@@ -1,4 +1,6 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v1.1)
+# Dimensions Stacks — Regras e dinâmica (GDD v1.2)
+
+> **CONSOLIDAÇÃO ATUAL (12/10/2026):** o autor aprovou as **87 cartas com descrições, atributos e habilidades atribuídas**, aceitou **129 habilidades** como catálogo de design (78 equipadas, 51 livres), e ratificou as opções descritas na seção **24**. Avisos anteriores “proposta” em seções históricas são substituídos por essa decisão **somente quanto aos itens que já possuíam opção explícita**. Pendências sem solução continuam abertas. A autoridade operacional está no [contrato para IA](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -345,3 +347,21 @@ O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito 
 Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de fotografias; Avó: lente dos óculos; Ingrid: ursinho; Suéten: relógio; Ibliso: coleira**. A documentação de Elos tem status *misto*, embora os seis nomes sejam informados no documento canônico de personagens. **Não declarar que o pai de Vini é Carnam.**
 
 **Total atualizado: 87 cartas candidatas**, das quais **18 de Diário Sobrenatural**. As descrições, valores e habilidades propostas estão em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md); nenhuma das quatro novas fichas foi aprovada como dado definitivo. A biblioteca segue com **129 habilidades candidatas**, sem atribuição final.
+
+## 24. Ratificação do baralho e da biblioteca (decisão final do autor: “Aprove tudo”, 12/10/2026)
+
+**APROVADO:** **87 cartas** com nomes/IDs, descrições, valores naturais e uma habilidade especial atribuída a cada uma. **APROVADA** a escala natural **0–100**, as siglas **ATQ/DEF/INT/VEL** e o limite editorial de **120 caracteres** para a descrição curta; bônus temporários de habilidades podem ultrapassar 100. A União conserva habilidades estratégicas marcantes. O catálogo contém **129 IDs de habilidades** aceitos como repertório, **78 equipados no baralho atual** (algumas habilidades repetidas em personagens diferentes) e **51 não equipados**, aguardando novas cartas.
+
+**TERMINOLOGIA APROVADA:** usar **Habilidade Especial** (também “Especial”, sigla **ESP**) como nome guarda-chuva da interface; as habilidades podem atacar, defender, controlar, recuperar e agir como coringa. “Ataque Especial” é o nome histórico das cartas antigas.
+
+**CONFIGURAÇÃO INICIAL APROVADA PARA TESTES:** distribuir **18 cartas a cada jogador**, sendo **7 no baralho ativo** e **11 na reserva**, em partidas com 2–4 jogadores. Quantidades na partida: **36, 54 e 72** respectivamente. A coleção tem 87 cartas; **como sortear/selecionar as cartas da coleção sem viés permanece PENDENTE**. O baralho de 18 é ponto de partida autorizado, não afirmação de duração equilibrada.
+
+**PRIORIDADE E DEFESA APROVADAS COMO MODELO:** prioridade circular a partir do iniciador em sentido horário; quando uma especial é jogada, uma defesa pode ser ativada **em resposta enquanto o efeito ainda está pendente**, entrando antes dele na pilha (resolução inversa, última a entrar é a primeira a resolver). Uma defesa pode reagir antes da captura/descarte normal se seu texto permitir. Depois de resolvido o efeito, não existe cancelamento retroativo. **Passar não consome especial.** Uma especial defensiva ativada voluntariamente **consome o único uso voluntário normal do combate**, salvo permissão explícita para uma segunda. **AE-130** anula **a última habilidade especial pendente** e não devolve a carta especial anulada. **AE-111** força todas as especiais preparadas até duas. **AE-112** não pode criar ciclos infinitos.
+
+**EXCLUSÕES PRESERVADAS:** antigos efeitos físicos **#18, #24 e #52** retirados; **AE-104** aposentado. O novo **AE-129 Triunfo Raro** não é o antigo #52 e foi aprovado **para S01 Jasmey Badrock**, sem eliminar testes de raridade, reações e equilíbrio. A habilidade de ruína **AE-103** afeta somente **cartas normais do campo de combate**, não especiais preparadas.
+
+**ORIGEM POR SÉRIE:** Ciclo de Jesed 23 (amarelo), Viajantes 19 (azul), Spacetheft 14 (preto), Diário Sobrenatural 18 (roxo), Mistério Oculto 12 (vermelho), Belfex/Édelin 1 (verde). **A União** é apenas selo sobre a cor própria, sem duplicação de cartas.
+
+**PENDÊNCIAS NÃO RESOLVIDAS PELA APROVAÇÃO GENÉRICA:** como preparar exatamente cartas especiais; a janela pré-revelação exigida por certos textos; a ordem de duas ativações forçadas pela AE-111; destino das duas cartas normais do especial duplo AE-010; empate absoluto após os três critérios; tratamento de alvos/zonas com cartas insuficientes; distribuição justa das 87 cartas; tempo de reação para partidas online; testes de raridade e balanceamento. Estes comportamentos **não podem ser inventados** por outra IA.
+
+**FONTES OFICIAIS PARA CÓDIGO:** [cartas_87.json](../dados/oficial/cartas_87.json), [habilidades_129.json](../dados/oficial/habilidades_129.json) e [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md). A [tabela de 87 cartas](CARTAS_87_PROPOSTAS.md) tem nome histórico mas **conteúdo aprovado**. Cartas físicas antigas permanecem somente referências.
