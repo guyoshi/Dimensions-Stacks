@@ -1,4 +1,4 @@
-# Dimensions Stacks — Ataques especiais e estado do acervo (v0.6)
+# Dimensions Stacks — Ataques especiais e estado do acervo (v0.7)
 
 > **ÍNDICE ATUALIZADO.** Consulte também as [leituras provisórias de IA](LEITURAS_IA_PENDENTES_2026-10-12.md) e as correções do [GDD atualizado](REGRAS.md). A fonte mais confiável para os efeitos das **23 cartas transcritas** diretamente pelo autor é [Transcrições confirmadas](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md). O [inventário fotográfico inicial](INVENTARIO_FOTOGRAFICO_LEGADO.md) está arquivado: contém hipóteses de leitura e balanceamento feitas **antes** dos esclarecimentos do autor. Os documentos de referência não são equivalentes: em divergências, prevalece a transcrição original do autor e suas decisões expressas. Não reutilizar automaticamente os nomes, valores e biografias físicos na versão digital.
 
@@ -96,6 +96,6 @@
 
 ## 6. Decisões de funcionamento e atribuição posteriores
 
-**Ativação:** o proprietário escolhe **qual ataque especial preparado** utilizar e **em qual rodada**. Continua pendente decidir se pode ativar voluntariamente ambos na mesma disputa; a habilidade #59 obriga o oponente a usar todas as preparadas, até duas. Para efeitos entre oponentes simultâneos, prioridade e janela ainda não estão fechadas.
+**Ativação (confirmada):** cada jogador escolhe qual especial preparado ativar e em qual rodada. **O limite voluntário é de 1 carta especial por combate**, salvo quando uma habilidade específica autorizar duas ativações no mesmo confronto. A habilidade #59 **força todas** as especiais já preparadas pelo alvo (até duas), mesmo que exceda o limite voluntário. Repetir um efeito com a #62 não equivale a ativar outra carta preparada. A prioridade entre jogadores e a janela exata de ativação ainda precisam de decisão.
 
 **Catálogo ativo:** [128 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md), com 128 colunas de atribuição ainda vazias, inclusive proposta de vitória rara **AE-129**. O ID antigo **AE-104 foi aposentado** junto com o efeito da carta física #52, sem renumerar os demais. Recuperação direta de #12 inspira **AE-087**.
