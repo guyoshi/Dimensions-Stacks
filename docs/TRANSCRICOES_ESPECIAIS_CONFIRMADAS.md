@@ -1,4 +1,4 @@
-# Ataques especiais — transcrições originais confirmadas
+# Ataques especiais — transcrições originais e correções do autor
 
 > **Fonte primária:** transcrição feita pelo autor a partir de cartas físicas em 12/10/2026 (14:20–14:22). **23 cartas distintas**. O especial **17** apareceu duas vezes na mensagem do autor e foi consolidado uma só vez. Os nomes e as frases a seguir foram mantidos **tal como transcritos**, inclusive grafias, terminologia antiga como *status*, *maço de reserva*, *Baralho Negro* e associações cromáticas antigas. Esta é a referência mais confiável para os textos desses 23 ataques; leituras visuais anteriores são preliminares e ficam subordinadas a esta transcrição.
 
@@ -32,6 +32,15 @@
 
 **Atenção:** a carta física #06 está escrita como **Mark Pollar**, mas a ficha futura do jogo usará **Mark Polar**, conforme correção explícita do autor. Estes nomes físicos **não definem** quais personagens receberão os especiais na versão digital.
 
+### Correções e decisões posteriores
+
+- **#19 — Buraco Negro:** o autor corrigiu a referência anterior a *Baralho Negro* para **Buraco Negro**. **Texto funcional vigente:** “Sacrifique uma carta com algum status acima de 90 em troca das três primeiras cartas do Buraco Negro.” Mantemos acima a frase originalmente transcrita para rastreabilidade, mas não criaremos outra zona.
+- **#18 — Ricochett Bombargue:** **retirado** do conjunto ativo a pedido do autor. Permanece somente como registro da carta física.
+- **#24 — Primus Tenesy:** **retirado** do conjunto ativo a pedido do autor. Permanece somente como registro da carta física.
+- **#59 — William McCroys:** obriga usar **todas as cartas de ataques especiais já preparadas na mesa**, até duas. Não atinge cartas da reserva ou do baralho ativo.
+- **Empates de atributo:** valor do atributo disputado → soma dos quatro atributos → soma de Poder + Inteligência; empate persistente ainda não definido.
+- **Novas leituras feitas por IA** não têm o mesmo nível de confiança que transcrições feitas pelo autor: ver [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md).
+
 ## 2. Auditoria inicial de design, separada da fonte primária
 
 **Os pareceres abaixo são sugestões, não mudanças automáticas no texto original.** Todos os efeitos ativados consomem sua carta especial, descartada no **Buraco Negro**, salvo exceções expressamente resolvidas. A carta normal de combate continua vulnerável.
@@ -46,11 +55,11 @@
 | 11 · Velho-Sábio | **Manter com esclarecimento** | Redistribuição simultânea, não cria cartas. Definir seleção e zona das cartas, ordem entre sobreviventes, e se jogador com zero cartas participa. |
 | 15 · Théorix | **Manter** | Bónus claro com custo especial; definir alvo e duração da alteração. |
 | 17 · Saliens | **Testar** | Transferência de 2 cartas da reserva, muito dependente do momento. Definir se escolhidas ou aleatórias, destino e reservas com menos de 2 cartas. |
-| 18 · Ricochett Bombargue | **Atenção alta** | Extremamente impactante no confronto de 3–4 jogadores. Definir vencedor/perdedor em confronto coletivo e se a inversão ocorre depois da comparação ou também depois de outros especiais. |
+| 18 · Ricochett Bombargue | **Retirado do jogo** | Extremamente impactante no confronto de 3–4 jogadores. Definir vencedor/perdedor em confronto coletivo e se a inversão ocorre depois da comparação ou também depois de outros especiais. |
 | 19 · Sagrado Senhor da Morte | **Manter com esclarecimento** | Custo alto pode justificar retorno de três cartas. 'Baralho Negro' foi mantido literalmente: falta confirmar equivalência com Buraco Negro, zona da carta sacrificada e se podem voltar especiais. |
 | 21 · Policial Jeffrey | **Manter com esclarecimento** | Definir se troca entre si os valores POD/VEL de uma carta ou transforma um status em outro, e em qual janela. |
 | 22 · Celine Backboard | **Manter com esclarecimento** | Como #21: não presumir semântica exata, e testar a interação com pares permitidos. |
-| 24 · Primus Tenesy | **Regras novas necessárias** | Quebra a restrição básica de usar um só par. Definir se dois combates ou uma disputa combinada, como somar e como resolver captura/defesa. |
+| 24 · Primus Tenesy | **Retirado do jogo** | Quebra a restrição básica de usar um só par. Definir se dois combates ou uma disputa combinada, como somar e como resolver captura/defesa. |
 | 27 · Kiw Tenesy | **Manter** | Fortalece dois status defensivos, mas em combate normal só um será escolhido. Definir quem é alvo, se efeitos são cumulativos e duração. |
 | 34 · Master Kang | **Testar para 2 jogadores** | Texto pressupõe pelo menos dois adversários. Em partidas com 2 jogadores precisa regra ou não pode ser ativado; definir zonas e escolhas. |
 | 35 · Cap. Zoddie | **Manter com esclarecimento** | Rotação de reservas, forte e estratégica, mas não cria cartas; definir sentido e resultado em mesas de 2/3/4 e jogadores já eliminados. |
@@ -86,3 +95,7 @@
 ## 5. Próximo passo
 
 Prosseguir com a transcrição dos ataques físicos restantes. Manter texto original distinto de versão digital proposta, risco de balanceamento e decisão formal do autor. A fonte do inventário fotográfico legado está em [ATAQUES_ESPECIAIS.md](ATAQUES_ESPECIAIS.md). As regras já ratificadas estão em [REGRAS.md](REGRAS.md).
+
+## Situação atual deste conjunto de 23 cartas
+
+**23 efeitos históricos transcritos; 21 permanecem como referências candidatas para o PC, e 2 foram removidos da seleção ativa (#18 e #24).** Ter um texto histórico não significa que a habilidade tenha sido atribuída a personagem definitivo. As regras atuais de desempate, descarte e uso forçado prevalecem sobre pareceres antigos nesta página.
