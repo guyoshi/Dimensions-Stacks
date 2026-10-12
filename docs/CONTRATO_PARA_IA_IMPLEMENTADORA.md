@@ -1,105 +1,83 @@
-# Dimensions Stacks — Contrato de leitura para IA implementadora (v1.0)
+# Dimensions Stacks — Contrato oficial para IA implementadora (v2.0)
 
-> **LEIA PRIMEIRO.** O repositório está em **fase de definição de design**, não contém protótipo de jogo completo. Este contrato impede que outra IA confunda **decisões aprovadas pelo autor** com **propostas do assistente**. A implementação só deve assumir regras classificadas **CONFIRMADO**. Para recursos não aprovados, preservar o estado `pendente`, pedir validação e não inventar comportamento silenciosamente.
+> **LEIA PRIMEIRO. APROVAÇÃO AUTORAL: 12/10/2026.** O autor disse **“Aprove tudo”** após a inclusão dos quatro últimos integrantes da Família Carnam. Estão **APROVADOS os 87 registros de cartas, seus textos, atributos e habilidades atribuídas**. Também foi aceito o catálogo de **129 habilidades** como repertório de design, as regras anteriormente definidas e as propostas estruturadas documentadas abaixo. Isso **não** afirma que o jogo está programado, testado ou que situações não especificadas possuam solução automática.
 
-## 1. Hierarquia das fontes e atualização
+## 1. Ordem de autoridade e dados de produção
 
-1. **Este contrato** = índice dos estados, travas e dependências.
-2. [REGRAS.md](REGRAS.md) = regras já aprovadas e lacunas explícitas. Passagens históricas/alternativas anteriores ficam subordinadas a **decisões posteriores do autor**.
-3. [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) = **87 fichas propostas, ainda não aprovadas**, com fontes narrativas e 120 caracteres máximos de descrição curta.
-4. [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md) = **129 habilidades candidatas**, com 129 células vazias de `Carta atribuída (ID)`. Cada ID é uma mecânica candidata, não poder automaticamente conferido à personagem de mesmo nome histórico.
-5. [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md) = proposta de janela de reação defensiva, ordem e cancelamentos. **Não é regra consolidada**.
-6. [ELENCO_CANDIDATO.md](ELENCO_CANDIDATO.md) = identidades das 87 cartas/personagens, procedência e formação da União.
-7. [TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md), [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md) e [INVENTARIO_FOTOGRAFICO_LEGADO.md](INVENTARIO_FOTOGRAFICO_LEGADO.md) = **somente histórico de ideias mecânicas e referência física**, não nome, biografia, atributo ou habilidade definitiva das novas cartas.
+1. **Este contrato e as decisões mais recentes do autor** têm prioridade sobre avisos históricos “proposto” espalhados em documentos anteriores.
+2. [REGRAS.md](REGRAS.md): mecânicas, aprovações e **pendências operacionais**.
+3. [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md): apesar do nome antigo do arquivo, é a **tabela de 87 cartas APROVADAS**.
+4. [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md): **129 habilidades**, com coluna final preenchida para 78 efeitos distintos utilizados nas 87 cartas. As outras **51 permanecem no catálogo para expansão**.
+5. [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md): o nome do arquivo é histórico; **a pilha de reações defensivas e prioridade circular fica aprovada como modelo-base**, com os casos-limite indicados mais adiante pendentes de especificação.
+6. **JSON oficial:** [87 cartas](../dados/oficial/cartas_87.json) e [129 habilidades](../dados/oficial/habilidades_129.json), ambos com status de aprovação. São os dados estruturados atuais para outra IA.
+7. [ELENCO_CANDIDATO.md](ELENCO_CANDIDATO.md): preserva fontes literárias e identidades, mas a inclusão das **87 cartas** foi aprovada como baralho.
+8. [CHECKLIST_VALIDACAO.md](CHECKLIST_VALIDACAO.md): testes, cenários e bloqueios ainda abertos.
 
-Repositório de fontes literárias: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Parte do cânone dos livros em andamento pode mudar; materiais com status `histórico` ou `misto` não devem ser elevados a cânone final.
+**Fontes antigas** como cartas físicas, leituras por IA, textos do livro 2 classificados como mistos, e cópias em `dados/propostas` não são fontes de dados finais de jogo. O repositório de ficção é [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). A **aprovação da carta para o jogo não garante a correção canônica da biografia** quando o campo de confiança narrativa é baixo: verificar o manuscrito antes de criar eventos, habilidades ou fatos literários novos.
 
-## 2. Decisões CONFIRMADAS
+## 2. Decisões APROVADAS como design do jogo
 
-| Domínio | Status | Decisão |
-| --- | --- | --- |
-| Formato | CONFIRMADO | Partidas todos contra todos com 2, 3 ou 4 jogadores; vencer eliminando as cartas utilizáveis dos demais. |
-| Mão inicial | CONFIRMADO | 7 cartas no baralho ativo inicial, que o jogador pode ordenar; cartas restantes em meios de reserva. |
-| Carta normal | CONFIRMADO | Só a primeira carta do baralho ativo participa da disputa, salvo habilidade que autorize outra. |
-| Pares | CONFIRMADO | **Ataque (ATQ)/Defesa (DEF)** e **Inteligência (INT)/Velocidade (VEL)**. **Poder** é o nome histórico substituído por **Ataque**. |
-| Tipos de vitória | CONFIRMADO | Se maior atributo vencedor é **ATQ ou INT**, captura cartas de combate rivais. Se é **DEF ou VEL**, salva a própria e descarta as demais no Buraco Negro. Exceções somente por habilidades expressas. |
-| Desempate | CONFIRMADO | Valor individual; depois **soma ATQ+DEF+INT+VEL**; depois **soma ATQ+INT**. Empate posterior permanece em aberto. |
-| Primeira rodada | CONFIRMADO | Cada jogador inicia uma vez, sem especiais usados. |
-| Área preparada | CONFIRMADO | Até 2 especiais preparadas, viradas para baixo à esquerda, protegidas dos efeitos comuns. |
-| Especial voluntário | CONFIRMADO | Ativar **no máximo 1 carta especial voluntariamente por combate**, salvo habilidade que permita 2 explicitamente. O jogador escolhe qual especial preparado usar e em qual rodada. |
-| Custo especial | CONFIRMADO | Carta de especial ativada vai ao Buraco Negro, salvo exceção expressa já definida. A carta normal continua podendo perder. |
-| Conflito de atributos | CONFIRMADO | Se habilidades impuserem status diferentes, comparar o atributo imposto na carta de combate de cada usuário: vence o **valor maior**, e todos usam esse atributo. Empate específico após os critérios gerais ainda pendente. |
-| Ataque em dupla | CONFIRMADO | Efeito antigo #09: usar duas cartas normais consecutivas, somando o **mesmo atributo**. Destino da dupla no desfecho exige especificação adicional. |
-| Uso forçado | CONFIRMADO | Efeito antigo #59 / candidato AE-111: alvo ativa **todas as suas especiais já preparadas**, até 2, mesmo sem querer. Não puxa carta não preparada. |
-| Recuperação | CONFIRMADO | Efeito antigo #12: 2 cartas **aleatórias** do Buraco Negro ao **fim da própria reserva**. |
-| Limpeza de campo | CONFIRMADO | Efeito antigo #54: somente cartas **normais colocadas em combate**, **não** especiais preparadas. |
-| Repetição | CONFIRMADO | Efeito antigo #62: pode repetir pagando custo, **não permitir ciclos infinitos**. A especificação de limite interno exato ainda é proposta. |
-| Históricos retirados | CONFIRMADO | Efeitos antigos #18, #24 e #52 não fazem parte da seleção ativa nova. Isso **não elimina** a possibilidade de outros efeitos de vitória automática raros. |
-| Reação de defesa | CONFIRMADO (INTENÇÃO) | Defesas devem responder a ataques **enquanto ainda possam impedi-los**, mesmo em janelas tardias do combate. A prioridade exata e a sequência de eventos estão **PROPOSTAS**. |
-| Cores | CONFIRMADO | Viajantes **azul**; Mistério Oculto **vermelha**; Ciclo de Jesed **amarela**; Belfex/Édelin **verde**; Diário Sobrenatural **roxo**; Spacetheft **preta**. |
-| A União | CONFIRMADO | Integrantes ficam em suas séries, com **selo sobreposto** sem duplicar cartas. Equipe: Bruno Lins Lee, Brenda, Hyde (cabeça, fundador ainda em aberto), Releuz (temporário), Jasmey, Mark Polar, Édelin; Jennifer futura. |
-| Força intencional | CONFIRMADO (DIRETRIZ) | Haverá cartas fracas, especialistas, fortes e elites; cartas ruins podem ser úteis para trocas. União deve receber **as melhores e mais marcantes habilidades**, sem implicar números definitivos aprovados. |
-| Novo cancelamento | CONFIRMADO (IDEIA) | Incluir habilidade que **anula a última habilidade especial jogada**; texto concreto `AE-130` ainda candidato. |
+| Área | Regra aprovada |
+| --- | --- |
+| Elenco | **87 cartas oficiais**, distribuídas em **J 23, V 19, S 14, D 18, M 12, B 1**. Cada carta tem ID, nome, descrição curta, atributos naturais, soma e habilidade especial equipados e aprovados. |
+| Valores naturais | **0–100**, valores inteiros para **Ataque (ATQ), Defesa (DEF), Inteligência (INT), Velocidade (VEL)**. Especiais podem elevar valores temporários acima de 100. |
+| Desempate | Primeiro valor no atributo selecionado; depois **soma dos quatro atributos**; em seguida **ATQ + INT**. Empate remanescente continua **PENDENTE**, não criar moeda ou sorteio. |
+| Pares | **ATQ/DEF** e **INT/VEL**. ATQ/INT são ofensivos; DEF/VEL são defensivos. |
+| Vitória normal | Melhor resultado ofensivo captura as cartas normais derrotadas; melhor resultado defensivo protege sua carta e envia cartas normais derrotadas ao **Buraco Negro**. Preservar exceções expressas. |
+| Formação inicial | Partidas com 2–4 jogadores, todos contra todos. **Configuração inicial aprovada para testes: 18 cartas por participante** (7 ativas, 11 na reserva): 36/54/72 cartas em partidas com 2/3/4. A seleção exata do subconjunto a partir das 87 ainda requer procedimento. |
+| Preparação e uso | No máximo **2 habilidades especiais preparadas** à esquerda. Normalmente **1 ativação especial voluntária por combate**, salvo habilidade que autorize duas. O proprietário escolhe o especial e a rodada; especiais usadas vão ao Buraco Negro. |
+| Ativação forçada | **AE-111**, derivada do efeito físico #59, faz o alvo ativar **todas** as suas especiais já preparadas (até duas), sem sacar novas. |
+| Recuperação | Efeito #12: 2 cartas aleatórias do Buraco Negro para o fim da própria reserva. |
+| Limpeza | Efeito #54/AE-103 atinge somente cartas **normais colocadas em combate**, não cartas especiais preparadas. |
+| Repetição | AE-112: efeito pode ser repetido com custo, **sem ciclos infinitos**. Não repetir outra repetição/cópia indefinidamente. |
+| Defesa reativa | **Aprovado o modelo de janelas de resposta antes de o ataque ser concluído.** Reações podem interromper efeitos pendentes e resolver antes deles; efeitos já resolvidos não são desfeitos retroativamente. Passar não gasta especial, e reagir não cria uma segunda ativação voluntária gratuita. |
+| Prioridade-base | Iniciador do combate oferece primeira oportunidade; prioridade segue **circularmente em sentido horário**; efeitos especiais respondidos entram em **pilha de resolução inversa (último a entrar, primeiro a resolver)**. Uma defesa pode interromper uma ameaça pendente no momento pertinente. Detalhes ainda não fixados estão na seção 4. |
+| Contraespecial | **AE-130** anula a última habilidade especial **pendente** de resolução. Não anula habilidades já concluídas; ambas as cartas especiais ativadas são consumidas normalmente. |
+| Nome da mecânica | Interface: **Habilidade Especial** (`ESP`) ou **Especial**. “Ataque Especial” permanece nome histórico das cartas físicas. |
+| Escopo da coleção | 129 habilidades aceitas como **catálogo de design**; **78 equipadas** entre as 87 cartas, **51 sem carta atribuída**, disponíveis para expansão. Repetir habilidade em cartas diferentes é permitido. |
+| União | 7 integrantes originais e Jennifer como futura integrante. Cada carta conserva sua cor de origem com selo adicional, sem duplicar. As habilidades fortes distribuídas para os oito foram **aprovadas**. |
+| Cores | Viajantes azul; Mistério Oculto vermelho; Ciclo de Jesed amarelo; Série Édelin/Belfex verde; Diário Sobrenatural roxo; Spacetheft preto. Não definir a força por cor. |
+| Variedade | Cartas intencionalmente fracas, especialistas, equilibradas e elites são parte da concepção aprovada. A soma desigual faz parte do desempate. |
+| Apresentação | Descrições curtas de até **120 caracteres**; o texto completo da habilidade pode aparecer em expansão/tooltip. O limite é aprovado como norma editorial, mas a diagramação precisa de teste visual. |
 
-## 3. Dados e ideias PROPOSTOS (não usar como definitivos sem aprovação)
+## 3. Baralho e habilidades: regras de implementação
 
-| Item | Estado | Conteúdo |
-| --- | --- | --- |
-| Intervalo de atributos | **PROPOSTO** | Valores naturais inteiros de **0 a 100** e bônus temporários possivelmente acima de 100. |
-| Fichas dos 87 personagens | **PROPOSTO** | Nome, descrição curta (até 120 caracteres), ATQ/DEF/INT/VEL, soma, perfil e habilidade. Todas as 87 sugestões aguardam aprovação. |
-| Texto curto | **PROPOSTO** | **Máximo de 120 caracteres** por descrição de frente de carta, validado mecanicamente; precisa de teste de layout final. |
-| 129 habilidades | **PROPOSTO** | Catálogo por família, alguns itens ainda arriscados. Não atribuir a personagens sem aceite. |
-| Especial raro AE-129 | **PROPOSTO** | Vitória automática de comparação, diferente da mecânica física #52, retirada. Pode haver pouquíssimas cartas raras assim, conforme diretriz do autor. |
-| Defesa reativa | **PROPOSTO (MECANISMO)** | Pilha de prioridade, oportunidade de resposta antes da resolução do ataque, efeitos cancelados consumidos, sem retroatividade; ver documento separado. |
-| AE-130 | **PROPOSTO (TEXTO)** | Anular último especial **pendente**, não efeito já concluído. Origina-se de ideia confirmada, mas implementação detalhada precisa de aprovação. |
-| Nome guarda-chuva | **PROPOSTO** | Chamar o conjunto de **Habilidades Especiais (ESP)**, pois há ataques, defesas, controles, recuperações e coringas. O nome histórico era “Ataque Especial”. |
-| Total na partida | **PROPOSTO** | 18 cartas por jogador (7 ativas e 11 na reserva), ou 36/54/72 em jogos 2/3/4. Não aprovado; **não restringir automaticamente a seleção de 87 a esse número**. |
-| Habilidade de dois rivais | **PARCIAL** | Em duelo direita/esquerda são a mesma pessoa. Transferir cartas de um adversário para ele mesmo pode ser gasto sem vantagem, como aprovado. Efeitos que exigem **dois rivais distintos** não têm segundo alvo; não criar saque duplicado automaticamente. |
-| Atribuições de A União | **PROPOSTO** | Oito habilidades fortes reservadas inicialmente nas fichas, todas reversíveis antes da aprovação. |
+- **Fonte oficial do conteúdo:** os 87 registros do JSON oficial, validados contra a tabela Markdown. Os nomes de chaves do JSON oficial (ex.: `atributos.ATQ`, `habilidade_especial_id`) prevalecem sobre chaves de arquivos antigos marcadas `_propostos`.
+- **78/129 IDs de habilidade estão equipados**; 51 efeitos não possuem carta nesta versão do baralho. **Nunca distribua os 51 automaticamente**.
+- **AE-104 foi aposentada; os efeitos históricos #18, #24 e #52 continuam excluídos.** A habilidade **AE-129**, uma vitória automática rara *diferente*, está aprovada para **S01 Jasmey**. Não ressuscitar o #52 antigo.
+- **A União:** Bruno (V02), Brenda (V15), Hyde (M01), Releuz (M10), Jasmey (S01), Mark Polar (J03), Édelin (B01); Jennifer (D06) entra depois, porém sua carta base já existe. Selo próprio sem cor exclusiva.
+- **Família Carnam:** D07 Ingrid, D13 Suéten, D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso (cão). D17 **não é** D10 Avó de Kelly. A arma associada ao Elo de Carnam não significa que Carnam seja o pai de Vini.
+- **Viajantes Dimensionais adicionados:** V16 Facka (Faka no manuscrito), V17 Lanigiah (rainha Aracnas), V18 Grande Pai Gaia (líder Obbs) e V19 Seti (guerreiro Obb).
+- **Cartas históricas físicas:** são fonte de ideias, mas nomes, valores e representações não são herdados automaticamente pelas cartas digitais.
+- **Balanceamento:** aprovação autoral não equivale a simulação, raridade final, acessibilidade de interface ou QA concluídos. Não reequilibrar silenciosamente uma ficha aprovada.
 
-## 4. Pendências que impedem um jogo competitivo definido sem novas decisões
+## 4. Pendências reais que a aprovação genérica NÃO especifica
 
-- **Origem da carta que será preparada como especial:** topo do ativo, escolha na pilha, reserva ou outra. Não deduzir.
-- **Quando preparar especiais:** regras exatas de preparação e janelas; proteções e limites estão conhecidos.
-- **Momento/ordem de resolução dos especiais e das reações defensivas:** ver proposta. Não impor LIFO como fato já confirmado.
-- **Direito de reação e prioridade em simultaneidade:** quem age primeiro, janela pré-revelação e defensiva pré-resolução, como resolver vários efeitos de cancelamento.
-- **Empate absolutamente completo:** quando somam iguais no atributo disputado, na soma dos quatro e na soma ATQ+INT.
-- **Destino das duas cartas normais do ataque especial de soma:** captura/descarte/retorno, especialmente em empate.
-- **Limite e destino quando Buraco Negro ou reserva não oferecem cartas suficientes** para uma habilidade; não substituir zonas arbitrariamente.
-- **Raridade, distribuição de cartas e número inicial total** da partida ainda não aprovados.
-- **Como selecionar as cartas para 2/3/4 participantes sem vantagem** (as 87 candidatas não se dividem igualmente).
-- **Exceções e custos de recuperações de cartas especiais** sem reativação infinita.
-- **Origem e poderes canônicos** de Édelin Fils, Releuz e Richard Falkner, bem como detalhes de Diego, ainda insuficientes para afirmar capacidades definitivas. **Filippo/Filipo** requer confirmação de grafia.
+1. **Origem e momento de preparar especiais:** a regra de duas preparadas existe, mas ainda não há um procedimento completo e inequívoco de escolha/retirada da pilha.
+2. **Dupla do especial AE-010:** destino de cada uma das duas cartas normais após vitória, derrota ou empate.
+3. **Empate absoluto:** o que fazer se valor eleito, soma de quatro e ATQ+INT ainda empatarem.
+4. **Janelas anteriores à revelação:** habilidades cuja própria descrição exige agir “antes do combate” precisam de posicionamento explícito; não inverter arbitrariamente seu sentido.
+5. **AE-111 com duas especiais obrigatórias:** ordem de ativação, alvos e possíveis respostas entre os dois efeitos. A proposta é o titular escolher ordem/alvos; a regra-base de forçar todas já está aprovada.
+6. **Alvo ausente/zonas insuficientes:** comportamento quando a reserva, o Buraco Negro ou a área de alvo contiverem menos cartas que as solicitadas; não inventar roubo de outra zona.
+7. **Seleção inicial justa** de 18 cartas entre as 87 em partidas de 2, 3 e 4 jogadores (aleatorização, repetição, distribuição por série e sorteio).
+8. **Detalhes de relógio/rede:** duração do tempo de reação e serialização de ações simultâneas num jogo online.
+9. **Raridade formal e estatísticas de testes** dos especiais de captura coletiva, anulação e vitória automática.
+10. **Revisão de fonte narrativa** de Édelin, Releuz, Diego e Richard Falkner, sem confundir a aprovação *lúdica* dos textos com evidência literária.
 
-## 5. Instruções rígidas para a próxima IA
+A aprovação “Aprove tudo” ratifica as **opções propostas existentes**, mas não fornece respostas para perguntas que nunca tiveram uma opção fechada. Nesses casos a IA deve solicitar decisão, deixar como `PENDENTE` ou usar marcador explícito numa prévia. **Não afirmar jogo competitivo totalmente pronto.**
 
-**FAÇA:** manter docs com estados explícitos `CONFIRMADO`, `PROPOSTO`, `PENDENTE`; apresentar sugestões separadas da autoridade do autor; verificar cartas e habilidades por ID; mostrar efeitos/valores no layout somente quando aprovados; perguntar antes de completar lacunas mecânicas essenciais. Usar PT-BR no texto do jogo e nos materiais.
+## 5. Procedimento para próxima IA
 
-**NÃO FAÇA:** substituir decisões do autor por conveniências de programação; copiar nomes, biografias, atributos ou cor das cartas de infância; inventar atributos canônicos sem fonte; interpretar um documento histórico como livro final; dar a A União uma cor própria; duplicar automaticamente membros da União; considerar 18 cartas por jogador uma decisão aceita; considerar 87 fichas ainda propostas como baralho final; eliminar habilidades fortes apenas por intuição.
+**FAÇA:** importar os arquivos em `dados/oficial`, preservar IDs e atribuições, aplicar as regras aprovadas, usar PT-BR, referenciar a origem literária e separar pendências de decisões tomadas. Atualizar Markdown e JSON juntos a cada alteração autorizada.
 
-**Ponto de partida seguro:** usar dados em rascunho para UI de prévia e ferramentas internas de edição, com avisos de `não aprovado`. Não afirmar que o jogo competitivo está finalizado ou equilibrado até que as pendências essenciais sejam decididas, simuladas e testadas.
+**NÃO FAÇA:** usar dados em `dados/propostas` como atuais, reconstruir informações do jogo com base nas cartas físicas, duplicar integrantes da União, inventar mecânica para empate irredutível, presumir que 129 habilidades são 129 cartas diferentes, alterar valores sem autorização, chamar um texto de biografia de prova sobre o cânone, ou declarar equilíbrio sem testes.
 
-## 6. Dados estruturados para ferramenta de prévia
+## 6. Referências
 
-O diretório [dados/propostas](../dados/propostas/README.md) contém arquivos JSON de **87 cartas** e **129 habilidades**, todos com `status: PROPOSTA_NAO_APROVADA`. A IA pode importar esses arquivos **apenas para prévia, comparação e ferramentas de revisão**, nunca para considerá-los baralho validado. Em caso de divergência entre JSON e Markdown, **interrompa para reconciliar**. Não inventar valores nem completar nomes pela própria conta.
-
-## 7. Índice operacional
-
-- [Decisões e GDD](REGRAS.md)
-- [87 fichas propostas por personagem](CARTAS_87_PROPOSTAS.md)
-- [JSON para prévia das 87 cartas](../dados/propostas/cartas_87.json)
-- [JSON para prévia das 129 habilidades](../dados/propostas/habilidades_129.json)
-- [129 habilidades candidatas, sem atribuição confirmada](BIBLIOTECA_ATAQUES_ESPECIAIS.md)
-- [Reações defensivas e prioridade propostas](PRIORIDADE_ESPECIAIS_PROPOSTA.md)
-- [87 identidades e fontes canônicas](ELENCO_CANDIDATO.md)
-- [Auditoria de efeitos históricos](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md)
-
-## 8. Inclusão confirmada do elenco em Viajantes Dimensionais
-
-O autor pediu adicionar **quatro personagens**: Facka (Faka no manuscrito), Lanigiah (rainha das Aracnas), Grande Pai Gaia (líder Obb) e Seti (guerreiro Obb aliado dos irmãos). A existência e funções estão sustentadas pelo manuscrito; **os atributos, habilidades e descrições exatas são sugestões de balanceamento**, não regras aprovadas. Elenco atual **83 cartas, das quais 19 de Viajantes**. A União permanece sem novas adesões confirmadas. A fonte canônica para conferência é *Viajantes dimensionais - A Patrulha de Korvo.docx*; para revisões e prévias, usar [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e [cartas_87.json](../dados/propostas/cartas_87.json).
-
-## 9. Família Carnam no primeiro Diário Sobrenatural — atualização para 87
-
-**INCLUSÃO SOLICITADA PELO AUTOR:** pertencem ao elenco da Família Carnam **D15 Carnam (pai)**, **D16 Isabela**, **D17 Avó Carnam** e **D18 Ibliso (cão)**. Já existiam **D07 Ingrid Carnam** e **D13 Suéten**; evitar duplicar esses IDs. **D10 Avó de Kelly não é D17**. A associação com espíritos/Elos consta do cânone da série; os detalhes dos Elos estão em documento de status *misto*. Não confundir a **arma ligada ao pai de Vini**, Elo de Carnam, com uma afirmação de que Carnam seja o pai de Vini.
-
-**SITUAÇÃO ATUAL:** 87 cartas candidatas de seis séries; Diário Sobrenatural agora tem **18** e Viajantes Dimensionais **19**. As quatro fichas novas receberam sugestões de ATQ/DEF/INT/VEL, descrições de até 120 caracteres e um AE da biblioteca existente. **Esses valores e associações são hipóteses para revisão do autor**, não habilidades demonstradas no livro ou prontas para lançamento. Usar [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e [cartas_87.json](../dados/propostas/cartas_87.json). **Biblioteca mantém 129 habilidades** com coluna de atribuição final vazia.
+- [Fichas aprovadas (arquivo com nome histórico)](CARTAS_87_PROPOSTAS.md)
+- [JSON oficial de cartas](../dados/oficial/cartas_87.json)
+- [Catálogo aprovado de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md)
+- [JSON oficial de habilidades](../dados/oficial/habilidades_129.json)
+- [GDD](REGRAS.md)
+- [Reações, pilha e prioridade](PRIORIDADE_ESPECIAIS_PROPOSTA.md)
+- [Checklist](CHECKLIST_VALIDACAO.md)
