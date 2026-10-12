@@ -1,10 +1,13 @@
-# Leituras provisórias de IA (12/10/2026)
+# Leituras provisórias de IA e identificações complementares (12/10/2026)
 
 **Aviso:** transcrições extraídas por IA e fornecidas pelo autor, ainda NÃO verificadas. Não substituir [textos confirmados](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md). A grafia antiga foi preservada, inclusive possíveis erros.
 
 | Nº | Carta física | Trecho fornecido | Qualidade |
 |---|---|---|---|
+| 03 | Édelin | Ataque especial não identificado | nome e número confirmados pelo autor |
+| 05 | Brenda | Ataque especial não identificado | nome e número confirmados pelo autor |
 | 07 | Releuz | Seu rival... | parcial |
+| 08 | Breno | Ataque especial não identificado | nome e número confirmados pelo autor |
 | 10 | Beatriz Gabrielle Lins Lee | Antes do combate... | parcial na nova lista; efeito completo identificado em foto anterior |
 | 12 | Pecker | Pegue duas cartas do Baralho Negro e deposie sete ao fim do seu meio de reserva | provável erro de transcrição |
 | 13 | Garmand Lips | Roube a carta combatente do adversario em troca de uma aleatória sua | IA, verificar |
@@ -20,6 +23,7 @@
 | 33 | Rockstam Demyre | oBRIGUE UM JOGADOR A EMBARALHAR as suas cartas em mão com o meio de reserva e puxar as primeiras 5 pra usar. | IA, verificar |
 | 37 | D. Lesort | Force cada um dos jogadores a jogar uma carta aleatória ao Buraco Negro. | trecho reconstruído; quebra da palavra 'jogadores' normalizada |
 | 38 | Cap. Tzough | Puxe a última carta do meio de reserva do adversário à direita para você. | IA, verificar |
+| 39 | Cap. Nastácia | Ataque especial não identificado | número confirmado pelo autor |
 | 40 | Hanuno Pollar | Peça pro adversario da sua esquerda pra trocar cartas com o da sua direita. | IA, verificar |
 | 41 | Fieridus Pollar | Faça um de seus adversários mostrar todas as suas cartas em mãos | IA, verificar |
 | 42 | Herpeus Pollar | Sacrifique uma carta com qualquer status +90 em troca de uma carta aleatória de cada jogador | IA, verificar |
@@ -45,6 +49,12 @@ Dos números **01–62**, identificados **59**. Faltam **16, 26 e 55**. O autor 
 
 **Importante:** Beatriz #10 tem seu ataque conhecido das fotos anteriores: antes do combate, troca sua carta combatente com a do adversário à direita. O texto de IA atual não acrescenta informação.
 
-**Divergências:** #47 foi anteriormente lida como “CARTA DUPLA”, nesta lista como “CARTA DEFESA”; #12 contém trecho “deposie sete”, que requer conferência. Variam grafias de vários nomes, como Pecker/Peckler, Facka/Focka, Dhawer Flint/Flinn, Monthar/Monther, Angia/Angla, Jalled/Jelled.
+**Divergências:** #47 foi anteriormente lida como “CARTA DUPLA”, e agora aparece com o texto de defesa contra ataques especiais; #12 contém trecho “deposie sete”, que requer conferência. A palavra “jogadores” em #37 estava dividida por uma barra de tabela na mensagem e foi reunida para manter o Markdown válido. O texto de #62 mantém “ma” conforme recebido. Variam grafias de vários nomes, como Pecker/Peckler, Facka/Focka, Dhawer Flint/Flinn, Monthar/Monther, Angia/Angla, Jalled/Jelled.
 
 **Cortes aprovados:** #18 Ricochett Bombargue e #24 Primus Tenesy ficam no histórico, mas não no conjunto ativo de habilidades.
+
+## Efeitos que ainda precisam ser recuperados
+
+Sem texto suficiente: **03 Édelin, 05 Brenda, 07 Releuz, 08 Breno, 39 Cap. Nastácia, 44 Monthar Pollar, 45 Merryn, 51 Lissan Tellus e 53 Atrum Morlet**. Também faltam por inteiro as cartas e habilidades dos números **16, 26 e 55**. A leitura da carta **12 Pecker** continua ambígua.
+
+As ampliações de #20, #37, #47, #49, #50, #52 e #62 foram recebidas do autor, mas devem permanecer como leitura provisória enquanto a redação exata das cartas físicas não for conferida.
