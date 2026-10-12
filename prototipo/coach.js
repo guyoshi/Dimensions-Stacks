@@ -37,12 +37,12 @@
     const V = (U.dbg && U.dbg().V) || null; if (V && V.humans < 1) return Promise.resolve();
     mark(id);
     const layer = U.layer();
-    if (d.hint) { // não bloqueia o jogo: cartão que some sozinho
+    if (V && V.online) { // online não pode travar a mesa dos outros: cartão que some sozinho
       const n = el(`<div class="coach hint"><div class="ch"><b>💡 ${esc(d.t)}</b><button class="x" aria-label="Fechar">✕</button></div><div class="cb">${d.b}</div></div>`);
       layer.appendChild(n); const close = () => { n.classList.add('out'); setTimeout(() => n.remove(), 300); };
       n.querySelector('.x').onclick = close; setTimeout(close, 9000); return Promise.resolve();
     }
-    return new Promise((res, rej) => {
+    return new Promise((res, rej) => { // offline: congela o jogo até "Entendi"
       const run = U.run; if (run) run.rej.add(rej);
       const n = el(`<div class="coach modal"><div class="box"><div class="ch"><b>💡 ${esc(d.t)}</b></div><div class="cb">${d.b}</div><div class="row" style="justify-content:flex-end"><button class="btn primary sm" data-a="ok">Entendi</button></div></div></div>`);
       n.querySelector('[data-a=ok]').onclick = () => { SND.play('click'); if (run) run.rej.delete(rej); n.remove(); res(); };
@@ -76,27 +76,34 @@
   ];
   U.rulesFull = U.rules;
   U.rules = function () {
-    SND.play('click'); let i = 0, sx = null;
-    const n = el(`<div class="guide"><div class="gbox"><header><b>Como jogar</b><button class="ibtn" data-a="x" aria-label="Fechar">✕</button></header><div class="gbody"></div><div class="gdots"></div>
-      <footer><button class="btn sm" data-a="prev">◀ Anterior</button><button class="btn ghost sm" data-a="full">Regras completas</button><button class="btn primary sm" data-a="next">Próximo ▶</button></footer></div></div>`);
-    const body = $('.gbody', n), dots = $('.gdots', n);
-    function draw(dir) {
-      const s = SL[i]; body.className = 'gbody ' + (dir > 0 ? 'inR' : dir < 0 ? 'inL' : '');
-      body.innerHTML = `<div class="gh"><span class="gic">${s.ic}</span><h2>${esc(s.t)}</h2><small>${i + 1} / ${SL.length}</small></div><div class="gc">${s.b()}</div>`;
-      dots.innerHTML = SL.map((_, k) => `<i class="${k === i ? 'on' : ''}" data-k="${k}"></i>`).join('');
-      $('[data-a=prev]', n).disabled = i === 0; const nx = $('[data-a=next]', n); nx.textContent = i === SL.length - 1 ? 'Concluir ✓' : 'Próximo ▶';
-    }
+    SND.play('click'); let i = 0;
+    const slides = SL.map((s, k) => `<section class="gslide" data-k="${k}"><div class="gh"><span class="gic">${s.ic}</span><h2>${esc(s.t)}</h2><small>${k + 1} / ${SL.length}</small></div><div class="gc">${s.b()}</div></section>`).join('');
+    const n = el(`<div class="guide"><div class="gbox"><header><b>Como jogar</b><button class="ibtn" data-a="x" aria-label="Fechar">✕</button></header><div class="gtrack" tabindex="0">${slides}</div><div class="gdots">${SL.map((_, k) => `<i data-k="${k}"></i>`).join('')}</div>
+      <footer><button class="btn sm" data-a="prev" aria-label="Anterior">◀ Anterior</button><button class="btn ghost sm" data-a="full">Regras completas</button><button class="btn primary sm" data-a="next">Próximo ▶</button></footer></div></div>`);
+    const box = $('.gbox', n), track = $('.gtrack', n), dots = $$('.gdots i', n), prev = $('[data-a=prev]', n), next = $('[data-a=next]', n);
+    const paint = () => {
+      dots.forEach((d, k) => d.classList.toggle('on', k === i));
+      prev.disabled = i === 0; next.textContent = i === SL.length - 1 ? 'Concluir ✓' : 'Próximo ▶'; box.classList.toggle('last', i === SL.length - 1);
+    };
+    const goTo = (k, smooth) => { k = Math.max(0, Math.min(SL.length - 1, k)); track.scrollTo({ left: k * track.clientWidth, behavior: smooth === false ? 'auto' : 'smooth' }); };
+    let raf = 0;
+    track.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { const k = Math.round(track.scrollLeft / Math.max(1, track.clientWidth)); if (k !== i && k >= 0 && k < SL.length) { i = k; SND.play('tick'); paint(); } }); }, { passive: true });
     const close = () => { n.remove(); document.removeEventListener('keydown', key); };
-    const go = d => { const j = Math.max(0, Math.min(SL.length - 1, i + d)); if (j === i) { if (d > 0) close(); return; } i = j; SND.play('tick'); draw(d); };
-    const key = e => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); };
+    const key = e => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') goTo(i + 1); else if (e.key === 'ArrowLeft') goTo(i - 1); };
     document.addEventListener('keydown', key);
     n.addEventListener('click', e => {
-      const b = e.target.closest('[data-a],[data-k]'); if (!b) { if (e.target === n) close(); return; } SND.init();
-      if (b.dataset.k != null) { const k = +b.dataset.k; const d = k - i; i = k; SND.play('tick'); draw(d); return; }
-      const a = b.dataset.a; if (a === 'x') close(); else if (a === 'prev') go(-1); else if (a === 'next') go(1); else if (a === 'full') { close(); U.rulesFull(); }
+      const b = e.target.closest('[data-a],[data-k]'); if (!b || b.closest('.gslide')) { if (e.target === n) close(); return; } SND.init();
+      if (b.dataset.k != null) return goTo(+b.dataset.k);
+      const a = b.dataset.a; if (a === 'x') close(); else if (a === 'prev') goTo(i - 1); else if (a === 'next') { if (i === SL.length - 1) close(); else goTo(i + 1); } else if (a === 'full') { close(); U.rulesFull(); }
     });
-    n.addEventListener('pointerdown', e => { sx = e.clientX; });
-    n.addEventListener('pointerup', e => { if (sx == null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1); });
-    U.layer().appendChild(n); draw(0);
+    // arrastar com o mouse (no toque o próprio scroll acompanha o dedo)
+    let dr = null;
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || e.button !== 0) return; dr = { x: e.clientX, l: track.scrollLeft, moved: false }; });
+    window.addEventListener('pointermove', mv);
+    window.addEventListener('pointerup', up);
+    function mv(e) { if (!dr) return; const dx = e.clientX - dr.x; if (!dr.moved && Math.abs(dx) > 5) { dr.moved = true; track.classList.add('drag'); } if (dr.moved) track.scrollLeft = dr.l - dx; }
+    function up(e) { if (!dr) return; const d = dr; dr = null; track.classList.remove('drag'); if (d.moved) { const dx = e.clientX - d.x; const k = Math.abs(dx) > 50 ? i + (dx < 0 ? 1 : -1) : Math.round(track.scrollLeft / track.clientWidth); goTo(k); } }
+    new MutationObserver(() => { if (!n.isConnected) { window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); } }).observe(U.layer(), { childList: true });
+    U.layer().appendChild(n); paint(); track.focus({ preventScroll: true });
   };
 })();

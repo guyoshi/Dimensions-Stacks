@@ -42,7 +42,7 @@ def step(pg, name, log):
 try:
   with sync_playwright() as p:
     b = p.chromium.launch(args=['--autoplay-policy=no-user-gesture-required'])
-    ctx = b.new_context(viewport={'width': 1100, 'height': 760})
+    ctx = b.new_context(viewport={'width': int(os.environ.get('W', 1100)), 'height': int(os.environ.get('H', 760))})
     init = "localStorage.setItem('dsstacks.opts', JSON.stringify({speed:'rapido',musicOn:false,help:false}));(()=>{const st=window.setTimeout;window.setTimeout=(f,d,...a)=>st(f,(d||0)/%s,...a);})();" % fast
     pages = []
     for i in range(nguest + 1):
@@ -52,6 +52,7 @@ try:
         pg.goto('http://localhost:8766/_page.html'); pg.wait_for_timeout(900)
         if os.environ.get('ABIL'): pg.evaluate("a => DS_DATA.CARTAS.forEach(c => { c.especial = a; })", os.environ['ABIL'])
         pages.append(pg)
+        if os.environ.get('TLS'): pg.evaluate("s => { const o = JSON.parse(s); for (const k in o) DSUI.TL[k] = o[k]; }", os.environ['TLS'])
     host = pages[0]
     host.click('[data-go=online]'); host.evaluate('window.__dsSf = 1'); host.click('[data-a=create]')
     host.wait_for_selector('.roomcode', timeout=8000); code = host.inner_text('.roomcode').strip(); print('codigo', code)
@@ -65,7 +66,7 @@ try:
     host.wait_for_timeout(300)
     host.click('[data-a=start]')
     t0 = time.time(); log = []; done = set(); maxs = float(os.environ.get('MAXS', '300')); shot = False
-    texts = {}; dropped = False; drop = os.environ.get('DROP')
+    texts = {}; seen_tmr = set(); dropped = False; drop = os.environ.get('DROP')
     while time.time() - t0 < maxs and len(done) < len(pages):
         if drop and not dropped and time.time() - t0 > 12:
             dropped = True; k = 1 if drop == 'guest' else 0; pages[k].close(); done.add(k); print('fechou', drop)
@@ -76,6 +77,17 @@ try:
             except Exception: pass
         for i, pg in enumerate(pages):
             if i in done: continue
+            if str(i) in os.environ.get('IDLE', '').split(','):
+                try:
+                    if pg.evaluate("()=>!!document.querySelector('.final')"): done.add(i)
+                    if pg.query_selector('.tmr:not(.passive)'): seen_tmr.add('own' + str(i))
+                    if pg.query_selector('.tmr.passive'): seen_tmr.add('passive' + str(i))
+                except Exception: pass
+                continue
+            try:
+                if pg.query_selector('.tmr:not(.passive)'): seen_tmr.add('own' + str(i))
+                if pg.query_selector('.tmr.passive'): seen_tmr.add('passive' + str(i))
+            except Exception: pass
             r, st = step(pg, 'H' if i == 0 else f'G{i}', log)
             if r == 'final': done.add(i); texts[i] = st['finalText']
             if not shot and time.time() - t0 > 8: shot = True; [q.screenshot(path=f'{out}/online_game_{j}.png') for j, q in enumerate(pages)]
@@ -83,6 +95,9 @@ try:
     for i, pg in enumerate(pages):
         try: pg.screenshot(path=f'{out}/online_final_{i}.png')
         except Exception: pass
+    print('cronometros vistos:', sorted(seen_tmr))
+    try: print('jogadas automaticas no log do anfitriao:', host.evaluate("()=>DSUI.dbg().V.logs.filter(l=>/autom|demorou/.test(l.text)).length"))
+    except Exception as e: print('log?', e)
     print('terminou', len(done), '/', len(pages), 'tempo', round(time.time() - t0, 1)); print('finais', texts)
     
     b.close()

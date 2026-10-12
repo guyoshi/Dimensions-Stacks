@@ -245,7 +245,11 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
 .slots code { color: var(--gold2); }
 
 /* ---------- CARTA ---------- */
-.card { --cw: 100px; width: var(--cw); height: calc(var(--cw) * 1.4); font-size: calc(var(--cw) / 20); perspective: 900px; position: relative; flex: none; user-select: none; }
+/* A carta é desenhada num tamanho fixo (200 × 280 px, fonte 10px) e ampliada/reduzida por transform.
+   Assim o texto sempre acompanha a carta: navegadores não deixam a fonte ficar menor que ~6px, o que fazia o texto das cartas pequenas parecer grande demais. */
+.card { --cw: 100px; --k: tan(atan2(var(--cw), 200px)); width: var(--cw); height: calc(var(--cw) * 1.4); font-size: 10px; position: relative; flex: none; user-select: none; }
+.card .zm { position: absolute; left: 0; top: 0; width: 200px; height: 280px; transform-origin: 0 0; transform: scale(var(--k)); perspective: 900px; }
+@supports not (width: calc(tan(atan2(1px, 1px)) * 1px)) { .card { font-size: calc(var(--cw) / 20); } .card .zm { width: 100%; height: 100%; transform: none; } }
 .card .flip { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.3,.1,.2,1); }
 .card.up .flip { transform: rotateY(180deg); }
 .card.noanim .flip { transition: none; }
@@ -512,7 +516,7 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .favbtn { align-self: flex-start; }
 .favbtn svg { width: 16px; height: 16px; }
 .favbtn.on { color: #ffd25f; border-color: #ffd25f88; }
-.card.isfav::before { content: "★"; position: absolute; right: -.2em; top: -.5em; z-index: 6; font-size: 1.5em; color: #ffd25f; text-shadow: 0 0 .6em #ffb02e, 0 0 2px #000; pointer-events: none; }
+.card.isfav::before { content: "★"; position: absolute; right: -2px; top: -5px; z-index: 6; font-size: max(10px, calc(var(--cw) * .075)); color: #ffd25f; text-shadow: 0 0 .6em #ffb02e, 0 0 2px #000; pointer-events: none; }
 
 /* cartas: série de cor + borda metálica (Spacetheft é preta) e selo próprio de A União */
 .card .face.front { box-shadow: inset 0 0 0 .1em #ffffff33; }
@@ -651,3 +655,28 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .gc .leg .n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 12px; background: var(--metal); color: #1a1810; }
 .gc .leg .cico { display: inline-flex; padding: 2px; margin-left: 3px; vertical-align: middle; } .gc .leg .cico svg { width: 14px; height: 14px; }
 @media (max-width: 380px) { .gc .anat { grid-template-columns: 1fr; justify-items: center; } }
+
+/* guia: carrossel (arrasta com o dedo; botões só no PC) */
+.gtrack { display: flex; flex: 1; min-height: 330px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; outline: none; -webkit-overflow-scrolling: touch; }
+.gtrack::-webkit-scrollbar { display: none; }
+.gtrack.drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+.gslide { flex: 0 0 100%; min-width: 0; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; padding: 6px 18px; overflow-y: auto; }
+@media (pointer: coarse) { .gbox footer [data-a=prev] { display: none; } .gbox:not(.last) footer [data-a=next] { display: none; } .gbox footer { justify-content: center; } .gbox.last footer .ghost { order: 0; width: auto; } }
+
+/* feedback ao apertar: afunda e acende enquanto pressiona, depois "estala" */
+button, .playbig, .daily, [data-act], [data-go], [data-tab], [data-top] { -webkit-tap-highlight-color: transparent; }
+.pressing:not(.ibtn) { transform: scale(.94) !important; filter: brightness(1.3); transition: transform .08s, filter .08s; }
+.btn.pressing, .playbig.pressing { box-shadow: 0 0 0 2px var(--metal2) inset, 0 0 18px #f1ecdc55 !important; }
+.pop { animation: btnPop .34s cubic-bezier(.2, 1.4, .4, 1); }
+@keyframes btnPop { 0% { transform: scale(.94); } 55% { transform: scale(1.06); } 100% { transform: scale(1); } }
+.reduce .pop { animation: none; }
+.reduce .pressing { transform: none !important; }
+
+/* tempo limite online */
+.tmr { position: absolute; z-index: 60; left: 12px; top: calc(60px + env(safe-area-inset-top, 0px)); display: grid; grid-template-columns: auto auto; align-items: center; gap: 2px 8px; padding: 6px 12px 7px; border-radius: 14px; background: #0c0d11ee; border: 1px solid var(--line); color: var(--ink); pointer-events: none; min-width: 118px; }
+.tmr .tl { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.tmr b { font-family: var(--f-disp); font-size: 18px; text-align: right; font-variant-numeric: tabular-nums; color: var(--metal2); }
+.tmr i { grid-column: 1 / -1; height: 4px; border-radius: 3px; background: #ffffff1c; overflow: hidden; }
+.tmr u { display: block; height: 100%; background: var(--metal); transform-origin: left; transition: transform .25s linear; }
+.tmr.passive { opacity: .85; } .tmr.passive u { background: var(--ink2); }
+.tmr.low b { color: #ff7a6b; } .tmr.low u { background: #ff7a6b; }

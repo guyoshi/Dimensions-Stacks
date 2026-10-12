@@ -68,14 +68,14 @@
     const art = IMG[id] ? `<div class="art"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
-      <div class="flip"><div class="face back"><i class="seal"></i></div>
+      <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
       <div class="face front"><div class="in">${art}<div class="shade"></div>
         <div class="mark"><span class="ser">${esc(s.titulo || s.marca)}</span></div>
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
         <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
         ${c.provisorio ? '<div class="teste">PRÉVIA</div>' : ''}
-      </div></div></div>`);
+      </div></div></div></div>`);
     node.dataset.serie = c.serie; node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
@@ -110,14 +110,14 @@
     const w = Math.min(280, window.innerWidth - 60);
     const stage = el('<div class="zoomstage"></div>');
     function build(cid) {
-      const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial];
+      const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial], cs = (opts.stats && opts.stats[cid]) || c.stats;
       const wrap = el(`<div class="zoomwrap"></div>`);
-      wrap.append(cardEl(cid, { up: true, noanim: true, cw: w }));
+      wrap.append(cardEl(cid, { up: true, noanim: true, cw: w, stats: cs }));
       const max = 100;
       wrap.append(el(`<div class="meta">
         <h2>${esc(c.nome)}</h2>
         <div class="row"><span class="pill" style="background:${s.cor};color:${s.texto}">${esc(s.nome)}</span><span class="pill">${c.perfil ? 'Perfil: ' + esc(c.perfil) : RARIDADES[c.raridade].nome}</span>${c.uniao ? '<span class="pill">A União</span>' : ''}${c.provisorio ? '<span class="pill" style="background:#ff5a7a">proposta · não aprovada</span>' : ''}${IMG[cid] ? '' : '<span class="pill">sem foto</span>'}</div>
-        <div class="stbars">${AIDS.map(a => `<div class="stbar" data-a="${a}">${ICON[a]}<i><s style="width:${Math.min(100, c.stats[a] / max * 100)}%"></s></i><b>${c.stats[a]}</b></div>`).join('')}</div>
+        <div class="stbars">${AIDS.map(a => `<div class="stbar" data-a="${a}">${ICON[a]}<i><s style="width:${Math.min(100, cs[a] / max * 100)}%"></s></i><b>${cs[a]}${cs[a] !== c.stats[a] ? ` <small class="hint">(base ${c.stats[a]})</small>` : ''}</b></div>`).join('')}</div>
         <div><b>✦ ${esc(sp ? sp.nome : '—')}</b><br><span class="hint">${esc(sp ? sp.texto : '')}</span>${sp && sp.stub ? '<br><span class="hint">⚠ Efeito ainda não implementado neste protótipo.</span>' : ''}</div>
         ${c.descricao ? `<p>${esc(c.descricao)}</p>` : ''}
         ${c.nota ? `<div class="hint">Nota do elenco: ${esc(c.nota)}</div>` : ''}</div>`));
@@ -314,6 +314,15 @@
     draw(); SND.play('click'); U.modal(wrap);
   }
 
+  // ---- lista de sons
+  function soundList() {
+    const n = el(`<div><h2 style="color:var(--gold2);margin-bottom:6px">Lista de sons</h2>
+      <div class="slots">${Object.entries(SND.SLOTS).filter(([k]) => k !== 'menu').map(([k, t]) => `<div><button class="btn sm" data-snd="${k}" style="min-height:28px;padding:.2em .6em" aria-label="Ouvir ${esc(t)}">▶</button><span>${esc(t)}</span></div>`).join('')}</div>
+      <div class="row" style="margin-top:14px"><button class="btn ghost sm" data-back>← Opções</button></div></div>`);
+    n.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; SND.init(); if (b.dataset.snd) return SND.play(b.dataset.snd); if (b.hasAttribute('data-back')) { const x = n.closest('.modal'); const cl = x && $('.x', x); if (cl) cl.click(); options(); } });
+    SND.play('click'); U.modal(n);
+  }
+
   // ---- opções
   function options() {
     const n = el(`<div><h2 style="color:var(--gold2);margin-bottom:6px">Opções</h2>
@@ -326,12 +335,11 @@
       <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
       <div class="optrow"><span>Faixa "PRÉVIA"</span><div class="seg" data-o="showTest"><button data-v="1" class="${S.showTest ? 'on' : ''}">Mostrar</button><button data-v="0" class="${!S.showTest ? 'on' : ''}">Ocultar</button></div></div>
       <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div>
-      <div class="lbl">Sons (sintetizados — substituíveis pelos seus arquivos)</div>
-      <div class="slots">${Object.entries(SND.SLOTS).filter(([k]) => k !== 'menu').map(([k, t]) => `<div><button class="btn sm" data-snd="${k}" style="min-height:28px;padding:.2em .6em">▶</button><span><code>${k}</code> ${esc(t)}</span></div>`).join('')}</div>
-      <p class="hint">Para usar sons seus, envie os arquivos pedindo "embutir sons": cada um entra no slot de mesmo nome e substitui o sintetizado.</p></div>`);
+      <div class="optrow"><span>Sons do jogo</span><button class="btn sm" data-sounds>Ver sons</button></div></div>`);
     n.addEventListener('input', e => { const o = e.target.dataset.o; if (!o) return; S[o] = +e.target.value; applyOpts(); });
     n.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return; SND.init();
+      if (b.hasAttribute('data-sounds')) { const x = n.closest('.modal'); const cl = x && $('.x', x); if (cl) cl.click(); return soundList(); }
       if (b.dataset.snd) return SND.play(b.dataset.snd);
       if (b.hasAttribute('data-tipsreset')) { U.tipsReset && U.tipsReset(); b.textContent = 'Pronto ✓'; return; }
       const seg = b.closest('.seg'); if (!seg) return; const o = seg.dataset.o, v = b.dataset.v;
@@ -343,6 +351,10 @@
 
   U.boot = function () {
     screens(); U.tabsInit(); applyOpts(); U.show('menu');
+    const PRESS = 'button,[data-act],[data-go],[data-tab],[data-top],.playbig,.daily';
+    const prs = e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled || b.matches('input')) return; b.classList.add('pressing'); const rel = () => { b.classList.remove('pressing'); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.removeEventListener(t, rel)); }; ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.addEventListener(t, rel)); };
+    window.addEventListener('pointerdown', prs, true);
+    window.addEventListener('click', e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled) return; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); setTimeout(() => b.classList.remove('pop'), 340); try { if (!S.reduce && navigator.vibrate) navigator.vibrate(8); } catch (er) { } }, true);
     const unlock = () => { SND.init(); window.removeEventListener('pointerdown', unlock); };
     window.addEventListener('pointerdown', unlock);
   };

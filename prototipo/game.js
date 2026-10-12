@@ -93,6 +93,31 @@
       });
     });
   }
+  // ---- tempo limite das decisões (só online)
+  const TL = { orderHand: 75, prepare: 20, attr: 25, special: 20, pickCards: 40, pickAttr: 20, chooseTarget: 20 };
+  const tlOf = k => TL[k] || 25; U.TL = TL;
+  const TM = { el: null, iv: null };
+  function tmrStop() { clearInterval(TM.iv); TM.iv = null; if (TM.el) { TM.el.remove(); TM.el = null; } }
+  function tmrStart(sec, o) {
+    tmrStop(); o = o || {}; const host = $('#game'); if (!host) return;
+    const n = el(`<div class="tmr${o.label ? ' passive' : ''}"><span class="tl"></span><b></b><i><u></u></i></div>`); host.append(n); TM.el = n;
+    const end = Date.now() + sec * 1000; let last = -1; $('.tl', n).textContent = o.label || 'Seu tempo';
+    const upd = () => {
+      const left = Math.max(0, end - Date.now()), s = Math.ceil(left / 1000); $('b', n).textContent = s + 's'; $('u', n).style.transform = `scaleX(${left / (sec * 1000)})`; n.classList.toggle('low', s <= 8);
+      if (!o.label && s <= 5 && s > 0 && s !== last) SND.play('tick'); last = s;
+      if (left <= 0) { const cb = o.onEnd; tmrStop(); if (cb) cb(); }
+    };
+    upd(); TM.iv = setInterval(upd, 250);
+  }
+  function cancelPrompt() { const d = $('#dock'); if (d) { d.hidden = true; d.replaceChildren(); } $$('.order, .cover, .coach.modal').forEach(x => x.remove()); }
+  // roda uma decisão humana com contagem regressiva; no fim do tempo fecha a caixa e devolve o resultado automático
+  function timed(tl, run, fb) {
+    return new Promise((res, rej) => {
+      let done = false;
+      tmrStart(tl, { onEnd: () => { if (done) return; done = true; cancelPrompt(); caption('Tempo esgotado: jogada automática.', true); let v; try { v = fb ? fb() : undefined; } catch (e) { console.error(e); } res(v); } });
+      run().then(v => { if (done) return; done = true; tmrStop(); res(v); }, e => { if (done) return; done = true; tmrStop(); rej(e); });
+    });
+  }
   function waitClose(content, o) {
     return new Promise((res, rej) => { const run = U.run; run.rej.add(rej); U.modal(content, Object.assign({}, o, { onclose: () => { run.rej.delete(rej); res(); } })); });
   }
@@ -365,7 +390,7 @@
       pulseBH(); await sleep(150);
     },
     async resolved({ combat, result, moves }) {
-      updateAll();
+      updateAll(); let tipId = null;
       if (result.type === 'tie' || result.type === 'none') {
         banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700);
       } else {
@@ -376,12 +401,13 @@
         const r = slot.getBoundingClientRect(); const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
         FX.burst(cx, cy, { n: 80, speed: 9, life: 70, up: 2 });
         setTimeout(() => FX.burst(cx, cy, { n: 40, speed: 5, life: 60, colors: atk ? ['#ff7a45', '#fff', '#e9dfc0'] : ['#8fd6ff', '#fff', '#4aa8ff'] }), 300);
-        if (U.tip) { const t = ['reveal', atk ? 'capture' : 'bh'].find(x => !U.tipSeen(x)); if (t) U.tip(t); }
+        tipId = U.tip ? ['reveal', atk ? 'capture' : 'bh'].find(x => !U.tipSeen(x)) : null;
         const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Ataque + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
         banner(`${nameOf(w)} vence!`, tb ? tbTxt : `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 3600 : 2100);
         caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
         await sleep(tb ? 3400 : 2100);
       }
+      if (tipId && !V.online) await U.tip(tipId); // offline: congela a mesa e explica antes das cartas se moverem
       // movimentação das cartas
       const jobs = moves.map((m, i) => sleep(i * 220).then(async () => {
         const src = V.slots[m.from], card = $('.card', src); if (!card) return;
@@ -391,21 +417,22 @@
         else { if (m.from !== m.to) SND.play('capture'); await fly(src, dest, { id: m.cards[0], stats: e && e.stats, cw: V.cw, ms: 800, arc: 30 }); }
       }));
       await Promise.all(jobs); refresh(); await sleep(250);
+      if (tipId && V.online) U.tip(tipId); // online: só depois das animações, sem travar a mesa
     },
     async combatEnd() {
       Object.values(V.slots).forEach(s => { s.replaceChildren(); s.className = s.className.replace(/\b(has|pending|winner|loser|withdrawn|tremble|charging|cancelx)\b/g, '').replace(/\s+/g, ' ').trim(); });
       V.combat = null; refresh(); await sleep(250);
     },
     async refill({ pid, cards }) {
-      if (U.tip && pid === V.viewer) U.tip('refill');
       SND.play('refill'); caption(`${nameOf(pid)} compra ${cards.length} carta(s) da reserva.`);
       for (let i = 0; i < cards.length; i++) { fly(seatRes(pid), seatDeck(pid), { ms: 450, cw: 50 }); await sleep(70); }
       await sleep(450); refresh();
+      if (U.tip && pid === V.viewer) { if (V.online) U.tip('refill'); else await U.tip('refill'); }
     },
     async eliminated({ pid }) {
       refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700);
     },
-    async round({ round }) { if (U.tip && round === 2) U.tip('round2'); refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Ataques especiais liberados' : null, null, 1500); await sleep(1000); },
+    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Ataques especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
       refresh(); const s = G.s; const human = winner != null && (V.online ? winner === V.viewer : !G.p(winner).bot); const anyHuman = V.humans > 0;
       SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
@@ -436,7 +463,7 @@
   // ---------------------------------------------------------------- decisões humanas
   function makeIO() {
     return {
-      notify: async (type, data) => { if (U.rec) { try { const r = U.rec.ev(type, data, G); if (r) U.lastRec = r; } catch (e) { console.error('rec', e); } } const f = H[type]; if (f) { try { await f(data || {}); } catch (e) { if (e === 'abort') throw e; console.error('UI', type, e); } } },
+      notify: async (type, data) => { if (TM.el && TM.el.classList.contains('passive')) tmrStop(); if (U.rec) { try { const r = U.rec.ev(type, data, G); if (r) U.lastRec = r; } catch (e) { console.error('rec', e); } } const f = H[type]; if (f) { try { await f(data || {}); } catch (e) { if (e === 'abort') throw e; console.error('UI', type, e); } } },
       log: (text, cls) => { V.logs.push({ text, cls }); if (cls !== 'prep') caption(text, cls === 'vit'); const d = $('.logdrawer .lg'); if (d) d.append(el(`<p class="${cls}">${esc(text)}</p>`)); },
       orderHand: (p, hand) => orderHand(p, hand),
       async prepare(p, top) {
@@ -621,23 +648,24 @@
       const state = () => ({ players: G.s.players.map(p => ({ pid: p.pid, name: p.name, bot: p.bot, avatar: p.avatar, alive: p.alive, deck: p.deck.slice(), reserve: p.reserve.slice(), prepared: p.prepared.slice() })),
         bh: G.s.bh.map(x => x.kind === 'normal' ? x.id : x.id + ':' + x.kind), round: G.s.round, combats: G.s.combats, initiator: G.s.initiator, over: G.s.over, winner: G.s.winner, byLimit: G.s.byLimit });
       let logq = [], flushing = false;
-      const TIMEOUT = 150000; let askSeq = 0;
+      let askSeq = 0;
+      const fbOf = (kind, p, a) => kind === 'orderHand' ? G.botOrderHand(a[0]) : (G['bot_' + kind] ? G['bot_' + kind](p, ...a) : undefined);
       const remoteAsk = (p, kind, args, fb) => {
         const peer = seats[p.pid].peer; if (!peer || closed) return fb();
-        const id = ++askSeq; send({ n: ++seq, t: 'waiting', pid: p.pid }); caption(`Aguardando ${p.name}…`);
+        const id = ++askSeq, tl = tlOf(kind); send({ n: ++seq, t: 'waiting', pid: p.pid, tl }); caption(`Aguardando ${p.name}…`); tmrStart(tl + 2, { label: p.name });
         return new Promise(res => {
           let done = false, iv, to;
-          const finish = v => { if (done) return; done = true; clearInterval(iv); clearTimeout(to); pending.delete(id); res(v); };
+          const finish = v => { if (done) return; done = true; clearInterval(iv); clearTimeout(to); pending.delete(id); tmrStop(); res(v); };
           pending.set(id, { peer, pid: p.pid, finish: v => finish(v === undefined ? fb() : v) });
-          const msg = { id, pid: p.pid, kind, args }; const go = () => link.send('ask', msg, peer).catch(() => { });
-          go(); iv = setInterval(go, 7000); to = setTimeout(() => { G.log(`${p.name} demorou demais: jogada automática.`, 'efeito'); finish(fb()); }, TIMEOUT);
+          const msg = { id, pid: p.pid, kind, args, tl }; const go = () => link.send('ask', msg, peer).catch(() => { });
+          go(); iv = setInterval(go, 7000); to = setTimeout(() => { G.log(`${p.name} demorou demais: jogada automática.`, 'efeito'); finish(fb()); }, (tl + 6) * 1000);
         });
       };
       off.push(link.on('ans', (d, m) => { const q = pending.get(d.id); if (q && q.peer === m.peer) q.finish(d.v == null ? undefined : d.v); }));
       const wrap = (kind, mk) => async (p, ...a) => {
         const peer = seats[p.pid].peer;
-        if (!peer || peer === link.me) { send({ n: ++seq, t: 'waiting', pid: p.pid }); return local[kind](p, ...a); }
-        return remoteAsk(p, kind, mk(...a), () => (G['bot_' + kind] ? G['bot_' + kind](p, ...a) : undefined));
+        if (!peer || peer === link.me) { send({ n: ++seq, t: 'waiting', pid: p.pid, tl: tlOf(kind) }); return timed(tlOf(kind), () => local[kind](p, ...a), () => fbOf(kind, p, a)); }
+        return remoteAsk(p, kind, mk(...a), () => fbOf(kind, p, a));
       };
       const io = {
         notify: async (type, data) => {
@@ -681,7 +709,7 @@
       enqueue(async () => {
         if (m.st) applyState(m.st); if (m.cb !== undefined) V.combat = m.cb;
         if (m.t === 'log') { m.lg.forEach(([t, c]) => local.log(t, c)); return; }
-        if (m.t === 'waiting') { const p = G.p(m.pid); if (p) caption(m.pid === V.viewer ? 'Sua vez de decidir.' : `Aguardando ${p.name}…`); return; }
+        if (m.t === 'waiting') { const p = G.p(m.pid); if (p) { caption(m.pid === V.viewer ? 'Sua vez de decidir.' : `Aguardando ${p.name}…`); if (m.pid !== V.viewer && m.tl) tmrStart(m.tl + 2, { label: p.name }); } return; }
         await local.notify(m.t, m.d || {});
       });
     }));
@@ -690,13 +718,26 @@
       if (answered.has(m.id)) { link.send('ans', { id: m.id, v: answered.get(m.id) }).catch(() => { }); return; }
       if (inflight.has(m.id)) return; inflight.add(m.id);
       enqueue(async () => {
-        let v; try { v = await local[m.kind](G.p(m.pid), ...m.args); } catch (e) { if (e === 'abort') return; console.error(e); }
+        let v; try { v = await timed(m.tl || tlOf(m.kind), () => local[m.kind](G.p(m.pid), ...m.args), null); } catch (e) { if (e === 'abort') return; console.error(e); }
         const out = v === undefined ? null : v; answered.set(m.id, out); inflight.delete(m.id);
         link.send('ans', { id: m.id, v: out }).catch(() => { });
       });
     }));
     off.push(link.onPeers(() => { if (!closed && !link.peers().some(p => p.peer === ctl.hostPeer) && !G.s.over) leaveNow('O anfitrião saiu da partida.'); }));
   };
+
+  // toque numa carta da mesa: abre a carta grande (a minha, ou as viradas dos outros), com os valores já alterados por efeitos
+  document.addEventListener('click', e => {
+    const gm = $('#game'); if (!V || !gm || gm.hidden || !G) return;
+    const card = e.target.closest && e.target.closest('#game .slot .card, #game .seat .prepslot .card, #game .flyghost'); if (!card || card.classList.contains('flyghost') || card.closest('.modal, .order')) return;
+    const slot = card.closest('.slot'), seat = card.closest('.seat'); let pid = -1;
+    if (slot) pid = +Object.keys(V.slots).find(k => V.slots[k] === slot); else if (seat) pid = +Object.keys(V.seats).find(k => V.seats[k] === seat);
+    if (!(card.classList.contains('up') || pid === V.viewer)) return; // cartas viradas para baixo dos outros continuam secretas
+    const id = card.dataset.id; if (!id || !CARDS[id]) return;
+    const ents = (V.combat && V.combat.entries || []).filter(x => x.card && (V.slots[x.pid] && $('.card', V.slots[x.pid]) && ($('.card', V.slots[x.pid]).classList.contains('up') || x.pid === V.viewer)));
+    const list = ents.map(x => x.card), stats = {}; ents.forEach(x => { if (x.stats) stats[x.card] = x.stats; });
+    e.stopPropagation(); SND.init(); U.zoom(id, { list: list.length > 1 && list.includes(id) ? list : null, stats });
+  });
 
   U.dbg = () => ({ G, V });
 })();
