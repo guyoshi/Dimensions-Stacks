@@ -39,9 +39,9 @@
 
 ## Identificações adicionais
 
-Capitã Nastácia: número e ataque desconhecidos. Outra carta verde no inventário fotográfico: identidade e número desconhecidos.
+Capitã Nastácia é a carta 39 (identidade confirmada pelo autor), mas o ataque ainda está ilegível. Outra carta verde no inventário: identidade e número desconhecidos.
 
-Dos números **01–62**, identificados **55**. Faltam **03, 05, 08, 16, 26, 39, 55**. #25 Zark Carmel e #28 Naek foram novas identificações nesta lista.
+Dos números **01–62**, identificados **59**. Faltam **16, 26 e 55**. O autor confirmou: 03 Édelin, 05 Brenda, 08 Breno e 39 Capitã Nastácia. #25 Zark Carmel e #28 Naek foram novas identificações nesta lista.
 
 **Importante:** Beatriz #10 tem seu ataque conhecido das fotos anteriores: antes do combate, troca sua carta combatente com a do adversário à direita. O texto de IA atual não acrescenta informação.
 
