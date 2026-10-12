@@ -1,6 +1,6 @@
-# Dimensions Stacks — Prioridade e reações defensivas (proposta v0.2)
+# Dimensions Stacks — Modelo aprovado de prioridade e reações defensivas (v1.0)
 
-> **STATUS: PROPOSTA, AGUARDA APROVAÇÃO DO AUTOR.** O jogador pediu explicitamente que **habilidades defensivas possam ser usadas como reação a ataques a qualquer momento em que ainda seja possível impedi-los**. O mecanismo exato abaixo resolve essa necessidade, sem tratar como aprovado tudo que ainda está em discussão.
+> **APROVADO COMO MODELO-BASE PELO AUTOR em 12/10/2026.** Prioridade circular, respostas defensivas antes de resolver um efeito, pilha de resolução inversa, consumo de especial mesmo anulada e **AE-130** fazem parte da versão de design aprovada. **Casos ainda não definidos estão na seção 7** e não devem ser improvisados.
 
 ## 1. Confirmado pelo autor; não alterar
 
@@ -13,21 +13,21 @@
 7. O autor aprovou renomear **Poder** para **Ataque (ATQ)**. Os pares ficam **ATQ/DEF** e **INT/VEL**.
 8. Conflito entre duas imposições de atributos diferentes: comparar nas cartas de quem impôs o valor do atributo que cada uma impõe; vence o maior. Desempate geral: valor usado → soma de quatro atributos → ATQ+INT; empate absoluto ainda aberto.
 
-## 2. Nome das habilidades: recomendação editorial, NÃO aprovado
+## 2. Nome das habilidades: APROVADO
 
 Como também existem cartas de proteção, reação e manipulação, **“Ataque Especial” não abrange bem todos os usos**.
 
-**Recomendação:** rótulo geral na interface **Habilidade Especial** ou simplesmente **Especial**, abreviado **ESP**. Cada uma teria categoria **Ataque / Defesa / Controle / Recuperação / Coringa**, usada apenas para interface e janela de reação, sem gerar bônus novo. Em páginas históricas, preservar a expressão “Ataque Especial”, que é o nome do jogo de infância.
+**Regra editorial aprovada:** rótulo geral na interface **Habilidade Especial** ou simplesmente **Especial**, abreviado **ESP**. Cada uma teria categoria **Ataque / Defesa / Controle / Recuperação / Coringa**, usada apenas para interface e janela de reação, sem gerar bônus novo. Em páginas históricas, preservar a expressão “Ataque Especial”, que é o nome do jogo de infância.
 
 ## 3. O problema da fila única
 
 Uma fila de efeitos ativados que se resolve sem permitir interromper a resolução **inviabiliza uma defesa reativa tardia**. Por exemplo, se um ataque tenta roubar uma carta, o defensor precisa de oportunidade de **usar seu escudo antes que o roubo seja consolidado**, mesmo que todos já tenham revelado cartas e iniciado a resolução.
 
-**Proposta recomendada: prioridade circular + janelas de reação defensiva antes de cada efeito perigoso.**
+**Modelo aprovado: prioridade circular + janelas de reação defensiva antes de cada efeito perigoso.**
 
 ### Janela A — Preparação/Pré-combate (se a habilidade exigir)
 
-Habilidades cujo texto exige *antes do combate* podem ter janela específica **antes da revelação ou seleção definitiva dos atributos**, com prioridade na ordem do iniciador em sentido horário. Não inferir que um texto que diz "antes" pode passar a ser jogado depois. **A necessidade exata dessa janela deve ser aprovada.**
+Habilidades cujo texto exige *antes do combate* podem ter janela específica **antes da revelação ou seleção definitiva dos atributos**, com prioridade na ordem do iniciador em sentido horário. Não inferir que um texto que diz "antes" pode passar a ser jogado depois. **A colocação exata dessa janela anterior à revelação ainda é uma pendência técnica real**, porque os ataques históricos com “antes do combate” não podem perder essa condição.
 
 ### Janela B — Após revelação, antes da comparação
 
@@ -51,7 +51,7 @@ Se todas as ameaças e respostas tiverem sido tratadas: resolve-se a comparaçã
 
 ## 4. Habilidade NOVA AE-130: Anular a última habilidade
 
-**Redação candidata para o jogo:**
+**Redação aprovada para o jogo:**
 
 > **REAÇÃO — Anule a última habilidade especial ativada que ainda não tenha sido resolvida. A carta anulada é descartada normalmente. Não desfaz efeitos já concluídos.**
 
@@ -59,7 +59,7 @@ Se todas as ameaças e respostas tiverem sido tratadas: resolve-se a comparaçã
 - **O que não anula:** especial já resolvida ou a própria carta de combate normal. Não pode voltar para buscar um roubo concluído em rodada anterior.
 - **Se houver outra AE-130:** uma segunda anulação pode anular a primeira, desde que a nova ativação seja legal e o jogador tenha autorização para usá-la.
 - **Custo:** ambas as cartas que foram ativadas e depois anuladas acabam no Buraco Negro, seguindo o custo confirmado.
-- **Fonte:** solicitado expressamente pelo autor; o texto específico **ainda é proposta**.
+- **Fonte:** pedido e aprovação expressos pelo autor; a habilidade está **atribuída à carta M02 Agente Sete**.
 
 ### Exemplo prático com três jogadores
 
@@ -85,11 +85,11 @@ A já resolveu um efeito que retirou carta da reserva de B. Quando B tenta reagi
 | AE-103 | Protege sua carta e descarta as **cartas normais de combate** alheias | Não atinge especiais preparadas |
 | AE-130 | Anula a **última habilidade pendente** | Não permite escolher livremente uma habilidade mais antiga da pilha |
 
-Essas descrições são um modelo de interação para discutir, não prioridades aprovadas.
+Essas descrições constituem o **modelo aprovado** de interação; permanecem abertas apenas as exceções de resolução explicitamente registradas na seção 7.
 
 ## 6. Efeitos especiais que exigem exceções de prioridade
 
-**AE-111 uso forçado:** a carta que obriga uso resolve na pilha; quando resolver, coloca na pilha as até duas especiais que o alvo já preparou. **Proposta:** o dono do alvo escolhe a ordem e os alvos legais; cada efeito forçado também oferece oportunidade de resposta defensiva. Quem já gastou uma especial voluntária não ganha outra por isso: essas ativações são **forçadas**.
+**AE-111 uso forçado:** a carta que obriga uso resolve na pilha; quando resolver, coloca na pilha as até duas especiais que o alvo já preparou. **Procedimento-base aceito:** o dono do alvo escolhe a ordem e os alvos legais; cada efeito forçado também oferece oportunidade de resposta defensiva. Quem já gastou uma especial voluntária não ganha outra por isso: essas ativações são **forçadas**.
 
 **AE-112 repetição:** repetir uma vez o efeito de uma especial já resolvida **não ativa uma segunda carta especial preparada**. A repetição só acontece depois de pagar o custo e não pode apontar para outra repetição ou cópia.
 
@@ -105,6 +105,10 @@ Essas descrições são um modelo de interação para discutir, não prioridades
 4. Quanto tempo uma oportunidade de reação dura no jogo digital? Ainda não definir segundos nem relógio.
 5. O que ocorre se o alvo de uma habilidade deixa de existir antes de ela resolver? E se dois efeitos anularem o último simultaneamente?
 
-**Resumo:** o autor aprovou **a necessidade de defesas reativas em qualquer momento útil**; esta especificação de janelas, pilha e resposta é uma solução proposta, não autorização para programar regras indefinidas.
+**Resumo:** a prioridade circular, a pilha de resolução inversa e a defesa reativa enquanto a ameaça ainda está pendente foram **aprovadas**. A implementação deve aguardar decisão apenas dos casos-limite da seção 7, sem alterar livremente as regras-base.
 
 [Voltar ao GDD](REGRAS.md) · [Biblioteca de 129 candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [87 fichas propostas](CARTAS_87_PROPOSTAS.md).
+
+## 8. Ratificação por “Aprove tudo”
+
+**APROVADO** o sistema de reações já descrito: a defesa pode ser utilizada quando a ameaça aparecer e antes de sua resolução, inclusive durante uma cadeia de especiais, obedecendo à autorização de apenas uma especial voluntária por combate. **AE-130** anula a última especial pendente e é uma habilidade atualmente equipada em **M02 Agente Sete**. A janela de preparação pré-revelação, os alvos já inexistentes e a duração do relógio online não têm resposta fechada; seguem sob especificação, conforme [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
