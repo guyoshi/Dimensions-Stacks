@@ -15,4 +15,9 @@ Jogo de cartas digital para PC que reúne personagens do universo literário **D
 - [Inventário fotográfico original, arquivado](docs/INVENTARIO_FOTOGRAFICO_LEGADO.md)
 - [Elenco candidato das séries](docs/ELENCO_CANDIDATO.md)
 
+## Propostas para aprovação (não são regras confirmadas)
+
+- [Matriz de dados das 79 cartas, ainda sem atributos e sem especiais atribuídos](docs/FICHAS_CARTAS_BASE.md)
+- [Prioridade de múltiplos especiais e resolução das reações](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md)
+
 As decisões originais e as propostas de revisão devem permanecer identificadas separadamente. A referência narrativa é o repositório [dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). A documentação está sujeita à aprovação do autor.
