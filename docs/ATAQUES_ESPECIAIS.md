@@ -1,6 +1,6 @@
-# Dimensions Stacks — Ataques especiais e estado do acervo (v0.4)
+# Dimensions Stacks — Ataques especiais e estado do acervo (v0.5)
 
-> **ÍNDICE ATUALIZADO.** Consulte também as [leituras provisórias de IA](LEITURAS_IA_PENDENTES_2026-10-12.md) e as correções do [GDD v0.4](REGRAS.md). A fonte mais confiável para os efeitos das **23 cartas transcritas** diretamente pelo autor é [Transcrições confirmadas](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md). O [inventário fotográfico inicial](INVENTARIO_FOTOGRAFICO_LEGADO.md) está arquivado: contém hipóteses de leitura e balanceamento feitas **antes** dos esclarecimentos do autor. Os documentos de referência não são equivalentes: em divergências, prevalece a transcrição original do autor e suas decisões expressas. Não reutilizar automaticamente os nomes, valores e biografias físicos na versão digital.
+> **ÍNDICE ATUALIZADO.** Consulte também as [leituras provisórias de IA](LEITURAS_IA_PENDENTES_2026-10-12.md) e as correções do [GDD atualizado](REGRAS.md). A fonte mais confiável para os efeitos das **23 cartas transcritas** diretamente pelo autor é [Transcrições confirmadas](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md). O [inventário fotográfico inicial](INVENTARIO_FOTOGRAFICO_LEGADO.md) está arquivado: contém hipóteses de leitura e balanceamento feitas **antes** dos esclarecimentos do autor. Os documentos de referência não são equivalentes: em divergências, prevalece a transcrição original do autor e suas decisões expressas. Não reutilizar automaticamente os nomes, valores e biografias físicos na versão digital.
 
 ## 1. Regras centrais e decisões ratificadas
 
@@ -42,28 +42,38 @@
 
 **Usar [TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md) para reproduzir textos LITERAIS e consultar parecer individual das 23 cartas.** As linhas acima são só resumos.
 
-## 3. Cartas numeradas com leitura nova por IA ainda provisória: 32
+## 3. Numeração reconciliada: 59 de 62
 
-A [nova tabela enviada pelo autor](LEITURAS_IA_PENDENTES_2026-10-12.md) contém **32 números distintos** que não estavam nas 23 transcrições diretas anteriores. Em alguns casos o trecho parece completo, em outros só se lê o rótulo, e noutros não se recuperou nenhuma regra. Como as leituras foram extraídas por IA, **nenhuma é tratada como transcrição direta e definitiva**.
+- **23 cartas numeradas** com texto original diretamente transcrito pelo autor (consultar [transcrições](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md)).
+- **32 cartas numeradas** na tabela de leituras por IA enviada posteriormente; o autor completou alguns trechos, mas a exatidão textual ainda exige verificação (consultar [tabela atualizada](LEITURAS_IA_PENDENTES_2026-10-12.md)).
+- **4 identidades adicionais confirmadas pelo autor**, ainda sem ataque legível: **03 Édelin, 05 Brenda, 08 Breno e 39 Capitã Nastácia**.
+- **Total de números de cartas físicas identificados: 59**. Se o baralho original seguia 01 a 62 sem lacunas, faltam **16, 26 e 55**.
+- A **carta verde sem nome** visível numa fotografia permanece sem identificação. Não relacioná-la automaticamente aos números ausentes.
+- **18 Ricochett Bombargue e 24 Primus Tenesy:** os efeitos originais foram retirados da versão PC pelo autor. Os números seguem no inventário histórico.
+- **12 Pecker:** texto incerto (“deposie sete ...”), exige confirmação antes de criar regra.
+- **10 Beatriz:** a fotografia individual anterior já permitiu recuperar o efeito de troca de cartas de combate; a nova leitura traz só “Antes do combate...”.
 
-**Números dessa lista:** 07, 10, 12, 13, 14, 20, 23, 25, 28, 29, 30, 31, 32, 33, 37, 38, 40, 41, 42, 43, 44, 45, 47, 48, 49, 50, 51, 52, 53, 54, 56 e 62.
+### Trechos ampliados nesta atualização
 
-**Reconciliação exata:** 23 números transcritos diretamente + 32 números com leituras por IA = **55 números identificados, de 01 a 62**. **Faltam números 03, 05, 08, 16, 26, 39 e 55.** #25 Zark Carmel e #28 Naek são identificações novas, sem foto individual reconhecida no inventário inicial.
+| Nº | Carta física | Efeito recuperado / complemento | Validação |
+| --- | --- | --- | --- |
+| 20 | Agente Sete | Troque o status Defesa pela inteligência de sua carta | Texto fornecido pelo autor, origem IA ainda a conferir |
+| 37 | D. Lesort | Force cada um dos jogadores a jogar uma carta aleatória ao Buraco Negro | Texto fornecido pelo autor; quebra em “jogador/es” corrigida apenas para exibição |
+| 47 | Kate Fira | CARTA DEFESA: Impeça qualquer ataque especial neste turno | Texto fornecido pelo autor; leitura antiga indicava “CARTA DUPLA” |
+| 49 | Temi Lokat | CARTA DEFESA: Impeça o rival de te vencer neste turno | Texto fornecido pelo autor; falta definir resolução |
+| 50 | Raum Cedar | CARTA ATAQUE... Obrigue cada jogador a descartar uma carta aleatória ao Buraco Negro | Abertura do texto ainda parcial |
+| 52 | Luar Engeal | CARTA CORINGA: Vença este turno e roube as cartas dos adversários para si | Forte, a testar e especificar prioridade |
+| 62 | Anasin | Utilize um ataque especial mais de uma vez, ma descarte duas cartas a sua escolha ao Buraco Negro | “ma” preservado como na leitura; possivelmente “mas” |
 
-**Referências físicas sem número confirmado:** Cap. Nastácia e uma carta verde junto de Jelled. Não atribuir automaticamente nenhum número faltante a essas cartas. O inventário de 55 referências fotográficas original não equivale exatamente aos 55 números agora identificados porque há duas novas identificações e cartas sem número.
+### Habilidades e identificações pendentes
 
-**#10 Beatriz** já tinha seu efeito principal recuperado de fotografia individual anterior (troca com a carta de combate adversária à direita); a nova leitura traz apenas o início “Antes do combate...”.
+**Ainda sem efeito suficiente para implementação:** 03 Édelin, 05 Brenda, 07 Releuz, 08 Breno, 39 Capitã Nastácia, 44 Monthar Pollar, 45 Merryn, 51 Lissan Tellus e 53 Atrum Morlet, além das cartas desconhecidas **16, 26, 55**. O texto de **12 Pecker** precisa de confirmação.
 
-**Efeitos mais incompletos:** #07 Releuz, #20 Agente Sete, #37 D. Lesort, #44 Monthar Pollar, #45 Merryn, #47 Kate Fira, #49 Temi Lokat, #50 Raum Cedar, #51 Lissan Tellus, #52 Luar Engeal, #53 Atrum Morlet e #62 Anasin. **#12 Pecker** exige conferência especial por texto possivelmente corrompido; #28 Naek também exige esclarecer a quem se refere “suas”.
-
-**Divergência visual a checar:** #47 Kate Fira foi lida anteriormente como “CARTA DUPLA” e agora consta “CARTA DEFESA”. Nenhuma das leituras tem confirmação suficiente.
-
-**Ataques retirados do conjunto de habilidades digitais:** #18 e #24; seus números e textos históricos continuam inventariados.
+**Importante:** números de cartas físicas e códigos do futuro baralho digital são coisas distintas. As cartas antigas servem para **reaproveitar mecânicas**, não para copiar automaticamente elenco, cor, atributo ou história. A carta nova de Édelin continua com código digital **B01**, embora a carta física antiga dela fosse #03.
 
 ## 4. Focos de risco para testes
 
 - **#18 Inversão de resultado:** retirado do jogo, arquivado para rastreabilidade.
-- **#24 Mistura Inteligência/Poder:** desrespeita pares normais de comparação por uma exceção especial, necessitando resolução explícita.
 - **#34 Master Kang:** menciona roubar uma carta de cada jogador, mas duelos só têm um oponente. Definir alternativa ou restrição.
 - **#35 e #46 Reservas:** diferenciar rotação coletiva de troca bilateral e casos de reserva vazia.
 - **#36 Reserva:** seleção e ordenação podem ser fortes, mas implicam custo especial e não devem ser cortadas sem teste.
@@ -75,7 +85,7 @@ A [nova tabela enviada pelo autor](LEITURAS_IA_PENDENTES_2026-10-12.md) contém 
 ## 5. Documentação
 
 - [Textos originais confirmados + avaliação por carta](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md).
-- [Leituras adicionais por IA ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
+- [Leituras adicionais por IA e quatro identidades confirmadas](LEITURAS_IA_PENDENTES_2026-10-12.md).
 - [Regras e dinâmica oficial/proposta](REGRAS.md).
 - [Inventário fotográfico legado, com interpretações superadas](INVENTARIO_FOTOGRAFICO_LEGADO.md).
 - [Revisão histórica anterior à transcrição](REVISAO_ESPECIAIS_2026-10-12.md).
