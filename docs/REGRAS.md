@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.6)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.7)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -86,9 +86,9 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 - Ataques especiais podem expressamente abrir exceções, como recuperar carta do Buraco Negro, retirar da reserva ou afetar cartas de combate.
 - 'Aleatório': seleção sem ver o conteúdo. 'À sua escolha': seleção após ver as opções autorizadas.
 
-**CONTRADIÇÃO NO MANUAL:** uma passagem diz que somente **um especial** pode ser usado durante o combate; outra diz que é possível usar **os dois** no mesmo turno. **PENDENTE de decisão do autor** antes da implementação.
+**MANUAL ANTIGO (HISTÓRICO):** há passagens contraditórias sobre usar um ou dois especiais voluntariamente no mesmo combate. **ESCLARECIMENTO DO AUTOR:** o jogador escolhe qual especial já preparado deseja ativar e em qual rodada. **PENDENTE:** se também poderá ativar voluntariamente ambos na mesma disputa; não inferir uma quantidade máxima de ativações voluntárias por essa frase.
 
-**PENDENTE:** se preparar a carta a retira obrigatoriamente do topo do baralho ativo ou de outra zona; se preparar substitui a participação normal daquela carta no turno; quem decide a ordem de ativação simultânea; limites temporais exatos de reação, escolha de alvo e efeitos que se anulam.
+**PENDENTE:** se preparar a carta a retira obrigatoriamente do topo do baralho ativo ou de outra zona; se preparar substitui a participação normal daquela carta no turno; prioridade entre jogadores que desejam ativar especiais na mesma janela; limites temporais exatos de reação, escolha de alvo e efeitos que se anulam. **A escolha de qual especial preparado ativar e em qual rodada pertence ao seu proprietário**, salvo uso forçado da habilidade #59.
 
 **PROPOSTA de sequência de interface:** preparação pré-combate → escolha de atributos → revelação → janela de especiais → recálculo do combate → resolução de captura/defesa → descarte dos especiais ativados.
 
@@ -233,16 +233,16 @@ Destaques para especificação futura:
 - **#47 Kate Fira —** carta de defesa que impede todos os ataques especiais do turno. **PENDENTE:** prioridade contra especiais já iniciados e relação com #59 que força múltiplas ativações.
 - **#49 Temi Lokat —** carta de defesa que impede o rival de vencer neste turno. **PENDENTE:** se impede derrota do usuário apenas ou impede vitória do alvo, e como funciona em 3–4 jogadores.
 - **#50 Raum Cedar —** obriga cada jogador a descartar uma carta aleatória ao Buraco Negro. **PENDENTE:** fragmento de início perdido depois de “CARTA ATAQUE...”; aparentemente semelhante a #37, verificar se são duplicados ou têm tempos diferentes.
-- **#52 Luar Engeal —** carta coringa que vence automaticamente o turno e captura cartas dos adversários. **PENDENTE:** prioridade contra cartas de defesa, efeitos de cancelamento e conflito com outros coringas.
-- **#62 Anasin —** permite utilizar um ataque especial novamente mediante descarte de duas cartas escolhidas. **PENDENTE:** a transcrição diz “ma descarte” (provável truncamento de “mas”); não definir número máximo de repetições, janela e interação com especiais já descartados antes da aprovação.
+- **#52 Luar Engeal — RETIRADO:** não usar a habilidade física original no novo catálogo. **Outra possibilidade, independente e ainda candidata:** algumas cartas raras podem possuir vitória automática; o custo de gastar o especial antecipadamente por ativação forçada #59 é um contrajogo importante. Não considerar a raridade ou esse contrajogo uma regra que garante equilíbrio sem testes.
+- **#62 Anasin —** repetir uma habilidade pagando duas cartas escolhidas. **DECISÃO DO AUTOR:** impedir ciclos de repetição. **Especificação de segurança proposta:** não repetir o próprio especial 62 nem outro especial de repetição/cópia em cadeia; resolver no máximo uma repetição por ativação; bloquear reativação de efeitos ressuscitados na mesma disputa. Janela e cartas elegíveis ainda requerem definição.
 
 ### Riscos transversais a estudar
 
 1. **Ataques defensivos não são iguais:** #31 anula o turno só para o jogador; #32 impede perda, #47 anula especiais, #48 bloqueia ataques dirigidos ao usuário, #49 impede rival de vencer. São hipóteses de interpretação diferentes e não devem ser fundidas sem teste.
-2. **Efeitos de vitória forçada e proteção total** (#52, #54) precisam de regra explícita de ordem de resolução, sobretudo em partidas com 4 jogadores. Não inventar prioridades permanentes sem o autor.
-3. **Especial repetido** (#62) pode ter custo alto (duas cartas) e ainda assim criar cadeia de ativações; exigir definição clara de limite e se repetição da própria carta seria permitida.
+2. **Efeitos de vitória forçada e proteção total:** o antigo #52 foi retirado. Candidatos raros novos e a proteção/eliminações do #54 precisam de regras de prioridade e reação, sobretudo em partidas com quatro jogadores. **#54 afeta somente as cartas normais colocadas em combate**, não cartas especiais preparadas.
+3. **Especial repetido** (#62) tem custo alto (duas cartas), e o autor determinou **não permitir ciclos infinitos**. Não repetir a própria repetição, não encadear cópias/repetições sem limite nem reativar na mesma disputa cartas retornadas do Buraco Negro.
 4. **Itens identificados vs. elenco definitivo:** #03 Édelin é um número da carta de infância, não substitui o código B01 da carta digital. Nenhuma atribuição de habilidade à personagem do novo elenco está aprovada por mera coincidência de nome físico.
-5. **Uso de múltiplos especiais num combate:** o manual original tinha contradição sobre uso de 1 ou 2 voluntariamente, mas #59 já foi confirmado como obrigando todas as **preparadas**. Resolver a limitação voluntária antes de definir #47 e #62.
+5. **Ativação voluntária:** cada jogador decide qual de seus especiais preparados ativar e em que rodada. Continua pendente se ele pode usar voluntariamente os dois no mesmo combate. A habilidade #59 **obriga ativar todas as preparadas**, até duas, independentemente da preferência do alvo.
 
 
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
@@ -253,4 +253,37 @@ Destaques para especificação futura:
 - Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
 - **Habilidade proposta pelo autor, texto parcial:** “roube a última carta do meio de reserva de cada adversário”; consta como **AE-048**, aguardando confirmação do trecho cortado ao final da mensagem.
 - **Fatores para balanceamento:** custo irreversível do próprio especial, risco para a carta normal, alcance do efeito com 2/3/4 jogadores, zonas afetadas, janela de ativação, direito a contra-ataque e prevenção de cadeias infinitas de recuperação/cópia.
-- **Não começar programando os casos perigosos:** vitória automática, limpeza global de campo, repetição de especiais e uso forçado combinado com anulação precisam de modelo de prioridade/reação, antes de qualquer decisão final.
+- **Não começar programando os casos perigosos:** vitória automática rara proposta, limpeza do campo com escopo definido, repetição com bloqueio de ciclos e uso forçado combinado com anulação precisam de modelo de prioridade/reação, antes de qualquer decisão final.
+
+
+## 19. Decisões consolidadas sobre especiais (12/10/2026, tarde)
+
+| Referência histórica | Estado atualizado | Regra funcional |
+| --- | --- | --- |
+| #12 Pecker | **Texto esclarecido diretamente pelo autor** | Pegue **duas cartas aleatórias do Buraco Negro** e deposite-as **ao fim do seu meio de reserva**. O Buraco Negro é a zona única de descarte. Faltando menos de duas, comportamento ainda a fechar. O usuário não restringiu a cartas normais, portanto não acrescentar esse filtro silenciosamente. |
+| #52 Luar Engeal | **Efeito físico original retirado** | Não atribuir a ninguém a habilidade incondicional original dessa carta. Podem existir **outras** habilidades de vitória automática em poucas cartas **raras**, desde que estudadas separadamente. |
+| #54 Angia Lux | **Escopo de descarte confirmado** | “Cartas em jogo” = **somente as cartas normais de combate** que os jogadores colocaram na disputa. O efeito NÃO manda cartas especiais preparadas ao Buraco Negro; o descarte de especiais ativadas segue suas próprias regras. A frase “impeça qualquer ataque” ainda exige regras de interação com outros especiais. |
+| #62 Anasin | **Repetição permitida sem ciclos** | Repetir efeito de especial pagando o custo, mas proibir autorreferência, repetições de repetições ou sequências ilimitadas. Texto técnico e momento da nova resolução ainda a ratificar. |
+| #34 Master Kang | **Manter a peculiaridade multijogador** | Se o texto requer duas pessoas distintas para roubos, o duelo com um único adversário não oferece dois alvos diferentes. **Não inventar roubo duplo do mesmo rival automaticamente.** A impossibilidade de ativar o efeito integral no duelo deve ser apresentada com clareza ao jogador, até adaptação expressa. |
+| #40 / #43 | **Permitir efeitos sem vantagem em duelos** | Em partida com dois jogadores, o adversário à esquerda e à direita é a **mesma pessoa**. Se um efeito move recursos desse adversário para ele mesmo, a movimentação resulta em nenhuma alteração líquida. **Não trocar automaticamente o efeito por outro**; o jogador decide se deseja gastar a habilidade assim. |
+
+### 19.1 Ativação voluntária versus ativação forçada
+
+**APROVADO:** o jogador decide **qual** ataque especial que já preparou ativar e **em qual rodada** deseja utilizá-lo. Não se cria um cronograma automático nem uma ordem obrigatória entre suas cartas. Uma habilidade de força como #59 pode consumir **todas** as cartas já preparadas por seu alvo, mesmo se o momento for ruim para ele. Isso pode desperdiçar um especial raro que garantiria vitória num confronto mais importante.
+
+**AINDA PENDENTE:** limite de ativações voluntárias na mesma disputa (uma ou duas); prioridade quando dois ou mais jogadores desejam ativar simultaneamente; fase exata de ativação do especial em relação à revelação das cartas. “A qualquer rodada” não equivale a “em qualquer fase do combate”.
+
+### 19.2 Prevenção de ciclos de repetição (direção aprovada; mecanismos técnicos propostos)
+
+1. A mesma habilidade não pode gerar um novo direito de repetição indefinidamente.
+2. Efeito do tipo **repetir/copy** não pode repetir a si próprio nem usar outro **repetir/copy** como alvo para encadear a mesma família.
+3. A repetição adicional gerada por uma única ativação é **finita, uma vez**; custos de cartas devem ser pagos integralmente, antes do resultado.
+4. Uma carta especial que tenha retornado do Buraco Negro durante uma disputa não pode ser reativada **nessa mesma disputa**.
+5. Em todos os casos, a interface mostra quais cartas são alvo válido; se não houver, não deve oferecer uma ativação impossível.
+
+Os cinco itens são uma especificação **proposta para operacionalizar o “impedir ciclos”**, não uma mudança nos textos históricos.
+
+### 19.3 Vitórias automáticas raras, não atribuídas
+
+O autor aceita que **pouquíssimas cartas** possam ter um especial de vitória automática; isso **não restaura** o original da carta física #52. A habilidade nova deve ser identificada separadamente, e o custo de uso antecipado/forçado será relevante ao balanceamento. Como o critério de raridade, o efeito exato e a resposta defensiva ainda não foram fechados, não inventar regra universal de imunidade/cancelamento.
+
