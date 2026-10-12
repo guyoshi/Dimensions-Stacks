@@ -1,68 +1,53 @@
-# Dimensions Stacks — Checklist de consistência e testes futuros (v0.1)
+# Dimensions Stacks — Checklist de validação do baralho aprovado (v1.0)
 
-> **Propósito:** impedir que uma IA implemente decisões que o autor não tomou. Cada caso abaixo distingue **invariante de dados**, **regra confirmada** e **comportamento a definir**. Não executar como se o jogo já estivesse funcional.
+> **Conteúdo das 87 cartas e atribuições de habilidades: APROVADO em 12/10/2026.** O checklist separa testes de consistência já realizados dos testes de jogo ainda necessários. Não rebaixar a aprovação autoral para “proposta” em razão de testes técnicos pendentes.
 
-## 1. Invariantes para prévia (dados ainda não aprovados)
+## 1. Invariantes verificáveis dos arquivos oficiais
 
-| Teste | Esperado | Status |
-| --- | --- | --- |
-| Identidades de cartas | **87 IDs distintos**, séries J/V/S/D/M/B, sem duplicata por selo de A União | Estrutura conhecida |
-| Fichas propostas | 87 entradas em `docs/CARTAS_87_PROPOSTAS.md` e `dados/propostas/cartas_87.json` | Proposta |
-| Faixa de atributos | ATQ, DEF, INT, VEL são inteiros de 0–100 nas **propostas** | Proposta de escala |
-| Soma | Igual a ATQ + DEF + INT + VEL em cada carta candidata | Consistência matemática |
-| Descrição curta | Comprimento <=120 caracteres na tabela candidata | Proposta visual; conferir layout |
-| Habilidades | **129 IDs únicos**, sem AE-104 (aposentado), com AE-129 e AE-130 | Catálogo candidato |
-| Atribuição definitiva | **0 atribuições definitivas** na biblioteca; pareamentos só em tabela de propostas | Estado do projeto |
-| A União | 7 integrantes informados + Jennifer futura, **8 selos**, sem duplicar cartas | Confirmado |
-| Origem por cor | V azul; M vermelho; J amarelo; B verde; D roxo; S preto | Confirmado |
-| Português | Nomes, descrições e interface em PT-BR | Padrão editorial |
+- [x] **87** IDs de carta únicos, com séries **J 23, V 19, S 14, D 18, M 12, B 1**.
+- [x] Cada carta possui `nome`, `descricao_curta`, `atributos.{ATQ,DEF,INT,VEL}`, `soma_atributos`, `habilidade_especial_id` e `status: APROVADA_PELO_AUTOR`.
+- [x] Atributos naturais em **0–100**, inteiros; `soma_atributos` é a soma correta dos quatro.
+- [x] Descrição de frente de carta com **até 120 caracteres**.
+- [x] Cada `habilidade_especial_id` das 87 cartas existe no catálogo de **129 IDs**.
+- [x] A biblioteca distingue **78 efeitos diferentes equipados** (87 relações carta→habilidade) e **51 sem carta**, guardados para futuras expansões.
+- [x] O ID **AE-104** não aparece no catálogo; **AE-129** (Jasmey) e **AE-130** (Agente Sete) existem.
+- [x] A União possui **7 membros originais + Jennifer futura**, sem duplicar cartas nem criar cor exclusiva.
+- [x] Cores: V azul, M vermelho, J amarelo, B verde, D roxo, S preto.
+- [x] Núcleo Carnam: D07 Ingrid, D13 Suéten, D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso; D17 ≠ D10 Avó de Kelly.
+- [x] Núcleo Viajantes adicional: V16 Facka (Faka no manuscrito), V17 Lanigiah, V18 Grande Pai Gaia e V19 Seti.
+- [x] [JSON oficial de cartas](../dados/oficial/cartas_87.json) e [tabela Markdown aprovada](CARTAS_87_PROPOSTAS.md) devem manter a mesma identidade, textos, atributos e IDs de especial.
+- [x] [JSON oficial de habilidades](../dados/oficial/habilidades_129.json) e [biblioteca Markdown](BIBLIOTECA_ATAQUES_ESPECIAIS.md) devem registrar as mesmas cartas por habilidade.
 
-## 2. Testes de regras já confirmadas
+**[x] significa validação documental e de dados**, não simulação do combate nem teste de layout.
 
-1. **Empate de atributo:** dois combatentes com mesmo valor eleito. Vence quem possuir maior soma ATQ+DEF+INT+VEL; se empatar novamente, comparar ATQ+INT. Se persistir empate, marcar como **PENDENTE**, não decidir automaticamente.
-2. **Imposição simultânea:** jogador A impõe ATQ 94, jogador B impõe INT 91; se ambos os efeitos estão válidos, todos usam ATQ. Se algum foi anulado **antes** de resolver, só considerar imposições remanescentes.
-3. **Vitória ofensiva:** vencedor por ATQ/INT captura cartas normais adversárias de combate; vitória por DEF/VEL preserva sua carta mas descarta cartas rivais no Buraco Negro.
-4. **Ativação voluntária:** com duas especiais preparadas, o jogador pode virar apenas uma voluntariamente naquele combate, salvo habilidade explícita; a outra permanece.
-5. **Uso forçado (#59):** o alvo com duas preparadas é obrigado a gastar ambas; com uma preparada, gasta uma; sem preparadas, não se inventa carta.
-6. **Ataque em dupla (#09):** soma do mesmo atributo de duas cartas **consecutivas**, nunca maior de duas. Desfecho da dupla ainda **PENDENTE**.
-7. **Recuperar (#12):** duas cartas aleatórias do Buraco Negro para **o fim da reserva**, não para o baralho ativo. O caso com menos de duas cartas no descarte ainda exige regra.
-8. **Limpeza (#54):** pode afetar somente as cartas **normais em combate**. Não descartar as especiais **preparadas** por esse efeito.
-9. **Repetição (#62):** impedir ciclos infinitos. A mecânica proposta limita novas repetições do mesmo tipo, mas o algoritmo exato deve ser ratificado.
-10. **Dois jogadores esquerda/direita:** ambos os sentidos conduzem ao mesmo rival; transferência de cartas dele para ele mesmo pode consumir a habilidade sem vantagem, sem mudar o efeito automaticamente.
-11. **Efeitos históricos removidos:** não restabelecer os antigos #18, #24 ou #52 como habilidades ativas.
+## 2. Regras aprovadas que precisam de testes de execução
 
-## 3. Testes para a PROPOSTA de reações defensivas
+1. Partidas para **2–4 jogadores**, configuração inicial de **18 cartas por jogador**, 7 ativas e 11 na reserva.
+2. Pares de atributos **ATQ/DEF** e **INT/VEL**. Desempate: atributo usado → soma dos quatro → ATQ+INT. Empate ainda persistente **PENDENTE**.
+3. Ataque vencedor captura; Defesa/Velocidade vencedoras protegem a própria e enviam derrotadas ao Buraco Negro.
+4. Até duas especiais preparadas; **uma ativação voluntária por combate**, salvo autorização textual expressa para duas. AE-111 força todas as preparadas, até duas.
+5. **Reações defensivas aprovadas:** podem interromper efeitos ainda pendentes; resolução inversa de respostas; custo mesmo da especial anulada. Não alterar efeitos já concluídos.
+6. **AE-130** anula a última especial pendente. **AE-112** não cria ciclos. **AE-103** só interfere nas cartas normais em combate.
+7. **AE-010** soma o mesmo atributo de duas cartas consecutivas (o destino de ambas ainda não está especificado).
+8. **AE-129** permite triunfo raro da carta S01, sujeito à janela de contrajogo aprovada.
+9. Histórico físico **#18, #24 e #52** eliminado do jogo ativo; não restaurar.
 
-- Uma habilidade defensiva preparada pode responder a ataque **pendente de resolução**, antes de captura, descarte ou roubo.
-- **AE-130** cancela a **última habilidade especial ainda pendente**; o recurso usado é consumido. Não reverte efeito já concluído.
-- Se A ativa bônus, B ativa ataque especial e C cancela B, B não produz efeito, mas A pode continuar válido.
-- Se B já gastou seu único especial voluntário, não consegue usar outra carta defensiva voluntariamente na mesma disputa, salvo uma habilidade que expressamente permita 2.
-- Se uma defesa é ativada enquanto um efeito está prestes a resolver, ela precisa resolver antes **sem processar retroativamente** o resultado.
-- Se o efeito forçado #59 coloca duas especiais na pilha, estabelecer prioridade e ordem do proprietário **antes de implementar**.
+## 3. Casos-limite ainda PENDENTES
 
-Todos os itens deste grupo validam **o modelo proposto**, não decisões finalizadas pelo autor.
+- [ ] Origem de uma carta especial antes de prepará-la e a janela de preparação.
+- [ ] Como selecionar e distribuir sem viés as 18 cartas a cada jogador, retiradas da coleção de 87.
+- [ ] Destino individual das duas cartas de AE-010 após vitória, derrota e empate.
+- [ ] Resolução de empate absoluto mesmo depois da soma ATQ+INT.
+- [ ] Habilidades que precisam agir antes de revelar cartas: janela pré-revelação.
+- [ ] Ordem/alvos das duas especiais forçadas pelo AE-111 quando há duas preparadas, e oportunidade de resposta entre elas.
+- [ ] Efeitos cujo alvo some ou cuja zona tem menos cartas que o necessário.
+- [ ] Prioridade de ações simultâneas e timeout da interface online.
+- [ ] Simulações e testes de balanceamento para 2, 3 e 4 jogadores, incluindo diferenças intencionais de força.
+- [ ] Conferência visual de texto de 120 caracteres e visualização ampliada de Habilidades Especiais.
+- [ ] Revisão canônica das descrições com fonte narrativa fraca; nenhuma mudança automática de números sem nova autorização.
 
-## 4. Alertas de balanceamento que não devem ser 'corrigidos' automaticamente
+## 4. Próxima IA deve evitar
 
-- Existem cartas intencionalmente fracas, como **V14**, que podem ganhar utilidade por troca, além de especialistas extremos e elites.
-- A soma total não é padronizada: ela faz parte do desempate.
-- Personagens de A União devem receber habilidades especialmente marcantes, mas seus **IDs AE atuais são propostas**, não poderes canônicos aprovados.
-- ATAQUE e INTELIGÊNCIA são ofensivos e podem capturar; DEFESA e VELOCIDADE defendem mas descartam o oponente. Comparar sua eficiência em teste: não concluir só com médias aritméticas.
-- Testar partidas com 2, 3 e 4 jogadores separadamente. Efeitos em “cada adversário” aumentam de impacto com o número de participantes.
-- **Ato de usar especial tem custo real**, incluindo o descarte da própria carta especial, mesmo quando efeito é anulado.
+**Não declarar jogo terminado**, não transformar os 51 efeitos da reserva em novas cartas automaticamente, não copiar biografias de cartas físicas antigas, não criar efeitos para eliminar a variação de poder entre cartas, não inventar uma solução para empate irredutível e não confundir **aprovação do conteúdo** com **testes satisfatórios**.
 
-## 5. Bloqueios de lançamento ainda abertos
-
-**Não considerar uma versão competitiva concluída sem:** definir de onde saem especiais preparadas; determinar a janela prioritária e as reações; aprovar destino de duas cartas do ataque em dupla; resolver empate absoluto; definir tamanho do baralho efetivamente distribuído por jogador e seleção em 2/3/4; validar raridade/custos de vitória automática; aprovar explicitamente as 87 fichas e o texto integral/categoria das habilidades destinadas aos personagens; testar legibilidade real das descrições e habilidades no design visual.
-
-[Contrato de implementação](CONTRATO_PARA_IA_IMPLEMENTADORA.md) · [87 cartas propostas](CARTAS_87_PROPOSTAS.md) · [Biblioteca de 129 habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
-
-## 6. Revisão específica da Família Carnam
-
-- [ ] IDs D15–D18 presentes, únicos e com atributos propostos dentro de 0–100.
-- [ ] D07 Ingrid e D13 Suéten **não** duplicados.
-- [ ] D17 Avó Carnam ≠ D10 Avó de Kelly.
-- [ ] D18 Ibliso descrito como **cão**, não humano ou demônio.
-- [ ] Elo de Carnam identificado como **arma ligada ao pai de Vini**, sem deduzir que Carnam é o pai de Vini.
-- [ ] Descrições curtas <=120 caracteres e JSON/Markdown sincronizados.
-- [ ] Total de candidatos 87, Diário Sobrenatural 18, biblioteca de 129 AEs intacta.
+[Baralho oficial](BARALHO_OFICIAL.md) · [GDD](REGRAS.md) · [Contrato para IA](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
