@@ -1,6 +1,6 @@
-# Dimensions Stacks — Auditoria de balanceamento dos ataques especiais (v1.0)
+# Dimensions Stacks — Auditoria de balanceamento dos ataques especiais (v1.1)
 
-> Revisão de **todas as 62 posições da coleção física numerada**: 59 têm pelo menos a identidade do cartão, 3 (**16, 26 e 55**) não têm. Alguns ataques legíveis derivam de transcrições diretas do autor (**Direta**), outros de fotos (**Foto**), e outros de leitura por IA ainda a verificar (**IA**). **A carta física não determina quem receberá o ataque especial novo.** Todos os IDs AE são referências ao [catálogo de 120 efeitos candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md). **Nenhum valor ou capacidade dos personagens físicos antigos será reaproveitado automaticamente.**
+> Revisão de **todas as 62 posições da coleção física numerada**: 59 têm pelo menos a identidade do cartão, 3 (**16, 26 e 55**) não têm. Alguns ataques legíveis derivam de transcrições diretas do autor (**Direta**), outros de fotos (**Foto**), e outros de leitura por IA ainda a verificar (**IA**). **A carta física não determina quem receberá o ataque especial novo.** Todos os IDs AE são referências ao [catálogo de 128 efeitos candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md). **Nenhum valor ou capacidade dos personagens físicos antigos será reaproveitado automaticamente.**
 
 ## 1. Resumo do diagnóstico
 
@@ -39,7 +39,7 @@
 | 17 | Roubar 2 da reserva à direita | **Manter** | Alta variância, custo especial existe; permitir até quantidade disponível, definir destino. | AE-045 | Direta |
 | 18 | Inverter vencedor e perdedor | **Retirar** | Corte explícito do autor. Em 4 participantes há vários perdedores e resultado ambíguo. | — | Direta |
 | 19 | Sacrificar carta >90 por primeiras 3 do Buraco Negro | **Ajustar** | A troca pode ser justa, mas permitir recuperar especiais repetidamente cria loops; exigir critério de carta e custo. | AE-081 | Direta |
-| 20 | Trocar Defesa por Inteligência da própria carta | **Ajustar** | Troca ou cópia? Precisamos explicitar se os dois valores são permutados ou um substitui o outro. | AE-005 (ref. atributo: AE-095) | IA |
+| 20 | Trocar Defesa por Inteligência da própria carta | **Ajustar** | Troca ou cópia? Precisamos explicitar se os dois valores são permutados ou um substitui o outro. | AE-016 | IA |
 | 21 | Trocar Velocidade por Poder de uma carta | **Ajustar** | Especificar permuta dos números e janela anterior à resolução. | AE-013 | Direta |
 | 22 | Trocar Inteligência por Poder de uma carta | **Ajustar** | Especificar se troca ambos os números ou copia um para o outro. | AE-011 | Direta |
 | 23 | Ganhar cartas de combate e pagar 1 por adversário | **Ajustar** | Com 4 rivais o custo cresce; se faltar 1 para cada, efeito deve ser indisponível antes de ativar. | AE-070 | IA |
@@ -61,7 +61,7 @@
 | 39 | Capitã Nastácia; habilidade desconhecida | **Pendente** | Nome e número confirmados, efeito não recuperado. | — | Identidade |
 | 40 | Obrigar vizinho esquerdo trocar com direito | **Ajustar** | Em duelo esquerda = direita e efeito se anula. Fazer variante específica 3+ ou outro alvo. | AE-063 | IA |
 | 41 | Revelar baralho ativo rival | **Manter** | Efeito informacional leve: ganho não é automático, pode merecer benefício complementar em partidas curtas. | AE-091 | IA |
-| 42 | Sacrificar >90 e pegar 1 aleatória de cada jogador | **Ajustar** | Se 'cada jogador' inclui você, texto ambíguo; definir somente adversários e custo >=90; escala com número de rivais. | AE-068 | IA |
+| 42 | Sacrificar >90 e pegar 1 aleatória de cada jogador | **Ajustar** | Se 'cada jogador' inclui você, texto ambíguo; propor somente adversários e custo >90; escala com número de rivais. | AE-068 | IA |
 | 43 | Transferir 3 do vizinho esquerdo ao direito | **Ajustar** | Em duelo devolve ao mesmo jogador: efeito vazio. Restringir a 3+ e ter alternativa em 2. | AE-065 | IA |
 | 44 | Efeito sem leitura | **Pendente** | Nenhuma regra recuperada; manter vaga, não inventar texto. | — | IA parcial |
 | 45 | Efeito ilegível | **Pendente** | Desgaste impede avaliação. | — | IA parcial |
@@ -144,7 +144,7 @@
 
 ## 6. Referências
 
-- [Biblioteca de 120 habilidades com coluna de atribuição vazia](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
+- [Biblioteca de 128 habilidades com coluna de atribuição vazia](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
 - [Regulamento/GDD](REGRAS.md).
 - [Transcrições diretas da primeira leva de 23 cartas](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md).
 - [Leituras provisórias de outras cartas e quatro identidades adicionais](LEITURAS_IA_PENDENTES_2026-10-12.md).
