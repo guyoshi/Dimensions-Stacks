@@ -66,7 +66,7 @@
   def('AE-010', 'Ataque em dupla', 'Jogue também a próxima carta do seu baralho: some o mesmo atributo das duas num único valor.', 'Bônus', {
     can(ctx, pid) { return ctx.player(pid).deck.length >= 1; },
     async apply(ctx, act) {
-      const p = ctx.player(act.pid), e = ctx.entry(act.pid); if (!p.deck.length || !e) return ctx.say('Sem carta para lançar: o especial é gasto.'); const c = p.deck.shift(); e.extra.push(c);
+      const p = ctx.player(act.pid), e = ctx.entry(act.pid); if (!p.deck.length || !e || e.gone) return ctx.say('Sem carta para lançar: o especial é gasto.'); const c = p.deck.shift(); e.extra.push(c);
       ctx.recalc(e);
       ctx.say(`${ctx.name(act.pid)} lança uma segunda carta: ${CARDS[c].nome} (+${CARDS[c].stats[e.attr]}).`);
       await ctx.emit('extra', { pid: act.pid, card: c });
@@ -223,7 +223,7 @@
       await this.emit('setup', {});
       for (let i = 0; i < n; i++) {
         const p = this.p(i); let ord;
-        if (p.bot) ord = this.botOrderHand(hands[i]); else ord = await this.io.orderHand(p, hands[i].slice());
+        if (p.bot) ord = this.botOrderHand(hands[i], p); else ord = await this.io.orderHand(p, hands[i].slice());
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
       }
@@ -231,8 +231,9 @@
       this.log(`${this.p(this.s.initiator).name} sorteia a iniciativa.`);
       await this.emit('ready', {});
     }
-    botOrderHand(hand) { // melhores primeiro, com ruído
-      return hand.slice().sort((a, b) => (sum4(CARDS[b].stats) + this.rand() * 40) - (sum4(CARDS[a].stats) + this.rand() * 40));
+    botOrderHand(hand, p) { // melhores primeiro, com ruído (maior no fácil)
+      const nz = this.lvl(p).ord;
+      return hand.slice().sort((a, b) => (sum4(CARDS[b].stats) + this.rand() * nz) - (sum4(CARDS[a].stats) + this.rand() * nz));
     }
 
     ctxFor(combat) {
@@ -332,7 +333,7 @@
     swapEntryCard(e, card) { const old = e.card; e.card = card; e.base = Object.assign({}, CARDS[card].stats); this.recalc(e); return old; }
     async askCards(pid, spec, bot) {
       const p = this.p(pid); const min = spec.min == null ? 1 : spec.min, max = spec.max == null ? 1 : spec.max;
-      const fallback = () => { let r = bot ? bot() : spec.cards.slice(0, max); r = (r || []).filter((c, i, a) => spec.cards.includes(c) && a.indexOf(c) === i).slice(0, max); if (r.length < min) r = spec.cards.slice(0, min); return r; };
+      const fallback = () => { let r = bot && !this.blindNow(p) ? bot() : (p.bot && bot ? shuffle(spec.cards.slice(), () => this.rand()).slice(0, Math.max(min, Math.min(max, spec.cards.length))) : spec.cards.slice(0, max)); r = (r || []).filter((c, i, a) => spec.cards.includes(c) && a.indexOf(c) === i).slice(0, max); if (r.length < min) r = spec.cards.slice(0, min); return r; };
       if (p.bot || !this.io.pickCards) return fallback();
       const r = await this.io.pickCards(p, Object.assign({}, spec, { min, max }));
       if (!Array.isArray(r) || r.length < min || r.length > max || r.some((c, i) => !spec.cards.includes(c) || r.indexOf(c) !== i)) return fallback();
@@ -340,12 +341,13 @@
     }
     async askAttr(pid, spec, bot) {
       const p = this.p(pid); const opts = spec.options;
-      if (p.bot || !this.io.pickAttr) return bot ? bot() : opts[0];
+      if (p.bot || !this.io.pickAttr) return bot && !this.blindNow(p) ? bot() : (p.bot ? opts[Math.floor(this.rand() * opts.length)] : opts[0]);
       const r = await this.io.pickAttr(p, spec); return opts.includes(r) ? r : opts[0];
     }
     async pickTarget(pid, cand, label, bot) {
       if (cand.length === 1) return cand[0];
       const p = this.p(pid);
+      if (p.bot && this.blindNow(p)) return cand[Math.floor(this.rand() * cand.length)];
       if (p.bot && bot) { const r = bot(cand); return cand.includes(r) ? r : cand[0]; }
       if (p.bot) { return cand.slice().sort((a, b) => this.totalCards(this.p(b)) - this.totalCards(this.p(a)))[0]; }
       const r = await this.io.chooseTarget(p, cand, label); return cand.includes(r) ? r : cand[0];
@@ -595,6 +597,12 @@
       const live = es.filter(e => !e.withdrawn);
       es.filter(e => e.withdrawn && !e.gone).forEach(back);
       // cartas banidas (Ruína de campo) já foram ao Buraco Negro no momento do efeito; um resgate posterior pode tê-las tirado de lá
+      // rede de segurança: carta que ficou presa a uma carta banida (ex.: trocada ou lançada depois do banimento) e não está em nenhuma zona vai ao Buraco Negro
+      {
+        const seen = new Set(); this.s.bh.forEach(x => seen.add(x.id)); this.s.players.forEach(q => [...q.deck, ...q.reserve, ...q.prepared].forEach(c => seen.add(c)));
+        es.filter(e => !e.gone).forEach(e => cardsOf(e).forEach(c => seen.add(c)));
+        es.filter(e => e.gone).forEach(e => cardsOf(e).forEach(c => { if (!seen.has(c)) { seen.add(c); this.s.bh.push({ id: c, kind: 'normal' }); } }));
+      }
       // capturas condicionais (Capturar atacante/defensor, Duelo condicionado): a carta é tomada ao fim do combate
       const claimed = new Set();
       for (const cl of combat.claims) {
@@ -637,14 +645,18 @@
     async chooseLoser(w, cand, label) {
       if (cand.length === 1) return cand[0];
       const p = this.p(w.pid);
-      if (p.bot) return cand.slice().sort((a, b) => sum4(CARDS[b.card].stats) - sum4(CARDS[a.card].stats))[0];
+      if (p.bot) return this.blindNow(p) ? cand[Math.floor(this.rand() * cand.length)] : cand.slice().sort((a, b) => sum4(CARDS[b.card].stats) - sum4(CARDS[a.card].stats))[0];
       const pid = await this.io.chooseTarget(p, cand.map(c => c.pid), label); return cand.find(c => c.pid === pid) || cand[0];
     }
 
     // ---------------------------------------------------------------- IA
     skill(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: 0.1, normal: 0.6, dificil: 1 }[d] ?? 0.6; }
+    // Nível do bot: blind = chance de NÃO ler o estado da mesa (escolhe sem olhar adversários/cartas); lapse = chance de errar a escolha do atributo; ord = ruído ao ordenar a mão.
+    lvl(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: { blind: 0.35, lapse: 0.2, ord: 100 }, normal: { blind: 0.12, lapse: 0.06, ord: 50 }, dificil: { blind: 0, lapse: 0.01, ord: 30 } }[d] || { blind: 0.12, lapse: 0.06, ord: 50 }; }
+    blindNow(p) { return !!(p && p.bot) && this.rand() < this.lvl(p).blind; }
     async bot_attr(p, entry, options, combat) {
       const sk = this.skill(p); let best = null, bs = -1;
+      if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
       options.forEach(a => { const v = entry.stats[a]; let s = pct(a, v) * (0.6 + 0.4 * sk) + (ATTR[a].tipo === 'ataque' ? 0.03 : 0) + (this.rand() - 0.5) * (0.5 - 0.4 * sk); if (s > bs) { bs = s; best = a; } });
       return best;
     }
@@ -686,6 +698,7 @@
       let best = null, bs = -1;
       usable.forEach(c => {
         const sp = SP[CARDS[c].especial]; let u = 0; try { u = sp.ai ? sp.ai(ctx, p.pid) : 0.4; } catch (e) { u = 0.3; }
+        if (this.blindNow(p)) u = 0.1 + this.rand() * 0.6;                              // não leu a mesa: decide quase às cegas
         if (u < 0.12 - 0.08 * urg) return;                                          // sem utilidade nesta situação: nunca gasta
         u += Math.min(0.2, 0.06 * p._held);                           // carta parada na mão: vale usar
         u += (this.rand() - 0.5) * 2 * noise;
