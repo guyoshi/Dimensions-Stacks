@@ -1,26 +1,165 @@
 {
  "_raiz": "Dimensões Infinitas",
  "_aviso": "id da carta -> caminho da foto dentro da pasta raiz no OneDrive. Edite aqui quando trocar a foto escolhida de um personagem.",
- "J01": {"src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Jokara.png", "mtimeMs": 1790945091622},
- "J02": {"src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Nestira.png", "mtimeMs": 1787500241000},
- "J03": {"src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Karesis.png", "mtimeMs": 1788997281989, "alt": ["Guerras de Sangue/.../Marken.png", "Ruínas dos Céus/.../Loutes.png"]},
- "J04": {"src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Gabasteri.png", "mtimeMs": 1791586911665},
- "J05": {"src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Maletar.png", "mtimeMs": 1791586968404},
- "J06": {"src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Platisa.png", "mtimeMs": 1790989162819},
- "J07": {"src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Mariv.png", "mtimeMs": 1790989293642},
- "J08": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Kaelina.png", "mtimeMs": 1791374615938},
- "J09": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Alyra.png", "mtimeMs": 1791377996273},
- "J10": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Daryon Polar.png", "mtimeMs": 1791776554965},
- "J11": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Cal Edran.png", "mtimeMs": 1791799258059},
- "J12": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Rendar.png", "mtimeMs": 1787500245000},
- "J13": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Nynestra.png", "mtimeMs": 1787500244000},
- "J14": {"src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Cal Kadrir.png", "mtimeMs": 1791806184216},
- "J15": {"src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Dareth Quatro-Dedos.png", "mtimeMs": 1791812577876},
- "J16": {"src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Elis.png", "mtimeMs": 1791811494635},
- "J17": {"src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Selina.png", "mtimeMs": 1788997050668},
- "J18": {"src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Vetarius Polar.png", "mtimeMs": 1791375952999},
- "J19": {"src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Kerath Polar.png", "mtimeMs": 1791811546678},
- "J21": {"src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/21 ciclos - Nefestra.png", "mtimeMs": 1791586844359, "alt": ["11 ciclos - Nefestra.png"]},
- "J22": {"src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/25 ciclos - Sefter.png", "mtimeMs": 1791586844419, "alt": ["15 ciclos - Sefter.png"]},
- "J23": {"src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/31 ciclos - Kedran.png", "mtimeMs": 1791586844481, "alt": ["21 ciclos - Kedran.png"]}
+ "J01": {
+  "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Jokara.png",
+  "mtimeMs": 1790945091622
+ },
+ "J02": {
+  "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Nestira.png",
+  "mtimeMs": 1787500241000
+ },
+ "J03": {
+  "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Karesis.png",
+  "mtimeMs": 1788997281989,
+  "alt": [
+   "Guerras de Sangue/.../Marken.png",
+   "Ruínas dos Céus/.../Loutes.png"
+  ]
+ },
+ "J04": {
+  "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Gabasteri.png",
+  "mtimeMs": 1791586911665
+ },
+ "J05": {
+  "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Maletar.png",
+  "mtimeMs": 1791586968404
+ },
+ "J06": {
+  "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Platisa.png",
+  "mtimeMs": 1790989162819
+ },
+ "J07": {
+  "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Mariv.png",
+  "mtimeMs": 1790989293642
+ },
+ "J08": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Kaelina.png",
+  "mtimeMs": 1791374615938
+ },
+ "J09": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Alyra.png",
+  "mtimeMs": 1791377996273
+ },
+ "J10": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Daryon Polar.png",
+  "mtimeMs": 1791776554965
+ },
+ "J11": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Cal Edran.png",
+  "mtimeMs": 1791799258059
+ },
+ "J12": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Rendar.png",
+  "mtimeMs": 1787500245000
+ },
+ "J13": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Nynestra.png",
+  "mtimeMs": 1787500244000
+ },
+ "J14": {
+  "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Cal Kadrir.png",
+  "mtimeMs": 1791806184216
+ },
+ "J15": {
+  "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Dareth Quatro-Dedos.png",
+  "mtimeMs": 1791812577876
+ },
+ "J16": {
+  "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Elis.png",
+  "mtimeMs": 1791811494635
+ },
+ "J17": {
+  "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Selina.png",
+  "mtimeMs": 1788997050668
+ },
+ "J18": {
+  "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Vetarius Polar.png",
+  "mtimeMs": 1791375952999
+ },
+ "J19": {
+  "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Kerath Polar.png",
+  "mtimeMs": 1791811546678
+ },
+ "J21": {
+  "src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/21 ciclos - Nefestra.png",
+  "mtimeMs": 1791586844359,
+  "alt": [
+   "11 ciclos - Nefestra.png"
+  ]
+ },
+ "J22": {
+  "src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/25 ciclos - Sefter.png",
+  "mtimeMs": 1791586844419,
+  "alt": [
+   "15 ciclos - Sefter.png"
+  ]
+ },
+ "J23": {
+  "src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/31 ciclos - Kedran.png",
+  "mtimeMs": 1791586844481,
+  "alt": [
+   "21 ciclos - Kedran.png"
+  ]
+ },
+ "V01": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Breno Lins.png",
+  "mtimeMs": 1791819779977
+ },
+ "V02": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Bruno Lins.png",
+  "mtimeMs": 1791819791316
+ },
+ "V03": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Banjo Lins.png",
+  "mtimeMs": 1791820060768
+ },
+ "V04": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Beatriz Lins.png",
+  "mtimeMs": 1791820119904
+ },
+ "V05": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Velho-Sábio.png",
+  "mtimeMs": 1791821088089
+ },
+ "V06": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Erla Diggs.png",
+  "mtimeMs": 1791820324200
+ },
+ "V07": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Lucas Veline.png",
+  "mtimeMs": 1791821308617
+ },
+ "V08": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Garmand.png",
+  "mtimeMs": 1791821244683
+ },
+ "V09": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Ricochet Bombergue.png",
+  "mtimeMs": 1791821183629
+ },
+ "V10": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Korvo.png",
+  "mtimeMs": 1791820591915
+ },
+ "V11": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Gary.png",
+  "mtimeMs": 1791821367664
+ },
+ "V12": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Anasin.png",
+  "mtimeMs": 1791821724378
+ },
+ "V13": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Saliens.png",
+  "mtimeMs": 1791821782443
+ },
+ "V14": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Tio Frank.png",
+  "mtimeMs": 1791821855980
+ },
+ "V15": {
+  "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Brenda.png",
+  "mtimeMs": 1791821588723
+ }
 }

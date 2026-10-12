@@ -17,7 +17,7 @@
     'Ordem de resolução dos especiais: sentido horário a partir de quem iniciou a disputa.',
     'Especiais usados vão ao Buraco Negro depois que todos os efeitos resolvem (não podem ser recuperados na mesma disputa).',
     'Captura: carta do vencedor primeiro, depois as dos adversários em sentido horário a partir dele.',
-    'Empate absoluto (soma e Poder+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
+    'Empate absoluto (soma e Ataque+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
     'Baralho vazio: compra até 7 da reserva; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
     'À direita = próximo jogador ativo no sentido horário; à esquerda = o anterior. Em duelo, ambos são o único adversário.',
     'Especial só é oferecido quando há alvo válido (exceto Interrupção, que depende dos especiais dos outros).',
@@ -45,7 +45,7 @@
       ai(ctx, pid) { const e = ctx.entry(pid); let b = 0; const k = e.attr; b = mods[k] || 0; if (!b) return 0.05; return ctx.flipChance(pid, b); },
     }, extra || {}));
   }
-  modSpec('AE-001', 'Impulso de Poder', 'Sua carta de combate recebe +15 em Poder nesta disputa.', { pod: 15 });
+  modSpec('AE-001', 'Impulso de Ataque', 'Sua carta de combate recebe +15 em Ataque nesta disputa.', { pod: 15 });
   modSpec('AE-002', 'Muralha de Defesa', 'Sua carta de combate recebe +15 em Defesa nesta disputa.', { def: 15 });
   modSpec('AE-003', 'Clarividência', 'Sua carta de combate recebe +15 em Inteligência nesta disputa.', { int: 15 });
   modSpec('AE-004', 'Arrancada', 'Sua carta de combate recebe +15 em Velocidade nesta disputa.', { vel: 15 });
@@ -54,7 +54,7 @@
     ai(ctx, pid) { return ctx.flipChance(pid, 15); },
   });
   modSpec('AE-006', 'Dupla resistência', 'Sua carta de combate recebe +15 Defesa e +20 Velocidade nesta disputa.', { def: 15, vel: 20 });
-  modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +10 Poder e +10 Inteligência nesta disputa.', { pod: 10, int: 10 });
+  modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa.', { pod: 10, int: 10 });
   modSpec('AE-008', 'Guarda equilibrada', 'Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa.', { def: 10, vel: 10 });
   def('AE-009', 'Superação', 'Se o valor original que você escolheu for 40 ou menos, adicione +25 a esse atributo.', 'Bônus', {
     can(ctx, pid) { const e = ctx.entry(pid); return !!e && e.base[e.attr] <= 40; },
@@ -158,7 +158,7 @@
     apply(ctx, act) { ctx.entry(act.pid).defCapture = true; ctx.say(`${ctx.name(act.pid)} prepara uma defesa que captura.`); },
     ai(ctx, pid) { const e = ctx.entry(pid); return ATTR[e.attr].tipo === 'defesa' && !ctx.isLosing(pid) ? 0.8 : 0.05; },
   });
-  def('AE-106', 'Ataque que bane', 'Se vencer usando Poder ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.', 'Resolução', {
+  def('AE-106', 'Ataque que bane', 'Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).atkBanish = true; ctx.say(`${ctx.name(act.pid)} prepara um ataque que bane.`); },
     ai(ctx, pid) { const e = ctx.entry(pid); return ATTR[e.attr].tipo === 'ataque' && !ctx.isLosing(pid) ? 0.5 : 0.05; },
   });
@@ -267,7 +267,7 @@
       if (v > bestOpp) return 0.04; if (v + bonus >= bestOpp) return 0.93; return 0.02;
     }
 
-    // ---- avaliação do vencedor (empates: valor → soma 4 → Poder+Inteligência) ----
+    // ---- avaliação do vencedor (empates: valor → soma 4 → Ataque+Inteligência) ----
     evaluate(combat, quiet) {
       const es = combat.entries.filter(e => !e.withdrawn);
       if (es.length < 2) return { winners: [], tie: false, none: true, top: 0 };
@@ -335,13 +335,13 @@
 
     async playCombat(init) {
       const g = this, order = this.order(init);
-      const combat = { initiator: init, order, entries: [], activations: [], specialsAllowed: this.s.round >= 2 };
+      const combat = { initiator: init, order, entries: [], activations: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2) };
       this.combat = combat;
       await this.emit('combatStart', { initiator: init, round: this.s.round });
       // 1) preparação [PROPOSTA]
       if (combat.specialsAllowed) {
         const prep = [];
-        for (const pid of order) { const p = this.p(pid); if (p.prepared.length < 2 && p.deck.length >= 2) { const yes = await this.decide(p, 'prepare', p.deck[0]); if (yes) prep.push(pid); } }
+        for (const pid of order) { const p = this.p(pid); if (p.bot && p.prepared.length < 2 && p.deck.length >= 2) { const sp0 = SP[CARDS[p.deck[0]].especial]; if (p.bot && (!sp0 || sp0.stub)) continue; const yes = await this.decide(p, 'prepare', p.deck[0]); if (yes && sp0) prep.push(pid); } }
         for (const pid of prep) { const p = this.p(pid); const c = p.deck.shift(); p.prepared.push(c); this.log(`${p.name} prepara um ataque especial.`, 'prep'); await this.emit('prepare', { pid, card: c }); }
       }
       // 2) cartas em campo
@@ -352,14 +352,14 @@
       await this.emit('commit', { combat });
       // 3) atributos: iniciador escolhe livremente; os demais no mesmo par
       const ie = combat.entries.find(e => e.pid === init);
-      ie.attr = await this.decide(this.p(init), 'attr', ie, AID, combat);
+      ie.attr = await this.chooseAttr(combat, ie, AID);
       if (!AID.includes(ie.attr)) ie.attr = AID[0];
       this.log(`${this.p(init).name} inicia em ${ATTR[ie.attr].nome}.`, 'attr');
       await this.emit('initiatorAttr', { combat, pid: init, attr: ie.attr });
       const pair = AID.filter(a => ATTR[a].par === ATTR[ie.attr].par);
       for (const e of combat.entries) {
         if (e.pid === init) continue;
-        e.attr = await this.decide(this.p(e.pid), 'attr', e, pair, combat);
+        e.attr = await this.chooseAttr(combat, e, pair);
         if (!pair.includes(e.attr)) e.attr = pair[0];
       }
       // 4) revelação
@@ -395,6 +395,24 @@
       await this.resolve(combat);
       await this.emit('combatEnd', { combat });
       this.combat = null;
+    }
+    // Escolha de atributo. O humano também pode "preparar" a carta da mesa como especial: ela sai do combate
+    // e a próxima do baralho entra no lugar (nova escolha). Proposta de fluxo pedida pelo autor.
+    async chooseAttr(combat, e, options) {
+      const p = this.p(e.pid);
+      for (let guard = 0; guard < 4; guard++) {
+        const canPrep = !p.bot && combat.specialsAllowed && p.prepared.length < 2 && p.deck.length >= 1;
+        const r = await this.decide(p, 'attr', e, options, combat, canPrep);
+        if (r === '@prep' && canPrep) {
+          const old = e.card; p.prepared.push(old);
+          const c2 = p.deck.shift(); e.card = c2; e.base = Object.assign({}, CARDS[c2].stats); e.stats = Object.assign({}, CARDS[c2].stats); e.bonus = 0; e.extra = []; e.attr = null;
+          this.log(`${p.name} prepara um ataque especial.`, 'prep');
+          await this.emit('swapCard', { pid: e.pid, old, card: c2, combat });
+          continue;
+        }
+        return r;
+      }
+      return options[0];
     }
     activate(combat, pid, card, forced) {
       const p = this.p(pid); const i = p.prepared.indexOf(card); if (i < 0) return null;
@@ -468,7 +486,7 @@
       return best;
     }
     async bot_prepare(p, topCard) {
-      const sp = SP[CARDS[topCard].especial]; if (!sp) return false;
+      const sp = SP[CARDS[topCard].especial]; if (!sp || sp.stub) return false;
       if (p.deck.length < 4 && p.reserve.length < 3) return false;
       const base = { facil: 0.2, normal: 0.3, dificil: 0.4 }[this.cfg.difficulty] ?? 0.3;
       const weak = sum4(CARDS[topCard].stats) < 215 ? 0.2 : 0; // cartas fracas viram especial com mais gosto
@@ -480,6 +498,15 @@
       return best;
     }
   }
+
+  // Nomes/textos oficiais da PROPOSTA (habilidades_129.json). Mecânica só existe para as já implementadas;
+  // as demais viram "stub": aparecem na carta, mas não podem ser preparadas/ativadas neste protótipo.
+  const HAB = (D && D.HABILIDADES) || {};
+  Object.keys(HAB).forEach(id => {
+    const h = HAB[id];
+    if (SP[id]) { SP[id].nome = h[0]; SP[id].texto = h[1]; SP[id].grupo = h[2]; }
+    else SP[id] = { id, nome: h[0], texto: h[1], cat: h[2], grupo: h[2], stub: true, phase: 'main', can: () => true, ai: () => 0.03, apply(ctx, act) { ctx.say(`${ctx.name(act.pid)} virou “${h[0]}”, mas esse efeito ainda não foi implementado: nada acontece.`); } };
+  });
 
   const api = { Game, SPECIALS: SP, CARDS, ATTRS, AID, ATTR, PROPOSTAS, sum4, pause, shuffle, mkRng, pct };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.DS_ENGINE = api;

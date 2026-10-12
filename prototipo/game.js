@@ -43,6 +43,15 @@
     U.layer().appendChild(b); setTimeout(() => b.remove(), (ms || 1800) * S.k + 100);
   }
   function caption(t, flash) { const c = $('#caption'); if (!c) return; c.textContent = t || ''; c.classList.toggle('flash', !!flash); }
+  function spLine(cardId, combat, canPrep) {
+    const c = CARDS[cardId], sp = E.SPECIALS[c.especial]; if (!sp) return '';
+    const from = (G && G.cfg && G.cfg.specialsFrom) || 2;
+    let act = '';
+    if (combat && combat.specialsAllowed === false) act = `<span class="splnote">Especiais só liberam na Rodada ${from}.</span>`;
+    else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ Usar como ataque especial</button><span class="splnote">A carta sai do combate, fica fechada ao seu lado e a próxima entra no lugar.${sp.stub ? ' ⚠ Efeito ainda não implementado: ao virar, nada acontece e ela vai ao Buraco Negro.' : ''}</span>`;
+    else act = `<span class="splnote">Você já tem 2 especiais preparados ou não há outra carta para entrar no lugar.</span>`;
+    return `<div class="hint spline">✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}${sp.stub ? ' <i>(efeito ainda não implementado)</i>' : ''}<div class="splact">${act}</div></div>`;
+  }
   function ghostCard(o) {
     const id = o.id || U.D.CARTAS[0].id;
     const g = cardEl(id, { up: !!o.id, noanim: true, stats: o.stats }); g.classList.add('flyghost'); return g;
@@ -117,10 +126,11 @@
   function gameMenu() {
     SND.play('click');
     const n = el(`<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px"><h2 style="color:var(--gold2)">Pausa</h2>
-      <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button><button class="btn" data-a="q">Abandonar partida</button></div>`);
-    const m = U.modal(n); let sure = false;
+      <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button><button class="btn" data-a="n">↻ Reiniciar partida</button><button class="btn" data-a="q">Abandonar partida</button></div>`);
+    const m = U.modal(n); let sure = false, sureN = false;
     n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a;
-      if (a === 'c') m.close(); else if (a === 'r') U.rules(); else if (a === 'o') U.options();
+      if (a === 'n') { if (!sureN) { sureN = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } }
+      else if (a === 'c') m.close(); else if (a === 'r') U.rules(); else if (a === 'o') U.options();
       else if (a === 'q') { if (!sure) { sure = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.killRun(); $$('#layer > *').forEach(x => x.remove()); U.show('menu'); } } };
   }
 
@@ -154,7 +164,7 @@
     const w = $('.arenaWrap'); if (!w || !V) return;
     const W = w.clientWidth, H = w.clientHeight, n = V.n;
     const need = n === 2 ? { w: 1.5, h: 4.6 } : n === 3 ? { w: 3.45, h: 3.6 } : { w: 3.5, h: 5.2 };
-    const cw = Math.max(40, Math.floor(Math.min(W / need.w, H / need.h, 150)));
+    const cw = Math.max(26, Math.floor(Math.min(W / need.w, H / need.h, 150)));
     V.cw = cw; $('.arena', w).style.setProperty('--cw', cw + 'px');
   }
   function refresh() {
@@ -237,11 +247,21 @@
     },
     async combatStart({ initiator, round }) {
       V.init = initiator; V.winShown = false; refresh();
-      caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia`); await sleep(350);
+      caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · ataques especiais liberam na Rodada 2' : '')); await sleep(350);
     },
     async prepare({ pid }) {
       const to = seatPrep(pid); const from = seatDeck(pid);
       SND.play('special'); await fly(from, to, { ms: 500, cw: 60 }); refresh(); caption(`${nameOf(pid)} prepara um ataque especial…`); await sleep(250);
+    },
+    async swapCard({ pid, old, card, combat }) {
+      const slot = V.slots[pid]; const oldEl = $('.card', slot);
+      SND.play('special');
+      if (oldEl) { oldEl.style.visibility = 'hidden'; await fly(slot, seatPrep(pid), { ms: 480, cw: V.cw }); oldEl.remove(); }
+      refresh();
+      const e = combat.entries.find(x => x.pid === pid);
+      const c = cardEl(card, { stats: e.stats }); c.style.visibility = 'hidden'; slot.append(c);
+      await fly(seatDeck(pid), slot, { ms: 420, ease: 'cubic-bezier(.2,.8,.3,1)' });
+      c.style.visibility = ''; SND.play('place'); refresh(); caption(`${nameOf(pid)} preparou um especial e colocou outra carta.`); await sleep(250);
     },
     async commit({ combat }) {
       V.combat = combat;
@@ -267,7 +287,7 @@
       const box = $('.acts', st);
       acts.forEach((a, i) => {
         const sp = E.SPECIALS[CARDS[a.card].especial];
-        const n = el(`<div class="act" style="--pc:${PCOL[a.pid]};animation-delay:${i * .18}s"><div class="own">${esc(nameOf(a.pid))}${forced || a.forced ? ' (forçado)' : ''}</div><div class="cb"></div><div class="spn">✦ ${esc(sp.nome)}</div><div class="stx">${esc(sp.texto)}</div></div>`);
+        const n = el(`<div class="act" style="--pc:${PCOL[a.pid]};animation-delay:${i * .18}s"><div class="own">${esc(nameOf(a.pid))}${forced || a.forced ? ' (forçado)' : ''}</div><div class="cb"></div><div class="sn">✦ ${esc(sp.nome)}</div><div class="stx">${esc(sp.texto)}</div></div>`);
         $('.cb', n).append(cardEl(a.card, { cw: Math.min(150, (window.innerWidth - 60) / Math.max(1, acts.length) - 20) }));
         box.append(n);
       });
@@ -352,7 +372,7 @@
     async eliminated({ pid }) {
       refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700);
     },
-    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, null, null, 1500); await sleep(1000); },
+    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Ataques especiais liberados' : null, null, 1500); await sleep(1000); },
     async end({ winner }) {
       refresh(); const s = G.s; const human = winner != null && !G.p(winner).bot; const anyHuman = V.humans > 0;
       SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
@@ -364,7 +384,7 @@
         <div class="hint">${s.byLimit ? 'Limite de disputas atingido: vence quem tem mais cartas.' : w ? 'Todos os adversários foram eliminados.' : ''}</div>
         <div class="stats"><div><b>${s.combats}</b>disputas</div><div><b>${s.round}</b>rodadas</div><div><b>${s.bh.length}</b>no Buraco Negro</div></div>
         <div class="row" style="justify-content:center"><button class="btn primary" data-a="again">Jogar de novo</button><button class="btn" data-a="menu">Menu</button></div></div></div></div>`);
-      n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); n.remove(); if (b.dataset.a === 'again') U.startGame(lastCfg); else U.show('menu'); };
+      n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); n.remove(); if (b.dataset.a === 'again') { U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } else U.show('menu'); };
       U.layer().appendChild(n);
     },
   };
@@ -376,24 +396,24 @@
       log: (text, cls) => { V.logs.push({ text, cls }); if (cls !== 'prep') caption(text, cls === 'vit'); const d = $('.logdrawer .lg'); if (d) d.append(el(`<p class="${cls}">${esc(text)}</p>`)); },
       orderHand: (p, hand) => orderHand(p, hand),
       async prepare(p, top) {
+        const c = CARDS[top], sp = E.SPECIALS[c.especial];
         if (V.noPrep[p.pid]) return false;
         await cover(p);
-        const c = CARDS[top], sp = E.SPECIALS[c.especial];
         const node = el(`<div class="sheet"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}: preparar ataque especial?</h3>
           <div class="hint">Carta do topo: <b>${esc(c.nome)}</b><br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}</div>
-          <div class="hint">Se preparar, a carta fica fechada ao seu lado (em vez de combater) e você decide virá-la depois da revelação.</div>
+          <div class="hint">Se preparar, a carta fica fechada ao seu lado (em vez de combater) e você decide virá-la depois da revelação.</div>${sp.stub ? '<div class="hint">⚠ Efeito ainda não implementado: ao virar, nada acontece e a carta vai ao Buraco Negro.</div>' : ''}
           <div class="row"><button class="btn primary sm" data-v="1">Preparar especial</button><button class="btn sm" data-v="0">Jogar normalmente</button><button class="btn ghost sm" data-v="n">Não perguntar mais</button></div></div></div>`);
         $('.cardbox', node).append(cardEl(top, { up: true, noanim: true, cw: Math.min(96, V.cw || 96) }));
         const v = await ask(node, '[data-v]'); if (v === 'n') V.noPrep[p.pid] = true; return v === '1';
       },
-      async attr(p, entry, options, combat) {
+      async attr(p, entry, options, combat, canPrep) {
         await cover(p);
         const init = combat.initiator === p.pid; const ia = combat.entries.find(e => e.pid === combat.initiator).attr;
         const txt = init ? 'Você inicia: escolha <b>qualquer</b> atributo.' : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${options.map(a => '<b>' + ATT[a].nome + '</b>').join(' e ')} — em segredo.`;
         const node = el(`<div class="sheet"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>
-          <div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div></div></div>`);
+          ${spLine(entry.card, combat, canPrep)}<div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div></div></div>`);
         $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: Math.min(96, V.cw || 96), stats: entry.stats }));
-        return ask(node, '.attrbtn');
+        return ask(node, '.attrbtn, .prepbtn');
       },
       async special(p, usable, combat, ctx) {
         await cover(p);
@@ -421,7 +441,7 @@
         const run = U.run; run.rej.add(rej);
         let arr = hand.slice(), sel = -1, last = 0;
         const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: monte seu baralho</h2>
-          <div class="hint">Toque numa carta e depois em outra para trocá-las de lugar. A carta <b>nº 1</b> é a primeira a entrar em disputa (e a que pode virar especial).</div></div>
+          <div class="hint">Toque numa carta e depois em outra para trocá-las de lugar. A carta <b>nº 1</b> é a primeira a entrar em disputa.</div></div>
           <div class="grid"></div><div class="info"></div>
           <div class="row" style="justify-content:center"><button class="btn sm" data-a="l">◀ Mover</button><button class="btn sm" data-a="r">Mover ▶</button><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);
@@ -433,7 +453,7 @@
             w.append(cardEl(id, { up: true, noanim: true, cw })); w.onclick = () => { SND.play('tick'); last = i; if (sel < 0) sel = i; else if (sel === i) sel = -1; else { [arr[sel], arr[i]] = [arr[i], arr[sel]]; sel = -1; SND.play('place'); } draw(); }; return w;
           }));
           const id = arr[last], c = CARDS[id], sp = E.SPECIALS[c.especial];
-          $('.info', ov).innerHTML = `<b>${esc(c.nome)}</b> · ${AIDS.map(a => `${ATT[a].abre} ${c.stats[a]}`).join(' · ')}<br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}`;
+          $('.info', ov).innerHTML = `<b>${esc(c.nome)}</b> · ${AIDS.map(a => `<span class="ico" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}${c.stats[a]}</span>`).join(' ')}<br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}`;
         }
         ov.onclick = e => {
           const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a; SND.play('click');
@@ -455,7 +475,7 @@
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };

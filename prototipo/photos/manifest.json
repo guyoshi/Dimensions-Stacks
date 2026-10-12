@@ -198,6 +198,141 @@
    "w": 720,
    "h": 1018,
    "webp": 175578
+  },
+  "V01": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Breno Lins.png",
+   "mtimeMs": 1791819779977,
+   "bytes": 2984164,
+   "sha1": "a0e1a1569b",
+   "w": 720,
+   "h": 1080,
+   "webp": 161082
+  },
+  "V02": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Bruno Lins.png",
+   "mtimeMs": 1791819791316,
+   "bytes": 2952819,
+   "sha1": "1532a0390c",
+   "w": 720,
+   "h": 1080,
+   "webp": 167026
+  },
+  "V03": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Banjo Lins.png",
+   "mtimeMs": 1791820060768,
+   "bytes": 2879247,
+   "sha1": "b708e0934c",
+   "w": 720,
+   "h": 1080,
+   "webp": 180744
+  },
+  "V04": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Beatriz Lins.png",
+   "mtimeMs": 1791820119904,
+   "bytes": 2752635,
+   "sha1": "6e47524a0b",
+   "w": 720,
+   "h": 1080,
+   "webp": 175822
+  },
+  "V05": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Velho-Sábio.png",
+   "mtimeMs": 1791821088089,
+   "bytes": 3216161,
+   "sha1": "6ff04a5b09",
+   "w": 720,
+   "h": 1080,
+   "webp": 217272
+  },
+  "V06": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Erla Diggs.png",
+   "mtimeMs": 1791820324200,
+   "bytes": 2459942,
+   "sha1": "2f70a53f62",
+   "w": 720,
+   "h": 1080,
+   "webp": 133398
+  },
+  "V07": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Lucas Veline.png",
+   "mtimeMs": 1791821308617,
+   "bytes": 2264756,
+   "sha1": "688f95c135",
+   "w": 720,
+   "h": 1080,
+   "webp": 127762
+  },
+  "V08": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Garmand.png",
+   "mtimeMs": 1791821244683,
+   "bytes": 2790075,
+   "sha1": "f2d1a6307d",
+   "w": 720,
+   "h": 1080,
+   "webp": 166316
+  },
+  "V09": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Ricochet Bombergue.png",
+   "mtimeMs": 1791821183629,
+   "bytes": 2729203,
+   "sha1": "4161301183",
+   "w": 720,
+   "h": 1080,
+   "webp": 187866
+  },
+  "V10": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Korvo.png",
+   "mtimeMs": 1791820591915,
+   "bytes": 3006532,
+   "sha1": "f3a26893bc",
+   "w": 720,
+   "h": 1080,
+   "webp": 167940
+  },
+  "V11": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Gary.png",
+   "mtimeMs": 1791821367664,
+   "bytes": 2508090,
+   "sha1": "0eb80349d0",
+   "w": 720,
+   "h": 1080,
+   "webp": 120784
+  },
+  "V12": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Anasin.png",
+   "mtimeMs": 1791821724378,
+   "bytes": 2611825,
+   "sha1": "5b0c251291",
+   "w": 720,
+   "h": 1080,
+   "webp": 133836
+  },
+  "V13": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Saliens.png",
+   "mtimeMs": 1791821782443,
+   "bytes": 2844426,
+   "sha1": "58c8405fbc",
+   "w": 720,
+   "h": 1080,
+   "webp": 195356
+  },
+  "V14": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Tio Frank.png",
+   "mtimeMs": 1791821855980,
+   "bytes": 2523569,
+   "sha1": "21784c9eb5",
+   "w": 720,
+   "h": 1080,
+   "webp": 140784
+  },
+  "V15": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Brenda.png",
+   "mtimeMs": 1791821588723,
+   "bytes": 2648034,
+   "sha1": "4fc3681695",
+   "w": 720,
+   "h": 1080,
+   "webp": 157466
   }
  }
 }

@@ -14,11 +14,17 @@
   };
 
   const ATRIBUTOS = [
-    { id: 'pod', nome: 'Poder',        abre: 'POD', tipo: 'ataque', par: 0 },
+    { id: 'pod', nome: 'Ataque',       abre: 'ATQ', tipo: 'ataque', par: 0 },
     { id: 'def', nome: 'Defesa',       abre: 'DEF', tipo: 'defesa', par: 0 },
     { id: 'int', nome: 'Inteligência', abre: 'INT', tipo: 'ataque', par: 1 },
     { id: 'vel', nome: 'Velocidade',   abre: 'VEL', tipo: 'defesa', par: 1 },
   ];
+
+  // Prévia: propostas do repositório (cartas_79.json / habilidades_129.json) — NÃO APROVADAS pelo autor.
+  if (typeof require !== 'undefined' && typeof window === 'undefined') { try { require('./propostas.js'); } catch (e) { /* sem propostas */ } }
+  const PROP = root.DS_PROPOSTAS || null;
+  // perfil proposto -> estilo visual da carta (efeito cosmético; raridade oficial ainda pendente)
+  const PERFIL_ESTILO = { 'Elite': 'lendaria', 'Forte': 'epica', 'Padrão': 'rara', 'Modesta': 'comum', 'Frágil': 'comum', 'Azar': 'comum' };
 
   const RARIDADES = {
     comum:    { nome: 'Comum' },
@@ -151,17 +157,21 @@
       const g = gerarProvisorio(id);
       const d = CARTAS_DEFINITIVAS[id] || {};
       const definitiva = !!d.stats;
-      const st = d.stats || g.stats;
+      const pr = !definitiva && PROP && PROP.cartas[id] ? PROP.cartas[id] : null;
+      const st = d.stats || (pr ? pr.s : g.stats);
       return {
         id: id, nome: nome, serie: serie, nota: nota, uniao: uniao,
-        descricao: d.descricao || '',
+        descricao: d.descricao || (pr ? pr.d : ''),
+        perfil: pr ? pr.p : null,
+        proposta: !!pr && !pr.a,
+        aprovada: !!(pr && pr.a),
         stats: { pod: st[0], def: st[1], int: st[2], vel: st[3] },
-        raridade: d.raridade || g.raridade,
-        especial: d.especial || g.especial,
-        provisorio: !definitiva,
+        raridade: d.raridade || (pr ? PERFIL_ESTILO[pr.p] || 'comum' : g.raridade),
+        especial: d.especial || (pr ? pr.e : g.especial),
+        provisorio: !definitiva && !(pr && pr.a),
       };
     });
   }
 
-  root.DS_DATA = { SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: montarCartas(), hash: hash, rng: rng };
+  root.DS_DATA = { SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: montarCartas(), HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
 })(typeof window !== 'undefined' ? window : globalThis);

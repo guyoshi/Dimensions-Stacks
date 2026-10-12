@@ -2,7 +2,7 @@
   "metadata": {
     "jogo": "Dimensions Stacks",
     "tipo": "PREVIA_DE_CARTAS",
-    "status": "PROPOSTA_NAO_APROVADA",
+    "status": "APROVADA",
     "idioma": "pt-BR",
     "quantidade": 79,
     "atributos": [
@@ -11,15 +11,20 @@
       "INT",
       "VEL"
     ],
-    "escala": "0-100 PROPOSTA, NAO APROVADA",
+    "escala": "0-100 APROVADA",
     "nomenclatura_atq": "APROVADA",
     "limite_descricao": 120,
     "descricao_limite_status": "PROPOSTA_DE_LAYOUT",
     "fonte_regras": "docs/REGRAS.md",
     "fonte_canon": "docs/ELENCO_CANDIDATO.md",
     "guia": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
-    "aviso": "Valores, habilidades, tiers e textos nao sao dados finais. Somente previews e revisao ate aprovacao explicita do autor.",
-    "versao_balanceamento": "Revisao qualitativa: 16 perfis ajustados para dispersar atributos dominantes. Ainda nao validado por simulacao."
+    "aviso": "Cartas (atributos, descricoes e habilidades sugeridas) aprovadas pelo autor em 12/10/2026, por instrucao direta no chat. Nenhuma carta foi alterada na aprovacao.",
+    "versao_balanceamento": "Revisao qualitativa: 16 perfis ajustados para dispersar atributos dominantes. Ainda nao validado por simulacao.",
+    "aprovacao": {
+      "data": "2026-10-12",
+      "por": "autor",
+      "escopo": "79 cartas de cartas_79.json"
+    }
   },
   "cartas": [
     {
@@ -39,7 +44,7 @@
       "uniao": "nao",
       "fonte_identificador": "J1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J02",
@@ -58,7 +63,7 @@
       "uniao": "nao",
       "fonte_identificador": "J1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J03",
@@ -77,7 +82,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "J1/J3/J4",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J04",
@@ -96,7 +101,7 @@
       "uniao": "nao",
       "fonte_identificador": "J1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J05",
@@ -115,7 +120,7 @@
       "uniao": "nao",
       "fonte_identificador": "J1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J06",
@@ -134,7 +139,7 @@
       "uniao": "nao",
       "fonte_identificador": "J1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J07",
@@ -153,7 +158,7 @@
       "uniao": "nao",
       "fonte_identificador": "J1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J08",
@@ -172,7 +177,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J09",
@@ -191,7 +196,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J10",
@@ -210,7 +215,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J11",
@@ -229,7 +234,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J12",
@@ -248,7 +253,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J13",
@@ -267,7 +272,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J14",
@@ -286,7 +291,7 @@
       "uniao": "nao",
       "fonte_identificador": "J2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J15",
@@ -305,7 +310,7 @@
       "uniao": "nao",
       "fonte_identificador": "J3",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J16",
@@ -324,7 +329,7 @@
       "uniao": "nao",
       "fonte_identificador": "J3",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J17",
@@ -343,7 +348,7 @@
       "uniao": "nao",
       "fonte_identificador": "J3",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J18",
@@ -362,7 +367,7 @@
       "uniao": "nao",
       "fonte_identificador": "J3",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J19",
@@ -381,7 +386,7 @@
       "uniao": "nao",
       "fonte_identificador": "J3",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J20",
@@ -400,7 +405,7 @@
       "uniao": "nao",
       "fonte_identificador": "J4",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J21",
@@ -419,7 +424,7 @@
       "uniao": "nao",
       "fonte_identificador": "J4",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J22",
@@ -438,7 +443,7 @@
       "uniao": "nao",
       "fonte_identificador": "J4",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "J23",
@@ -457,7 +462,7 @@
       "uniao": "nao",
       "fonte_identificador": "J4",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V01",
@@ -476,7 +481,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V02",
@@ -495,7 +500,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V03",
@@ -514,7 +519,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V04",
@@ -533,7 +538,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V05",
@@ -552,7 +557,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V06",
@@ -571,7 +576,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V07",
@@ -590,7 +595,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V08",
@@ -609,7 +614,7 @@
       "uniao": "nao",
       "fonte_identificador": "V-manuscrito",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V09",
@@ -628,7 +633,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Baixa",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V10",
@@ -647,7 +652,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V11",
@@ -666,7 +671,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V12",
@@ -685,7 +690,7 @@
       "uniao": "nao",
       "fonte_identificador": "V-manuscrito",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V13",
@@ -704,7 +709,7 @@
       "uniao": "nao",
       "fonte_identificador": "V-manuscrito",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V14",
@@ -723,7 +728,7 @@
       "uniao": "nao",
       "fonte_identificador": "V",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "V15",
@@ -742,7 +747,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "V-manuscrito",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S01",
@@ -761,7 +766,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "S",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S02",
@@ -780,7 +785,7 @@
       "uniao": "nao",
       "fonte_identificador": "S",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S03",
@@ -799,7 +804,7 @@
       "uniao": "nao",
       "fonte_identificador": "S",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S04",
@@ -818,7 +823,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S05",
@@ -837,7 +842,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S06",
@@ -856,7 +861,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S07",
@@ -875,7 +880,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S08",
@@ -894,7 +899,7 @@
       "uniao": "nao",
       "fonte_identificador": "S",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S09",
@@ -913,7 +918,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S10",
@@ -932,7 +937,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S11",
@@ -951,7 +956,7 @@
       "uniao": "nao",
       "fonte_identificador": "S/autor",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S12",
@@ -970,7 +975,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S13",
@@ -989,7 +994,7 @@
       "uniao": "nao",
       "fonte_identificador": "S",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "S14",
@@ -1008,7 +1013,7 @@
       "uniao": "nao",
       "fonte_identificador": "S-misto",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D01",
@@ -1027,7 +1032,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D02",
@@ -1046,7 +1051,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D03",
@@ -1065,7 +1070,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D04",
@@ -1084,7 +1089,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D05",
@@ -1103,7 +1108,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D06",
@@ -1122,7 +1127,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D07",
@@ -1141,7 +1146,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D08",
@@ -1160,7 +1165,7 @@
       "uniao": "nao",
       "fonte_identificador": "D2-histórico",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D09",
@@ -1179,7 +1184,7 @@
       "uniao": "nao",
       "fonte_identificador": "Autor",
       "confianca_da_descricao": "Baixa",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D10",
@@ -1198,7 +1203,7 @@
       "uniao": "nao",
       "fonte_identificador": "D2-histórico",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D11",
@@ -1217,7 +1222,7 @@
       "uniao": "nao",
       "fonte_identificador": "D2-histórico",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D12",
@@ -1236,7 +1241,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1/D2",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D13",
@@ -1255,7 +1260,7 @@
       "uniao": "nao",
       "fonte_identificador": "D1",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "D14",
@@ -1274,7 +1279,7 @@
       "uniao": "nao",
       "fonte_identificador": "D2-histórico",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M01",
@@ -1293,7 +1298,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M02",
@@ -1312,7 +1317,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M03",
@@ -1331,7 +1336,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M04",
@@ -1350,7 +1355,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M05",
@@ -1369,7 +1374,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M06",
@@ -1388,7 +1393,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M07",
@@ -1407,7 +1412,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Média",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M08",
@@ -1426,7 +1431,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M09",
@@ -1445,7 +1450,7 @@
       "uniao": "nao",
       "fonte_identificador": "Autor",
       "confianca_da_descricao": "Baixa",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M10",
@@ -1464,7 +1469,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "Autor",
       "confianca_da_descricao": "Baixa",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M11",
@@ -1483,7 +1488,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "M12",
@@ -1502,7 +1507,7 @@
       "uniao": "nao",
       "fonte_identificador": "M",
       "confianca_da_descricao": "Alta",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     },
     {
       "id": "B01",
@@ -1521,7 +1526,7 @@
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "Autor",
       "confianca_da_descricao": "Baixa",
-      "status": "PROPOSTA_NAO_APROVADA"
+      "status": "APROVADA"
     }
   ]
 }

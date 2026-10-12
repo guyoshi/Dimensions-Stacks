@@ -76,7 +76,8 @@ try:
           elif 'preparar' in dt:
             pick = btns[0] if random.random() < .5 else btns[1]
           else:
-            pick = random.choice(btns)
+            pre = [x for x in btns if x.get_attribute('data-v') == '@prep']
+            pick = pre[0] if pre and random.random() < .5 else random.choice([x for x in btns if x.get_attribute('data-v') != '@prep'] or btns)
           pg.wait_for_timeout(250 if fast <= 1 else 30); 
           if fast <= 1 and 'attr' in shots and 'attr2' not in shots: pass
           pick.click(); continue
