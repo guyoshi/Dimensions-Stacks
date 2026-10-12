@@ -1,6 +1,8 @@
-# Dimensions Stacks — Modelo de fichas em branco (arquivo auxiliar v0.2)
+# Dimensions Stacks — MODELO HISTÓRICO de fichas vazias (arquivo auxiliar arquivado)
 
-> **MODELO EM BRANCO, NÃO USAR COMO FONTE DE ATRIBUTOS.** As **87 fichas preenchidas com descrições, números e habilidades sugeridos** estão em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md). Este arquivo conserva apenas a antiga **matriz vazia e os apontamentos preliminares** de design para consulta. Ambos são propostas não aprovadas; veja o [contrato de autoridade](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+> **ARQUIVO ARQUIVADO, NÃO É FONTE DE DADOS.** As 87 cartas completas foram **APROVADAS em 12/10/2026**. Importar apenas [JSON oficial](../dados/oficial/cartas_87.json), consultar [Baralho oficial](BARALHO_OFICIAL.md) e [Fichas em Markdown aprovadas](CARTAS_87_PROPOSTAS.md). Este modelo continua somente como histórico de campos vazios; qualquer “proposta” abaixo descreve o planejamento antigo, não revoga a aprovação atual.
+
+> Este modelo em branco está superado pela aprovação autoral. A lista e os números oficiais estão em [BARALHO_OFICIAL.md](BARALHO_OFICIAL.md).
 
 ## 1. Padrão recomendado, aguardando aprovação do autor
 
@@ -168,9 +170,9 @@ Além dos números, cada carta terá:
 
 `ATQ*`: se o autor preferir manter o nome original, renomear a coluna para `POD` antes de preencher dados; **nenhum atributo foi renomeado oficialmente ainda**.
 
-## 4. Proposta de quantidade por partida (não aprovada)
+## 4. Configuração aprovada posteriormente (ver fonte atual)
 
-Para evitar que o conjunto atual de 87 personagens seja dividido desigualmente, testar **18 cartas por jogador** em partidas todos-contra-todos:
+Como configuração inicial aprovada para testes, distribuir **18 cartas por jogador** em partidas todos-contra-todos:
 
 | Jogadores | Cartas selecionadas para a partida | Baralho ativo inicial por jogador | Reserva por jogador |
 | ---: | ---: | ---: | ---: |
@@ -178,7 +180,7 @@ Para evitar que o conjunto atual de 87 personagens seja dividido desigualmente, 
 | 3 | 54 | 7 | 11 |
 | 4 | 72 | 7 | 11 |
 
-Com isso, as cartas restantes entre as 83 não entram naquela partida. O tamanho 18 é **proposta de teste**; ajustes de duração da partida poderão mudar o número. Não confundir as **87 cartas candidatas da coleção** com a quantidade de cartas **efetivamente distribuídas numa partida**.
+Historicamente, as cartas restantes da coleção não entrariam na partida inicial. O tamanho 18 foi **aprovado como configuração inicial para testes**; ajustes de duração da partida poderão mudar o número. Não confundir as **87 cartas candidatas da coleção** com a quantidade de cartas **efetivamente distribuídas numa partida**.
 
 ## 5. Referências
 
