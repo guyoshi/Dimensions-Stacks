@@ -1,4 +1,4 @@
-# Dimensions Stacks — Ataques especiais e estado do acervo (v0.5)
+# Dimensions Stacks — Ataques especiais e estado do acervo (v0.6)
 
 > **ÍNDICE ATUALIZADO.** Consulte também as [leituras provisórias de IA](LEITURAS_IA_PENDENTES_2026-10-12.md) e as correções do [GDD atualizado](REGRAS.md). A fonte mais confiável para os efeitos das **23 cartas transcritas** diretamente pelo autor é [Transcrições confirmadas](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md). O [inventário fotográfico inicial](INVENTARIO_FOTOGRAFICO_LEGADO.md) está arquivado: contém hipóteses de leitura e balanceamento feitas **antes** dos esclarecimentos do autor. Os documentos de referência não são equivalentes: em divergências, prevalece a transcrição original do autor e suas decisões expressas. Não reutilizar automaticamente os nomes, valores e biografias físicos na versão digital.
 
@@ -50,7 +50,7 @@
 - **Total de números de cartas físicas identificados: 59**. Se o baralho original seguia 01 a 62 sem lacunas, faltam **16, 26 e 55**.
 - A **carta verde sem nome** visível numa fotografia permanece sem identificação. Não relacioná-la automaticamente aos números ausentes.
 - **18 Ricochett Bombargue e 24 Primus Tenesy:** os efeitos originais foram retirados da versão PC pelo autor. Os números seguem no inventário histórico.
-- **12 Pecker:** texto incerto (“deposie sete ...”), exige confirmação antes de criar regra.
+- **12 Pecker (CONFIRMADO):** recupere **duas cartas aleatórias do Buraco Negro** e coloque-as **ao fim do próprio meio de reserva**. A leitura antiga “deposie sete” foi corrigida diretamente pelo autor.
 - **10 Beatriz:** a fotografia individual anterior já permitiu recuperar o efeito de troca de cartas de combate; a nova leitura traz só “Antes do combate...”.
 
 ### Trechos ampliados nesta atualização
@@ -62,24 +62,28 @@
 | 47 | Kate Fira | CARTA DEFESA: Impeça qualquer ataque especial neste turno | Texto fornecido pelo autor; leitura antiga indicava “CARTA DUPLA” |
 | 49 | Temi Lokat | CARTA DEFESA: Impeça o rival de te vencer neste turno | Texto fornecido pelo autor; falta definir resolução |
 | 50 | Raum Cedar | CARTA ATAQUE... Obrigue cada jogador a descartar uma carta aleatória ao Buraco Negro | Abertura do texto ainda parcial |
-| 52 | Luar Engeal | CARTA CORINGA: Vença este turno e roube as cartas dos adversários para si | Forte, a testar e especificar prioridade |
+| 52 | Luar Engeal | CARTA CORINGA: Vença este turno e roube as cartas dos adversários para si | **RETIRADO pelo autor:** texto preservado apenas historicamente; não usar o efeito original. |
 | 62 | Anasin | Utilize um ataque especial mais de uma vez, ma descarte duas cartas a sua escolha ao Buraco Negro | “ma” preservado como na leitura; possivelmente “mas” |
 
 ### Habilidades e identificações pendentes
 
-**Ainda sem efeito suficiente para implementação:** 03 Édelin, 05 Brenda, 07 Releuz, 08 Breno, 39 Capitã Nastácia, 44 Monthar Pollar, 45 Merryn, 51 Lissan Tellus e 53 Atrum Morlet, além das cartas desconhecidas **16, 26, 55**. O texto de **12 Pecker** precisa de confirmação.
+**Ainda sem efeito suficiente para implementação:** 03 Édelin, 05 Brenda, 07 Releuz, 08 Breno, 39 Capitã Nastácia, 44 Monthar Pollar, 45 Merryn, 51 Lissan Tellus e 53 Atrum Morlet, além das cartas desconhecidas **16, 26, 55**. O texto de **12 Pecker** foi confirmado diretamente pelo autor.
 
 **Importante:** números de cartas físicas e códigos do futuro baralho digital são coisas distintas. As cartas antigas servem para **reaproveitar mecânicas**, não para copiar automaticamente elenco, cor, atributo ou história. A carta nova de Édelin continua com código digital **B01**, embora a carta física antiga dela fosse #03.
 
 ## 4. Focos de risco para testes
 
 - **#18 Inversão de resultado:** retirado do jogo, arquivado para rastreabilidade.
-- **#34 Master Kang:** menciona roubar uma carta de cada jogador, mas duelos só têm um oponente. Definir alternativa ou restrição.
+- **#34 Master Kang:** o texto integral pressupõe dois adversários distintos; em duelo há só um. Não converter automaticamente em roubo duplo do mesmo jogador.
 - **#35 e #46 Reservas:** diferenciar rotação coletiva de troca bilateral e casos de reserva vazia.
 - **#36 Reserva:** seleção e ordenação podem ser fortes, mas implicam custo especial e não devem ser cortadas sem teste.
 - **#19 Buraco Negro:** o autor confirmou tratar-se da zona única de descarte; esclarecer custo e retorno das três cartas.
 - **#60 e #61 Cor:** só adaptar depois de definir o alvo e o critério funcional que substituirá azul/vermelho.
 - **#06 Especial já usado:** esclarecer em que ponto da janela de ativação a carta é capturada antes de ir ao Buraco Negro.
+- **#40 / #43:** quando esquerda e direita indicam o mesmo adversário no duelo, movimentar cartas de volta para ele não traz ganho, mas a habilidade pode ser usada, conforme preferência do jogador.
+- **#52:** efeito físico original aposentado; vitória automática poderá existir apenas em novas habilidades raras, depois de definição e teste.
+- **#54:** descarte atinge só as cartas normais em combate, não especiais preparadas.
+- **#62:** repetir especiais com custo é permitido, mas **não gerar ciclos infinitos**. Ver biblioteca e GDD.
 - **#24 Mistura Inteligência/Poder:** excluído do conjunto ativo e arquivado.
 
 ## 5. Documentação
@@ -89,3 +93,9 @@
 - [Regras e dinâmica oficial/proposta](REGRAS.md).
 - [Inventário fotográfico legado, com interpretações superadas](INVENTARIO_FOTOGRAFICO_LEGADO.md).
 - [Revisão histórica anterior à transcrição](REVISAO_ESPECIAIS_2026-10-12.md).
+
+## 6. Decisões de funcionamento e atribuição posteriores
+
+**Ativação:** o proprietário escolhe **qual ataque especial preparado** utilizar e **em qual rodada**. Continua pendente decidir se pode ativar voluntariamente ambos na mesma disputa; a habilidade #59 obriga o oponente a usar todas as preparadas, até duas. Para efeitos entre oponentes simultâneos, prioridade e janela ainda não estão fechadas.
+
+**Catálogo ativo:** [128 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md), com 128 colunas de atribuição ainda vazias, inclusive proposta de vitória rara **AE-129**. O ID antigo **AE-104 foi aposentado** junto com o efeito da carta física #52, sem renumerar os demais. Recuperação direta de #12 inspira **AE-087**.
