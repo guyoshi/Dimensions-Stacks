@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.5)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.6)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -106,21 +106,22 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 - Não recuperar ataques especiais preparados sem regra expressa.
 - Não roubar cartas já colocadas no campo de combate, **salvo efeito de carta explicitamente autorizado**.
 
-## 9. Identidade visual: proposta para a versão PC
+## 9. Identidade visual aprovada para a versão PC (12/10/2026)
 
-**Substituir as cores como julgamento moral** ('verde = herói', 'vermelho = vilão') por uma **identidade de série/universo**. Evita classificar ambiguamente personagens de Jesed. Exemplo de proposta, **não final**:
+**Decisão definitiva do autor para a cor-base por série, não por heroísmo/vilania:**
 
-| Origem | Cor-base sugerida | Marca textual |
+| Série de origem | Cor aprovada | Marca na carta |
 | --- | --- | --- |
-| Ciclo de Jesed | bronze / verde profundo | JESED |
-| Viajantes Dimensionais | turquesa | VIAJANTES |
-| Spacetheft | azul interestelar | SPACETHEFT |
-| Diário Sobrenatural | vinho / ameixa | DIÁRIO |
-| Mistério Oculto | grafite / violeta | MISTÉRIO |
-| A União | prata / branco | UNIÃO |
-| Édelin | âmbar | ÉDELIN |
+| Viajantes Dimensionais | **Azul** | VIAJANTES |
+| Mistério Oculto | **Vermelha** | MISTÉRIO OCULTO |
+| Ciclo de Jesed | **Amarela** | JESED |
+| Série de Édelin / Belfex (nome da série pendente) | **Verde** | BELFEX |
+| Diário Sobrenatural | **Roxo** | DIÁRIO SOBRENATURAL |
+| Spacetheft | **Preta** | SPACETHEFT |
 
-Usar **ícones/selos separados** para raridade, papel mecânico e filiação à União. Personagens que aparecem em mais de uma série mantêm uma origem principal e podem receber selo de crossover. A cor **não muda regras de combate**. Efeitos antigos baseados em 'cartas azuis/vermelhas' precisam ser reescritos para critério funcional (ver ATAQUES_ESPECIAIS.md).
+**A União não tem cor-base exclusiva**: seus integrantes conservam a cor da própria série e recebem um **selo sobreposto de filiação**. Raridade, status mecânico e filiação são atributos visuais independentes. O uso de cores **não modifica regras**, não oferece bônus, não determina se personagem é herói/vilão e **não pode ser usado literalmente** pelos ataques físicos antigos #60 (azul) e #61 (vermelho); esses precisam de nova condição mecânica.
+
+Cuidar da acessibilidade: moldura preta com texto de alto contraste, moldura amarela com texto escuro, e não depender apenas de cor para identificar origem.
 
 ## 10. Princípios de balanceamento para testes
 
@@ -242,3 +243,14 @@ Destaques para especificação futura:
 3. **Especial repetido** (#62) pode ter custo alto (duas cartas) e ainda assim criar cadeia de ativações; exigir definição clara de limite e se repetição da própria carta seria permitida.
 4. **Itens identificados vs. elenco definitivo:** #03 Édelin é um número da carta de infância, não substitui o código B01 da carta digital. Nenhuma atribuição de habilidade à personagem do novo elenco está aprovada por mera coincidência de nome físico.
 5. **Uso de múltiplos especiais num combate:** o manual original tinha contradição sobre uso de 1 ou 2 voluntariamente, mas #59 já foi confirmado como obrigando todas as **preparadas**. Resolver a limitação voluntária antes de definir #47 e #62.
+
+
+## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
+
+- O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **79 personagens candidatos** das séries serão distribuídos posteriormente.
+- Foi criada a [biblioteca de **128 ataques especiais candidatos**](BIBLIOTECA_ATAQUES_ESPECIAIS.md), agrupados em 13 famílias, com coluna `Carta atribuída (ID)` vazia em todas as habilidades, para que nenhuma seja atribuída a personagem por acidente.
+- A [auditoria de **62 posições do baralho físico**](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
+- Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
+- **Habilidade proposta pelo autor, texto parcial:** “roube a última carta do meio de reserva de cada adversário”; consta como **AE-048**, aguardando confirmação do trecho cortado ao final da mensagem.
+- **Fatores para balanceamento:** custo irreversível do próprio especial, risco para a carta normal, alcance do efeito com 2/3/4 jogadores, zonas afetadas, janela de ativação, direito a contra-ataque e prevenção de cadeias infinitas de recuperação/cópia.
+- **Não começar programando os casos perigosos:** vitória automática, limpeza global de campo, repetição de especiais e uso forçado combinado com anulação precisam de modelo de prioridade/reação, antes de qualquer decisão final.
