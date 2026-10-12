@@ -1,19 +1,19 @@
-# Dimensions Stacks — 87 cartas candidatas com atributos, descrições e especiais (v0.3)
+# Dimensions Stacks — 87 cartas do baralho aprovado (v1.0)
 
-> **STATUS GLOBAL: PROPOSTA CRIATIVA, NÃO APROVADA PELO AUTOR PARA IMPLEMENTAÇÃO.** Baseado nos cânones dos livros e no manuscrito de *A Patrulha de Korvo*. Detalhes canônicos têm graus de confiança distintos, identificados por linha. Os números e as atribuições mecânicas abaixo **não são fatos do universo literário nem regras já aprovadas**. **Nenhuma IA implementadora deve tratá-los como dados definitivos até aprovação explícita.**
+> **APROVAÇÃO AUTORAL: 12/10/2026, escopo das 87 cartas.** Os 87 nomes/IDs, as descrições impressas, os atributos ATQ/DEF/INT/VEL e os IDs de Habilidade Especial atribuídos na tabela estão **APROVADOS como dados do jogo**. Isto **não** transforma descrições especulativas em fatos dos romances, nem dispensa testes de balanceamento e legibilidade. Fonte de autoridade: [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 1. Contrato de tamanho e campos
 
-- **Descrição curta:** máximo de **120 caracteres Unicode**, incluindo espaços e pontuação. A tabela registra `Tamanho` para facilitar verificação. Este limite é **proposta visual** inspirada no espaço de texto das cartas físicas antigas, que apresentavam biografias em fonte muito pequena. O tamanho real depende de fonte, imagem e proporção da carta: **validar visualmente antes da arte final**.
+- **Descrição curta:** máximo de **120 caracteres Unicode**, incluindo espaços e pontuação. A tabela registra `Tamanho` para facilitar verificação. Este limite é **regra editorial aprovada para as fichas** inspirada no espaço de texto das cartas físicas antigas, que apresentavam biografias em fonte muito pequena. O tamanho real depende de fonte, imagem e proporção da carta: **validar visualmente antes da arte final**.
 - **Atributos naturais inteiros:** `ATQ`, `DEF`, `INT`, `VEL` entre 0 e 100. O autor **aprovou definitivamente o nome Ataque no lugar de Poder**. Manter os confrontos Ataque/Defesa e Inteligência/Velocidade; ATQ e INT são ofensivos.
 - **Soma** é a soma dos 4 números naturais. Desempate: atributo escolhido, depois soma dos 4, depois soma ATQ + INT, conforme a regra confirmada.
-- **Classes abaixo** são rótulos internos **propostos** para testar equilíbrio, sem criar classe de personagem nem bônus: `Azar` (soma <150), `Frágil` (150–194), `Modesta` (195–239), `Padrão` (240–284), `Forte` (285–319), `Elite` (320+). **Somas não precisam ser iguais**: cartas deliberadamente ruins são parte do jogo e podem ser trocadas com habilidades.
-- **União:** os 7 integrantes confirmados e Jennifer futura **receberam especiais candidatos de maior impacto** ou controle, mas nem todos precisam ser fortes em todos os atributos. Não existe habilidade exclusivamente reservada aos membros da União sem aprovação do autor; isso é uma **prioridade de curadoria**, não regra.
-- **Fonte/Grau:** `Alta` = identidade/traço fundamentado em fonte canônica; `Média` = informação escassa ou material classificado como misto/histórico; `Baixa` = apenas nome/referência autoral, **não inventar feitos ou capacidades**. **Todos** os valores, classes e especiais são hipóteses de game design, mesmo nas linhas com grau `Alta`.
+- **Classes abaixo** são rótulos internos **aprovados como classificação analítica** para acompanhamento do equilíbrio, sem criar classe de personagem nem bônus: `Azar` (soma <150), `Frágil` (150–194), `Modesta` (195–239), `Padrão` (240–284), `Forte` (285–319), `Elite` (320+). **Somas não precisam ser iguais**: cartas deliberadamente ruins são parte do jogo e podem ser trocadas com habilidades.
+- **União:** os 7 integrantes confirmados e Jennifer futura **receberam habilidades especiais de maior impacto, aprovadas pelo autor** ou controle, mas nem todos precisam ser fortes em todos os atributos. A atribuição registrada é **aprovada**, mas não significa exclusividade de habilidades: podem ser reaproveitadas em outras cartas futuras.
+- **Fonte/Grau:** `Alta` = identidade/traço fundamentado em fonte canônica; `Média` = informação escassa ou material classificado como misto/histórico; `Baixa` = apenas nome/referência autoral, **não inventar feitos ou capacidades**. **Todos os valores, classes e especiais são decisões aprovadas para o jogo**, mesmo nas linhas com grau `Alta`, que indica confiança sobre a **biografia**, não a força no jogo.
 - **Spoilers:** descrições de frente de carta evitam mortes, reviravoltas e identidades secretas. A conexão de Mark com fases temporais consta em fontes de autor e necessita aprovação editorial antes de aparecer publicamente.
 - **Coluna da biblioteca:** por solicitação anterior do autor, **não preencher ainda a coluna `Carta atribuída` na biblioteca central dos especiais**, que continua vazia. Esta matriz contém uma **primeira sugestão reversível** de pareamento `carta ↔ habilidade`, não uma atribuição confirmada.
 
-## 2. Tabela de fichas de cartas propostas (87)
+## 2. Fichas oficiais do baralho (87)
 
 | ID | Nome da carta | Descrição curta (até 120) | Tamanho | ATQ | DEF | INT | VEL | Soma | Perfil | Especial sugerido | A União | Fonte | Grau |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- |
@@ -221,7 +221,7 @@ A entrada **D09 Diego** não tem perfil verificável no material consultado; por
 
 ## 6. Estado do projeto e próximo passo
 
-**87 fichas propostas preenchidas, 87/87 ainda não aprovadas.** Atribuições podem mudar para adequar cânone, raridade, coerência e equilíbrio. O GDD separa regras confirmadas de propostas em [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). [Elenco original](ELENCO_CANDIDATO.md) · [Catálogo de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Reações defensivas](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
+**87 fichas de cartas aprovadas; 87/87 possuem atributos e especial atribuído.** Atribuições podem mudar para adequar cânone, raridade, coerência e equilíbrio. O GDD separa regras confirmadas de propostas em [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). [Elenco original](ELENCO_CANDIDATO.md) · [Catálogo de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Reações defensivas](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
 
 ## 7. Correção da primeira distribuição após auditoria de atributos
 
@@ -241,7 +241,7 @@ Distribuição atual do maior atributo por carta: **ATQ 19, DEF 20, INT 28, VEL 
 
 **Correção de identificação:** o rei dos Obbs indicado pelo autor é **Gaia**, cujo título narrativo exato é **Grande Pai**; Lanigiah é de outro povo (Aracnas). O Obb que ajuda os irmãos é **Seti**. **Facka/Faka:** manter a grafia solicitada pelo autor para o projeto do jogo, mas padronizar com o manuscrito quando ele decidir o nome definitivo.
 
-**Estado:** todos os quatro campos numéricos, perfis e associações de habilidades são **PROPOSTA**, aguardando revisão do autor. Suas identidades, funções e relações com os irmãos foram conferidas no manuscrito. **O número de habilidades da biblioteca permanece 129**, com atribuição definitiva vazia: não são ataques físicos automaticamente transplantados.
+**Estado:** todos os quatro campos numéricos, perfis e associações de habilidades são **APROVADA PARA O JOGO**, sujeita a testes e revisões futuras. Suas identidades, funções e relações com os irmãos foram conferidas no manuscrito. **O número de habilidades da biblioteca permanece 129**, com atribuição definitiva vazia: não são ataques físicos automaticamente transplantados.
 
 
 ## 9. Família Carnam: personagens e Elos do primeiro livro
@@ -259,4 +259,10 @@ Distribuição atual do maior atributo por carta: **ATQ 19, DEF 20, INT 28, VEL 
 
 **Separar núcleos:** D17 Avó Carnam não é D10 Avó de Kelly. **Não duplicar** D07 Ingrid nem D13 Suéten. **Não confundir Carnam com o pai de Vini** por causa da arma mencionada no Elo.
 
-**Limites de conhecimento:** o cânone consultado não comprova valores de ATQ/DEF/INT/VEL nem poderes de jogo correspondentes aos objetos; são **somente propostas de balanceamento**. O texto real impresso na carta terá até 120 caracteres, conforme norma visual ainda sujeita a teste.
+**Limites de conhecimento:** o cânone consultado não comprova valores de ATQ/DEF/INT/VEL nem poderes de jogo correspondentes aos objetos; são **atribuições aprovadas para o jogo**. O texto real impresso na carta terá até 120 caracteres, conforme norma visual ainda sujeita a teste.
+
+## 10. Registro de aprovação (12/10/2026)
+
+O autor disse **“Aprove tudo”** após a inclusão dos membros da Família Carnam. Isso ratifica **as 87 fichas completas** (identidade, texto da descrição, atributos naturais, soma correspondente, perfil de design e referência AE) como **v1.0 do baralho**. Os 8 integrantes presentes/futuros de A União conservam suas habilidades marcantes, e os 87 registros não serão alterados automaticamente por otimizações da IA. **Desempenho em partida e biografias de personagens com fonte `Baixa` exigem validação distinta.**
+
+Há **78 IDs de habilidades distintos equipados nas 87 cartas**; repetições entre personagens são intencionais e legais. Os **51 IDs de habilidade restantes** na biblioteca de 129 estão disponíveis para futuras expansões. A coluna da biblioteca passa a mostrar as 87 atribuições confirmadas. As cartas antigas e seus nomes/efeitos físicos permanecem apenas como material histórico.
