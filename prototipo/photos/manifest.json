@@ -1,0 +1,203 @@
+{
+ "raiz": "Dimensões Infinitas",
+ "fotos": {
+  "J01": {
+   "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Jokara.png",
+   "mtimeMs": 1790945091622,
+   "bytes": 2125109,
+   "sha1": "7746c91afe",
+   "w": 720,
+   "h": 900,
+   "webp": 76648
+  },
+  "J02": {
+   "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Nestira.png",
+   "mtimeMs": 1787500241000,
+   "bytes": 2394541,
+   "sha1": "3d38f4b4c6",
+   "w": 720,
+   "h": 900,
+   "webp": 87420
+  },
+  "J03": {
+   "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Karesis.png",
+   "mtimeMs": 1788997281989,
+   "bytes": 2350711,
+   "sha1": "774226466a",
+   "w": 720,
+   "h": 900,
+   "webp": 103072
+  },
+  "J04": {
+   "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Gabasteri.png",
+   "mtimeMs": 1791586911665,
+   "bytes": 2455232,
+   "sha1": "183c10aa33",
+   "w": 720,
+   "h": 900,
+   "webp": 116968
+  },
+  "J05": {
+   "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Maletar.png",
+   "mtimeMs": 1791586968404,
+   "bytes": 2777538,
+   "sha1": "3e43efc64d",
+   "w": 720,
+   "h": 1080,
+   "webp": 159494
+  },
+  "J06": {
+   "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Platisa.png",
+   "mtimeMs": 1790989162819,
+   "bytes": 2643618,
+   "sha1": "949f19db4d",
+   "w": 720,
+   "h": 900,
+   "webp": 140290
+  },
+  "J07": {
+   "src": "Ciclo de Jesed/1 - Ruínas dos Céus/02 - Assets/Personagens/Mariv.png",
+   "mtimeMs": 1790989293642,
+   "bytes": 2605261,
+   "sha1": "67bc7d6e7e",
+   "w": 720,
+   "h": 900,
+   "webp": 136796
+  },
+  "J08": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Kaelina.png",
+   "mtimeMs": 1791374615938,
+   "bytes": 2315872,
+   "sha1": "836260c2c5",
+   "w": 720,
+   "h": 900,
+   "webp": 91446
+  },
+  "J09": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Alyra.png",
+   "mtimeMs": 1791377996273,
+   "bytes": 2136731,
+   "sha1": "cd1c0ae9e4",
+   "w": 720,
+   "h": 900,
+   "webp": 73316
+  },
+  "J10": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Daryon Polar.png",
+   "mtimeMs": 1791776554965,
+   "bytes": 2076686,
+   "sha1": "1c6a3bd017",
+   "w": 720,
+   "h": 900,
+   "webp": 52160
+  },
+  "J11": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Cal Edran.png",
+   "mtimeMs": 1791799258059,
+   "bytes": 2149640,
+   "sha1": "2d92fedb42",
+   "w": 720,
+   "h": 960,
+   "webp": 83522
+  },
+  "J12": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Rendar.png",
+   "mtimeMs": 1787500245000,
+   "bytes": 2404451,
+   "sha1": "36026aec41",
+   "w": 720,
+   "h": 900,
+   "webp": 90578
+  },
+  "J13": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Nynestra.png",
+   "mtimeMs": 1787500244000,
+   "bytes": 2666617,
+   "sha1": "751c584ce6",
+   "w": 720,
+   "h": 960,
+   "webp": 127666
+  },
+  "J14": {
+   "src": "Ciclo de Jesed/2 - Guerras de Sangue/02 - Assets/Personagens/Cal Kadrir.png",
+   "mtimeMs": 1791806184216,
+   "bytes": 2242895,
+   "sha1": "0087a55ec1",
+   "w": 720,
+   "h": 960,
+   "webp": 99788
+  },
+  "J15": {
+   "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Dareth Quatro-Dedos.png",
+   "mtimeMs": 1791812577876,
+   "bytes": 2939218,
+   "sha1": "9f29e33be9",
+   "w": 720,
+   "h": 1080,
+   "webp": 191306
+  },
+  "J16": {
+   "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Elis.png",
+   "mtimeMs": 1791811494635,
+   "bytes": 2598008,
+   "sha1": "2cff73f485",
+   "w": 720,
+   "h": 901,
+   "webp": 121450
+  },
+  "J17": {
+   "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Selina.png",
+   "mtimeMs": 1788997050668,
+   "bytes": 2221577,
+   "sha1": "c944fdf220",
+   "w": 720,
+   "h": 900,
+   "webp": 96572
+  },
+  "J18": {
+   "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Vetarius Polar.png",
+   "mtimeMs": 1791375952999,
+   "bytes": 2170729,
+   "sha1": "3fcdf398d7",
+   "w": 720,
+   "h": 900,
+   "webp": 87664
+  },
+  "J19": {
+   "src": "Ciclo de Jesed/3 - Dinastia Polar/02 - Assets/Personagens/Kerath Polar.png",
+   "mtimeMs": 1791811546678,
+   "bytes": 1966800,
+   "sha1": "2f6b42d627",
+   "w": 720,
+   "h": 1080,
+   "webp": 54332
+  },
+  "J21": {
+   "src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/21 ciclos - Nefestra.png",
+   "mtimeMs": 1791586844359,
+   "bytes": 3216619,
+   "sha1": "9c53a9b6a4",
+   "w": 720,
+   "h": 1018,
+   "webp": 205256
+  },
+  "J22": {
+   "src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/25 ciclos - Sefter.png",
+   "mtimeMs": 1791586844419,
+   "bytes": 2907363,
+   "sha1": "34e2d74527",
+   "w": 720,
+   "h": 1018,
+   "webp": 159756
+  },
+  "J23": {
+   "src": "Ciclo de Jesed/4 - Herdeiros das Cinzas/02 - Assets/Personagens/31 ciclos - Kedran.png",
+   "mtimeMs": 1791586844481,
+   "bytes": 2918004,
+   "sha1": "7ed4e597c3",
+   "w": 720,
+   "h": 1018,
+   "webp": 175578
+  }
+ }
+}

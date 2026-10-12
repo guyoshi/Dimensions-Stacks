@@ -1,0 +1,25 @@
+/* gerado por tools/build_fotos.py — não editar */
+window.CARD_IMAGES = {
+ "J01": "photos/J01.webp?v=7746c91afe",
+ "J02": "photos/J02.webp?v=3d38f4b4c6",
+ "J03": "photos/J03.webp?v=774226466a",
+ "J04": "photos/J04.webp?v=183c10aa33",
+ "J05": "photos/J05.webp?v=3e43efc64d",
+ "J06": "photos/J06.webp?v=949f19db4d",
+ "J07": "photos/J07.webp?v=67bc7d6e7e",
+ "J08": "photos/J08.webp?v=836260c2c5",
+ "J09": "photos/J09.webp?v=cd1c0ae9e4",
+ "J10": "photos/J10.webp?v=1c6a3bd017",
+ "J11": "photos/J11.webp?v=2d92fedb42",
+ "J12": "photos/J12.webp?v=36026aec41",
+ "J13": "photos/J13.webp?v=751c584ce6",
+ "J14": "photos/J14.webp?v=0087a55ec1",
+ "J15": "photos/J15.webp?v=9f29e33be9",
+ "J16": "photos/J16.webp?v=2cff73f485",
+ "J17": "photos/J17.webp?v=c944fdf220",
+ "J18": "photos/J18.webp?v=3fcdf398d7",
+ "J19": "photos/J19.webp?v=2f6b42d627",
+ "J21": "photos/J21.webp?v=9c53a9b6a4",
+ "J22": "photos/J22.webp?v=34e2d74527",
+ "J23": "photos/J23.webp?v=7ed4e597c3"
+};
