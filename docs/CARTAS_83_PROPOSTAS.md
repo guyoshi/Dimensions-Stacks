@@ -1,4 +1,4 @@
-# Dimensions Stacks — 79 cartas candidatas com atributos, descrições e especiais (v0.1)
+# Dimensions Stacks — 83 cartas candidatas com atributos, descrições e especiais (v0.2)
 
 > **STATUS GLOBAL: PROPOSTA CRIATIVA, NÃO APROVADA PELO AUTOR PARA IMPLEMENTAÇÃO.** Baseado nos cânones dos livros e no manuscrito de *A Patrulha de Korvo*. Detalhes canônicos têm graus de confiança distintos, identificados por linha. Os números e as atribuições mecânicas abaixo **não são fatos do universo literário nem regras já aprovadas**. **Nenhuma IA implementadora deve tratá-los como dados definitivos até aprovação explícita.**
 
@@ -13,7 +13,7 @@
 - **Spoilers:** descrições de frente de carta evitam mortes, reviravoltas e identidades secretas. A conexão de Mark com fases temporais consta em fontes de autor e necessita aprovação editorial antes de aparecer publicamente.
 - **Coluna da biblioteca:** por solicitação anterior do autor, **não preencher ainda a coluna `Carta atribuída` na biblioteca central dos especiais**, que continua vazia. Esta matriz contém uma **primeira sugestão reversível** de pareamento `carta ↔ habilidade`, não uma atribuição confirmada.
 
-## 2. Tabela de fichas de cartas propostas (79)
+## 2. Tabela de fichas de cartas propostas (83)
 
 | ID | Nome da carta | Descrição curta (até 120) | Tamanho | ATQ | DEF | INT | VEL | Soma | Perfil | Especial sugerido | A União | Fonte | Grau |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- |
@@ -55,6 +55,10 @@
 | V13 | Saliens | Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo. | 87 | 83 | 68 | 59 | 76 | 286 | Forte | AE-046 |  | V-manuscrito | Alta |
 | V14 | Tio Frank | Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás. | 87 | 11 | 39 | 38 | 20 | 108 | Azar | AE-051 |  | V | Alta |
 | V15 | Brenda | Aprendiz em Tayo, destaca-se pela confiança e pela atitude provocadora diante dos colegas. | 90 | 66 | 76 | 86 | 92 | 320 | Elite | AE-073 | ⭐ União | V-manuscrito | Média |
+| V16 | Facka | Jovem Aracna curiosa e falante, guia os irmãos Lins pelos túneis subterrâneos de Belfex. | 88 | 36 | 40 | 75 | 89 | 240 | Padrão | AE-100 |  | V-manuscrito | Alta |
+| V17 | Lanigiah | Rainha das Aracnas, combina imponência e astúcia ao testar a coragem de Banjo na grande caverna. | 96 | 76 | 82 | 95 | 43 | 296 | Forte | AE-096 |  | V-manuscrito | Alta |
+| V18 | Grande Pai Gaia | Líder dos Obbs de Pinesoto, ergue raízes e troncos vivos para proteger seu povo dos invasores. | 94 | 80 | 99 | 89 | 34 | 302 | Forte | AE-103 |  | V-manuscrito | Alta |
+| V19 | Seti | Líder de guerra dos Obbs, supera a desconfiança inicial e ajuda os irmãos durante o ataque a Pinesoto. | 102 | 79 | 85 | 66 | 82 | 312 | Forte | AE-105 |  | V-manuscrito | Alta |
 | S01 | Jasmey Badrock | Pirata Dale impulsivo e carismático, sobrevive com um braço metálico e desafia o código da Lebargan. | 100 | 92 | 76 | 72 | 88 | 328 | Elite | AE-129 | ⭐ União | S | Alta |
 | S02 | Amanda | Aliada de Jasmey, questiona as ordens de Jelles e ajuda a desafiar o domínio da Lebargan. | 89 | 56 | 82 | 73 | 65 | 276 | Padrão | AE-075 |  | S | Alta |
 | S03 | Eric | Irmão de Amanda, sarcástico e curioso, arrisca tudo ao disputar o Olho de Domongo. | 82 | 48 | 47 | 77 | 86 | 258 | Padrão | AE-069 |  | S | Alta |
@@ -157,14 +161,14 @@
 | AE-093 | Espionagem tripla | J21, M11 | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. |
 | AE-094 | Inversão de fila | M03 | Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo. |
 | AE-095 | Atrasar a próxima | V08 | Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho. |
-| AE-096 | Quebrar o plano | J10 | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. |
+| AE-096 | Quebrar o plano | J10, V17 | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. |
 | AE-097 | Escolha de sete | V05 | Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo. |
 | AE-098 | Organizar reserva | D01 | Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada. |
 | AE-099 | Reforçar o fim | S07 | Mova a primeira carta de sua reserva para o fim do seu baralho ativo, sem ver seu conteúdo. |
-| AE-100 | Confundir próximo turno | J16 | Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais. |
+| AE-100 | Confundir próximo turno | J16, V16 | Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais. |
 | AE-101 | Capturar atacante | S08 | Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. |
-| AE-103 | Ruína de campo | B01 | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. |
-| AE-105 | Defesa que captura | J12 | Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la. |
+| AE-103 | Ruína de campo | B01, V18 | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. |
+| AE-105 | Defesa que captura | J12, V19 | Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la. |
 | AE-108 | Negar captura inimiga | D13 | Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor. |
 | AE-110 | Margem estreita | J01 | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. |
 | AE-111 | Ativação forçada | M10 | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. |
@@ -212,10 +216,24 @@ A entrada **D09 Diego** não tem perfil verificável no material consultado; por
 
 ## 6. Estado do projeto e próximo passo
 
-**79 fichas propostas preenchidas, 79/79 ainda não aprovadas.** Atribuições podem mudar para adequar cânone, raridade, coerência e equilíbrio. O GDD separa regras confirmadas de propostas em [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). [Elenco original](ELENCO_CANDIDATO.md) · [Catálogo de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Reações defensivas](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
+**83 fichas propostas preenchidas, 83/83 ainda não aprovadas.** Atribuições podem mudar para adequar cânone, raridade, coerência e equilíbrio. O GDD separa regras confirmadas de propostas em [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). [Elenco original](ELENCO_CANDIDATO.md) · [Catálogo de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Reações defensivas](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
 
 ## 7. Correção da primeira distribuição após auditoria de atributos
 
 A primeira versão concentrava o maior atributo de **43/79 cartas em Inteligência**, o que pode reduzir a variedade de confrontos INT/VEL e tornar Defesa/Velocidade pouco atraentes. Nesta segunda passagem, foram **reajustadas 16 fichas propostas** para equilibrar perfis narrativamente plausíveis: proteção, mobilidade, reflexos e força física também se tornaram características principais. **Não houve mudança em descrições, habilidades sugeridas ou decisões oficiais do autor.**
 
 Distribuição atual do maior atributo por carta: **ATQ 19, DEF 20, INT 28, VEL 12**. A distribuição **não precisa ser simétrica**, pois os personagens têm histórias e competências distintas. É um diagnóstico pré-teste, sem simulação completa das regras ainda pendentes.
+
+
+## 8. Inclusões verificadas no manuscrito: Aracnas e Obbs (V16–V19)
+
+| ID | Nome usado nas cartas | Fonte efetiva no manuscrito | Interpretação da habilidade sugerida |
+| --- | --- | --- | --- |
+| Carta V16 | **Facka** | No texto aparece como **Faka**, uma **Aracna jovem**, extrovertida e guia dos irmãos pelos túneis | **AE-100, Confundir próximo turno:** aproveita conhecimento dos caminhos e do ambiente subterrâneo; é abstração lúdica, não prova de magia de confusão |
+| Carta V17 | **Lanigiah** | É **rainha das Aracnas**, de porte gigantesco, e submete Banjo a uma experiência ligada a seus temores e lembranças | **AE-096, Quebrar o plano:** representação estratégica de desorientação e controle; não afirmar que ela altera pilhas de cartas no cânone |
+| Carta V18 | **Grande Pai Gaia** | **Líder dos Obbs de Pinesoto**; usa raízes, troncos e escudos naturais para tentar conter o ataque à aldeia | **AE-103, Ruína de campo:** efeito excepcional inspirado na defesa coletiva de seu povo; ele só atinge cartas normais em combate, nunca especiais preparadas |
+| Carta V19 | **Seti** | **Líder de guerra dos Obbs**; prende os irmãos inicialmente, depois os alimenta, combate invasores e indica caminho de fuga | **AE-105, Defesa que captura:** raízes que prendem inimigos representam captura defensiva |
+
+**Correção de identificação:** o rei dos Obbs indicado pelo autor é **Gaia**, cujo título narrativo exato é **Grande Pai**; Lanigiah é de outro povo (Aracnas). O Obb que ajuda os irmãos é **Seti**. **Facka/Faka:** manter a grafia solicitada pelo autor para o projeto do jogo, mas padronizar com o manuscrito quando ele decidir o nome definitivo.
+
+**Estado:** todos os quatro campos numéricos, perfis e associações de habilidades são **PROPOSTA**, aguardando revisão do autor. Suas identidades, funções e relações com os irmãos foram conferidas no manuscrito. **O número de habilidades da biblioteca permanece 129**, com atribuição definitiva vazia: não são ataques físicos automaticamente transplantados.

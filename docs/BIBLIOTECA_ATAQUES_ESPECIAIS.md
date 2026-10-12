@@ -237,14 +237,14 @@
 - **Antigo #52 excluído:** o ID **AE-104 foi aposentado**, não recebe carta atribuída. **AE-129** é uma **proposta nova e rara**, com vitória automática que respeita a natureza ataque/defesa do atributo declarado, não o antigo efeito de captura incondicional. **AE-103** afeta só as cartas normais de combate, jamais a área de especiais preparadas.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
 - **Efeitos com 2/3/4 jogadores:** em duelo, direita e esquerda apontam ao mesmo oponente. AE-063/064/065 podem ser gastas mesmo sem vantagem; não serão convertidas obrigatoriamente em novas habilidades. AE-036 exige dois adversários distintos para seu efeito completo.
-- **Atribuição:** a coluna `Carta atribuída (ID)` continua vazia para **129/129 habilidades** porque **nenhuma foi definitivamente aprovada**. As sugestões de pareamento para 79 personagens estão **somente** em [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md), com status de proposta reversível.
+- **Atribuição:** a coluna `Carta atribuída (ID)` continua vazia para **129/129 habilidades** porque **nenhuma foi definitivamente aprovada**. As sugestões de pareamento para 83 personagens estão **somente** em [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md), com status de proposta reversível.
 
 ## Documentos associados
 
 - [Auditoria detalhada dos especiais antigos](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md).
 - [GDD de regras e condições de vitória](REGRAS.md).
-- [Elenco de 79 candidatos](ELENCO_CANDIDATO.md).
-- [Fichas de 79 personagens com sugestões não aprovadas](CARTAS_79_PROPOSTAS.md).
+- [Elenco de 83 candidatos](ELENCO_CANDIDATO.md).
+- [Fichas de 83 personagens com sugestões não aprovadas](CARTAS_83_PROPOSTAS.md).
 - [Contrato de implementação que separa aprovações e propostas](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 - [Registro dos 23 ataques diretamente transcritos](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md).
 - [Leituras adicionais, ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).

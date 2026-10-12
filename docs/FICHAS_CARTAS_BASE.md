@@ -1,6 +1,6 @@
 # Dimensions Stacks — Modelo de fichas em branco (arquivo auxiliar v0.2)
 
-> **MODELO EM BRANCO, NÃO USAR COMO FONTE DE ATRIBUTOS.** As **79 fichas preenchidas com descrições, números e habilidades sugeridos** estão em [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md). Este arquivo conserva apenas a antiga **matriz vazia e os apontamentos preliminares** de design para consulta. Ambos são propostas não aprovadas; veja o [contrato de autoridade](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+> **MODELO EM BRANCO, NÃO USAR COMO FONTE DE ATRIBUTOS.** As **83 fichas preenchidas com descrições, números e habilidades sugeridos** estão em [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md). Este arquivo conserva apenas a antiga **matriz vazia e os apontamentos preliminares** de design para consulta. Ambos são propostas não aprovadas; veja o [contrato de autoridade](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 1. Padrão recomendado, aguardando aprovação do autor
 
@@ -53,7 +53,7 @@
 | J22 | Sefter | — | — | — | — | — | — | — | A definir |
 | J23 | Kedran | — | — | — | — | — | — | — | A definir |
 
-### Viajantes Dimensionais (15)
+### Viajantes Dimensionais (19)
 
 **Cor-base:** `#2563eb` (referência ilustrativa do tom; o autor aprovou a cor, não o código hexadecimal exato).
 
@@ -74,6 +74,10 @@
 | V13 | Saliens | — | — | — | — | — | — | — | A definir |
 | V14 | Tio Frank | — | — | — | — | — | — | — | A definir |
 | V15 | Brenda | — | — | — | — | — | — | Sim | A definir |
+| V16 | Facka | — | — | — | — | — | — | — | A definir |
+| V17 | Lanigiah | — | — | — | — | — | — | — | A definir |
+| V18 | Grande Pai Gaia | — | — | — | — | — | — | — | A definir |
+| V19 | Seti | — | — | — | — | — | — | — | A definir |
 
 ### Spacetheft (14)
 
@@ -162,7 +166,7 @@ Além dos números, cada carta terá:
 
 ## 4. Proposta de quantidade por partida (não aprovada)
 
-Para evitar que o conjunto atual de 79 personagens seja dividido desigualmente, testar **18 cartas por jogador** em partidas todos-contra-todos:
+Para evitar que o conjunto atual de 83 personagens seja dividido desigualmente, testar **18 cartas por jogador** em partidas todos-contra-todos:
 
 | Jogadores | Cartas selecionadas para a partida | Baralho ativo inicial por jogador | Reserva por jogador |
 | ---: | ---: | ---: | ---: |
@@ -170,13 +174,13 @@ Para evitar que o conjunto atual de 79 personagens seja dividido desigualmente, 
 | 3 | 54 | 7 | 11 |
 | 4 | 72 | 7 | 11 |
 
-Com isso, as cartas restantes entre as 79 não entram naquela partida. O tamanho 18 é **proposta de teste**; ajustes de duração da partida poderão mudar o número. Não confundir as **79 cartas candidatas da coleção** com a quantidade de cartas **efetivamente distribuídas numa partida**.
+Com isso, as cartas restantes entre as 83 não entram naquela partida. O tamanho 18 é **proposta de teste**; ajustes de duração da partida poderão mudar o número. Não confundir as **83 cartas candidatas da coleção** com a quantidade de cartas **efetivamente distribuídas numa partida**.
 
 ## 5. Referências
 
-- [Elenco das 79 cartas](ELENCO_CANDIDATO.md).
+- [Elenco das 83 cartas](ELENCO_CANDIDATO.md).
 - [Regras originais e decisões aprovadas](REGRAS.md).
 - [129 habilidades especiais candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
-- [79 fichas propostas preenchidas](CARTAS_79_PROPOSTAS.md).
+- [83 fichas propostas preenchidas](CARTAS_83_PROPOSTAS.md).
 - [Contrato de decisões para outra IA](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 - [Proposta de prioridade e ordem de resolução](PRIORIDADE_ESPECIAIS_PROPOSTA.md).

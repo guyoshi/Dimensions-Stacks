@@ -9,11 +9,11 @@ Jogo competitivo de cartas para PC, baseado em personagens das séries interliga
 | Documento | Finalidade e autoridade |
 | --- | --- |
 | **[Contrato de implementação](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md)** | **Comece aqui**: separa o que o autor confirmou de propostas e dúvidas ainda abertas |
-| [Regras do jogo, GDD v0.9](docs/REGRAS.md) | Mecânicas aprovadas e questões pendentes; atributo **Ataque** substituiu **Poder** |
-| **[79 cartas com descrições, atributos e especial sugerido](docs/CARTAS_79_PROPOSTAS.md)** | **79 propostas para revisão do autor**, não números definitivos |
+| [Regras do jogo, GDD v1.0](docs/REGRAS.md) | Mecânicas aprovadas e questões pendentes; atributo **Ataque** substituiu **Poder** |
+| **[83 cartas com descrições, atributos e especial sugerido](docs/CARTAS_83_PROPOSTAS.md)** | **83 propostas para revisão do autor**, não números definitivos |
 | [Biblioteca de 129 habilidades especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md) | Mecânicas candidatas por tipo; **129 colunas de atribuição definitiva vazias** |
 | [Reações defensivas, prioridades e anulação do último especial](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | **Proposta técnica** para permitir respostas defensivas enquanto ataques ainda não foram resolvidos |
-| [Elenco das 79 cartas e A União](docs/ELENCO_CANDIDATO.md) | Identidades, origens e integrantes da União sem duplicações |
+| [Elenco das 83 cartas e A União](docs/ELENCO_CANDIDATO.md) | Identidades, origens e integrantes da União sem duplicações |
 | [Checklist de testes e bloqueios](docs/CHECKLIST_VALIDACAO.md) | Validações de dados, regras confirmadas e cenários ainda pendentes |
 | [Auditoria dos ataques físicos](docs/AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) | Avaliação histórica dos efeitos antigos, úteis apenas como inspiração mecânica |
 | [Transcrições de cartas físicas confirmadas](docs/TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md) | Arquivo de referência histórica; não copiar nomes e atributos das cartas físicas |
@@ -21,7 +21,7 @@ Jogo competitivo de cartas para PC, baseado em personagens das séries interliga
 
 ## Visão de design
 
-- **79 cartas candidatas**, seis cores por série, filiação a **A União por selo** adicional.
+- **83 cartas candidatas**, seis cores por série, filiação a **A União por selo** adicional.
 - **Quatro atributos**: **Ataque (ATQ)**, Defesa, Inteligência, Velocidade; pares ATQ/DEF e INT/VEL.
 - **Partidas de 2, 3 ou 4 jogadores**, com 7 cartas em baralho ativo inicial e meio de reserva.
 - **129 habilidades especiais candidatas** para distribuir, incluindo a **AE-130: Anular a última habilidade pendente**, solicitada pelo autor.
@@ -31,7 +31,7 @@ Jogo competitivo de cartas para PC, baseado em personagens das séries interliga
 
 ## Dados estruturados para prévia (NÃO APROVADOS)
 
-- [JSON com as 79 cartas](dados/propostas/cartas_79.json)
+- [JSON com as 83 cartas](dados/propostas/cartas_83.json)
 - [JSON com as 129 habilidades](dados/propostas/habilidades_129.json)
 - [Instruções sobre status e sincronização](dados/propostas/README.md)
 
@@ -39,4 +39,4 @@ Estes arquivos são **espelhos das propostas** e não podem ser utilizados como 
 
 ## Próximas aprovações
 
-Revisar os **79 perfis propostos**, confirmar a especificação das **reações defensivas** e solucionar pendências estruturais do GDD (preparação da especial, desempate absoluto, destino de carta dupla, distribuição de início da partida, prioridades de efeitos). Somente depois esses dados podem ser tratados como baralho final, com validação de layout e testes de balanceamento.
+Revisar os **83 perfis propostos**, confirmar a especificação das **reações defensivas** e solucionar pendências estruturais do GDD (preparação da especial, desempate absoluto, destino de carta dupla, distribuição de início da partida, prioridades de efeitos). Somente depois esses dados podem ser tratados como baralho final, com validação de layout e testes de balanceamento.
