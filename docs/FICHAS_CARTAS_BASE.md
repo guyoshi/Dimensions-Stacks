@@ -1,6 +1,6 @@
 # Dimensions Stacks — Modelo de fichas em branco (arquivo auxiliar v0.2)
 
-> **MODELO EM BRANCO, NÃO USAR COMO FONTE DE ATRIBUTOS.** As **83 fichas preenchidas com descrições, números e habilidades sugeridos** estão em [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md). Este arquivo conserva apenas a antiga **matriz vazia e os apontamentos preliminares** de design para consulta. Ambos são propostas não aprovadas; veja o [contrato de autoridade](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+> **MODELO EM BRANCO, NÃO USAR COMO FONTE DE ATRIBUTOS.** As **87 fichas preenchidas com descrições, números e habilidades sugeridos** estão em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md). Este arquivo conserva apenas a antiga **matriz vazia e os apontamentos preliminares** de design para consulta. Ambos são propostas não aprovadas; veja o [contrato de autoridade](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 1. Padrão recomendado, aguardando aprovação do autor
 
@@ -100,7 +100,7 @@
 | S13 | Capitão Tzough | — | — | — | — | — | — | — | A definir |
 | S14 | Genrir | — | — | — | — | — | — | — | A definir |
 
-### Diário Sobrenatural (14)
+### Diário Sobrenatural (18)
 
 **Cor-base:** `#7e22ce` (referência ilustrativa do tom; o autor aprovou a cor, não o código hexadecimal exato).
 
@@ -120,6 +120,10 @@
 | D12 | Agouro | — | — | — | — | — | — | — | A definir |
 | D13 | Suéten | — | — | — | — | — | — | — | A definir |
 | D14 | Filippo (Filipo, grafia a confirmar) | — | — | — | — | — | — | — | A definir |
+| D15 | Carnam (pai) | — | — | — | — | — | — | — | A definir |
+| D16 | Isabela | — | — | — | — | — | — | — | A definir |
+| D17 | Avó Carnam | — | — | — | — | — | — | — | A definir |
+| D18 | Ibliso (cão) | — | — | — | — | — | — | — | A definir |
 
 ### Mistério Oculto (12)
 
@@ -166,7 +170,7 @@ Além dos números, cada carta terá:
 
 ## 4. Proposta de quantidade por partida (não aprovada)
 
-Para evitar que o conjunto atual de 83 personagens seja dividido desigualmente, testar **18 cartas por jogador** em partidas todos-contra-todos:
+Para evitar que o conjunto atual de 87 personagens seja dividido desigualmente, testar **18 cartas por jogador** em partidas todos-contra-todos:
 
 | Jogadores | Cartas selecionadas para a partida | Baralho ativo inicial por jogador | Reserva por jogador |
 | ---: | ---: | ---: | ---: |
@@ -174,13 +178,13 @@ Para evitar que o conjunto atual de 83 personagens seja dividido desigualmente, 
 | 3 | 54 | 7 | 11 |
 | 4 | 72 | 7 | 11 |
 
-Com isso, as cartas restantes entre as 83 não entram naquela partida. O tamanho 18 é **proposta de teste**; ajustes de duração da partida poderão mudar o número. Não confundir as **83 cartas candidatas da coleção** com a quantidade de cartas **efetivamente distribuídas numa partida**.
+Com isso, as cartas restantes entre as 83 não entram naquela partida. O tamanho 18 é **proposta de teste**; ajustes de duração da partida poderão mudar o número. Não confundir as **87 cartas candidatas da coleção** com a quantidade de cartas **efetivamente distribuídas numa partida**.
 
 ## 5. Referências
 
-- [Elenco das 83 cartas](ELENCO_CANDIDATO.md).
+- [Elenco das 87 cartas](ELENCO_CANDIDATO.md).
 - [Regras originais e decisões aprovadas](REGRAS.md).
 - [129 habilidades especiais candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
-- [83 fichas propostas preenchidas](CARTAS_83_PROPOSTAS.md).
+- [87 fichas propostas preenchidas](CARTAS_87_PROPOSTAS.md).
 - [Contrato de decisões para outra IA](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 - [Proposta de prioridade e ordem de resolução](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
