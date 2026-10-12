@@ -44,7 +44,7 @@
     }
     return new Promise((res, rej) => {
       const run = U.run; if (run) run.rej.add(rej);
-      const n = el(`<div class="coach modal"><div class="box"><div class="ch"><b>💡 ${esc(d.t)}</b></div><div class="cb">${d.b}</div><div class="row" style="justify-content:flex-end"><button class="btn primary sm" data-a="ok">Entendi</button></div><div class="hint" style="margin-top:8px;text-align:right">Dicas aparecem só na primeira vez. Dá para desligar em Opções.</div></div></div>`);
+      const n = el(`<div class="coach modal"><div class="box"><div class="ch"><b>💡 ${esc(d.t)}</b></div><div class="cb">${d.b}</div><div class="row" style="justify-content:flex-end"><button class="btn primary sm" data-a="ok">Entendi</button></div></div></div>`);
       n.querySelector('[data-a=ok]').onclick = () => { SND.play('click'); if (run) run.rej.delete(rej); n.remove(); res(); };
       layer.appendChild(n);
     });
