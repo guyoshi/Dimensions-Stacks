@@ -18,7 +18,8 @@
     "fonte_regras": "docs/REGRAS.md",
     "fonte_canon": "docs/ELENCO_CANDIDATO.md",
     "guia": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
-    "aviso": "Valores, habilidades, tiers e textos nao sao dados finais. Somente previews e revisao ate aprovacao explicita do autor."
+    "aviso": "Valores, habilidades, tiers e textos nao sao dados finais. Somente previews e revisao ate aprovacao explicita do autor.",
+    "versao_balanceamento": "Revisao qualitativa: 16 perfis ajustados para dispersar atributos dominantes. Ainda nao validado por simulacao."
   },
   "cartas": [
     {
@@ -47,11 +48,11 @@
       "descricao_curta": "Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície.",
       "atributos_propostos": {
         "ATQ": 24,
-        "DEF": 55,
-        "INT": 78,
+        "DEF": 82,
+        "INT": 75,
         "VEL": 38
       },
-      "soma_calculada": 195,
+      "soma_calculada": 219,
       "perfil_sugerido": "Modesta",
       "habilidade_especial_sugerida_id": "AE-087",
       "uniao": "nao",
@@ -143,10 +144,10 @@
       "atributos_propostos": {
         "ATQ": 48,
         "DEF": 51,
-        "INT": 67,
-        "VEL": 58
+        "INT": 62,
+        "VEL": 73
       },
-      "soma_calculada": 224,
+      "soma_calculada": 234,
       "perfil_sugerido": "Modesta",
       "habilidade_especial_sugerida_id": "AE-090",
       "uniao": "nao",
@@ -502,12 +503,12 @@
       "cor_serie": "azul",
       "descricao_curta": "Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir.",
       "atributos_propostos": {
-        "ATQ": 69,
+        "ATQ": 80,
         "DEF": 38,
         "INT": 73,
         "VEL": 64
       },
-      "soma_calculada": 244,
+      "soma_calculada": 255,
       "perfil_sugerido": "Padrão",
       "habilidade_especial_sugerida_id": "AE-039",
       "uniao": "nao",
@@ -598,11 +599,11 @@
       "descricao_curta": "Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes.",
       "atributos_propostos": {
         "ATQ": 69,
-        "DEF": 72,
-        "INT": 75,
+        "DEF": 79,
+        "INT": 72,
         "VEL": 59
       },
-      "soma_calculada": 275,
+      "soma_calculada": 279,
       "perfil_sugerido": "Padrão",
       "habilidade_especial_sugerida_id": "AE-095",
       "uniao": "nao",
@@ -656,10 +657,10 @@
       "atributos_propostos": {
         "ATQ": 51,
         "DEF": 47,
-        "INT": 66,
-        "VEL": 55
+        "INT": 60,
+        "VEL": 70
       },
-      "soma_calculada": 219,
+      "soma_calculada": 228,
       "perfil_sugerido": "Modesta",
       "habilidade_especial_sugerida_id": "AE-055",
       "uniao": "nao",
@@ -673,13 +674,13 @@
       "cor_serie": "azul",
       "descricao_curta": "Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos.",
       "atributos_propostos": {
-        "ATQ": 71,
+        "ATQ": 85,
         "DEF": 58,
-        "INT": 82,
+        "INT": 80,
         "VEL": 70
       },
-      "soma_calculada": 281,
-      "perfil_sugerido": "Padrão",
+      "soma_calculada": 293,
+      "perfil_sugerido": "Forte",
       "habilidade_especial_sugerida_id": "AE-114",
       "uniao": "nao",
       "fonte_identificador": "V-manuscrito",
@@ -732,11 +733,11 @@
       "atributos_propostos": {
         "ATQ": 66,
         "DEF": 76,
-        "INT": 88,
-        "VEL": 81
+        "INT": 86,
+        "VEL": 92
       },
-      "soma_calculada": 311,
-      "perfil_sugerido": "Forte",
+      "soma_calculada": 320,
+      "perfil_sugerido": "Elite",
       "habilidade_especial_sugerida_id": "AE-073",
       "uniao": "integrante_ou_futura",
       "fonte_identificador": "V-manuscrito",
@@ -769,11 +770,11 @@
       "descricao_curta": "Aliada de Jasmey, questiona as ordens de Jelles e ajuda a desafiar o domínio da Lebargan.",
       "atributos_propostos": {
         "ATQ": 56,
-        "DEF": 69,
-        "INT": 78,
+        "DEF": 82,
+        "INT": 73,
         "VEL": 65
       },
-      "soma_calculada": 268,
+      "soma_calculada": 276,
       "perfil_sugerido": "Padrão",
       "habilidade_especial_sugerida_id": "AE-075",
       "uniao": "nao",
@@ -864,12 +865,12 @@
       "descricao_curta": "Integrante da equipe de Jasmey, enfrenta o cativeiro e a fuga com seus aliados.",
       "atributos_propostos": {
         "ATQ": 55,
-        "DEF": 61,
-        "INT": 70,
+        "DEF": 76,
+        "INT": 65,
         "VEL": 51
       },
-      "soma_calculada": 237,
-      "perfil_sugerido": "Modesta",
+      "soma_calculada": 247,
+      "perfil_sugerido": "Padrão",
       "habilidade_especial_sugerida_id": "AE-099",
       "uniao": "nao",
       "fonte_identificador": "S-misto",
@@ -999,9 +1000,9 @@
         "ATQ": 80,
         "DEF": 53,
         "INT": 49,
-        "VEL": 79
+        "VEL": 85
       },
-      "soma_calculada": 261,
+      "soma_calculada": 267,
       "perfil_sugerido": "Padrão",
       "habilidade_especial_sugerida_id": "AE-053",
       "uniao": "nao",
@@ -1035,12 +1036,12 @@
       "descricao_curta": "Irmã mais velha de Kelly, enfrenta perdas e conflitos ao seguir os rastros do sobrenatural.",
       "atributos_propostos": {
         "ATQ": 39,
-        "DEF": 50,
-        "INT": 79,
+        "DEF": 77,
+        "INT": 75,
         "VEL": 58
       },
-      "soma_calculada": 226,
-      "perfil_sugerido": "Modesta",
+      "soma_calculada": 249,
+      "perfil_sugerido": "Padrão",
       "habilidade_especial_sugerida_id": "AE-028",
       "uniao": "nao",
       "fonte_identificador": "D1",
@@ -1301,11 +1302,11 @@
       "descricao_curta": "Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais.",
       "atributos_propostos": {
         "ATQ": 83,
-        "DEF": 80,
-        "INT": 94,
+        "DEF": 96,
+        "INT": 90,
         "VEL": 80
       },
-      "soma_calculada": 337,
+      "soma_calculada": 349,
       "perfil_sugerido": "Elite",
       "habilidade_especial_sugerida_id": "AE-130",
       "uniao": "nao",
@@ -1321,11 +1322,11 @@
       "atributos_propostos": {
         "ATQ": 18,
         "DEF": 31,
-        "INT": 74,
-        "VEL": 48
+        "INT": 72,
+        "VEL": 78
       },
-      "soma_calculada": 171,
-      "perfil_sugerido": "Frágil",
+      "soma_calculada": 199,
+      "perfil_sugerido": "Modesta",
       "habilidade_especial_sugerida_id": "AE-094",
       "uniao": "nao",
       "fonte_identificador": "M",
@@ -1396,11 +1397,11 @@
       "descricao_curta": "Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização.",
       "atributos_propostos": {
         "ATQ": 77,
-        "DEF": 83,
-        "INT": 91,
+        "DEF": 94,
+        "INT": 88,
         "VEL": 59
       },
-      "soma_calculada": 310,
+      "soma_calculada": 318,
       "perfil_sugerido": "Forte",
       "habilidade_especial_sugerida_id": "AE-118",
       "uniao": "nao",
@@ -1453,11 +1454,11 @@
       "descricao_curta": "Luzitano deixado na Terra pela Luz após os eventos de Órbita Oráculo.",
       "atributos_propostos": {
         "ATQ": 76,
-        "DEF": 78,
-        "INT": 92,
+        "DEF": 92,
+        "INT": 87,
         "VEL": 82
       },
-      "soma_calculada": 328,
+      "soma_calculada": 337,
       "perfil_sugerido": "Elite",
       "habilidade_especial_sugerida_id": "AE-111",
       "uniao": "integrante_ou_futura",
@@ -1509,12 +1510,12 @@
       "cor_serie": "verde",
       "descricao_curta": "Édelin Fils pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento.",
       "atributos_propostos": {
-        "ATQ": 87,
+        "ATQ": 92,
         "DEF": 83,
-        "INT": 88,
+        "INT": 86,
         "VEL": 80
       },
-      "soma_calculada": 338,
+      "soma_calculada": 341,
       "perfil_sugerido": "Elite",
       "habilidade_especial_sugerida_id": "AE-103",
       "uniao": "integrante_ou_futura",
