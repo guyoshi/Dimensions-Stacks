@@ -1,4 +1,4 @@
-# Dimensions Stacks — Biblioteca de ataques especiais (v1.2)
+# Dimensions Stacks — Biblioteca de ataques especiais (v1.3)
 
 > **Catálogo de design, NÃO distribuição definitiva.** São **128 habilidades candidatas**, agrupadas em 13 famílias (12 grupos de 10 e um grupo adicional de 8). Todas se referem a possíveis efeitos para as **cartas novas**, não às identidades físicas antigas. A coluna final **Carta atribuída (ID)** foi deixada **em branco** em todas as linhas para preenchimento posterior, por exemplo `J01`, `V02`, `S01`, `D06`, `M01`, `B01`. O ID `AE-001` identifica a **habilidade**, e a referência física `#09` identifica apenas o ataque antigo que inspirou a mecânica. Uma habilidade pode ser reutilizada em mais de uma carta se o autor aprovar.
 
@@ -13,7 +13,7 @@
 7. **Tempo/ordem de efeitos ainda requer regra global**, antes do protótipo. Alguns efeitos requerem ativação antes da escolha/revelação dos atributos, outros depois e antes do resultado, e outros na resolução. Não tentar implementar todos num único momento indistinto.
 8. **Risco:** `Teste` = efeito plausível para primeira rodada de protótipos; `Atenção` = efeito viável, mas pode escalar ou exigir regra; `Experimental` = alto risco de quebrar equilíbrio, prioridade ou condição de vitória; `Regra-base` = mecânica essencial ratificada pelo autor; `Condicional 3+` = precisa adaptação para duelos.
 9. **Cores por origem:** Viajantes Dimensionais **azul**; Mistério Oculto **vermelho**; Ciclo de Jesed **amarelo**; série de Édelin/Belfex **verde**; Diário Sobrenatural **roxo**; Spacetheft **preta**. A União recebe **selo independente**, não é cor ou categoria de ataque. **Nenhuma habilidade deve exigir cor de série como requisito de força ou captura.**
-10. **Limites em discussão:** quantos especiais voluntários por disputa, como se prepara uma carta, destino quando não restarem cartas suficientes, empate absoluto após os três critérios, efeitos sobre as duas cartas do especial AE-010, e loops envolvendo AE-112/AE-116.
+10. **Ativação por combate, regra aprovada:** o jogador pode ativar voluntariamente **somente 1 especial preparado por combate**. **Exceção:** uma habilidade específica pode permitir 2 ativações voluntárias no mesmo combate. **AE-111 (#59)** força todas as especiais já preparadas do alvo, até 2, mesmo sem consentimento. **AE-112** repete um efeito e **não concede ativação genérica de outra carta preparada**. Ainda estão em discussão: origem das cartas preparadas, janelas e prioridade, destino quando faltarem cartas, empate final e efeitos sobre duas cartas normais do AE-010.
 
 **Legendas de origem:** `#NN` = inspiração de carta física; `novo` = habilidade proposta; `#NN (adaptação)` = propositalmente diferente do original. As escolhas de bônus, limiares e quantidades propostas precisam ser testadas.
 
@@ -189,8 +189,8 @@
 
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-111 | Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa. | #59 | Regra-base |  |
-| AE-112 | Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. | #62 (ciclos proibidos) | Atenção |  |
+| AE-111 | Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. | #59 | Regra-base |  |
+| AE-112 | Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada. | #62 (ciclos proibidos) | Atenção |  |
 | AE-113 | Interrupção precisa | Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. | novo | Teste |  |
 | AE-114 | Desvio de alvo | Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você. | novo | Teste |  |
 | AE-115 | Eco de habilidade | Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia. | novo | Atenção |  |
@@ -215,6 +215,8 @@
 | AE-128 | Permutar Defesa e Velocidade | Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
 
 **Registro de exclusão:** o efeito incondicional da carta física **#52** e seu ID anterior **AE-104** foram removidos deste catálogo atribuído. O ID foi reservado para não renumerar as habilidades. O novo **AE-129** é um conceito raro diferente, ainda sujeito à aprovação final.
+
+**Ativação voluntária confirmada:** **1 carta especial preparada por combate**, escolhida e ativada no turno desejado. Somente habilidades com permissão explícita podem permitir duas. **Nenhuma das 128 entradas atuais é automaticamente uma autorização genérica para ativar duas cartas**: esta eventual mecânica deve ser proposta/aprovada explicitamente. A especial **AE-111** força todas as especiais preparadas do alvo (até duas), criando exceção não voluntária; **AE-112** repete um efeito sem autorizar virar uma segunda especial. A ordem entre jogadores e a janela precisa ainda precisam de definição no GDD.
 
 ## Regras propostas de integridade (antes de programar)
 
