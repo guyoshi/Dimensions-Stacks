@@ -663,10 +663,11 @@
   // Nomes/textos oficiais da PROPOSTA (habilidades_129.json) sobrepõem os de cada especial implementado.
   const HAB = (D && D.HABILIDADES) || {};
   function finalize() {
+    const CUR = root.DS_CURTOS || {};
     Object.keys(HAB).forEach(id => {
-      const h = HAB[id];
-      if (SP[id]) { SP[id].nome = h[0]; SP[id].texto = h[1]; SP[id].grupo = h[2]; }
-      else SP[id] = { id, nome: h[0], texto: h[1], cat: h[2], grupo: h[2], stub: true, phase: 'main', can: () => true, ai: () => 0.03, apply(ctx, act) { ctx.say(`${ctx.name(act.pid)} virou “${h[0]}”, mas esse efeito ainda não foi implementado: nada acontece.`); } };
+      const h = HAB[id], tx = CUR[id] || h[1];
+      if (SP[id]) { SP[id].nome = h[0]; SP[id].texto = tx; SP[id].grupo = h[2]; }
+      else SP[id] = { id, nome: h[0], texto: tx, cat: h[2], grupo: h[2], stub: true, phase: 'main', can: () => true, ai: () => 0.03, apply(ctx, act) { ctx.say(`${ctx.name(act.pid)} virou “${h[0]}”, mas esse efeito ainda não foi implementado: nada acontece.`); } };
     });
   }
 

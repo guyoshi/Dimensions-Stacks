@@ -236,7 +236,7 @@
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
       <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
         <input type="text" maxlength="14" value="${esc(p.name)}" data-i="${i}" aria-label="Nome do jogador ${i + 1}">
-        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : '<span class="pill">🤖 Bot</span>'}</div>`).join('')}</div>
+        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para o bot">🎲 Sortear</button>`}</div>`).join('')}</div>
       <div class="lbl">Dificuldade dos bots</div>
       <div class="seg" data-k="diff">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${CFG.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
@@ -247,6 +247,10 @@
     s.onclick = e => {
       const b = e.target.closest('button'); if (!b) return; SND.init(); SND.play('click');
       const seg = b.closest('.seg'); const pre = b.dataset.pre;
+      if (b.dataset.reroll != null) {
+        const i = +b.dataset.reroll; const used = CFG.seats.slice(0, CFG.n).filter((p, k) => k !== i).map(p => p.name);
+        CFG.seats[i].name = randBot(used); CFG.seats[i].bot = true; store.set('cfg', CFG); return setup();
+      }
       if (pre) {
         if (pre === '1') { CFG.n = 2; CFG.seats[0] = { name: 'Você', bot: false }; CFG.seats[1] = { name: 'Bot', bot: true }; }
         else if (pre === '3') { CFG.n = 4; CFG.seats[0] = { name: 'Você', bot: false }; for (let i = 1; i < 4; i++) CFG.seats[i] = { name: 'Bot', bot: true }; }

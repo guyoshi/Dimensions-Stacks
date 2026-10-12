@@ -48,9 +48,9 @@
     const from = (G && G.cfg && G.cfg.specialsFrom) || 2;
     let act = '';
     if (combat && combat.specialsAllowed === false) act = `<span class="splnote">Especiais só liberam na Rodada ${from}.</span>`;
-    else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ Usar como ataque especial</button><span class="splnote">A carta sai do combate, fica fechada ao seu lado e a próxima entra no lugar.${sp.phase === 'ctrl' ? ' Este especial controla os atributos: só vale se já estiver preparado antes da disputa; você poderá virá-lo a partir da próxima.' : ''}</span>`;
-    else act = `<span class="splnote">Você já tem 2 especiais preparados ou não há outra carta para entrar no lugar.</span>`;
-    return `<div class="hint spline">✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}${sp.stub ? ' <i>(efeito ainda não implementado)</i>' : ''}<div class="splact">${act}</div></div>`;
+    else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ Usar como especial</button><span class="splnote">A carta sai do combate e a próxima entra no lugar.${sp.phase === 'ctrl' ? ' Controla atributos: só vale se já estiver preparado antes da disputa.' : ''}</span>`;
+    else act = `<span class="splnote">Sem vaga para preparar outro especial agora.</span>`;
+    return `<div class="hint spline">✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}<div class="splact">${act}</div></div>`;
   }
   function ghostCard(o) {
     const id = o.id || U.D.CARTAS[0].id;
@@ -486,8 +486,9 @@
           : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`;
-        const node = el(`<div class="sheet"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>
-          ${spLine(entry.card, combat, canPrep)}<div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div></div></div>`);
+        const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div></div>
+          <div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
+          ${spLine(entry.card, combat, canPrep)}</div>`);
         $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: Math.min(96, V.cw || 96), stats: entry.stats }));
         return ask(node, '.attrbtn, .prepbtn');
       },
