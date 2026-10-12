@@ -1,0 +1,1858 @@
+{
+  "metadata": {
+    "jogo": "Dimensions Stacks",
+    "versao_biblioteca": "1.0",
+    "status": "CATALOGO_APROVADO_COM_TESTES_PENDENTES",
+    "data_aprovacao": "2026-10-12",
+    "total_habilidades": 129,
+    "habilidades_distintas_equipadas": 78,
+    "habilidades_em_reserva": 51,
+    "id_aposentado": "AE-104",
+    "nome_do_tipo": "Habilidade Especial",
+    "aviso": "A aprovacao autoral ratifica ideias/textos existentes e sua atribuicao as 87 fichas, nao certifica equilíbrio nem resolve procedimentos incompletos. Habilidades da reserva nao estao equipadas em carta alguma. Cartas fisicas originais sao historicas."
+  },
+  "habilidades": [
+    {
+      "id": "AE-001",
+      "nome": "Impulso de Ataque",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +15 em Ataque nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-002",
+      "nome": "Muralha de Defesa",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +15 em Defesa nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J14"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-003",
+      "nome": "Clarividência",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +15 em Inteligência nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-004",
+      "nome": "Arrancada",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +15 em Velocidade nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D09",
+        "D18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-005",
+      "nome": "Reforço flexível",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +15 em um atributo à sua escolha nesta disputa.",
+      "origem_ideia": "#15",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-006",
+      "nome": "Dupla resistência",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Uma carta de combate sua recebe +15 Defesa e +20 Velocidade nesta disputa.",
+      "origem_ideia": "#27",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-007",
+      "nome": "Ímpeto ofensivo",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-008",
+      "nome": "Guarda equilibrada",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "M05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-009",
+      "nome": "Superação",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-010",
+      "nome": "Ataque em dupla",
+      "categoria": "Bônus, penalidades e soma",
+      "texto_efeito": "Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate.",
+      "origem_ideia": "#09",
+      "avaliacao_de_risco": "Regra-base",
+      "cartas_atribuidas": [
+        "J15"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-011",
+      "nome": "Ataque → Inteligência",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Ataque; Ataque permanece igual.",
+      "origem_ideia": "#22 (adaptação)",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-012",
+      "nome": "Inteligência → Ataque",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "M08"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-013",
+      "nome": "Ataque → Velocidade",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Ataque; Ataque permanece igual.",
+      "origem_ideia": "#21 (adaptação)",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-014",
+      "nome": "Velocidade → Ataque",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Ataque pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-015",
+      "nome": "Defesa → Inteligência",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Inteligência pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-016",
+      "nome": "Inteligência → Defesa",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Defesa pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
+      "origem_ideia": "#20 (adaptação)",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-017",
+      "nome": "Ataque → Defesa",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Defesa pelo valor que sua carta possui em Ataque; Ataque permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J23"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-018",
+      "nome": "Defesa → Ataque",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Ataque pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-019",
+      "nome": "Inteligência → Velocidade",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-020",
+      "nome": "Velocidade → Inteligência",
+      "categoria": "Conversões direcionais de atributos",
+      "texto_efeito": "Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-021",
+      "nome": "Atributo universal",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Escolha um atributo: todos, inclusive você, devem disputar nele. Conflitos de imposição seguem o GDD.",
+      "origem_ideia": "#57/#58/#04",
+      "avaliacao_de_risco": "Regra-base",
+      "cartas_atribuidas": [
+        "V02"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-022",
+      "nome": "Par ofensivo",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-023",
+      "nome": "Par mental",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Antes de declarar atributos, determine que todos usem o par Inteligência/Velocidade nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-024",
+      "nome": "Ataque obrigatório",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-025",
+      "nome": "Defesa obrigatória",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-026",
+      "nome": "Forçar ataque rival",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Escolha um adversário: ele deve usar o atributo de ataque do par vigente.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "M12"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-027",
+      "nome": "Forçar defesa rival",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Escolha um adversário: ele deve usar o atributo de defesa do par vigente.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-028",
+      "nome": "Proibir o ataque rival",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D02"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-029",
+      "nome": "Proibir a defesa rival",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-030",
+      "nome": "Escolha transferida",
+      "categoria": "Controle do confronto e do atributo",
+      "texto_efeito": "Nesta disputa, escolha qual dos dois atributos do par vigente um adversário utilizará; você continua escolhendo o seu normalmente.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J08"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-031",
+      "nome": "Primeira à direita",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Pegue a próxima carta do topo do baralho ativo do adversário à direita, exceto a já comprometida em combate.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-032",
+      "nome": "Primeira à esquerda",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Pegue a próxima carta do topo do baralho ativo do adversário à esquerda, exceto a já comprometida em combate.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S12"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-033",
+      "nome": "Sorte à direita",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Pegue 1 carta aleatória do baralho ativo do adversário à direita, excluindo cartas comprometidas.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-034",
+      "nome": "Sorte à esquerda",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Pegue 1 carta aleatória do baralho ativo do adversário à esquerda, excluindo cartas comprometidas.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-035",
+      "nome": "Saque livre",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Escolha um adversário e tome 1 carta aleatória de seu baralho ativo, sem afetar cartas preparadas.",
+      "origem_ideia": "#02",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-036",
+      "nome": "Saque de dois rivais",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Roube uma carta aleatória do baralho ativo de cada um de dois adversários distintos; cartas de combate e especiais preparados não são alvos. Sem dois adversários distintos, a condição integral não é atendida.",
+      "origem_ideia": "#34 (adaptação)",
+      "avaliacao_de_risco": "Condicional 3+",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-037",
+      "nome": "Recompensa ofensiva",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Se vencer atacando, tome também a próxima carta do topo do baralho ativo de um adversário derrotado.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J09"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-038",
+      "nome": "Recompensa defensiva",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Se vencer defendendo, tome a próxima carta do topo do baralho ativo de um adversário derrotado, sem modificar o destino das cartas de combate.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-039",
+      "nome": "Saque revelado",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-040",
+      "nome": "Apreensão limitada",
+      "categoria": "Roubo do baralho ativo",
+      "texto_efeito": "Escolha um adversário com ao menos 4 cartas ativas fora do combate; pegue 1 carta aleatória de seu baralho ativo.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-041",
+      "nome": "Última da direita",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue a última carta do meio de reserva do adversário à direita.",
+      "origem_ideia": "#38",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V09"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-042",
+      "nome": "Última da esquerda",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue a última carta do meio de reserva do adversário à esquerda.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-043",
+      "nome": "Primeira da direita",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue a primeira carta do meio de reserva do adversário à direita.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-044",
+      "nome": "Primeira da esquerda",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue a primeira carta do meio de reserva do adversário à esquerda.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-045",
+      "nome": "Reserva dupla à direita",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue 2 cartas aleatórias do meio de reserva do adversário à direita, se disponíveis.",
+      "origem_ideia": "#17",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-046",
+      "nome": "Reserva dupla à esquerda",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue 2 cartas aleatórias do meio de reserva do adversário à esquerda, se disponíveis.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V13"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-047",
+      "nome": "Tributo coletivo",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue 1 carta aleatória da reserva de cada adversário ativo que possua reserva.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "S10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-048",
+      "nome": "Última de cada reserva",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Pegue a última carta do meio de reserva de cada adversário ativo que tenha cartas nessa zona.",
+      "origem_ideia": "ideia do autor (frase cortada)",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S09"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-049",
+      "nome": "Escolha da reserva",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Escolha um adversário e pegue até 2 cartas aleatórias de sua reserva.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-050",
+      "nome": "Reserva em perigo",
+      "categoria": "Roubo do meio de reserva",
+      "texto_efeito": "Se um adversário tiver até 3 cartas no baralho ativo, tome a última carta de sua reserva, caso exista.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-051",
+      "nome": "Troca escolhida",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta aleatória do baralho ativo de um adversário.",
+      "origem_ideia": "#01/#30",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V14"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-052",
+      "nome": "Troca de combatente",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Tome a carta de combate de um adversário e entregue-lhe 1 carta aleatória do seu baralho ativo; a troca antecede a comparação.",
+      "origem_ideia": "#13",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-053",
+      "nome": "Combatente da direita",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque sua carta de combate pela do adversário à direita antes da comparação.",
+      "origem_ideia": "#10",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "S14"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-054",
+      "nome": "Combatente da esquerda",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque sua carta de combate pela do adversário à esquerda antes da comparação.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-055",
+      "nome": "Troca de topos à direita",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à direita.",
+      "origem_ideia": "#25",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-056",
+      "nome": "Troca de topos à esquerda",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à esquerda.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-057",
+      "nome": "Passe à esquerda",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda.",
+      "origem_ideia": "#11",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-058",
+      "nome": "Passe à direita",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-059",
+      "nome": "Permuta das reservas à esquerda",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque todo o seu meio de reserva pelo do adversário à esquerda.",
+      "origem_ideia": "#46",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "S13"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-060",
+      "nome": "Permuta das reservas à direita",
+      "categoria": "Trocas diretas e circulação de cartas",
+      "texto_efeito": "Troque todo o seu meio de reserva pelo do adversário à direita.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-061",
+      "nome": "Reservas giratórias à direita",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à direita.",
+      "origem_ideia": "#35",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J13"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-062",
+      "nome": "Reservas giratórias à esquerda",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-063",
+      "nome": "Troca entre vizinhos",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Faça o jogador à esquerda trocar 1 carta ativa escolhida com o da direita. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto.",
+      "origem_ideia": "#40",
+      "avaliacao_de_risco": "Sem ganho em duelos",
+      "cartas_atribuidas": [
+        "M04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-064",
+      "nome": "Transferência de reserva",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem.",
+      "origem_ideia": "#43 (var.)",
+      "avaliacao_de_risco": "Sem ganho em duelos",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-065",
+      "nome": "Tríplice transferência",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido.",
+      "origem_ideia": "#43",
+      "avaliacao_de_risco": "Sem ganho em duelos",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-066",
+      "nome": "Descarte coletivo",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro.",
+      "origem_ideia": "#37/#50",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-067",
+      "nome": "Descarte adversário",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Cada adversário ativo envia 1 carta aleatória de seu baralho ativo ao Buraco Negro; você não descarta outra carta além da especial.",
+      "origem_ideia": "#50 (var.)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-068",
+      "nome": "Tributo por sacrifício",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Sacrifique uma carta normal sua com algum atributo acima de 90; tome 1 carta aleatória do baralho ativo de cada adversário ativo.",
+      "origem_ideia": "#42",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-069",
+      "nome": "Doação escolhida",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Escolha um adversário: ele deve escolher uma carta de seu próprio baralho ativo para entregar ao fim do seu.",
+      "origem_ideia": "#28",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J04",
+        "S03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-070",
+      "nome": "Conquista compensada",
+      "categoria": "Redistribuição coletiva e sacrifício",
+      "texto_efeito": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido.",
+      "origem_ideia": "#23",
+      "avaliacao_de_risco": "Experimental",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-071",
+      "nome": "Ausência tática",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota.",
+      "origem_ideia": "#31",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-072",
+      "nome": "Não perder a carta",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada.",
+      "origem_ideia": "#32",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J19"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-073",
+      "nome": "Silêncio de especiais",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Anule os ataques especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas.",
+      "origem_ideia": "#47",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V15"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-074",
+      "nome": "Imunidade pessoal",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais.",
+      "origem_ideia": "#48",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-075",
+      "nome": "Captura negada",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Escolha um rival: mesmo que ele vença, ele não poderá capturar sua carta de combate nesta disputa.",
+      "origem_ideia": "#49 (adaptação)",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S02"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-076",
+      "nome": "Guardião do baralho",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-077",
+      "nome": "Guardião da reserva",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Anule a próxima tentativa de roubar uma carta de sua reserva nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D14"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-078",
+      "nome": "Reflexo de roubo",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Se um rival tentar roubar exatamente 1 carta sua, cancele esse roubo e tome 1 carta aleatória do baralho ativo dele.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V01"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-079",
+      "nome": "Escudo antecipado",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V06"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-080",
+      "nome": "Anular modificador",
+      "categoria": "Defesas, bloqueios e salvamentos",
+      "texto_efeito": "Cancele até 1 bônus ou redução numérica que tenha sido aplicado à sua carta de combate nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S06"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-081",
+      "nome": "Resgate extremo",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Sacrifique 1 carta normal sua que tenha atributo original acima de 90; receba as 3 primeiras cartas do Buraco Negro, se existirem.",
+      "origem_ideia": "#19",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "D12"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-082",
+      "nome": "Resgate aleatório duplo",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Recupere até 2 cartas aleatórias do Buraco Negro e coloque-as no fim de seu baralho ativo.",
+      "origem_ideia": "#56",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "M09"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-083",
+      "nome": "Resgate do topo",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Recupere a carta normal mais recente do Buraco Negro para o fim de seu baralho ativo.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J06"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-084",
+      "nome": "Resgate antigo",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-085",
+      "nome": "Resgate escolhido",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "D04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-086",
+      "nome": "Troca pelo descarte",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-087",
+      "nome": "Reabastecimento da reserva",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral.",
+      "origem_ideia": "#12 (texto corrigido pelo autor)",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J02"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-088",
+      "nome": "Retorno imediato",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-089",
+      "nome": "Sacrifício duplo",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J22"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-090",
+      "nome": "Segunda chance",
+      "categoria": "Recuperação e manipulação do Buraco Negro",
+      "texto_efeito": "Se sua carta de combate fosse para o Buraco Negro nesta disputa, coloque-a em vez disso no fim de sua reserva; não preserve vitória nem capture.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-091",
+      "nome": "Revelar a mão",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa.",
+      "origem_ideia": "#41",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J20"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-092",
+      "nome": "Próximas três",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D08",
+        "D16"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-093",
+      "nome": "Espionagem tripla",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D17",
+        "J21",
+        "M11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-094",
+      "nome": "Inversão de fila",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "M03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-095",
+      "nome": "Atrasar a próxima",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V08"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-096",
+      "nome": "Quebrar o plano",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo.",
+      "origem_ideia": "#33",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J10",
+        "V17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-097",
+      "nome": "Escolha de sete",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo.",
+      "origem_ideia": "#36 (adaptação)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "V05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-098",
+      "nome": "Organizar reserva",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D01"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-099",
+      "nome": "Reforçar o fim",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Mova a primeira carta de sua reserva para o fim do seu baralho ativo, sem ver seu conteúdo.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-100",
+      "nome": "Confundir próximo turno",
+      "categoria": "Informação e manipulação de ordem",
+      "texto_efeito": "Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J16",
+        "V16"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-101",
+      "nome": "Capturar atacante",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
+      "origem_ideia": "#60 (adaptação)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "S08"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-102",
+      "nome": "Capturar defensor",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Ataque + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
+      "origem_ideia": "#61 (adaptação)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-103",
+      "nome": "Ruína de campo",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente.",
+      "origem_ideia": "#54 (escopo aprovado)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "B01",
+        "V18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-105",
+      "nome": "Defesa que captura",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J12",
+        "V19"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-106",
+      "nome": "Ataque que bane",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D15"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-107",
+      "nome": "Iniciativa contra fracos",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-108",
+      "nome": "Negar captura inimiga",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "D13"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-109",
+      "nome": "Duelo condicionado",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Experimental",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-110",
+      "nome": "Margem estreita",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J01"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-129",
+      "nome": "Triunfo raro",
+      "categoria": "Capturas condicionais e efeitos decisivos",
+      "texto_efeito": "Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Candidato a pouquíssimas cartas raras**, ainda não aprovado como habilidade final.",
+      "origem_ideia": "novo; não é o antigo #52",
+      "avaliacao_de_risco": "Rara, experimental",
+      "cartas_atribuidas": [
+        "S01"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-111",
+      "nome": "Ativação forçada",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária.",
+      "origem_ideia": "#59",
+      "avaliacao_de_risco": "Regra-base",
+      "cartas_atribuidas": [
+        "M10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-112",
+      "nome": "Repetição onerosa",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada.",
+      "origem_ideia": "#62 (ciclos proibidos)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "D06"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-113",
+      "nome": "Interrupção precisa",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "J17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-114",
+      "nome": "Desvio de alvo",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "V12"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-115",
+      "nome": "Eco de habilidade",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "M01"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-116",
+      "nome": "Apropriar especial usado",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Ganhe a carta de ataque especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo.",
+      "origem_ideia": "#06 (adaptação)",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "J03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-117",
+      "nome": "Preparação exposta",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "M06"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-118",
+      "nome": "Blindagem de especial",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Atenção",
+      "cartas_atribuidas": [
+        "M07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-119",
+      "nome": "Preparação urgente",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Experimental",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-120",
+      "nome": "Remover alteração",
+      "categoria": "Interações entre ataques especiais",
+      "texto_efeito": "Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [
+        "S04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-121",
+      "nome": "Defesa → Velocidade",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-122",
+      "nome": "Velocidade → Defesa",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Substitua o valor de Defesa pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-123",
+      "nome": "Permutar Ataque e Inteligência",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Troque entre si os números de Ataque e Inteligência da mesma carta; ambos mudam.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-124",
+      "nome": "Permutar Ataque e Velocidade",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Troque entre si os números de Ataque e Velocidade da mesma carta; ambos mudam.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-125",
+      "nome": "Permutar Ataque e Defesa",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Troque entre si os números de Ataque e Defesa da mesma carta; ambos mudam.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-126",
+      "nome": "Permutar Inteligência e Velocidade",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Troque entre si os números de Inteligência e Velocidade da mesma carta; ambos mudam.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-127",
+      "nome": "Permutar Inteligência e Defesa",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Troque entre si os números de Inteligência e Defesa da mesma carta; ambos mudam.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-128",
+      "nome": "Permutar Defesa e Velocidade",
+      "categoria": "Conversões faltantes e permutas completas",
+      "texto_efeito": "Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam.",
+      "origem_ideia": "novo",
+      "avaliacao_de_risco": "Teste",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    },
+    {
+      "id": "AE-130",
+      "nome": "Anular a última habilidade",
+      "categoria": "Reações e contramedidas novas",
+      "texto_efeito": "**REAÇÃO DEFENSIVA.** Quando uma habilidade especial for ativada e ainda não tiver resolvido seu efeito, anule a **última habilidade pendente**. A carta anulada é consumida e vai ao Buraco Negro. Não desfaz efeitos já concluídos.",
+      "origem_ideia": "novo, solicitado pelo autor",
+      "avaliacao_de_risco": "Teste; texto proposto",
+      "cartas_atribuidas": [
+        "M02"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+      "validacao_balanceamento": "PENDENTE_DE_TESTES",
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+    }
+  ]
+}
