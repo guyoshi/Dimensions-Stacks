@@ -159,3 +159,29 @@ Para a primeira versão jogável, **não precisamos necessariamente de 76 cartas
 Criar para cada carta aprovada um registro com: `id`, `personagem`, `origem`, `livro_base`, `descrição_sem_spoiler`, `POD`, `DEF`, `INT`, `VEL`, `especial_id`, `raridade`, `filiação`, `estado_canônico`, `fonte` e `status_de_aprovação`. Não misturar a ficha narrativa com a matemática de balanceamento.
 
 Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Documentos associados: [Regras](REGRAS.md) · [Ataques especiais](ATAQUES_ESPECIAIS.md).
+
+
+## 10. Atualização oficial: A União (12/10/2026)
+
+**Fonte:** relação informada diretamente pelo autor. **Sete membros atuais da formação descrita e uma integrante futura**. A lista abaixo tem prioridade sobre deduções das cartas antigas. Não presumir papéis de fundador.
+
+| Código de filiação | Integrante | Série de origem | Situação |
+| --- | --- | --- | --- |
+| U01 | Bruno Lins Lee | Viajantes Dimensionais | Integrante |
+| U02 | Brenda | Viajantes Dimensionais | Integrante |
+| U03 | Hyde | Mistério Oculto | Integrante |
+| U04 | Releuz (nome temporário) | Mistério Oculto / apresentação no contexto de A União | Integrante |
+| U05 | Jasmey Badrock | Spacetheft | Integrante |
+| U06 | Mark Pollar | Ciclo de Jesed | Integrante |
+| U07 | Édelin Fils | Série de Édelin, ainda sem título | Integrante |
+| U08 | Jennifer (sobrenome não confirmado) | Diário Sobrenatural | Entrada futura |
+
+**Releuz:** luzitano deixado na Terra por **A Luz**, depois dos eventos de *Órbita Oráculo*. Sua natureza e história não foram inventadas para preencher a ficha.
+
+**Contagem:** a relação agrega **Brenda** e **Releuz** como 2 candidatos não incluídos no elenco anterior: agora existem **78 personagens únicos candidatos**, antes da revisão de cortes e acréscimos. Os outros seis já constavam com nome ou equivalente (Bruno, Hyde, Jasmey, Mark, Édelin e Jennifer). **Filiação à União não duplica automaticamente a carta**, sendo preferencialmente um selo adicional.
+
+**Observação de grafia:** o autor especificou **Mark Pollar** para A União; as fichas de Jesed usam também **Mark Polar** e suas formas históricas. Não dividir artificialmente uma mesma personagem em duas até conciliação editorial. Idem para o sobrenome de Jennifer: **não inventar**.
+
+### Recomendação visual aprovada pelo autor
+
+**Usar cor-base por série/origem em vez de alinhamento moral** (herói/vilão). Selos separados para raridade e filiação à União. A cor da série não confere poderes, não define raro, não julga alinhamento moral.
