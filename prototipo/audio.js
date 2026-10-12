@@ -6,8 +6,8 @@
   const SLOTS = {
     click: 'clique de botão', deal: 'carta distribuída ao baralho', place: 'carta colocada no campo', flip: 'virar carta',
     suspense: 'tensão antes de virar (batidas)', reveal: 'revelação do atributo', win: 'carta vencedora', lose: 'carta derrotada',
-    capture: 'captura de carta', blackhole: 'carta engolida pelo Buraco Negro', special: 'ataque especial preparado',
-    specialFlip: 'ataque especial virado', slash: 'ataque vencedor', shield: 'defesa vencedora', round: 'nova rodada',
+    capture: 'captura de carta', blackhole: 'carta engolida pelo Buraco Negro', special: 'especial preparado',
+    specialFlip: 'especial virado', slash: 'ataque vencedor', shield: 'defesa vencedora', round: 'nova rodada',
     refill: 'compra da reserva', elim: 'jogador eliminado', victory: 'vitória na partida', defeat: 'derrota na partida',
     steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', menu: 'ambiente do menu / mesa (loop)',
   };

@@ -21,45 +21,77 @@
     const richest = (ctx, cand) => cand.slice().sort((a, b) => ctx.g.totalCards(ctx.player(b)) - ctx.g.totalCards(ctx.player(a)))[0];
     const pctOf = (e, list) => Math.max(...list.map(a => api.pct(a, e.stats[a])));
     const ctrlU = p => Math.max(0.03, Math.min(0.85, (p - 0.5) * 2));
+    const needMem = (g, p) => g.alive().some(o => o !== p.pid && g.p(o).deck.length > 0 && g.memKnown(p, o).length < 2);
+    const MEANSUM = (() => { const l = Object.keys(CARDS); return l.reduce((t, id) => t + sum(id), 0) / l.length; })();
+    const bhAvg = ctx => avgSum(ctx.bhNormal());
+    const clamp01 = x => Math.max(0.03, Math.min(0.85, x));
+    // ganho em "cartas médias" de um resgate: o que volta menos o que se gasta (a carta do especial, mais o que for sacrificado)
+    const gainU = (g) => clamp01(0.15 + 0.45 * (g / MEANSUM));
+    const costC = c => c ? sum(c) : 0.6 * MEANSUM;
+    // cartas seguintes dos rivais que o bot lembra (do topo para o fundo)
+    const foeSeqs = (ctx, pid) => ctx.opps(pid).map(o => ctx.mem(pid, o));
+    // ordem para minhas próximas cartas: cada posição enfrenta o rival que lembro; uso a MENOR carta que vence e entrego a pior onde já perdi
+    const orderVs = (ctx, pid, v) => {
+      const seqs = foeSeqs(ctx, pid); let rest = v.slice(); const out = [];
+      for (let i = 0; i < v.length; i++) {
+        const need = Math.max(0, ...seqs.map(q => q[i] ? sum(q[i]) : 0)); let pick;
+        if (need > 0) { const win = rest.filter(c => sum(c) > need + 8).sort((a, b) => sum(a) - sum(b)); pick = win[0] || rest.slice().sort((a, b) => sum(a) - sum(b))[0]; }
+        else pick = rest.slice().sort((a, b) => sum(b) - sum(a))[0];
+        out.push(pick); rest.splice(rest.indexOf(pick), 1);
+      }
+      return out;
+    };
+    const orderScore = (ctx, pid, seq) => { const seqs = foeSeqs(ctx, pid); return seq.reduce((t, c, i) => { const need = Math.max(0, ...seqs.map(q => q[i] ? sum(q[i]) : 0)); return t + (need > 0 ? sigm((sum(c) - need) / 30) * 80 : sum(c) * (seq.length - i) / seq.length / 3); }, 0); };
+    const sigm = x => 1 / (1 + Math.exp(-x));
+    const avgSum = l => l.length ? l.reduce((t, c) => t + sum(c), 0) / l.length : 0;
+    // melhor atributo do bot considerando as cartas de rivais que ele lembra (senão, percentil)
+    const bestVs = (ctx, pid, list) => { let b = null, bp = -1; const e = ctx.entry(pid); list.forEach(a => { const w = ctx.pWin(pid, a); const sc = w.known ? w.P : api.pct(a, e.stats[a]); if (sc > bp) { bp = sc; b = a; } }); return { a: b, p: bp }; };
+    // quanto um rival que conheço perde se só puder usar certos atributos (controle de tipo)
+    const forceGain = (ctx, pid, k, tipo) => {
+      let best = null, bg = 0;
+      ctx.opps(pid).forEach(o => { const c = ctx.foe(pid, o); if (!c) return; const st = CARDS[c].stats, allowed = AID.filter(a => k === 'force' ? ATTR[a].tipo === tipo : ATTR[a].tipo !== tipo);
+        const g = Math.max(...AID.map(a => st[a])) - Math.max(...allowed.map(a => st[a])); if (g > bg) { bg = g; best = o; } });
+      return { t: best, g: bg };
+    };
     const maxType = (e, tipo) => AID.filter(a => ATTR[a].tipo === tipo).reduce((m, a) => Math.max(m, e.stats[a]), 0);
 
     // ================================================================ controle do confronto e do atributo (fase ctrl)
     D('AE-021', 'Controle', {
       phase: 'ctrl',
       async apply(ctx, act) {
-        const best = ctx.bestAttr(act.pid).a;
-        const a = await ctx.askAttr(act.pid, { title: 'Atributo universal: todos disputam em qual?', hint: 'Você, inclusive. As cartas estão fechadas: a escolha é às cegas.', options: AID }, () => best);
+        const a = await ctx.askAttr(act.pid, { title: 'Atributo universal: todos disputam em qual?', hint: 'Você, inclusive. As cartas estão fechadas: a escolha é às cegas.', options: AID }, () => bestVs(ctx, act.pid, AID).a);
         const ctl = ctx.combat.ctl; if (ctl.universal) return ctx.say('Já há um atributo universal: este efeito é ignorado (vale o primeiro).');
         ctl.universal = a; ctx.say(`Todos disputam em ${ATTR[a].nome}.`);
       },
-      ai(ctx, pid) { return ctrlU(ctx.bestAttr(pid).p); },
+      ai(ctx, pid) { return ctrlU(bestVs(ctx, pid, AID).p); },
     });
     [['AE-022', 0], ['AE-023', 1]].forEach(([id, par]) => D(id, 'Controle', {
       phase: 'ctrl',
       apply(ctx, act) { const ctl = ctx.combat.ctl; if (ctl.pair != null) return ctx.say('O par já foi imposto: este efeito é ignorado (vale o primeiro).'); ctl.pair = par; ctx.say(`Todos usam o par ${AID.filter(a => ATTR[a].par === par).map(a => ATTR[a].nome).join('/')}.`); },
-      ai(ctx, pid) { const e = ctx.entry(pid); const mine = AID.filter(a => ATTR[a].par === par), oth = AID.filter(a => ATTR[a].par !== par); return pctOf(e, mine) > pctOf(e, oth) ? ctrlU(pctOf(e, mine)) : 0.03; },
+      ai(ctx, pid) { const mine = AID.filter(a => ATTR[a].par === par), oth = AID.filter(a => ATTR[a].par !== par); const m = bestVs(ctx, pid, mine).p; return m > bestVs(ctx, pid, oth).p ? ctrlU(m) : 0.03; },
     }));
     [['AE-024', 'ataque'], ['AE-025', 'defesa']].forEach(([id, tipo]) => D(id, 'Controle', {
       phase: 'ctrl',
       apply(ctx, act) { const ctl = ctx.combat.ctl; if (ctl.typeAll) return ctx.say('O tipo de atributo já foi imposto: este efeito é ignorado.'); ctl.typeAll = tipo; ctx.say(`Todos devem usar atributo de ${tipo}.`); },
-      ai(ctx, pid) { const e = ctx.entry(pid); const mine = AID.filter(a => ATTR[a].tipo === tipo), oth = AID.filter(a => ATTR[a].tipo !== tipo); return pctOf(e, mine) > pctOf(e, oth) ? ctrlU(pctOf(e, mine)) : 0.03; },
+      ai(ctx, pid) { const mine = AID.filter(a => ATTR[a].tipo === tipo), oth = AID.filter(a => ATTR[a].tipo !== tipo); const m = bestVs(ctx, pid, mine).p; return m > bestVs(ctx, pid, oth).p ? ctrlU(m) : 0.03; },
     }));
     [['AE-026', 'force', 'ataque'], ['AE-027', 'force', 'defesa'], ['AE-028', 'ban', 'ataque'], ['AE-029', 'ban', 'defesa']].forEach(([id, k, tipo]) => D(id, 'Controle', {
       phase: 'ctrl',
       async apply(ctx, act) {
-        const t = await ctx.target(act.pid, ctx.opps(act.pid), k === 'force' ? `Quem será obrigado a usar ${tipo}?` : `Quem fica proibido de usar ${tipo}?`); if (t == null) return;
+        const t = await ctx.target(act.pid, ctx.opps(act.pid), k === 'force' ? `Quem será obrigado a usar ${tipo}?` : `Quem fica proibido de usar ${tipo}?`, c => forceGain(ctx, act.pid, k, tipo).t ?? c[0]); if (t == null) return;
         const per = ctx.combat.ctl.per[t] || (ctx.combat.ctl.per[t] = {}); per[k] = tipo;
         ctx.say(k === 'force' ? `${nm(ctx, t)} deve usar atributo de ${tipo}.` : `${nm(ctx, t)} não pode usar atributo de ${tipo}.`);
       },
-      ai: () => 0.2, val: 0.25,
+      // só vale com a carta do rival na memória: força o tipo em que ele é mais fraco
+      ai(ctx, pid) { const g = forceGain(ctx, pid, k, tipo).g; return g >= 30 ? 0.85 : g >= 15 ? 0.55 : g >= 5 ? 0.25 : 0.1; }, val: 0.7,
     }));
     D('AE-030', 'Controle', {
       phase: 'ctrl',
       async apply(ctx, act) {
-        const t = await ctx.target(act.pid, ctx.opps(act.pid), 'De quem você escolherá o atributo?'); if (t == null) return;
+        const t = await ctx.target(act.pid, ctx.opps(act.pid), 'De quem você escolherá o atributo?', c => c.find(o => ctx.foe(act.pid, o)) ?? c[0]); if (t == null) return;
         const per = ctx.combat.ctl.per[t] || (ctx.combat.ctl.per[t] = {}); per.chooser = act.pid; ctx.say(`${nm(ctx, act.pid)} vai escolher o atributo de ${nm(ctx, t)}.`);
       },
-      ai: () => 0.4, val: 0.35,
+      ai(ctx, pid) { const k = ctx.opps(pid).some(o => ctx.foe(pid, o)); return k ? 0.8 : 0.3; }, val: 0.8,
     });
 
     // ================================================================ roubo do baralho ativo / reserva (vizinhos)
@@ -149,7 +181,7 @@
     D('AE-051', 'Troca', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 1 && ctx.opps(pid).some(o => hasDeck(ctx, o)); },
       async apply(ctx, act) {
-        const cand = ctx.opps(act.pid).filter(o => hasDeck(ctx, o)); const t = await ctx.target(act.pid, cand, 'Trocar com o baralho de quem?'); if (t == null) return;
+        const cand = ctx.opps(act.pid).filter(o => hasDeck(ctx, o)); const t = await ctx.target(act.pid, cand, 'Trocar com o baralho de quem?', c => c.slice().sort((a, b) => avgSum(ctx.player(b).deck) - avgSum(ctx.player(a).deck))[0]); if (t == null) return;
         const mine = ctx.player(act.pid).deck; if (!mine.length) return;
         const [give] = await ctx.askCards(act.pid, { title: `Troca escolhida: qual carta sua vai para ${nm(ctx, t)}?`, hint: 'Você recebe uma carta aleatória do baralho dele.', cards: mine.slice(), min: 1, max: 1 }, () => lowest(mine, 1));
         if (await ctx.blocked(act.pid, t, 'deck', 1, 'swap')) return;
@@ -159,7 +191,8 @@
         ctx.say(`${nm(ctx, act.pid)} troca cartas com ${nm(ctx, t)}.`);
         await ctx.emit('steal', { from: t, to: act.pid, card: got }); await ctx.emit('steal', { from: act.pid, to: t, card: give });
       },
-      ai: (ctx, pid) => { const mine = ctx.player(pid).deck; if (!mine.length) return 0; const lo = Math.min(...mine.map(c => sum(c))); const rich = ctx.opps(pid).filter(o => hasDeck(ctx, o)).map(o => ctx.player(o).deck.reduce((t, c) => t + sum(c), 0) / ctx.player(o).deck.length); return rich.length && Math.max(...rich) > lo + 40 ? 0.55 : 0.2; },
+      // troco minha pior por uma ao acaso do rival de baralho mais forte (média pública não é conhecida: uso a média geral)
+      ai: (ctx, pid) => { const mine = ctx.player(pid).deck; if (!mine.length) return 0; const lo = Math.min(...mine.map(c => sum(c))); const g = MEANSUM - lo; return g >= 70 ? 0.8 : g >= 40 ? 0.55 : g >= 15 ? 0.25 : 0.04; },
     });
     D('AE-052', 'Troca', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 1 && ctx.entries().some(e => e.pid !== pid); },
@@ -198,7 +231,8 @@
           const x = a[0], y = b[0]; a[0] = y; b[0] = x; ctx.say(`${nm(ctx, act.pid)} troca os topos de baralho com ${nm(ctx, t)}.`);
           await ctx.emit('steal', { from: t, to: act.pid, card: y }); await ctx.emit('steal', { from: act.pid, to: t, card: x });
         },
-        ai: () => 0.1, val: 0.1,
+        // troco o topo do meu baralho pelo do vizinho: vale se o meu é fraco (ou se lembro que o dele é melhor)
+        ai(ctx, pid) { const t = side(ctx, pid); if (t == null || !hasDeck(ctx, t) || !hasDeck(ctx, pid)) return 0; const k = ctx.foeNext(pid, t); const mine = sum(ctx.player(pid).deck[0]); const g = k ? sum(k) - mine : 0.5 * (MEANSUM - mine); return g >= 45 ? 0.85 : g >= 25 ? 0.55 : g >= 10 ? 0.25 : 0.03; }, val: 0.6,
       });
     }
     swapTops('AE-055', 'R'); swapTops('AE-056', 'L');
@@ -244,7 +278,8 @@
           al.forEach(pid => { ctx.player(pid).reserve = nw[pid] || []; });
           ctx.say(`As reservas giram para a ${dir === 'R' ? 'direita' : 'esquerda'}.`); await ctx.emit('rotate', { dir, list: al.map(pid => ({ from: pid, to: dir === 'R' ? ctx.right(pid) : ctx.left(pid) })) });
         },
-        ai: () => 0.12,
+        // a reserva que chego a receber (do vizinho que passa para mim) contra a que entrego
+        ai(ctx, pid) { const from = dir === 'R' ? ctx.left(pid) : ctx.right(pid); if (from == null) return 0; const g = ctx.player(from).reserve.length - ctx.player(pid).reserve.length; return g >= 3 ? 0.75 : g >= 2 ? 0.5 : g >= 1 ? 0.25 : 0.03; }, val: 0.5,
       });
     }
     rotateRes('AE-061', 'R'); rotateRes('AE-062', 'L');
@@ -258,7 +293,7 @@
         dl.splice(dl.indexOf(cl), 1); dr.splice(dr.indexOf(cr), 1); dr.push(cl); dl.push(cr);
         ctx.say(`${nm(ctx, L)} e ${nm(ctx, R)} trocam cartas.`); await ctx.emit('steal', { from: L, to: R, card: cl }); await ctx.emit('steal', { from: R, to: L, card: cr });
       },
-      ai: () => 0.1, prep: 0.3,
+      ai: () => 0.03, prep: 0.3, val: 0,   // vizinhos escolhem o que dar: sem ganho para quem usa
     });
     D('AE-064', 'Redistribuição', {
       async apply(ctx, act) {
@@ -268,7 +303,8 @@
         const c = rl.splice(Math.floor(ctx.rand() * rl.length), 1)[0]; ctx.player(R).reserve.push(c);
         ctx.say(`${nm(ctx, act.pid)} move uma carta da reserva de ${nm(ctx, t)} para a de ${nm(ctx, R)}.`); await ctx.emit('steal', { from: t, to: R, card: c, zone: 'reserve', dzone: 'reserve' });
       },
-      ai: () => 0.1, prep: 0.25,
+      // só em 3+: tira da reserva do líder (à esquerda) e dá a quem está atrás de mim (à direita)
+      ai(ctx, pid) { const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 2 && tot(R) < tot(pid) && ctx.player(L).reserve.length ? 0.5 : 0.03; }, prep: 0.25, val: 0.4,
     });
     D('AE-065', 'Redistribuição', {
       async apply(ctx, act) {
@@ -277,7 +313,7 @@
         const dl = ctx.player(t).deck; for (let n = 0; n < 3 && dl.length; n++) { const c = dl.splice(Math.floor(ctx.rand() * dl.length), 1)[0]; ctx.player(R).deck.push(c); await ctx.emit('steal', { from: t, to: R, card: c }); }
         ctx.say(`${nm(ctx, act.pid)} transfere cartas de ${nm(ctx, t)} para ${nm(ctx, R)}.`);
       },
-      ai: () => 0.1, prep: 0.25,
+      ai(ctx, pid) { const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 3 && tot(R) < tot(pid) ? 0.6 : 0.03; }, prep: 0.25, val: 0.5,
     });
     D('AE-067', 'Redistribuição', {
       can(ctx, pid) { return ctx.opps(pid).some(o => hasDeck(ctx, o)); },
@@ -354,7 +390,8 @@
         if (best) { best.off = true; ctx.say(`${nm(ctx, act.pid)} anula uma redução numérica (+${bd}).`); } else ctx.say('Nenhuma redução numérica a anular.');
         ctx.recalc(e);
       },
-      ai: () => 0.04,
+      // seguro: vale quando estou ganhando e um rival pode virar algo que me reduza
+      ai(ctx, pid) { return ctx.isLosing(pid) ? 0.03 : 0.05 + 0.4 * oppFlip(ctx, pid); }, val: 0.3,
     });
 
     // ================================================================ Buraco Negro
@@ -370,12 +407,12 @@
         for (const t of take) { ctx.fromBH(t); p.deck.push(t); await ctx.emit('rescue', { pid: act.pid, card: t }); }
         ctx.say(`${nm(ctx, act.pid)} faz um resgate extremo.`);
       },
-      ai: ctx => ctx.bhNormal().length >= 3 ? 0.55 : 0.2,
+      ai(ctx, pid, c) { const l = ctx.bhNormal(), el = ctx.player(pid).deck.filter(strongBase); if (l.length < 3 || !el.length) return 0.04; return gainU(l.slice(0, 3).reduce((t, x) => t + sum(x), 0) - sum(lowest(el, 1)[0]) - costC(c)); },
     });
     D('AE-084', 'Buraco Negro', {
       can(ctx) { return ctx.bhNormal().length > 0; },
       async apply(ctx, act) { const l = ctx.bhNormal(); if (!l.length) return; const c = l[0]; ctx.fromBH(c); ctx.player(act.pid).deck.push(c); ctx.say(`${nm(ctx, act.pid)} resgata ${CARDS[c].nome}.`); await ctx.emit('rescue', { pid: act.pid, card: c }); },
-      ai: ctx => bhU(ctx),
+      ai(ctx, pid, c) { const l = ctx.bhNormal(); return l.length ? gainU(sum(l[0]) - costC(c)) : 0; },
     });
     D('AE-085', 'Buraco Negro', {
       can(ctx) { return ctx.bhNormal().length > 0; },
@@ -384,7 +421,7 @@
         const [c] = await ctx.askCards(act.pid, { title: 'Resgate escolhido: qual carta recuperar?', hint: 'Cartas normais do Buraco Negro.', cards: l, min: 1, max: 1 }, () => highest(l, 1));
         ctx.fromBH(c); ctx.player(act.pid).deck.push(c); ctx.say(`${nm(ctx, act.pid)} resgata ${CARDS[c].nome}.`); await ctx.emit('rescue', { pid: act.pid, card: c });
       },
-      ai: ctx => bhU(ctx) + 0.05,
+      ai(ctx, pid, c) { const l = ctx.bhNormal(); return l.length ? gainU(Math.max(...l.map(sum)) - costC(c)) : 0; },
     });
     D('AE-086', 'Buraco Negro', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 1 && ctx.bhNormal().length > 0; },
@@ -395,7 +432,7 @@
         for (let n = 0; n < 2; n++) { const l = ctx.bhNormal().filter(x => x !== c); if (!l.length) break; const r = l[Math.floor(ctx.rand() * l.length)]; ctx.fromBH(r); p.deck.push(r); await ctx.emit('rescue', { pid: act.pid, card: r }); }
         ctx.say(`${nm(ctx, act.pid)} troca pelo descarte.`);
       },
-      ai: ctx => ctx.bhNormal().length >= 3 ? 0.5 : 0.15,
+      ai(ctx, pid, c) { const l = ctx.bhNormal(), d = ctx.player(pid).deck; if (!l.length || !d.length) return 0; return gainU(Math.min(2, l.length) * avgSum(l) - sum(lowest(d, 1)[0]) - costC(c)); },
     });
     D('AE-087', 'Buraco Negro', {
       can(ctx) { return ctx.bhAll().length > 0; },
@@ -419,49 +456,51 @@
         for (let k = 0; k < 3; k++) { const l = ctx.bhNormal().filter(x => !cs.includes(x)); if (!l.length) break; const r = l[Math.floor(ctx.rand() * l.length)]; ctx.fromBH(r); p.deck.push(r); await ctx.emit('rescue', { pid: act.pid, card: r }); }
         ctx.say(`${nm(ctx, act.pid)} faz um sacrifício duplo.`);
       },
-      ai: ctx => ctx.bhNormal().length >= 4 ? 0.5 : 0.15,
+      ai(ctx, pid, c) { const l = ctx.bhNormal(), d = ctx.player(pid).deck; if (l.length < 2 || d.length < 2) return 0.04; return gainU(Math.min(3, l.length) * avgSum(l) - lowest(d, 2).reduce((t, x) => t + sum(x), 0) - costC(c)); },
     });
 
     // ================================================================ informação e manipulação de ordem
     D('AE-091', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => hasDeck(ctx, o)); },
       async apply(ctx, act) {
-        const cand = ctx.opps(act.pid).filter(o => hasDeck(ctx, o)); const t = await ctx.target(act.pid, cand, 'Quem revela a ordem do baralho?'); if (t == null) return;
-        await ctx.emit('peek', { pid: act.pid, target: t, cards: ctx.player(t).deck.slice(), title: 'Mão revelada', hint: `Ordem do baralho de ${nm(ctx, t)} (topo → fundo).` }); ctx.say(`${nm(ctx, t)} revela a ordem do baralho a ${nm(ctx, act.pid)}.`);
+        const cand = ctx.opps(act.pid).filter(o => hasDeck(ctx, o)); const t = await ctx.target(act.pid, cand, 'Quem revela a ordem do baralho?', c => c.find(o => ctx.mem(act.pid, o).length < 2) ?? c[0]); if (t == null) return;
+        await ctx.emit('peek', { pid: act.pid, target: t, cards: ctx.player(t).deck.slice(), title: 'Mão revelada', hint: `Ordem do baralho de ${nm(ctx, t)} (topo → fundo).` }); ctx.learn(act.pid, t, ctx.player(t).deck.slice()); ctx.say(`${nm(ctx, t)} revela a ordem do baralho a ${nm(ctx, act.pid)}.`);
       },
-      ai: () => 0.08, prep: 0.4, val: 0.1,
+      ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length > 0 && ctx.mem(pid, o).length < 2) ? 0.55 : 0.05, prep: 0.4, val: 1.0, want: needMem,
     });
     D('AE-092', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 2; },
       async apply(ctx, act) {
         const p = ctx.player(act.pid); const n = Math.min(3, p.deck.length); const v = p.deck.slice(0, n);
-        const o = await ctx.askCards(act.pid, { title: 'Ordene as próximas cartas (1ª = topo)', hint: 'Toque nas cartas na ordem em que quer que entrem em disputa.', cards: v, min: n, max: n, ordered: true }, () => highest(v, n));
+        const o = await ctx.askCards(act.pid, { title: 'Ordene as próximas cartas (1ª = topo)', hint: 'Toque nas cartas na ordem em que quer que entrem em disputa.', cards: v, min: n, max: n, ordered: true }, () => orderVs(ctx, act.pid, v));
         p.deck.splice(0, n, ...o); ctx.say(`${nm(ctx, act.pid)} reordena as próximas cartas.`); await ctx.emit('reorder', { pid: act.pid });
       },
-      ai: () => 0.1, prep: 0.5, val: 0.1,
+      ai(ctx, pid) { const v = ctx.player(pid).deck.slice(0, 3); if (v.length < 2) return 0; if (foeSeqs(ctx, pid).some(q => q.length)) return 0.6; const sp = Math.max(...v.map(sum)) - Math.min(...v.map(sum)); return sp >= 60 ? 0.3 : 0.1; }, prep: 0.5, val: 0.8,
     });
     D('AE-094', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 2; },
       async apply(ctx, act) { const p = ctx.player(act.pid); const n = Math.min(3, p.deck.length); p.deck.splice(0, n, ...p.deck.slice(0, n).reverse()); ctx.say(`${nm(ctx, act.pid)} inverte a fila das próximas ${n} cartas.`); await ctx.emit('reorder', { pid: act.pid }); },
-      ai: () => 0.06, prep: 0.4, val: 0.08,
+      ai(ctx, pid) { const v = ctx.player(pid).deck.slice(0, 3); if (v.length < 2) return 0; const g = orderScore(ctx, pid, v.slice().reverse()) - orderScore(ctx, pid, v); return g >= 40 ? 0.7 : g >= 20 ? 0.4 : 0.04; }, prep: 0.4, val: 0.5,
     });
     D('AE-095', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length >= 2); },
       async apply(ctx, act) {
         const cand = ctx.opps(act.pid).filter(o => ctx.player(o).deck.length >= 2); if (!cand.length) return ctx.say('Nenhum adversário com mais de uma carta ativa.');
-        const t = await ctx.target(act.pid, cand, 'Atrasar a próxima carta de quem?'); if (t == null) return;
+        const t = await ctx.target(act.pid, cand, 'Atrasar a próxima carta de quem?', c => c.slice().sort((a, b) => (ctx.foeNext(act.pid, b) ? sum(ctx.foeNext(act.pid, b)) : 0) - (ctx.foeNext(act.pid, a) ? sum(ctx.foeNext(act.pid, a)) : 0))[0]); if (t == null) return;
         const d = ctx.player(t).deck; if (d.length) d.push(d.shift()); ctx.say(`${nm(ctx, act.pid)} atrasa a próxima carta de ${nm(ctx, t)}.`); await ctx.emit('reorder', { pid: t });
       },
-      val: 0.3, ai: () => 0.4,
+      // só vale se lembro que a próxima dele é forte; às cegas é jogar uma moeda
+      val: 0.5, ai(ctx, pid) { const ks = ctx.opps(pid).map(o => ctx.foeNext(pid, o)).filter(Boolean); if (!ks.length) return 0.18; return Math.max(...ks.map(sum)) >= MEANSUM + 25 ? 0.85 : 0.05; },
     });
     D('AE-096', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length + ctx.player(o).reserve.length > 0); },
       async apply(ctx, act) {
-        const cand = ctx.opps(act.pid).filter(o => ctx.player(o).deck.length + ctx.player(o).reserve.length > 0); const t = await ctx.target(act.pid, cand, 'Quebrar o plano de quem?'); if (t == null) return;
+        const cand = ctx.opps(act.pid).filter(o => ctx.player(o).deck.length + ctx.player(o).reserve.length > 0); const t = await ctx.target(act.pid, cand, 'Quebrar o plano de quem?', c => c.slice().sort((a, b) => ctx.player(b).deck.length - ctx.player(a).deck.length)[0]); if (t == null) return;
         const p = ctx.player(t); const all = api.shuffle(p.deck.concat(p.reserve), () => ctx.rand()); p.deck = all.slice(0, 5); p.reserve = all.slice(5);
         ctx.say(`${nm(ctx, act.pid)} embaralha baralho e reserva de ${nm(ctx, t)}; só 5 cartas ficam ativas.`); await ctx.emit('reorder', { pid: t });
       },
-      val: 0.35, ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length >= 6) ? 0.5 : 0.3,
+      // quem tem baralho grande perde a vantagem: só 5 cartas ficam ativas, o resto vai à reserva
+      val: 0.9, ai(ctx, pid) { const n = Math.max(0, ...ctx.opps(pid).map(o => ctx.player(o).deck.length)); return n >= 9 ? 0.85 : n >= 7 ? 0.55 : n >= 6 ? 0.25 : 0.04; },
     });
     D('AE-097', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).reserve.length > 0; },
@@ -471,7 +510,7 @@
         o.forEach(c => p.reserve.splice(p.reserve.indexOf(c), 1)); p.deck.unshift(...o);
         ctx.say(`${nm(ctx, act.pid)} traz ${o.length === 1 ? '1 carta' : o.length + ' cartas'} da reserva ao topo.`); await ctx.emit('reorder', { pid: act.pid });
       },
-      ai: (ctx, pid) => ctx.player(pid).deck.length <= 2 ? 0.45 : 0.1, prep: 0.5, val: 0.15,
+      ai(ctx, pid) { const p = ctx.player(pid); if (p.deck.length <= 2) return 0.6; const top = highest(p.reserve, 7); return avgSum(top) > avgSum(p.deck) + 20 ? 0.4 : 0.06; }, prep: 0.5, val: 0.5,
     });
     D('AE-098', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).reserve.length >= 2; },
@@ -480,12 +519,12 @@
         const o = await ctx.askCards(act.pid, { title: 'Reorganize as primeiras cartas da reserva', hint: 'A 1ª será a primeira a entrar no baralho.', cards: v, min: n, max: n, ordered: true }, () => highest(v, n));
         p.reserve.splice(0, n, ...o); ctx.say(`${nm(ctx, act.pid)} organiza a reserva.`); await ctx.emit('reorder', { pid: act.pid });
       },
-      ai: () => 0.05, prep: 0.4, val: 0.08,
+      ai(ctx, pid) { const p = ctx.player(pid); return p.reserve.length >= 4 && p.deck.length <= 3 ? 0.3 : 0.04; }, prep: 0.4, val: 0.15,
     });
     D('AE-099', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).reserve.length > 0; },
       async apply(ctx, act) { const p = ctx.player(act.pid); if (!p.reserve.length) return; p.deck.push(p.reserve.shift()); ctx.say(`${nm(ctx, act.pid)} reforça o fim do baralho.`); await ctx.emit('reorder', { pid: act.pid }); },
-      ai: () => 0.12, prep: 0.5, val: 0.1,
+      ai(ctx, pid) { const p = ctx.player(pid); return p.deck.length <= 3 && p.reserve.length && sum(p.reserve[0]) > avgSum(p.deck) + 15 ? 0.4 : 0.05; }, prep: 0.5, val: 0.15,
     });
     D('AE-100', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length >= 2); },
@@ -494,9 +533,10 @@
         const t = await ctx.target(act.pid, cand, 'Confundir o próximo turno de quem?'); if (t == null) return;
         const d = ctx.player(t).deck; const v = d.slice(0, 3); if (!v.length) return;
         const [c] = await ctx.askCards(act.pid, { title: `Qual carta de ${nm(ctx, t)} ficará no topo?`, hint: 'As demais mantêm a ordem relativa.', cards: v, min: 1, max: 1 }, () => lowest(v, 1));
-        d.splice(d.indexOf(c), 1); d.unshift(c); ctx.say(`${nm(ctx, act.pid)} confunde o próximo turno de ${nm(ctx, t)}.`); await ctx.emit('reorder', { pid: t });
+        d.splice(d.indexOf(c), 1); d.unshift(c); ctx.say(`${nm(ctx, act.pid)} confunde o próximo turno de ${nm(ctx, t)}.`); await ctx.emit('reorder', { pid: t }); ctx.learn(act.pid, t, d.slice());
       },
-      ai: () => 0.3,
+      // vejo as 3 próximas dele e deixo a pior no topo: depois sei exatamente o que ele joga
+      ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length >= 3) ? 0.65 : 0.25, val: 1.0, want: needMem,
     });
 
     // ================================================================ capturas condicionais e efeitos decisivos
@@ -607,9 +647,9 @@
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0); },
       async apply(ctx, act) {
         const cand = ctx.opps(act.pid).filter(o => ctx.player(o).prepared.length > 0); const t = await ctx.target(act.pid, cand, 'Quem expõe os especiais preparados?'); if (t == null) return;
-        await ctx.emit('peek', { pid: act.pid, target: t, cards: ctx.player(t).prepared.slice(0, 2), title: 'Preparação exposta', hint: `Especiais preparados de ${nm(ctx, t)} (continuam preparados).` }); ctx.say(`${nm(ctx, t)} expõe seus especiais preparados.`);
+        await ctx.emit('peek', { pid: act.pid, target: t, cards: ctx.player(t).prepared.slice(0, 2), title: 'Preparação exposta', hint: `Especiais preparados de ${nm(ctx, t)} (continuam preparados).` }); ctx.learn(act.pid, t, ctx.player(t).prepared.slice(0, 2), 'prep'); ctx.say(`${nm(ctx, t)} expõe seus especiais preparados.`);
       },
-      ai: () => 0.08, prep: 0.5, val: 0.1,
+      ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) ? 0.4 : 0.04, prep: 0.5, val: 0.5, want: (g, p) => g.alive().some(o => o !== p.pid && g.p(o).prepared.length > 0 && !(p.mem.prep[o] || []).length),
     });
     D('AE-118', 'Interação', {
       phase: 'shield', companion: true,
@@ -622,7 +662,8 @@
         const p = ctx.player(act.pid); if (p.prepared.length >= 2 || !p.deck.length) return ctx.say('Não há espaço ou carta para preparar.');
         const c = p.deck.shift(); p.prepared.push(c); ctx.combat.locked.add(c); ctx.say(`${nm(ctx, act.pid)} prepara outro especial na hora.`); await ctx.emit('prepare', { pid: act.pid, card: c });
       },
-      ai: () => 0.06, prep: 0.5, val: 0.1,
+      // adianta o preparo: bom quando a próxima carta é fraca e o especial dela vale
+      ai(ctx, pid) { const p = ctx.player(pid); if (p.deck.length < 3 || p.prepared.length > 2) return 0.02; const sp = SP[CARDS[p.deck[0]].especial]; return sp && ctx.g.botVal(sp) >= 1 && sum(p.deck[0]) < MEANSUM ? 0.5 : 0.04; }, prep: 0.5, val: 0.6,
     });
     D('AE-120', 'Interação', {
       phase: 'late',
@@ -633,7 +674,7 @@
         const e = ctx.entry(t); const n = mods(e); e.mods.forEach(m => { m.off = true; }); ctx.recalc(e);
         ctx.say(n ? `${nm(ctx, act.pid)} remove as alterações numéricas da carta de ${nm(ctx, t)}.` : 'Remoção sem efeito: a carta não tinha alterações.');
       },
-      ai(ctx, pid) { return ctx.entries().some(e => e.pid !== pid && e.mods.length) ? 0.5 : 0.04; },
+      ai(ctx, pid) { return ctx.entries().some(e => e.pid !== pid && e.mods.length) ? 0.5 : ctx.isLosing(pid) ? 0.03 : 0.05 + 0.4 * oppFlip(ctx, pid); }, val: 0.3,
     });
 
     // ================================================================ conversões e permutas

@@ -1022,7 +1022,7 @@
       "id": "AE-073",
       "nome": "Silêncio de especiais",
       "categoria": "Defesas, bloqueios e salvamentos",
-      "texto_efeito": "Anule os ataques especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas.",
+      "texto_efeito": "Anule as habilidades especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas.",
       "origem_ideia": "#47",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
@@ -1590,7 +1590,7 @@
     {
       "id": "AE-111",
       "nome": "Ativação forçada",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária.",
       "origem_ideia": "#59",
       "avaliacao_de_risco": "Regra-base",
@@ -1605,7 +1605,7 @@
     {
       "id": "AE-112",
       "nome": "Repetição onerosa",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada.",
       "origem_ideia": "#62 (ciclos proibidos)",
       "avaliacao_de_risco": "Atenção",
@@ -1620,8 +1620,8 @@
     {
       "id": "AE-113",
       "nome": "Interrupção precisa",
-      "categoria": "Interações entre ataques especiais",
-      "texto_efeito": "Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente.",
+      "categoria": "Interações entre habilidades especiais",
+      "texto_efeito": "Cancele 1 habilidade especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
@@ -1635,7 +1635,7 @@
     {
       "id": "AE-114",
       "nome": "Desvio de alvo",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
@@ -1650,7 +1650,7 @@
     {
       "id": "AE-115",
       "nome": "Eco de habilidade",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
@@ -1665,8 +1665,8 @@
     {
       "id": "AE-116",
       "nome": "Apropriar especial usado",
-      "categoria": "Interações entre ataques especiais",
-      "texto_efeito": "Ganhe a carta de ataque especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo.",
+      "categoria": "Interações entre habilidades especiais",
+      "texto_efeito": "Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo.",
       "origem_ideia": "#06 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
@@ -1680,7 +1680,7 @@
     {
       "id": "AE-117",
       "nome": "Preparação exposta",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
@@ -1695,7 +1695,7 @@
     {
       "id": "AE-118",
       "nome": "Blindagem de especial",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
@@ -1710,7 +1710,7 @@
     {
       "id": "AE-119",
       "nome": "Preparação urgente",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Experimental",
@@ -1723,7 +1723,7 @@
     {
       "id": "AE-120",
       "nome": "Remover alteração",
-      "categoria": "Interações entre ataques especiais",
+      "categoria": "Interações entre habilidades especiais",
       "texto_efeito": "Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",

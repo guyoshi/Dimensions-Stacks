@@ -15,9 +15,9 @@
 
 ## 2. Nome das habilidades: APROVADO
 
-Como também existem cartas de proteção, reação e manipulação, **“Ataque Especial” não abrange bem todos os usos**.
+Como também existem cartas de proteção, reação e manipulação, **“Habilidade Especial” não abrange bem todos os usos**.
 
-**Regra editorial aprovada:** rótulo geral na interface **Habilidade Especial** ou simplesmente **Especial**, abreviado **ESP**. Cada uma teria categoria **Ataque / Defesa / Controle / Recuperação / Coringa**, usada apenas para interface e janela de reação, sem gerar bônus novo. Em páginas históricas, preservar a expressão “Ataque Especial”, que é o nome do jogo de infância.
+**Regra editorial aprovada:** rótulo geral na interface **Habilidade Especial** ou simplesmente **Especial**, abreviado **ESP**. Cada uma teria categoria **Ataque / Defesa / Controle / Recuperação / Coringa**, usada apenas para interface e janela de reação, sem gerar bônus novo. Em páginas históricas, preservar a expressão “Habilidade Especial”, que é o nome do jogo de infância.
 
 ## 3. O problema da fila única
 
@@ -37,7 +37,7 @@ Todos os jogadores ativos têm oportunidades em sentido horário de usar **uma e
 
 Quando uma habilidade ameaçadora é ativada **ou está prestes a resolver**, os jogadores afetados podem usar **especial preparada do tipo Defesa/Reação**, desde que ainda possuam ativação voluntária disponível ou uma exceção que permita mais ativações.
 
-- Uma defesa pode entrar **em resposta** a qualquer ataque especial ainda pendente ou ao resultado do confronto normal **antes de as cartas mudarem irreversivelmente de zona**.
+- Uma defesa pode entrar **em resposta** a qualquer habilidade especial ainda pendente ou ao resultado do confronto normal **antes de as cartas mudarem irreversivelmente de zona**.
 - Não é necessário esperar a próxima rodada ou o próprio turno para responder. “A qualquer momento” significa **qualquer oportunidade legal durante o combate em que exista uma ameaça pendente**, não depois de um efeito já encerrado.
 - A nova defesa entra no topo da pilha e **resolve antes** do efeito ao qual responde. Ao final das respostas sucessivas, retoma-se a resolução do efeito anterior, se ele ainda estiver válido.
 - Mesmo se outro jogador já passou, ele pode responder numa janela nova se ainda tiver sua ativação disponível. Passar não consome especial.

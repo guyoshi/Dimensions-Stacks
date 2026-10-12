@@ -6,7 +6,7 @@
 
 ## 1. Conceito
 
-Jogo de cartas digital para PC, competitivo e com personagens das diferentes séries de **Dimensões Infinitas**. Cada carta futura receberá seu próprio nome, descrição, atributos e um ataque especial temático, de acordo com o cânone literário. **Os nomes, biografias e valores das cartas antigas não serão reaproveitados como base**. Os ataques especiais antigos são referências de design, não habilidades já atribuídas aos novos personagens.
+Jogo de cartas digital para PC, competitivo e com personagens das diferentes séries de **Dimensões Infinitas**. Cada carta futura receberá seu próprio nome, descrição, atributos e uma habilidade especial temática, de acordo com o cânone literário. **Os nomes, biografias e valores das cartas antigas não serão reaproveitados como base**. As habilidades especiais antigos são referências de design, não habilidades já atribuídas aos novos personagens.
 
 - Modalidades: **2, 3 ou 4 jogadores**, todos contra todos (formato proposto para o PC; sem equipes nesta versão).
 - Objetivo: **eliminar todas as cartas disponíveis dos adversários**, incluindo, quando aplicável, o meio de reserva.
@@ -18,8 +18,8 @@ Jogo de cartas digital para PC, competitivo e com personagens das diferentes sé
 1. **Baralho ativo:** pilha ordenada do jogador; a carta do topo é a próxima em combate. Capturas e cartas preservadas vão para o final dessa pilha. Pode aumentar ou diminuir.
 2. **Meio de reserva:** cartas restantes distribuídas em partes iguais entre jogadores após a mão/baralho inicial. Não é livremente acessível.
 3. **Campo de combate:** 1 carta do topo do baralho ativo por jogador em cada disputa normal.
-4. **Área de ataques especiais:** à esquerda do jogador, comporta **até 2 cartas** preparadas e viradas para baixo.
-5. **Buraco Negro:** descarte comum, ordenado pela sequência real dos descartes. Cartas ali não voltam ao jogo sem ataque especial que permita expressamente.
+4. **Área de habilidades especiais:** à esquerda do jogador, comporta **até 2 cartas** preparadas e viradas para baixo.
+5. **Buraco Negro:** descarte comum, ordenado pela sequência real dos descartes. Cartas ali não voltam ao jogo sem habilidade especial que permita expressamente.
 6. **Cartas capturadas:** deixam o campo e entram no final do baralho ativo de quem as capturou.
 
 **PENDENTE:** total inicial de cartas em jogo, distribuição do resto quando não divisível por 2/3/4, visibilidade da quantidade e da ordem da reserva, e se o jogador pode examinar as cartas depois da preparação.
@@ -76,16 +76,16 @@ Para choque de **especiais de imposição de atributo** que empatem no valor usa
 
 O combate é coletivo: um único iniciador e todos os jogadores ainda ativos participam, com um único maior valor vencedor. A regra geral acima continua aplicável. **PENDENTE:** como processar vencedores empatados e especiais que escolhem 'o adversário à direita/esquerda' quando este estiver eliminado.
 
-## 6. Ataques especiais (núcleo original)
+## 6. Habilidades especiais (núcleo original)
 
 - Só podem ser usados **a partir da segunda rodada**.
-- Antes de uma disputa, o jogador anuncia/prepara uma carta de ataque especial, colocando-a **virada para baixo à esquerda**.
+- Antes de uma disputa, o jogador anuncia/prepara uma carta de habilidade especial, colocando-a **virada para baixo à esquerda**.
 - É permitido deixar **até 2 cartas** preparadas por jogador.
 - Ficam protegidas: não podem ser roubadas nem atacadas por efeitos comuns.
 - O jogador pode **virá-las no momento escolhido**, no contexto de combate (o manual descreve a ativação depois da revelação dos atributos).
 - A carta preparada fica **comprometida**: não pode ser recolhida voluntariamente para o baralho.
 - Depois de utilizada, **vai obrigatoriamente ao Buraco Negro**.
-- Ataques especiais podem expressamente abrir exceções, como recuperar carta do Buraco Negro, retirar da reserva ou afetar cartas de combate.
+- Habilidades especiais podem expressamente abrir exceções, como recuperar carta do Buraco Negro, retirar da reserva ou afetar cartas de combate.
 - 'Aleatório': seleção sem ver o conteúdo. 'À sua escolha': seleção após ver as opções autorizadas.
 
 **REGRA CONFIRMADA PELO AUTOR (12/10/2026):** o jogador pode ativar voluntariamente **no máximo 1 carta especial preparada por combate**, escolhendo qual usar e em qual rodada. **Exceção:** uma habilidade específica pode permitir ativar duas cartas especiais no mesmo combate. **Ativação forçada (#59):** obriga usar todas as especiais já preparadas, até duas, independentemente do limite voluntário. O manual antigo tinha passagens contraditórias; esta decisão posterior prevalece.
@@ -97,7 +97,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 ## 7. Meio de reserva
 
 - Quando o baralho ativo de alguém acabar, o jogador compra **mais 7 cartas da própria reserva**, como estabelece o manual.
-- Ataques especiais específicos podem permitir retirar cartas da própria reserva ou da de um adversário.
+- Habilidades especiais específicos podem permitir retirar cartas da própria reserva ou da de um adversário.
 - **PENDENTE:** quando restarem menos de 7 na reserva; reposição durante uma disputa; se o jogador fica temporariamente sem carta de combate; quando se declara eliminação na presença de cartas especiais preparadas.
 
 ## 8. Proibições e restrições originais
@@ -105,7 +105,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 - Não trocar livremente cartas com a própria reserva ou com outro jogador.
 - Não consultar/pular a segunda e demais cartas do baralho ativo para jogar uma posterior.
 - Não usar atributos fora do par Ataque/Defesa ou Inteligência/Velocidade.
-- Não recuperar ataques especiais preparados sem regra expressa.
+- Não recuperar habilidades especiais preparados sem regra expressa.
 - Não roubar cartas já colocadas no campo de combate, **salvo efeito de carta explicitamente autorizado**.
 
 ## 9. Identidade visual aprovada para a versão PC (12/10/2026)
@@ -149,12 +149,12 @@ Cuidar da acessibilidade: moldura preta com texto de alto contraste, moldura ama
 - Esclarecimentos do autor: vitória por eliminação, combate com primeira carta, confronto defesa x defesa, até duas cartas especiais preparadas e baralho ativo crescente.
 - Cânone narrativo: [Dimensões Infinitas](https://github.com/guyoshi/dimensoesinfinitas).
 
-Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco candidato](ELENCO_CANDIDATO.md).
+Documentos complementares: [Habilidades especiais](ATAQUES_ESPECIAIS.md) · [Elenco candidato](ELENCO_CANDIDATO.md).
 
 
 ## 13. Esclarecimento do autor sobre custo de especiais (12/10/2026)
 
-**Confirmação:** o **ataque especial utilizado vai ao Buraco Negro**; a carta **normal de combate** não recebe proteção extra por esse uso. Se vencer, seguirá a regra normal (inclusive indo ao fim do baralho quando apropriado); se perder, pode ser capturada ou descartada conforme a resolução. Obrigar a mesa ao mesmo atributo **não garante vitória**. Portanto, custo da carta especial e possibilidade de derrota da carta comum devem ser contabilizados antes de classificar uma habilidade como excessiva.
+**Confirmação:** a **habilidade especial utilizada vai ao Buraco Negro**; a carta **normal de combate** não recebe proteção extra por esse uso. Se vencer, seguirá a regra normal (inclusive indo ao fim do baralho quando apropriado); se perder, pode ser capturada ou descartada conforme a resolução. Obrigar a mesa ao mesmo atributo **não garante vitória**. Portanto, custo da carta especial e possibilidade de derrota da carta comum devem ser contabilizados antes de classificar uma habilidade como excessiva.
 
 **Decisão editorial visual confirmada:** o autor aprovou **cores por série**, deixando de associar verde a heróis e vermelho a vilões. Selos identificam A União e raridade sem duplicar obrigatoriamente personagens.
 
@@ -162,15 +162,15 @@ Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco 
 
 ## 14. Decisões confirmadas: especiais 09 e 59 e choque de atributos (12/10/2026)
 
-### 14.1 Ataque especial 09 — duas cartas somadas
+### 14.1 Habilidade especial 09 — duas cartas somadas
 
-**APROVADO:** ao ativar o especial, o jogador usa **duas cartas consecutivas do topo de seu baralho ativo**, somando o valor **do mesmo atributo escolhido em ambas** para produzir **um único total no confronto**. A razão estratégica original é permitir que uma primeira carta fraca ganhe força com a segunda. **Há um custo real:** consome-se uma carta de ataque especial (que vai ao Buraco Negro) e duas cartas normais ficam comprometidas com a disputa, em vez de uma. Não substituir automaticamente por “pegar o maior dos dois valores”, nem aplicar teto de soma sem testes.
+**APROVADO:** ao ativar o especial, o jogador usa **duas cartas consecutivas do topo de seu baralho ativo**, somando o valor **do mesmo atributo escolhido em ambas** para produzir **um único total no confronto**. A razão estratégica original é permitir que uma primeira carta fraca ganhe força com a segunda. **Há um custo real:** consome-se uma carta de habilidade especial (que vai ao Buraco Negro) e duas cartas normais ficam comprometidas com a disputa, em vez de uma. Não substituir automaticamente por “pegar o maior dos dois valores”, nem aplicar teto de soma sem testes.
 
 **PROPOSTA operacional até confirmação:** as duas cartas normais seguem juntas o desfecho do combate: se a dupla vence atacando, ambas retornam ao final do baralho ativo do vencedor junto das cartas capturadas; se vence defendendo, ambas retornam ao final de seu baralho ativo; se perde, ambas são capturadas ou descartadas segundo a regra comum. **PENDENTE:** quando só há uma carta ativa e menos de duas disponíveis para formar a dupla; desempate com duas cartas e forma de calcular a soma de todos os atributos (se aplicável).
 
-### 14.2 Ataque especial 59 — ativação forçada
+### 14.2 Habilidade especial 59 — ativação forçada
 
-**APROVADO:** obriga um adversário a usar uma carta de ataque especial **somente se ela já estiver preparada na área de especiais à esquerda (virada para baixo, esperando ativação)**. Não obriga tirar uma carta nova do baralho ou da reserva. A carta forçada é ativada e descartada como qualquer especial utilizado.
+**APROVADO:** obriga um adversário a usar uma carta de habilidade especial **somente se ela já estiver preparada na área de especiais à esquerda (virada para baixo, esperando ativação)**. Não obriga tirar uma carta nova do baralho ou da reserva. A carta forçada é ativada e descartada como qualquer especial utilizado.
 
 **APROVADO (12/10/2026):** deve **usar todas as cartas especiais que já estiverem preparadas na sua área à esquerda**, até duas. O autor usou a expressão 'todas em mãos'; em conjunto com a decisão anterior, isso significa as cartas **já disponíveis/preparadas para ativação**, não cartas ainda escondidas no baralho ativo ou na reserva. **PENDENTE:** como resolver a ordem de ativação das duas, escolhas de alvo internas e eventual janela de resposta.
 
@@ -192,13 +192,13 @@ A disputa de imposição **não é a resolução do combate**: depois dela, todo
 - No conjunto de cartas de Ciclo de Jesed, a identidade da carta deve ser **Mark Polar**. **Karesis é Mark** segundo o autor e não deve surgir como carta única adicional. O alias Loutes não aparece no nome exibido.
 
 
-## 15. Transcrição direta de ataques especiais recuperados (12/10/2026, 14:20–14:22)
+## 15. Transcrição direta de habilidades especiais recuperados (12/10/2026, 14:20–14:22)
 
 O autor transcreveu **23 cartas físicas distintas**, consideradas fonte de texto original mais confiável do que a leitura anterior de fotos. Ver [lista com textos literais e auditoria individual](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md). Não aplicar automaticamente os nomes e as classificações cromáticas antigas às cartas novas.
 
 Destaques para especificação futura:
 
-1. **#06 — Mark Pollar (nome antigo na carta):** *Ganhe a carta que o inimigo usou no ataque especial.* Isso se refere a especial **já utilizado**, não a carta esperando preparada. Definir destino da carta ganha e a interação excepcional com o descarte.
+1. **#06 — Mark Pollar (nome antigo na carta):** *Ganhe a carta que o inimigo usou na habilidade especial.* Isso se refere a especial **já utilizado**, não a carta esperando preparada. Definir destino da carta ganha e a interação excepcional com o descarte.
 2. **#18 — Ricochett Bombargue:** *Inverta os papéis de vencedor e perdedor uma vez.* Em combate com mais de dois jogadores, definir explicitamente a correspondência de vários perdedores com o vencedor único. Não enfraquecer o efeito antes da regra operacional/testes.
 3. **#19 — Sagrado Senhor da Morte:** *Sacrifique uma carta com algum status acima de 90 em troca das três primeiras cartas do Baralho Negro.* **TERMO CORRIGIDO PELO AUTOR:** trata-se do **Buraco Negro**; não existe indicação de uma segunda zona chamada 'Baralho Negro'. Definir quem escolhe a carta sacrificada, a zona de destino, e se os três itens podem incluir especiais.
 4. **#24 — Primus Tenesy:** *Jogue duas cartas, uma em Inteligência e outra em Poder.* Exceção intencional ao par normal ataque/defesa; **RETIRADO DO JOGO:** especial #24 removido por decisão do autor, preservado somente como registro histórico.
@@ -206,7 +206,7 @@ Destaques para especificação futura:
 6. **#34 — Master Kang:** *Roube duas cartas, uma de cada jogador.* Com dois jogadores não há dois adversários. **PENDENTE:** versão de duelo ou restrição de uso.
 7. **#35 — Cap. Zoddie:** *Troque os maços de reserva dos jogadores, da esquerda para a direita, começando por você.* Diferenciar da troca apenas com a esquerda (#46) e definir rotação simultânea da mesa.
 8. **#36 — Luna Stellar:** *Veja suas cartas do monte de reserva e separe 7 para usar na ordem.* Definir onde entram essas 7 e como proceder quando restarem menos de 7 na reserva.
-9. **#59 — William McCroys:** *Obrigue um jogador a usar suas cartas de ataque especial nessa rodada.* **Já confirmado:** somente as cartas especiais preparadas na mesa podem ser forçadas; **APROVADO:** todas as cartas especiais já preparadas devem ser usadas; ordem e alvos individuais ainda pendentes.
+9. **#59 — William McCroys:** *Obrigue um jogador a usar suas cartas de habilidade especial nessa rodada.* **Já confirmado:** somente as cartas especiais preparadas na mesa podem ser forçadas; **APROVADO:** todas as cartas especiais já preparadas devem ser usadas; ordem e alvos individuais ainda pendentes.
 10. **#60 e #61:** as condições literais se referem a carta **azul** e carta **vermelha**. As cores do jogo digital identificarão séries, não União ou vilania. **PENDENTE:** identificar a carta-alvo e aprovar uma nova condição funcional sem alterar silenciosamente as regras antigas.
 
 **Separação metodológica:** texto transcrito é a fonte original, o que o autor confirmou é a decisão do GDD; aplicações concretas ainda não definidas são hipóteses de design e devem ficar rotuladas **PENDENTE** ou **PROPOSTA**.
@@ -214,17 +214,17 @@ Destaques para especificação futura:
 
 ## 16. Decisões subsequentes — retirada, terminologia e desempates (12/10/2026)
 
-- **Especial #18 (Ricochett Bombargue): RETIRADO** do conjunto de ataques especiais previstos para o jogo de PC. O texto físico permanece preservado no arquivo histórico, sem efeitos ativos.
-- **Especial #24 (Primus Tenesy): RETIRADO** do conjunto de ataques especiais previstos para PC. A carta física continua documentada, mas a mecânica não deve ser replicada.
+- **Especial #18 (Ricochett Bombargue): RETIRADO** do conjunto de habilidades especiais previstos para o jogo de PC. O texto físico permanece preservado no arquivo histórico, sem efeitos ativos.
+- **Especial #24 (Primus Tenesy): RETIRADO** do conjunto de habilidades especiais previstos para PC. A carta física continua documentada, mas a mecânica não deve ser replicada.
 - **Especial #19 (Sagrado Senhor da Morte):** o autor confirmou que **'Baralho Negro' significa Buraco Negro**. Usar apenas **Buraco Negro** na documentação funcional; preservar nota de divergência com a transcrição anterior. A regra de sacrificar uma carta com atributo superior a 90 em troca das três primeiras do Buraco Negro continua disponível para análise.
-- **Especial #59 (William McCroys):** obriga o jogador escolhido a **usar todas as cartas de ataque especial que já tiver preparado à esquerda na mesa**, no máximo duas. A formulação nova 'todas em mãos' **não autoriza puxar cartas não preparadas de outras zonas**.
+- **Especial #59 (William McCroys):** obriga o jogador escolhido a **usar todas as cartas de habilidade especial que já tiver preparado à esquerda na mesa**, no máximo duas. A formulação nova 'todas em mãos' **não autoriza puxar cartas não preparadas de outras zonas**.
 - **Desempate geral:** valor individual → soma dos quatro atributos → soma **Poder + Inteligência**. Empate persistente depois desses três critérios continua pendente.
 - **Leituras por IA de outras cartas:** registrar como **provisórias**, nunca como texto confirmado. Consultar [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md).
 
 
 ## 17. Inventário ampliado e novas questões mecânicas (12/10/2026)
 
-**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com ataques especiais **não recuperados**. Ver [inventário principal](ATAQUES_ESPECIAIS.md) e [tabela de leituras ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
+**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com habilidades especiais **não recuperados**. Ver [inventário principal](ATAQUES_ESPECIAIS.md) e [tabela de leituras ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
 
 ### Efeitos recentemente ampliados (origem: texto reconstruído por IA e fornecido pelo autor)
 
@@ -232,7 +232,7 @@ Destaques para especificação futura:
 
 - **#20 Agente Sete —** trocar o valor de Defesa pela Inteligência da própria carta. **PENDENTE:** a redação indica troca/substituição, não está claro se intercambia ambos os números ou copia apenas um, e qual efeito nos pares legais.
 - **#37 D. Lesort —** cada jogador envia uma carta aleatória ao Buraco Negro. **PENDENTE:** de qual zona sai a carta, se o próprio ativador participa e quando ocorre o descarte.
-- **#47 Kate Fira —** carta de defesa que impede todos os ataques especiais do turno. **PENDENTE:** prioridade contra especiais já iniciados e relação com #59 que força múltiplas ativações.
+- **#47 Kate Fira —** carta de defesa que impede todos as habilidades especiais do turno. **PENDENTE:** prioridade contra especiais já iniciados e relação com #59 que força múltiplas ativações.
 - **#49 Temi Lokat —** carta de defesa que impede o rival de vencer neste turno. **PENDENTE:** se impede derrota do usuário apenas ou impede vitória do alvo, e como funciona em 3–4 jogadores.
 - **#50 Raum Cedar —** obriga cada jogador a descartar uma carta aleatória ao Buraco Negro. **PENDENTE:** fragmento de início perdido depois de “CARTA ATAQUE...”; aparentemente semelhante a #37, verificar se são duplicados ou têm tempos diferentes.
 - **#52 Luar Engeal — RETIRADO:** não usar a habilidade física original no novo catálogo. **Outra possibilidade, independente e ainda candidata:** algumas cartas raras podem possuir vitória automática; o custo de gastar o especial antecipadamente por ativação forçada #59 é um contrajogo importante. Não considerar a raridade ou esse contrajogo uma regra que garante equilíbrio sem testes.
@@ -271,7 +271,7 @@ Destaques para especificação futura:
 
 ### 19.1 Ativação voluntária versus ativação forçada
 
-**APROVADO:** o jogador decide **qual** ataque especial que já preparou ativar e **em qual rodada** deseja utilizá-lo. Não se cria um cronograma automático nem uma ordem obrigatória entre suas cartas. Uma habilidade de força como #59 pode consumir **todas** as cartas já preparadas por seu alvo, mesmo se o momento for ruim para ele. Isso pode desperdiçar um especial raro que garantiria vitória num confronto mais importante.
+**APROVADO:** o jogador decide **qual** habilidade especial que já preparou ativar e **em qual rodada** deseja utilizá-lo. Não se cria um cronograma automático nem uma ordem obrigatória entre suas cartas. Uma habilidade de força como #59 pode consumir **todas** as cartas já preparadas por seu alvo, mesmo se o momento for ruim para ele. Isso pode desperdiçar um especial raro que garantiria vitória num confronto mais importante.
 
 **LIMITAÇÃO VOLUNTÁRIA APROVADA:** **uma especial preparada por combate**, salvo autorização explícita de uma habilidade para usar duas. **A ativação forçada #59 é exceção:** o alvo usa todas as que já preparou (no máximo duas). **AINDA PENDENTE:** prioridade quando jogadores diferentes solicitarem ativações na mesma janela e fase exata da ativação perante a revelação; “em qualquer rodada” não significa “em qualquer momento do combate”.
 
@@ -293,7 +293,7 @@ O autor aceita que **pouquíssimas cartas** possam ter um especial de vitória a
 
 ## 20. Limite de especiais voluntários por combate — decisão oficial (12/10/2026)
 
-**CONFIRMADO PELO AUTOR:** a regra geral permite **ativar voluntariamente uma carta de ataque especial preparada por combate**. O jogador escolhe qual carta entre as até duas preparadas deseja usar e escolhe em que rodada utilizá-la; não precisa usar um especial em todas as rodadas.
+**CONFIRMADO PELO AUTOR:** a regra geral permite **ativar voluntariamente uma carta de habilidade especial preparada por combate**. O jogador escolhe qual carta entre as até duas preparadas deseja usar e escolhe em que rodada utilizá-la; não precisa usar um especial em todas as rodadas.
 
 **Exceções específicas:**
 
@@ -314,7 +314,7 @@ O autor **aprovou trocar o nome antigo Poder por Ataque**, com sigla **ATQ**. As
 
 **Escala de 0 a 100 para atributos naturais** está **recomendada**, com bônus temporários que podem ultrapassar 100, mas ainda será validada visualmente e em testes de balanceamento.
 
-### 21.2 “Ataque Especial” ou “Habilidade Especial”? (APROVADO na seção 24)
+### 21.2 “Habilidade Especial” ou “Habilidade Especial”? (APROVADO na seção 24)
 
 Como algumas cartas **protegem, anulam ou respondem a outras**, recomendo que o termo guarda-chuva seja **Habilidade Especial** (ou o botão curto **Especial / ESP**). As habilidades ganhariam classificações apenas editoriais, como **Ataque, Defesa, Controle, Recuperação ou Coringa**. **Habilidade Especial foi aprovada** como nome na interface; o nome antigo continua registrado em materiais históricos.
 
@@ -352,7 +352,7 @@ Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de foto
 
 **APROVADO:** **87 cartas** com nomes/IDs, descrições, valores naturais e uma habilidade especial atribuída a cada uma. **APROVADA** a escala natural **0–100**, as siglas **ATQ/DEF/INT/VEL** e o limite editorial de **120 caracteres** para a descrição curta; bônus temporários de habilidades podem ultrapassar 100. A União conserva habilidades estratégicas marcantes. O catálogo contém **129 IDs de habilidades** aceitos como repertório, **78 equipados no baralho atual** (algumas habilidades repetidas em personagens diferentes) e **51 não equipados**, aguardando novas cartas.
 
-**TERMINOLOGIA APROVADA:** usar **Habilidade Especial** (também “Especial”, sigla **ESP**) como nome guarda-chuva da interface; as habilidades podem atacar, defender, controlar, recuperar e agir como coringa. “Ataque Especial” é o nome histórico das cartas antigas.
+**TERMINOLOGIA APROVADA:** usar **Habilidade Especial** (também “Especial”, sigla **ESP**) como nome guarda-chuva da interface; as habilidades podem atacar, defender, controlar, recuperar e agir como coringa. “Habilidade Especial” é o nome histórico das cartas antigas.
 
 **CONFIGURAÇÃO INICIAL APROVADA PARA TESTES:** distribuir **18 cartas a cada jogador**, sendo **7 no baralho ativo** e **11 na reserva**, em partidas com 2–4 jogadores. Quantidades na partida: **36, 54 e 72** respectivamente. A coleção tem 87 cartas; **como sortear/selecionar as cartas da coleção sem viés permanece PENDENTE**. O baralho de 18 é ponto de partida autorizado, não afirmação de duração equilibrada.
 

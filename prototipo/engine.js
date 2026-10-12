@@ -118,7 +118,8 @@
       for (const pid of ctx.order()) { const p = ctx.player(pid); if (!p.deck.length) continue; const i = Math.floor(ctx.rand() * p.deck.length); const [c] = p.deck.splice(i, 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid, card: c }); }
       ctx.say('Todos descartam uma carta ao Buraco Negro.');
     },
-    ai: () => 0.1, val: 0.1,
+    // vale quando um rival está a uma carta de cair e eu tenho folga; ou quando tenho mais cartas que todos (a perda igual pesa mais neles)
+    ai(ctx, pid) { const me = ctx.player(pid).deck.length, os = ctx.opps(pid).map(o => ctx.player(o)); if (!os.length) return 0; if (os.some(o => o.deck.length === 1 && !o.reserve.length) && me >= 3) return 0.8; return me >= 4 && os.every(o => o.deck.length + o.reserve.length <= me - 2) ? 0.35 : 0.03; }, val: 0.5,
   });
   def('AE-071', 'Ausência tática', 'Retire só a sua carta desta disputa: ela volta ao fim do seu baralho, sem vitória nem derrota.', 'Defesa', {
     can(ctx, pid) { return ctx.entries().length >= 2; },
@@ -135,12 +136,12 @@
       for (let n = 0; n < 2; n++) { const l = ctx.bhNormal(); if (!l.length) break; const pick = l[Math.floor(ctx.rand() * l.length)]; ctx.fromBH(pick); ctx.player(act.pid).deck.push(pick); await ctx.emit('rescue', { pid: act.pid, card: pick }); }
       ctx.say(`${ctx.name(act.pid)} resgata cartas do Buraco Negro.`);
     },
-    ai: ctx => bhU(ctx),
+    ai(ctx, pid, c) { const l = ctx.bhNormal(); if (!l.length) return 0; const n = Math.min(2, l.length); return Math.max(0.03, Math.min(0.85, 0.15 + 0.45 * ((n * l.reduce((t, x) => t + sum4(CARDS[x].stats), 0) / l.length - (c ? sum4(CARDS[c].stats) : 130)) / 210))); },
   });
   def('AE-083', 'Resgate do topo', 'Recupere a carta normal mais recente do Buraco Negro para o fim do seu baralho.', 'Buraco Negro', {
     can(ctx) { return ctx.bhNormal().length > 0; },
     async apply(ctx, act) { const l = ctx.bhNormal(); if (!l.length) return; const c = l[l.length - 1]; ctx.fromBH(c); ctx.player(act.pid).deck.push(c); ctx.say(`${ctx.name(act.pid)} resgata ${CARDS[c].nome}.`); await ctx.emit('rescue', { pid: act.pid, card: c }); },
-    ai: ctx => bhU(ctx),
+    ai(ctx, pid, c) { const l = ctx.bhNormal(); if (!l.length) return 0; return Math.max(0.03, Math.min(0.85, 0.15 + 0.45 * ((sum4(CARDS[l[l.length - 1]].stats) - (c ? sum4(CARDS[c].stats) : 130)) / 210))); },
   });
   def('AE-090', 'Segunda chance', 'Se sua carta de combate fosse ao Buraco Negro nesta disputa, ela vai ao fim da sua reserva.', 'Defesa', {
     apply(ctx, act) { ctx.entry(act.pid).toReserve = true; ctx.say(`${ctx.name(act.pid)} se prepara para uma segunda chance.`); },
@@ -150,10 +151,10 @@
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length > 0); },
     async apply(ctx, act) {
       const cand = ctx.opps(act.pid).filter(o => ctx.player(o).deck.length > 0); if (!cand.length) return;
-      const t = await ctx.target(act.pid, cand, 'Espionar o baralho de quem?'); if (t == null) return; const cards = ctx.player(t).deck.slice(0, 3);
-      await ctx.emit('peek', { pid: act.pid, target: t, cards }); ctx.say(`${ctx.name(act.pid)} espia o baralho de ${ctx.name(t)}.`);
+      const t = await ctx.target(act.pid, cand, 'Espionar o baralho de quem?', c => c.find(o => !ctx.mem(act.pid, o).length) ?? c[0]); if (t == null) return; const cards = ctx.player(t).deck.slice(0, 3);
+      await ctx.emit('peek', { pid: act.pid, target: t, cards }); ctx.learn(act.pid, t, cards); ctx.say(`${ctx.name(act.pid)} espia o baralho de ${ctx.name(t)}.`);
     },
-    ai: () => 0.08, val: 0.1,
+    ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length > 0 && !ctx.mem(pid, o).length) ? 0.5 : 0.06, val: 0.9, want: (g, p) => g.alive().some(o => o !== p.pid && g.p(o).deck.length > 0 && !g.memKnown(p, o).length),
   });
   def('AE-105', 'Defesa que captura', 'Se vencer usando Defesa ou Velocidade, capture a carta de 1 adversário derrotado em vez de descartá-la.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).defCapture = true; ctx.say(`${ctx.name(act.pid)} prepara uma defesa que captura.`); },
@@ -176,7 +177,7 @@
     },
     ai: (ctx, pid) => Math.min(0.7, 0.2 + 0.2 * ctx.opps(pid).reduce((t, o) => t + ctx.player(o).prepared.length, 0)),
   });
-  def('AE-113', 'Interrupção precisa', 'Cancele 1 ataque especial de um adversário antes da resolução; o especial cancelado é descartado normalmente. (Se ninguém ativar, é desperdiçada.)', 'Interação', {
+  def('AE-113', 'Interrupção precisa', 'Cancele 1 especial de um adversário antes da resolução; o especial cancelado é descartado normalmente. (Se ninguém ativar, é desperdiçada.)', 'Interação', {
     phase: 'pre',
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0); },
     async apply(ctx, act) {
@@ -207,7 +208,7 @@
     order(from) { const al = this.alive(); if (from == null) return al; const n = this.s.players.length; const out = []; for (let k = 0; k < n; k++) { const pid = (from + k) % n; if (this.p(pid).alive) out.push(pid); } return out; }
     nextAlive(pid) { const n = this.s.players.length; for (let k = 1; k <= n; k++) { const x = (pid + k) % n; if (this.p(x).alive) return x; } return pid; }
     prevAlive(pid) { const n = this.s.players.length; for (let k = 1; k <= n; k++) { const x = (pid - k + n * 2) % n; if (this.p(x).alive) return x; } return pid; }
-    async emit(type, data) { if (this.io.notify) await this.io.notify(type, data || {}); }
+    async emit(type, data) { if (type === 'steal' || type === 'discard' || type === 'reorder' || type === 'extra' || type === 'swapCard') this.memTouch(data || {}, type); if (this.io.notify) await this.io.notify(type, data || {}); }
     log(text, cls) { this.logs.push({ text, cls: cls || '' }); if (this.io.log) this.io.log(text, cls || ''); }
     totalCards(p) { return p.deck.length + p.reserve.length + p.prepared.length; }
 
@@ -229,6 +230,7 @@
       }
       this.s.initiator = Math.floor(this.rand() * n);
       this.log(`${this.p(this.s.initiator).name} sorteia a iniciativa.`);
+      this.memInit();
       await this.emit('ready', {});
     }
     botOrderHand(hand, p) { // melhores primeiro, com ruído (maior no fácil)
@@ -255,7 +257,12 @@
         value: e => e.stats[e.attr] + e.bonus,
         pickTarget: (pid, cand, label) => g.pickTarget(pid, cand, label),
         pick: (pid, cand, label, bot) => g.pickTarget(pid, cand, label, bot),
-        target: async (pid, cand, label) => { if (!cand.length) return null; const t = await g.pickTarget(pid, cand, label); return g.hit(combat, pid, t); },
+        target: async (pid, cand, label, bot) => { if (!cand.length) return null; const t = await g.pickTarget(pid, cand, label, bot); return g.hit(combat, pid, t); },
+        learn: (pid, t, cards, kind) => g.learn(g.p(pid), t, cards, kind),
+        mem: (pid, t) => g.memKnown(g.p(pid), t),
+        foe: (pid, t) => g.foeNow(g.p(pid), t), foeNext: (pid, t) => g.foeNext(g.p(pid), t),
+        pWin: (pid, a) => { const e = combat.entries.find(x => x.pid === pid); return e ? g.pWin(g.p(pid), e, a, combat) : { P: 0.5, known: 0 }; },
+        lvl: pid => g.lvl(g.p(pid)),
         hit: (actor, victim) => g.hit(combat, actor, victim),
         take: (thief, victim, zone, sel, o) => g.take(combat, thief, victim, zone, sel, o),
         blocked: (thief, victim, zone, n, kind) => g.blocked(combat, thief, victim, zone, n, kind),
@@ -432,19 +439,20 @@
       const g = this, order = this.order(init);
       const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
         def: {}, ctl: { per: {} }, claims: [], onWin: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
-      this.combat = combat;
+      this.combat = combat; this.memTick();
       await this.emit('combatStart', { initiator: init, round: this.s.round });
       // 1) preparação dos bots [PROPOSTA]
       if (combat.specialsAllowed) {
         const prep = [];
         for (const pid of order) { const p = this.p(pid); if (p.bot && p.prepared.length < 2 && p.deck.length >= 2) { const sp0 = SP[CARDS[p.deck[0]].especial]; if (!sp0) continue; const yes = await this.decide(p, 'prepare', p.deck[0]); if (yes) prep.push(pid); } }
-        for (const pid of prep) { const p = this.p(pid); const c = p.deck.shift(); p.prepared.push(c); this.log(`${p.name} prepara um ataque especial.`, 'prep'); await this.emit('prepare', { pid, card: c }); }
+        for (const pid of prep) { const p = this.p(pid); const c = p.deck.shift(); p.prepared.push(c); this.log(`${p.name} prepara um especial.`, 'prep'); await this.emit('prepare', { pid, card: c }); }
       }
       // 2) cartas em campo
       for (const pid of order) {
         const p = this.p(pid); const c = p.deck.shift();
         combat.entries.push({ pid, card: c, base: Object.assign({}, CARDS[c].stats), stats: Object.assign({}, CARDS[c].stats), bonus: 0, extra: [], mods: [], attr: null, withdrawn: false, gone: false, noCaptureBy: new Set() });
       }
+      this.memCommit(combat);
       await this.emit('commit', { combat });
       // 2b) especiais de controle (antes de declarar atributos)
       if (combat.specialsAllowed) await this.ctrlWindow(combat);
@@ -546,7 +554,7 @@
     async chooseAttr(combat, e, options) {
       const p = this.p(e.pid); const per = combat.ctl.per[e.pid];
       if (per && per.chooser != null && options.length > 1) {
-        const ch = per.chooser; const pick = await this.askAttr(ch, { title: `Escolha o atributo que ${p.name} vai usar`, hint: 'A carta dele está fechada: a escolha é às cegas.', options }, () => options[Math.floor(this.rand() * options.length)]);
+        const ch = per.chooser; const pick = await this.askAttr(ch, { title: `Escolha o atributo que ${p.name} vai usar`, hint: 'A carta dele está fechada: a escolha é às cegas.', options }, () => { const k = this.foeNow(this.p(ch), e.pid); return k ? options.slice().sort((a, b) => CARDS[k].stats[a] - CARDS[k].stats[b])[0] : options[Math.floor(this.rand() * options.length)]; });
         this.log(`${this.p(ch).name} escolhe o atributo de ${p.name}.`, 'efeito'); return pick;
       }
       for (let guard = 0; guard < 4; guard++) {
@@ -556,7 +564,7 @@
         if (r === '@prep' && canPrep) {
           const old = e.card; p.prepared.push(old);
           const c2 = p.deck.shift(); e.card = c2; e.base = Object.assign({}, CARDS[c2].stats); e.mods = []; e.extra = []; e.attr = null; this.recalc(e);
-          this.log(`${p.name} prepara um ataque especial.`, 'prep');
+          this.log(`${p.name} prepara um especial.`, 'prep');
           await this.emit('swapCard', { pid: e.pid, old, card: c2, combat });
           continue;
         }
@@ -639,7 +647,7 @@
         if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela ${ev.tb.stage === 1 ? 'soma dos 4 atributos' : 'soma de Ataque + Inteligência'}: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
         this.log(`${this.p(w.pid).name} vence ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit');
       }
-      combat.result = result; combat.moves = moves;
+      combat.result = result; combat.moves = moves; this.memResolved(moves);
       await this.emit('resolved', { combat, result, moves });
     }
     async chooseLoser(w, cand, label) {
@@ -652,12 +660,71 @@
     // ---------------------------------------------------------------- IA
     skill(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: 0.1, normal: 0.6, dificil: 1 }[d] ?? 0.6; }
     // Nível do bot: blind = chance de NÃO ler o estado da mesa (escolhe sem olhar adversários/cartas); lapse = chance de errar a escolha do atributo; ord = ruído ao ordenar a mão.
-    lvl(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: { blind: 0.35, lapse: 0.2, ord: 100 }, normal: { blind: 0.12, lapse: 0.06, ord: 50 }, dificil: { blind: 0, lapse: 0.01, ord: 30 } }[d] || { blind: 0.12, lapse: 0.06, ord: 50 }; }
+    // cap = quantas cartas seguintes de um rival ele consegue guardar de uma espiada; forget = chance de esquecer o que viu a cada disputa; mist = chance de errar o custo ao decidir se sacrifica a carta como especial
+    lvl(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: { blind: 0.25, lapse: 0.14, ord: 80, cap: 3, forget: 0.08, mist: 0.4 }, normal: { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }, dificil: { blind: 0, lapse: 0.01, ord: 30, cap: 99, forget: 0.002, mist: 0.01 } }[d] || { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }; }
+    // ---- memória do bot (modelo de fila). Para cada rival, a ordem do baralho que ele conhece; null = carta que não viu.
+    // Cartas jogadas voltam ao fim do baralho de quem as ganha: depois de uma volta o bot já sabe a ordem, sem gastar especial.
+    // Espiadas preenchem o início mais cedo. Níveis baixos guardam menos cartas (cap) e esquecem mais (forget).
+    memInit() { this.s.players.forEach(p => { if (!p.bot) return; p.mem = { q: {}, prep: {}, cur: {} }; this.s.players.forEach(o => { if (o.pid !== p.pid) p.mem.q[o.pid] = Array(o.deck.length).fill(null); }); }); }
+    memQ(p, t) { const n = this.p(t).deck.length; let q = p.mem.q[t]; if (!q || q.length > n) q = p.mem.q[t] = Array(n).fill(null); while (q.length < n) q.push(null); return q; }
+    memKnown(p, t) { if (!p || !p.mem) return []; const q = this.memQ(p, t), out = []; for (const c of q) { if (c == null) break; out.push(c); } return out; }
+    memTrim(p, t) { const q = p.mem.q[t], cap = this.lvl(p).cap; let n = 0; for (let i = 0; i < q.length; i++) if (q[i] != null && ++n > cap) q[i] = null; }
+    learn(p, t, cards, kind) {
+      if (!p || !p.bot || !p.mem || t == null) return;
+      if (kind === 'prep') { p.mem.prep[t] = cards.slice(0, 2); return; }
+      const q = this.memQ(p, t); cards.forEach((c, i) => { if (i < q.length) q[i] = c; }); this.memTrim(p, t);
+    }
+    memTick() { // início da disputa: esquece um pouco (mais no fácil) e limpa a carta prevista da mesa
+      this.s.players.forEach(p => { if (!p.bot || !p.mem) return; p.mem.cur = {}; const f = this.lvl(p).forget;
+        Object.keys(p.mem.q).forEach(t => { const q = p.mem.q[t]; for (let i = 0; i < q.length; i++) if (q[i] != null && this.rand() < f) q[i] = null; });
+        Object.keys(p.mem.prep).forEach(k => { if (this.rand() < f) delete p.mem.prep[k]; }); });
+    }
+    memCommit(combat) { // as cartas foram à mesa (viradas para baixo): o bot prevê a de cada rival pela fila e acompanha quantas saíram do topo
+      this.s.players.forEach(p => { if (!p.bot || !p.mem) return; combat.entries.forEach(e => {
+        if (e.pid === p.pid) return; const q = p.mem.q[e.pid]; if (!q) return; const L = this.p(e.pid).deck.length, removed = q.length - L;
+        if (removed < 1) { p.mem.q[e.pid] = Array(L).fill(null); return; }         // não bate: perdeu o fio
+        if (q[removed - 1] != null) p.mem.cur[e.pid] = q[removed - 1];
+        q.splice(0, removed);
+      }); });
+    }
+    memResolved(moves) { // fim da disputa: toda carta que mudou de baralho foi vista; entra no fim da fila de quem a recebeu
+      this.s.players.forEach(p => { if (!p.bot || !p.mem) return;
+        (moves || []).forEach(m => { if (m.zone === 'reserve' || typeof m.to !== 'number' || m.to === p.pid) return; const q = p.mem.q[m.to]; if (q) q.push(...m.cards); });
+        Object.keys(p.mem.q).forEach(t => { this.memQ(p, +t); this.memTrim(p, +t); }); });
+    }
+    memTouch(d, type) { // algo mexeu no baralho de alguém à vista de todos: quem só viu acontecer perde a fila dele
+      const ids = [d.from, d.to, d.pid, d.target].filter(x => x != null);
+      this.s.players.forEach(p => { if (p.bot && p.mem) ids.forEach(i => { const q = p.mem.q[i]; if (i === p.pid || !q) return;
+        if (type === 'extra' && q.length === this.p(i).deck.length + 1) { q.shift(); return; }             // a carta extra saiu do topo, à vista
+        p.mem.q[i] = Array(this.p(i).deck.length).fill(null); }); });
+    }
+    foeNow(p, t) { // carta que o bot SABE (pela fila) que o rival t joga nesta disputa
+      if (!p || !p.mem) return null; const c = this.combat; if (c && c.entries.length) return p.mem.cur[t] || null;
+      return this.memKnown(p, t)[0] || null;
+    }
+    foeNext(p, t) { // a seguinte de t, se sabe
+      if (!p || !p.mem) return null; const c = this.combat, k = this.memKnown(p, t); return (c && c.entries.length ? k[0] : k[1]) || null;
+    }
+    // chance (0..1) de ganhar com o atributo a contra os rivais cujas cartas ele conhece; os desconhecidos entram pelo percentil
+    pWin(p, entry, a, combat) {
+      const v = entry.stats[a]; let P = 1, known = 0;
+      (combat ? combat.entries : []).forEach(x => {
+        if (x.pid === p.pid || x.withdrawn) return; const c = this.foeNow(p, x.pid);
+        if (!c) { P *= pct(a, v); return; } known++;
+        const st = CARDS[c].stats, cand = x.attr ? [x.attr] : AID.filter(k => ATTR[k].par === ATTR[a].par);
+        const ov = Math.max(...cand.map(k => st[k])); P *= 1 / (1 + Math.exp(-(v - ov) / 7));
+      });
+      return { P, known };
+    }
     blindNow(p) { return !!(p && p.bot) && this.rand() < this.lvl(p).blind; }
     async bot_attr(p, entry, options, combat) {
       const sk = this.skill(p); let best = null, bs = -1;
       if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
-      options.forEach(a => { const v = entry.stats[a]; let s = pct(a, v) * (0.6 + 0.4 * sk) + (ATTR[a].tipo === 'ataque' ? 0.03 : 0) + (this.rand() - 0.5) * (0.5 - 0.4 * sk); if (s > bs) { bs = s; best = a; } });
+      options.forEach(a => {
+        const v = entry.stats[a], w = this.pWin(p, entry, a, combat);
+        let s = w.known ? w.P * 1.1 + (this.rand() - 0.5) * (0.35 - 0.3 * sk) : pct(a, v) * (0.6 + 0.4 * sk) + (this.rand() - 0.5) * (0.5 - 0.4 * sk);   // com a carta do rival na memória, prevê o resultado
+        s += ATTR[a].tipo === 'ataque' ? 0.03 : 0; if (s > bs) { bs = s; best = a; }
+      });
       return best;
     }
     // ---- IA dos especiais ----
@@ -675,6 +742,7 @@
     // partidas longas (ciclos de capturas) pedem mais ousadia: sobe depois da rodada 12
     botUrgency() { return Math.max(0, Math.min(1, (this.s.round - 12) / 20)); }
     botPrepWant(p, sp) {
+      if (sp.want) { try { if (!sp.want(this, p)) return 0; } catch (e) { /* segue */ } }
       if (sp.noWant) return 1;
       try { const ctx = this.ctxFor(this.combat); return sp.can(ctx, p.pid) ? 1 : 0; } catch (e) { return 1; }
     }
@@ -686,9 +754,11 @@
       if (this.botVal(sp) < 0.15 * (1 - this.botUrgency()) || !this.botPrepWant(p, sp)) return false;
       const sk = this.skill(p), urg = this.botUrgency(), V = this.botVal(sp) * (sp.prep == null ? 1 : 0.5 + 0.5 * Math.min(1, sp.prep * 2)) + 1.5 * urg;
       // carta como combatente vale ~ (2·P(vencer) − 1) cartas; como especial vale V. Carta fraca rende mais virando especial.
-      const pc = SUMS.filter(x => x <= sum4(CARDS[topCard].stats)).length / SUMS.length, T = 1.2 * pc;
-      let ch = 0.55 + (V - T) * 0.35;
-      ch *= 0.55 + 0.45 * sk;                                        // dificuldade: o fácil prepara com menos critério
+      const mine = sum4(CARDS[topCard].stats), pc0 = SUMS.filter(x => x <= mine).length / SUMS.length;
+      let pcs = 0, nf = 0; this.alive().forEach(o => { if (o === p.pid) return; nf++; const k = this.foeNow(p, o); pcs += k ? 1 / (1 + Math.exp(-(mine - sum4(CARDS[k].stats)) / 35)) : pc0; });   // rival conhecido: compara de verdade
+      const pc = nf ? pcs / nf : pc0, lv = this.lvl(p), T = this.rand() < lv.mist ? this.rand() * 0.7 : 1.2 * pc;               // às vezes erra o custo: gasta carta forte, guarda fraca (mais no fácil)
+      let ch = 1 / (1 + Math.exp(-(V - T) * 3));                     // vale a pena quando o especial rende mais que a carta lutando
+      ch *= 0.85 + 0.15 * sk;                                        // dificuldade: o fácil prepara com menos critério
       if (p.prepared.length) ch *= 0.6;
       return this.rand() < Math.max(0, Math.min(0.95, ch * BOT_RATE * (1 + 2 * urg)));
     }
@@ -697,9 +767,9 @@
       p._held = (p._held || 0);
       let best = null, bs = -1;
       usable.forEach(c => {
-        const sp = SP[CARDS[c].especial]; let u = 0; try { u = sp.ai ? sp.ai(ctx, p.pid) : 0.4; } catch (e) { u = 0.3; }
-        if (this.blindNow(p)) u = 0.1 + this.rand() * 0.6;                              // não leu a mesa: decide quase às cegas
-        if (u < 0.12 - 0.08 * urg) return;                                          // sem utilidade nesta situação: nunca gasta
+        const sp = SP[CARDS[c].especial]; let u = 0; try { u = sp.ai ? sp.ai(ctx, p.pid, c) : 0.4; } catch (e) { u = 0.3; }
+        if (u < 0.12 - 0.08 * urg) return;                                                // sem utilidade nesta situação: nem o fácil gasta
+        if (this.blindNow(p)) u = 0.5 * u + 0.5 * (0.15 + this.rand() * 0.55);            // leu mal a mesa: avalia com ruído, mas dentro do que faz sentido
         u += Math.min(0.2, 0.06 * p._held);                           // carta parada na mão: vale usar
         u += (this.rand() - 0.5) * 2 * noise;
         if (u > bs) { bs = u; best = c; }
@@ -714,19 +784,15 @@
   const HAB = (D && D.HABILIDADES) || {};
   // especiais cuja condição só existe durante a disputa (não dá para checar na preparação)
   const NOWANT = ['AE-009', 'AE-052', 'AE-053', 'AE-054', 'AE-071', 'AE-101', 'AE-102', 'AE-103', 'AE-109', 'AE-107', 'AE-112', 'AE-111', 'AE-113', 'AE-117', 'AE-130', 'AE-115', 'AE-116', 'AE-073', 'AE-074', 'AE-114'];
-  // Calibração dos bots (medida com tests/bot_per_special.js): val = quanto vale gastar uma carta de combate para preparar; aiMul = escala da vontade de virar.
+  // Calibração dos bots (medida com tests/calib_val.js: varre val e aiMul de cada especial em duelo e em 3 jogadores; reativos/informação usam estimativa de projeto)
+  // [antiga] (tests/bot_per_special.js): val = quanto vale gastar uma carta de combate para preparar; aiMul = escala da vontade de virar.
   // Valor de cada especial em "cartas de diferença" (medido com tests/bot_per_special.js: % de vitórias do bot que usa × o que nunca usa, (v-38)/12).
-  const BOT_VAL = { 'AE-002': 1.2, 'AE-004': 1.2, 'AE-006': 2.2, 'AE-008': 1.6, 'AE-010': 4.8, 'AE-012': 1.1, 'AE-017': 0.2, 'AE-021': 0.9, 'AE-022': 0.5, 'AE-024': 0, 'AE-026': 0, 'AE-028': 0.9, 'AE-030': 0.4, 'AE-031': 4.1, 'AE-032': 4.1, 'AE-037': 2.8, 'AE-039': 4.0, 'AE-041': 2.2, 'AE-046': 2.4, 'AE-047': 2.3, 'AE-048': 2.2, 'AE-051': 0.2, 'AE-053': 4.5, 'AE-055': 0.4, 'AE-059': 1.0, 'AE-061': 0.7, 'AE-062': 0.7, 'AE-063': 0.8, 'AE-066': 0.4, 'AE-067': 1.4, 'AE-068': 0.2, 'AE-069': 2.4, 'AE-071': 1.5, 'AE-072': 1.5, 'AE-073': 0.9, 'AE-074': 0.9, 'AE-075': 1.7, 'AE-076': 0.9, 'AE-077': 0.9, 'AE-078': 0.9, 'AE-079': 0.9, 'AE-080': 0.5, 'AE-081': 0.1, 'AE-082': 0.2, 'AE-083': 0.2, 'AE-084': 0, 'AE-085': 0.2, 'AE-086': 0, 'AE-087': 3.6, 'AE-089': 0, 'AE-090': 0.9, 'AE-091': 0.5, 'AE-092': 0.4, 'AE-093': 0.4, 'AE-094': 0.7, 'AE-095': 0, 'AE-096': 0, 'AE-097': 0.3, 'AE-098': 0.7, 'AE-099': 0.2, 'AE-100': 0, 'AE-101': 3.3, 'AE-103': 4.3, 'AE-105': 0.9, 'AE-106': 0.7, 'AE-108': 0.9, 'AE-110': 1.7, 'AE-111': 0.9, 'AE-112': 0.9, 'AE-113': 0.9, 'AE-114': 0.9, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.4, 'AE-118': 0.9, 'AE-120': 0.3, 'AE-129': 4.9, 'AE-130': 0.9 };
+  const BOT_VAL = { 'AE-002': 0.6, 'AE-004': 0.6, 'AE-006': 0.6, 'AE-008': 0.6, 'AE-010': 1.6, 'AE-012': 0.6, 'AE-017': 0.5, 'AE-021': 0.15, 'AE-022': 0.3, 'AE-024': 0.3, 'AE-026': 0.3, 'AE-028': 0.15, 'AE-030': 0.6, 'AE-031': 2.5, 'AE-032': 1.6, 'AE-037': 0.6, 'AE-039': 2.5, 'AE-041': 0.15, 'AE-046': 1, 'AE-047': 1.6, 'AE-048': 1.6, 'AE-051': 0.4, 'AE-053': 1, 'AE-055': 0.15, 'AE-056': 0.15, 'AE-059': 1, 'AE-061': 1, 'AE-062': 1, 'AE-063': 0.05, 'AE-064': 0.05, 'AE-065': 0.1, 'AE-066': 0.2, 'AE-067': 0.5, 'AE-068': 0.3, 'AE-069': 1, 'AE-071': 0.15, 'AE-072': 0.15, 'AE-073': 0.8, 'AE-074': 0.9, 'AE-075': 0.15, 'AE-076': 0.7, 'AE-077': 0.6, 'AE-078': 0.7, 'AE-079': 0.7, 'AE-080': 0.3, 'AE-081': 1, 'AE-082': 0.3, 'AE-083': 0.3, 'AE-084': 0.2, 'AE-085': 0.3, 'AE-086': 0.6, 'AE-087': 2.5, 'AE-089': 0.3, 'AE-090': 0.7, 'AE-091': 0.3, 'AE-092': 0.1, 'AE-093': 0.25, 'AE-094': 0.1, 'AE-095': 0.25, 'AE-096': 0.4, 'AE-097': 0.2, 'AE-098': 0.1, 'AE-099': 0.1, 'AE-100': 0.3, 'AE-101': 0.3, 'AE-103': 1, 'AE-105': 0.9, 'AE-106': 0.05, 'AE-108': 0.8, 'AE-110': 0.3, 'AE-111': 0.9, 'AE-112': 0.8, 'AE-113': 0.9, 'AE-114': 0.8, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.15, 'AE-118': 0.6, 'AE-119': 0.15, 'AE-120': 0.3, 'AE-129': 2.5, 'AE-130': 1 };
   // sem utilidade para o bot (ele não consegue tirar proveito): nunca prepara
-  const BOT_RATE = 2.2;
+  const BOT_RATE = 1;
   const SUMS = D.CARTAS.map(c => sum4(c.stats)).sort((x, y) => x - y);
-  const BOT_JUNK = ['AE-066', 'AE-061', 'AE-062', 'AE-098', 'AE-106', 'AE-055', 'AE-056', 'AE-063', 'AE-064', 'AE-065', 'AE-091', 'AE-080', 'AE-093', 'AE-094', 'AE-092', 'AE-120', 'AE-117', 'AE-017', 'AE-099'];
-  const TUNE = {
-    'AE-055': { aiMul: 0.4 }, 'AE-056': { aiMul: 0.4 },
-    'AE-061': { aiMul: 0.3 }, 'AE-062': { aiMul: 0.3 }, 'AE-063': { aiMul: 0.2 }, 'AE-064': { aiMul: 0.2 }, 'AE-065': { aiMul: 0.2 },
-    'AE-051': { aiMul: 0.5 }, 'AE-095': { aiMul: 0.3 }, 'AE-100': { aiMul: 0.5 },
-    'AE-081': { aiMul: 0.6 }, 'AE-066': { aiMul: 0.5 },
-  };
+  const BOT_JUNK = ['AE-106', 'AE-063'];
+  const TUNE = { 'AE-002': { aiMul: 0.65 }, 'AE-004': { aiMul: 0.65 }, 'AE-006': { aiMul: 0.65 }, 'AE-008': { aiMul: 0.65 }, 'AE-010': { aiMul: 0.65 }, 'AE-012': { aiMul: 0.65 }, 'AE-021': { aiMul: 0.65 }, 'AE-022': { aiMul: 0.35 }, 'AE-030': { aiMul: 0.65 }, 'AE-031': { aiMul: 0.65 }, 'AE-032': { aiMul: 0.65 }, 'AE-037': { aiMul: 0.65 }, 'AE-039': { aiMul: 0.65 }, 'AE-041': { aiMul: 0.65 }, 'AE-046': { aiMul: 0.65 }, 'AE-047': { aiMul: 0.65 }, 'AE-048': { aiMul: 0.65 }, 'AE-059': { aiMul: 0.65 }, 'AE-061': { aiMul: 0.35 }, 'AE-062': { aiMul: 0.35 }, 'AE-069': { aiMul: 0.65 }, 'AE-071': { aiMul: 0.35 }, 'AE-072': { aiMul: 0.35 }, 'AE-075': { aiMul: 0.65 }, 'AE-081': { aiMul: 0.65 }, 'AE-082': { aiMul: 0.35 }, 'AE-101': { aiMul: 0.65 }, 'AE-103': { aiMul: 0.65 }, 'AE-110': { aiMul: 0.65 }, 'AE-129': { aiMul: 0.35 } };
   function finalize() {
     NOWANT.forEach(id => { if (SP[id]) SP[id].noWant = true; });
     Object.keys(BOT_VAL).forEach(id => { if (SP[id]) SP[id].val = BOT_VAL[id]; });

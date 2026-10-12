@@ -290,11 +290,11 @@
     },
     async combatStart({ initiator, round }) {
       V.init = initiator; V.win = {}; refresh();
-      caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · ataques especiais liberam na Rodada 2' : '')); await sleep(350);
+      caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · especiais liberam na Rodada 2' : '')); await sleep(350);
     },
     async prepare({ pid }) {
       const to = seatPrep(pid); const from = seatDeck(pid);
-      SND.play('special'); await fly(from, to, { ms: 500, cw: 60 }); refresh(); caption(`${nameOf(pid)} prepara um ataque especial…`); await sleep(250);
+      SND.play('special'); await fly(from, to, { ms: 500, cw: 60 }); refresh(); caption(`${nameOf(pid)} prepara um especial…`); await sleep(250);
     },
     async swapCard({ pid, old, card, combat }) {
       const slot = V.slots[pid]; const oldEl = $('.card', slot);
@@ -325,7 +325,7 @@
     async specialWindow({ stage }) {
       stage = stage || 'main'; V.win = V.win || {}; if (V.win[stage]) return; V.win[stage] = true;
       if (stage === 'ctrl') { banner('Controle de atributos', 'especiais antes de declarar', '#7dd3ff', 1400); caption('Janela de especiais de controle…'); }
-      else { banner('Janela de especiais', 'decida em segredo', '#c58cff', 1400); caption('Janela de ataques especiais…'); }
+      else { banner('Janela de especiais', 'decida em segredo', '#c58cff', 1400); caption('Janela de especiais…'); }
       await sleep(900);
     },
     async specialsFlip({ combat, acts, forced }) {
@@ -450,7 +450,7 @@
     async eliminated({ pid }) {
       refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700);
     },
-    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Ataques especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
+    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
       refresh(); const s = G.s; const human = winner != null && (V.online ? winner === V.viewer : !G.p(winner).bot); const anyHuman = V.humans > 0;
       SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
@@ -488,7 +488,7 @@
         const c = CARDS[top], sp = E.SPECIALS[c.especial];
         if (V.noPrep[p.pid]) return false;
         await cover(p);
-        const node = el(`<div class="sheet"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}: preparar ataque especial?</h3>
+        const node = el(`<div class="sheet"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}: preparar especial?</h3>
           <div class="hint">Carta do topo: <b>${esc(c.nome)}</b><br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}</div>
           ${sp.stub ? '<div class="hint">⚠ Efeito ainda não implementado: ao virar, nada acontece e a carta vai ao Buraco Negro.</div>' : ''}
           <div class="row"><button class="btn primary sm" data-v="1">Preparar especial</button><button class="btn sm" data-v="0">Jogar normalmente</button><button class="btn ghost sm" data-v="n">Não perguntar mais</button></div></div></div>`);
@@ -514,7 +514,7 @@
         await cover(p); if (U.tip) await U.tip('special');
         const T = stage === 'ctrl' ? ['virar um especial de controle?', '']
           : stage === 'second' ? ['virar também um segundo especial?', '']
-          : ['virar um ataque especial?', ''];
+          : ['virar um especial?', ''];
         const node = el(`<div class="sheet"><div class="txt" style="flex:1 1 100%"><h3>${esc(p.name)}: ${T[0]}</h3></div></div>`);
         usable.forEach(id => {
           const sp = E.SPECIALS[CARDS[id].especial];

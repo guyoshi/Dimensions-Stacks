@@ -33,7 +33,7 @@
 | Defesa reativa | **Aprovado o modelo de janelas de resposta antes de o ataque ser concluído.** Reações podem interromper efeitos pendentes e resolver antes deles; efeitos já resolvidos não são desfeitos retroativamente. Passar não gasta especial, e reagir não cria uma segunda ativação voluntária gratuita. |
 | Prioridade-base | Iniciador do combate oferece primeira oportunidade; prioridade segue **circularmente em sentido horário**; efeitos especiais respondidos entram em **pilha de resolução inversa (último a entrar, primeiro a resolver)**. Uma defesa pode interromper uma ameaça pendente no momento pertinente. Detalhes ainda não fixados estão na seção 4. |
 | Contraespecial | **AE-130** anula a última habilidade especial **pendente** de resolução. Não anula habilidades já concluídas; ambas as cartas especiais ativadas são consumidas normalmente. |
-| Nome da mecânica | Interface: **Habilidade Especial** (`ESP`) ou **Especial**. “Ataque Especial” permanece nome histórico das cartas físicas. |
+| Nome da mecânica | Nome oficial: **Habilidade Especial**; forma curta, usada nos botões e textos da interface: **Especial** (`ESP`). “Ataque Especial” era só o nome histórico das cartas físicas e não deve mais aparecer na interface (decisão do autor, 13/10/2026). |
 | Escopo da coleção | 129 habilidades aceitas como **catálogo de design**; **78 equipadas** entre as 87 cartas, **51 sem carta atribuída**, disponíveis para expansão. Repetir habilidade em cartas diferentes é permitido. |
 | União | 7 integrantes originais e Jennifer como futura integrante. Cada carta conserva sua cor de origem com selo adicional, sem duplicar. As habilidades fortes distribuídas para os oito foram **aprovadas**. |
 | Cores | Viajantes azul; Mistério Oculto vermelho; Ciclo de Jesed amarelo; Série Édelin/Belfex verde; Diário Sobrenatural roxo; Spacetheft preto. Não definir a força por cor. |
@@ -49,6 +49,7 @@
 - **Família Carnam:** D07 Ingrid, D13 Suéten, D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso (cão). D17 **não é** D10 Avó de Kelly. A arma associada ao Elo de Carnam não significa que Carnam seja o pai de Vini.
 - **Viajantes Dimensionais adicionados:** V16 Facka (Faka no manuscrito), V17 Lanigiah (rainha Aracnas), V18 Grande Pai Gaia (líder Obbs) e V19 Seti (guerreiro Obb).
 - **Cartas históricas físicas:** são fonte de ideias, mas nomes, valores e representações não são herdados automaticamente pelas cartas digitais.
+- **Reatribuição de especiais (13/10/2026, autorizada pelo autor):** 42 das 79 cartas fora da União trocaram de habilidade especial para que o custo (a força da carta sacrificada) acompanhe o valor do especial; informação e ordenação ficam em cartas fracas. Antes/depois em [CARTAS_E_ESPECIAIS.md](CARTAS_E_ESPECIAIS.md); versão anterior preservada em `dados/historico/cartas_87_antes_2026-10-13.json`.
 - **Balanceamento:** aprovação autoral não equivale a simulação, raridade final, acessibilidade de interface ou QA concluídos. Não reequilibrar silenciosamente uma ficha aprovada.
 
 ## 4. Pendências reais que a aprovação genérica NÃO especifica

@@ -18,7 +18,7 @@
 | ID | Nome da carta | Descrição curta (até 120) | Tamanho | ATQ | DEF | INT | VEL | Soma | Perfil | Especial sugerido | A União | Fonte | Grau |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- |
 | J01 | Jokara | Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência. | 99 | 43 | 65 | 83 | 22 | 213 | Modesta | AE-110 |  | J1 | Alta |
-| J02 | Nestira | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 92 | 24 | 82 | 75 | 38 | 219 | Modesta | AE-087 |  | J1 | Alta |
+| J02 | Nestira | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 92 | 24 | 82 | 75 | 38 | 219 | Modesta | AE-096 |  | J1 | Alta |
 | J03 | Mark Polar | Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas. | 92 | 72 | 70 | 94 | 74 | 310 | Forte | AE-116 | ⭐ União | J1/J3/J4 | Alta |
 | J04 | Gabasteri | Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle. | 98 | 83 | 72 | 66 | 52 | 273 | Padrão | AE-069 |  | J1 | Alta |
 | J05 | Maletar | Construtor vigoroso, aprende a erguer abrigos numa terra onde as antigas técnicas já não bastam. | 96 | 78 | 87 | 58 | 30 | 253 | Padrão | AE-076 |  | J1 | Alta |
@@ -32,31 +32,31 @@
 | J13 | Nynestra | Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias. | 91 | 40 | 70 | 89 | 61 | 260 | Padrão | AE-061 |  | J2 | Alta |
 | J14 | Cal Kadrir | Jovem Calandrir disciplinado, mantém os ritos e o dever mesmo quando a política muda de rumo. | 93 | 79 | 83 | 55 | 59 | 276 | Padrão | AE-002 |  | J2 | Alta |
 | J15 | Dareth Quatro-Dedos | Veterano de quatro dedos, retorna à arena para impedir que uma nova guerra destrua os civis. | 92 | 92 | 86 | 68 | 45 | 291 | Forte | AE-010 |  | J3 | Alta |
-| J16 | Elis | Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran. | 94 | 36 | 41 | 90 | 93 | 260 | Padrão | AE-100 |  | J3 | Alta |
-| J17 | Selina | Conselheira sagaz, lê as engrenagens do poder e aprende a agir antes de ter todas as certezas. | 94 | 29 | 43 | 96 | 52 | 220 | Modesta | AE-113 |  | J3 | Alta |
-| J18 | Vetarius Polar | Soberano carismático de Kaeliran, confia na continuidade de sua dinastia e adia decisões difíceis. | 98 | 57 | 76 | 84 | 44 | 261 | Padrão | AE-022 |  | J3 | Alta |
-| J19 | Kerath Polar | Calandrir firme e disciplinada, protege Kaeliran com coragem e um sentido inflexível do dever. | 94 | 84 | 91 | 74 | 64 | 313 | Forte | AE-072 |  | J3 | Alta |
-| J20 | Jelatira | Anciã guardiã da memória familiar, preserva antigas histórias sem revelar todos os seus segredos. | 97 | 8 | 24 | 87 | 12 | 131 | Azar | AE-091 |  | J4 | Alta |
+| J16 | Elis | Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran. | 94 | 36 | 41 | 90 | 93 | 260 | Padrão | AE-089 |  | J3 | Alta |
+| J17 | Selina | Conselheira sagaz, lê as engrenagens do poder e aprende a agir antes de ter todas as certezas. | 94 | 29 | 43 | 96 | 52 | 220 | Modesta | AE-117 |  | J3 | Alta |
+| J18 | Vetarius Polar | Soberano carismático de Kaeliran, confia na continuidade de sua dinastia e adia decisões difíceis. | 98 | 57 | 76 | 84 | 44 | 261 | Padrão | AE-072 |  | J3 | Alta |
+| J19 | Kerath Polar | Calandrir firme e disciplinada, protege Kaeliran com coragem e um sentido inflexível do dever. | 94 | 84 | 91 | 74 | 64 | 313 | Forte | AE-062 |  | J3 | Alta |
+| J20 | Jelatira | Anciã guardiã da memória familiar, preserva antigas histórias sem revelar todos os seus segredos. | 97 | 8 | 24 | 87 | 12 | 131 | Azar | AE-106 |  | J4 | Alta |
 | J21 | Nefestra | Jovem sem um braço, busca nas lembranças respostas para a origem e a perda de sua família. | 90 | 16 | 30 | 91 | 37 | 174 | Frágil | AE-093 |  | J4 | Alta |
-| J22 | Sefter | Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama. | 75 | 50 | 53 | 72 | 85 | 260 | Padrão | AE-089 |  | J4 | Alta |
-| J23 | Kedran | Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado. | 86 | 82 | 79 | 57 | 70 | 288 | Forte | AE-017 |  | J4 | Alta |
+| J22 | Sefter | Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama. | 75 | 50 | 53 | 72 | 85 | 260 | Padrão | AE-071 |  | J4 | Alta |
+| J23 | Kedran | Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado. | 86 | 82 | 79 | 57 | 70 | 288 | Forte | AE-079 |  | J4 | Alta |
 | V01 | Breno Lins | Irmão mais velho dos Lins, controla a própria densidade e assume riscos para proteger os irmãos. | 96 | 85 | 90 | 58 | 52 | 285 | Forte | AE-078 |  | V | Alta |
 | V02 | Bruno Lins Lee | Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha. | 96 | 94 | 70 | 74 | 78 | 316 | Forte | AE-021 | ⭐ União | V | Alta |
-| V03 | Banjo Lins | Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir. | 89 | 80 | 38 | 73 | 64 | 255 | Padrão | AE-039 |  | V | Alta |
+| V03 | Banjo Lins | Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir. | 89 | 80 | 38 | 73 | 64 | 255 | Padrão | AE-080 |  | V | Alta |
 | V04 | Beatriz Lins | A mais nova dos Lins, manifesta fogo e caos em um poder difícil de controlar. | 77 | 93 | 31 | 48 | 55 | 227 | Modesta | AE-067 |  | V | Alta |
-| V05 | Velho-Sábio / Auream | Mentor dos irmãos em Belfex, guarda conhecimento antigo sobre Korvo e a Sociedade de Tayo. | 90 | 62 | 83 | 96 | 39 | 280 | Padrão | AE-097 |  | V | Alta |
-| V06 | Erla | Édion da Vigilância, enfrenta Korvo com disciplina e desconfiança mesmo contra a própria instituição. | 101 | 78 | 79 | 83 | 73 | 313 | Forte | AE-079 |  | V | Alta |
-| V07 | Lucas Veline | Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada. | 86 | 35 | 65 | 86 | 42 | 228 | Modesta | AE-062 |  | V | Média |
-| V08 | Garmand | Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes. | 79 | 69 | 79 | 72 | 59 | 279 | Padrão | AE-095 |  | V-manuscrito | Alta |
-| V09 | Ricochet Bombergue | Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex. | 85 | 76 | 48 | 62 | 91 | 277 | Padrão | AE-041 |  | V | Baixa |
-| V10 | Korvo | Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites. | 84 | 98 | 79 | 94 | 72 | 343 | Elite | AE-068 |  | V | Alta |
-| V11 | Gary | Ligado à Vigilância, serve secretamente aos interesses do mago Korvo. | 69 | 51 | 47 | 60 | 70 | 228 | Modesta | AE-055 |  | V | Alta |
+| V05 | Velho-Sábio / Auream | Mentor dos irmãos em Belfex, guarda conhecimento antigo sobre Korvo e a Sociedade de Tayo. | 90 | 62 | 83 | 96 | 39 | 280 | Padrão | AE-008 |  | V | Alta |
+| V06 | Erla | Édion da Vigilância, enfrenta Korvo com disciplina e desconfiança mesmo contra a própria instituição. | 101 | 78 | 79 | 83 | 73 | 313 | Forte | AE-031 |  | V | Alta |
+| V07 | Lucas Veline | Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada. | 86 | 35 | 65 | 86 | 42 | 228 | Modesta | AE-097 |  | V | Média |
+| V08 | Garmand | Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes. | 79 | 69 | 79 | 72 | 59 | 279 | Padrão | AE-004 |  | V-manuscrito | Alta |
+| V09 | Ricochet Bombergue | Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex. | 85 | 76 | 48 | 62 | 91 | 277 | Padrão | AE-017 |  | V | Baixa |
+| V10 | Korvo | Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites. | 84 | 98 | 79 | 94 | 72 | 343 | Elite | AE-087 |  | V | Alta |
+| V11 | Gary | Ligado à Vigilância, serve secretamente aos interesses do mago Korvo. | 69 | 51 | 47 | 60 | 70 | 228 | Modesta | AE-095 |  | V | Alta |
 | V12 | Anasin | Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos. | 84 | 85 | 58 | 80 | 70 | 293 | Forte | AE-114 |  | V-manuscrito | Média |
 | V13 | Saliens | Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo. | 87 | 83 | 68 | 59 | 76 | 286 | Forte | AE-046 |  | V-manuscrito | Alta |
-| V14 | Tio Frank | Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás. | 87 | 11 | 39 | 38 | 20 | 108 | Azar | AE-051 |  | V | Alta |
+| V14 | Tio Frank | Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás. | 87 | 11 | 39 | 38 | 20 | 108 | Azar | AE-063 |  | V | Alta |
 | V15 | Brenda | Aprendiz em Tayo, destaca-se pela confiança e pela atitude provocadora diante dos colegas. | 90 | 66 | 76 | 86 | 92 | 320 | Elite | AE-073 | ⭐ União | V-manuscrito | Média |
 | V16 | Facka | Jovem Aracna curiosa e falante, guia os irmãos Lins pelos túneis subterrâneos de Belfex. | 88 | 36 | 40 | 75 | 89 | 240 | Padrão | AE-100 |  | V-manuscrito | Alta |
-| V17 | Lanigiah | Rainha das Aracnas, combina imponência e astúcia ao testar a coragem de Banjo na grande caverna. | 96 | 76 | 82 | 95 | 43 | 296 | Forte | AE-096 |  | V-manuscrito | Alta |
+| V17 | Lanigiah | Rainha das Aracnas, combina imponência e astúcia ao testar a coragem de Banjo na grande caverna. | 96 | 76 | 82 | 95 | 43 | 296 | Forte | AE-108 |  | V-manuscrito | Alta |
 | V18 | Grande Pai Gaia | Líder dos Obbs de Pinesoto, ergue raízes e troncos vivos para proteger seu povo dos invasores. | 94 | 80 | 99 | 89 | 34 | 302 | Forte | AE-103 |  | V-manuscrito | Alta |
 | V19 | Seti | Líder de guerra dos Obbs, supera a desconfiança inicial e ajuda os irmãos durante o ataque a Pinesoto. | 102 | 79 | 85 | 66 | 82 | 312 | Forte | AE-105 |  | V-manuscrito | Alta |
 | S01 | Jasmey Badrock | Pirata Dale impulsivo e carismático, sobrevive com um braço metálico e desafia o código da Lebargan. | 100 | 92 | 76 | 72 | 88 | 328 | Elite | AE-129 | ⭐ União | S | Alta |
@@ -64,45 +64,45 @@
 | S03 | Eric | Irmão de Amanda, sarcástico e curioso, arrisca tudo ao disputar o Olho de Domongo. | 82 | 48 | 47 | 77 | 86 | 258 | Padrão | AE-069 |  | S | Alta |
 | S04 | Lias Hardman | Engenheiro inventivo, transforma sucata em soluções e mantém a esperança entre companheiros. | 92 | 18 | 41 | 96 | 30 | 185 | Frágil | AE-120 |  | S-misto | Alta |
 | S05 | Kord | Companheiro vigoroso da tripulação de Jasmey, oferece proteção quando a força é necessária. | 91 | 78 | 81 | 51 | 51 | 261 | Padrão | AE-006 |  | S-misto | Média |
-| S06 | O'reilly | Mecânico leal e aliado de Hardman, enfrenta os perigos do espaço ao lado dos companheiros. | 90 | 69 | 79 | 65 | 44 | 257 | Padrão | AE-080 |  | S-misto | Média |
-| S07 | Buni | Integrante da equipe de Jasmey, enfrenta o cativeiro e a fuga com seus aliados. | 79 | 55 | 76 | 65 | 51 | 247 | Padrão | AE-099 |  | S-misto | Média |
-| S08 | Vivian | Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo. | 93 | 83 | 70 | 89 | 65 | 307 | Forte | AE-101 |  | S | Média |
+| S06 | O'reilly | Mecânico leal e aliado de Hardman, enfrenta os perigos do espaço ao lado dos companheiros. | 90 | 69 | 79 | 65 | 44 | 257 | Padrão | AE-082 |  | S-misto | Média |
+| S07 | Buni | Integrante da equipe de Jasmey, enfrenta o cativeiro e a fuga com seus aliados. | 79 | 55 | 76 | 65 | 51 | 247 | Padrão | AE-024 |  | S-misto | Média |
+| S08 | Vivian | Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo. | 93 | 83 | 70 | 89 | 65 | 307 | Forte | AE-113 |  | S | Média |
 | S09 | Capitã Nastácia | Capitã lendária da Lebargan, comanda com discrição uma das naves mais temidas do espaço. | 88 | 91 | 93 | 82 | 75 | 341 | Elite | AE-048 |  | S-misto | Alta |
 | S10 | Jelles | Comandante brutal da Lebargan, governa pelo medo e busca o poder escondido na Aurora. | 85 | 93 | 82 | 80 | 65 | 320 | Elite | AE-047 |  | S-misto | Alta |
-| S11 | A Besta (Aurora) | Criatura despertada na Aurora, alvo da obsessão de Jelles e ameaça envolta em mistério. | 87 | 100 | 100 | 22 | 32 | 254 | Padrão | AE-024 |  | S/autor | Média |
+| S11 | A Besta (Aurora) | Criatura despertada na Aurora, alvo da obsessão de Jelles e ameaça envolta em mistério. | 87 | 100 | 100 | 22 | 32 | 254 | Padrão | AE-068 |  | S/autor | Média |
 | S12 | Vek | Dale leal ao antigo código, deixa o ressentimento transformar sua relação com Jasmey. | 85 | 75 | 64 | 59 | 68 | 266 | Padrão | AE-032 |  | S-misto | Alta |
 | S13 | Capitão Tzough | Capitão pirata rival, negocia sob pressão e disputa vantagens nos perigos do espaço. | 84 | 81 | 74 | 84 | 57 | 296 | Forte | AE-059 |  | S | Média |
 | S14 | Genrir | Rival provocador de Jasmey, surpreende ao participar da ruptura contra Jelles. | 78 | 80 | 53 | 49 | 85 | 267 | Padrão | AE-053 |  | S-misto | Alta |
-| D01 | Junior | Escritor e amigo de Pedro, tenta organizar relatos marcados por culpa e eventos sobrenaturais. | 94 | 21 | 35 | 82 | 46 | 184 | Frágil | AE-098 |  | D1 | Alta |
-| D02 | Priscila | Irmã mais velha de Kelly, enfrenta perdas e conflitos ao seguir os rastros do sobrenatural. | 91 | 39 | 77 | 75 | 58 | 249 | Padrão | AE-028 |  | D1 | Alta |
-| D03 | Pedro | Amigo impulsivo de Junior, desafia o medo e o luto enquanto busca proteger quem ama. | 84 | 52 | 39 | 59 | 74 | 224 | Modesta | AE-071 |  | D1 | Alta |
+| D01 | Junior | Escritor e amigo de Pedro, tenta organizar relatos marcados por culpa e eventos sobrenaturais. | 94 | 21 | 35 | 82 | 46 | 184 | Frágil | AE-099 |  | D1 | Alta |
+| D02 | Priscila | Irmã mais velha de Kelly, enfrenta perdas e conflitos ao seguir os rastros do sobrenatural. | 91 | 39 | 77 | 75 | 58 | 249 | Padrão | AE-026 |  | D1 | Alta |
+| D03 | Pedro | Amigo impulsivo de Junior, desafia o medo e o luto enquanto busca proteger quem ama. | 84 | 52 | 39 | 59 | 74 | 224 | Modesta | AE-084 |  | D1 | Alta |
 | D04 | Kelly | Leitora inteligente, investiga segredos sobrenaturais na tentativa de reparar antigas culpas. | 93 | 14 | 26 | 91 | 38 | 169 | Frágil | AE-085 |  | D1 | Alta |
-| D05 | Vinicius (Vini) | Jovem manco e marcado pela violência, tenta escapar do peso do passado e da reputação familiar. | 95 | 78 | 52 | 62 | 48 | 240 | Padrão | AE-031 |  | D1 | Alta |
+| D05 | Vinicius (Vini) | Jovem manco e marcado pela violência, tenta escapar do peso do passado e da reputação familiar. | 95 | 78 | 52 | 62 | 48 | 240 | Padrão | AE-022 |  | D1 | Alta |
 | D06 | Jennifer | Sensível aos espíritos e às visões, Jennifer procura compreender o dom que a isola dos outros. | 94 | 71 | 77 | 91 | 70 | 309 | Forte | AE-112 | ⭐ União | D1 | Alta |
-| D07 | Ingrid Carnam | Espírito da família Carnam, carrega uma história de sofrimento e manipulação sobrenatural. | 90 | 74 | 75 | 68 | 53 | 270 | Padrão | AE-084 |  | D1 | Alta |
-| D08 | Glenda | Jovem que deseja ser jornalista, investiga acontecimentos estranhos para encontrar respostas. | 93 | 27 | 38 | 82 | 64 | 211 | Modesta | AE-092 |  | D2-histórico | Média |
-| D09 | Diego | Personagem de Diário Sobrenatural ainda sem perfil narrativo verificável nos materiais consultados. | 99 | 36 | 42 | 46 | 48 | 172 | Frágil | AE-004 |  | Autor | Baixa |
-| D10 | Avó de Kelly | Avó de Kelly, conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre. | 95 | 8 | 34 | 90 | 13 | 145 | Azar | AE-086 |  | D2-histórico | Média |
-| D11 | Cara-de-Larva | Demônio executor ligado à Besta da Carnificina, explora o medo das suas vítimas. | 80 | 90 | 69 | 54 | 71 | 284 | Padrão | AE-066 |  | D2-histórico | Média |
+| D07 | Ingrid Carnam | Espírito da família Carnam, carrega uma história de sofrimento e manipulação sobrenatural. | 90 | 74 | 75 | 68 | 53 | 270 | Padrão | AE-051 |  | D1 | Alta |
+| D08 | Glenda | Jovem que deseja ser jornalista, investiga acontecimentos estranhos para encontrar respostas. | 93 | 27 | 38 | 82 | 64 | 211 | Modesta | AE-091 |  | D2-histórico | Média |
+| D09 | Diego | Personagem de Diário Sobrenatural ainda sem perfil narrativo verificável nos materiais consultados. | 99 | 36 | 42 | 46 | 48 | 172 | Frágil | AE-094 |  | Autor | Baixa |
+| D10 | Avó de Kelly | Avó de Kelly, conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre. | 95 | 8 | 34 | 90 | 13 | 145 | Azar | AE-092 |  | D2-histórico | Média |
+| D11 | Cara-de-Larva | Demônio executor ligado à Besta da Carnificina, explora o medo das suas vítimas. | 80 | 90 | 69 | 54 | 71 | 284 | Padrão | AE-012 |  | D2-histórico | Média |
 | D12 | Agouro | Entidade manipuladora, Agouro se alimenta do sofrimento e influencia os vivos e os espíritos. | 93 | 97 | 87 | 92 | 70 | 346 | Elite | AE-081 |  | D1/D2 | Alta |
-| D13 | Suéten | Espírito da família Carnam, um dos elos de uma tragédia que atravessa gerações. | 79 | 62 | 71 | 55 | 35 | 223 | Modesta | AE-108 |  | D1 | Média |
+| D13 | Suéten | Espírito da família Carnam, um dos elos de uma tragédia que atravessa gerações. | 79 | 62 | 71 | 55 | 35 | 223 | Modesta | AE-066 |  | D1 | Média |
 | D14 | Filippo (Filipo, grafia a confirmar) | Jovem ligado à história de Manu, procura enfrentar os perigos que a cercam. | 75 | 34 | 46 | 63 | 65 | 208 | Modesta | AE-077 |  | D2-histórico | Média |
-| D15 | Carnam (pai) | Espírito do pai da Família Carnam, relacionado a um Elo marcado pela violência e por uma arma. | 94 | 68 | 52 | 52 | 31 | 203 | Modesta | AE-106 |  | D1-Carnam | Alta |
-| D16 | Isabela | Espírito da Família Carnam, cujo Elo é um álbum de fotografias ligado às lembranças do passado. | 95 | 23 | 39 | 66 | 46 | 174 | Frágil | AE-092 |  | D1-Carnam | Alta |
+| D15 | Carnam (pai) | Espírito do pai da Família Carnam, relacionado a um Elo marcado pela violência e por uma arma. | 94 | 68 | 52 | 52 | 31 | 203 | Modesta | AE-055 |  | D1-Carnam | Alta |
+| D16 | Isabela | Espírito da Família Carnam, cujo Elo é um álbum de fotografias ligado às lembranças do passado. | 95 | 23 | 39 | 66 | 46 | 174 | Frágil | AE-098 |  | D1-Carnam | Alta |
 | D17 | Avó Carnam | Avó da Família Carnam, ligada à lente dos óculos que preserva seu vínculo sobrenatural. | 87 | 8 | 35 | 81 | 16 | 140 | Azar | AE-093 |  | D1-Carnam | Alta |
 | D18 | Ibliso (cão) | Cão da Família Carnam, ligado à coleira que integra os misteriosos Elos manipulados por Agouro. | 95 | 54 | 42 | 25 | 92 | 213 | Modesta | AE-004 |  | D1-Carnam | Alta |
 | M01 | Hyde | Detetive observador e obstinado, conecta pistas improváveis enquanto enfrenta suas próprias sombras. | 100 | 53 | 58 | 100 | 76 | 287 | Forte | AE-115 | ⭐ União | M | Alta |
 | M02 | Agente Sete | Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais. | 87 | 83 | 96 | 90 | 80 | 349 | Elite | AE-130 |  | M | Alta |
-| M03 | Diana | Figura decisiva no passado de Hyde, enfrenta a dor com humor, curiosidade e humanidade. | 87 | 18 | 31 | 72 | 78 | 199 | Modesta | AE-094 |  | M | Alta |
-| M04 | Matt Pontas | Advogado habilidoso e sarcástico, abre caminhos por favores, influência e brechas jurídicas. | 92 | 24 | 38 | 91 | 61 | 214 | Modesta | AE-063 |  | M | Alta |
-| M05 | Padre Tomas | Mentor moral de Hyde, ensina a fazer perguntas difíceis antes de condenar os outros. | 84 | 12 | 42 | 84 | 20 | 158 | Frágil | AE-008 |  | M | Alta |
-| M06 | Benjamin Karnudo | Nome de um inimigo cuja perseguição conduz Hyde por uma trama de segredos e identidades. | 88 | 68 | 53 | 86 | 59 | 266 | Padrão | AE-117 |  | M | Alta |
-| M07 | Agente Seis | Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização. | 82 | 77 | 94 | 88 | 59 | 318 | Forte | AE-118 |  | M | Média |
-| M08 | Dra. Helena Valença | Cientista da SPAGE, desenvolveu uma interface para acompanhar a saúde cerebral de astronautas. | 94 | 19 | 32 | 96 | 39 | 186 | Frágil | AE-012 |  | M | Alta |
-| M09 | Richard Falkner (Bulldog) | Richard Falkner, chamado Bulldog, integra o universo investigativo de Mistério Oculto. | 86 | 81 | 86 | 66 | 54 | 287 | Forte | AE-082 |  | Autor | Baixa |
+| M03 | Diana | Figura decisiva no passado de Hyde, enfrenta a dor com humor, curiosidade e humanidade. | 87 | 18 | 31 | 72 | 78 | 199 | Modesta | AE-041 |  | M | Alta |
+| M04 | Matt Pontas | Advogado habilidoso e sarcástico, abre caminhos por favores, influência e brechas jurídicas. | 92 | 24 | 38 | 91 | 61 | 214 | Modesta | AE-100 |  | M | Alta |
+| M05 | Padre Tomas | Mentor moral de Hyde, ensina a fazer perguntas difíceis antes de condenar os outros. | 84 | 12 | 42 | 84 | 20 | 158 | Frágil | AE-092 |  | M | Alta |
+| M06 | Benjamin Karnudo | Nome de um inimigo cuja perseguição conduz Hyde por uma trama de segredos e identidades. | 88 | 68 | 53 | 86 | 59 | 266 | Padrão | AE-101 |  | M | Alta |
+| M07 | Agente Seis | Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização. | 82 | 77 | 94 | 88 | 59 | 318 | Forte | AE-039 |  | M | Média |
+| M08 | Dra. Helena Valença | Cientista da SPAGE, desenvolveu uma interface para acompanhar a saúde cerebral de astronautas. | 94 | 19 | 32 | 96 | 39 | 186 | Frágil | AE-028 |  | M | Alta |
+| M09 | Richard Falkner (Bulldog) | Richard Falkner, chamado Bulldog, integra o universo investigativo de Mistério Oculto. | 86 | 81 | 86 | 66 | 54 | 287 | Forte | AE-118 |  | Autor | Baixa |
 | M10 | Releuz (nome temporário) | Luzitano deixado na Terra pela Luz após os eventos de Órbita Oráculo. | 69 | 76 | 92 | 87 | 82 | 337 | Elite | AE-111 | ⭐ União | Autor | Baixa |
 | M11 | X | Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar. | 98 | 8 | 19 | 99 | 45 | 171 | Frágil | AE-093 |  | M | Alta |
-| M12 | James | Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana. | 93 | 75 | 62 | 96 | 51 | 284 | Padrão | AE-026 |  | M | Alta |
+| M12 | James | Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana. | 93 | 75 | 62 | 96 | 51 | 284 | Padrão | AE-086 |  | M | Alta |
 | B01 | Édelin Fils | Édelin Fils pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento. | 101 | 92 | 83 | 86 | 80 | 341 | Elite | AE-103 | ⭐ União | Autor | Baixa |
 
 ## 3. Efeito legível da habilidade indicada
@@ -143,7 +143,7 @@
 | AE-069 | Doação escolhida | J04, S03 | Escolha um adversário: ele deve escolher uma carta de seu próprio baralho ativo para entregar ao fim do seu. |
 | AE-071 | Ausência tática | D03 | Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota. |
 | AE-072 | Não perder a carta | J19 | Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada. |
-| AE-073 | Silêncio de especiais | V15 | Anule os ataques especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas. |
+| AE-073 | Silêncio de especiais | V15 | Anule as habilidades especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas. |
 | AE-074 | Imunidade pessoal | J11 | Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais. |
 | AE-075 | Captura negada | S02 | Escolha um rival: mesmo que ele vença, ele não poderá capturar sua carta de combate nesta disputa. |
 | AE-076 | Guardião do baralho | J05 | Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa. |
@@ -177,10 +177,10 @@
 | AE-110 | Margem estreita | J01 | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. |
 | AE-111 | Ativação forçada | M10 | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. |
 | AE-112 | Repetição onerosa | D06 | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada. |
-| AE-113 | Interrupção precisa | J17 | Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. |
+| AE-113 | Interrupção precisa | J17 | Cancele 1 habilidade especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. |
 | AE-114 | Desvio de alvo | V12 | Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você. |
 | AE-115 | Eco de habilidade | M01 | Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia. |
-| AE-116 | Apropriar especial usado | J03 | Ganhe a carta de ataque especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. |
+| AE-116 | Apropriar especial usado | J03 | Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. |
 | AE-117 | Preparação exposta | M06 | Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas. |
 | AE-118 | Blindagem de especial | M07 | Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas. |
 | AE-120 | Remover alteração | S04 | Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação. |

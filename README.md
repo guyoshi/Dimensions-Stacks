@@ -11,6 +11,7 @@ Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dime
 | **[Baralho oficial v1.0](docs/BARALHO_OFICIAL.md)** | **Comece aqui:** status da aprovação, 87 cartas, distribuição e links de produção |
 | **[Contrato de regras para IA](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md)** | Distingue o que foi aprovado de questões operacionais ainda pendentes |
 | [Regras e GDD v1.2](docs/REGRAS.md) | Mecânicas confirmadas, última seção de ratificação e pendências |
+| **[Cartas e especiais (nº, nome, descrição, especial)](docs/CARTAS_E_ESPECIAIS.md)** | Lista simples das 87 cartas com a habilidade especial de cada uma e o registro da reatribuição de 13/10/2026 |
 | **[87 cartas aprovadas, fichas completas](docs/CARTAS_87_PROPOSTAS.md)** | Tabela de descrições, atributos e habilidades. O nome `PROPOSTAS` é histórico; **conteúdo aprovado** |
 | **[129 Habilidades Especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)** | **78 efeitos diferentes equipados em 87 cartas**, 51 guardados para expansões |
 | [Modelo-base aprovado de reações defensivas](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | Prioridade circular, reações antes da resolução e contraespecial AE-130 |

@@ -38,12 +38,12 @@
   // my = resumo do jogador humano na partida (ver finish)
   const DAILY = [
     { id: 'int2', texto: 'Vença uma partida ganhando 2 disputas com Inteligência.', ok: m => m.won && m.my.att.int >= 2 },
-    { id: 'esp1', texto: 'Vença uma partida usando um ataque especial.', ok: m => m.won && m.my.esp >= 1 },
+    { id: 'esp1', texto: 'Vença uma partida usando um especial.', ok: m => m.won && m.my.esp >= 1 },
     { id: 'vd', texto: 'Na mesma partida, ganhe uma disputa com Velocidade e outra com Defesa.', ok: m => m.my.att.vel >= 1 && m.my.att.def >= 1 },
     { id: 'n3', texto: 'Vença uma partida de 3 ou mais jogadores.', ok: m => m.won && m.n >= 3 },
     { id: 'r11', texto: 'Vença uma partida em até 11 rodadas.', ok: m => m.won && m.rounds <= 11 },
     { id: 'd8', texto: 'Ganhe 8 disputas em uma única partida.', ok: m => m.my.disp >= 8 },
-    { id: 'esp3', texto: 'Use 3 ataques especiais em uma partida.', ok: m => m.my.esp >= 3 },
+    { id: 'esp3', texto: 'Use 3 especiais em uma partida.', ok: m => m.my.esp >= 3 },
     { id: 'hard', texto: 'Vença uma partida contra bots no nível Difícil.', ok: m => m.won && m.diff === 'dificil' && m.humans === 1 },
     { id: 'pod2', texto: 'Vença uma partida ganhando 2 disputas com Ataque.', ok: m => m.won && m.my.att.pod >= 2 },
   ];
@@ -52,7 +52,7 @@
   // ---------------------------------------------------------------- missões da semana
   const WEEKLY = [
     { id: 'w_win', texto: 'Vença 3 partidas', meta: 3, get: t => t.win },
-    { id: 'w_esp', texto: 'Use 6 ataques especiais', meta: 6, get: t => t.esp },
+    { id: 'w_esp', texto: 'Use 6 especiais', meta: 6, get: t => t.esp },
     { id: 'w_disp', texto: 'Ganhe 20 disputas', meta: 20, get: t => t.disp },
     { id: 'w_play', texto: 'Jogue 5 partidas', meta: 5, get: t => t.g },
   ];
@@ -65,8 +65,8 @@
     { id: 'wins_5', nome: 'Veterana dimensional', desc: 'Vença 5 partidas.', prog: p => [p.t.w, 5] },
     { id: 'wins_25', nome: 'Campeã do Nexo', desc: 'Vença 25 partidas.', prog: p => [p.t.w, 25] },
     { id: 'streak_3', nome: 'Maré alta', desc: 'Vença 3 partidas seguidas.', prog: p => [p.t.best, 3] },
-    { id: 'special_1', nome: 'Faísca especial', desc: 'Use um ataque especial.', prog: p => [p.t.esp, 1] },
-    { id: 'special_25', nome: 'Mestre dos especiais', desc: 'Use 25 ataques especiais.', prog: p => [p.t.esp, 25] },
+    { id: 'special_1', nome: 'Faísca especial', desc: 'Use um especial.', prog: p => [p.t.esp, 1] },
+    { id: 'special_25', nome: 'Mestre dos especiais', desc: 'Use 25 especiais.', prog: p => [p.t.esp, 25] },
     { id: 'four_win', nome: 'Mesa cheia', desc: 'Vença uma partida com 4 jogadores.', flag: true },
     { id: 'online_play', nome: 'Convite aceito', desc: 'Jogue uma partida online.', prog: p => [p.t.online.g, 1] },
     { id: 'online_win', nome: 'Rival de verdade', desc: 'Vença uma partida contra outra pessoa.', prog: p => [p.t.pvp.w, 1] },

@@ -24,11 +24,11 @@
 | AE-001 | Impulso de Ataque | Sua carta de combate recebe +15 em Ataque nesta disputa. | novo | Teste | — |
 | AE-002 | Muralha de Defesa | Sua carta de combate recebe +15 em Defesa nesta disputa. | novo | Teste | J14 |
 | AE-003 | Clarividência | Sua carta de combate recebe +15 em Inteligência nesta disputa. | novo | Teste | — |
-| AE-004 | Arrancada | Sua carta de combate recebe +15 em Velocidade nesta disputa. | novo | Teste | D09, D18 |
+| AE-004 | Arrancada | Sua carta de combate recebe +15 em Velocidade nesta disputa. | novo | Teste | V08, D18 |
 | AE-005 | Reforço flexível | Sua carta de combate recebe +15 em um atributo à sua escolha nesta disputa. | #15 | Teste | — |
 | AE-006 | Dupla resistência | Uma carta de combate sua recebe +15 Defesa e +20 Velocidade nesta disputa. | #27 | Teste | S05 |
 | AE-007 | Ímpeto ofensivo | Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa. | novo | Teste | — |
-| AE-008 | Guarda equilibrada | Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa. | novo | Teste | M05 |
+| AE-008 | Guarda equilibrada | Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa. | novo | Teste | V05 |
 | AE-009 | Superação | Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa. | novo | Teste | — |
 | AE-010 | Ataque em dupla | Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate. | #09 | Regra-base | J15 |
 
@@ -39,12 +39,12 @@
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-011 | Ataque → Inteligência | Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Ataque; Ataque permanece igual. | #22 (adaptação) | Teste | — |
-| AE-012 | Inteligência → Ataque | Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual. | novo | Teste | M08 |
+| AE-012 | Inteligência → Ataque | Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual. | novo | Teste | D11 |
 | AE-013 | Ataque → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Ataque; Ataque permanece igual. | #21 (adaptação) | Teste | — |
 | AE-014 | Velocidade → Ataque | Substitua o valor de Ataque pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste | — |
 | AE-015 | Defesa → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste | — |
 | AE-016 | Inteligência → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. | #20 (adaptação) | Teste | — |
-| AE-017 | Ataque → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Ataque; Ataque permanece igual. | novo | Teste | J23 |
+| AE-017 | Ataque → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Ataque; Ataque permanece igual. | novo | Teste | V09 |
 | AE-018 | Defesa → Ataque | Substitua o valor de Ataque pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste | — |
 | AE-019 | Inteligência → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. | novo | Teste | — |
 | AE-020 | Velocidade → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste | — |
@@ -54,13 +54,13 @@
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-021 | Atributo universal | Escolha um atributo: todos, inclusive você, devem disputar nele. Conflitos de imposição seguem o GDD. | #57/#58/#04 | Regra-base | V02 |
-| AE-022 | Par ofensivo | Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa. | novo | Teste | J18 |
+| AE-022 | Par ofensivo | Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa. | novo | Teste | D05 |
 | AE-023 | Par mental | Antes de declarar atributos, determine que todos usem o par Inteligência/Velocidade nesta disputa. | novo | Teste | — |
-| AE-024 | Ataque obrigatório | Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você. | novo | Teste | S11 |
+| AE-024 | Ataque obrigatório | Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você. | novo | Teste | S07 |
 | AE-025 | Defesa obrigatória | Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você. | novo | Teste | — |
-| AE-026 | Forçar ataque rival | Escolha um adversário: ele deve usar o atributo de ataque do par vigente. | novo | Teste | M12 |
+| AE-026 | Forçar ataque rival | Escolha um adversário: ele deve usar o atributo de ataque do par vigente. | novo | Teste | D02 |
 | AE-027 | Forçar defesa rival | Escolha um adversário: ele deve usar o atributo de defesa do par vigente. | novo | Teste | — |
-| AE-028 | Proibir o ataque rival | Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa. | novo | Teste | D02 |
+| AE-028 | Proibir o ataque rival | Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa. | novo | Teste | M08 |
 | AE-029 | Proibir a defesa rival | Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa. | novo | Teste | — |
 | AE-030 | Escolha transferida | Nesta disputa, escolha qual dos dois atributos do par vigente um adversário utilizará; você continua escolhendo o seu normalmente. | novo | Teste | J08 |
 
@@ -68,7 +68,7 @@
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-031 | Primeira à direita | Pegue a próxima carta do topo do baralho ativo do adversário à direita, exceto a já comprometida em combate. | novo | Teste | D05 |
+| AE-031 | Primeira à direita | Pegue a próxima carta do topo do baralho ativo do adversário à direita, exceto a já comprometida em combate. | novo | Teste | V06 |
 | AE-032 | Primeira à esquerda | Pegue a próxima carta do topo do baralho ativo do adversário à esquerda, exceto a já comprometida em combate. | novo | Teste | S12 |
 | AE-033 | Sorte à direita | Pegue 1 carta aleatória do baralho ativo do adversário à direita, excluindo cartas comprometidas. | novo | Teste | — |
 | AE-034 | Sorte à esquerda | Pegue 1 carta aleatória do baralho ativo do adversário à esquerda, excluindo cartas comprometidas. | novo | Teste | — |
@@ -76,14 +76,14 @@
 | AE-036 | Saque de dois rivais | Roube uma carta aleatória do baralho ativo de cada um de dois adversários distintos; cartas de combate e especiais preparados não são alvos. Sem dois adversários distintos, a condição integral não é atendida. | #34 (adaptação) | Condicional 3+ | — |
 | AE-037 | Recompensa ofensiva | Se vencer atacando, tome também a próxima carta do topo do baralho ativo de um adversário derrotado. | novo | Atenção | J09 |
 | AE-038 | Recompensa defensiva | Se vencer defendendo, tome a próxima carta do topo do baralho ativo de um adversário derrotado, sem modificar o destino das cartas de combate. | novo | Atenção | — |
-| AE-039 | Saque revelado | Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem. | novo | Atenção | V03 |
+| AE-039 | Saque revelado | Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem. | novo | Atenção | M07 |
 | AE-040 | Apreensão limitada | Escolha um adversário com ao menos 4 cartas ativas fora do combate; pegue 1 carta aleatória de seu baralho ativo. | novo | Teste | — |
 
 ## E. Roubo do meio de reserva (10)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-041 | Última da direita | Pegue a última carta do meio de reserva do adversário à direita. | #38 | Teste | V09 |
+| AE-041 | Última da direita | Pegue a última carta do meio de reserva do adversário à direita. | #38 | Teste | M03 |
 | AE-042 | Última da esquerda | Pegue a última carta do meio de reserva do adversário à esquerda. | novo | Teste | — |
 | AE-043 | Primeira da direita | Pegue a primeira carta do meio de reserva do adversário à direita. | novo | Teste | — |
 | AE-044 | Primeira da esquerda | Pegue a primeira carta do meio de reserva do adversário à esquerda. | novo | Teste | — |
@@ -98,11 +98,11 @@
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-051 | Troca escolhida | Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta aleatória do baralho ativo de um adversário. | #01/#30 | Teste | V14 |
+| AE-051 | Troca escolhida | Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta aleatória do baralho ativo de um adversário. | #01/#30 | Teste | D07 |
 | AE-052 | Troca de combatente | Tome a carta de combate de um adversário e entregue-lhe 1 carta aleatória do seu baralho ativo; a troca antecede a comparação. | #13 | Atenção | — |
 | AE-053 | Combatente da direita | Troque sua carta de combate pela do adversário à direita antes da comparação. | #10 | Atenção | S14 |
 | AE-054 | Combatente da esquerda | Troque sua carta de combate pela do adversário à esquerda antes da comparação. | novo | Atenção | — |
-| AE-055 | Troca de topos à direita | Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à direita. | #25 | Teste | V11 |
+| AE-055 | Troca de topos à direita | Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à direita. | #25 | Teste | D15 |
 | AE-056 | Troca de topos à esquerda | Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à esquerda. | novo | Teste | — |
 | AE-057 | Passe à esquerda | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda. | #11 | Teste | — |
 | AE-058 | Passe à direita | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita. | novo | Teste | — |
@@ -114,13 +114,13 @@
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-061 | Reservas giratórias à direita | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à direita. | #35 | Atenção | J13 |
-| AE-062 | Reservas giratórias à esquerda | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda. | novo | Atenção | V07 |
-| AE-063 | Troca entre vizinhos | Faça o jogador à esquerda trocar 1 carta ativa escolhida com o da direita. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto. | #40 | Sem ganho em duelos | M04 |
+| AE-062 | Reservas giratórias à esquerda | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda. | novo | Atenção | J19 |
+| AE-063 | Troca entre vizinhos | Faça o jogador à esquerda trocar 1 carta ativa escolhida com o da direita. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto. | #40 | Sem ganho em duelos | V14 |
 | AE-064 | Transferência de reserva | Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem. | #43 (var.) | Sem ganho em duelos | — |
 | AE-065 | Tríplice transferência | Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido. | #43 | Sem ganho em duelos | — |
-| AE-066 | Descarte coletivo | Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro. | #37/#50 | Teste | D11 |
+| AE-066 | Descarte coletivo | Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro. | #37/#50 | Teste | D13 |
 | AE-067 | Descarte adversário | Cada adversário ativo envia 1 carta aleatória de seu baralho ativo ao Buraco Negro; você não descarta outra carta além da especial. | #50 (var.) | Atenção | V04 |
-| AE-068 | Tributo por sacrifício | Sacrifique uma carta normal sua com algum atributo acima de 90; tome 1 carta aleatória do baralho ativo de cada adversário ativo. | #42 | Atenção | V10 |
+| AE-068 | Tributo por sacrifício | Sacrifique uma carta normal sua com algum atributo acima de 90; tome 1 carta aleatória do baralho ativo de cada adversário ativo. | #42 | Atenção | S11 |
 | AE-069 | Doação escolhida | Escolha um adversário: ele deve escolher uma carta de seu próprio baralho ativo para entregar ao fim do seu. | #28 | Teste | J04, S03 |
 | AE-070 | Conquista compensada | Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido. | #23 | Experimental | — |
 
@@ -128,75 +128,75 @@
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-071 | Ausência tática | Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota. | #31 | Teste | D03 |
-| AE-072 | Não perder a carta | Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada. | #32 | Teste | J19 |
-| AE-073 | Silêncio de especiais | Anule os ataques especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas. | #47 | Atenção | V15 |
+| AE-071 | Ausência tática | Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota. | #31 | Teste | J22 |
+| AE-072 | Não perder a carta | Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada. | #32 | Teste | J18 |
+| AE-073 | Silêncio de especiais | Anule as habilidades especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas. | #47 | Atenção | V15 |
 | AE-074 | Imunidade pessoal | Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais. | #48 | Teste | J11 |
 | AE-075 | Captura negada | Escolha um rival: mesmo que ele vença, ele não poderá capturar sua carta de combate nesta disputa. | #49 (adaptação) | Teste | S02 |
 | AE-076 | Guardião do baralho | Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa. | novo | Teste | J05 |
 | AE-077 | Guardião da reserva | Anule a próxima tentativa de roubar uma carta de sua reserva nesta disputa. | novo | Teste | D14 |
 | AE-078 | Reflexo de roubo | Se um rival tentar roubar exatamente 1 carta sua, cancele esse roubo e tome 1 carta aleatória do baralho ativo dele. | novo | Atenção | V01 |
-| AE-079 | Escudo antecipado | Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa. | novo | Teste | V06 |
-| AE-080 | Anular modificador | Cancele até 1 bônus ou redução numérica que tenha sido aplicado à sua carta de combate nesta disputa. | novo | Teste | S06 |
+| AE-079 | Escudo antecipado | Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa. | novo | Teste | J23 |
+| AE-080 | Anular modificador | Cancele até 1 bônus ou redução numérica que tenha sido aplicado à sua carta de combate nesta disputa. | novo | Teste | V03 |
 
 ## I. Recuperação e manipulação do Buraco Negro (10)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-081 | Resgate extremo | Sacrifique 1 carta normal sua que tenha atributo original acima de 90; receba as 3 primeiras cartas do Buraco Negro, se existirem. | #19 | Atenção | D12 |
-| AE-082 | Resgate aleatório duplo | Recupere até 2 cartas aleatórias do Buraco Negro e coloque-as no fim de seu baralho ativo. | #56 | Atenção | M09 |
+| AE-082 | Resgate aleatório duplo | Recupere até 2 cartas aleatórias do Buraco Negro e coloque-as no fim de seu baralho ativo. | #56 | Atenção | S06 |
 | AE-083 | Resgate do topo | Recupere a carta normal mais recente do Buraco Negro para o fim de seu baralho ativo. | novo | Teste | J06 |
-| AE-084 | Resgate antigo | Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo. | novo | Teste | D07 |
+| AE-084 | Resgate antigo | Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo. | novo | Teste | D03 |
 | AE-085 | Resgate escolhido | Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo. | novo | Atenção | D04 |
-| AE-086 | Troca pelo descarte | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá. | novo | Teste | D10 |
-| AE-087 | Reabastecimento da reserva | Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral. | #12 (texto corrigido pelo autor) | Teste | J02 |
+| AE-086 | Troca pelo descarte | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá. | novo | Teste | M12 |
+| AE-087 | Reabastecimento da reserva | Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral. | #12 (texto corrigido pelo autor) | Teste | V10 |
 | AE-088 | Retorno imediato | Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta. | novo | Teste | — |
-| AE-089 | Sacrifício duplo | Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias. | novo | Atenção | J22 |
+| AE-089 | Sacrifício duplo | Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias. | novo | Atenção | J16 |
 | AE-090 | Segunda chance | Se sua carta de combate fosse para o Buraco Negro nesta disputa, coloque-a em vez disso no fim de sua reserva; não preserve vitória nem capture. | novo | Teste | J07 |
 
 ## J. Informação e manipulação de ordem (10)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-091 | Revelar a mão | Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa. | #41 | Teste | J20 |
-| AE-092 | Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. | novo | Teste | D08, D16 |
-| AE-093 | Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. | novo | Teste | D17, J21, M11 |
-| AE-094 | Inversão de fila | Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo. | novo | Teste | M03 |
-| AE-095 | Atrasar a próxima | Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho. | novo | Teste | V08 |
-| AE-096 | Quebrar o plano | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. | #33 | Atenção | J10, V17 |
-| AE-097 | Escolha de sete | Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo. | #36 (adaptação) | Atenção | V05 |
-| AE-098 | Organizar reserva | Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada. | novo | Teste | D01 |
-| AE-099 | Reforçar o fim | Mova a primeira carta de sua reserva para o fim do seu baralho ativo, sem ver seu conteúdo. | novo | Teste | S07 |
-| AE-100 | Confundir próximo turno | Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais. | novo | Atenção | J16, V16 |
+| AE-091 | Revelar a mão | Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa. | #41 | Teste | D08 |
+| AE-092 | Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. | novo | Teste | D10, M05 |
+| AE-093 | Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. | novo | Teste | J21, D17, M11 |
+| AE-094 | Inversão de fila | Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo. | novo | Teste | D09 |
+| AE-095 | Atrasar a próxima | Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho. | novo | Teste | V11 |
+| AE-096 | Quebrar o plano | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. | #33 | Atenção | J02, J10 |
+| AE-097 | Escolha de sete | Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo. | #36 (adaptação) | Atenção | V07 |
+| AE-098 | Organizar reserva | Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada. | novo | Teste | D16 |
+| AE-099 | Reforçar o fim | Mova a primeira carta de sua reserva para o fim do seu baralho ativo, sem ver seu conteúdo. | novo | Teste | D01 |
+| AE-100 | Confundir próximo turno | Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais. | novo | Atenção | V16, M04 |
 
 ## K. Capturas condicionais e efeitos decisivos (10)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-101 | Capturar atacante | Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção | S08 |
+| AE-101 | Capturar atacante | Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção | M06 |
 | AE-102 | Capturar defensor | Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Ataque + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção | — |
-| AE-103 | Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. | #54 (escopo aprovado) | Atenção | B01, V18 |
+| AE-103 | Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. | #54 (escopo aprovado) | Atenção | V18, B01 |
 
 | AE-105 | Defesa que captura | Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la. | novo | Teste | J12, V19 |
-| AE-106 | Ataque que bane | Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada. | novo | Teste | D15 |
+| AE-106 | Ataque que bane | Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada. | novo | Teste | J20 |
 | AE-107 | Iniciativa contra fracos | Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa. | novo | Atenção | — |
-| AE-108 | Negar captura inimiga | Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor. | novo | Teste | D13 |
+| AE-108 | Negar captura inimiga | Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor. | novo | Teste | V17 |
 | AE-109 | Duelo condicionado | Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece. | novo | Experimental | — |
 | AE-110 | Margem estreita | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. | novo | Atenção | J01 |
 | AE-129 | Triunfo raro | Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Candidato a pouquíssimas cartas raras**, aprovado para Jasmey como habilidade rara, sujeito a testes de equilíbrio. | novo; não é o antigo #52 | Rara, experimental | S01 |
 
-## L. Interações entre ataques especiais (10)
+## L. Interações entre habilidades especiais (10)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-111 | Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. | #59 | Regra-base | M10 |
 | AE-112 | Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada. | #62 (ciclos proibidos) | Atenção | D06 |
-| AE-113 | Interrupção precisa | Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. | novo | Teste | J17 |
+| AE-113 | Interrupção precisa | Cancele 1 habilidade especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. | novo | Teste | S08 |
 | AE-114 | Desvio de alvo | Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você. | novo | Teste | V12 |
 | AE-115 | Eco de habilidade | Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia. | novo | Atenção | M01 |
-| AE-116 | Apropriar especial usado | Ganhe a carta de ataque especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. | #06 (adaptação) | Atenção | J03 |
-| AE-117 | Preparação exposta | Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas. | novo | Teste | M06 |
-| AE-118 | Blindagem de especial | Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas. | novo | Atenção | M07 |
+| AE-116 | Apropriar especial usado | Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. | #06 (adaptação) | Atenção | J03 |
+| AE-117 | Preparação exposta | Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas. | novo | Teste | J17 |
+| AE-118 | Blindagem de especial | Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas. | novo | Atenção | M09 |
 | AE-119 | Preparação urgente | Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa. | novo | Experimental | — |
 | AE-120 | Remover alteração | Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação. | novo | Teste | S04 |
 ## M. Conversões faltantes e permutas completas (8)

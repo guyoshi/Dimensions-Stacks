@@ -74,7 +74,7 @@
       },
       "soma_atributos": 219,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-087",
+      "habilidade_especial_id": "AE-096",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J1",
@@ -410,7 +410,7 @@
       },
       "soma_atributos": 260,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-100",
+      "habilidade_especial_id": "AE-089",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J3",
@@ -434,7 +434,7 @@
       },
       "soma_atributos": 220,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-113",
+      "habilidade_especial_id": "AE-117",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J3",
@@ -458,7 +458,7 @@
       },
       "soma_atributos": 261,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-022",
+      "habilidade_especial_id": "AE-072",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J3",
@@ -482,7 +482,7 @@
       },
       "soma_atributos": 313,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-072",
+      "habilidade_especial_id": "AE-062",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J3",
@@ -506,7 +506,7 @@
       },
       "soma_atributos": 131,
       "perfil_balanceamento": "Azar",
-      "habilidade_especial_id": "AE-091",
+      "habilidade_especial_id": "AE-106",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J4",
@@ -554,7 +554,7 @@
       },
       "soma_atributos": 260,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-089",
+      "habilidade_especial_id": "AE-071",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J4",
@@ -578,7 +578,7 @@
       },
       "soma_atributos": 288,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-017",
+      "habilidade_especial_id": "AE-079",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J4",
@@ -650,7 +650,7 @@
       },
       "soma_atributos": 255,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-039",
+      "habilidade_especial_id": "AE-080",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -698,7 +698,7 @@
       },
       "soma_atributos": 280,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-097",
+      "habilidade_especial_id": "AE-008",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -722,7 +722,7 @@
       },
       "soma_atributos": 313,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-079",
+      "habilidade_especial_id": "AE-031",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -746,7 +746,7 @@
       },
       "soma_atributos": 228,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-062",
+      "habilidade_especial_id": "AE-097",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -770,7 +770,7 @@
       },
       "soma_atributos": 279,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-095",
+      "habilidade_especial_id": "AE-004",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -794,7 +794,7 @@
       },
       "soma_atributos": 277,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-041",
+      "habilidade_especial_id": "AE-017",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -818,7 +818,7 @@
       },
       "soma_atributos": 343,
       "perfil_balanceamento": "Elite",
-      "habilidade_especial_id": "AE-068",
+      "habilidade_especial_id": "AE-087",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -842,7 +842,7 @@
       },
       "soma_atributos": 228,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-055",
+      "habilidade_especial_id": "AE-095",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -914,7 +914,7 @@
       },
       "soma_atributos": 108,
       "perfil_balanceamento": "Azar",
-      "habilidade_especial_id": "AE-051",
+      "habilidade_especial_id": "AE-063",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -986,7 +986,7 @@
       },
       "soma_atributos": 296,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-096",
+      "habilidade_especial_id": "AE-108",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -1178,7 +1178,7 @@
       },
       "soma_atributos": 257,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-080",
+      "habilidade_especial_id": "AE-082",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-misto",
@@ -1202,7 +1202,7 @@
       },
       "soma_atributos": 247,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-099",
+      "habilidade_especial_id": "AE-024",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-misto",
@@ -1226,7 +1226,7 @@
       },
       "soma_atributos": 307,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-101",
+      "habilidade_especial_id": "AE-113",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S",
@@ -1298,7 +1298,7 @@
       },
       "soma_atributos": 254,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-024",
+      "habilidade_especial_id": "AE-068",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S/autor",
@@ -1394,7 +1394,7 @@
       },
       "soma_atributos": 184,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-098",
+      "habilidade_especial_id": "AE-099",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1418,7 +1418,7 @@
       },
       "soma_atributos": 249,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-028",
+      "habilidade_especial_id": "AE-026",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1442,7 +1442,7 @@
       },
       "soma_atributos": 224,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-071",
+      "habilidade_especial_id": "AE-084",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1490,7 +1490,7 @@
       },
       "soma_atributos": 240,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-031",
+      "habilidade_especial_id": "AE-022",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1538,7 +1538,7 @@
       },
       "soma_atributos": 270,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-084",
+      "habilidade_especial_id": "AE-051",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1562,7 +1562,7 @@
       },
       "soma_atributos": 211,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-092",
+      "habilidade_especial_id": "AE-091",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D2-histórico",
@@ -1586,7 +1586,7 @@
       },
       "soma_atributos": 172,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-004",
+      "habilidade_especial_id": "AE-094",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "Autor",
@@ -1610,7 +1610,7 @@
       },
       "soma_atributos": 145,
       "perfil_balanceamento": "Azar",
-      "habilidade_especial_id": "AE-086",
+      "habilidade_especial_id": "AE-092",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D2-histórico",
@@ -1634,7 +1634,7 @@
       },
       "soma_atributos": 284,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-066",
+      "habilidade_especial_id": "AE-012",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D2-histórico",
@@ -1682,7 +1682,7 @@
       },
       "soma_atributos": 223,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-108",
+      "habilidade_especial_id": "AE-066",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1730,7 +1730,7 @@
       },
       "soma_atributos": 203,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-106",
+      "habilidade_especial_id": "AE-055",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1-Carnam",
@@ -1754,7 +1754,7 @@
       },
       "soma_atributos": 174,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-092",
+      "habilidade_especial_id": "AE-098",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1-Carnam",
@@ -1874,7 +1874,7 @@
       },
       "soma_atributos": 199,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-094",
+      "habilidade_especial_id": "AE-041",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1898,7 +1898,7 @@
       },
       "soma_atributos": 214,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-063",
+      "habilidade_especial_id": "AE-100",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1922,7 +1922,7 @@
       },
       "soma_atributos": 158,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-008",
+      "habilidade_especial_id": "AE-092",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1946,7 +1946,7 @@
       },
       "soma_atributos": 266,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-117",
+      "habilidade_especial_id": "AE-101",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1970,7 +1970,7 @@
       },
       "soma_atributos": 318,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-118",
+      "habilidade_especial_id": "AE-039",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1994,7 +1994,7 @@
       },
       "soma_atributos": 186,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-012",
+      "habilidade_especial_id": "AE-028",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -2018,7 +2018,7 @@
       },
       "soma_atributos": 287,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-082",
+      "habilidade_especial_id": "AE-118",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "Autor",
@@ -2090,7 +2090,7 @@
       },
       "soma_atributos": 284,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-026",
+      "habilidade_especial_id": "AE-086",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
