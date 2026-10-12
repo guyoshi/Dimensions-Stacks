@@ -1,13 +1,13 @@
-# Dimensions Stacks — Elenco candidato (v0.2)
+# Dimensions Stacks — Elenco aprovado (v1.0)
 
-> **87 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 87 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
+> **ELENCO APROVADO PELO AUTOR: 87 cartas únicas** em seis séries (23 Jesed, 19 Viajantes, 14 Spacetheft, 18 Diário Sobrenatural, 12 Mistério Oculto, 1 Belfex). A União é apenas uma filiação transversal, não origem duplicada. **Os números, descrições e habilidades da versão atual já foram aprovados**, conforme [BARALHO_OFICIAL.md](BARALHO_OFICIAL.md). Grau de confiança canônica nas descrições não é o mesmo que aprovação de balanceamento.
 
 ## Critérios
 
 - Variar as séries: não deixar Ciclo de Jesed dominar o baralho.
 - Usar personagens efetivamente existentes na documentação literária (ou nome informado pelo autor).
 - Incluir protagonistas, antagonistas, secundários, figuras sobrenaturais e personagens de papel político ou investigativo: o jogo não exige que todos sejam lutadores.
-- A renomeação de **Poder** para **Ataque (ATQ)** está aprovada. Os quatro números (ATQ/DEF/INT/VEL), descrições curtas e habilidade especial já receberam **propostas ainda não aprovadas** em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md), sempre sem copiar atributos históricos das cartas físicas.
+- O nome **Ataque (ATQ)**, o intervalo 0–100, as descrições e os quatro atributos foram **aprovados para as 87 cartas**. Ver [fichas oficiais](BARALHO_OFICIAL.md), sem copiar habilidades das cartas físicas antigas.
 - Manter **origem**, **filiação** (quando conhecida) e **raridade** como metadados distintos. Não classificar simplesmente 'herói/vilão' pelo tom de pele/cor da moldura.
 - Um mesmo personagem em diferentes fases (como **Mark Polar**) pode ter mais de uma versão futuramente, mas **é contado uma vez nesta lista**.
 
@@ -176,9 +176,9 @@ O autor confirmou sete integrantes na formação informada e Jennifer como futur
 
 *A União não entra na soma: mantém 7 integrantes confirmados e Jennifer como futura integrante, sem cartas duplicadas.*
 
-## 9. Próximo passo para as fichas definitivas
+## 9. Campos de manutenção futura para as fichas definitivas
 
-Criar para cada carta aprovada um registro com: `id`, `personagem`, `origem`, `livro_base`, `descrição_sem_spoiler`, `POD`, `DEF`, `INT`, `VEL`, `especial_id`, `raridade`, `filiação`, `estado_canônico`, `fonte` e `status_de_aprovação`. Não misturar a ficha narrativa com a matemática de balanceamento.
+Criar para cada carta aprovada um registro com: `id`, `personagem`, `origem`, `livro_base`, `descrição_sem_spoiler`, `ATQ`, `DEF`, `INT`, `VEL`, `especial_id`, `raridade`, `filiação`, `estado_canônico`, `fonte` e `status_de_aprovação`. Não misturar a ficha narrativa com a matemática de balanceamento.
 
 Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Documentos associados: [Regras](REGRAS.md) · [Ataques especiais](ATAQUES_ESPECIAIS.md).
 
@@ -198,15 +198,15 @@ Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/d
 
 **A União:** somente selo adicional nos integrantes da equipe, sem cor própria obrigatória e sem duplicar a carta-base. **Nenhuma cor define a raridade, o heroísmo ou a vilania**. Cores não são critérios de ataque/captura.
 
-**Ataques especiais ainda sem atribuição:** o arquivo [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md) tem 129 efeitos candidatos com coluna `Carta atribuída (ID)` totalmente vazia. Atribuir definitivamente apenas após validação dos atributos, da personalidade, do cânone e do balanceamento de cada personagem. As sugestões individuais, ainda reversíveis, estão num documento separado.
+**Atribuição oficial:** a [biblioteca](BIBLIOTECA_ATAQUES_ESPECIAIS.md) tem **129 habilidades**, sendo **78 IDs distintos equipados em 87 cartas aprovadas** e **51 disponíveis para expansões**. A coluna `Carta atribuída (ID)` registra os IDs oficiais.
 
-## 11. Estado atual das propostas
+## 11. Estado atual do baralho aprovado
 
-**As 87 fichas receberam descrições com até 120 caracteres, atributos de 0–100 propostos e um especial candidato por personagem.** O arquivo [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) é a fonte para revisão, mas nenhuma linha foi aprovada como dado final; as colunas da biblioteca central de 129 efeitos seguem vazias até a distribuição ser ratificada pelo autor. Seguir o [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+**As 87 fichas estão aprovadas como conteúdo de jogo**, com descrições até 120 caracteres, atributos de 0–100 e uma habilidade especial atribuída. Fonte estruturada: [JSON oficial](../dados/oficial/cartas_87.json). São exigidos testes de balanceamento, não uma nova aprovação geral. Seguir [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 12. Quatro personagens adicionais de Viajantes Dimensionais
 
-Em 12/10/2026, o autor pediu inclusão de **Facka, Lanigiah, rei dos Obbs e o Obb que ajuda os irmãos**. Conferência do manuscrito confirmou **Faka**, **Lanigiah**, **Gaia** e **Seti**, respectivamente. O nome oficial do líder Obb nos diálogos é **Grande Pai Gaia**; Lanigiah é a **rainha das Aracnas**, não dos Obbs. O manuscrito registra o nome **Faka**, mas o autor escreveu **Facka**; manter Facka na ficha candidata com alerta de uniformização editorial. As habilidades e os números dos novos V16–V19 são **propostas de balanceamento**, não dados canônicos.
+Em 12/10/2026, o autor pediu inclusão de **Facka, Lanigiah, rei dos Obbs e o Obb que ajuda os irmãos**. Conferência do manuscrito confirmou **Faka**, **Lanigiah**, **Gaia** e **Seti**, respectivamente. O nome oficial do líder Obb nos diálogos é **Grande Pai Gaia**; Lanigiah é a **rainha das Aracnas**, não dos Obbs. O manuscrito registra o nome **Faka**, mas o autor escreveu **Facka**; manter Facka na ficha candidata com alerta de uniformização editorial. As habilidades e os números dos novos V16–V19 estão **aprovados para o jogo**, sem representar provas sobre seus poderes literários.
 
 
 ## 13. Família Carnam — Diário Sobrenatural, Livro 1
@@ -215,4 +215,8 @@ O autor esclareceu que o pedido sobre “o pai, a avó, etc.” se referia à **
 
 **D07 Ingrid Carnam** e **D13 Suéten** já existiam. Foram acrescentados **D15 Carnam (pai)**, **D16 Isabela**, **D17 Avó Carnam** e **D18 Ibliso (cão)**. **D10 Avó de Kelly não pertence ao grupo Carnam só por ser chamada de “avó”.** Não duplicar D07 nem D13.
 
-**Base narrativa identificada; atributos e especiais continuam PROPOSTOS.** O cânone resume a condição espiritual da família e seus Elos, mas não fornece atributos numéricos de combate nem prova que uma pessoa possua, literalmente, a mecânica de jogo inspirada em seu objeto.
+**Base narrativa identificada; atributos e especiais estão APROVADOS PARA O JOGO.** O cânone resume a condição espiritual da família e seus Elos, mas não fornece atributos numéricos de combate nem prova que uma pessoa possua, literalmente, a mecânica de jogo inspirada em seu objeto.
+
+## 14. Ratificação oficial do elenco
+
+Por decisão do autor em **12/10/2026 (“Aprove tudo”)**, os **87 personagens e suas fichas atuais** foram aprovados como primeira coleção jogável. Não acrescentar cartas sem solicitação nem alterar os números oficiais automaticamente. Manter separadas a validação de cânone, a aprovação da ficha para o jogo e a aprovação dos testes de balanceamento. [Dados oficiais](../dados/oficial/cartas_87.json) e [resumo do baralho](BARALHO_OFICIAL.md).
