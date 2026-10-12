@@ -1,4 +1,6 @@
-# Revisão dos ataques especiais (12/10/2026)
+# Revisão histórica dos ataques especiais (12/10/2026)
+
+> **Esta revisão é anterior à transcrição direta de 23 cartas pelo autor.** Consulte [TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md) para textos originais e avaliação vigente. Leituras, palpites e recomendações abaixo foram superados onde divergirem da transcrição ou do GDD atualizado.
 
 Documento complementar à [auditoria original](ATAQUES_ESPECIAIS.md). As fotografias mostram parcialmente alguns rodapés; não inventar o texto faltante.
 
