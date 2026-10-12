@@ -1,13 +1,13 @@
 # Dimensions Stacks — Elenco candidato (v0.2)
 
-> **79 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 79 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
+> **83 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 83 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
 
 ## Critérios
 
 - Variar as séries: não deixar Ciclo de Jesed dominar o baralho.
 - Usar personagens efetivamente existentes na documentação literária (ou nome informado pelo autor).
 - Incluir protagonistas, antagonistas, secundários, figuras sobrenaturais e personagens de papel político ou investigativo: o jogo não exige que todos sejam lutadores.
-- A renomeação de **Poder** para **Ataque (ATQ)** está aprovada. Os quatro números (ATQ/DEF/INT/VEL), descrições curtas e habilidade especial já receberam **propostas ainda não aprovadas** em [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md), sempre sem copiar atributos históricos das cartas físicas.
+- A renomeação de **Poder** para **Ataque (ATQ)** está aprovada. Os quatro números (ATQ/DEF/INT/VEL), descrições curtas e habilidade especial já receberam **propostas ainda não aprovadas** em [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md), sempre sem copiar atributos históricos das cartas físicas.
 - Manter **origem**, **filiação** (quando conhecida) e **raridade** como metadados distintos. Não classificar simplesmente 'herói/vilão' pelo tom de pele/cor da moldura.
 - Um mesmo personagem em diferentes fases (como **Mark Polar**) pode ter mais de uma versão futuramente, mas **é contado uma vez nesta lista**.
 
@@ -44,9 +44,9 @@ Fontes: fichas canônicas **02 - Personagens.md** de *Ruínas dos Céus*, *Guerr
 
 **Nota:** algumas funções de *Herdeiros das Cinzas* ainda são planeadas; confirmar versão canônica antes de aprovar especiais que revelem segredos. Spoilers importantes envolvendo Mark Polar merecem uma estratégia de apresentação.
 
-## 2. Viajantes Dimensionais — 15 candidatos
+## 2. Viajantes Dimensionais — 19 candidatos
 
-Fonte: `Viajantes Dimensionais/1 - A Patrulha de Korvo/01 - Canon/02 - Personagens.md` e notas de desenvolvimento.
+Fonte: `Viajantes Dimensionais/1 - A Patrulha de Korvo/01 - Canon/02 - Personagens.md` e manuscrito `Viajantes dimensionais - A Patrulha de Korvo.docx`. Os quatro personagens adicionais foram verificados no manuscrito.
 
 | # | Personagem | Referência narrativa |
 | --- | --- | --- |
@@ -65,6 +65,10 @@ Fonte: `Viajantes Dimensionais/1 - A Patrulha de Korvo/01 - Canon/02 - Personage
 | V13 | Saliens | Integrante da Patrulha de Korvo |
 | V14 | Tio Frank | Responsável pelos irmãos Lins após a morte dos pais |
 | V15 | Brenda | Aprendiz de Tayo; futura integrante de A União |
+| V16 | Facka (grafada **Faka** no manuscrito) | Jovem Aracna curiosa, guia os irmãos pelos túneis até o território Obb; **Facka** é a grafia solicitada pelo autor para a carta, pendente padronização no livro |
+| V17 | Lanigiah | **Rainha das Aracnas**, personagem imponente que submete Banjo a uma experiência ligada a memórias e coragem; não confundir com realeza Obb |
+| V18 | Grande Pai Gaia | Líder dos Obbs de Pinesoto, usa raízes e troncos para defender seu povo; referido como “Grande Pai” no manuscrito |
+| V19 | Seti | Líder de guerra dos Obbs de Pinesoto; inicialmente desconfia dos irmãos, depois os alimenta e os ajuda durante o ataque |
 
 ## 3. Spacetheft — 14 candidatos
 
@@ -158,13 +162,13 @@ O autor confirmou sete integrantes na formação informada e Jennifer como futur
 
 | Origem | Candidatos únicos | Proporção |
 | --- | ---: | ---: |
-| Ciclo de Jesed | 23 | 29,1% |
-| Viajantes Dimensionais | 15 | 19,0% |
-| Spacetheft | 14 | 17,7% |
-| Diário Sobrenatural | 14 | 17,7% |
-| Mistério Oculto | 12 | 15,2% |
-| Belfex (série de Édelin) | 1 | 1,3% |
-| **TOTAL** | **79** | **100%** |
+| Ciclo de Jesed | 23 | 27,7% |
+| Viajantes Dimensionais | 19 | 22,9% |
+| Spacetheft | 14 | 16,9% |
+| Diário Sobrenatural | 14 | 16,9% |
+| Mistério Oculto | 12 | 14,5% |
+| Belfex (série de Édelin) | 1 | 1,2% |
+| **TOTAL** | **83** | **100%** |
 
 *A União não aparece na soma: é uma filiação transversal com 7 integrantes confirmados e 1 futura integrante.*
 
@@ -194,4 +198,8 @@ Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/d
 
 ## 11. Estado atual das propostas
 
-**As 79 fichas receberam descrições com até 120 caracteres, atributos de 0–100 propostos e um especial candidato por personagem.** O arquivo [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md) é a fonte para revisão, mas nenhuma linha foi aprovada como dado final; as colunas da biblioteca central de 129 efeitos seguem vazias até a distribuição ser ratificada pelo autor. Seguir o [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+**As 83 fichas receberam descrições com até 120 caracteres, atributos de 0–100 propostos e um especial candidato por personagem.** O arquivo [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md) é a fonte para revisão, mas nenhuma linha foi aprovada como dado final; as colunas da biblioteca central de 129 efeitos seguem vazias até a distribuição ser ratificada pelo autor. Seguir o [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+
+## 12. Quatro personagens adicionais de Viajantes Dimensionais
+
+Em 12/10/2026, o autor pediu inclusão de **Facka, Lanigiah, rei dos Obbs e o Obb que ajuda os irmãos**. Conferência do manuscrito confirmou **Faka**, **Lanigiah**, **Gaia** e **Seti**, respectivamente. O nome oficial do líder Obb nos diálogos é **Grande Pai Gaia**; Lanigiah é a **rainha das Aracnas**, não dos Obbs. O manuscrito registra o nome **Faka**, mas o autor escreveu **Facka**; manter Facka na ficha candidata com alerta de uniformização editorial. As habilidades e os números dos novos V16–V19 são **propostas de balanceamento**, não dados canônicos.
