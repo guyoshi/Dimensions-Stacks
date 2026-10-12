@@ -9,7 +9,7 @@
 | 12 | Pecker | Pegue duas cartas do Baralho Negro e deposie sete ao fim do seu meio de reserva | provável erro de transcrição |
 | 13 | Garmand Lips | Roube a carta combatente do adversario em troca de uma aleatória sua | IA, verificar |
 | 14 | Facka | Se a carta jogada do adversário não for humano, jesediano, mago, senavelita ou elfo ela é sua | IA, verificar |
-| 20 | Agente Sete | Troque o status Defesa... | parcial |
+| 20 | Agente Sete | Troque o status Defesa pela inteligência de sua carta | ampliado pelo autor; verificar a leitura |
 | 23 | Dhawer Flint | Ganhe todas as cartas em combate, mas de uma carta sua a escolha para cada jogador | IA, verificar |
 | 25 | Zark Carmel | Troque a carta de cima do seu baralho com a de cima do seu adversário da direita. | IA, verificar; número novo |
 | 28 | Naek | Seu adversário escolherá uma de suas cartas para lhe dar | IA, verificar; número novo |
@@ -18,7 +18,7 @@
 | 31 | Breddy Finch | CARTA DEFESA: Anule este turno para você | IA, verificar |
 | 32 | Sivar Gruf | CARTA DEFESA: Anule este turno e não perca carta alguma | IA, verificar |
 | 33 | Rockstam Demyre | oBRIGUE UM JOGADOR A EMBARALHAR as suas cartas em mão com o meio de reserva e puxar as primeiras 5 pra usar. | IA, verificar |
-| 37 | D. Lesort | Ataque muito desfocado. | ilegível |
+| 37 | D. Lesort | Force cada um dos jogadores a jogar uma carta aleatória ao Buraco Negro. | trecho reconstruído; quebra da palavra 'jogadores' normalizada |
 | 38 | Cap. Tzough | Puxe a última carta do meio de reserva do adversário à direita para você. | IA, verificar |
 | 40 | Hanuno Pollar | Peça pro adversario da sua esquerda pra trocar cartas com o da sua direita. | IA, verificar |
 | 41 | Fieridus Pollar | Faça um de seus adversários mostrar todas as suas cartas em mãos | IA, verificar |
@@ -26,9 +26,9 @@
 | 43 | Nehee Pollar | Roube três cartas aleatórias do joghador a sua esquerda e entregue ao jogador a sua direita | IA, verificar |
 | 44 | Monthar Pollar | . | sem efeito |
 | 45 | Merryn | Ataque encoberto pelo desgaste da carta. | ilegível |
-| 47 | Kate Fira | CARTA DEFESA... e menciona ataque especial. | parcial; foto antiga dizia CARTA DUPLA |
+| 47 | Kate Fira | CARTA DEFESA: Impeça qualquer ataque especial neste turno. | complementado pelo autor; foto antiga indicava CARTA DUPLA |
 | 48 | Igor Wody | CARTA DEFESA: Impeça qualquer ataque neste turno contra você | IA, verificar |
-| 49 | Temi Lokat | CARTA DEFESA: Impeça o rival... | parcial |
+| 49 | Temi Lokat | CARTA DEFESA: Impeça o rival de te vencer neste turno | complementado; conferir interpretação |
 | 50 | Raum Cedar | CARTA ATAQUE... e menciona descartar uma carta aleatória. | parcial |
 | 51 | Lissan Tellus (Lorane) | CARTA ATAQUE... | parcial |
 | 52 | Luar Engeal | CARTA CORINGA... | parcial |
