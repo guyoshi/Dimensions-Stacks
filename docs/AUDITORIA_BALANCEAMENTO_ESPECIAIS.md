@@ -1,4 +1,4 @@
-# Dimensions Stacks — Auditoria de balanceamento dos ataques especiais (v1.2)
+# Dimensions Stacks — Auditoria de balanceamento dos ataques especiais (v1.3)
 
 > Revisão de **todas as 62 posições da coleção física numerada**: 59 têm pelo menos a identidade do cartão, 3 (**16, 26 e 55**) não têm. Alguns ataques legíveis derivam de transcrições diretas do autor (**Direta**), outros de fotos (**Foto**), e outros de leitura por IA ainda a verificar (**IA**). **A carta física não determina quem receberá o ataque especial novo.** Todos os IDs AE são referências ao [catálogo de 128 efeitos candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md). **Nenhum valor ou capacidade dos personagens físicos antigos será reaproveitado automaticamente.**
 
@@ -115,7 +115,7 @@
 
 ### Especial contra especial
 
-**#06, #47, #59, #62**: definir ordem, respostas, cópia/reativação, gasto da carta e a janela de ativação. A regra aprovada de #59 força todas as especiais já preparadas; não obriga puxar cartas da reserva.
+**#06, #47, #59, #62**: o **limite normal confirmado é 1 ativação voluntária de carta especial por combate**, salvo habilidade que permita duas. A regra de #59 **força todas as especiais já preparadas do alvo (até 2)**, independentemente desse limite. #62 permite repetir efeito com custo, mas não dá autorização geral para virar uma segunda carta especial preparada. Ainda requerem decisão ordem entre jogadores, janelas e respostas.
 
 ### Textos ilegíveis e cartas ausentes
 
