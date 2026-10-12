@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Gera propostas.js a partir de dados/propostas/*.json do repositório (cartas_79 + habilidades_129).
+"""Gera propostas.js a partir de dados/propostas/*.json do repositório (cartas_NN mais recente + habilidades_129).
 Uso: python3 tools/importar_propostas.py [pasta_dados_propostas]   (padrão: ../dados/propostas)
 Cartas com status APROVADA saem do modo prévia; as demais aparecem marcadas como prévia."""
 import json, sys, os
 base = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), '..', '..', 'dados', 'propostas')
-c = json.load(open(os.path.join(base, 'cartas_79.json'), encoding='utf-8'))
+import glob, re
+arq = max(glob.glob(os.path.join(base, 'cartas_*.json')), key=lambda f: int(re.search(r'cartas_(\d+)', f).group(1)))
+c = json.load(open(arq, encoding='utf-8'))
+print('lendo', os.path.basename(arq))
 h = json.load(open(os.path.join(base, 'habilidades_129.json'), encoding='utf-8'))
 cartas = {}
 for x in c['cartas']:

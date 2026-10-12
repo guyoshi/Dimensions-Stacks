@@ -48,7 +48,7 @@
     const from = (G && G.cfg && G.cfg.specialsFrom) || 2;
     let act = '';
     if (combat && combat.specialsAllowed === false) act = `<span class="splnote">Especiais só liberam na Rodada ${from}.</span>`;
-    else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ Usar como ataque especial</button><span class="splnote">A carta sai do combate, fica fechada ao seu lado e a próxima entra no lugar.${sp.stub ? ' ⚠ Efeito ainda não implementado: ao virar, nada acontece e ela vai ao Buraco Negro.' : ''}</span>`;
+    else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ Usar como ataque especial</button><span class="splnote">A carta sai do combate, fica fechada ao seu lado e a próxima entra no lugar.${sp.phase === 'ctrl' ? ' Este especial controla os atributos: só vale se já estiver preparado antes da disputa; você poderá virá-lo a partir da próxima.' : ''}</span>`;
     else act = `<span class="splnote">Você já tem 2 especiais preparados ou não há outra carta para entrar no lugar.</span>`;
     return `<div class="hint spline">✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}${sp.stub ? ' <i>(efeito ainda não implementado)</i>' : ''}<div class="splact">${act}</div></div>`;
   }
@@ -246,7 +246,7 @@
       banner('Que comece!', `${nameOf(G.s.initiator)} inicia`, null, 1500); await sleep(900);
     },
     async combatStart({ initiator, round }) {
-      V.init = initiator; V.winShown = false; refresh();
+      V.init = initiator; V.win = {}; refresh();
       caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · ataques especiais liberam na Rodada 2' : '')); await sleep(350);
     },
     async prepare({ pid }) {
@@ -279,8 +279,11 @@
       caption(`${nameOf(pid)} iniciou em ${ATT[attr].nome}. Os demais escolhem ${par} em segredo.`, true); await sleep(700);
     },
     async reveal({ combat }) { await revealCards(combat); },
-    async specialWindow() {
-      if (V.winShown) return; V.winShown = true; banner('Janela de especiais', 'decida em segredo', '#c58cff', 1400); caption('Janela de ataques especiais…'); await sleep(900);
+    async specialWindow({ stage }) {
+      stage = stage || 'main'; V.win = V.win || {}; if (V.win[stage]) return; V.win[stage] = true;
+      if (stage === 'ctrl') { banner('Controle de atributos', 'especiais antes de declarar', '#7dd3ff', 1400); caption('Janela de especiais de controle…'); }
+      else { banner('Janela de especiais', 'decida em segredo', '#c58cff', 1400); caption('Janela de ataques especiais…'); }
+      await sleep(900);
     },
     async specialsFlip({ combat, acts, forced }) {
       const st = el(`<div class="stage"><div class="acts"></div></div>`);
@@ -313,25 +316,52 @@
     async extra({ pid, card }) {
       const e = entryOf(pid); await fly(seatDeck(pid), V.slots[pid], { ms: 500 }); SND.play('place'); if (e) updateSlot(e); refresh(); await sleep(250);
     },
-    async steal({ from, to, card, zone }) {
-      SND.play('steal'); await fly(zone === 'reserve' ? seatRes(from) : seatDeck(from), seatDeck(to), { ms: 600, cw: 60, arc: 40 }); refresh(); await sleep(150);
+    async steal({ from, to, card, zone, dzone }) {
+      SND.play('steal'); await fly(zone === 'reserve' ? seatRes(from) : seatDeck(from), dzone === 'reserve' ? seatRes(to) : seatDeck(to), { ms: 600, cw: 60, arc: 40 }); refresh(); await sleep(150);
     },
     async discard({ pid }) {
       SND.play('blackhole'); await fly(seatDeck(pid), $('#bh'), { ms: 800, cw: 60, r1: 540, s1: .05, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); pulseBH(); await sleep(100);
     },
-    async rescue({ pid }) {
-      SND.play('steal'); await fly($('#bh'), seatDeck(pid), { ms: 700, cw: 60, r0: 360, s0: .1, arc: 30 }); refresh(); await sleep(150);
+    async rescue({ pid, dzone }) {
+      SND.play('steal'); await fly($('#bh'), dzone === 'reserve' ? seatRes(pid) : seatDeck(pid), { ms: 700, cw: 60, r0: 360, s0: .1, arc: 30 }); pulseBH(); await sleep(150);
     },
-    async peek({ pid, target, cards }) {
+    async block({ pid }) {
+      const s = V.slots[pid]; SND.play('shield'); if (s) { s.classList.add('cancelx'); } const seat = V.seats[pid]; if (seat) { const r = seat.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 30, speed: 5, life: 40, colors: ['#8fd6ff', '#fff', '#4aa8ff'] }); }
+      await sleep(700); if (s) s.classList.remove('cancelx');
+    },
+    async combatSwap({ swaps }) {
+      SND.play('special');
+      for (const sw of swaps) {
+        const slot = V.slots[sw.pid], e = entryOf(sw.pid); if (!slot || !e) continue;
+        const old = $('.card', slot); const c = cardEl(sw.card, { up: true, noanim: true, stats: e.stats });
+        if (old) old.replaceWith(c); else slot.append(c);
+        updateSlot(e); const r = slot.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 30, speed: 5, life: 45 });
+      }
+      await sleep(900);
+    },
+    async banish({ pid, cards }) {
+      const slot = V.slots[pid], card = $('.card', slot); SND.play('blackhole');
+      if (card) { card.style.visibility = 'hidden'; await fly(slot, $('#bh'), { id: cards[0], stats: (entryOf(pid) || {}).stats, cw: V.cw, ms: 900, r1: 540, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); }
+      const x = $('.xtra', slot); if (x) x.remove(); const b = $('.badge', slot); if (b) b.remove(); pulseBH(); await sleep(150);
+    },
+    async reorder({ pid }) { SND.play('deal'); const s = V.seats[pid]; if (s) { s.classList.add('pulse'); setTimeout(() => s.classList.remove('pulse'), 600); } await sleep(450); },
+    async reserveSwap({ a, b }) {
+      SND.play('steal'); await Promise.all([fly(seatRes(a), seatRes(b), { ms: 700, cw: 50, arc: 40 }), fly(seatRes(b), seatRes(a), { ms: 700, cw: 50, arc: -40 })]); refresh(); await sleep(120);
+    },
+    async rotate({ list }) {
+      SND.play('steal'); await Promise.all(list.filter(x => x.to != null && x.to !== x.from).map(x => fly(seatRes(x.from), seatRes(x.to), { ms: 750, cw: 50, arc: 30 }))); refresh(); await sleep(120);
+    },
+    async peek({ pid, target, cards, title, hint }) {
       const p = G.p(pid); if (p.bot) return;
       await cover(p);
-      const w = el(`<div><h2 style="color:var(--gold2)">Espionagem</h2><p class="hint">Próximas cartas do baralho de ${esc(nameOf(target))} (topo → fundo). Só você vê isto.</p><div class="cgrid"></div></div>`);
+      const w = el(`<div><h2 style="color:var(--gold2)">${esc(title || 'Espionagem')}</h2><p class="hint">${esc(hint || `Próximas cartas do baralho de ${nameOf(target)} (topo → fundo). Só você vê isto.`)} Só você vê isto.</p><div class="cgrid"></div></div>`);
       $('.cgrid', w).append(...cards.map(id => cardEl(id, { up: true, noanim: true, cw: 110, click: true })));
       await waitClose(w);
     },
-    async specialsDone() {
+    async specialsDone({ claimed }) {
+      const cl = {}; (claimed || []).forEach(x => { cl[x.card] = x.pid; });
       const strip = $('.strip'); if (strip) { const chips = $$('.chip', strip); SND.play('blackhole');
-        await Promise.all(chips.map((c, i) => sleep(i * 150).then(() => fly(c, $('#bh'), { ms: 700, id: c.dataset.card, cw: 70, s1: .05, r1: 420, fade: true })))); strip.remove(); }
+        await Promise.all(chips.map((c, i) => sleep(i * 150).then(() => cl[c.dataset.card] != null ? fly(c, seatDeck(cl[c.dataset.card]), { ms: 800, id: c.dataset.card, cw: 70, arc: 40 }) : fly(c, $('#bh'), { ms: 700, id: c.dataset.card, cw: 70, s1: .05, r1: 420, fade: true })))); strip.remove(); }
       pulseBH(); await sleep(150);
     },
     async resolved({ combat, result, moves }) {
@@ -409,15 +439,22 @@
       async attr(p, entry, options, combat, canPrep) {
         await cover(p);
         const init = combat.initiator === p.pid; const ia = combat.entries.find(e => e.pid === combat.initiator).attr;
-        const txt = init ? 'Você inicia: escolha <b>qualquer</b> atributo.' : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${options.map(a => '<b>' + ATT[a].nome + '</b>').join(' e ')} — em segredo.`;
+        const lst = options.map(a => '<b>' + ATT[a].nome + '</b>').join(options.length === 2 ? ' e ' : ', ');
+        const txt = combat.ctl && combat.ctl.universal ? `Atributo universal: todos disputam em ${lst}.`
+          : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
+          : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
+          : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`;
         const node = el(`<div class="sheet"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>
           ${spLine(entry.card, combat, canPrep)}<div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div></div></div>`);
         $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: Math.min(96, V.cw || 96), stats: entry.stats }));
         return ask(node, '.attrbtn, .prepbtn');
       },
-      async special(p, usable, combat, ctx) {
+      async special(p, usable, combat, ctx, stage) {
         await cover(p);
-        const node = el(`<div class="sheet"><div class="txt" style="flex:1 1 100%"><h3>${esc(p.name)}: virar um ataque especial?</h3><div class="hint">Você pode virar no máximo 1. Os virados são revelados juntos, depois que todos decidirem.</div></div></div>`);
+        const T = stage === 'ctrl' ? ['virar um especial de controle?', 'Estes especiais valem antes de declarar os atributos. Os virados são revelados juntos.']
+          : stage === 'second' ? ['virar também um segundo especial?', 'Este especial é "companheiro": pode acompanhar outro especial na mesma disputa.']
+          : ['virar um ataque especial?', 'Você pode virar no máximo 1 (exceto especiais companheiros). Os virados são revelados juntos, depois que todos decidirem.'];
+        const node = el(`<div class="sheet"><div class="txt" style="flex:1 1 100%"><h3>${esc(p.name)}: ${T[0]}</h3><div class="hint">${T[1]}</div></div></div>`);
         usable.forEach(id => {
           const sp = E.SPECIALS[CARDS[id].especial];
           const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div><button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
@@ -425,6 +462,37 @@
         });
         node.append(el('<button class="btn" data-v="none">Manter fechado</button>'));
         const v = await ask(node, '[data-v]'); return v === 'none' ? null : v;
+      },
+      async pickCards(p, spec) {
+        await cover(p);
+        return new Promise((res, rej) => {
+          const run = U.run; run.rej.add(rej); const min = spec.min, max = spec.max; let sel = [], last = spec.cards[0];
+          const ov = el(`<div class="order pick"><div><h2 style="color:var(--gold2)">${esc(p.name)}: ${esc(spec.title)}</h2>
+            <div class="hint">${esc(spec.hint || '')} ${spec.ordered && !/Toque/.test(spec.hint || '') ? 'Toque nas cartas na ordem desejada (1 = primeira). ' : ''}<b class="pcnt"></b></div></div>
+            <div class="grid"></div><div class="info"></div>
+            <div class="row" style="justify-content:center">${max > 1 || min === 0 ? '<button class="btn sm" data-a="clr">Limpar</button>' : ''}<button class="btn primary" data-a="ok">Confirmar ▶</button></div></div>`);
+          const W = window.innerWidth - 32; let cw = Math.floor((W - 6 * 10) / 6); if (cw < 70) cw = Math.floor((W - 3 * 10) / 3); cw = Math.max(64, Math.min(104, cw));
+          function info() { const c = CARDS[last], sp = E.SPECIALS[c.especial]; $('.info', ov).innerHTML = `<b>${esc(c.nome)}</b> · ${AIDS.map(a => `<span class="ico" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}${c.stats[a]}</span>`).join(' ')}<br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}`; }
+          function draw() {
+            const g = $('.grid', ov);
+            g.replaceChildren(...spec.cards.map(id => {
+              const i = sel.indexOf(id); const w = el(`<div class="oc${i >= 0 ? ' sel' : ''}">${i >= 0 ? `<div class="no">${spec.ordered ? i + 1 : '✓'}</div>` : ''}</div>`);
+              w.append(cardEl(id, { up: true, noanim: true, cw }));
+              w.onclick = () => { SND.play('tick'); last = id; if (i >= 0) sel.splice(i, 1); else if (max === 1) sel = [id]; else if (sel.length < max) sel.push(id); draw(); };
+              return w;
+            }));
+            $('.pcnt', ov).textContent = `Selecionadas: ${sel.length}${max > 1 ? ' de ' + max : ''}${min > 0 ? ' (mín. ' + min + ')' : ''}`;
+            $('[data-a=ok]', ov).disabled = sel.length < min || sel.length > max; info();
+          }
+          ov.onclick = e => { const b = e.target.closest('[data-a]'); if (!b || b.disabled) return; SND.play('click'); if (b.dataset.a === 'clr') { sel = []; draw(); } else if (b.dataset.a === 'ok') { run.rej.delete(rej); ov.remove(); res(sel.slice()); } };
+          $('#game').append(ov); draw();
+        });
+      },
+      async pickAttr(p, spec) {
+        await cover(p);
+        const node = el(`<div class="sheet"><div class="txt"><h3>${esc(p.name)}</h3><div class="hint"><b>${esc(spec.title)}</b><br>${esc(spec.hint || '')}</div>
+          <div class="attrs">${spec.options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span></button>`).join('')}</div></div></div>`);
+        return ask(node, '.attrbtn');
       },
       async chooseTarget(p, cands, label) {
         await cover(p);

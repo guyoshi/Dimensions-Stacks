@@ -38,13 +38,16 @@ try:
       pg.click('[data-go=setup]'); pg.wait_for_timeout(300)
       pre = os.environ.get('PRE', 'w' if mode == 'bots' else '1')
       pg.click(f'[data-pre="{pre}"]'); pg.wait_for_timeout(200)
+      if os.environ.get('SF'): pg.click('.seg[data-k=sf] [data-v="1"]')
+      if os.environ.get('ABIL'): pg.evaluate("a => DS_DATA.CARTAS.forEach(c => { c.especial = a; })", os.environ['ABIL'])
       pg.click('[data-act=go]')
       t0 = time.time(); shots = {}; n = 0; maxs = float(os.environ.get('MAXS', '240'))
       done = False
       while time.time() - t0 < maxs:
         pg.wait_for_timeout(150); n += 1
         st = pg.evaluate("""() => ({
-          order: !!document.querySelector('.order'),
+          order: !!document.querySelector('.order:not(.pick)'),
+          pick: !!document.querySelector('.order.pick'),
           dock: !!document.querySelector('#dock:not([hidden]) [data-v]'),
           dockText: (document.querySelector('#dock:not([hidden]) h3')||{}).textContent||'',
           cover: !!document.querySelector('.cover button'),
@@ -61,6 +64,18 @@ try:
         if st['order']:
           snap('order'); pg.click('.order [data-a=best]'); pg.wait_for_timeout(200); pg.click('.order [data-a=ok]'); continue
         if st['cover']: pg.click('.cover button'); continue
+        if st['pick']:
+          snap('pick')
+          try:
+            for i_ in range(12):
+              if not pg.is_disabled('.order.pick [data-a=ok]'): break
+              els_ = pg.query_selector_all('.order.pick .oc:not(.sel)')
+              if not els_: break
+              els_[0].click(timeout=1500); pg.wait_for_timeout(40)
+            pg.wait_for_timeout(200)
+            pg.click('.order.pick [data-a=ok]', timeout=1500); print('pick ok')
+          except Exception as e_: print('pick retry', str(e_)[:60])
+          continue
         if st['dock']:
           dt = st['dockText']
           if 'preparar' in dt: snap('prepare')
@@ -70,7 +85,11 @@ try:
           btns = pg.query_selector_all('#dock [data-v]')
           import random
           pick = None
-          if 'virar' in dt:
+          if os.environ.get('ABIL') and 'virar' in dt:
+            pick = [x for x in btns if x.get_attribute('data-v') != 'none'][0]
+          elif os.environ.get('ABIL') and 'preparar' not in dt and any(x.get_attribute('data-v') == '@prep' for x in btns):
+            pick = [x for x in btns if x.get_attribute('data-v') == '@prep'][0]
+          elif 'virar' in dt:
             ys = [x for x in btns if x.get_attribute('data-v') != 'none']
             pick = random.choice(ys) if ys and random.random() < .7 else btns[-1]
           elif 'preparar' in dt:

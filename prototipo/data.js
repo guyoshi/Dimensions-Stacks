@@ -20,7 +20,7 @@
     { id: 'vel', nome: 'Velocidade',   abre: 'VEL', tipo: 'defesa', par: 1 },
   ];
 
-  // Prévia: propostas do repositório (cartas_79.json / habilidades_129.json) — NÃO APROVADAS pelo autor.
+  // Prévia: propostas do repositório (cartas_NN.json / habilidades_129.json) — NÃO APROVADAS pelo autor.
   if (typeof require !== 'undefined' && typeof window === 'undefined') { try { require('./propostas.js'); } catch (e) { /* sem propostas */ } }
   const PROP = root.DS_PROPOSTAS || null;
   // perfil proposto -> estilo visual da carta (efeito cosmético; raridade oficial ainda pendente)
@@ -76,6 +76,10 @@
     ['V13', 'Saliens', 'viajantes', 'Integrante da Patrulha de Korvo'],
     ['V14', 'Tio Frank', 'viajantes', 'Responsável pelos irmãos Lins'],
     ['V15', 'Brenda', 'viajantes', 'Aprendiz de Tayo', 1],
+    ['V16', 'Facka', 'viajantes', 'Jovem Aracna, guia dos irmãos Lins em Belfex'],
+    ['V17', 'Lanigiah', 'viajantes', 'Rainha das Aracnas'],
+    ['V18', 'Grande Pai Gaia', 'viajantes', 'Líder dos Obbs de Pinesoto'],
+    ['V19', 'Seti', 'viajantes', 'Líder de guerra dos Obbs'],
     // Spacetheft
     ['S01', 'Jasmey Badrock', 'spacetheft', 'Pirata Dale e protagonista; braço metálico', 1],
     ['S02', 'Amanda', 'spacetheft', 'Aliada de Jasmey, crítica do regime da Lebargan'],
@@ -106,6 +110,10 @@
     ['D12', 'Agouro', 'diario', 'Entidade sobrenatural e agente de manipulação'],
     ['D13', 'Suéten', 'diario', 'Integrante do conjunto de espíritos/Elos Carnam'],
     ['D14', 'Filippo', 'diario', 'Personagem do livro 2; ligado a Manu'],
+    ['D15', 'Carnam (pai)', 'diario', 'Espírito do pai da Família Carnam'],
+    ['D16', 'Isabela', 'diario', 'Espírito da Família Carnam; Elo em álbum de fotografias'],
+    ['D17', 'Avó Carnam', 'diario', 'Avó da Família Carnam; Elo nas lentes dos óculos'],
+    ['D18', 'Ibliso (cão)', 'diario', 'Cão da Família Carnam; Elo na coleira'],
     // Mistério Oculto
     ['M01', 'Hyde', 'misterio', 'Investigador, observação e raciocínio lógico', 1],
     ['M02', 'Agente Sete', 'misterio', 'Ex-SPAGE, investigação e estratégia operacional'],

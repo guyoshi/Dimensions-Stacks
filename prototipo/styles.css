@@ -341,3 +341,10 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 
 .ico { display: inline-flex; align-items: center; gap: .25em; margin-right: .6em; font-weight: 800; }
 .ico svg { width: 1.1em; height: 1.1em; fill: currentColor; color: var(--ac); }
+
+/* ---- especiais: seletor de cartas e efeitos */
+.seat.pulse { animation: seatp .6s; }
+@keyframes seatp { 0%, 100% { transform: none; } 40% { transform: scale(1.08); filter: drop-shadow(0 0 12px var(--gold)); } }
+.order.pick .grid { max-height: 52vh; overflow: auto; align-content: flex-start; }
+.order .row .btn[disabled] { opacity: .4; pointer-events: none; }
+.pcnt { color: var(--gold2); }
