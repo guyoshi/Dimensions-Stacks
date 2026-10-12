@@ -1,13 +1,13 @@
 # Dimensions Stacks — Elenco candidato (v0.2)
 
-> **83 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 83 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
+> **87 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 87 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
 
 ## Critérios
 
 - Variar as séries: não deixar Ciclo de Jesed dominar o baralho.
 - Usar personagens efetivamente existentes na documentação literária (ou nome informado pelo autor).
 - Incluir protagonistas, antagonistas, secundários, figuras sobrenaturais e personagens de papel político ou investigativo: o jogo não exige que todos sejam lutadores.
-- A renomeação de **Poder** para **Ataque (ATQ)** está aprovada. Os quatro números (ATQ/DEF/INT/VEL), descrições curtas e habilidade especial já receberam **propostas ainda não aprovadas** em [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md), sempre sem copiar atributos históricos das cartas físicas.
+- A renomeação de **Poder** para **Ataque (ATQ)** está aprovada. Os quatro números (ATQ/DEF/INT/VEL), descrições curtas e habilidade especial já receberam **propostas ainda não aprovadas** em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md), sempre sem copiar atributos históricos das cartas físicas.
 - Manter **origem**, **filiação** (quando conhecida) e **raridade** como metadados distintos. Não classificar simplesmente 'herói/vilão' pelo tom de pele/cor da moldura.
 - Um mesmo personagem em diferentes fases (como **Mark Polar**) pode ter mais de uma versão futuramente, mas **é contado uma vez nesta lista**.
 
@@ -91,7 +91,7 @@ Fontes: `Spacetheft/1 - A Lenda da Aurora/01 - Canon/02 - Personagens.md` e `...
 | S13 | Capitão Tzough | Capitão pirata rival |
 | S14 | Genrir | Rival de Jasmey e participante da ruptura |
 
-## 4. Diário Sobrenatural — 14 candidatos
+## 4. Diário Sobrenatural — 18 candidatos
 
 Fonte: `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens.md`, complementado pelos documentos do volume 2 conforme o elenco for aprovado.
 
@@ -111,6 +111,10 @@ Fonte: `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens
 | D12 | Agouro | Entidade sobrenatural e agente de manipulação |
 | D13 | Suéten | Integrante do conjunto de espíritos/Elos Carnam |
 | D14 | Filippo (Filipo, grafia a confirmar) | Personagem do livro 2; ligado a Manu; o planejamento literário usa “Filippo”, enquanto o autor escreveu “Filipo” |
+| D15 | Carnam (pai) | Espírito associado ao pai da Família Carnam; Elo ligado à arma relacionada ao pai de Vini; **não confundir com o pai de Vini** |
+| D16 | Isabela | Integrante da Família Carnam, espírito vinculado ao álbum de fotografias |
+| D17 | Avó Carnam | Espírito da Família Carnam, vinculado à lente dos óculos; **não confundir com D10 Avó de Kelly** |
+| D18 | Ibliso (cão) | Cão da Família Carnam, cujo Elo é a coleira; representado como personagem próprio, não como humano ou demônio |
 
 **Nota:** para espíritos, pessoas falecidas e entidades, os números de combate representam **potencial lúdico**, não necessariamente força física em vida.
 
@@ -162,15 +166,15 @@ O autor confirmou sete integrantes na formação informada e Jennifer como futur
 
 | Origem | Candidatos únicos | Proporção |
 | --- | ---: | ---: |
-| Ciclo de Jesed | 23 | 27,7% |
-| Viajantes Dimensionais | 19 | 22,9% |
-| Spacetheft | 14 | 16,9% |
-| Diário Sobrenatural | 14 | 16,9% |
-| Mistério Oculto | 12 | 14,5% |
-| Belfex (série de Édelin) | 1 | 1,2% |
-| **TOTAL** | **83** | **100%** |
+| Ciclo de Jesed | 23 | 26,4% |
+| Viajantes Dimensionais | 19 | 21,8% |
+| Spacetheft | 14 | 16,1% |
+| Diário Sobrenatural | 18 | 20,7% |
+| Mistério Oculto | 12 | 13,8% |
+| Belfex (série de Édelin) | 1 | 1,1% |
+| **TOTAL** | **87** | **100%** |
 
-*A União não aparece na soma: é uma filiação transversal com 7 integrantes confirmados e 1 futura integrante.*
+*A União não entra na soma: mantém 7 integrantes confirmados e Jennifer como futura integrante, sem cartas duplicadas.*
 
 ## 9. Próximo passo para as fichas definitivas
 
@@ -198,8 +202,17 @@ Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/d
 
 ## 11. Estado atual das propostas
 
-**As 83 fichas receberam descrições com até 120 caracteres, atributos de 0–100 propostos e um especial candidato por personagem.** O arquivo [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md) é a fonte para revisão, mas nenhuma linha foi aprovada como dado final; as colunas da biblioteca central de 129 efeitos seguem vazias até a distribuição ser ratificada pelo autor. Seguir o [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
+**As 87 fichas receberam descrições com até 120 caracteres, atributos de 0–100 propostos e um especial candidato por personagem.** O arquivo [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) é a fonte para revisão, mas nenhuma linha foi aprovada como dado final; as colunas da biblioteca central de 129 efeitos seguem vazias até a distribuição ser ratificada pelo autor. Seguir o [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 12. Quatro personagens adicionais de Viajantes Dimensionais
 
 Em 12/10/2026, o autor pediu inclusão de **Facka, Lanigiah, rei dos Obbs e o Obb que ajuda os irmãos**. Conferência do manuscrito confirmou **Faka**, **Lanigiah**, **Gaia** e **Seti**, respectivamente. O nome oficial do líder Obb nos diálogos é **Grande Pai Gaia**; Lanigiah é a **rainha das Aracnas**, não dos Obbs. O manuscrito registra o nome **Faka**, mas o autor escreveu **Facka**; manter Facka na ficha candidata com alerta de uniformização editorial. As habilidades e os números dos novos V16–V19 são **propostas de balanceamento**, não dados canônicos.
+
+
+## 13. Família Carnam — Diário Sobrenatural, Livro 1
+
+O autor esclareceu que o pedido sobre “o pai, a avó, etc.” se referia à **Família Carnam de Diário Sobrenatural**, e não a parentes de Viajantes Dimensionais. O [cânone do livro 1](https://github.com/guyoshi/dimensoesinfinitas/blob/main/Di%C3%A1rio%20Sobrenatural/1%20-%20Os%20Elos%20das%20Sombras/01%20-%20Canon/02%20-%20Personagens.md) lista seis figuras associadas à família e aos Elos: **Carnam, Isabela, avó, Ingrid, Suéten e Ibliso (cão)**. O documento de [Elos e Artefatos](https://github.com/guyoshi/dimensoesinfinitas/blob/main/Di%C3%A1rio%20Sobrenatural/1%20-%20Os%20Elos%20das%20Sombras/01%20-%20Canon/07%20-%20Elos%20e%20Artefatos.md) associa, respectivamente: **arma**, **álbum de fotografias**, **lente dos óculos**, **ursinho antigo**, **relógio dourado** e **coleira**.
+
+**D07 Ingrid Carnam** e **D13 Suéten** já existiam. Foram acrescentados **D15 Carnam (pai)**, **D16 Isabela**, **D17 Avó Carnam** e **D18 Ibliso (cão)**. **D10 Avó de Kelly não pertence ao grupo Carnam só por ser chamada de “avó”.** Não duplicar D07 nem D13.
+
+**Base narrativa identificada; atributos e especiais continuam PROPOSTOS.** O cânone resume a condição espiritual da família e seus Elos, mas não fornece atributos numéricos de combate nem prova que uma pessoa possua, literalmente, a mecânica de jogo inspirada em seu objeto.
