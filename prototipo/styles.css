@@ -713,3 +713,24 @@ button, .playbig, .daily, [data-act], [data-go], [data-tab], [data-top] { -webki
 }
 /* espaço para o nome sob cada carta (antes ficava escondido atrás do Buraco Negro) */
 .arena { row-gap: calc(var(--cw) * .12 + 12px); }
+
+/* ---- apresentação de especiais em ação ---- */
+.fxb { position: absolute; left: 50%; top: 11%; width: min(92%, 440px); transform: translateX(-50%); z-index: 41; pointer-events: none; text-align: center;
+  background: linear-gradient(180deg, #14161cf2, #0b0c10f2); border: 1px solid #ffffff22; border-top: 3px solid var(--pc, var(--gold)); border-radius: 14px; padding: 6px 14px 8px;
+  box-shadow: 0 10px 34px #000a, 0 0 26px color-mix(in srgb, var(--pc, #b78cff) 45%, transparent); animation: fxIn .38s cubic-bezier(.2,1.2,.4,1) both; }
+.fxb.out { animation: fxOut .45s ease both; }
+.fxb .who { display: inline-flex; align-items: center; gap: 7px; font-weight: 900; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--pc, var(--gold)); }
+.fxb .who i { width: 10px; height: 10px; border-radius: 50%; background: var(--pc, var(--gold)); }
+.fxb .who small { font-size: 10px; opacity: .8; border: 1px solid currentColor; border-radius: 99px; padding: 0 7px; letter-spacing: .08em; }
+.fxb .nm { font-family: var(--f-disp); font-weight: 900; font-size: clamp(17px, 4.6vw, 24px); color: var(--gold2); margin-top: 2px; text-wrap: balance; }
+.fxb .rs { display: none; margin-top: 6px; font-size: clamp(13px, 3.4vw, 15px); font-weight: 700; color: var(--ink); line-height: 1.35; text-wrap: balance; }
+.fxb.done .rs { display: block; animation: fxIn .3s ease both; }
+@keyframes fxIn { from { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(.92); } }
+@keyframes fxOut { to { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(.96); } }
+.ftag { position: absolute; z-index: 42; transform: translate(-50%, -100%); pointer-events: none; font-weight: 900; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; background: #0b0c10ee; border: 1px solid #ffffff33; color: var(--ink); animation: ftagUp 1.4s ease both; white-space: nowrap; }
+.ftag.bad { color: #ff8a8a; border-color: #ff8a8a88; } .ftag.good { color: #8fd6ff; border-color: #8fd6ff88; }
+@keyframes ftagUp { 0% { opacity: 0; transform: translate(-50%, -60%); } 15% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -190%); } }
+.splact { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 6px; }
+
+.invsteps { margin: 8px 0 14px; padding-left: 1.3em; display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.45; color: var(--ink); text-align: left; }
+.invsteps li::marker { color: var(--gold); font-weight: 900; }

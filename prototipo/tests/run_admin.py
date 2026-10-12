@@ -18,6 +18,7 @@ try:
     pg.goto('http://localhost:8766/_page.html'); pg.wait_for_timeout(800)
     pg.click('#nav [data-tab=prof]'); pg.wait_for_timeout(600)
     pg.click('#pfAdmin button'); pg.wait_for_timeout(500)
+    pg.click('[data-a=invite]'); pg.wait_for_timeout(300); pg.screenshot(path='tests/shots/adm_invite.png'); print('invite', pg.evaluate("document.querySelectorAll('.invsteps li').length")); pg.click('[data-x]'); pg.wait_for_timeout(200); print('fechou', pg.evaluate("!document.querySelector('.invsteps')"))
     pg.select_option('#sN', '20'); pg.select_option('#sC', '7'); pg.click('[data-a=sim]')
     pg.wait_for_function("/20 simuladas/.test(document.querySelector('.adm').textContent)", timeout=60000)
     pg.wait_for_timeout(300)

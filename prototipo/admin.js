@@ -102,7 +102,7 @@
         <label>Origem <select data-f="src"><option value="todas"${S.src === 'todas' ? ' selected' : ''}>Real + simulada</option><option value="real"${S.src === 'real' ? ' selected' : ''}>Partidas reais</option><option value="sim"${S.src === 'sim' ? ' selected' : ''}>Simuladas</option></select></label>
         <label>Modo <select data-f="mode"><option value="todos">Todos</option>${Object.keys(MODE).map(k => `<option value="${k}"${S.mode === k ? ' selected' : ''}>${MODE[k]}</option>`).join('')}</select></label>
         <label>Mín. disputas/carta <select data-f="minK">${[1, 10, 20, 40, 80].map(v => `<option${S.minK === v ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
-        <button class="btn sm" data-a="reload">Atualizar</button></div>
+        <button class="btn sm" data-a="reload">Atualizar</button><button class="btn sm" data-a="invite">Como convidar alguém</button></div>
         <div class="hint">${S.real.filter(m => !m.sim).length} partidas reais no registro · ${S.sims.length} simuladas nesta sessão · ${L.length} na análise</div></section>
 
       <section class="adm-box"><h3>Simulador (bot × bot)</h3><div class="adm-f">
@@ -145,6 +145,18 @@
       if (b.dataset.s) { if (S.sort === b.dataset.s) S.dir *= -1; else { S.sort = b.dataset.s; S.dir = b.dataset.s === 'nome' ? 1 : -1; } return paint(); }
       const a = b.dataset.a;
       if (a === 'close') { root.remove(); root = null; stopSim.on = true; }
+      else if (a === 'invite') {
+        const m = el(`<div class="modal"><div class="box"><h2>Como convidar alguém</h2>
+          <ol class="invsteps">
+            <li><b>Compartilhe o jogo.</b> Na página deste jogo no Claude, use o botão <b>Compartilhar</b> e deixe o acesso liberado para quem tiver o link.</li>
+            <li><b>Copie o link</b> e envie à pessoa (mensagem, e-mail, grupo).</li>
+            <li><b>Ela abre o link</b> e entra no jogo. Para manter o progresso, deve criar o perfil em <b>Perfil</b>.</li>
+            <li><b>Para jogar junto:</b> você toca em <b>🌐 Jogar online → Criar sala</b> e passa o código de 4 letras/números.</li>
+            <li><b>Ela entra</b> em <b>🌐 Jogar online → Entrar</b>, digita o código e aguarda o início.</li>
+          </ol>
+          <div class="row" style="justify-content:center"><button class="btn primary" data-x="1">Entendi</button></div></div></div>`);
+        m.onclick = ev => { if (ev.target === m || ev.target.closest('[data-x]')) m.remove(); }; m.style.zIndex = 400; root.appendChild(m);
+      }
       else if (a === 'reload') { b.disabled = true; await loadReal(); paint(); }
       else if (a === 'clrsim') { S.sims = []; paint(); }
       else if (a === 'savesim') {

@@ -59,12 +59,13 @@ try:
           final: !!document.querySelector('.final'),
           banner: (document.querySelector('.banner b')||{}).textContent||'',
           stage: !!document.querySelector('.stage'),
+          fxb: !!document.querySelector('.fxb.done'),
           susp: !!document.querySelector('.arena.suspense'),
           modal: !!document.querySelector('.modal:not(:has(.final))')
         })""")
-        def snap(name):
+        def snap(name, wait=600):
           if name not in shots:
-            pg.wait_for_timeout(600); print('scroll', name, pg.evaluate("[document.scrollingElement.scrollLeft,document.scrollingElement.scrollTop,...['#app','#game'].map(q=>{const e=document.querySelector(q);return e?[e.scrollLeft,e.scrollTop]:null})]")); print('dbg',name,pg.evaluate("(()=>{const w=document.querySelector('.arenaWrap'),a=document.querySelector('.arena');const r=a.getBoundingClientRect();return [w.clientWidth,w.clientHeight,a.style.getPropertyValue('--cw'),Math.round(r.height),getComputedStyle(a).gridTemplateRows]})()")); pg.screenshot(path=f'{out}/{tag}_{name}.png'); shots[name] = 1
+            pg.wait_for_timeout(wait); print('scroll', name, pg.evaluate("[document.scrollingElement.scrollLeft,document.scrollingElement.scrollTop,...['#app','#game'].map(q=>{const e=document.querySelector(q);return e?[e.scrollLeft,e.scrollTop]:null})]")); print('dbg',name,pg.evaluate("(()=>{const w=document.querySelector('.arenaWrap'),a=document.querySelector('.arena');const r=a.getBoundingClientRect();return [w.clientWidth,w.clientHeight,a.style.getPropertyValue('--cw'),Math.round(r.height),getComputedStyle(a).gridTemplateRows]})()")); pg.screenshot(path=f'{out}/{tag}_{name}.png'); shots[name] = 1
         if st['final']: snap('final'); done = True; break
         if st['order']:
           snap('order'); pg.click('.order [data-a=best]'); pg.wait_for_timeout(200); pg.click('.order [data-a=ok]'); continue
@@ -105,6 +106,7 @@ try:
           pg.wait_for_timeout(250 if fast <= 1 else 30); 
           if fast <= 1 and 'attr' in shots and 'attr2' not in shots: pass
           pick.click(); continue
+        if st['fxb']: snap('fxb' + str(len([k for k in shots if k.startswith('fxb')])), 0) if len([k for k in shots if k.startswith('fxb')]) < 3 else None
         if st['stage']: snap('special_stage')
         if st['susp']: snap('suspense')
         if st['banner']: snap('banner_' + re.sub(r'\W+', '', st['banner'])[:14])

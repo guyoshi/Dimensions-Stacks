@@ -12,6 +12,7 @@ async function run(title, o) {
     async bot_special(p, usable, combat, ctx, stage) { const f = flip[p.pid]; if (!f) return null; const c = usable.find(x => !this._done.has(x) && (f === true || f.includes(E.CARDS[x].especial))); if (c) this._done.add(c); return c || null; }
     async bot_attr(p, entry, options) { const w = attrs[p.pid]; return w && options.includes(w) ? w : options[0]; }
     async bot_pickAttr() { return null; }
+    async bot_prepare() { return false; }
   }
   const g = new G({ players, perPlayer: 7, seed: 5, specialsFrom: 1, io: { notify: async () => {}, log: t => logs.push(t) } }); g._done = new Set();
   await g.setup(); g.s.initiator = 0;

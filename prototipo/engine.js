@@ -39,6 +39,8 @@
   const SP = {};
   function def(id, nome, texto, cat, o) { SP[id] = Object.assign({ id, nome, texto, cat, phase: 'main', can: () => true, ai: null }, o); }
 
+  const winnerOf = ctx => { const w = ctx.g.evaluate(ctx.combat, true); return w.winners && w.winners.length === 1 ? w.winners[0] : null; };
+  const bhU = ctx => Math.min(0.85, 0.3 + 0.15 * ctx.bhNormal().length);
   function modSpec(id, nome, texto, mods, extra) {
     def(id, nome, texto, 'Bônus', Object.assign({
       apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, nome, x => { for (const k in mods) x.stats[k] += mods[k]; }); ctx.say(`${ctx.name(act.pid)} ganha bônus de atributo.`); },
@@ -90,7 +92,7 @@
       const t = await ctx.target(act.pid, cand, 'Roubar do baralho de quem?'); if (t == null) return;
       const got = await ctx.take(act.pid, t, 'deck', ctx.rndIdx(1)); if (got.length) ctx.say(`${ctx.name(act.pid)} toma uma carta de ${ctx.name(t)}.`);
     },
-    ai: () => 0.5,
+    ai: () => 0.78,
   });
   def('AE-041', 'Última da direita', 'Pegue a última carta do meio de reserva do adversário à direita.', 'Roubo', {
     can(ctx, pid) { const r = ctx.right(pid); return r != null && ctx.player(r).reserve.length > 0; },
@@ -99,7 +101,7 @@
       r = await ctx.hit(act.pid, r); if (r == null) return;
       const got = await ctx.take(act.pid, r, 'reserve', l => [l.length - 1]); if (got.length) ctx.say(`${ctx.name(act.pid)} toma a última carta da reserva de ${ctx.name(r)}.`);
     },
-    ai: () => 0.5,
+    ai: () => 0.6,
   });
   def('AE-049', 'Escolha da reserva', 'Escolha um adversário e pegue até 2 cartas aleatórias da reserva dele.', 'Roubo', {
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).reserve.length > 0); },
@@ -108,7 +110,7 @@
       const t = await ctx.target(act.pid, cand, 'Tomar da reserva de quem?'); if (t == null) return;
       const got = await ctx.take(act.pid, t, 'reserve', ctx.rndIdx(2), { n: 2 }); if (got.length) ctx.say(`${ctx.name(act.pid)} esvazia parte da reserva de ${ctx.name(t)}.`);
     },
-    ai: () => 0.5,
+    ai: () => 0.65,
   });
   def('AE-066', 'Descarte coletivo', 'Cada jogador ativo, inclusive você, envia 1 carta aleatória do baralho ativo ao Buraco Negro.', 'Roubo', {
     can(ctx, pid) { return ctx.alive().some(p => ctx.player(p).deck.length > 0); },
@@ -116,16 +118,16 @@
       for (const pid of ctx.order()) { const p = ctx.player(pid); if (!p.deck.length) continue; const i = Math.floor(ctx.rand() * p.deck.length); const [c] = p.deck.splice(i, 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid, card: c }); }
       ctx.say('Todos descartam uma carta ao Buraco Negro.');
     },
-    ai: () => 0.25,
+    ai: () => 0.1, val: 0.1,
   });
   def('AE-071', 'Ausência tática', 'Retire só a sua carta desta disputa: ela volta ao fim do seu baralho, sem vitória nem derrota.', 'Defesa', {
     can(ctx, pid) { return ctx.entries().length >= 2; },
     apply(ctx, act) { ctx.entry(act.pid).withdrawn = true; ctx.say(`${ctx.name(act.pid)} retira a carta da disputa.`); },
-    ai(ctx, pid) { return ctx.isLosing(pid) ? 0.7 : 0.03; },
+    ai(ctx, pid) { return ctx.isLosing(pid) ? 0.8 : 0.03; },
   });
   def('AE-072', 'Não perder a carta', 'Mesmo que perca, sua carta de combate volta ao fim do seu próprio baralho.', 'Defesa', {
     apply(ctx, act) { ctx.entry(act.pid).saveOnLoss = true; ctx.say(`${ctx.name(act.pid)} protege a própria carta.`); },
-    ai(ctx, pid) { return ctx.isLosing(pid) ? 0.85 : 0.08; },
+    ai(ctx, pid) { return ctx.isLosing(pid) ? 0.88 : 0.06; },
   });
   def('AE-082', 'Resgate aleatório duplo', 'Recupere até 2 cartas normais aleatórias do Buraco Negro para o fim do seu baralho.', 'Buraco Negro', {
     can(ctx) { return ctx.bhNormal().length > 0; },
@@ -133,16 +135,16 @@
       for (let n = 0; n < 2; n++) { const l = ctx.bhNormal(); if (!l.length) break; const pick = l[Math.floor(ctx.rand() * l.length)]; ctx.fromBH(pick); ctx.player(act.pid).deck.push(pick); await ctx.emit('rescue', { pid: act.pid, card: pick }); }
       ctx.say(`${ctx.name(act.pid)} resgata cartas do Buraco Negro.`);
     },
-    ai: () => 0.6,
+    ai: ctx => bhU(ctx),
   });
   def('AE-083', 'Resgate do topo', 'Recupere a carta normal mais recente do Buraco Negro para o fim do seu baralho.', 'Buraco Negro', {
     can(ctx) { return ctx.bhNormal().length > 0; },
     async apply(ctx, act) { const l = ctx.bhNormal(); if (!l.length) return; const c = l[l.length - 1]; ctx.fromBH(c); ctx.player(act.pid).deck.push(c); ctx.say(`${ctx.name(act.pid)} resgata ${CARDS[c].nome}.`); await ctx.emit('rescue', { pid: act.pid, card: c }); },
-    ai: () => 0.6,
+    ai: ctx => bhU(ctx),
   });
   def('AE-090', 'Segunda chance', 'Se sua carta de combate fosse ao Buraco Negro nesta disputa, ela vai ao fim da sua reserva.', 'Defesa', {
     apply(ctx, act) { ctx.entry(act.pid).toReserve = true; ctx.say(`${ctx.name(act.pid)} se prepara para uma segunda chance.`); },
-    ai(ctx, pid) { return ctx.isLosing(pid) ? 0.6 : 0.1; },
+    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'defesa' ? 0.7 : 0.04; },
   });
   def('AE-093', 'Espionagem tripla', 'Veja as 3 próximas cartas do baralho ativo de um adversário, sem alterá-las.', 'Informação', {
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length > 0); },
@@ -151,7 +153,7 @@
       const t = await ctx.target(act.pid, cand, 'Espionar o baralho de quem?'); if (t == null) return; const cards = ctx.player(t).deck.slice(0, 3);
       await ctx.emit('peek', { pid: act.pid, target: t, cards }); ctx.say(`${ctx.name(act.pid)} espia o baralho de ${ctx.name(t)}.`);
     },
-    ai: () => 0.25,
+    ai: () => 0.08, val: 0.1,
   });
   def('AE-105', 'Defesa que captura', 'Se vencer usando Defesa ou Velocidade, capture a carta de 1 adversário derrotado em vez de descartá-la.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).defCapture = true; ctx.say(`${ctx.name(act.pid)} prepara uma defesa que captura.`); },
@@ -159,11 +161,12 @@
   });
   def('AE-106', 'Ataque que bane', 'Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).atkBanish = true; ctx.say(`${ctx.name(act.pid)} prepara um ataque que bane.`); },
-    ai(ctx, pid) { const e = ctx.entry(pid); return ATTR[e.attr].tipo === 'ataque' && !ctx.isLosing(pid) ? 0.5 : 0.05; },
+    // Banir só tira do vencedor a carta que ele capturaria: nenhum bot escolhe isso de propósito.
+    val: 0.04, ai() { return 0.03; },
   });
   def('AE-108', 'Negar captura inimiga', 'Se perder para um atributo de ataque, sua carta vai ao Buraco Negro, não ao baralho do vencedor.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).negateCapture = true; ctx.say(`${ctx.name(act.pid)} nega a captura da própria carta.`); },
-    ai(ctx, pid) { return ctx.isLosing(pid) ? 0.6 : 0.05; },
+    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'ataque' ? 0.5 : 0.04; },
   });
   def('AE-111', 'Ativação forçada', 'Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas (até 2) nesta disputa.', 'Interação', {
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0); },
@@ -171,7 +174,7 @@
       const cand = ctx.opps(act.pid).filter(o => ctx.player(o).prepared.length > 0); if (!cand.length) return ctx.say('Ninguém tem especiais preparados.');
       const t = await ctx.target(act.pid, cand, 'Forçar quem a ativar os especiais?'); if (t == null) return; await ctx.force(t, act);
     },
-    ai: () => 0.6,
+    ai: (ctx, pid) => Math.min(0.7, 0.2 + 0.2 * ctx.opps(pid).reduce((t, o) => t + ctx.player(o).prepared.length, 0)),
   });
   def('AE-113', 'Interrupção precisa', 'Cancele 1 ataque especial de um adversário antes da resolução; o especial cancelado é descartado normalmente. (Se ninguém ativar, é desperdiçada.)', 'Interação', {
     phase: 'pre',
@@ -182,7 +185,7 @@
       const pids = [...new Set(list.map(a => a.pid))]; const t = pids.length === 1 ? pids[0] : await ctx.pickTarget(act.pid, pids, 'Cancelar o especial de quem?');
       const a = list.find(x => x.pid === t); if (await ctx.cancelAct(a, act.pid)) ctx.say(`${ctx.name(act.pid)} cancela o especial de ${ctx.name(t)}!`);
     },
-    ai: () => 0.4,
+    ai: (ctx, pid) => 0.05 + 0.7 * ctx.g.botOppFlip(pid),
   });
 
   // ordem de resolução dos efeitos: blindagem → cancelamentos → proteções → principais → cópias/repetições → ajustes finais
@@ -212,7 +215,7 @@
       const cfg = this.cfg, n = cfg.players.length;
       const per = Math.max(7, cfg.perPlayer);
       const ids = shuffle(D.CARTAS.map(c => c.id), this.rand).slice(0, per * n);
-      this.s.players = cfg.players.map((pc, i) => ({ pid: i, name: pc.name, bot: !!pc.bot, avatar: pc.avatar, deck: [], reserve: [], prepared: [], alive: true }));
+      this.s.players = cfg.players.map((pc, i) => ({ pid: i, name: pc.name, bot: !!pc.bot, avatar: pc.avatar, diff: pc.diff, noSpecial: !!pc.noSpecial, deck: [], reserve: [], prepared: [], alive: true }));
       const hands = []; let k = 0;
       for (let i = 0; i < n; i++) hands.push(ids.slice(k, k += 7));
       const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
@@ -591,7 +594,7 @@
       let result = { type: 'none', winners: [], winnerPid: null };
       const live = es.filter(e => !e.withdrawn);
       es.filter(e => e.withdrawn && !e.gone).forEach(back);
-      es.filter(e => e.gone).forEach(e => cardsOf(e).forEach(c => { if (!this.s.bh.some(x => x.id === c)) this.s.bh.push({ id: c, kind: 'normal' }); }));
+      // cartas banidas (Ruína de campo) já foram ao Buraco Negro no momento do efeito; um resgate posterior pode tê-las tirado de lá
       // capturas condicionais (Capturar atacante/defensor, Duelo condicionado): a carta é tomada ao fim do combate
       const claimed = new Set();
       for (const cl of combat.claims) {
@@ -639,30 +642,84 @@
     }
 
     // ---------------------------------------------------------------- IA
-    skill() { return { facil: 0.1, normal: 0.6, dificil: 1 }[this.cfg.difficulty] ?? 0.6; }
+    skill(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: 0.1, normal: 0.6, dificil: 1 }[d] ?? 0.6; }
     async bot_attr(p, entry, options, combat) {
-      const sk = this.skill(); let best = null, bs = -1;
+      const sk = this.skill(p); let best = null, bs = -1;
       options.forEach(a => { const v = entry.stats[a]; let s = pct(a, v) * (0.6 + 0.4 * sk) + (ATTR[a].tipo === 'ataque' ? 0.03 : 0) + (this.rand() - 0.5) * (0.5 - 0.4 * sk); if (s > bs) { bs = s; best = a; } });
       return best;
     }
+    // ---- IA dos especiais ----
+    // Valor típico de cada especial para quem o prepara (0..1). Define quanto vale gastar uma carta de combate como especial.
+    botVal(sp) {
+      if (sp.val != null) return sp.val;
+      const byCat = { 'Bônus': 1.6, 'Conversão': 1.2, 'Controle': 1, 'Roubo': 3, 'Troca': 1, 'Redistribuição': 0.8, 'Defesa': 1.2, 'Buraco Negro': 1.4, 'Informação': 0.2, 'Captura': 1.5, 'Interação': 1 };
+      return byCat[sp.cat] ?? 1;
+    }
+    // chance de o adversário o virar um especial nesta disputa (para especiais reativos)
+    botOppFlip(pid) {
+      let none = 1; this.alive().forEach(o => { if (o === pid) return; const n = this.p(o).prepared.length; none *= 1 - (n >= 2 ? 0.5 : n === 1 ? 0.33 : 0); });
+      return 1 - none;
+    }
+    // partidas longas (ciclos de capturas) pedem mais ousadia: sobe depois da rodada 12
+    botUrgency() { return Math.max(0, Math.min(1, (this.s.round - 12) / 20)); }
+    botPrepWant(p, sp) {
+      if (sp.noWant) return 1;
+      try { const ctx = this.ctxFor(this.combat); return sp.can(ctx, p.pid) ? 1 : 0; } catch (e) { return 1; }
+    }
     async bot_prepare(p, topCard) {
       const sp = SP[CARDS[topCard].especial]; if (!sp) return false;
-      if (p.deck.length < 4 && p.reserve.length < 3) return false;
+      if (p.prepared.length >= 2 || p.noSpecial) return false;
+      if (p.deck.length < 3 && p.reserve.length < 3) return false;
       if (sp.minOpps && this.alive().length - 1 < sp.minOpps) return false;
-      const base = { facil: 0.2, normal: 0.3, dificil: 0.4 }[this.cfg.difficulty] ?? 0.3;
-      const weak = sum4(CARDS[topCard].stats) < 215 ? 0.2 : 0; // cartas fracas viram especial com mais gosto
-      return this.rand() < (base + weak) * (sp.prep == null ? 1 : sp.prep) && p.prepared.length < 2;
+      if (this.botVal(sp) < 0.15 * (1 - this.botUrgency()) || !this.botPrepWant(p, sp)) return false;
+      const sk = this.skill(p), urg = this.botUrgency(), V = this.botVal(sp) * (sp.prep == null ? 1 : 0.5 + 0.5 * Math.min(1, sp.prep * 2)) + 1.5 * urg;
+      // carta como combatente vale ~ (2·P(vencer) − 1) cartas; como especial vale V. Carta fraca rende mais virando especial.
+      const pc = SUMS.filter(x => x <= sum4(CARDS[topCard].stats)).length / SUMS.length, T = 1.2 * pc;
+      let ch = 0.55 + (V - T) * 0.35;
+      ch *= 0.55 + 0.45 * sk;                                        // dificuldade: o fácil prepara com menos critério
+      if (p.prepared.length) ch *= 0.6;
+      return this.rand() < Math.max(0, Math.min(0.95, ch * BOT_RATE * (1 + 2 * urg)));
     }
-    async bot_special(p, usable, combat, ctx) {
-      let best = null, bs = 0;
-      usable.forEach(c => { const sp = SP[CARDS[c].especial]; const s = (sp.ai ? sp.ai(ctx, p.pid) : 0.4) * (0.7 + 0.3 * this.skill()); if (s > bs && this.rand() < s) { bs = s; best = c; } });
-      return best;
+    async bot_special(p, usable, combat, ctx, stage) {
+      const sk = this.skill(p), urg = this.botUrgency(); const thr = 0.46 - 0.16 * sk - 0.25 * urg, noise = 0.3 - 0.22 * sk;
+      p._held = (p._held || 0);
+      let best = null, bs = -1;
+      usable.forEach(c => {
+        const sp = SP[CARDS[c].especial]; let u = 0; try { u = sp.ai ? sp.ai(ctx, p.pid) : 0.4; } catch (e) { u = 0.3; }
+        if (u < 0.12 - 0.08 * urg) return;                                          // sem utilidade nesta situação: nunca gasta
+        u += Math.min(0.2, 0.06 * p._held);                           // carta parada na mão: vale usar
+        u += (this.rand() - 0.5) * 2 * noise;
+        if (u > bs) { bs = u; best = c; }
+      });
+      if (best != null && bs >= thr) { p._held = 0; return best; }
+      if (stage !== 'second') p._held++;
+      return null;
     }
   }
 
   // Nomes/textos oficiais da PROPOSTA (habilidades_129.json) sobrepõem os de cada especial implementado.
   const HAB = (D && D.HABILIDADES) || {};
+  // especiais cuja condição só existe durante a disputa (não dá para checar na preparação)
+  const NOWANT = ['AE-009', 'AE-052', 'AE-053', 'AE-054', 'AE-071', 'AE-101', 'AE-102', 'AE-103', 'AE-109', 'AE-107', 'AE-112', 'AE-111', 'AE-113', 'AE-117', 'AE-130', 'AE-115', 'AE-116', 'AE-073', 'AE-074', 'AE-114'];
+  // Calibração dos bots (medida com tests/bot_per_special.js): val = quanto vale gastar uma carta de combate para preparar; aiMul = escala da vontade de virar.
+  // Valor de cada especial em "cartas de diferença" (medido com tests/bot_per_special.js: % de vitórias do bot que usa × o que nunca usa, (v-38)/12).
+  const BOT_VAL = { 'AE-002': 1.2, 'AE-004': 1.2, 'AE-006': 2.2, 'AE-008': 1.6, 'AE-010': 4.8, 'AE-012': 1.1, 'AE-017': 0.2, 'AE-021': 0.9, 'AE-022': 0.5, 'AE-024': 0, 'AE-026': 0, 'AE-028': 0.9, 'AE-030': 0.4, 'AE-031': 4.1, 'AE-032': 4.1, 'AE-037': 2.8, 'AE-039': 4.0, 'AE-041': 2.2, 'AE-046': 2.4, 'AE-047': 2.3, 'AE-048': 2.2, 'AE-051': 0.2, 'AE-053': 4.5, 'AE-055': 0.4, 'AE-059': 1.0, 'AE-061': 0.7, 'AE-062': 0.7, 'AE-063': 0.8, 'AE-066': 0.4, 'AE-067': 1.4, 'AE-068': 0.2, 'AE-069': 2.4, 'AE-071': 1.5, 'AE-072': 1.5, 'AE-073': 0.9, 'AE-074': 0.9, 'AE-075': 1.7, 'AE-076': 0.9, 'AE-077': 0.9, 'AE-078': 0.9, 'AE-079': 0.9, 'AE-080': 0.5, 'AE-081': 0.1, 'AE-082': 0.2, 'AE-083': 0.2, 'AE-084': 0, 'AE-085': 0.2, 'AE-086': 0, 'AE-087': 3.6, 'AE-089': 0, 'AE-090': 0.9, 'AE-091': 0.5, 'AE-092': 0.4, 'AE-093': 0.4, 'AE-094': 0.7, 'AE-095': 0, 'AE-096': 0, 'AE-097': 0.3, 'AE-098': 0.7, 'AE-099': 0.2, 'AE-100': 0, 'AE-101': 3.3, 'AE-103': 4.3, 'AE-105': 0.9, 'AE-106': 0.7, 'AE-108': 0.9, 'AE-110': 1.7, 'AE-111': 0.9, 'AE-112': 0.9, 'AE-113': 0.9, 'AE-114': 0.9, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.4, 'AE-118': 0.9, 'AE-120': 0.3, 'AE-129': 4.9, 'AE-130': 0.9 };
+  // sem utilidade para o bot (ele não consegue tirar proveito): nunca prepara
+  const BOT_RATE = 2.2;
+  const SUMS = D.CARTAS.map(c => sum4(c.stats)).sort((x, y) => x - y);
+  const BOT_JUNK = ['AE-066', 'AE-061', 'AE-062', 'AE-098', 'AE-106', 'AE-055', 'AE-056', 'AE-063', 'AE-064', 'AE-065', 'AE-091', 'AE-080', 'AE-093', 'AE-094', 'AE-092', 'AE-120', 'AE-117', 'AE-017', 'AE-099'];
+  const TUNE = {
+    'AE-055': { aiMul: 0.4 }, 'AE-056': { aiMul: 0.4 },
+    'AE-061': { aiMul: 0.3 }, 'AE-062': { aiMul: 0.3 }, 'AE-063': { aiMul: 0.2 }, 'AE-064': { aiMul: 0.2 }, 'AE-065': { aiMul: 0.2 },
+    'AE-051': { aiMul: 0.5 }, 'AE-095': { aiMul: 0.3 }, 'AE-100': { aiMul: 0.5 },
+    'AE-081': { aiMul: 0.6 }, 'AE-066': { aiMul: 0.5 },
+  };
   function finalize() {
+    NOWANT.forEach(id => { if (SP[id]) SP[id].noWant = true; });
+    Object.keys(BOT_VAL).forEach(id => { if (SP[id]) SP[id].val = BOT_VAL[id]; });
+    BOT_JUNK.forEach(id => { if (SP[id]) SP[id].val = 0; });
+    Object.keys(SP).forEach(id => { if (SP[id].val == null && BOT_VAL[id] == null) SP[id].val = 4 * (SP[id]._v0 ?? 0.4); });
+    Object.keys(TUNE).forEach(id => { const sp = SP[id]; if (!sp) return; const t = TUNE[id]; if (t.val != null) sp.val = t.val; if (t.aiMul != null && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid) => f(ctx, pid) * t.aiMul; } });
     const CUR = root.DS_CURTOS || {};
     Object.keys(HAB).forEach(id => {
       const h = HAB[id], tx = CUR[id] || h[1];
