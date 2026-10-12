@@ -7,7 +7,7 @@
 - Variar as séries: não deixar Ciclo de Jesed dominar o baralho.
 - Usar personagens efetivamente existentes na documentação literária (ou nome informado pelo autor).
 - Incluir protagonistas, antagonistas, secundários, figuras sobrenaturais e personagens de papel político ou investigativo: o jogo não exige que todos sejam lutadores.
-- Os quatro números (POD/DEF/INT/VEL) e a habilidade especial **serão propostos depois**, de acordo com a narrativa e com balanceamento, não copiados das cartas antigas.
+- A renomeação de **Poder** para **Ataque (ATQ)** está aprovada. Os quatro números (ATQ/DEF/INT/VEL), descrições curtas e habilidade especial já receberam **propostas ainda não aprovadas** em [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md), sempre sem copiar atributos históricos das cartas físicas.
 - Manter **origem**, **filiação** (quando conhecida) e **raridade** como metadados distintos. Não classificar simplesmente 'herói/vilão' pelo tom de pele/cor da moldura.
 - Um mesmo personagem em diferentes fases (como **Mark Polar**) pode ter mais de uma versão futuramente, mas **é contado uma vez nesta lista**.
 
@@ -190,4 +190,8 @@ Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/d
 
 **A União:** somente selo adicional nos integrantes da equipe, sem cor própria obrigatória e sem duplicar a carta-base. **Nenhuma cor define a raridade, o heroísmo ou a vilania**. Cores não são critérios de ataque/captura.
 
-**Ataques especiais ainda sem atribuição:** o arquivo [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md) tem 128 efeitos candidatos com coluna `Carta atribuída (ID)` totalmente vazia. Atribuir apenas após fixar atributos, papel e identidade de cada personagem.
+**Ataques especiais ainda sem atribuição:** o arquivo [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md) tem 129 efeitos candidatos com coluna `Carta atribuída (ID)` totalmente vazia. Atribuir definitivamente apenas após validação dos atributos, da personalidade, do cânone e do balanceamento de cada personagem. As sugestões individuais, ainda reversíveis, estão num documento separado.
+
+## 11. Estado atual das propostas
+
+**As 79 fichas receberam descrições com até 120 caracteres, atributos de 0–100 propostos e um especial candidato por personagem.** O arquivo [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md) é a fonte para revisão, mas nenhuma linha foi aprovada como dado final; as colunas da biblioteca central de 129 efeitos seguem vazias até a distribuição ser ratificada pelo autor. Seguir o [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
