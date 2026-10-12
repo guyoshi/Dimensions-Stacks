@@ -8,7 +8,7 @@
 - **Atributos naturais inteiros:** `ATQ`, `DEF`, `INT`, `VEL` entre 0 e 100. O autor **aprovou definitivamente o nome Ataque no lugar de Poder**. Manter os confrontos Ataque/Defesa e Inteligência/Velocidade; ATQ e INT são ofensivos.
 - **Soma** é a soma dos 4 números naturais. Desempate: atributo escolhido, depois soma dos 4, depois soma ATQ + INT, conforme a regra confirmada.
 - **Classes abaixo** são rótulos internos **aprovados como classificação analítica** para acompanhamento do equilíbrio, sem criar classe de personagem nem bônus: `Azar` (soma <150), `Frágil` (150–194), `Modesta` (195–239), `Padrão` (240–284), `Forte` (285–319), `Elite` (320+). **Somas não precisam ser iguais**: cartas deliberadamente ruins são parte do jogo e podem ser trocadas com habilidades.
-- **União:** os 7 integrantes confirmados e Jennifer futura **receberam habilidades especiais de maior impacto, aprovadas pelo autor** ou controle, mas nem todos precisam ser fortes em todos os atributos. A atribuição registrada é **aprovada**, mas não significa exclusividade de habilidades: podem ser reaproveitadas em outras cartas futuras.
+- **União:** os 7 integrantes confirmados e Jennifer futura **receberam habilidades especiais de maior impacto ou controle, aprovadas pelo autor**, mas nem todos precisam ser fortes em todos os atributos. A atribuição registrada é **aprovada**, mas não significa exclusividade de habilidades: podem ser reaproveitadas em outras cartas futuras.
 - **Fonte/Grau:** `Alta` = identidade/traço fundamentado em fonte canônica; `Média` = informação escassa ou material classificado como misto/histórico; `Baixa` = apenas nome/referência autoral, **não inventar feitos ou capacidades**. **Todos os valores, classes e especiais são decisões aprovadas para o jogo**, mesmo nas linhas com grau `Alta`, que indica confiança sobre a **biografia**, não a força no jogo.
 - **Spoilers:** descrições de frente de carta evitam mortes, reviravoltas e identidades secretas. A conexão de Mark com fases temporais consta em fontes de autor e necessita aprovação editorial antes de aparecer publicamente.
 - **Coluna da biblioteca:** por solicitação anterior do autor, **não preencher ainda a coluna `Carta atribuída` na biblioteca central dos especiais**, que continua vazia. Esta matriz contém uma **primeira sugestão reversível** de pareamento `carta ↔ habilidade`, não uma atribuição confirmada.
@@ -107,7 +107,7 @@
 
 ## 3. Efeito legível da habilidade indicada
 
-| Especial | Nome na biblioteca | Cartas candidatas que o utilizam | Texto de regra integral (referência) |
+| Especial | Nome na biblioteca | Cartas aprovadas que o utilizam | Texto de regra integral (referência) |
 | --- | --- | --- | --- |
 | AE-002 | Muralha de Defesa | J14 | Sua carta de combate recebe +15 em Defesa nesta disputa. |
 | AE-004 | Arrancada | D09, D18 | Sua carta de combate recebe +15 em Velocidade nesta disputa. |
@@ -184,7 +184,7 @@
 | AE-117 | Preparação exposta | M06 | Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas. |
 | AE-118 | Blindagem de especial | M07 | Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas. |
 | AE-120 | Remover alteração | S04 | Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação. |
-| AE-129 | Triunfo raro | S01 | Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Candidato a pouquíssimas cartas raras**, ainda não aprovado como habilidade final. |
+| AE-129 | Triunfo raro | S01 | Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Aprovado para Jasmey como habilidade rara; o efeito físico antigo #52 segue excluído.** |
 | AE-130 | Anular a última habilidade | M02 | **REAÇÃO DEFENSIVA.** Quando uma habilidade especial for ativada e ainda não tiver resolvido seu efeito, anule a **última habilidade pendente**. A carta anulada é consumida e vai ao Buraco Negro. Não desfaz efeitos já concluídos. |
 
 **As versões curtas do texto especial para imprimir no layout AINDA NÃO FORAM ESCRITAS.** Exibir na carta o nome da habilidade e, em tooltip/verso/ampliação, o texto integral da biblioteca até a equipe validar uma versão compacta com o mesmo sentido. Não reduzir condições em segredo para caber.
@@ -200,7 +200,7 @@
 - **S:** `Spacetheft/1 - A Lenda da Aurora/01 - Canon/02 - Personagens.md`
 - **S-misto:** `Spacetheft/1 - A Lenda da Aurora/01 - Canon/12 - Planejamento e Referencia/Fontes Convertidas/Personagens - Fonte Oficial.md (status misto)`
 - **S/autor:** `Cânone Spacetheft + confirmação específica do autor sobre o despertar da Besta na Aurora`
-- **D1-Carnam:** `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens.md` e `07 - Elos e Artefatos.md` (**status da lista dos Elos: misto**); identidades verificadas, atributos e habilidades criados como propostas de jogo, não talentos canônicos.
+- **D1-Carnam:** `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens.md` e `07 - Elos e Artefatos.md` (**status da lista dos Elos: misto**); identidades verificadas, atributos e habilidades aprovados para o jogo, sem serem necessariamente poderes canônicos.
 - **D1:** `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens.md`
 - **D2-histórico:** `Diário Sobrenatural/2 - A Alvorada das Ilusões/01 - Canon/12 - Planejamento e Referencia/Resumo de Desenvolvimento.md (HISTÓRICO, não cânone fechado)`
 - **D1/D2:** `Personagens do livro 1 (cânone) + desenvolvimento histórico do livro 2`
@@ -214,18 +214,18 @@ A entrada **D09 Diego** não tem perfil verificável no material consultado; por
 
 1. **Nunca equalizar automaticamente a soma dos quatro atributos.** Fortes, equilibradas, especialistas e cartas ruins são escolhas autorais. A fraquíssima **V14 Tio Frank**, com soma **108**, foi proposta para criar o efeito “ah, não, veio essa!”, mas seu especial de troca **AE-051** dá utilidade ocasional.
 2. **Não supor que todo personagem tenha força física elevada.** Investigadores, eruditos e espíritos têm perfis de atributos segundo sua atuação narrativa, com grau de interpretação transparente.
-3. **União deve ter os especiais mais memoráveis**, mas raridade e poder continuam distintos. Distribuir raridade depois da prova de combos; por exemplo, o raro **AE-129 Triunfo Raro** é somente candidato, ainda não ratificado como carta definitiva.
+3. **União deve ter os especiais mais memoráveis**, mas raridade e poder continuam distintos. Distribuir raridade depois da prova de combos; por exemplo, o raro **AE-129 Triunfo Raro** está aprovado na carta S01, ainda sujeito a testes práticos.
 4. **Efeitos de especial são independentes dos nomes físicos das cartas antigas.** IDs AE-### citam a nova biblioteca; não há obrigação de manter a habilidade antiga com a personagem de mesmo nome.
 5. **Sem gráfico determinístico de vitória ainda:** os números acima foram desenhados para criar perfis variados, mas não são balanceamento estatisticamente testado. Gerar simulações de 2/3/4 jogadores quando o regulamento estiver fechado.
 6. **Não aplicar modificadores especiais permanentemente** aos valores naturais. Os modificadores temporários poderão ultrapassar 100, mas o limite de apresentação e o destino das cartas ainda devem ser aprovados.
 
 ## 6. Estado do projeto e próximo passo
 
-**87 fichas de cartas aprovadas; 87/87 possuem atributos e especial atribuído.** Atribuições podem mudar para adequar cânone, raridade, coerência e equilíbrio. O GDD separa regras confirmadas de propostas em [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). [Elenco original](ELENCO_CANDIDATO.md) · [Catálogo de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Reações defensivas](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
+**87 fichas de cartas aprovadas; 87/87 possuem atributos e especial atribuído.** Mudanças futuras exigirão revisão e decisão do autor; os testes não anulam automaticamente as escolhas atuais. O GDD separa regras confirmadas de propostas em [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). [Elenco original](ELENCO_CANDIDATO.md) · [Catálogo de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Reações defensivas](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
 
 ## 7. Correção da primeira distribuição após auditoria de atributos
 
-A primeira versão concentrava o maior atributo de **43/79 cartas em Inteligência**, o que pode reduzir a variedade de confrontos INT/VEL e tornar Defesa/Velocidade pouco atraentes. Nesta segunda passagem, foram **reajustadas 16 fichas propostas** para equilibrar perfis narrativamente plausíveis: proteção, mobilidade, reflexos e força física também se tornaram características principais. **Não houve mudança em descrições, habilidades sugeridas ou decisões oficiais do autor.**
+A primeira versão concentrava o maior atributo de **43/79 cartas em Inteligência**, o que pode reduzir a variedade de confrontos INT/VEL e tornar Defesa/Velocidade pouco atraentes. Nesta segunda passagem, foram **reajustadas 16 fichas antes da aprovação** para equilibrar perfis narrativamente plausíveis: proteção, mobilidade, reflexos e força física também se tornaram características principais. **Não houve mudança em descrições, habilidades sugeridas ou decisões oficiais do autor.**
 
 Distribuição atual do maior atributo por carta: **ATQ 19, DEF 20, INT 28, VEL 12**. A distribuição **não precisa ser simétrica**, pois os personagens têm histórias e competências distintas. É um diagnóstico pré-teste, sem simulação completa das regras ainda pendentes.
 
@@ -241,7 +241,7 @@ Distribuição atual do maior atributo por carta: **ATQ 19, DEF 20, INT 28, VEL 
 
 **Correção de identificação:** o rei dos Obbs indicado pelo autor é **Gaia**, cujo título narrativo exato é **Grande Pai**; Lanigiah é de outro povo (Aracnas). O Obb que ajuda os irmãos é **Seti**. **Facka/Faka:** manter a grafia solicitada pelo autor para o projeto do jogo, mas padronizar com o manuscrito quando ele decidir o nome definitivo.
 
-**Estado:** todos os quatro campos numéricos, perfis e associações de habilidades são **APROVADA PARA O JOGO**, sujeita a testes e revisões futuras. Suas identidades, funções e relações com os irmãos foram conferidas no manuscrito. **O número de habilidades da biblioteca permanece 129**, com atribuição definitiva vazia: não são ataques físicos automaticamente transplantados.
+**Estado:** todos os quatro campos numéricos, perfis e associações de habilidades estão **APROVADOS PARA O JOGO**, sujeita a testes e revisões futuras. Suas identidades, funções e relações com os irmãos foram conferidas no manuscrito. **O número de habilidades da biblioteca permanece 129**, com as atribuições aprovadas registradas: não são ataques físicos automaticamente transplantados.
 
 
 ## 9. Família Carnam: personagens e Elos do primeiro livro
