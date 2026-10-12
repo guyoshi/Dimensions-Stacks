@@ -1,44 +1,41 @@
 # Dimensions Stacks
 
-Jogo competitivo de cartas para PC, baseado em personagens das séries interligadas de **Dimensões Infinitas**. **Estado atual: pré-produção e documentação**, não há implementação de jogo neste repositório.
+Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dimensões Infinitas**.
 
-> **PARA QUALQUER IA OU DESENVOLVEDOR: LEIA PRIMEIRO [CONTRATO_PARA_IA_IMPLEMENTADORA.md](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md).** Não transforme propostas em regras já aprovadas.
+> **STATUS: BARALHO APROVADO PELO AUTOR (12/10/2026).** O conteúdo inicial tem **87 cartas oficiais e 129 habilidades no catálogo**. O jogo **ainda não está programado ou balanceado por testes**. Leia o [contrato para outra IA](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md) antes de modificar qualquer dado.
 
-## Onde encontrar cada decisão
+## Documentação principal
 
-| Documento | Finalidade e autoridade |
+| Documento | Finalidade |
 | --- | --- |
-| **[Contrato de implementação](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md)** | **Comece aqui**: separa o que o autor confirmou de propostas e dúvidas ainda abertas |
-| [Regras do jogo, GDD v1.1](docs/REGRAS.md) | Mecânicas aprovadas e questões pendentes; atributo **Ataque** substituiu **Poder** |
-| **[87 cartas com descrições, atributos e especial sugerido](docs/CARTAS_87_PROPOSTAS.md)** | **87 propostas para revisão do autor**, não números definitivos |
-| [Biblioteca de 129 habilidades especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md) | Mecânicas candidatas por tipo; **129 colunas de atribuição definitiva vazias** |
-| [Reações defensivas, prioridades e anulação do último especial](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | **Proposta técnica** para permitir respostas defensivas enquanto ataques ainda não foram resolvidos |
-| [Elenco das 87 cartas e A União](docs/ELENCO_CANDIDATO.md) | Identidades, origens e integrantes da União sem duplicações |
-| [Checklist de testes e bloqueios](docs/CHECKLIST_VALIDACAO.md) | Validações de dados, regras confirmadas e cenários ainda pendentes |
-| [Auditoria dos ataques físicos](docs/AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) | Avaliação histórica dos efeitos antigos, úteis apenas como inspiração mecânica |
-| [Transcrições de cartas físicas confirmadas](docs/TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md) | Arquivo de referência histórica; não copiar nomes e atributos das cartas físicas |
-| [Leituras de IA das cartas antigas](docs/LEITURAS_IA_PENDENTES_2026-10-12.md) | Dados provisórios/ilegíveis, nunca cânone para implementar |
+| **[Baralho oficial v1.0](docs/BARALHO_OFICIAL.md)** | **Comece aqui:** status da aprovação, 87 cartas, distribuição e links de produção |
+| **[Contrato de regras para IA](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md)** | Distingue o que foi aprovado de questões operacionais ainda pendentes |
+| [Regras e GDD v1.2](docs/REGRAS.md) | Mecânicas confirmadas, última seção de ratificação e pendências |
+| **[87 cartas aprovadas, fichas completas](docs/CARTAS_87_PROPOSTAS.md)** | Tabela de descrições, atributos e habilidades. O nome `PROPOSTAS` é histórico; **conteúdo aprovado** |
+| **[129 Habilidades Especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)** | **78 efeitos diferentes equipados em 87 cartas**, 51 guardados para expansões |
+| [Modelo-base aprovado de reações defensivas](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | Prioridade circular, reações antes da resolução e contraespecial AE-130 |
+| [Elenco das 87 cartas](docs/ELENCO_CANDIDATO.md) | Origem narrativa, identidade e membros da União |
+| [Checklist de validação](docs/CHECKLIST_VALIDACAO.md) | Validação documental e testes de partidas ainda necessários |
+| [Auditoria do baralho físico](docs/AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) | Material histórico apenas para inspiração, não a versão final das cartas |
 
-## Visão de design
+## Dados oficiais para implementação
 
-- **87 cartas candidatas**, seis cores por série, filiação a **A União por selo** adicional.
-- **Quatro atributos**: **Ataque (ATQ)**, Defesa, Inteligência, Velocidade; pares ATQ/DEF e INT/VEL.
-- **Partidas de 2, 3 ou 4 jogadores**, com 7 cartas em baralho ativo inicial e meio de reserva.
-- **129 habilidades especiais candidatas** para distribuir, incluindo a **AE-130: Anular a última habilidade pendente**, solicitada pelo autor.
-- Diferenças deliberadas entre cartas ruins, especialistas e elites. **Os integrantes de A União devem receber habilidades marcantes de maior impacto.**
-- **Carta especial voluntária: 1 por combate**, salvo habilidade excepcional; especiais defensivas devem poder responder a ataques em qualquer janela ainda útil. A ordem operacional detalhada **está em discussão**.
-- A biblioteca de efeitos é **independente dos nomes das cartas físicas antigas**. Origem narrativa: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas).
+- **[dados/oficial/cartas_87.json](dados/oficial/cartas_87.json)**: 87 cartas com status `APROVADA_PELO_AUTOR`, ATQ/DEF/INT/VEL e Habilidade Especial atribuída.
+- **[dados/oficial/habilidades_129.json](dados/oficial/habilidades_129.json)**: 129 habilidades aprovadas como catálogo de design; 78 equipadas, 51 reservadas para futuras cartas.
 
-## Dados estruturados para prévia (NÃO APROVADOS)
+**Arquivos antigos em `dados/propostas` não são dados de produção.** Não importar nem reconstruir dados finais a partir deles.
 
-- [JSON com as 87 cartas](dados/propostas/cartas_87.json)
-- [JSON com as 129 habilidades](dados/propostas/habilidades_129.json)
-- [Instruções sobre status e sincronização](dados/propostas/README.md)
+## Diretrizes aprovadas
 
-Estes arquivos são **espelhos das propostas** e não podem ser utilizados como conteúdo de produção confirmado.
+- **87 cartas**: 23 Ciclo de Jesed (amarelo), 19 Viajantes (azul), 14 Spacetheft (preto), 18 Diário Sobrenatural (roxo), 12 Mistério Oculto (vermelho) e 1 Belfex/Édelin (verde).
+- Quatro atributos naturais de **0 a 100**: **Ataque (ATQ), Defesa (DEF), Inteligência (INT), Velocidade (VEL)**.
+- **Habilidade Especial (ESP)** é o nome geral, incluindo ataques e defesas, com reações permitidas enquanto a ameaça ainda estiver pendente.
+- **18 cartas por jogador** como configuração inicial para testes (7 ativas, 11 na reserva); partidas de 2–4 jogadores.
+- **A União** preserva a cor original de cada série e recebe selo adicional; sem duplicação. Suas habilidades marcantes estão atribuídas e aprovadas.
+- Cartas fracas, fortes, especializadas e elites com totais desiguais são **intencionais**.
+- As especializações antigas **#18, #24 e #52** foram retiradas. O **AE-129** é um efeito raro novo, distinto do #52, e está atribuído à carta S01.
+- As fontes literárias estão no repositório [dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas); aprovação de uma carta digital **não autentica afirmações não verificadas sobre o cânone**.
 
-## Próximas aprovações
+## Trabalho técnico restante
 
-Revisar os **87 perfis propostos**, confirmar a especificação das **reações defensivas** e solucionar pendências estruturais do GDD (preparação da especial, desempate absoluto, destino de carta dupla, distribuição de início da partida, prioridades de efeitos). Somente depois esses dados podem ser tratados como baralho final, com validação de layout e testes de balanceamento.
-
-**Última ampliação:** [Família Carnam](docs/ELENCO_CANDIDATO.md) de *Diário Sobrenatural: Os Elos das Sombras*: Carnam (pai), Isabela, Avó Carnam e Ibliso (cão) como novas cartas D15–D18. Ingrid e Suéten já existiam. São 87 cartas candidatas, não 87 fichas aprovadas.
+Ainda precisamos resolver casos específicos **que não foram definidos**: origem/preparo das especiais, empate após todos os desempates, destino das duas cartas de AE-010, momentos pré-revelação, alvos impossíveis, distribuição imparcial e partidas online. Também faltam simulações e testes de interface. **Não inventar respostas apenas porque o autor aprovou as fichas.**
