@@ -1,71 +1,110 @@
-# Dimensions Stacks — Proposta de prioridade de ataques especiais (v0.1)
+# Dimensions Stacks — Prioridade e reações defensivas (proposta v0.2)
 
-> **Documento de design para aprovação, não regra oficial.** Preserva os limites **já confirmados**: no máximo **1 carta especial voluntária por combate por jogador**, a menos que uma habilidade específica permita duas; #59 obriga usar todas as especiais já preparadas do alvo (até 2); especiais ativadas são descartadas no Buraco Negro; e conflito entre imposições diferentes de atributo é decidido pelo valor do atributo imposto na carta normal do respectivo jogador. A maneira de organizar **prioridade e janelas** abaixo é **proposta**, aguardando aprovação.
+> **STATUS: PROPOSTA, AGUARDA APROVAÇÃO DO AUTOR.** O jogador pediu explicitamente que **habilidades defensivas possam ser usadas como reação a ataques a qualquer momento em que ainda seja possível impedi-los**. O mecanismo exato abaixo resolve essa necessidade, sem tratar como aprovado tudo que ainda está em discussão.
 
-## 1. Conceitos
+## 1. Confirmado pelo autor; não alterar
 
-- **Iniciador:** jogador cujo turno é escolher primeiro o atributo nesta disputa.
-- **Prioridade:** direito temporário de usar uma habilidade especial preparada elegível **ou passar**. Ter prioridade não garante vitória no combate.
-- **Pilha de resolução:** sequência de especiais ativadas ainda não resolvidas. O **último efeito colocado na pilha resolve primeiro** (*LIFO*).
-- **Passar:** não ativa especial nem consome o limite voluntário. Depois de qualquer nova ativação, a contagem de passes consecutivos reinicia.
-- **Acesso:** jogadores ativos recebem prioridade a partir do iniciador, em ordem horária. Quem já ativou seu limite voluntário não pode ativar voluntariamente outra, salvo habilidade que permita.
-- **Custo:** especial ativada vai ao Buraco Negro ainda que tenha sido anulada antes da resolução. O baralho normal é resolvido depois, sujeito a vitória/derrota.
-- **Habilidade cancelada:** não produz seu efeito. Cartas já consumidas não voltam por cancelamento, salvo exceção expressa.
+1. No máximo **1 carta especial ativada voluntariamente por jogador, por combate**, salvo habilidade que autorize duas expressamente.
+2. O jogador escolhe **qual** das especiais preparadas quer usar e **em qual rodada**. Pode guardar duas cartas especiais preparadas à sua esquerda.
+3. **Uso forçado AE-111 (original #59):** o alvo é obrigado a utilizar **todas as especiais já preparadas**, até duas, mesmo violando o limite voluntário normal.
+4. Depois de ativada, a carta especial vai ao **Buraco Negro**, inclusive se um efeito contrário anular sua habilidade (regra de custo e descarte).
+5. **Especial de repetição AE-112 (original #62):** não permitir ciclos de repetição; repetir **efeito** não vira voluntariamente uma segunda carta especial preparada.
+6. **AE-103 (original #54):** “cartas em jogo” são somente **as cartas normais apresentadas em combate**, não especiais preparadas.
+7. O autor aprovou renomear **Poder** para **Ataque (ATQ)**. Os pares ficam **ATQ/DEF** e **INT/VEL**.
+8. Conflito entre duas imposições de atributos diferentes: comparar nas cartas de quem impôs o valor do atributo que cada uma impõe; vence o maior. Desempate geral: valor usado → soma de quatro atributos → ATQ+INT; empate absoluto ainda aberto.
 
-## 2. Etapas sugeridas de um combate
+## 2. Nome das habilidades: recomendação editorial, NÃO aprovado
 
-1. **Preparação da disputa:** cada jogador compromete sua carta normal de combate; selecionam-se os atributos legais, mantendo as restrições de pares já definidas no GDD.
-2. **Revelação das cartas e atributos.**
-3. **Janela de especiais (proposta principal):** o iniciador recebe prioridade. Cada pessoa, ao receber a vez, pode ativar uma especial preparada válida ou passar. O processo continua em círculo até que todos os elegíveis tenham passado **consecutivamente** sem nova ativação.
-4. **Resolução da pilha:** resolver os efeitos na ordem **inversa** à ativação (último primeiro). Exceções de bloqueio, alteração de cartas, recuperação, imposição, ativação forçada e repetição são aplicadas conforme os textos e custos.
-5. **Confronto normal:** com os efeitos concluídos, fixar atributo válido, considerar modificadores e determinar o vencedor por valor individual. Em empate: soma dos quatro atributos, depois soma dos dois ofensivos (Poder + Inteligência no GDD original, ou Ataque + Inteligência se o autor aprovar renomeação).
-6. **Destino das cartas:** aplicar captura se vencedor usou ofensiva, ou descarte ao Buraco Negro se venceu defendendo, salvo modificação específica de uma habilidade; especiais utilizadas são descartadas como previsto.
+Como também existem cartas de proteção, reação e manipulação, **“Ataque Especial” não abrange bem todos os usos**.
 
-**Exceção ainda pendente:** a carta física #10 dizia “Antes do combate iniciar, troque sua carta de combate com a do adversário à direita”. A leitura mais conservadora exigiria uma **janela pré-revelação exclusiva** para efeitos que explicitamente dizem *antes do combate*. A janela única pós-revelação é uma **simplificação alternativa**, mas mudaria a informação disponível quando o jogador ativa essa carta. **Não decidir sem aprovação do autor.**
+**Recomendação:** rótulo geral na interface **Habilidade Especial** ou simplesmente **Especial**, abreviado **ESP**. Cada uma teria categoria **Ataque / Defesa / Controle / Recuperação / Coringa**, usada apenas para interface e janela de reação, sem gerar bônus novo. Em páginas históricas, preservar a expressão “Ataque Especial”, que é o nome do jogo de infância.
 
-## 3. Por que resolver de trás para frente?
+## 3. O problema da fila única
 
-Exemplo: A ativa **Impor Ataque**, B ativa **Impor Inteligência**, C ativa **Anular o especial de B**. C é a última ativada, portanto é resolvida primeiro e impede que a imposição de B entre em vigor. A continua valendo; todas as três cartas especiais ativadas são consumidas.
+Uma fila de efeitos ativados que se resolve sem permitir interromper a resolução **inviabiliza uma defesa reativa tardia**. Por exemplo, se um ataque tenta roubar uma carta, o defensor precisa de oportunidade de **usar seu escudo antes que o roubo seja consolidado**, mesmo que todos já tenham revelado cartas e iniciado a resolução.
 
-**Imposição de atributos não é sobreposição pela ordem:** se A e B impõem atributos diferentes **e ambas as imposições permanecem válidas depois da pilha**, a regra oficial compara **o valor do atributo imposto na carta de combate de cada autor**. O maior determina o atributo que todos devem usar. Se houver empate, o GDD prevê soma dos quatro atributos e depois soma dos ofensivos; a aplicação direta desses desempates ao conflito de imposições deve ser confirmada. Uma mudança de atributo resolvida antes pode alterar os valores, logo **propõe-se avaliar os valores atuais depois dos modificadores**.
+**Proposta recomendada: prioridade circular + janelas de reação defensiva antes de cada efeito perigoso.**
 
-## 4. Combate com jogadores 2, 3 ou 4
+### Janela A — Preparação/Pré-combate (se a habilidade exigir)
 
-- O iniciador obtém a primeira oportunidade de ação; em sentido horário todos poderão responder enquanto tiverem especiais preparadas e autorização para ativar.
-- O máximo voluntário base de cada jogador é 1, e o número de cartas preparadas por jogador é 2.
-- Um jogador que **passou** pode receber prioridade novamente quando outra pessoa ativar um efeito; passar não é renúncia permanente.
-- Jogadores eliminados não participam; a prioridade percorre somente os ativos.
-- Dois especiais que exigem o mesmo alvo são resolvidos um após outro. Se o alvo deixar de ser elegível antes do efeito seguinte, é necessário definir o destino do efeito inválido (não inventar recuperação da carta consumida).
-- **Em duelo, direita e esquerda são o mesmo adversário.** Efeitos que simplesmente devolvem cartas a esse adversário podem ser ativados sem vantagem, como o autor aprovou.
+Habilidades cujo texto exige *antes do combate* podem ter janela específica **antes da revelação ou seleção definitiva dos atributos**, com prioridade na ordem do iniciador em sentido horário. Não inferir que um texto que diz "antes" pode passar a ser jogado depois. **A necessidade exata dessa janela deve ser aprovada.**
 
-## 5. Casos especiais
+### Janela B — Após revelação, antes da comparação
 
-### 5.1 Habilidade de ativação forçada (#59 / AE-111)
+Todos os jogadores ativos têm oportunidades em sentido horário de usar **uma especial voluntária** (ou passar). Jogadores podem responder a habilidades adversárias, consumindo seu próprio limite voluntário. O iniciador oferece a primeira oportunidade, mas **não recebe vantagem automática de resolver primeiro**.
 
-**Confirmado:** o alvo deve ativar **todas as especiais já preparadas** (até duas), mesmo que o limite voluntário seja um. **Proposta operacional:** quando o efeito forçado resolver, exibir as cartas preparadas e permitir ao proprietário **decidir a ordem e os alvos legais** de suas duas ativações, que entram na pilha para resolução, sem reiniciar o limite voluntário. Se o efeito #59 tiver sido anulado antes de resolver, não acontece o gasto forçado. **A ordem escolhida pelo alvo e o momento de novas respostas continuam propostos**, não aprovados.
+### Janela C — Reação defensiva imediata
 
-### 5.2 Bloqueio de especiais (antigo #47 / AE-073)
+Quando uma habilidade ameaçadora é ativada **ou está prestes a resolver**, os jogadores afetados podem usar **especial preparada do tipo Defesa/Reação**, desde que ainda possuam ativação voluntária disponível ou uma exceção que permita mais ativações.
 
-Um efeito que cancela especiais ainda pendentes pode anulá-las antes da resolução. As cartas especiais que já foram ativadas e depois anuladas continuam consumidas. Definir alcance (um alvo ou todas as demais), e se cancela efeitos de outras janelas, antes de aprovar a habilidade definitiva.
+- Uma defesa pode entrar **em resposta** a qualquer ataque especial ainda pendente ou ao resultado do confronto normal **antes de as cartas mudarem irreversivelmente de zona**.
+- Não é necessário esperar a próxima rodada ou o próprio turno para responder. “A qualquer momento” significa **qualquer oportunidade legal durante o combate em que exista uma ameaça pendente**, não depois de um efeito já encerrado.
+- A nova defesa entra no topo da pilha e **resolve antes** do efeito ao qual responde. Ao final das respostas sucessivas, retoma-se a resolução do efeito anterior, se ele ainda estiver válido.
+- Mesmo se outro jogador já passou, ele pode responder numa janela nova se ainda tiver sua ativação disponível. Passar não consome especial.
+- **Limite continua valendo:** defesa reativa **não é uma segunda ativação voluntária gratuita** se o mesmo jogador já ativou uma especial normal, salvo texto expresso de exceção. Este trade-off é intencional e deve ser apresentado claramente na interface.
+- Se o jogador não tem especial defensiva preparada, ou seu limite foi consumido, não pode reagir por conveniência.
+- Depois que a carta normal já foi capturada/descartada, a defesa NÃO retroage no tempo para desfazer a captura.
 
-### 5.3 Repetição (antigo #62 / AE-112)
+### Janela D — Resolução final
 
-**Aprovado:** impedir ciclos infinitos. **Proposta:** repetir o efeito de um outro especial já usado **uma única vez por ativação**, pagando os 2 descartes exigidos. O efeito de repetição não pode gerar outra repetição, copiar-se a si mesmo, copiar uma cópia ou reativar outra carta especial preparada. Repetir **efeito** é diferente de ativar uma **segunda carta**.
+Se todas as ameaças e respostas tiverem sido tratadas: resolve-se a comparação de atributos, os desempates e o destino das cartas de combate. **Antes de consolidar uma captura/descartes**, disparar as últimas reações de defesa que explicitamente previnem perda/captura, se ainda houver prioridade legal.
 
-### 5.4 Ruína de campo (antigo #54 / AE-103)
+## 4. Habilidade NOVA AE-130: Anular a última habilidade
 
-**Confirmado:** “cartas em jogo” são **somente as cartas normais comprometidas em combate**. Especiais preparadas não são descartadas por esse efeito. Distinguir negar dano normal de negar efeitos de especiais; proteção das especiais não deve ser removida silenciosamente.
+**Redação candidata para o jogo:**
 
-### 5.5 Vitórias automáticas raras
+> **REAÇÃO — Anule a última habilidade especial ativada que ainda não tenha sido resolvida. A carta anulada é descartada normalmente. Não desfaz efeitos já concluídos.**
 
-**Confirmado:** o antigo #52 foi removido. Futuramente podem existir **poucas habilidades novas e raras** de vitória automática, sujeitas a balanceamento. A ativação forçada (#59) é possível contrajogo, porque pode obrigar gasto antecipado. Uma vitória antecipada forçada **ainda pode vencer a disputa atual**; o custo estratégico é perder a escolha do melhor momento.
+- **O que anula:** o **último especial pendente** da pilha. Se duas habilidades estiverem aguardando resolução, o alvo é aquela que está no topo, não qualquer habilidade escolhida livremente pelo defensor.
+- **O que não anula:** especial já resolvida ou a própria carta de combate normal. Não pode voltar para buscar um roubo concluído em rodada anterior.
+- **Se houver outra AE-130:** uma segunda anulação pode anular a primeira, desde que a nova ativação seja legal e o jogador tenha autorização para usá-la.
+- **Custo:** ambas as cartas que foram ativadas e depois anuladas acabam no Buraco Negro, seguindo o custo confirmado.
+- **Fonte:** solicitado expressamente pelo autor; o texto específico **ainda é proposta**.
 
-## 6. Decisões abertas antes da implementação
+### Exemplo prático com três jogadores
 
-1. Uma janela principal **após revelação** para todos os efeitos ou janelas adicionais **pré-revelação** para habilidades textualmente anteriores ao combate?
-2. Quando dois jogadores disputarem prioridade em condições especiais, seguir estritamente a ordem horária iniciando pelo iniciador ou uma outra regra?
-3. Quando #59 obriga dois especiais, **quem escolhe a ordem** e os alvos de cada uma?
-4. Se uma habilidade já ativada perder seu alvo antes da resolução, é apenas consumida ou existe comportamento alternativo específico?
-5. Empate definitivo após soma de todos e soma dos ofensivos, ainda pendente no GDD.
+1. A ativa **atributo obrigatório ATQ**.
+2. B responde impondo **INT**.
+3. C ativa **AE-130**, anulando a última especial pendente (a de B).
+4. Resolve-se C primeiro: B é anulada. A continua na pilha e depois impõe ATQ.
+5. As três especiais ativadas são gastas. O combate normal continua usando ATQ.
 
-[Voltar ao GDD](REGRAS.md) · [Biblioteca dos especiais](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Matriz das cartas](FICHAS_CARTAS_BASE.md).
+### Contraexemplo importante
+
+A já resolveu um efeito que retirou carta da reserva de B. Quando B tenta reagir depois da transferência confirmada, **AE-130 não pode desfazer essa movimentação**. B precisava responder **antes de o efeito terminar**. Uma habilidade específica de recuperação ou troca poderia intervir em momento posterior, mas seria outro efeito, não um cancelamento retroativo.
+
+## 5. Habilidades defensivas não são intercambiáveis
+
+| Referência | Alcance proposto | O que não faz |
+| --- | --- | --- |
+| AE-071 | Retira sua carta normal da disputa e a devolve ao ativo | Não cancela ataques contra outros |
+| AE-072 | Se você perder, impede captura/descarte de sua carta | Não impede vitória numérica do rival |
+| AE-073 | Anula habilidades adversárias ainda pendentes | Não volta atrás em efeitos já resolvidos |
+| AE-074 | Bloqueia uma ação dirigida especificamente a você | Não bloqueia ataque global contra todos |
+| AE-075 | Impede que o rival capture sua carta normal | Não anula atributo vencedor do rival |
+| AE-103 | Protege sua carta e descarta as **cartas normais de combate** alheias | Não atinge especiais preparadas |
+| AE-130 | Anula a **última habilidade pendente** | Não permite escolher livremente uma habilidade mais antiga da pilha |
+
+Essas descrições são um modelo de interação para discutir, não prioridades aprovadas.
+
+## 6. Efeitos especiais que exigem exceções de prioridade
+
+**AE-111 uso forçado:** a carta que obriga uso resolve na pilha; quando resolver, coloca na pilha as até duas especiais que o alvo já preparou. **Proposta:** o dono do alvo escolhe a ordem e os alvos legais; cada efeito forçado também oferece oportunidade de resposta defensiva. Quem já gastou uma especial voluntária não ganha outra por isso: essas ativações são **forçadas**.
+
+**AE-112 repetição:** repetir uma vez o efeito de uma especial já resolvida **não ativa uma segunda carta especial preparada**. A repetição só acontece depois de pagar o custo e não pode apontar para outra repetição ou cópia.
+
+**Duas habilidades que impõem atributos:** se ambas permanecerem válidas após cancelamentos e reações, aplicar a regra de valor maior já aprovada, não 'a última jogada sempre vence'.
+
+**Vitória automática rara:** se uma habilidade futura fizer alguém vencer a comparação sem olhar valores, ainda oferece janelas de defesa/cancelamento antes da resolução. O efeito antigo #52 foi retirado.
+
+## 7. Perguntas ainda não respondidas pelo autor
+
+1. A janela A pré-revelação será necessária para habilidades cujo texto exige *antes do combate*, ou vamos redesenhar todos os seus textos para a janela B?
+2. Na janela C, todas as habilidades defensivas podem reagir à comparação normal prestes a terminar, ou algumas serão limitadas ao tipo de ataque descrito em sua própria carta? (Recomendação: respeitar a condição explícita de cada defesa.)
+3. Ao obrigar duas cartas com AE-111, quem escolhe ordem e alvos? (Proposta: o dono original.)
+4. Quanto tempo uma oportunidade de reação dura no jogo digital? Ainda não definir segundos nem relógio.
+5. O que ocorre se o alvo de uma habilidade deixa de existir antes de ela resolver? E se dois efeitos anularem o último simultaneamente?
+
+**Resumo:** o autor aprovou **a necessidade de defesas reativas em qualquer momento útil**; esta especificação de janelas, pilha e resposta é uma solução proposta, não autorização para programar regras indefinidas.
+
+[Voltar ao GDD](REGRAS.md) · [Biblioteca de 129 candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [79 fichas propostas](CARTAS_79_PROPOSTAS.md).
