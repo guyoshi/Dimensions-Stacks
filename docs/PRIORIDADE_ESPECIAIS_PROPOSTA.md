@@ -107,4 +107,4 @@ Essas descrições são um modelo de interação para discutir, não prioridades
 
 **Resumo:** o autor aprovou **a necessidade de defesas reativas em qualquer momento útil**; esta especificação de janelas, pilha e resposta é uma solução proposta, não autorização para programar regras indefinidas.
 
-[Voltar ao GDD](REGRAS.md) · [Biblioteca de 129 candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [79 fichas propostas](CARTAS_79_PROPOSTAS.md).
+[Voltar ao GDD](REGRAS.md) · [Biblioteca de 129 candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [83 fichas propostas](CARTAS_83_PROPOSTAS.md).
