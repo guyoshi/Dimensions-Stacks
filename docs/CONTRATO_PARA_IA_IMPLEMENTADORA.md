@@ -6,10 +6,10 @@
 
 1. **Este contrato** = índice dos estados, travas e dependências.
 2. [REGRAS.md](REGRAS.md) = regras já aprovadas e lacunas explícitas. Passagens históricas/alternativas anteriores ficam subordinadas a **decisões posteriores do autor**.
-3. [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md) = **83 fichas propostas, ainda não aprovadas**, com fontes narrativas e 120 caracteres máximos de descrição curta.
+3. [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) = **87 fichas propostas, ainda não aprovadas**, com fontes narrativas e 120 caracteres máximos de descrição curta.
 4. [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md) = **129 habilidades candidatas**, com 129 células vazias de `Carta atribuída (ID)`. Cada ID é uma mecânica candidata, não poder automaticamente conferido à personagem de mesmo nome histórico.
 5. [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md) = proposta de janela de reação defensiva, ordem e cancelamentos. **Não é regra consolidada**.
-6. [ELENCO_CANDIDATO.md](ELENCO_CANDIDATO.md) = identidades das 83 cartas/personagens, procedência e formação da União.
+6. [ELENCO_CANDIDATO.md](ELENCO_CANDIDATO.md) = identidades das 87 cartas/personagens, procedência e formação da União.
 7. [TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md), [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md) e [INVENTARIO_FOTOGRAFICO_LEGADO.md](INVENTARIO_FOTOGRAFICO_LEGADO.md) = **somente histórico de ideias mecânicas e referência física**, não nome, biografia, atributo ou habilidade definitiva das novas cartas.
 
 Repositório de fontes literárias: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Parte do cânone dos livros em andamento pode mudar; materiais com status `histórico` ou `misto` não devem ser elevados a cânone final.
@@ -46,14 +46,14 @@ Repositório de fontes literárias: [guyoshi/dimensoesinfinitas](https://github.
 | Item | Estado | Conteúdo |
 | --- | --- | --- |
 | Intervalo de atributos | **PROPOSTO** | Valores naturais inteiros de **0 a 100** e bônus temporários possivelmente acima de 100. |
-| Fichas dos 83 personagens | **PROPOSTO** | Nome, descrição curta (até 120 caracteres), ATQ/DEF/INT/VEL, soma, perfil e habilidade. Todas as 83 sugestões aguardam aprovação. |
+| Fichas dos 87 personagens | **PROPOSTO** | Nome, descrição curta (até 120 caracteres), ATQ/DEF/INT/VEL, soma, perfil e habilidade. Todas as 87 sugestões aguardam aprovação. |
 | Texto curto | **PROPOSTO** | **Máximo de 120 caracteres** por descrição de frente de carta, validado mecanicamente; precisa de teste de layout final. |
 | 129 habilidades | **PROPOSTO** | Catálogo por família, alguns itens ainda arriscados. Não atribuir a personagens sem aceite. |
 | Especial raro AE-129 | **PROPOSTO** | Vitória automática de comparação, diferente da mecânica física #52, retirada. Pode haver pouquíssimas cartas raras assim, conforme diretriz do autor. |
 | Defesa reativa | **PROPOSTO (MECANISMO)** | Pilha de prioridade, oportunidade de resposta antes da resolução do ataque, efeitos cancelados consumidos, sem retroatividade; ver documento separado. |
 | AE-130 | **PROPOSTO (TEXTO)** | Anular último especial **pendente**, não efeito já concluído. Origina-se de ideia confirmada, mas implementação detalhada precisa de aprovação. |
 | Nome guarda-chuva | **PROPOSTO** | Chamar o conjunto de **Habilidades Especiais (ESP)**, pois há ataques, defesas, controles, recuperações e coringas. O nome histórico era “Ataque Especial”. |
-| Total na partida | **PROPOSTO** | 18 cartas por jogador (7 ativas e 11 na reserva), ou 36/54/72 em jogos 2/3/4. Não aprovado; **não restringir automaticamente a seleção de 83 a esse número**. |
+| Total na partida | **PROPOSTO** | 18 cartas por jogador (7 ativas e 11 na reserva), ou 36/54/72 em jogos 2/3/4. Não aprovado; **não restringir automaticamente a seleção de 87 a esse número**. |
 | Habilidade de dois rivais | **PARCIAL** | Em duelo direita/esquerda são a mesma pessoa. Transferir cartas de um adversário para ele mesmo pode ser gasto sem vantagem, como aprovado. Efeitos que exigem **dois rivais distintos** não têm segundo alvo; não criar saque duplicado automaticamente. |
 | Atribuições de A União | **PROPOSTO** | Oito habilidades fortes reservadas inicialmente nas fichas, todas reversíveis antes da aprovação. |
 
@@ -67,7 +67,7 @@ Repositório de fontes literárias: [guyoshi/dimensoesinfinitas](https://github.
 - **Destino das duas cartas normais do ataque especial de soma:** captura/descarte/retorno, especialmente em empate.
 - **Limite e destino quando Buraco Negro ou reserva não oferecem cartas suficientes** para uma habilidade; não substituir zonas arbitrariamente.
 - **Raridade, distribuição de cartas e número inicial total** da partida ainda não aprovados.
-- **Como selecionar as cartas para 2/3/4 participantes sem vantagem** (as 83 candidatas não se dividem igualmente).
+- **Como selecionar as cartas para 2/3/4 participantes sem vantagem** (as 87 candidatas não se dividem igualmente).
 - **Exceções e custos de recuperações de cartas especiais** sem reativação infinita.
 - **Origem e poderes canônicos** de Édelin Fils, Releuz e Richard Falkner, bem como detalhes de Diego, ainda insuficientes para afirmar capacidades definitivas. **Filippo/Filipo** requer confirmação de grafia.
 
@@ -75,25 +75,31 @@ Repositório de fontes literárias: [guyoshi/dimensoesinfinitas](https://github.
 
 **FAÇA:** manter docs com estados explícitos `CONFIRMADO`, `PROPOSTO`, `PENDENTE`; apresentar sugestões separadas da autoridade do autor; verificar cartas e habilidades por ID; mostrar efeitos/valores no layout somente quando aprovados; perguntar antes de completar lacunas mecânicas essenciais. Usar PT-BR no texto do jogo e nos materiais.
 
-**NÃO FAÇA:** substituir decisões do autor por conveniências de programação; copiar nomes, biografias, atributos ou cor das cartas de infância; inventar atributos canônicos sem fonte; interpretar um documento histórico como livro final; dar a A União uma cor própria; duplicar automaticamente membros da União; considerar 18 cartas por jogador uma decisão aceita; considerar 83 fichas ainda propostas como baralho final; eliminar habilidades fortes apenas por intuição.
+**NÃO FAÇA:** substituir decisões do autor por conveniências de programação; copiar nomes, biografias, atributos ou cor das cartas de infância; inventar atributos canônicos sem fonte; interpretar um documento histórico como livro final; dar a A União uma cor própria; duplicar automaticamente membros da União; considerar 18 cartas por jogador uma decisão aceita; considerar 87 fichas ainda propostas como baralho final; eliminar habilidades fortes apenas por intuição.
 
 **Ponto de partida seguro:** usar dados em rascunho para UI de prévia e ferramentas internas de edição, com avisos de `não aprovado`. Não afirmar que o jogo competitivo está finalizado ou equilibrado até que as pendências essenciais sejam decididas, simuladas e testadas.
 
 ## 6. Dados estruturados para ferramenta de prévia
 
-O diretório [dados/propostas](../dados/propostas/README.md) contém arquivos JSON de **83 cartas** e **129 habilidades**, todos com `status: PROPOSTA_NAO_APROVADA`. A IA pode importar esses arquivos **apenas para prévia, comparação e ferramentas de revisão**, nunca para considerá-los baralho validado. Em caso de divergência entre JSON e Markdown, **interrompa para reconciliar**. Não inventar valores nem completar nomes pela própria conta.
+O diretório [dados/propostas](../dados/propostas/README.md) contém arquivos JSON de **87 cartas** e **129 habilidades**, todos com `status: PROPOSTA_NAO_APROVADA`. A IA pode importar esses arquivos **apenas para prévia, comparação e ferramentas de revisão**, nunca para considerá-los baralho validado. Em caso de divergência entre JSON e Markdown, **interrompa para reconciliar**. Não inventar valores nem completar nomes pela própria conta.
 
 ## 7. Índice operacional
 
 - [Decisões e GDD](REGRAS.md)
-- [83 fichas propostas por personagem](CARTAS_83_PROPOSTAS.md)
-- [JSON para prévia das 83 cartas](../dados/propostas/cartas_83.json)
+- [87 fichas propostas por personagem](CARTAS_87_PROPOSTAS.md)
+- [JSON para prévia das 87 cartas](../dados/propostas/cartas_87.json)
 - [JSON para prévia das 129 habilidades](../dados/propostas/habilidades_129.json)
 - [129 habilidades candidatas, sem atribuição confirmada](BIBLIOTECA_ATAQUES_ESPECIAIS.md)
 - [Reações defensivas e prioridade propostas](PRIORIDADE_ESPECIAIS_PROPOSTA.md)
-- [83 identidades e fontes canônicas](ELENCO_CANDIDATO.md)
+- [87 identidades e fontes canônicas](ELENCO_CANDIDATO.md)
 - [Auditoria de efeitos históricos](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md)
 
 ## 8. Inclusão confirmada do elenco em Viajantes Dimensionais
 
-O autor pediu adicionar **quatro personagens**: Facka (Faka no manuscrito), Lanigiah (rainha das Aracnas), Grande Pai Gaia (líder Obb) e Seti (guerreiro Obb aliado dos irmãos). A existência e funções estão sustentadas pelo manuscrito; **os atributos, habilidades e descrições exatas são sugestões de balanceamento**, não regras aprovadas. Elenco atual **83 cartas, das quais 19 de Viajantes**. A União permanece sem novas adesões confirmadas. A fonte canônica para conferência é *Viajantes dimensionais - A Patrulha de Korvo.docx*; para revisões e prévias, usar [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md) e [cartas_83.json](../dados/propostas/cartas_83.json).
+O autor pediu adicionar **quatro personagens**: Facka (Faka no manuscrito), Lanigiah (rainha das Aracnas), Grande Pai Gaia (líder Obb) e Seti (guerreiro Obb aliado dos irmãos). A existência e funções estão sustentadas pelo manuscrito; **os atributos, habilidades e descrições exatas são sugestões de balanceamento**, não regras aprovadas. Elenco atual **83 cartas, das quais 19 de Viajantes**. A União permanece sem novas adesões confirmadas. A fonte canônica para conferência é *Viajantes dimensionais - A Patrulha de Korvo.docx*; para revisões e prévias, usar [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e [cartas_87.json](../dados/propostas/cartas_87.json).
+
+## 9. Família Carnam no primeiro Diário Sobrenatural — atualização para 87
+
+**INCLUSÃO SOLICITADA PELO AUTOR:** pertencem ao elenco da Família Carnam **D15 Carnam (pai)**, **D16 Isabela**, **D17 Avó Carnam** e **D18 Ibliso (cão)**. Já existiam **D07 Ingrid Carnam** e **D13 Suéten**; evitar duplicar esses IDs. **D10 Avó de Kelly não é D17**. A associação com espíritos/Elos consta do cânone da série; os detalhes dos Elos estão em documento de status *misto*. Não confundir a **arma ligada ao pai de Vini**, Elo de Carnam, com uma afirmação de que Carnam seja o pai de Vini.
+
+**SITUAÇÃO ATUAL:** 87 cartas candidatas de seis séries; Diário Sobrenatural agora tem **18** e Viajantes Dimensionais **19**. As quatro fichas novas receberam sugestões de ATQ/DEF/INT/VEL, descrições de até 120 caracteres e um AE da biblioteca existente. **Esses valores e associações são hipóteses para revisão do autor**, não habilidades demonstradas no livro ou prontas para lançamento. Usar [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e [cartas_87.json](../dados/propostas/cartas_87.json). **Biblioteca mantém 129 habilidades** com coluna de atribuição final vazia.
