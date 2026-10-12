@@ -76,8 +76,20 @@
       deal() { S.noise(0.07, 'lowpass', 2400, 900, 0.18); S.tone(130, 0.08, 'sine', 0.18, 0, 70); },
       place() { S.noise(0.09, 'lowpass', 1800, 500, 0.22); S.tone(95, 0.14, 'sine', 0.3, 0, 55); },
       flip() { S.noise(0.16, 'bandpass', 700, 3800, 0.2, 0, 2); S.tone(420, 0.06, 'triangle', 0.08, 0.1, 880); },
-      suspense() { [0, 0.34, 0.62, 0.84, 1.02, 1.16].forEach((t, i) => { S.tone(68 + i * 4, 0.16, 'sine', 0.3 + i * 0.03, t, 40); S.noise(0.05, 'lowpass', 300, 100, 0.12, t); }); },
-      reveal() { S.tone(90, 0.5, 'sine', 0.4, 0, 38); S.noise(0.35, 'bandpass', 3000, 6000, 0.1, 0.02, 3); S.tone(S.note(76), 0.5, 'triangle', 0.08, 0.04); },
+      suspense() {
+        // batidas aceleradas (com harmônicos audíveis em caixinhas de celular) + zumbido que sobe + brilho agudo
+        const beats = [0, 0.6, 1.14, 1.62, 2.04, 2.4, 2.72];
+        beats.forEach((t, i) => {
+          const v = 0.34 + i * 0.045;
+          S.tone(150, 0.17, 'triangle', v, t, 70); S.tone(75, 0.2, 'sine', v * 0.8, t, 42); S.noise(0.07, 'bandpass', 900, 300, 0.2 + i * 0.02, t, 1.2);
+          S.tone(170, 0.13, 'triangle', v * 0.7, t + 0.15, 80); S.noise(0.05, 'bandpass', 700, 250, 0.14, t + 0.15, 1.2);
+        });
+        const c = S.ctx, t0 = c.currentTime, f = c.createBiquadFilter(), g = c.createGain(); f.type = 'lowpass'; f.Q.value = 6;
+        f.frequency.setValueAtTime(220, t0); f.frequency.exponentialRampToValueAtTime(2200, t0 + 2.9);
+        g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.16, t0 + 2.8); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 3.05);
+        const d = c.createOscillator(); d.type = 'sawtooth'; d.frequency.setValueAtTime(110, t0); d.frequency.exponentialRampToValueAtTime(330, t0 + 3); d.connect(f); f.connect(g); g.connect(S.sfx); d.start(t0); d.stop(t0 + 3.1);
+        S.tone(1320, 2.8, 'sine', 0.012, 0, 1980); S.tone(1320, 2.8, 'sine', 0.05, 0.4, 2100);
+      },      reveal() { S.tone(90, 0.5, 'sine', 0.4, 0, 38); S.noise(0.35, 'bandpass', 3000, 6000, 0.1, 0.02, 3); S.tone(S.note(76), 0.5, 'triangle', 0.08, 0.04); },
       win() { [72, 76, 79, 84].forEach((n, i) => { S.tone(S.note(n), 0.5, 'triangle', 0.2, i * 0.09); S.tone(S.note(n + 12), 0.4, 'sine', 0.06, i * 0.09 + 0.02); }); S.tone(S.note(60), 1.4, 'sine', 0.16, 0); S.tone(S.note(67), 1.4, 'sine', 0.1, 0); [88, 91, 95, 100].forEach((n, i) => S.tone(S.note(n), 0.3, 'sine', 0.05, 0.4 + i * 0.07)); },
       lose() { S.tone(S.note(62), 0.45, 'sawtooth', 0.09, 0, S.note(55)); S.tone(S.note(55), 0.7, 'sine', 0.16, 0.2, S.note(48)); },
       capture() { S.noise(0.28, 'bandpass', 500, 2600, 0.18, 0, 2); S.tone(S.note(79), 0.3, 'triangle', 0.14, 0.18); S.tone(S.note(84), 0.45, 'triangle', 0.12, 0.27); },

@@ -3,19 +3,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Figtree:wght@500;700;800&display=swap">
 <style>
-/* Layout: uma tela única de aplicativo (menu, configuração, mesa). Mundo escuro e cósmico, ouro como acento.
+/* Nexo Dimensional: grafite profundo, marfim e metal discreto; brilho dimensional (ciano/violeta) só em elementos especiais.
    Tema único de propósito: um jogo de cartas noturno, sem versão clara. */
 :root {
-  --bg0: #07041a;
-  --ink: #f2ecff;
-  --ink2: #b3a6d9;
-  --gold: #f4c95d;
-  --gold2: #ffe39a;
-  --line: #ffffff2b;
+  --bg0: #0e0f13;
+  --bg1: #15171c;
+  --bg2: #1d2027;
+  --ink: #ede7d6;
+  --ink2: #a9a595;
+  --gold: #d6cfba;
+  --gold2: #f1ecdc;
+  --metal: #d6cfba; --metal2: #f6f1e2; --metald: #8b8576;
+  --nexus: #7fdcff; --nexus2: #b394ff;
+  --line: #ffffff26;
   --f-disp: 'Cinzel', 'Trajan Pro', Georgia, 'Times New Roman', serif;
   --f-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --p0: #ffd25f; --p1: #6cc6ff; --p2: #ff7ab0; --p3: #86f5a4;
-  --back: linear-gradient(135deg, #3b2490, #0d0822);
+  --back: linear-gradient(135deg, #2c3038, #0e0f13);
   color-scheme: dark;
 }
 [data-a="pod"] { --ac: #ff8a5c; }
@@ -35,8 +39,14 @@ noscript { display: block; padding: 24px; }
 <script src="audio.js"></script>
 <script src="especiais.js"></script>
 <script src="engine.js"></script>
+<script src="stats.js"></script>
 <script src="ui.js"></script>
 <script src="game.js"></script>
+<script src="coach.js"></script>
+<script src="home.js"></script>
+<script src="online.js"></script>
+<script src="admin.js"></script>
+<script src="cloud.js"></script>
 <script>
   (function () {
     try { window.DSUI.boot(); } catch (e) { console.error(e); document.getElementById('app').textContent = 'Erro ao iniciar: ' + e.message; }

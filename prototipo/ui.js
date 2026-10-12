@@ -68,15 +68,15 @@
     const art = IMG[id] ? `<div class="art"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
-      <div class="flip"><div class="face back"></div>
+      <div class="flip"><div class="face back"><i class="seal"></i></div>
       <div class="face front"><div class="in">${art}<div class="shade"></div>
-        <div class="mark"><span>${esc(s.marca)}</span><span class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</span></div>
+        <div class="mark"><span class="ser">${esc(s.titulo || s.marca)}</span></div>
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
-        <div class="stats">${statsHTML(c.stats, st)}</div></div></div>
+        <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
         ${c.provisorio ? '<div class="teste">PRÉVIA</div>' : ''}
       </div></div></div>`);
-    node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
+    node.dataset.serie = c.serie; node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
     if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id) } : null); }); }
@@ -121,6 +121,10 @@
         <div><b>✦ ${esc(sp ? sp.nome : '—')}</b><br><span class="hint">${esc(sp ? sp.texto : '')}</span>${sp && sp.stub ? '<br><span class="hint">⚠ Efeito ainda não implementado neste protótipo.</span>' : ''}</div>
         ${c.descricao ? `<p>${esc(c.descricao)}</p>` : ''}
         ${c.nota ? `<div class="hint">Nota do elenco: ${esc(c.nota)}</div>` : ''}</div>`));
+      const meta = $('.meta', wrap), fb = el('<button class="btn sm favbtn" type="button"></button>');
+      const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = (f ? U.ICO.star : U.ICO.starO) + (f ? 'Favorita' : 'Favoritar'); fb.classList.toggle('on', !!f); };
+      fb.onclick = () => { SND.play('click'); const r = window.DSSTATS.toggleFav(cid); paint(); document.querySelectorAll('.card[data-id="' + cid + '"]').forEach(x => { if (!x.closest('.zoomwrap')) x.classList.toggle('isfav', r.fav); }); if (r.unlocked && r.unlocked.length) U.toast('Conquista: ' + r.unlocked.map(a => a.nome).join(', ')); };
+      paint(); meta.insertBefore(fb, meta.children[1]);
       return wrap;
     }
     stage.append(build(id));
@@ -160,61 +164,84 @@
   // ---------------------------------------------------------------- telas
   U.show = function (name) {
     $$('.screen').forEach(s => { s.hidden = s.id !== name; });
+    if (U.afterShow) U.afterShow(name);
     if (name !== 'game') SND.setMusic && S.musicOn && SND.ctx && SND.startMusic();
   };
   function screens() {
     const app = $('#app');
-    app.innerHTML = `<section id="menu" class="screen"></section><section id="setup" class="screen" hidden></section><section id="game" class="screen" hidden></section><div id="layer"></div>`;
+    app.innerHTML = `<section id="menu" class="screen"></section><section id="setup" class="screen" hidden></section><section id="online" class="screen" hidden></section><section id="game" class="screen" hidden></section><div id="layer"></div>`;
   }
 
+
+  // fundo da tela inicial: cartas flutuando (profundidades diferentes) e brilhos que crescem e somem
+  function menuFx() {
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const bg = el('<div class="menu-bg" aria-hidden="true"><div class="fcards"></div><div class="sparks"></div><div class="vig"></div></div>');
+    const pool = Object.keys(CARDS); const withImg = pool.filter(id => IMG[id]); const ids = withImg.concat(pool.filter(id => !IMG[id])).slice(0, 40);
+    const fc = $('.fcards', bg), N = 9;
+    const order = ids.sort(() => Math.random() - .5);
+    for (let i = 0; i < N; i++) {
+      const depth = rnd(0, 1); const cw = Math.round(54 + depth * 78); const dur = rnd(46, 90) - depth * 22;
+      const w = el(`<div class="fc" style="--x:${((i + rnd(.1, .9)) / N * 100).toFixed(1)}%;--cw:${cw}px;--dur:${dur.toFixed(1)}s;--delay:${(-rnd(0, dur)).toFixed(1)}s;--rot:${rnd(-24, 24).toFixed(1)}deg;--rot2:${rnd(-24, 24).toFixed(1)}deg;--sway:${rnd(-70, 70).toFixed(0)}px;--op:${(.28 + depth * .3).toFixed(2)};--bl:${((1 - depth) * 2.2).toFixed(1)}px"></div>`);
+      w.append(cardEl(order[i % order.length], { up: true, noanim: true, cw })); fc.append(w);
+    }
+    const sp = $('.sparks', bg), cols = ['#ffffff', '#f1ecdc', '#cfe6ff', '#ffffff', '#e8d9ff'];
+    for (let i = 0; i < 24; i++) {
+      const sz = rnd(7, 24), big = sz > 17;
+      sp.append(el(`<span class="sp${big ? ' big' : ''}" style="left:${rnd(1, 99).toFixed(1)}%;top:${rnd(2, 98).toFixed(1)}%;--s:${sz.toFixed(0)}px;--d:${rnd(2.6, 7).toFixed(1)}s;--dl:${(-rnd(0, 7)).toFixed(1)}s;--c:${cols[i % cols.length]};--rt:${rnd(-35, 35).toFixed(0)}deg"><i></i></span>`));
+    }
+    return bg;
+  }
+
+  U.menuFx = menuFx;
   function fanIds() { const w = ['J08', 'J01', 'J09']; return w.filter(x => CARDS[x]); }
   function menu() {
     const s = $('#menu');
     s.innerHTML = `<div class="center">
       <div class="logo-fan"></div>
-      <div class="logo"><small>Dimensões Infinitas</small><b>Dimensions Stacks</b><i></i></div>
+      <div class="logo"><small>Dimensões Infinitas</small><b data-t="Dimensions Stacks">Dimensions Stacks</b><i></i></div>
       <div class="menu-list">
-        <button class="btn primary" data-go="setup">▶ Jogar</button>
+        <button class="btn primary" data-go="setup">▶ Jogar contra bots</button>
+        <button class="btn" data-go="online">🌐 Jogar online</button>
         <button class="btn" data-go="rules">📖 Como jogar</button>
         <button class="btn" data-go="coll">🃏 Coleção</button>
         <button class="btn" data-go="opts">⚙ Opções e sons</button>
       </div>
-      <div class="foot">Prévia · atributos, perfis e especiais vêm das propostas do repositório, ainda não aprovadas</div></div>`;
+      <div class="foot">Atributos, perfis e especiais: dados oficiais v1.0 aprovados pelo autor (12/10/2026) · equilíbrio ainda sem testes rigorosos</div></div>`;
+    s.prepend(menuFx());
     const fan = $('.logo-fan', s);
     fanIds().forEach((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 108 }); c.style.setProperty('--r', (i - 1) * 9 + 'deg'); c.style.setProperty('--y', (i === 1 ? -10 : 4) + 'px'); fan.append(c); });
-    s.onclick = e => { const b = e.target.closest('[data-go]'); if (!b) return; SND.init(); SND.play('click'); const g = b.dataset.go; if (g === 'setup') { rollBots(CFG.seats, CFG.n); setup(); U.show('setup'); } else if (g === 'rules') rules(); else if (g === 'coll') collection(); else if (g === 'opts') options(); };
+    s.onclick = e => { const b = e.target.closest('[data-go]'); if (!b) return; SND.init(); SND.play('click'); const g = b.dataset.go; if (g === 'setup') { rollBots(CFG.seats, CFG.n); setup(); U.show('setup'); } else if (g === 'online') U.online.open(); else if (g === 'rules') rules(); else if (g === 'coll') collection(); else if (g === 'opts') options(); };
   }
 
   // ---- configuração da partida
-  const CFG = Object.assign({ n: 2, seats: [{ name: 'Você', bot: false }, { name: 'Bot Alfa', bot: true }, { name: 'Bot Beta', bot: true }, { name: 'Bot Gama', bot: true }], per: 12, diff: 'normal', sf: 2 }, store.get('cfg', {}));
+  const CFG = Object.assign({ n: 2, seats: [{ name: 'Você', bot: false }, { name: 'Bot Alfa', bot: true }, { name: 'Bot Beta', bot: true }, { name: 'Bot Gama', bot: true }], per: 12, diff: 'normal', sf: 2 }, store.get('cfg', {})); CFG.sf = 2; U.CFG = CFG;
   // 100 nomes aleatórios para os bots (sorteados sem repetir na mesa)
   const BOT_NAMES = ['Aldrin Vex','Brisa Tormenta','Cael Duskmoor','Dara Quill','Elric Nox','Fenna Ashgrove','Gorin Pedralta','Hana Zephyr','Ivo Brasa','Jessa Corvin','Kito Marlow','Lysa Rime','Maro Tavish','Nilo Ventura','Orla Fenwick','Pavel Strix','Quira Solen','Rurik Vale','Sabra Lumen','Tobias Wren','Ula Marén','Vesper Kade','Wilmer Dusk','Xara Pell','Yago Brandt','Zelda Moura','Anselmo Rocha','Bianca Nimbus','Caio Mirante','Dalila Orvalho','Eron Faísca','Fabrício Lamar','Gaia Trindade','Heitor Brumas','Iara Solstício','Jorge Calhau','Kira Vento','Leandro Éter','Maya Sombria','Nuno Ferrão','Olívia Cinza','Pietro Arco','Quintino Rio','Rafaela Prisma','Silas Orbe','Tânia Gelo','Ulisses Faro','Vânia Âmbar','Wagner Lótus','Ximena Brasil','Yuri Cometa','Zaíra Nuvem','Abel Quasar','Beca Lunar','Cosme Nebuloso','Duda Cintila','Elio Penumbra','Flora Astral','Gil Meteoro','Hera Zênite','Inácio Vórtice','Jade Eclipse','Kleber Nova','Lia Órbita','Mateus Plasma','Nara Aurora','Otto Pulsar','Pérola Abismo','Rômulo Fóton','Sara Galáxia','Tomé Cósmico','Úrsula Halo','Vicente Ônix','Wanda Brisa','Xavier Opala','Yara Safira','Zeca Turmalina','Alma Ciclone','Bento Granizo','Cíntia Relâmpago','Davi Trovão','Estela Névoa','Fausto Geada','Gisele Ressaca','Hugo Maré','Ísis Orvalho','Jonas Tempestade','Karina Bruma','Lucas Furacão','Mônica Brasa','Nando Rajada','Odete Cinzeiro','Plínio Vendaval','Quitéria Garoa','Ravi Alvorada','Sônia Poente','Túlio Crepúsculo','Vera Zéfiro','Wesley Aurora','Zuri Cintilante'];
   const isAutoName = n => /^Bot( |$)/.test(n || '') || BOT_NAMES.includes(n);
   function randBot(used) { const free = BOT_NAMES.filter(n => !used.includes(n)); const a = free.length ? free : BOT_NAMES; return a[Math.floor(Math.random() * a.length)]; }
+  U.randBot = randBot;
   U.rerollBotNames = function (players) { const used = players.filter(p => !p.bot).map(p => p.name); players.forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); return players; };
   function rollBots(seats, n) { const used = seats.slice(0, n).filter(p => !(p.bot && isAutoName(p.name))).map(p => p.name); seats.slice(0, n).forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
   function setup() {
     const s = $('#setup');
+    CFG.seats.forEach((p, i) => { if (i > 0 && !p.bot) { p.bot = true; p.name = 'Bot'; } });
     { const used = CFG.seats.slice(0, CFG.n).filter(p => !(p.bot && /^Bot( |$)/.test(p.name))).map(p => p.name); CFG.seats.slice(0, CFG.n).forEach(p => { if (p.bot && /^Bot( |$)/.test(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
     const maxPer = Math.min(24, Math.floor(CARTAS.length / CFG.n));
     CFG.per = Math.max(7, Math.min(CFG.per, maxPer));
     const seats = CFG.seats.slice(0, CFG.n);
     s.innerHTML = `<div class="center"><div class="panel">
       <h2>Nova partida</h2>
-      <div class="lbl">Atalhos</div>
-      <div class="row"><button class="btn sm" data-pre="1">Você × Bot</button><button class="btn sm" data-pre="3">Você × 3 Bots</button><button class="btn sm" data-pre="h">2 humanos</button><button class="btn sm" data-pre="w">Só bots (assistir)</button></div>
       <div class="lbl">Jogadores</div>
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
       <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
         <input type="text" maxlength="14" value="${esc(p.name)}" data-i="${i}" aria-label="Nome do jogador ${i + 1}">
-        <div class="seg" data-k="bot" data-i="${i}"><button data-v="0" class="${!p.bot ? 'on' : ''}">Humano</button><button data-v="1" class="${p.bot ? 'on' : ''}">Bot</button></div></div>`).join('')}</div>
+        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : '<span class="pill">🤖 Bot</span>'}</div>`).join('')}</div>
       <div class="lbl">Dificuldade dos bots</div>
       <div class="seg" data-k="diff">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${CFG.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>
-      <div class="lbl">Ataques especiais liberados</div>
-      <div class="seg" data-k="sf"><button data-v="2" class="${CFG.sf !== 1 ? 'on' : ''}">A partir da Rodada 2 (regra)</button><button data-v="1" class="${CFG.sf === 1 ? 'on' : ''}">Desde a Rodada 1 (teste)</button></div>
       <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">
-      <div class="hint">7 formam o baralho ativo; o restante vai para a reserva. Mais cartas = partida mais longa.${seats.filter(p => !p.bot).length > 1 ? '<br><b>Mais de um humano:</b> o aparelho é passado entre vocês; uma tela de cobertura protege as decisões secretas.' : ''}</div>
+      <div class="hint">7 formam o baralho ativo; o restante vai para a reserva. Mais cartas = partida mais longa.<br>Para jogar contra outras pessoas, cada uma no seu aparelho, use <b>Multiplayer</b> no Início.</div>
       <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-act="back">← Voltar</button><button class="btn primary" data-act="go">Começar ▶</button></div>
     </div></div>`;
     s.onclick = e => {
@@ -223,7 +250,6 @@
       if (pre) {
         if (pre === '1') { CFG.n = 2; CFG.seats[0] = { name: 'Você', bot: false }; CFG.seats[1] = { name: 'Bot', bot: true }; }
         else if (pre === '3') { CFG.n = 4; CFG.seats[0] = { name: 'Você', bot: false }; for (let i = 1; i < 4; i++) CFG.seats[i] = { name: 'Bot', bot: true }; }
-        else if (pre === 'h') { CFG.n = 2; CFG.seats[0] = { name: 'Jogador 1', bot: false }; CFG.seats[1] = { name: 'Jogador 2', bot: false }; }
         else { CFG.n = 3; for (let i = 0; i < 3; i++) CFG.seats[i] = { name: 'Bot', bot: true }; }
         store.set('cfg', CFG); return setup();
       }
@@ -244,6 +270,14 @@
       else if (e.target.dataset.i != null && e.target.type === 'text') { CFG.seats[+e.target.dataset.i].name = e.target.value; const av = e.target.closest('.seatcfg').querySelector('.avatar'); av.textContent = (e.target.value[0] || '?').toUpperCase(); store.set('cfg', CFG); }
     };
   }
+
+  U.profileName = () => (window.DSSTATS && window.DSSTATS.profile().name) || '';
+  U.openSetup = function () { if (CFG.seats[0] && !CFG.seats[0].bot && (CFG.seats[0].name === 'Você' || !CFG.seats[0].name) && U.profileName()) CFG.seats[0].name = U.profileName(); rollBots(CFG.seats, CFG.n); setup(); U.show('setup'); };
+  U.quick = function () {
+    SND.init(); const me = U.profileName() || 'Você';
+    const players = [{ name: me, bot: false, avatar: 0 }, { name: randBot([me]), bot: true, avatar: 1 }];
+    U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2 });
+  };
 
   // ---- regras
   function rules() {
@@ -287,6 +321,8 @@
       <div class="optrow"><span>Efeitos</span><input type="range" min="0" max="1" step=".05" value="${S.sfx}" data-o="sfx"></div>
       <div class="optrow"><span>Música</span><input type="range" min="0" max="1" step=".05" value="${S.music}" data-o="music"></div>
       <div class="optrow"><span>Música ambiente</span><div class="seg" data-o="musicOn"><button data-v="1" class="${S.musicOn ? 'on' : ''}">Ligada</button><button data-v="0" class="${!S.musicOn ? 'on' : ''}">Desligada</button></div></div>
+      <div class="optrow"><span>Dicas durante a partida</span><div class="seg" data-o="help"><button data-v="1" class="${S.help !== false ? 'on' : ''}">Ligadas</button><button data-v="0" class="${S.help === false ? 'on' : ''}">Desligadas</button></div></div>
+      <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
       <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
       <div class="optrow"><span>Faixa "PRÉVIA"</span><div class="seg" data-o="showTest"><button data-v="1" class="${S.showTest ? 'on' : ''}">Mostrar</button><button data-v="0" class="${!S.showTest ? 'on' : ''}">Ocultar</button></div></div>
       <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div>
@@ -297,6 +333,7 @@
     n.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return; SND.init();
       if (b.dataset.snd) return SND.play(b.dataset.snd);
+      if (b.hasAttribute('data-tipsreset')) { U.tipsReset && U.tipsReset(); b.textContent = 'Pronto ✓'; return; }
       const seg = b.closest('.seg'); if (!seg) return; const o = seg.dataset.o, v = b.dataset.v;
       S[o] = (o === 'speed') ? v : v === '1'; applyOpts(); $$('button', seg).forEach(x => x.classList.toggle('on', x === b)); SND.play('click');
     });
@@ -305,7 +342,7 @@
   U.options = options; U.rules = rules; U.collection = collection;
 
   U.boot = function () {
-    screens(); menu(); applyOpts(); U.show('menu');
+    screens(); U.tabsInit(); applyOpts(); U.show('menu');
     const unlock = () => { SND.init(); window.removeEventListener('pointerdown', unlock); };
     window.addEventListener('pointerdown', unlock);
   };

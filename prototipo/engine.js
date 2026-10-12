@@ -364,13 +364,14 @@
       const top = Math.max(...es.map(val));
       let pool = es.filter(e => val(e) === top);
       es.forEach(e => { if (e.margin && val(e) < top && top - val(e) <= 10 && !pool.includes(e)) pool.push(e); });
-      let tie = false;
+      let tie = false, tb = null;
       if (pool.length > 1) {
+        tb = { stage: 1, top, list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })) };
         let best = Math.max(...pool.map(e => sum4(e.stats))); pool = pool.filter(e => sum4(e.stats) === best);
-        if (pool.length > 1) { best = Math.max(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
+        if (pool.length > 1) { tb = { stage: 2, top, list: pool.map(e => ({ pid: e.pid, v: e.stats.pod + e.stats.int })) }; best = Math.max(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
         if (pool.length > 1) tie = true;
       }
-      return { winners: pool, tie, none: false, top };
+      return { winners: pool, tie, none: false, top, tb };
     }
 
     // ---------------------------------------------------------------- combate
@@ -623,7 +624,8 @@
             toBH(l);
           }
         }
-        result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: w.stats[w.attr] + w.bonus };
+        result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: w.stats[w.attr] + w.bonus, tb: ev.tb || null };
+        if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela ${ev.tb.stage === 1 ? 'soma dos 4 atributos' : 'soma de Ataque + Inteligência'}: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
         this.log(`${this.p(w.pid).name} vence ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit');
       }
       combat.result = result; combat.moves = moves;

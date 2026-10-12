@@ -13,7 +13,7 @@
     init() { this.cv = $('#fx'); this.x = this.cv.getContext('2d'); const rs = () => { this.cv.width = window.innerWidth; this.cv.height = window.innerHeight; }; rs(); window.addEventListener('resize', rs); },
     burst(x, y, o) {
       if (!this.cv || U.S.reduce) return; o = o || {};
-      const cols = o.colors || ['#ffe08a', '#fff', '#ffb02e', '#ff7a45'];
+      const cols = o.colors || ['#e9dfc0', '#fff', '#ffb02e', '#ff7a45'];
       for (let i = 0; i < (o.n || 50); i++) {
         const a = Math.random() * Math.PI * 2, sp = (o.speed || 6) * (.3 + Math.random());
         this.ps.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - (o.up || 0), life: 0, max: (o.life || 55) * (.6 + Math.random() * .8), s: (o.size || 3.2) * (.5 + Math.random()), c: cols[i % cols.length], g: o.g == null ? .12 : o.g, sq: o.sq });
@@ -22,7 +22,7 @@
     },
     confetti() {
       if (U.S.reduce) return;
-      for (let k = 0; k < 6; k++) setTimeout(() => this.burst(Math.random() * window.innerWidth, -10, { n: 40, speed: 4, up: -3, g: .09, life: 160, size: 5, sq: true, colors: ['#ffe08a', '#6cb6ff', '#ff7ab0', '#86f5a4', '#c58cff'] }), k * 250);
+      for (let k = 0; k < 6; k++) setTimeout(() => this.burst(Math.random() * window.innerWidth, -10, { n: 40, speed: 4, up: -3, g: .09, life: 160, size: 5, sq: true, colors: ['#e9dfc0', '#6cb6ff', '#ff7ab0', '#86f5a4', '#c58cff'] }), k * 250);
     },
     loop() {
       const x = this.x; x.clearRect(0, 0, this.cv.width, this.cv.height);
@@ -126,12 +126,12 @@
   function gameMenu() {
     SND.play('click');
     const n = el(`<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px"><h2 style="color:var(--gold2)">Pausa</h2>
-      <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button><button class="btn" data-a="n">↻ Reiniciar partida</button><button class="btn" data-a="q">Abandonar partida</button></div>`);
+      <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button>${V.online ? '' : '<button class="btn" data-a="n">↻ Reiniciar partida</button>'}<button class="btn" data-a="q">${V.online ? 'Sair da partida' : 'Abandonar partida'}</button></div>`);
     const m = U.modal(n); let sure = false, sureN = false;
     n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a;
       if (a === 'n') { if (!sureN) { sureN = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } }
       else if (a === 'c') m.close(); else if (a === 'r') U.rules(); else if (a === 'o') U.options();
-      else if (a === 'q') { if (!sure) { sure = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.killRun(); $$('#layer > *').forEach(x => x.remove()); U.show('menu'); } } };
+      else if (a === 'q') { if (!sure) { sure = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.killRun(); $$('#layer > *').forEach(x => x.remove()); if (V.online) { U.onlineOff && U.onlineOff(); V.ctl.leave(); } else U.show('menu'); } } };
   }
 
   function buildBoard() {
@@ -193,7 +193,7 @@
   function showMyDeck() {
     const p = G.p(V.viewer); SND.play('click');
     const w = el(`<div><h2 style="color:var(--gold2)">Seu baralho</h2><p class="hint">Ordem de jogo (1ª = próxima a entrar). Reserva: ${p.reserve.length} carta(s) fechadas.</p><div class="cgrid"></div>${p.prepared.length ? '<h3 style="margin:10px 0;color:var(--gold2)">Especiais preparados</h3><div class="cgrid" id="pp"></div>' : ''}</div>`);
-    $('.cgrid', w).append(...p.deck.map((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 96, click: true }); const t = el(`<div class="tag" style="position:absolute;top:-8px;left:4px;z-index:3;background:#0b0720;border:1px solid var(--line);border-radius:99px;padding:0 7px;font-size:11px;font-weight:900">${i + 1}</div>`); c.append(t); return c; }));
+    $('.cgrid', w).append(...p.deck.map((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 96, click: true }); const t = el(`<div class="tag" style="position:absolute;top:-8px;left:4px;z-index:3;background:#0b0c10;border:1px solid var(--line);border-radius:99px;padding:0 7px;font-size:11px;font-weight:900">${i + 1}</div>`); c.append(t); return c; }));
     const pp = $('#pp', w); if (pp) pp.append(...p.prepared.map(id => cardEl(id, { up: true, noanim: true, cw: 96, click: true })));
     U.modal(w);
   }
@@ -296,7 +296,7 @@
       });
       U.layer().appendChild(st); SND.play('special');
       await sleep(500); $$('.card', st).forEach(c => c.classList.add('up')); SND.play('specialFlip');
-      const r = st.getBoundingClientRect(); FX.burst(r.width / 2, r.height / 2, { n: 70, speed: 8, colors: ['#ffe08a', '#c58cff', '#fff'], life: 60 });
+      const r = st.getBoundingClientRect(); FX.burst(r.width / 2, r.height / 2, { n: 70, speed: 8, colors: ['#e9dfc0', '#c58cff', '#fff'], life: 60 });
       await sleep(2300); st.remove();
       let strip = $('.strip'); if (!strip) { strip = el('<div class="strip"></div>'); $('.arenaWrap').append(strip); }
       acts.forEach(a => { const sp = E.SPECIALS[CARDS[a.card].especial]; strip.append(el(`<div class="chip" data-card="${a.card}" style="--pc:${PCOL[a.pid]}"><i></i>${esc(nameOf(a.pid))}: ${esc(sp.nome)}</div>`)); });
@@ -352,7 +352,7 @@
       SND.play('steal'); await Promise.all(list.filter(x => x.to != null && x.to !== x.from).map(x => fly(seatRes(x.from), seatRes(x.to), { ms: 750, cw: 50, arc: 30 }))); refresh(); await sleep(120);
     },
     async peek({ pid, target, cards, title, hint }) {
-      const p = G.p(pid); if (p.bot) return;
+      const p = G.p(pid); if (p.bot || (V.online && pid !== V.viewer)) return;
       await cover(p);
       const w = el(`<div><h2 style="color:var(--gold2)">${esc(title || 'Espionagem')}</h2><p class="hint">${esc(hint || `Próximas cartas do baralho de ${nameOf(target)} (topo → fundo). Só você vê isto.`)} Só você vê isto.</p><div class="cgrid"></div></div>`);
       $('.cgrid', w).append(...cards.map(id => cardEl(id, { up: true, noanim: true, cw: 110, click: true })));
@@ -367,7 +367,7 @@
     async resolved({ combat, result, moves }) {
       updateAll();
       if (result.type === 'tie' || result.type === 'none') {
-        banner('Empate', 'As cartas voltam aos donos', '#b9aedb', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700);
+        banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700);
       } else {
         const w = result.winnerPid, slot = V.slots[w], atk = result.type === 'attack';
         combat.entries.forEach(e => { if (e.pid === w) slot.classList.add('winner'); else if (!e.withdrawn) V.slots[e.pid].classList.add('loser'); });
@@ -375,10 +375,12 @@
         slot.append(el(atk ? '<div class="fx-slash"></div>' : '<div class="fx-shield"></div>'));
         const r = slot.getBoundingClientRect(); const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
         FX.burst(cx, cy, { n: 80, speed: 9, life: 70, up: 2 });
-        setTimeout(() => FX.burst(cx, cy, { n: 40, speed: 5, life: 60, colors: atk ? ['#ff7a45', '#fff', '#ffe08a'] : ['#8fd6ff', '#fff', '#4aa8ff'] }), 300);
-        banner(`${nameOf(w)} vence!`, `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', 2100);
-        caption(`${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
-        await sleep(2100);
+        setTimeout(() => FX.burst(cx, cy, { n: 40, speed: 5, life: 60, colors: atk ? ['#ff7a45', '#fff', '#e9dfc0'] : ['#8fd6ff', '#fff', '#4aa8ff'] }), 300);
+        if (U.tip) { const t = ['reveal', atk ? 'capture' : 'bh'].find(x => !U.tipSeen(x)); if (t) U.tip(t); }
+        const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Ataque + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
+        banner(`${nameOf(w)} vence!`, tb ? tbTxt : `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 3600 : 2100);
+        caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
+        await sleep(tb ? 3400 : 2100);
       }
       // movimentação das cartas
       const jobs = moves.map((m, i) => sleep(i * 220).then(async () => {
@@ -395,6 +397,7 @@
       V.combat = null; refresh(); await sleep(250);
     },
     async refill({ pid, cards }) {
+      if (U.tip && pid === V.viewer) U.tip('refill');
       SND.play('refill'); caption(`${nameOf(pid)} compra ${cards.length} carta(s) da reserva.`);
       for (let i = 0; i < cards.length; i++) { fly(seatRes(pid), seatDeck(pid), { ms: 450, cw: 50 }); await sleep(70); }
       await sleep(450); refresh();
@@ -402,9 +405,9 @@
     async eliminated({ pid }) {
       refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700);
     },
-    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Ataques especiais liberados' : null, null, 1500); await sleep(1000); },
+    async round({ round }) { if (U.tip && round === 2) U.tip('round2'); refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Ataques especiais liberados' : null, null, 1500); await sleep(1000); },
     async end({ winner }) {
-      refresh(); const s = G.s; const human = winner != null && !G.p(winner).bot; const anyHuman = V.humans > 0;
+      refresh(); const s = G.s; const human = winner != null && (V.online ? winner === V.viewer : !G.p(winner).bot); const anyHuman = V.humans > 0;
       SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
       if (winner != null && (human || !anyHuman)) FX.confetti();
       const w = winner != null ? G.p(winner) : null;
@@ -413,16 +416,27 @@
         <h1>${w ? esc(w.name) + ' vence!' : 'Empate!'}</h1>
         <div class="hint">${s.byLimit ? 'Limite de disputas atingido: vence quem tem mais cartas.' : w ? 'Todos os adversários foram eliminados.' : ''}</div>
         <div class="stats"><div><b>${s.combats}</b>disputas</div><div><b>${s.round}</b>rodadas</div><div><b>${s.bh.length}</b>no Buraco Negro</div></div>
-        <div class="row" style="justify-content:center"><button class="btn primary" data-a="again">Jogar de novo</button><button class="btn" data-a="menu">Menu</button></div></div></div></div>`);
-      n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); n.remove(); if (b.dataset.a === 'again') { U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } else U.show('menu'); };
+        ${unlockHTML()}
+        <div class="row" style="justify-content:center">${V.online ? (V.ctl.again ? '<button class="btn primary" data-a="again">Nova partida (mesmos jogadores)</button>' : '<div class="hint" style="width:100%;text-align:center">Aguardando o anfitrião começar outra partida…</div>') : '<button class="btn primary" data-a="again">Jogar de novo</button>'}<button class="btn" data-a="menu">${V.online ? 'Sair da sala' : 'Menu'}</button></div></div></div></div>`);
+      n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); if (V.online) { if (b.dataset.a === 'again') { n.remove(); V.ctl.again(); } else { n.remove(); U.killRun(); U.onlineOff && U.onlineOff(); V.ctl.leave(); } return; } n.remove(); if (b.dataset.a === 'again') { U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } else U.show('menu'); };
       U.layer().appendChild(n);
     },
   };
 
+  function unlockHTML() {
+    const r = U.lastRec; U.lastRec = null; if (!r) return ''; const I = U.ICO || {}; const L = [];
+    if (r.daily) L.push(`<div class="u">${I.medal || ''}Desafio do dia concluído</div>`);
+    (r.ach || []).forEach(a => L.push(`<div class="u">${I.medal || ''}Conquista: ${esc(a.nome)}</div>`));
+    return L.length ? `<div class="unlocks">${L.join('')}</div>` : '';
+  }
+  function newRec(ctx) {
+    U.lastRec = null; const S = window.DSSTATS; U.rec = S ? S.recorder(ctx) : null;
+  }
+
   // ---------------------------------------------------------------- decisões humanas
   function makeIO() {
     return {
-      notify: async (type, data) => { const f = H[type]; if (f) { try { await f(data || {}); } catch (e) { if (e === 'abort') throw e; console.error('UI', type, e); } } },
+      notify: async (type, data) => { if (U.rec) { try { const r = U.rec.ev(type, data, G); if (r) U.lastRec = r; } catch (e) { console.error('rec', e); } } const f = H[type]; if (f) { try { await f(data || {}); } catch (e) { if (e === 'abort') throw e; console.error('UI', type, e); } } },
       log: (text, cls) => { V.logs.push({ text, cls }); if (cls !== 'prep') caption(text, cls === 'vit'); const d = $('.logdrawer .lg'); if (d) d.append(el(`<p class="${cls}">${esc(text)}</p>`)); },
       orderHand: (p, hand) => orderHand(p, hand),
       async prepare(p, top) {
@@ -439,6 +453,7 @@
       async attr(p, entry, options, combat, canPrep) {
         await cover(p);
         const init = combat.initiator === p.pid; const ia = combat.entries.find(e => e.pid === combat.initiator).attr;
+        if (U.tip) await U.tip(init ? 'attr_init' : 'attr_follow');
         const lst = options.map(a => '<b>' + ATT[a].nome + '</b>').join(options.length === 2 ? ' e ' : ', ');
         const txt = combat.ctl && combat.ctl.universal ? `Atributo universal: todos disputam em ${lst}.`
           : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
@@ -450,7 +465,7 @@
         return ask(node, '.attrbtn, .prepbtn');
       },
       async special(p, usable, combat, ctx, stage) {
-        await cover(p);
+        await cover(p); if (U.tip) await U.tip('special');
         const T = stage === 'ctrl' ? ['virar um especial de controle?', 'Estes especiais valem antes de declarar os atributos. Os virados são revelados juntos.']
           : stage === 'second' ? ['virar também um segundo especial?', 'Este especial é "companheiro": pode acompanhar outro especial na mesma disputa.']
           : ['virar um ataque especial?', 'Você pode virar no máximo 1 (exceto especiais companheiros). Os virados são revelados juntos, depois que todos decidirem.'];
@@ -509,30 +524,49 @@
         const run = U.run; run.rej.add(rej);
         let arr = hand.slice(), sel = -1, last = 0;
         const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: monte seu baralho</h2>
-          <div class="hint">Toque numa carta e depois em outra para trocá-las de lugar. A carta <b>nº 1</b> é a primeira a entrar em disputa.</div></div>
+          <div class="hint"><b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.</div></div>
           <div class="grid"></div><div class="info"></div>
-          <div class="row" style="justify-content:center"><button class="btn sm" data-a="l">◀ Mover</button><button class="btn sm" data-a="r">Mover ▶</button><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button></div>
+          <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);
         const W = window.innerWidth - 32;
         let cw = Math.floor((W - 6 * 10) / 7); if (cw < 70) cw = Math.floor((W - 3 * 10) / 4); cw = Math.max(64, Math.min(112, cw));
+        function renum() { $$('.oc', $('.grid', ov)).forEach((n, k) => { $('.no', n).textContent = k === 0 ? '1 · TOPO' : k + 1; }); }
+        function dragStart(ev, w, i0) {
+          if (ev.button > 0) return; ev.preventDefault();
+          const grid = $('.grid', ov), sx = ev.clientX, sy = ev.clientY; let moving = false, ghost = null;
+          const mv = e => {
+            if (!moving) { if (Math.hypot(e.clientX - sx, e.clientY - sy) < 8) return; moving = true; w.classList.add('drag'); SND.play('tick');
+              ghost = el('<div class="ghost"></div>'); ghost.append(cardEl(w.dataset.id, { up: true, noanim: true, cw })); ov.append(ghost); }
+            ghost.style.left = e.clientX + 'px'; ghost.style.top = e.clientY + 'px';
+            const nodes = $$('.oc', grid); let best = null, bd = 1e9;
+            nodes.forEach(n => { if (n === w) return; const r = n.getBoundingClientRect(); const d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2)); if (d < bd) { bd = d; best = n; } });
+            if (best && bd < cw * 0.9) { if (nodes.indexOf(w) < nodes.indexOf(best)) best.after(w); else best.before(w); renum(); }
+          };
+          const up = e => {
+            window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up);
+            if (ghost) ghost.remove();
+            if (moving) { arr = $$('.oc', grid).map(n => n.dataset.id); last = arr.indexOf(w.dataset.id); sel = last; SND.play('place'); }
+            else { SND.play('tick'); last = i0; sel = sel === i0 ? -1 : i0; }
+            draw();
+          };
+          window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+        }
         function draw() {
           const g = $('.grid', ov); g.replaceChildren(...arr.map((id, i) => {
             const w = el(`<div class="oc${sel === i ? ' sel' : ''}"><div class="no">${i === 0 ? '1 · TOPO' : i + 1}</div></div>`);
-            w.append(cardEl(id, { up: true, noanim: true, cw })); w.onclick = () => { SND.play('tick'); last = i; if (sel < 0) sel = i; else if (sel === i) sel = -1; else { [arr[sel], arr[i]] = [arr[i], arr[sel]]; sel = -1; SND.play('place'); } draw(); }; return w;
+            w.dataset.id = id; w.append(cardEl(id, { up: true, noanim: true, cw })); w.addEventListener('pointerdown', ev => dragStart(ev, w, i)); return w;
           }));
           const id = arr[last], c = CARDS[id], sp = E.SPECIALS[c.especial];
           $('.info', ov).innerHTML = `<b>${esc(c.nome)}</b> · ${AIDS.map(a => `<span class="ico" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}${c.stats[a]}</span>`).join(' ')}<br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}`;
         }
         ov.onclick = e => {
           const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a; SND.play('click');
-          if (a === 'l' && sel > 0) { [arr[sel - 1], arr[sel]] = [arr[sel], arr[sel - 1]]; sel--; last = sel; }
-          else if (a === 'r' && sel >= 0 && sel < arr.length - 1) { [arr[sel + 1], arr[sel]] = [arr[sel], arr[sel + 1]]; sel++; last = sel; }
-          else if (a === 'best') { arr.sort((x, y) => E.sum4(CARDS[y].stats) - E.sum4(CARDS[x].stats)); sel = -1; }
+          if (a === 'best') { arr.sort((x, y) => E.sum4(CARDS[y].stats) - E.sum4(CARDS[x].stats)); sel = -1; }
           else if (a === 'mix') { arr.sort(() => Math.random() - .5); sel = -1; }
           else if (a === 'ok') { run.rej.delete(rej); ov.remove(); return res(arr); }
           draw();
         };
-        $('#game').append(ov); draw();
+        $('#game').append(ov); draw(); if (U.tip) U.tip('order');
       });
     })();
   }
@@ -543,9 +577,126 @@
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
+    newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: cfg.difficulty, per: cfg.perPlayer, sf: cfg.specialsFrom, shared: true });
     G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };
+
+  // ---------------------------------------------------------------- online (anfitrião roda o motor; convidados espelham)
+  function plain(v, d) {
+    d = d || 0; if (v == null || typeof v === 'function') return v === undefined ? undefined : (typeof v === 'function' ? undefined : v);
+    if (typeof v !== 'object') return v; if (d > 4) return undefined;
+    if (v instanceof Set) return Array.from(v).map(x => plain(x, d + 1));
+    if (Array.isArray(v)) return v.map(x => plain(x, d + 1));
+    const o = {}; for (const k in v) { if (k === 'mods' || k === 'g' || k === 'ctx' || k === 'combat') continue; const r = plain(v[k], d + 1); if (r !== undefined) o[k] = r; } return o;
+  }
+  U.plain = plain;
+
+  U.startOnline = async function (ctl) {
+    lastCfg = null; SND.init(); U.killRun(); U.newRun(); U.onlineOff && U.onlineOff(); $$('#layer > *').forEach(x => x.remove());
+    if (!FX.cv) FX.init();
+    const seats = ctl.seats, host = ctl.role === 'host', link = ctl.link, cfg = ctl.cfg;
+    V = { n: seats.length, humans: 1, online: true, ctl, viewer: ctl.viewer, noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
+    U.show('game'); shell();
+    newRec({ viewer: ctl.viewer, online: true, humans: seats.filter(s => !s.bot).length, n: seats.length, diff: cfg.diff, per: cfg.per, sf: cfg.sf, shared: host });
+    const local = makeIO(), off = [], pending = new Map(); let seq = 0, closed = false;
+    U.onlineOff = () => { closed = true; off.forEach(f => { try { f(); } catch (e) { } }); pending.forEach(q => q.finish(undefined)); pending.clear(); };
+    const send = (o, to) => { if (!closed) link.send('ev', o, to).catch(() => { }); };
+    const leaveNow = (msg) => { U.killRun(); U.onlineOff(); const n = el(`<div class="modal"><div class="box"><div class="final"><h1>${esc(msg)}</h1><div class="row" style="justify-content:center"><button class="btn primary">Voltar ao menu</button></div></div></div></div>`); $('button', n).onclick = () => { n.remove(); V.ctl.leave(); }; U.layer().appendChild(n); };
+
+    if (host) {
+      let combatOn = false, initAnn = false, revealed = false;
+      const serCombat = c => c ? ({ initiator: c.initiator, order: c.order, specialsAllowed: c.specialsAllowed, ctl: { universal: !!(c.ctl && c.ctl.universal) },
+        entries: c.entries.map(e => ({ pid: e.pid, card: e.card, stats: e.stats, bonus: e.bonus, extra: e.extra, attr: (revealed || (initAnn && e.pid === c.initiator)) ? e.attr : null, withdrawn: !!e.withdrawn, gone: !!e.gone })) }) : null;
+      const serEvent = (type, data) => {
+        const o = {}; for (const k in data) { const v = data[k];
+          if (k === 'combat') o.combat = serCombat(v); else if (k === 'usable' || k === 'ctx') continue;
+          else if (k === 'act') o.act = { pid: v.pid, card: v.card, forced: !!v.forced };
+          else if (k === 'acts') o.acts = v.map(a => ({ pid: a.pid, card: a.card, forced: !!a.forced }));
+          else if (k === 'spec') o.spec = { nome: v.nome, texto: v.texto };
+          else { const r = plain(v); if (r !== undefined) o[k] = r; } }
+        if (type === 'prepare') delete o.card; return o;
+      };
+      const state = () => ({ players: G.s.players.map(p => ({ pid: p.pid, name: p.name, bot: p.bot, avatar: p.avatar, alive: p.alive, deck: p.deck.slice(), reserve: p.reserve.slice(), prepared: p.prepared.slice() })),
+        bh: G.s.bh.map(x => x.kind === 'normal' ? x.id : x.id + ':' + x.kind), round: G.s.round, combats: G.s.combats, initiator: G.s.initiator, over: G.s.over, winner: G.s.winner, byLimit: G.s.byLimit });
+      let logq = [], flushing = false;
+      const TIMEOUT = 150000; let askSeq = 0;
+      const remoteAsk = (p, kind, args, fb) => {
+        const peer = seats[p.pid].peer; if (!peer || closed) return fb();
+        const id = ++askSeq; send({ n: ++seq, t: 'waiting', pid: p.pid }); caption(`Aguardando ${p.name}…`);
+        return new Promise(res => {
+          let done = false, iv, to;
+          const finish = v => { if (done) return; done = true; clearInterval(iv); clearTimeout(to); pending.delete(id); res(v); };
+          pending.set(id, { peer, pid: p.pid, finish: v => finish(v === undefined ? fb() : v) });
+          const msg = { id, pid: p.pid, kind, args }; const go = () => link.send('ask', msg, peer).catch(() => { });
+          go(); iv = setInterval(go, 7000); to = setTimeout(() => { G.log(`${p.name} demorou demais: jogada automática.`, 'efeito'); finish(fb()); }, TIMEOUT);
+        });
+      };
+      off.push(link.on('ans', (d, m) => { const q = pending.get(d.id); if (q && q.peer === m.peer) q.finish(d.v == null ? undefined : d.v); }));
+      const wrap = (kind, mk) => async (p, ...a) => {
+        const peer = seats[p.pid].peer;
+        if (!peer || peer === link.me) { send({ n: ++seq, t: 'waiting', pid: p.pid }); return local[kind](p, ...a); }
+        return remoteAsk(p, kind, mk(...a), () => (G['bot_' + kind] ? G['bot_' + kind](p, ...a) : undefined));
+      };
+      const io = {
+        notify: async (type, data) => {
+          if (type === 'combatStart') { combatOn = true; initAnn = false; revealed = false; } else if (type === 'initiatorAttr') initAnn = true; else if (type === 'reveal') revealed = true;
+          const o = { n: ++seq, t: type, d: serEvent(type, data || {}), st: state() }; if (combatOn && G.combat && type !== 'combatEnd') o.cb = serCombat(G.combat); else if (type === 'combatEnd') o.cb = null;
+          let skip = false, to; if (type === 'peek') { to = seats[data.pid] && seats[data.pid].peer; if (!to || to === link.me) skip = true; }
+          if (!skip) send(o, to);
+          if (type === 'combatEnd') combatOn = false;
+          return local.notify(type, data);
+        },
+        log: (text, cls) => { local.log(text, cls); logq.push([text, cls || '']); if (!flushing) { flushing = true; queueMicrotask(() => { flushing = false; send({ n: ++seq, t: 'log', lg: logq.splice(0) }); }); } },
+        orderHand: wrap('orderHand', hand => [hand]),
+        prepare: wrap('prepare', top => [top]),
+        attr: wrap('attr', (entry, options, combat, canPrep) => [{ card: entry.card, stats: entry.stats }, options, serCombat(combat), canPrep]),
+        special: wrap('special', (usable, combat, ctx, stage) => [usable, serCombat(combat), null, stage]),
+        pickCards: wrap('pickCards', spec => [plain(spec)]),
+        pickAttr: wrap('pickAttr', spec => [plain(spec)]),
+        chooseTarget: wrap('chooseTarget', (cands, label) => [cands, label]),
+      };
+      const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i }));
+      G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, seed: cfg.seed, io });
+      U.game = G;
+      off.push(link.onPeers(ch => ch.left.forEach(pe => {
+        const i = seats.findIndex(s => s.peer === pe.peer); if (i < 0 || !G.p(i) || G.p(i).bot) return;
+        G.p(i).bot = true; G.log(`${G.p(i).name} desconectou. Um bot assumiu o lugar.`, 'efeito');
+        pending.forEach(q => { if (q.peer === pe.peer) q.finish(undefined); });
+      })));
+      try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
+      return;
+    }
+
+    // ----- convidado: espelha o estado e executa as decisões pedidas
+    G = { cfg: { specialsFrom: cfg.sf }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
+      p(pid) { return this.s.players[pid]; }, alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); } };
+    U.game = G;
+    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit'].forEach(k => { G.s[k] = st[k]; }); };
+    let last = 0, queue = Promise.resolve(); const answered = new Map(), inflight = new Set();
+    const enqueue = fn => { queue = queue.then(fn).catch(e => { if (e !== 'abort') console.error('online', e); }); };
+    off.push(link.on('ev', (m, msg) => {
+      if (msg.peer !== ctl.hostPeer || m.n <= last) return; last = m.n;
+      enqueue(async () => {
+        if (m.st) applyState(m.st); if (m.cb !== undefined) V.combat = m.cb;
+        if (m.t === 'log') { m.lg.forEach(([t, c]) => local.log(t, c)); return; }
+        if (m.t === 'waiting') { const p = G.p(m.pid); if (p) caption(m.pid === V.viewer ? 'Sua vez de decidir.' : `Aguardando ${p.name}…`); return; }
+        await local.notify(m.t, m.d || {});
+      });
+    }));
+    off.push(link.on('ask', (m, msg) => {
+      if (msg.peer !== ctl.hostPeer) return;
+      if (answered.has(m.id)) { link.send('ans', { id: m.id, v: answered.get(m.id) }).catch(() => { }); return; }
+      if (inflight.has(m.id)) return; inflight.add(m.id);
+      enqueue(async () => {
+        let v; try { v = await local[m.kind](G.p(m.pid), ...m.args); } catch (e) { if (e === 'abort') return; console.error(e); }
+        const out = v === undefined ? null : v; answered.set(m.id, out); inflight.delete(m.id);
+        link.send('ans', { id: m.id, v: out }).catch(() => { });
+      });
+    }));
+    off.push(link.onPeers(() => { if (!closed && !link.peers().some(p => p.peer === ctl.hostPeer) && !G.s.over) leaveNow('O anfitrião saiu da partida.'); }));
+  };
+
   U.dbg = () => ({ G, V });
 })();
