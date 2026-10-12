@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v1.0)
+# Dimensions Stacks — Regras e dinâmica (GDD v1.1)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -247,7 +247,7 @@ Destaques para especificação futura:
 
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
 
-- O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **83 personagens candidatos** das séries serão distribuídos posteriormente.
+- O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **87 personagens candidatos** das séries serão distribuídos posteriormente.
 - Foi criada a [biblioteca de **128 ataques especiais candidatos**](BIBLIOTECA_ATAQUES_ESPECIAIS.md), agrupados em 13 famílias, com coluna `Carta atribuída (ID)` vazia em todas as habilidades, para que nenhuma seja atribuída a personagem por acidente.
 - A [auditoria de **62 posições do baralho físico**](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
 - Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
@@ -328,7 +328,7 @@ Como algumas cartas **protegem, anulam ou respondem a outras**, recomendo que o 
 
 ### 21.5 Fichas de personagens e balanceamento (propostas, não cânone)
 
-Foram elaboradas **83 sugestões de fichas**, com descrições de **até 120 caracteres**, perfis numéricos propositalmente variados, habilidades sugeridas e sinalização de fonte/risco de extrapolação: [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md). O autor pediu diferenças importantes de força, incluindo cartas fracas mas negociáveis por efeitos de troca, especialistas e cartas de elite.
+Foram elaboradas **87 sugestões de fichas**, com descrições de **até 120 caracteres**, perfis numéricos propositalmente variados, habilidades sugeridas e sinalização de fonte/risco de extrapolação: [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md). O autor pediu diferenças importantes de força, incluindo cartas fracas mas negociáveis por efeitos de troca, especialistas e cartas de elite.
 
 **Os oito membros presentes ou futuros de A União** receberam habilidades candidatas de grande impacto: essa é a **diretriz de design solicitada pelo autor**, não a aprovação dos números e AE individuais. **Todos os valores, descrições e AE sugeridos ainda precisam de revisão do autor**, especialmente os personagens sem documentos narrativos confiáveis.
 
@@ -336,4 +336,12 @@ Foram elaboradas **83 sugestões de fichas**, com descrições de **até 120 car
 
 ## 22. Ampliação do elenco de Viajantes Dimensionais para 83 candidatos
 
-O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. Os atributos, descrições e habilidades individuais foram propostos em [CARTAS_83_PROPOSTAS.md](CARTAS_83_PROPOSTAS.md) e **não aprovados**. A biblioteca permanece com **129 habilidades candidatas**; a coluna de atribuição definitiva segue vazia. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
+O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. Os atributos, descrições e habilidades individuais foram propostos em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e **não aprovados**. A biblioteca permanece com **129 habilidades candidatas**; a coluna de atribuição definitiva segue vazia. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
+
+## 23. Inclusão de quatro integrantes da Família Carnam — total atual 87
+
+**Decisão de inclusão do autor:** o núcleo pretendido é a **Família Carnam do primeiro volume de Diário Sobrenatural**, não a família dos Lins de Viajantes Dimensionais. O documento canônico do Livro 1 identifica seis integrantes associados aos espíritos/Elos: **Carnam, Isabela, avó, Ingrid, Suéten, Ibliso (cão)**. **D07 Ingrid Carnam** e **D13 Suéten** já constavam do baralho. **Quatro cartas candidatas novas: D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso (cão)**. *A avó Carnam não é D10 Avó de Kelly.*
+
+Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de fotografias; Avó: lente dos óculos; Ingrid: ursinho; Suéten: relógio; Ibliso: coleira**. A documentação de Elos tem status *misto*, embora os seis nomes sejam informados no documento canônico de personagens. **Não declarar que o pai de Vini é Carnam.**
+
+**Total atualizado: 87 cartas candidatas**, das quais **18 de Diário Sobrenatural**. As descrições, valores e habilidades propostas estão em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md); nenhuma das quatro novas fichas foi aprovada como dado definitivo. A biblioteca segue com **129 habilidades candidatas**, sem atribuição final.
