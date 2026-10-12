@@ -9,6 +9,7 @@ Jogo de cartas digital para PC que reúne personagens do universo literário **D
 - [Regras e dinâmica (GDD)](docs/REGRAS.md)
 - [Ataques especiais: índice atualizado](docs/ATAQUES_ESPECIAIS.md)
 - [23 ataques especiais transcritos pelo autor](docs/TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md)
+- [32 novas leituras provisórias por IA, numeração e lacunas](docs/LEITURAS_IA_PENDENTES_2026-10-12.md)
 - [Inventário fotográfico original, arquivado](docs/INVENTARIO_FOTOGRAFICO_LEGADO.md)
 - [Elenco candidato das séries](docs/ELENCO_CANDIDATO.md)
 
