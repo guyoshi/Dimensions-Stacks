@@ -6,8 +6,8 @@
 
 | Teste | Esperado | Status |
 | --- | --- | --- |
-| Identidades de cartas | **79 IDs distintos**, séries J/V/S/D/M/B, sem duplicata por selo de A União | Estrutura conhecida |
-| Fichas propostas | 79 entradas em `docs/CARTAS_79_PROPOSTAS.md` e `dados/propostas/cartas_79.json` | Proposta |
+| Identidades de cartas | **83 IDs distintos**, séries J/V/S/D/M/B, sem duplicata por selo de A União | Estrutura conhecida |
+| Fichas propostas | 83 entradas em `docs/CARTAS_83_PROPOSTAS.md` e `dados/propostas/cartas_83.json` | Proposta |
 | Faixa de atributos | ATQ, DEF, INT, VEL são inteiros de 0–100 nas **propostas** | Proposta de escala |
 | Soma | Igual a ATQ + DEF + INT + VEL em cada carta candidata | Consistência matemática |
 | Descrição curta | Comprimento <=120 caracteres na tabela candidata | Proposta visual; conferir layout |
@@ -53,6 +53,6 @@ Todos os itens deste grupo validam **o modelo proposto**, não decisões finaliz
 
 ## 5. Bloqueios de lançamento ainda abertos
 
-**Não considerar uma versão competitiva concluída sem:** definir de onde saem especiais preparadas; determinar a janela prioritária e as reações; aprovar destino de duas cartas do ataque em dupla; resolver empate absoluto; definir tamanho do baralho efetivamente distribuído por jogador e seleção em 2/3/4; validar raridade/custos de vitória automática; aprovar explicitamente as 79 fichas e o texto integral/categoria das habilidades destinadas aos personagens; testar legibilidade real das descrições e habilidades no design visual.
+**Não considerar uma versão competitiva concluída sem:** definir de onde saem especiais preparadas; determinar a janela prioritária e as reações; aprovar destino de duas cartas do ataque em dupla; resolver empate absoluto; definir tamanho do baralho efetivamente distribuído por jogador e seleção em 2/3/4; validar raridade/custos de vitória automática; aprovar explicitamente as 83 fichas e o texto integral/categoria das habilidades destinadas aos personagens; testar legibilidade real das descrições e habilidades no design visual.
 
-[Contrato de implementação](CONTRATO_PARA_IA_IMPLEMENTADORA.md) · [79 cartas propostas](CARTAS_79_PROPOSTAS.md) · [Biblioteca de 129 habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
+[Contrato de implementação](CONTRATO_PARA_IA_IMPLEMENTADORA.md) · [83 cartas propostas](CARTAS_83_PROPOSTAS.md) · [Biblioteca de 129 habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
