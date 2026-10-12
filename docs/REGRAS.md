@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.4)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.5)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -217,3 +217,28 @@ Destaques para especificação futura:
 - **Especial #59 (William McCroys):** obriga o jogador escolhido a **usar todas as cartas de ataque especial que já tiver preparado à esquerda na mesa**, no máximo duas. A formulação nova 'todas em mãos' **não autoriza puxar cartas não preparadas de outras zonas**.
 - **Desempate geral:** valor individual → soma dos quatro atributos → soma **Poder + Inteligência**. Empate persistente depois desses três critérios continua pendente.
 - **Leituras por IA de outras cartas:** registrar como **provisórias**, nunca como texto confirmado. Consultar [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md).
+
+
+## 17. Inventário ampliado e novas questões mecânicas (12/10/2026)
+
+**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com ataques especiais **não recuperados**. Ver [inventário principal](ATAQUES_ESPECIAIS.md) e [tabela de leituras ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
+
+### Efeitos recentemente ampliados (origem: texto reconstruído por IA e fornecido pelo autor)
+
+**NÃO APROVADOS AUTOMATICAMENTE PARA O JOGO NOVO.** Estes textos representam o acervo original reconstruído, e seu funcionamento digital ainda precisa ser desenhado e, quando necessário, confirmado.
+
+- **#20 Agente Sete —** trocar o valor de Defesa pela Inteligência da própria carta. **PENDENTE:** a redação indica troca/substituição, não está claro se intercambia ambos os números ou copia apenas um, e qual efeito nos pares legais.
+- **#37 D. Lesort —** cada jogador envia uma carta aleatória ao Buraco Negro. **PENDENTE:** de qual zona sai a carta, se o próprio ativador participa e quando ocorre o descarte.
+- **#47 Kate Fira —** carta de defesa que impede todos os ataques especiais do turno. **PENDENTE:** prioridade contra especiais já iniciados e relação com #59 que força múltiplas ativações.
+- **#49 Temi Lokat —** carta de defesa que impede o rival de vencer neste turno. **PENDENTE:** se impede derrota do usuário apenas ou impede vitória do alvo, e como funciona em 3–4 jogadores.
+- **#50 Raum Cedar —** obriga cada jogador a descartar uma carta aleatória ao Buraco Negro. **PENDENTE:** fragmento de início perdido depois de “CARTA ATAQUE...”; aparentemente semelhante a #37, verificar se são duplicados ou têm tempos diferentes.
+- **#52 Luar Engeal —** carta coringa que vence automaticamente o turno e captura cartas dos adversários. **PENDENTE:** prioridade contra cartas de defesa, efeitos de cancelamento e conflito com outros coringas.
+- **#62 Anasin —** permite utilizar um ataque especial novamente mediante descarte de duas cartas escolhidas. **PENDENTE:** a transcrição diz “ma descarte” (provável truncamento de “mas”); não definir número máximo de repetições, janela e interação com especiais já descartados antes da aprovação.
+
+### Riscos transversais a estudar
+
+1. **Ataques defensivos não são iguais:** #31 anula o turno só para o jogador; #32 impede perda, #47 anula especiais, #48 bloqueia ataques dirigidos ao usuário, #49 impede rival de vencer. São hipóteses de interpretação diferentes e não devem ser fundidas sem teste.
+2. **Efeitos de vitória forçada e proteção total** (#52, #54) precisam de regra explícita de ordem de resolução, sobretudo em partidas com 4 jogadores. Não inventar prioridades permanentes sem o autor.
+3. **Especial repetido** (#62) pode ter custo alto (duas cartas) e ainda assim criar cadeia de ativações; exigir definição clara de limite e se repetição da própria carta seria permitida.
+4. **Itens identificados vs. elenco definitivo:** #03 Édelin é um número da carta de infância, não substitui o código B01 da carta digital. Nenhuma atribuição de habilidade à personagem do novo elenco está aprovada por mera coincidência de nome físico.
+5. **Uso de múltiplos especiais num combate:** o manual original tinha contradição sobre uso de 1 ou 2 voluntariamente, mas #59 já foi confirmado como obrigando todas as **preparadas**. Resolver a limitação voluntária antes de definir #47 e #62.
