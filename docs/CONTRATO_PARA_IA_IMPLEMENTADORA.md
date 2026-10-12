@@ -79,10 +79,16 @@ Repositório de fontes literárias: [guyoshi/dimensoesinfinitas](https://github.
 
 **Ponto de partida seguro:** usar dados em rascunho para UI de prévia e ferramentas internas de edição, com avisos de `não aprovado`. Não afirmar que o jogo competitivo está finalizado ou equilibrado até que as pendências essenciais sejam decididas, simuladas e testadas.
 
-## 6. Índice operacional
+## 6. Dados estruturados para ferramenta de prévia
+
+O diretório [dados/propostas](../dados/propostas/README.md) contém arquivos JSON de **79 cartas** e **129 habilidades**, todos com `status: PROPOSTA_NAO_APROVADA`. A IA pode importar esses arquivos **apenas para prévia, comparação e ferramentas de revisão**, nunca para considerá-los baralho validado. Em caso de divergência entre JSON e Markdown, **interrompa para reconciliar**. Não inventar valores nem completar nomes pela própria conta.
+
+## 7. Índice operacional
 
 - [Decisões e GDD](REGRAS.md)
 - [79 fichas propostas por personagem](CARTAS_79_PROPOSTAS.md)
+- [JSON para prévia das 79 cartas](../dados/propostas/cartas_79.json)
+- [JSON para prévia das 129 habilidades](../dados/propostas/habilidades_129.json)
 - [129 habilidades candidatas, sem atribuição confirmada](BIBLIOTECA_ATAQUES_ESPECIAIS.md)
 - [Reações defensivas e prioridade propostas](PRIORIDADE_ESPECIAIS_PROPOSTA.md)
 - [79 identidades e fontes canônicas](ELENCO_CANDIDATO.md)
