@@ -1,10 +1,10 @@
-# Dimensions Stacks — Matriz das fichas das cartas (rascunho v0.1)
+# Dimensions Stacks — Modelo de fichas em branco (arquivo auxiliar v0.2)
 
-> **79 personagens candidatos**, conforme [elenco aprovado para avaliação](ELENCO_CANDIDATO.md), mas **0 fichas numéricas preenchidas**. Este documento é uma matriz para preencher progressivamente; não é um baralho pronto nem atribui habilidades automaticamente.
+> **MODELO EM BRANCO, NÃO USAR COMO FONTE DE ATRIBUTOS.** As **79 fichas preenchidas com descrições, números e habilidades sugeridos** estão em [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md). Este arquivo conserva apenas a antiga **matriz vazia e os apontamentos preliminares** de design para consulta. Ambos são propostas não aprovadas; veja o [contrato de autoridade](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 1. Padrão recomendado, aguardando aprovação do autor
 
-**Quatro atributos inteiros de 0 a 100** (valor NATURAL da carta, sem bônus de combate). A mudança de nome abaixo é **proposta**:
+**Quatro atributos (escala 0–100 ainda proposta)**. O autor **APROVOU** a mudança do nome Poder para Ataque. A tabela abaixo registra nomes antigos somente para histórico:
 
 | Campo | Nome original | Nome recomendado para interface | Definição |
 | --- | --- | --- | --- |
@@ -13,13 +13,13 @@
 | `INT` | Inteligência | **Inteligência** | Antecipação, raciocínio, tática, análise e conhecimento |
 | `VEL` | Velocidade | **Velocidade** | Reflexos, movimentação, agilidade e evasão |
 
-**Pares de combate preservados:** Ataque/Defesa; Inteligência/Velocidade. Ataque e Inteligência são tipos ofensivos; Defesa e Velocidade são defensivos. A renomeação de Poder para Ataque **não foi ratificada**; antes de aprovar, todas as tabelas são preparatórias.
+**Pares de combate preservados:** Ataque/Defesa; Inteligência/Velocidade. Ataque e Inteligência são tipos ofensivos; Defesa e Velocidade são defensivos. A renomeação de Poder para Ataque **foi ratificada**; o nome válido na interface é **Ataque (ATQ)**. Apenas os números da escala e a distribuição dos atributos permanecem propostas.
 
 **Duas escalas separadas:** valor natural da carta entre 0–100, modificador especial temporário pode exceder 100 na comparação (sujeito a confirmação). Não normalizar automaticamente um bônus de +20 para manter abaixo de 100: isso enfraqueceria habilidades.
 
 **Orientação de balanceamento, NÃO limite fixo:** totais naturais na ordem de 195–245 como ponto inicial para a maioria dos candidatos; totais acima de 245 exigem contrapartida no perfil ou no especial. **Não igualar a soma de todas as cartas**, porque a soma dos quatro atributos é o primeiro desempate. Depois vem a soma Ataque + Inteligência, conforme regra já aprovada (originalmente Poder + Inteligência).
 
-**Atribuição dos especiais:** preencher `Especial (AE)` só após avaliar coerência narrativa, total de atributos e papel estratégico. O catálogo contém [128 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md), e a coluna de atribuição do catálogo permanece vazia.
+**Atribuição dos especiais:** preencher `Especial (AE)` só após avaliar coerência narrativa, total de atributos e papel estratégico. O catálogo contém [129 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md), e a coluna de atribuição do catálogo permanece vazia.
 
 ## 2. Matriz de personagens por série
 
@@ -176,5 +176,7 @@ Com isso, as cartas restantes entre as 79 não entram naquela partida. O tamanho
 
 - [Elenco das 79 cartas](ELENCO_CANDIDATO.md).
 - [Regras originais e decisões aprovadas](REGRAS.md).
-- [128 ataques especiais candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
+- [129 habilidades especiais candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
+- [79 fichas propostas preenchidas](CARTAS_79_PROPOSTAS.md).
+- [Contrato de decisões para outra IA](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 - [Proposta de prioridade e ordem de resolução](PRIORIDADE_ESPECIAIS_PROPOSTA.md).
