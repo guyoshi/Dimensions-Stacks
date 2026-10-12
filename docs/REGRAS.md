@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.7)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.8)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -86,9 +86,9 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 - Ataques especiais podem expressamente abrir exceções, como recuperar carta do Buraco Negro, retirar da reserva ou afetar cartas de combate.
 - 'Aleatório': seleção sem ver o conteúdo. 'À sua escolha': seleção após ver as opções autorizadas.
 
-**MANUAL ANTIGO (HISTÓRICO):** há passagens contraditórias sobre usar um ou dois especiais voluntariamente no mesmo combate. **ESCLARECIMENTO DO AUTOR:** o jogador escolhe qual especial já preparado deseja ativar e em qual rodada. **PENDENTE:** se também poderá ativar voluntariamente ambos na mesma disputa; não inferir uma quantidade máxima de ativações voluntárias por essa frase.
+**REGRA CONFIRMADA PELO AUTOR (12/10/2026):** o jogador pode ativar voluntariamente **no máximo 1 carta especial preparada por combate**, escolhendo qual usar e em qual rodada. **Exceção:** uma habilidade específica pode permitir ativar duas cartas especiais no mesmo combate. **Ativação forçada (#59):** obriga usar todas as especiais já preparadas, até duas, independentemente do limite voluntário. O manual antigo tinha passagens contraditórias; esta decisão posterior prevalece.
 
-**PENDENTE:** se preparar a carta a retira obrigatoriamente do topo do baralho ativo ou de outra zona; se preparar substitui a participação normal daquela carta no turno; prioridade entre jogadores que desejam ativar especiais na mesma janela; limites temporais exatos de reação, escolha de alvo e efeitos que se anulam. **A escolha de qual especial preparado ativar e em qual rodada pertence ao seu proprietário**, salvo uso forçado da habilidade #59.
+**PENDENTE:** se preparar a carta a retira obrigatoriamente do topo do baralho ativo ou de outra zona; se preparar substitui a participação normal daquela carta no turno; prioridade entre jogadores que desejam ativar especiais na mesma janela; limites temporais exatos de reação, escolha de alvo e efeitos que se anulam. **A escolha de qual único especial preparado ativar voluntariamente por combate e em qual rodada pertence ao proprietário**, salvo habilidade que permita dois ou ativação forçada da #59.
 
 **PROPOSTA de sequência de interface:** preparação pré-combate → escolha de atributos → revelação → janela de especiais → recálculo do combate → resolução de captura/defesa → descarte dos especiais ativados.
 
@@ -242,7 +242,7 @@ Destaques para especificação futura:
 2. **Efeitos de vitória forçada e proteção total:** o antigo #52 foi retirado. Candidatos raros novos e a proteção/eliminações do #54 precisam de regras de prioridade e reação, sobretudo em partidas com quatro jogadores. **#54 afeta somente as cartas normais colocadas em combate**, não cartas especiais preparadas.
 3. **Especial repetido** (#62) tem custo alto (duas cartas), e o autor determinou **não permitir ciclos infinitos**. Não repetir a própria repetição, não encadear cópias/repetições sem limite nem reativar na mesma disputa cartas retornadas do Buraco Negro.
 4. **Itens identificados vs. elenco definitivo:** #03 Édelin é um número da carta de infância, não substitui o código B01 da carta digital. Nenhuma atribuição de habilidade à personagem do novo elenco está aprovada por mera coincidência de nome físico.
-5. **Ativação voluntária:** cada jogador decide qual de seus especiais preparados ativar e em que rodada. Continua pendente se ele pode usar voluntariamente os dois no mesmo combate. A habilidade #59 **obriga ativar todas as preparadas**, até duas, independentemente da preferência do alvo.
+5. **Ativação voluntária:** no máximo **uma carta especial preparada por combate**, à escolha do jogador, salvo se outra habilidade **explicitamente** autorizar duas. O #59 força usar **todas** as especiais já preparadas, até duas. A escolha de rodada permanece livre para o dono, e as questões de janela/prioridade entre jogadores continuam pendentes.
 
 
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
@@ -271,7 +271,7 @@ Destaques para especificação futura:
 
 **APROVADO:** o jogador decide **qual** ataque especial que já preparou ativar e **em qual rodada** deseja utilizá-lo. Não se cria um cronograma automático nem uma ordem obrigatória entre suas cartas. Uma habilidade de força como #59 pode consumir **todas** as cartas já preparadas por seu alvo, mesmo se o momento for ruim para ele. Isso pode desperdiçar um especial raro que garantiria vitória num confronto mais importante.
 
-**AINDA PENDENTE:** limite de ativações voluntárias na mesma disputa (uma ou duas); prioridade quando dois ou mais jogadores desejam ativar simultaneamente; fase exata de ativação do especial em relação à revelação das cartas. “A qualquer rodada” não equivale a “em qualquer fase do combate”.
+**LIMITAÇÃO VOLUNTÁRIA APROVADA:** **uma especial preparada por combate**, salvo autorização explícita de uma habilidade para usar duas. **A ativação forçada #59 é exceção:** o alvo usa todas as que já preparou (no máximo duas). **AINDA PENDENTE:** prioridade quando jogadores diferentes solicitarem ativações na mesma janela e fase exata da ativação perante a revelação; “em qualquer rodada” não significa “em qualquer momento do combate”.
 
 ### 19.2 Prevenção de ciclos de repetição (direção aprovada; mecanismos técnicos propostos)
 
@@ -287,3 +287,18 @@ Os cinco itens são uma especificação **proposta para operacionalizar o “imp
 
 O autor aceita que **pouquíssimas cartas** possam ter um especial de vitória automática; isso **não restaura** o original da carta física #52. A habilidade nova deve ser identificada separadamente, e o custo de uso antecipado/forçado será relevante ao balanceamento. Como o critério de raridade, o efeito exato e a resposta defensiva ainda não foram fechados, não inventar regra universal de imunidade/cancelamento.
 
+
+
+## 20. Limite de especiais voluntários por combate — decisão oficial (12/10/2026)
+
+**CONFIRMADO PELO AUTOR:** a regra geral permite **ativar voluntariamente uma carta de ataque especial preparada por combate**. O jogador escolhe qual carta entre as até duas preparadas deseja usar e escolhe em que rodada utilizá-la; não precisa usar um especial em todas as rodadas.
+
+**Exceções específicas:**
+
+1. Uma habilidade cujo texto **explicitamente permita ativar duas cartas especiais no mesmo combate** pode superar o limite normal. Ainda será necessário criar/aprovar o texto e o custo das habilidades que concederem essa exceção.
+2. **AE-111 / especial antigo #59 (ativação forçada):** se outro jogador for obrigado a ativar seus especiais preparados, deverá usar **todos os que possuir preparados (até dois)** naquele confronto, mesmo ultrapassando a ativação voluntária normal. Não permite puxar cartas não preparadas.
+3. **AE-112 / especial antigo #62 (repetir efeito):** repetir uma vez o **efeito** de outra especial conforme seus custos e restrições não significa automaticamente ativar uma **segunda carta especial diferente**. A mecânica de repetição não concede, sozinha, permissão genérica para virar a outra carta preparada. Manter proteção contra ciclos.
+
+**Exemplo:** um jogador guarda dois especiais preparados, A e B. Numa disputa, pode voluntariamente usar A **ou** B; o outro continua preparado. Poderá usar o restante numa rodada posterior. Somente um efeito específico de ativação dupla ou a imposição de #59 poderá fazê-lo consumir ambos na mesma disputa.
+
+**PENDENTES DISTINTOS:** a ordem de resolução quando diferentes jogadores tentarem ativar efeitos, as janelas exatas de ativação e as condições de uma futura habilidade de ativação dupla. Não confundir *escolher a rodada* com prioridade absoluta ou interrupção em qualquer fase.
