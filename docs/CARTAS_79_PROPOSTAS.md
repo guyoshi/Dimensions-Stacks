@@ -41,7 +41,7 @@
 | J22 | Sefter | Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama. | 75 | 50 | 53 | 72 | 85 | 260 | Padrão | AE-089 |  | J4 | Alta |
 | J23 | Kedran | Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado. | 86 | 82 | 79 | 57 | 70 | 288 | Forte | AE-017 |  | J4 | Alta |
 | V01 | Breno Lins | Irmão mais velho dos Lins, controla a própria densidade e assume riscos para proteger os irmãos. | 96 | 85 | 90 | 58 | 52 | 285 | Forte | AE-078 |  | V | Alta |
-| V02 | Bruno Lins | Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha. | 96 | 94 | 70 | 74 | 78 | 316 | Forte | AE-021 | ⭐ União | V | Alta |
+| V02 | Bruno Lins Lee | Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha. | 96 | 94 | 70 | 74 | 78 | 316 | Forte | AE-021 | ⭐ União | V | Alta |
 | V03 | Banjo Lins | Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir. | 89 | 69 | 38 | 73 | 64 | 244 | Padrão | AE-039 |  | V | Alta |
 | V04 | Beatriz Lins | A mais nova dos Lins, manifesta fogo e caos em um poder difícil de controlar. | 77 | 93 | 31 | 48 | 55 | 227 | Modesta | AE-067 |  | V | Alta |
 | V05 | Velho-Sábio / Auream | Mentor dos irmãos em Belfex, guarda conhecimento antigo sobre Korvo e a Sociedade de Tayo. | 90 | 62 | 83 | 96 | 39 | 280 | Padrão | AE-097 |  | V | Alta |
