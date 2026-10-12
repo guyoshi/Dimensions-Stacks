@@ -1,4 +1,4 @@
-# Dimensions Stacks — Auditoria de balanceamento dos ataques especiais (v1.1)
+# Dimensions Stacks — Auditoria de balanceamento dos ataques especiais (v1.2)
 
 > Revisão de **todas as 62 posições da coleção física numerada**: 59 têm pelo menos a identidade do cartão, 3 (**16, 26 e 55**) não têm. Alguns ataques legíveis derivam de transcrições diretas do autor (**Direta**), outros de fotos (**Foto**), e outros de leitura por IA ainda a verificar (**IA**). **A carta física não determina quem receberá o ataque especial novo.** Todos os IDs AE são referências ao [catálogo de 128 efeitos candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md). **Nenhum valor ou capacidade dos personagens físicos antigos será reaproveitado automaticamente.**
 
@@ -6,15 +6,15 @@
 
 | Parecer | Quantidade | Significado |
 | --- | ---: | --- |
-| Manter | 19 | A mecânica parece saudável, faltando apenas regras gerais/testes. |
-| Pendente | 13 | Efeito/identidade ainda não permite parecer fundamentado. |
-| Ajustar | 22 | Bom conceito, mas texto, alvo, custo, duração ou escala ainda precisa ser resolvido. |
-| Redesenhar | 4 | Condição antiga não serve à nova identidade ou a população de cartas. |
-| Retirar | 2 | Descartado expressamente pelo autor do conjunto ativo. |
-| Experimental | 2 | Alto risco de tirar contrajogo e tornar atributos irrelevantes. |
-| **Total** | **62** | Inclui cartas originais retiradas e números sem texto. |
+| Manter | 21 | Mecânica coerente, ainda sujeita a regras gerais e testes. |
+| Ajustar | 22 | O efeito é aproveitável, mas precisa de definição de alvo, zona, custo ou resolução. |
+| Redesenhar | 4 | Critério antigo não funciona na versão nova, por exemplo cor/espécie. |
+| Experimental | 0 | Alto risco não resolvido, aguardando testes e contra-jogo. |
+| Retirar | 3 | Efeito antigo explicitamente excluído da biblioteca ativa pelo autor. |
+| Pendente | 12 | Efeito original ainda não recuperado com segurança. |
+| **Total** | **62** | Inclui números sem identidade/efeito e efeitos físicos retirados. |
 
-**Avaliação, não estatística de partidas:** estes pareceres são de design lógico, não resultados de testes. É possível que algumas habilidades fortes sejam aceitáveis porque **consomem a carta especial** e não protegem a carta normal de combate.
+**Avaliação lógica, não estatística de partidas:** os ataques utilizados descartam sua carta especial. Poderes fortes não estão necessariamente desequilibrados só porque atingem mais de um adversário.
 
 ## 2. Auditoria individual (01–62)
 
@@ -31,7 +31,7 @@
 | 09 | Jogar 2 cartas no mesmo atributo | **Manter** | Soma das duas cartas aprovada; falta resolver destino de ambas, desempates e baralho com 1 carta. | AE-010 | Direta |
 | 10 | Trocar cartas de combate à direita | **Ajustar** | Permitir apenas janela pré-comparação e atualizar titularidade; empates/atributos já declarados precisam de regra. | AE-053 | Foto |
 | 11 | Todos passam carta à esquerda | **Manter** | Transferência simultânea conserva quantidade; quando um jogador está sem cartas, definir alvo válido. | AE-057 | Direta |
-| 12 | Pegar 2 do Buraco Negro e 'deposie sete...' | **Pendente** | Trecho incoerente/corrompido; não programar nem corrigir para sete/seis sem foto melhor. | — | IA parcial |
+| 12 | Recuperar 2 cartas aleatórias do Buraco Negro para o fim da própria reserva | **Ajustar** | **Texto confirmado pelo autor.** Preservar quantidade e destino. Definir caso de menos de 2 cartas e evitar reativação cíclica de especiais eventualmente recuperados; não limitar silenciosamente a cartas normais. | AE-087 | Confirmação direta |
 | 13 | Trocar combatente rival por própria aleatória | **Ajustar** | Acessa carta já em campo, logo exige exceção e atualização de escolhas; bom risco/recompensa. | AE-052 | IA |
 | 14 | Capturar rival caso não pertença às espécies listadas | **Redesenhar** | Lista não é taxonomia homogênea; mistura espécie/categoria; vantagem variável por série. Trocar condição por atributo. | AE-101 | IA |
 | 15 | +15 em um atributo escolhido | **Manter** | Simples, compreensível; bônus deve durar uma disputa e afetar só uma carta. | AE-005 | Direta |
@@ -53,16 +53,16 @@
 | 31 | Anular turno apenas para si | **Manter** | Fuga defensiva; definir se preserva a carta e quando o combate continua entre outros. | AE-071 | IA |
 | 32 | Anular turno sem perder carta | **Ajustar** | Muito semelhante a #31. Variante útil: participar, mas preservar sua carta mesmo se perder. | AE-072 | IA |
 | 33 | Misturar ativo e reserva e puxar 5 | **Ajustar** | Interfere no plano do rival; não descartar cartas sobrantes, transferi-las para reserva; proteger jogo com reserva vazia. | AE-096 | IA |
-| 34 | Roubar 2, uma de cada jogador | **Ajustar** | Só há um adversário no modo 2. Propor 1 por adversário ativo (até 3), ou 2 do mesmo em duelo com custo. | AE-036 | Direta |
+| 34 | Roubar 2, uma de cada jogador | **Ajustar** | O efeito integral pede dois adversários distintos; no duelo só há um. Manter a particularidade em vez de inventar saque duplo do mesmo alvo. Se não há alvos suficientes, apresentar essa limitação claramente ao jogador. | AE-036 | Direta |
 | 35 | Rodar todos os montes de reserva | **Manter** | Escala bem a 2/3/4; definir rotação simultânea e direção; pode alterar muito a partida. | AE-061 | Direta |
 | 36 | Olhar reserva, separar 7 e ordenar | **Ajustar** | Ótima estratégia; definir se incorpora ou substitui ativo e como tratar menos de 7. | AE-097 | Direta |
 | 37 | Cada jogador descarta aleatória ao Buraco Negro | **Manter** | Afeta inclusive usuário; duplicada aproximadamente pelo #50, combinar numa família com variação. | AE-066 | IA |
 | 38 | Pegar última da reserva à direita | **Manter** | Variação direcional útil; oferecer espelho à esquerda. | AE-041 / AE-042 | IA |
 | 39 | Capitã Nastácia; habilidade desconhecida | **Pendente** | Nome e número confirmados, efeito não recuperado. | — | Identidade |
-| 40 | Obrigar vizinho esquerdo trocar com direito | **Ajustar** | Em duelo esquerda = direita e efeito se anula. Fazer variante específica 3+ ou outro alvo. | AE-063 | IA |
+| 40 | Obrigar vizinho esquerdo a trocar com o direito | **Manter** | Em duelo esquerda e direita são a mesma pessoa. A troca pode ser ativada mesmo sem gerar vantagem; **não criar efeito alternativo** automaticamente. | AE-063 | IA |
 | 41 | Revelar baralho ativo rival | **Manter** | Efeito informacional leve: ganho não é automático, pode merecer benefício complementar em partidas curtas. | AE-091 | IA |
 | 42 | Sacrificar >90 e pegar 1 aleatória de cada jogador | **Ajustar** | Se 'cada jogador' inclui você, texto ambíguo; propor somente adversários e custo >90; escala com número de rivais. | AE-068 | IA |
-| 43 | Transferir 3 do vizinho esquerdo ao direito | **Ajustar** | Em duelo devolve ao mesmo jogador: efeito vazio. Restringir a 3+ e ter alternativa em 2. | AE-065 | IA |
+| 43 | Transferir 3 do vizinho esquerdo ao direito | **Manter** | Em duelo os dois sentidos apontam para o único adversário: ele recebe suas próprias cartas de volta. O efeito não traz vantagem, mas o jogador pode optar por gastá-lo. | AE-065 | IA |
 | 44 | Efeito sem leitura | **Pendente** | Nenhuma regra recuperada; manter vaga, não inventar texto. | — | IA parcial |
 | 45 | Efeito ilegível | **Pendente** | Desgaste impede avaliação. | — | IA parcial |
 | 46 | Trocar toda reserva com rival à esquerda | **Manter** | Pode ser ruim para ativador; efeito de risco calculado, bom para fim de jogo. | AE-059 / AE-060 | Direta |
@@ -71,9 +71,9 @@
 | 49 | Impedir rival de vencer | **Ajustar** | Negação absoluta pode provocar conflito insolúvel; substituir por proteção contra captura própria. | AE-075 | IA |
 | 50 | Todos descartam aleatória no Buraco Negro | **Ajustar** | Quase mesma mecânica #37; variar para somente adversários, se o custo da especial equilibrar. | AE-066 / AE-067 | IA |
 | 51 | CARTA ATAQUE sem continuação | **Pendente** | Não há informação suficiente para decidir utilidade. | — | IA parcial |
-| 52 | Vitória automática e captura adversária | **Experimental** | Suprime atributos/estratégia; não usar literalmente no conjunto competitivo inicial; exigir condição e contrajogo. | AE-104 | IA |
+| 52 | Vitória automática e captura adversária da carta física | **Retirar** | **Decisão do autor: excluir o efeito original**. Uma habilidade de vitória automática para raríssimas cartas ainda pode ser desenvolvida à parte, sem restaurar #52. O novo AE-129 é somente uma proposta. | — | IA / decisão do autor |
 | 53 | CARTA ATAQUE sem continuação | **Pendente** | Não há informação suficiente para decidir utilidade. | — | IA parcial |
-| 54 | Cancelar ataques e mandar demais cartas em jogo ao Buraco Negro | **Experimental** | Pode varrer 3 adversários de uma vez, anular decisões e criar prioridade impossível; restringir a cartas em campo. | AE-103 | IA |
+| 54 | Impedir ataques e enviar cartas de combate adversárias ao Buraco Negro | **Ajustar** | **Esclarecido:** “cartas em jogo” significa só as cartas normais colocadas em combate; **não inclui especiais preparados**. Manter essa força como ferramenta de defesa, definir apenas reação a especiais ativados e janela. | AE-103 | IA / esclarecimento do autor |
 | 55 | Carta física desconhecida | **Pendente** | Número sem identidade/ataque. | — | Ausente |
 | 56 | Recuperar 2 aleatórias do Buraco Negro | **Ajustar** | Bom para recuperação, mas ciclos com especiais são perigosos. Diferenciar cartas normais/especiais. | AE-082 | IA |
 | 57 | Impor mesmo atributo a todos | **Manter** | Autor confirmou manter. Especial é consumido; não garante vitória da carta normal. | AE-021 | Direta |
@@ -81,7 +81,7 @@
 | 59 | Obrigar uso de todas especiais preparadas | **Manter** | Já aprovado: somente especiais realmente preparadas (até 2); resolver ordem/alvos. | AE-111 | Direta |
 | 60 | Capturar carta de cor azul | **Redesenhar** | Azul agora identifica Viajantes, não União. Não favorecer série: propor predicado por atributos ofensivos. | AE-101 | Direta |
 | 61 | Capturar carta de cor vermelha | **Redesenhar** | Vermelho agora identifica Mistério, não vilões. Propor predicado por atributos defensivos. | AE-102 | Direta |
-| 62 | Reutilizar especial pagando 2 cartas | **Ajustar** | Texto parcialmente recuperado; proibir cadeia de repetições e recuperar especial já gasta por esta ativação. | AE-112 | IA |
+| 62 | Reutilizar especial pagando 2 cartas | **Ajustar** | **Decisão do autor: impedir ciclos.** Repetir no máximo uma vez um efeito por ativação; não repetir a própria habilidade nem copiar/repetir efeitos encadeados; custos integralmente pagos. | AE-112 | IA / decisão do autor |
 
 ## 3. Revisão por família: como evitar quebrar a partida
 
@@ -103,7 +103,7 @@
 
 ### Descartes e Buraco Negro
 
-**#12, #19, #37, #50, #56**: especial já consumida tem custo. Recuperar especiais descartados sem limite pode recriar a mesma sequência de operações indefinidamente; proibir recuperação recursiva no primeiro teste.
+**#12 (agora confirmado), #19, #37, #50, #56**: especial já consumida tem custo. #12 recupera **duas cartas aleatórias do Buraco Negro para o fim da reserva**; não presumir filtro de cartas normais. Evitar reativar especiais recuperadas durante a mesma disputa para impedir ciclos.
 
 ### Defesas e anuladores
 
@@ -111,7 +111,7 @@
 
 ### Captura condicional e vitórias automáticas
 
-**#14, #29, #52, #54, #60, #61**: condições por espécies e cores históricas têm distribuição desigual; não converter cor de série em poder. Vitória automática e eliminação coletiva devem ficar *experimentais* até existir contrajogo.
+**#14, #29, #60, #61**: espécies e cores históricas criam assimetria por origem. **#52 foi retirado**, mas novas raríssimas cartas podem possuir vitória automática. **#54** está esclarecido: seu descarte afeta somente as cartas normais do campo de combate, não especiais preparadas.
 
 ### Especial contra especial
 
@@ -119,15 +119,15 @@
 
 ### Textos ilegíveis e cartas ausentes
 
-**#03, #05, #07, #08, #12, #16, #26, #39, #44, #45, #51, #53, #55**: não completar texto com fantasia nem supor que seriam bons/ruins. Esses números ainda não têm especial original recuperável com segurança.
+**#03, #05, #07, #08, #16, #26, #39, #44, #45, #51, #53, #55**: não completar texto com fantasia nem supor que seriam bons/ruins. Esses números ainda não têm especial original recuperável com segurança.
 
 ## 4. Riscos estruturais e medidas recomendadas (AINDA NÃO APROVADAS)
 
 1. **Preservar o custo real:** a carta especial preparada e ativada é descartada; a carta normal de combate pode perder. Não diminuir efeito sem razão.
 2. **Janela de ações:** antes de revelar cartas, após revelar e antes da comparação, após determinar vencedor e antes do destino. Cada habilidade deverá ter janela única quando chegarmos à especificação técnica.
 3. **Alvo sem cartas:** a interface deve bloquear o especial antes de gastar a carta, ou reorientar para o próximo alvo válido conforme texto expresso. Não transformar automaticamente reserva vazia em saque do baralho ativo.
-4. **Confrontos coletivos:** habilidades que dizem 'à esquerda/direita' devem usar vizinho ativo mais próximo; em partidas com 2, ambos os lados coincidem, e troca entre dois outros vizinhos distintos deve ser inválida ou ter substituto.
-5. **Cópias, recuperação e uso repetido:** criar limite de encadeamento (sem copiar uma cópia e sem repetir o efeito que repete), antes de distribuir os especiais raros.
+4. **Confrontos coletivos:** habilidades que dizem 'à esquerda/direita' consideram os vizinhos ativos em círculo; em partidas com 2, ambos os lados coincidem. Transferir a carta de um rival para ele mesmo **continua sendo permitido mesmo sem ganho**, sem criar substituição automática. Os efeitos que exijam dois rivais diferentes continuam a ter uma condição de alvo específica.
+5. **Cópias, recuperação e uso repetido:** por decisão do autor, **não permitir ciclos infinitos**. Especificação proposta: máximo uma repetição por ativação e proibição de repetir/copy a própria repetição, com custo adicional integral.
 6. **Descartes especiais:** distinguir carta normal (que representa unidade do combate) e carta especial ativada (consumida). Recuperação do Buraco Negro de cartas normais primeiro; recuperação de especiais deve ser exceção específica e cara.
 7. **Efeitos não deterministas:** selecionar aleatória sempre de zona claramente identificada. Na mesa de 4, mostrar em log quais cartas mudaram de dono e em qual sequência para evitar disputas de resolução.
 8. **Balanceamento por modo:** medir duração de partidas, tamanho dos baralhos, frequência de vitória de atributos defensivos, efeito médio por especial ativado e taxas de vitória em modo 2/3/4. Não há dados numéricos de teste ainda.
@@ -140,7 +140,7 @@
 
 **Segundo conjunto:** rotação de reservas, redistribuição geral, efeitos em lote, salvamentos, escolhas de sete, descarte coletivo e sacrifícios >90.
 
-**Somente depois dos testes:** vitória automática (#52), limpeza de campo (#54), repetição (#62), combinação de copiar/recuperar especiais e trocas complexas com cartas já reveladas.
+**Somente depois dos testes:** vitória automática rara **nova** (não a antiga #52, removida), limpeza restrita às cartas de combate (#54), repetição sem ciclos (#62), combinação de copiar/recuperar especiais e trocas complexas com cartas já reveladas.
 
 ## 6. Referências
 
