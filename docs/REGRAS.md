@@ -140,3 +140,12 @@ Usar **ícones/selos separados** para raridade, papel mecânico e filiação à 
 - Cânone narrativo: [Dimensões Infinitas](https://github.com/guyoshi/dimensoesinfinitas).
 
 Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco candidato](ELENCO_CANDIDATO.md).
+
+
+## 13. Esclarecimento do autor sobre custo de especiais (12/10/2026)
+
+**Confirmação:** o **ataque especial utilizado vai ao Buraco Negro**; a carta **normal de combate** não recebe proteção extra por esse uso. Se vencer, seguirá a regra normal (inclusive indo ao fim do baralho quando apropriado); se perder, pode ser capturada ou descartada conforme a resolução. Obrigar a mesa ao mesmo atributo **não garante vitória**. Portanto, custo da carta especial e possibilidade de derrota da carta comum devem ser contabilizados antes de classificar uma habilidade como excessiva.
+
+**Decisão editorial visual confirmada:** o autor aprovou **cores por série**, deixando de associar verde a heróis e vermelho a vilões. Selos identificam A União e raridade sem duplicar obrigatoriamente personagens.
+
+**Filiação oficial de A União:** Bruno Lins Lee, Brenda, Hyde, Releuz (provisório), Jasmey Badrock, Mark Pollar, Édelin Fils; Jennifer ingressa futuramente. Ver [elenco candidato](ELENCO_CANDIDATO.md#10-atualização-oficial-a-união-12102026).
