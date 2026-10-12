@@ -28,6 +28,14 @@ Jogo competitivo de cartas para PC, baseado em personagens das séries interliga
 - **Carta especial voluntária: 1 por combate**, salvo habilidade excepcional; especiais defensivas devem poder responder a ataques em qualquer janela ainda útil. A ordem operacional detalhada **está em discussão**.
 - A biblioteca de efeitos é **independente dos nomes das cartas físicas antigas**. Origem narrativa: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas).
 
+## Dados estruturados para prévia (NÃO APROVADOS)
+
+- [JSON com as 79 cartas](dados/propostas/cartas_79.json)
+- [JSON com as 129 habilidades](dados/propostas/habilidades_129.json)
+- [Instruções sobre status e sincronização](dados/propostas/README.md)
+
+Estes arquivos são **espelhos das propostas** e não podem ser utilizados como conteúdo de produção confirmado.
+
 ## Próximas aprovações
 
 Revisar os **79 perfis propostos**, confirmar a especificação das **reações defensivas** e solucionar pendências estruturais do GDD (preparação da especial, desempate absoluto, destino de carta dupla, distribuição de início da partida, prioridades de efeitos). Somente depois esses dados podem ser tratados como baralho final, com validação de layout e testes de balanceamento.
