@@ -19,7 +19,7 @@
 
 ## A. Bônus, penalidades e soma (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-001 | Impulso de Ataque | Sua carta de combate recebe +15 em Ataque nesta disputa. | novo | Teste | — |
 | AE-002 | Muralha de Defesa | Sua carta de combate recebe +15 em Defesa nesta disputa. | novo | Teste | J14 |
@@ -36,7 +36,7 @@
 
 **Regra de leitura:** `Origem → Destino` = copiar o número da Origem para o Destino **sem alterar o atributo de origem**. Isso não é uma permuta: a inversa é outra habilidade, garantindo os espelhos solicitados.
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-011 | Ataque → Inteligência | Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Ataque; Ataque permanece igual. | #22 (adaptação) | Teste | — |
 | AE-012 | Inteligência → Ataque | Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual. | novo | Teste | M08 |
@@ -51,7 +51,7 @@
 
 ## C. Controle do confronto e do atributo (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-021 | Atributo universal | Escolha um atributo: todos, inclusive você, devem disputar nele. Conflitos de imposição seguem o GDD. | #57/#58/#04 | Regra-base | V02 |
 | AE-022 | Par ofensivo | Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa. | novo | Teste | J18 |
@@ -66,7 +66,7 @@
 
 ## D. Roubo do baralho ativo (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-031 | Primeira à direita | Pegue a próxima carta do topo do baralho ativo do adversário à direita, exceto a já comprometida em combate. | novo | Teste | D05 |
 | AE-032 | Primeira à esquerda | Pegue a próxima carta do topo do baralho ativo do adversário à esquerda, exceto a já comprometida em combate. | novo | Teste | S12 |
@@ -81,7 +81,7 @@
 
 ## E. Roubo do meio de reserva (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-041 | Última da direita | Pegue a última carta do meio de reserva do adversário à direita. | #38 | Teste | V09 |
 | AE-042 | Última da esquerda | Pegue a última carta do meio de reserva do adversário à esquerda. | novo | Teste | — |
@@ -96,7 +96,7 @@
 
 ## F. Trocas diretas e circulação de cartas (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-051 | Troca escolhida | Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta aleatória do baralho ativo de um adversário. | #01/#30 | Teste | V14 |
 | AE-052 | Troca de combatente | Tome a carta de combate de um adversário e entregue-lhe 1 carta aleatória do seu baralho ativo; a troca antecede a comparação. | #13 | Atenção | — |
@@ -111,7 +111,7 @@
 
 ## G. Redistribuição coletiva e sacrifício (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-061 | Reservas giratórias à direita | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à direita. | #35 | Atenção | J13 |
 | AE-062 | Reservas giratórias à esquerda | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda. | novo | Atenção | V07 |
@@ -126,7 +126,7 @@
 
 ## H. Defesas, bloqueios e salvamentos (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-071 | Ausência tática | Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota. | #31 | Teste | D03 |
 | AE-072 | Não perder a carta | Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada. | #32 | Teste | J19 |
@@ -141,7 +141,7 @@
 
 ## I. Recuperação e manipulação do Buraco Negro (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-081 | Resgate extremo | Sacrifique 1 carta normal sua que tenha atributo original acima de 90; receba as 3 primeiras cartas do Buraco Negro, se existirem. | #19 | Atenção | D12 |
 | AE-082 | Resgate aleatório duplo | Recupere até 2 cartas aleatórias do Buraco Negro e coloque-as no fim de seu baralho ativo. | #56 | Atenção | M09 |
@@ -156,7 +156,7 @@
 
 ## J. Informação e manipulação de ordem (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-091 | Revelar a mão | Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa. | #41 | Teste | J20 |
 | AE-092 | Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. | novo | Teste | D08, D16 |
@@ -171,7 +171,7 @@
 
 ## K. Capturas condicionais e efeitos decisivos (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-101 | Capturar atacante | Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção | S08 |
 | AE-102 | Capturar defensor | Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Ataque + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção | — |
@@ -187,7 +187,7 @@
 
 ## L. Interações entre ataques especiais (10)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-111 | Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. | #59 | Regra-base | M10 |
 | AE-112 | Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada. | #62 (ciclos proibidos) | Atenção | D06 |
@@ -203,7 +203,7 @@
 
 **Por que este grupo existe:** há **12 conversões direcionais possíveis** entre os quatro atributos (cada um dos 4 pode substituir qualquer um dos outros 3) e **6 permutas bidirecionais**. O grupo B cobre as 10 primeiras conversões; este grupo completa as duas faltantes e oferece as seis permutas para não confundir *trocar números entre si* com *copiar um número sobre outro*.
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-121 | Defesa → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste | — |
 | AE-122 | Velocidade → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste | — |
@@ -223,7 +223,7 @@
 
 ## N. Reações e contramedidas novas (1)
 
-| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-130 | Anular a última habilidade | **REAÇÃO DEFENSIVA.** Quando uma habilidade especial for ativada e ainda não tiver resolvido seu efeito, anule a **última habilidade pendente**. A carta anulada é consumida e vai ao Buraco Negro. Não desfaz efeitos já concluídos. | novo, solicitado pelo autor | Teste; texto proposto | M02 |
 
@@ -244,7 +244,7 @@
 - [Auditoria detalhada dos especiais antigos](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md).
 - [GDD de regras e condições de vitória](REGRAS.md).
 - [Elenco de 87 candidatos](ELENCO_CANDIDATO.md).
-- [Fichas de 87 personagens com sugestões não aprovadas](CARTAS_87_PROPOSTAS.md).
+- [Fichas oficiais das 87 cartas](CARTAS_87_PROPOSTAS.md).
 - [Contrato de implementação que separa aprovações e propostas](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 - [Registro dos 23 ataques diretamente transcritos](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md).
 - [Leituras adicionais, ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
