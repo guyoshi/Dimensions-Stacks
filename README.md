@@ -14,6 +14,7 @@ Jogo competitivo de cartas para PC, baseado em personagens das séries interliga
 | [Biblioteca de 129 habilidades especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md) | Mecânicas candidatas por tipo; **129 colunas de atribuição definitiva vazias** |
 | [Reações defensivas, prioridades e anulação do último especial](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | **Proposta técnica** para permitir respostas defensivas enquanto ataques ainda não foram resolvidos |
 | [Elenco das 79 cartas e A União](docs/ELENCO_CANDIDATO.md) | Identidades, origens e integrantes da União sem duplicações |
+| [Checklist de testes e bloqueios](docs/CHECKLIST_VALIDACAO.md) | Validações de dados, regras confirmadas e cenários ainda pendentes |
 | [Auditoria dos ataques físicos](docs/AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) | Avaliação histórica dos efeitos antigos, úteis apenas como inspiração mecânica |
 | [Transcrições de cartas físicas confirmadas](docs/TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md) | Arquivo de referência histórica; não copiar nomes e atributos das cartas físicas |
 | [Leituras de IA das cartas antigas](docs/LEITURAS_IA_PENDENTES_2026-10-12.md) | Dados provisórios/ilegíveis, nunca cânone para implementar |
