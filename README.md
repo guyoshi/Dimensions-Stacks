@@ -9,7 +9,7 @@ Jogo competitivo de cartas para PC, baseado em personagens das séries interliga
 | Documento | Finalidade e autoridade |
 | --- | --- |
 | **[Contrato de implementação](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md)** | **Comece aqui**: separa o que o autor confirmou de propostas e dúvidas ainda abertas |
-| [Regras do jogo, GDD v0.9](docs/REGRAS.md) | Mecânicas aprovadas e questões pendentes; atributo **Ataque** substituiu **Poder** |
+| [Regras do jogo, GDD v1.0](docs/REGRAS.md) | Mecânicas aprovadas e questões pendentes; atributo **Ataque** substituiu **Poder** |
 | **[83 cartas com descrições, atributos e especial sugerido](docs/CARTAS_83_PROPOSTAS.md)** | **83 propostas para revisão do autor**, não números definitivos |
 | [Biblioteca de 129 habilidades especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md) | Mecânicas candidatas por tipo; **129 colunas de atribuição definitiva vazias** |
 | [Reações defensivas, prioridades e anulação do último especial](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | **Proposta técnica** para permitir respostas defensivas enquanto ataques ainda não foram resolvidos |
