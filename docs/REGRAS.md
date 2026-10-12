@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.1)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.2)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -148,4 +148,35 @@ Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco 
 
 **Decisão editorial visual confirmada:** o autor aprovou **cores por série**, deixando de associar verde a heróis e vermelho a vilões. Selos identificam A União e raridade sem duplicar obrigatoriamente personagens.
 
-**Filiação oficial de A União:** Bruno Lins Lee, Brenda, Hyde, Releuz (provisório), Jasmey Badrock, Mark Pollar, Édelin Fils; Jennifer ingressa futuramente. Ver [elenco candidato](ELENCO_CANDIDATO.md#10-atualização-oficial-a-união-12102026).
+**Filiação oficial de A União:** Bruno Lins Lee, Brenda, Hyde, Releuz (provisório), Jasmey Badrock, Mark Polar (também grafado Pollar em registros antigos), Édelin Fils; Jennifer ingressa futuramente. Hyde é a cabeça/liderança indicada para o grupo; **identidade do fundador ainda não fechada**. Ver [elenco candidato](ELENCO_CANDIDATO.md#7-a-união--filiação-oficial-sem-duplicar-cartas).
+
+## 14. Decisões confirmadas: especiais 09 e 59 e choque de atributos (12/10/2026)
+
+### 14.1 Ataque especial 09 — duas cartas somadas
+
+**APROVADO:** ao ativar o especial, o jogador usa **duas cartas consecutivas do topo de seu baralho ativo**, somando o valor **do mesmo atributo escolhido em ambas** para produzir **um único total no confronto**. A razão estratégica original é permitir que uma primeira carta fraca ganhe força com a segunda. **Há um custo real:** consome-se uma carta de ataque especial (que vai ao Buraco Negro) e duas cartas normais ficam comprometidas com a disputa, em vez de uma. Não substituir automaticamente por “pegar o maior dos dois valores”, nem aplicar teto de soma sem testes.
+
+**PROPOSTA operacional até confirmação:** as duas cartas normais seguem juntas o desfecho do combate: se a dupla vence atacando, ambas retornam ao final do baralho ativo do vencedor junto das cartas capturadas; se vence defendendo, ambas retornam ao final de seu baralho ativo; se perde, ambas são capturadas ou descartadas segundo a regra comum. **PENDENTE:** quando só há uma carta ativa e menos de duas disponíveis para formar a dupla; desempate com duas cartas e forma de calcular a soma de todos os atributos (se aplicável).
+
+### 14.2 Ataque especial 59 — ativação forçada
+
+**APROVADO:** obriga um adversário a usar uma carta de ataque especial **somente se ela já estiver preparada na área de especiais à esquerda (virada para baixo, esperando ativação)**. Não obriga tirar uma carta nova do baralho ou da reserva. A carta forçada é ativada e descartada como qualquer especial utilizado.
+
+**PENDENTE:** quem escolhe qual das duas cartas especiais preparadas será ativada; como determinar alvos e escolhas internas de um efeito ativado à força; se existe janela de resposta.
+
+### 14.3 Choque de imposições de atributos
+
+**APROVADO:** quando dois jogadores ativam especiais que impõem **atributos diferentes** (por exemplo, Poder e Inteligência) no mesmo combate, compara-se **o valor de cada atributo imposto na carta normal de combate de quem o impôs**. **O maior valor determina o atributo obrigatório para todos os jogadores naquela disputa**.
+
+**Exemplo:** jogador A impõe Poder e sua carta normal possui Poder 91; jogador B impõe Inteligência e a sua carta normal tem Inteligência 82. **Poder vence a disputa de imposição**. Todos jogam em Poder, inclusive o jogador B. Os dois especiais ativados são descartados no Buraco Negro, conforme a regra geral.
+
+A disputa de imposição **não é a resolução do combate**: depois dela, todos ainda comparam seus valores no atributo vencedor, e a carta comum pode ganhar ou perder normalmente.
+
+**PENDENTE:** empate exato entre valores de imposição; conflito com 3 ou mais especiais diferentes (viável com 3/4 jogadores ou duplas se aprovadas); interação com efeitos que modificam atributos antes da imposição. **PROPOSTA:** aplicar o mesmo critério de maior valor entre todos os especiais conflitantes, deixando desempate específico em aberto.
+
+### 14.4 Convenção de nomeação e identidade (aprovada)
+
+- A identidade visual **usa cores por série**, não herói versus vilão.
+- Integrantes de A União **recebem um selo** sem carta duplicada obrigatória.
+- A série de Édelin terá **numeração B, de Belfex**; o título ainda está em desenvolvimento.
+- No conjunto de cartas de Ciclo de Jesed, a identidade da carta deve ser **Mark Polar**. **Karesis é Mark** segundo o autor e não deve surgir como carta única adicional. O alias Loutes não aparece no nome exibido.
