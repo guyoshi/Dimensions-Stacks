@@ -218,7 +218,7 @@
 
 **Reação defensiva:** a habilidade **AE-130** foi adicionada para cancelar a última habilidade especial ainda pendente. A resposta pode entrar quando surgir uma ameaça, **antes de sua resolução**; não desfaz efeitos já concluídos. A janela detalhada de reações defensivas permanece uma proposta no GDD. Ter timing de resposta não cria segunda ativação voluntária gratuita, salvo habilidade expressa.
 
-**Ativação voluntária confirmada:** **1 carta especial preparada por combate**, escolhida e ativada no turno desejado. Somente habilidades com permissão explícita podem permitir duas. **Nenhuma das 128 entradas atuais é automaticamente uma autorização genérica para ativar duas cartas**: esta eventual mecânica deve ser proposta/aprovada explicitamente. A especial **AE-111** força todas as especiais preparadas do alvo (até duas), criando exceção não voluntária; **AE-112** repete um efeito sem autorizar virar uma segunda especial. A ordem entre jogadores e a janela precisa ainda precisam de definição no GDD.
+**Ativação voluntária confirmada:** **1 carta especial preparada por combate**, escolhida e ativada no turno desejado. Somente habilidades com permissão explícita podem permitir duas. **Nenhuma das 129 entradas atuais é automaticamente uma autorização genérica para ativar duas cartas**: esta eventual mecânica deve ser proposta/aprovada explicitamente. A especial **AE-111** força todas as especiais preparadas do alvo (até duas), criando exceção não voluntária; **AE-112** repete um efeito sem autorizar virar uma segunda especial. A ordem entre jogadores e a janela precisa ainda precisam de definição no GDD.
 
 
 ## N. Reações e contramedidas novas (1)
@@ -237,12 +237,14 @@
 - **Antigo #52 excluído:** o ID **AE-104 foi aposentado**, não recebe carta atribuída. **AE-129** é uma **proposta nova e rara**, com vitória automática que respeita a natureza ataque/defesa do atributo declarado, não o antigo efeito de captura incondicional. **AE-103** afeta só as cartas normais de combate, jamais a área de especiais preparadas.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
 - **Efeitos com 2/3/4 jogadores:** em duelo, direita e esquerda apontam ao mesmo oponente. AE-063/064/065 podem ser gastas mesmo sem vantagem; não serão convertidas obrigatoriamente em novas habilidades. AE-036 exige dois adversários distintos para seu efeito completo.
-- **Atribuição:** preencher a coluna `Carta atribuída (ID)` apenas quando estiverem definidos os atributos, a origem, a personalidade e o balanceamento daquela carta. Atualmente **129/129 campos de atribuição vazios**.
+- **Atribuição:** a coluna `Carta atribuída (ID)` continua vazia para **129/129 habilidades** porque **nenhuma foi definitivamente aprovada**. As sugestões de pareamento para 79 personagens estão **somente** em [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md), com status de proposta reversível.
 
 ## Documentos associados
 
 - [Auditoria detalhada dos especiais antigos](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md).
 - [GDD de regras e condições de vitória](REGRAS.md).
 - [Elenco de 79 candidatos](ELENCO_CANDIDATO.md).
+- [Fichas de 79 personagens com sugestões não aprovadas](CARTAS_79_PROPOSTAS.md).
+- [Contrato de implementação que separa aprovações e propostas](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 - [Registro dos 23 ataques diretamente transcritos](TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md).
 - [Leituras adicionais, ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
