@@ -11,7 +11,7 @@
 - **União:** os 7 integrantes confirmados e Jennifer futura **receberam habilidades especiais de maior impacto ou controle, aprovadas pelo autor**, mas nem todos precisam ser fortes em todos os atributos. A atribuição registrada é **aprovada**, mas não significa exclusividade de habilidades: podem ser reaproveitadas em outras cartas futuras.
 - **Fonte/Grau:** `Alta` = identidade/traço fundamentado em fonte canônica; `Média` = informação escassa ou material classificado como misto/histórico; `Baixa` = apenas nome/referência autoral, **não inventar feitos ou capacidades**. **Todos os valores, classes e especiais são decisões aprovadas para o jogo**, mesmo nas linhas com grau `Alta`, que indica confiança sobre a **biografia**, não a força no jogo.
 - **Spoilers:** descrições de frente de carta evitam mortes, reviravoltas e identidades secretas. A conexão de Mark com fases temporais consta em fontes de autor e necessita aprovação editorial antes de aparecer publicamente.
-- **Coluna da biblioteca:** por solicitação anterior do autor, **não preencher ainda a coluna `Carta atribuída` na biblioteca central dos especiais**, que continua vazia. Esta matriz contém uma **primeira sugestão reversível** de pareamento `carta ↔ habilidade`, não uma atribuição confirmada.
+- **Coluna da biblioteca: atribuições oficialmente aprovadas.** 87 cartas usam 78 habilidades distintas; a coluna do catálogo está preenchida. As 51 habilidades restantes não foram equipadas.
 
 ## 2. Fichas oficiais do baralho (87)
 
