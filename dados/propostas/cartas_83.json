@@ -18,19 +18,14 @@
     "fonte_regras": "docs/REGRAS.md",
     "fonte_canon": "docs/ELENCO_CANDIDATO.md",
     "guia": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
-<<<<<<< HEAD:dados/propostas/cartas_79.json
-    "aviso": "Cartas (atributos, descricoes e habilidades sugeridas) aprovadas pelo autor em 12/10/2026, por instrucao direta no chat. Nenhuma carta foi alterada na aprovacao.",
+    "aviso": "As 79 primeiras cartas (atributos, descricoes e habilidades sugeridas) foram aprovadas pelo autor em 12/10/2026, por instrucao direta no chat. As 4 cartas novas (V16-V19) continuam como proposta nao aprovada.",
     "versao_balanceamento": "Revisao qualitativa: 16 perfis ajustados para dispersar atributos dominantes. Ainda nao validado por simulacao.",
+    "nota_83": "V16–V19 são Facka (Faka no manuscrito), Lanigiah rainha Aracnas, Grande Pai Gaia líder Obbs, Seti líder de guerra Obb. Atributos e AE ainda são propostas.",
     "aprovacao": {
       "data": "2026-10-12",
       "por": "autor",
-      "escopo": "79 cartas de cartas_79.json"
+      "escopo": "79 cartas anteriores (de cartas_79.json); V16-V19 pendentes"
     }
-=======
-    "aviso": "Valores, habilidades, tiers e textos nao sao dados finais. Somente previews e revisao ate aprovacao explicita do autor.",
-    "versao_balanceamento": "Revisao qualitativa: 16 perfis ajustados para dispersar atributos dominantes. Ainda nao validado por simulacao.",
-    "nota_83": "V16–V19 são Facka (Faka no manuscrito), Lanigiah rainha Aracnas, Grande Pai Gaia líder Obbs, Seti líder de guerra Obb. Atributos e AE ainda são propostas."
->>>>>>> 7944ca902dfcbf0d66b7bc87f771978b6629d751:dados/propostas/cartas_83.json
   },
   "cartas": [
     {
