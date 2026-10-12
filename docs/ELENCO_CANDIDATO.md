@@ -1,6 +1,6 @@
 # Dimensions Stacks — Elenco candidato (v0.2)
 
-> **79 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 76 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
+> **79 candidatos únicos**, distribuídos em seis origens de cartas. **A União é uma filiação transversal**, não uma origem que duplica personagens. Formação da União confirmada pelo autor em 12/10/2026. Esta é uma lista de **candidatos**, não 79 cartas definitivas aprovadas. Nenhum atributo, ataque especial, raridade, biografia nova ou filiação à União foi inventado. Especialmente nas séries em andamento, conferir mudanças recentes antes da aprovação de cada carta.
 
 ## Critérios
 
@@ -19,7 +19,7 @@ Fontes: fichas canônicas **02 - Personagens.md** de *Ruínas dos Céus*, *Guerr
 | --- | --- | --- | --- |
 | J01 | Jokara | Ruínas dos Céus | Protagonista eterí; observadora e perseverante |
 | J02 | Nestira | Ruínas dos Céus | Sobrevivência, espiritualidade e cuidado prático |
-| J03 | Mark Polar | Ciclo de Jesed | Identidade principal da carta; não usar “Loutes” no nome exibido |
+| J03 | Mark Polar | Ciclo de Jesed | Identidade principal da carta; não criar duplicatas por pseudônimos ou identidades temporais |
 | J04 | Gabasteri | Ruínas dos Céus | Sobrevivente experiente e controlador |
 | J05 | Maletar | Ruínas dos Céus | Construtor e referência protetora |
 | J06 | Platisa | Ruínas dos Céus | Ecoante e conhecedora de plantas |
@@ -42,7 +42,7 @@ Fontes: fichas canônicas **02 - Personagens.md** de *Ruínas dos Céus*, *Guerr
 | J22 | Sefter | Herdeiros das Cinzas | Núcleo familiar; eixo temático do futuro e da reconstrução |
 | J23 | Kedran | Herdeiros das Cinzas | Núcleo familiar; eixo temático do presente |
 
-**Nota:** algumas funções de *Herdeiros das Cinzas* ainda são planeadas; confirmar versão canônica antes de aprovar especiais que revelem segredos. Spoilers importantes sobre Loutes/Mark merecem uma estratégia de apresentação.
+**Nota:** algumas funções de *Herdeiros das Cinzas* ainda são planeadas; confirmar versão canônica antes de aprovar especiais que revelem segredos. Spoilers importantes envolvendo Mark Polar merecem uma estratégia de apresentação.
 
 ## 2. Viajantes Dimensionais — 15 candidatos
 
@@ -106,7 +106,7 @@ Fonte: `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens
 | D11 | Cara-de-Larva | Demônio executor ligado à Besta da Carnificina, presente no livro 2 |
 | D12 | Agouro | Entidade sobrenatural e agente de manipulação |
 | D13 | Suéten | Integrante do conjunto de espíritos/Elos Carnam |
-| D14 | Filippo (Filipo) | Alvorada das Ilusões | Personagem presente no livro 2, ligado a Manu; conferir grafia oficial antes da carta final |
+| D14 | Filippo (Filipo, grafia a confirmar) | Personagem do livro 2; ligado a Manu; o planejamento literário usa “Filippo”, enquanto o autor escreveu “Filipo” |
 
 **Nota:** para espíritos, pessoas falecidas e entidades, os números de combate representam **potencial lúdico**, não necessariamente força física em vida.
 
@@ -139,16 +139,16 @@ Fonte: `Mistério Oculto/1 - Órbita Oráculo/01 - Canon/90 - Materiais reorgani
 
 ## 7. A União — filiação oficial sem duplicar cartas
 
-O autor confirmou sete integrantes na formação informada e Jennifer como futura integrante. **Hyde pode ser o líder/cabeça do grupo, proposta narrativa ainda não confirmada.** Não presumir que qualquer membro é fundador sem confirmação.
+O autor confirmou sete integrantes na formação informada e Jennifer como futura integrante. **Hyde é a cabeça/liderança do grupo, conforme direção do autor.** A atribuição de fundador segue indefinida: Hyde é uma possibilidade, não uma decisão oficial.
 
 | Selo da União | Personagem | Série/base da carta | Estado |
 | --- | --- | --- | --- |
 | U01 | Bruno Lins Lee | Viajantes Dimensionais (V02) | Integrante |
 | U02 | Brenda | Viajantes Dimensionais (V15) | Integrante |
-| U03 | Hyde | Mistério Oculto (M01) | Integrante; possível líder (proposta) |
+| U03 | Hyde | Mistério Oculto (M01) | Integrante; cabeça/líder; fundador ainda não decidido |
 | U04 | Releuz (provisório) | Mistério Oculto (M10) | Integrante |
 | U05 | Jasmey Badrock | Spacetheft (S01) | Integrante |
-| U06 | Mark Polar | Ciclo de Jesed (J03) | Integrante; também grafado Mark Pollar em material antigo |
+| U06 | Mark Polar | Ciclo de Jesed (J03) | Integrante; grafia correta para as cartas |
 | U07 | Édelin Fils | Belfex (B01) | Integrante |
 | U08 | Jennifer (sobrenome pendente) | Diário Sobrenatural (D06) | Entrada futura |
 
