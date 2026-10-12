@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.3)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.4)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -56,12 +56,19 @@ A escolha simultânea ou secreta do atributo pelos demais é **PROPOSTA de inter
 5. Se o maior valor vencedor for um **atributo de defesa**, os adversários perdem suas cartas de combate para o **Buraco Negro**; o defensor vencedor preserva sua própria carta no final do seu baralho ativo, mas não captura as outras.
 6. Avança o iniciador no sentido horário e repete.
 
-### Empates
+### Empates — sequência confirmada pelo autor (12/10/2026)
 
-O manual físico prevê um primeiro desempate pela **soma dos quatro atributos** de cada carta empatada; vence quem tiver maior soma. No material existe ainda uma observação específica para empate de defesa, cujo efeito precisa ser validado antes de se tornar regra digital.
+Quando **dois ou mais valores de atributos individuais empatarem**, aplicar os desempates nesta ordem **aos participantes empatados**:
 
-- **PENDENTE:** empate também na soma; empate em jogos com 3/4 jogadores; empate envolvendo ataque e defesa no mesmo valor; efeito definitivo do empate defensivo.
-- **PROPOSTA para testar:** preservar tipo (ataque/defesa) do vencedor do desempate. Se persistir igualdade, descartar as cartas empatadas no Buraco Negro sem captura, mas **não adotar sem aprovação**.
+1. **Maior valor do atributo escolhido no confronto.** Se empatar, prosseguir.
+2. **Maior soma dos quatro atributos da carta**: Poder + Defesa + Inteligência + Velocidade.
+3. **Se a soma total também empatar:** vence a maior soma de **Poder + Inteligência** (os dois atributos de ataque).
+
+O critério **Poder + Inteligência** tem precedência sobre Defesa + Velocidade em igualdade das somas totais, conforme decisão do autor.
+
+**PENDENTE:** empate absoluto depois do terceiro critério. **PENDENTE:** em confrontos com especiais que envolvem **duas cartas simultâneas**, como somar a totalidade dos atributos para desempate (#09, cuja soma principal já está aprovada). A documentação antiga mencionava um possível empate defensivo especial; a instrução nova de três etapas prevalece na regra geral.
+
+Para choque de **especiais de imposição de atributo** que empatem no valor usado para impor, **PROPOSTA**: aplicar a mesma sequência de desempate por soma dos quatro atributos e depois Poder + Inteligência. A aplicação automática à disputa de imposição não foi confirmada expressamente pelo autor, então permanece como proposta.
 
 ### Confrontos com 3 ou 4 jogadores
 
@@ -162,7 +169,7 @@ Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco 
 
 **APROVADO:** obriga um adversário a usar uma carta de ataque especial **somente se ela já estiver preparada na área de especiais à esquerda (virada para baixo, esperando ativação)**. Não obriga tirar uma carta nova do baralho ou da reserva. A carta forçada é ativada e descartada como qualquer especial utilizado.
 
-**PENDENTE:** o texto original é plural ('suas cartas de ataque especial'); se o alvo tiver duas preparadas, será obrigado a usar ambas ou pode ser apenas uma? Também falta decidir quem escolhe alvos e escolhas internas e se existe janela de resposta.
+**APROVADO (12/10/2026):** deve **usar todas as cartas especiais que já estiverem preparadas na sua área à esquerda**, até duas. O autor usou a expressão 'todas em mãos'; em conjunto com a decisão anterior, isso significa as cartas **já disponíveis/preparadas para ativação**, não cartas ainda escondidas no baralho ativo ou na reserva. **PENDENTE:** como resolver a ordem de ativação das duas, escolhas de alvo internas e eventual janela de resposta.
 
 ### 14.3 Choque de imposições de atributos
 
@@ -172,7 +179,7 @@ Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco 
 
 A disputa de imposição **não é a resolução do combate**: depois dela, todos ainda comparam seus valores no atributo vencedor, e a carta comum pode ganhar ou perder normalmente.
 
-**PENDENTE:** empate exato entre valores de imposição; conflito com 3 ou mais especiais diferentes (viável com 3/4 jogadores ou duplas se aprovadas); interação com efeitos que modificam atributos antes da imposição. **PROPOSTA:** aplicar o mesmo critério de maior valor entre todos os especiais conflitantes, deixando desempate específico em aberto.
+**PENDENTE:** empate exato entre valores de imposição (propõe-se aplicar a ordem de desempate geral desta seção), conflito com 3 ou mais especiais diferentes (viável com 3/4 jogadores ou duplas se aprovadas), e interação com efeitos que modificam atributos antes da imposição.
 
 ### 14.4 Convenção de nomeação e identidade (aprovada)
 
@@ -190,13 +197,23 @@ Destaques para especificação futura:
 
 1. **#06 — Mark Pollar (nome antigo na carta):** *Ganhe a carta que o inimigo usou no ataque especial.* Isso se refere a especial **já utilizado**, não a carta esperando preparada. Definir destino da carta ganha e a interação excepcional com o descarte.
 2. **#18 — Ricochett Bombargue:** *Inverta os papéis de vencedor e perdedor uma vez.* Em combate com mais de dois jogadores, definir explicitamente a correspondência de vários perdedores com o vencedor único. Não enfraquecer o efeito antes da regra operacional/testes.
-3. **#19 — Sagrado Senhor da Morte:** *Sacrifique uma carta com algum status acima de 90 em troca das três primeiras cartas do Baralho Negro.* Preservar o nome original **Baralho Negro**, diferente de **Buraco Negro** no manual geral, até confirmação da equivalência. Definir quem escolhe a carta sacrificada, a zona de destino, e se os três itens podem incluir especiais.
-4. **#24 — Primus Tenesy:** *Jogue duas cartas, uma em Inteligência e outra em Poder.* Exceção intencional ao par normal ataque/defesa; **PENDENTE:** se os valores somam, geram dois combates ou outro cálculo.
+3. **#19 — Sagrado Senhor da Morte:** *Sacrifique uma carta com algum status acima de 90 em troca das três primeiras cartas do Baralho Negro.* **TERMO CORRIGIDO PELO AUTOR:** trata-se do **Buraco Negro**; não existe indicação de uma segunda zona chamada 'Baralho Negro'. Definir quem escolhe a carta sacrificada, a zona de destino, e se os três itens podem incluir especiais.
+4. **#24 — Primus Tenesy:** *Jogue duas cartas, uma em Inteligência e outra em Poder.* Exceção intencional ao par normal ataque/defesa; **RETIRADO DO JOGO:** especial #24 removido por decisão do autor, preservado somente como registro histórico.
 5. **#27 — Kiw Tenesy:** *Adicione 15 de Defesa e 20 de Velocidade a uma carta.* Definir duração e zona válida; não presumir bônus permanente.
 6. **#34 — Master Kang:** *Roube duas cartas, uma de cada jogador.* Com dois jogadores não há dois adversários. **PENDENTE:** versão de duelo ou restrição de uso.
 7. **#35 — Cap. Zoddie:** *Troque os maços de reserva dos jogadores, da esquerda para a direita, começando por você.* Diferenciar da troca apenas com a esquerda (#46) e definir rotação simultânea da mesa.
 8. **#36 — Luna Stellar:** *Veja suas cartas do monte de reserva e separe 7 para usar na ordem.* Definir onde entram essas 7 e como proceder quando restarem menos de 7 na reserva.
-9. **#59 — William McCroys:** *Obrigue um jogador a usar suas cartas de ataque especial nessa rodada.* **Já confirmado:** somente as cartas especiais preparadas na mesa podem ser forçadas; **PENDENTE:** singular versus plural na presença de duas preparadas.
+9. **#59 — William McCroys:** *Obrigue um jogador a usar suas cartas de ataque especial nessa rodada.* **Já confirmado:** somente as cartas especiais preparadas na mesa podem ser forçadas; **APROVADO:** todas as cartas especiais já preparadas devem ser usadas; ordem e alvos individuais ainda pendentes.
 10. **#60 e #61:** as condições literais se referem a carta **azul** e carta **vermelha**. As cores do jogo digital identificarão séries, não União ou vilania. **PENDENTE:** identificar a carta-alvo e aprovar uma nova condição funcional sem alterar silenciosamente as regras antigas.
 
 **Separação metodológica:** texto transcrito é a fonte original, o que o autor confirmou é a decisão do GDD; aplicações concretas ainda não definidas são hipóteses de design e devem ficar rotuladas **PENDENTE** ou **PROPOSTA**.
+
+
+## 16. Decisões subsequentes — retirada, terminologia e desempates (12/10/2026)
+
+- **Especial #18 (Ricochett Bombargue): RETIRADO** do conjunto de ataques especiais previstos para o jogo de PC. O texto físico permanece preservado no arquivo histórico, sem efeitos ativos.
+- **Especial #24 (Primus Tenesy): RETIRADO** do conjunto de ataques especiais previstos para PC. A carta física continua documentada, mas a mecânica não deve ser replicada.
+- **Especial #19 (Sagrado Senhor da Morte):** o autor confirmou que **'Baralho Negro' significa Buraco Negro**. Usar apenas **Buraco Negro** na documentação funcional; preservar nota de divergência com a transcrição anterior. A regra de sacrificar uma carta com atributo superior a 90 em troca das três primeiras do Buraco Negro continua disponível para análise.
+- **Especial #59 (William McCroys):** obriga o jogador escolhido a **usar todas as cartas de ataque especial que já tiver preparado à esquerda na mesa**, no máximo duas. A formulação nova 'todas em mãos' **não autoriza puxar cartas não preparadas de outras zonas**.
+- **Desempate geral:** valor individual → soma dos quatro atributos → soma **Poder + Inteligência**. Empate persistente depois desses três critérios continua pendente.
+- **Leituras por IA de outras cartas:** registrar como **provisórias**, nunca como texto confirmado. Consultar [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md).
