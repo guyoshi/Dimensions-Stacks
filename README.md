@@ -7,6 +7,8 @@ Jogo de cartas digital para PC que reúne personagens do universo literário **D
 ## Documentos
 
 - [Regras e dinâmica (GDD)](docs/REGRAS.md)
+- **[Biblioteca de 128 especiais, por tipo, com atribuição em branco](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)**
+- **[Auditoria individual das 62 posições da coleção física](docs/AUDITORIA_BALANCEAMENTO_ESPECIAIS.md)**
 - [Ataques especiais: índice atualizado](docs/ATAQUES_ESPECIAIS.md)
 - [23 ataques especiais transcritos pelo autor](docs/TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md)
 - [32 leituras por IA e 4 identidades confirmadas, numeração e lacunas](docs/LEITURAS_IA_PENDENTES_2026-10-12.md)
