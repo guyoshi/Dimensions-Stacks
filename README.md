@@ -7,7 +7,9 @@ Jogo de cartas digital para PC que reúne personagens do universo literário **D
 ## Documentos
 
 - [Regras e dinâmica (GDD)](docs/REGRAS.md)
-- [Ataques especiais e auditoria de balanceamento](docs/ATAQUES_ESPECIAIS.md)
+- [Ataques especiais: índice atualizado](docs/ATAQUES_ESPECIAIS.md)
+- [23 ataques especiais transcritos pelo autor](docs/TRANSCRICOES_ESPECIAIS_CONFIRMADAS.md)
+- [Inventário fotográfico original, arquivado](docs/INVENTARIO_FOTOGRAFICO_LEGADO.md)
 - [Elenco candidato das séries](docs/ELENCO_CANDIDATO.md)
 
 As decisões originais e as propostas de revisão devem permanecer identificadas separadamente. A referência narrativa é o repositório [dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). A documentação está sujeita à aprovação do autor.
