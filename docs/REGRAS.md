@@ -1,4 +1,4 @@
-# Dimensions Stacks — Regras e dinâmica (GDD v0.8)
+# Dimensions Stacks — Regras e dinâmica (GDD v0.9)
 
 > Estado: **rascunho de design**, 12/10/2026. Documenta as regras das fotografias do jogo original e os esclarecimentos do autor. Qualquer regra não inteiramente determinada está identificada como **PENDENTE** ou **PROPOSTA**, nunca tratada como cânone.
 
@@ -38,10 +38,10 @@ Cada carta possui exatamente quatro atributos numéricos:
 
 | Atributo | Tipo | Pode confrontar |
 | --- | --- | --- |
-| Poder | Ataque | Poder ou Defesa |
-| Defesa | Defesa | Poder ou Defesa |
-| Inteligência | Ataque | Inteligência ou Velocidade |
-| Velocidade | Defesa | Inteligência ou Velocidade |
+| **Ataque (ATQ)** | Ataque | **Ataque ou Defesa** |
+| **Defesa (DEF)** | Defesa | **Ataque ou Defesa** |
+| **Inteligência (INT)** | Ataque | **Inteligência ou Velocidade** |
+| **Velocidade (VEL)** | Defesa | **Inteligência ou Velocidade** |
 
 O iniciador seleciona **qualquer dos quatro** atributos. Os demais escolhem um atributo do **mesmo par**. Cada jogador utiliza sua **primeira carta do baralho ativo**, sem passar à segunda ou terceira.
 
@@ -61,14 +61,14 @@ A escolha simultânea ou secreta do atributo pelos demais é **PROPOSTA de inter
 Quando **dois ou mais valores de atributos individuais empatarem**, aplicar os desempates nesta ordem **aos participantes empatados**:
 
 1. **Maior valor do atributo escolhido no confronto.** Se empatar, prosseguir.
-2. **Maior soma dos quatro atributos da carta**: Poder + Defesa + Inteligência + Velocidade.
-3. **Se a soma total também empatar:** vence a maior soma de **Poder + Inteligência** (os dois atributos de ataque).
+2. **Maior soma dos quatro atributos da carta**: Ataque + Defesa + Inteligência + Velocidade.
+3. **Se a soma total também empatar:** vence a maior soma de **Ataque + Inteligência** (os dois atributos de ataque).
 
-O critério **Poder + Inteligência** tem precedência sobre Defesa + Velocidade em igualdade das somas totais, conforme decisão do autor.
+O critério **Ataque + Inteligência** tem precedência sobre Defesa + Velocidade em igualdade das somas totais, conforme decisão do autor.
 
 **PENDENTE:** empate absoluto depois do terceiro critério. **PENDENTE:** em confrontos com especiais que envolvem **duas cartas simultâneas**, como somar a totalidade dos atributos para desempate (#09, cuja soma principal já está aprovada). A documentação antiga mencionava um possível empate defensivo especial; a instrução nova de três etapas prevalece na regra geral.
 
-Para choque de **especiais de imposição de atributo** que empatem no valor usado para impor, **PROPOSTA**: aplicar a mesma sequência de desempate por soma dos quatro atributos e depois Poder + Inteligência. A aplicação automática à disputa de imposição não foi confirmada expressamente pelo autor, então permanece como proposta.
+Para choque de **especiais de imposição de atributo** que empatem no valor usado para impor, **PROPOSTA**: aplicar a mesma sequência de desempate por soma dos quatro atributos e depois Ataque + Inteligência. A aplicação automática à disputa de imposição não foi confirmada expressamente pelo autor, então permanece como proposta.
 
 ### Confrontos com 3 ou 4 jogadores
 
@@ -90,7 +90,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 
 **PENDENTE:** se preparar a carta a retira obrigatoriamente do topo do baralho ativo ou de outra zona; se preparar substitui a participação normal daquela carta no turno; prioridade entre jogadores que desejam ativar especiais na mesma janela; limites temporais exatos de reação, escolha de alvo e efeitos que se anulam. **A escolha de qual único especial preparado ativar voluntariamente por combate e em qual rodada pertence ao proprietário**, salvo habilidade que permita dois ou ativação forçada da #59.
 
-**PROPOSTA de sequência de interface:** preparação pré-combate → escolha de atributos → revelação → janela de especiais → recálculo do combate → resolução de captura/defesa → descarte dos especiais ativados.
+**PROPOSTA de sequência de interface (AINDA EM DISCUSSÃO):** preparação pré-combate → escolha de atributos → revelação → janela de especiais e possíveis reações defensivas → comparação → resolução de captura/defesa → descarte dos especiais ativados. A intenção confirmada pelo autor é que defesas **possam reagir a ataques enquanto ainda estão pendentes**, inclusive em janelas mais tardias. Ver a [proposta de prioridade](PRIORIDADE_ESPECIAIS_PROPOSTA.md), cuja sequência detalhada **não foi aprovada**.
 
 ## 7. Meio de reserva
 
@@ -102,7 +102,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 
 - Não trocar livremente cartas com a própria reserva ou com outro jogador.
 - Não consultar/pular a segunda e demais cartas do baralho ativo para jogar uma posterior.
-- Não usar atributos fora do par Poder/Defesa ou Inteligência/Velocidade.
+- Não usar atributos fora do par Ataque/Defesa ou Inteligência/Velocidade.
 - Não recuperar ataques especiais preparados sem regra expressa.
 - Não roubar cartas já colocadas no campo de combate, **salvo efeito de carta explicitamente autorizado**.
 
@@ -174,9 +174,9 @@ Documentos complementares: [Ataques especiais](ATAQUES_ESPECIAIS.md) · [Elenco 
 
 ### 14.3 Choque de imposições de atributos
 
-**APROVADO:** quando dois jogadores ativam especiais que impõem **atributos diferentes** (por exemplo, Poder e Inteligência) no mesmo combate, compara-se **o valor de cada atributo imposto na carta normal de combate de quem o impôs**. **O maior valor determina o atributo obrigatório para todos os jogadores naquela disputa**.
+**APROVADO:** quando dois jogadores ativam especiais que impõem **atributos diferentes** (por exemplo, Ataque e Inteligência) no mesmo combate, compara-se **o valor de cada atributo imposto na carta normal de combate de quem o impôs**. **O maior valor determina o atributo obrigatório para todos os jogadores naquela disputa**.
 
-**Exemplo:** jogador A impõe Poder e sua carta normal possui Poder 91; jogador B impõe Inteligência e a sua carta normal tem Inteligência 82. **Poder vence a disputa de imposição**. Todos jogam em Poder, inclusive o jogador B. Os dois especiais ativados são descartados no Buraco Negro, conforme a regra geral.
+**Exemplo:** jogador A impõe Ataque e sua carta normal possui Ataque 91; jogador B impõe Inteligência e a sua carta normal tem Inteligência 82. **Ataque vence a disputa de imposição**. Todos jogam em Ataque, inclusive o jogador B. Os dois especiais ativados são descartados no Buraco Negro, conforme a regra geral.
 
 A disputa de imposição **não é a resolução do combate**: depois dela, todos ainda comparam seus valores no atributo vencedor, e a carta comum pode ganhar ou perder normalmente.
 
@@ -302,3 +302,34 @@ O autor aceita que **pouquíssimas cartas** possam ter um especial de vitória a
 **Exemplo:** um jogador guarda dois especiais preparados, A e B. Numa disputa, pode voluntariamente usar A **ou** B; o outro continua preparado. Poderá usar o restante numa rodada posterior. Somente um efeito específico de ativação dupla ou a imposição de #59 poderá fazê-lo consumir ambos na mesma disputa.
 
 **PENDENTES DISTINTOS:** a ordem de resolução quando diferentes jogadores tentarem ativar efeitos, as janelas exatas de ativação e as condições de uma futura habilidade de ativação dupla. Não confundir *escolher a rodada* com prioridade absoluta ou interrupção em qualquer fase.
+
+
+## 21. Terminologia de cartas, reações e conjunto de fichas (12/10/2026)
+
+### 21.1 Nome dos quatro atributos: confirmado
+
+O autor **aprovou trocar o nome antigo Poder por Ataque**, com sigla **ATQ**. As outras propriedades permanecem **Defesa (DEF), Inteligência (INT) e Velocidade (VEL)**. As duplas de confronto são **ATQ/DEF** e **INT/VEL**. ATQ e INT são ofensivos, DEF e VEL defensivos. O primeiro desempate continua a soma dos quatro; o segundo é **ATQ + INT**. **Documentos históricos preservam a palavra Poder como transcrição do jogo de infância**, não como nome válido na interface nova.
+
+**Escala de 0 a 100 para atributos naturais** está **recomendada**, com bônus temporários que podem ultrapassar 100, mas ainda será validada visualmente e em testes de balanceamento.
+
+### 21.2 “Ataque Especial” ou “Habilidade Especial”? (proposta de nomenclatura)
+
+Como algumas cartas **protegem, anulam ou respondem a outras**, recomendo que o termo guarda-chuva seja **Habilidade Especial** (ou o botão curto **Especial / ESP**). As habilidades ganhariam classificações apenas editoriais, como **Ataque, Defesa, Controle, Recuperação ou Coringa**. Esta renomeação **ainda não foi aprovada**; o nome antigo continua registrado em materiais históricos.
+
+### 21.3 Reações defensivas: requisito confirmado, mecanismo proposto
+
+**Intenção do autor confirmada:** as **habilidades especiais defensivas devem poder ser utilizadas em reação aos ataques adversários em qualquer oportunidade útil do combate**, porque precisam impedir o ataque **antes que ele se conclua**. Não são obrigadas a ser ativadas junto dos ataques ofensivos. A ativação por reação **não cria um segundo uso voluntário gratuito** quando o jogador já gastou sua única especial do combate.
+
+**Mecanismo detalhado a aprovar:** janelas de reação pré-resolução, pilha de efeitos e oportunidade de interromper antes de descartar/capturar. Consultar [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md). **Não concluir retrospectivamente ações já resolvidas**; voltar uma carta capturada por anulação posterior quebraria as zonas e o histórico.
+
+### 21.4 Novo especial solicitado pelo autor
+
+**AE-130 — Anular a última habilidade:** o autor solicitou uma habilidade para **anular o último especial jogado**. Proposta de texto técnico: “**REAÇÃO: anule a última habilidade especial que esteja pendente de resolução. A carta anulada vai ao Buraco Negro normalmente. Não desfaça efeitos já resolvidos.**” Esse é um novo ID da [biblioteca de 129 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md). O texto preciso e as janelas ainda requerem aprovação.
+
+### 21.5 Fichas de personagens e balanceamento (propostas, não cânone)
+
+Foram elaboradas **79 sugestões de fichas**, com descrições de **até 120 caracteres**, perfis numéricos propositalmente variados, habilidades sugeridas e sinalização de fonte/risco de extrapolação: [CARTAS_79_PROPOSTAS.md](CARTAS_79_PROPOSTAS.md). O autor pediu diferenças importantes de força, incluindo cartas fracas mas negociáveis por efeitos de troca, especialistas e cartas de elite.
+
+**Os oito membros presentes ou futuros de A União** receberam habilidades candidatas de grande impacto: essa é a **diretriz de design solicitada pelo autor**, não a aprovação dos números e AE individuais. **Todos os valores, descrições e AE sugeridos ainda precisam de revisão do autor**, especialmente os personagens sem documentos narrativos confiáveis.
+
+**Fonte única de autorização para IA implementadora:** [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). Qualquer decisão ali marcada `PROPOSTA` não pode ser promovida silenciosamente a regra aprovada.
