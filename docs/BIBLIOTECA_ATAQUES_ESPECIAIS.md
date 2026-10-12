@@ -1,6 +1,6 @@
-# Dimensions Stacks — Biblioteca de ataques especiais (v1.0)
+# Dimensions Stacks — Biblioteca de ataques especiais (v1.1)
 
-> **Catálogo de design, NÃO distribuição definitiva.** São **120 habilidades candidatas**, agrupadas em 12 famílias (10 em cada). Todas se referem a possíveis efeitos para as **cartas novas**, não às identidades físicas antigas. A coluna final **Carta atribuída (ID)** foi deixada **em branco** em todas as linhas para preenchimento posterior, por exemplo `J01`, `V02`, `S01`, `D06`, `M01`, `B01`. O ID `AE-001` identifica a **habilidade**, e a referência física `#09` identifica apenas o ataque antigo que inspirou a mecânica. Uma habilidade pode ser reutilizada em mais de uma carta se o autor aprovar.
+> **Catálogo de design, NÃO distribuição definitiva.** São **128 habilidades candidatas**, agrupadas em 13 famílias (12 grupos de 10 e um grupo adicional de 8). Todas se referem a possíveis efeitos para as **cartas novas**, não às identidades físicas antigas. A coluna final **Carta atribuída (ID)** foi deixada **em branco** em todas as linhas para preenchimento posterior, por exemplo `J01`, `V02`, `S01`, `D06`, `M01`, `B01`. O ID `AE-001` identifica a **habilidade**, e a referência física `#09` identifica apenas o ataque antigo que inspirou a mecânica. Uma habilidade pode ser reutilizada em mais de uma carta se o autor aprovar.
 
 ## Princípios obrigatórios e cuidados
 
@@ -32,20 +32,22 @@
 | AE-009 | Superação | Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa. | novo | Teste |  |
 | AE-010 | Ataque em dupla | Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate. | #09 | Regra-base |  |
 
-## B. Permutas de atributos (10)
+## B. Conversões direcionais de atributos (10)
+
+**Regra de leitura:** `Origem → Destino` = copiar o número da Origem para o Destino **sem alterar o atributo de origem**. Isso não é uma permuta: a inversa é outra habilidade, garantindo os espelhos solicitados.
 
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-011 | Poder por Inteligência | Troque entre si os valores numéricos de Poder e Inteligência da sua carta de combate nesta disputa. | #22 | Teste |  |
-| AE-012 | Inteligência por Poder | Copie o valor de Inteligência para Poder em sua carta de combate nesta disputa; Inteligência não muda. | novo | Teste |  |
-| AE-013 | Poder por Velocidade | Troque entre si os valores de Poder e Velocidade da sua carta de combate nesta disputa. | #21 | Teste |  |
-| AE-014 | Velocidade por Poder | Copie o valor de Velocidade para Poder na sua carta de combate nesta disputa; Velocidade não muda. | novo | Teste |  |
-| AE-015 | Defesa por Inteligência | Troque entre si os valores de Defesa e Inteligência da sua carta de combate nesta disputa. | #20 | Teste |  |
-| AE-016 | Inteligência por Defesa | Copie o valor de Inteligência para Defesa na sua carta de combate nesta disputa; Inteligência não muda. | novo | Teste |  |
-| AE-017 | Defesa por Poder | Troque entre si os valores de Defesa e Poder da sua carta de combate nesta disputa. | novo | Teste |  |
-| AE-018 | Poder por Defesa | Copie o valor de Poder para Defesa na sua carta de combate nesta disputa; Poder não muda. | novo | Teste |  |
-| AE-019 | Velocidade por Inteligência | Troque entre si os valores de Velocidade e Inteligência da sua carta de combate nesta disputa. | novo | Teste |  |
-| AE-020 | Inteligência por Velocidade | Copie o valor de Inteligência para Velocidade da sua carta de combate nesta disputa; Inteligência não muda. | novo | Teste |  |
+| AE-011 | Poder → Inteligência | Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Poder; Poder permanece igual. | #22 (adaptação) | Teste |  |
+| AE-012 | Inteligência → Poder | Substitua o valor de Poder pelo valor que a carta possui em Inteligência; Inteligência permanece igual. | novo | Teste |  |
+| AE-013 | Poder → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Poder; Poder permanece igual. | #21 (adaptação) | Teste |  |
+| AE-014 | Velocidade → Poder | Substitua o valor de Poder pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
+| AE-015 | Defesa → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
+| AE-016 | Inteligência → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. | #20 (adaptação) | Teste |  |
+| AE-017 | Poder → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Poder; Poder permanece igual. | novo | Teste |  |
+| AE-018 | Defesa → Poder | Substitua o valor de Poder pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
+| AE-019 | Inteligência → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. | novo | Teste |  |
+| AE-020 | Velocidade → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
 
 ## C. Controle do confronto e do atributo (10)
 
@@ -196,6 +198,21 @@
 | AE-118 | Blindagem de especial | Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas. | novo | Atenção |  |
 | AE-119 | Preparação urgente | Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa. | novo | Experimental |  |
 | AE-120 | Remover alteração | Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação. | novo | Teste |  |
+## M. Conversões faltantes e permutas completas (8)
+
+**Por que este grupo existe:** há **12 conversões direcionais possíveis** entre os quatro atributos (cada um dos 4 pode substituir qualquer um dos outros 3) e **6 permutas bidirecionais**. O grupo B cobre as 10 primeiras conversões; este grupo completa as duas faltantes e oferece as seis permutas para não confundir *trocar números entre si* com *copiar um número sobre outro*.
+
+| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| --- | --- | --- | --- | --- | --- |
+| AE-121 | Defesa → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
+| AE-122 | Velocidade → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
+| AE-123 | Permutar Poder e Inteligência | Troque entre si os números de Poder e Inteligência da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-124 | Permutar Poder e Velocidade | Troque entre si os números de Poder e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-125 | Permutar Poder e Defesa | Troque entre si os números de Poder e Defesa da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-126 | Permutar Inteligência e Velocidade | Troque entre si os números de Inteligência e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-127 | Permutar Inteligência e Defesa | Troque entre si os números de Inteligência e Defesa da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-128 | Permutar Defesa e Velocidade | Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
+
 ## Regras propostas de integridade (antes de programar)
 
 - **Carta sem habilidade recuperada:** não inventar texto físico; poderá receber qualquer AE aprovada conforme coerência narrativa.
@@ -206,7 +223,7 @@
 - **Vitória automática e limpeza global (AE-103 e AE-104):** **não recomendados para o conjunto competitivo inicial** até haver contrajogo e regra clara de prioridade. Estão aqui para análise e possível reformulação, não por terem sido aprovados.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
 - **Efeitos com 2/3/4 jogadores:** convenção proposta de esquerda/direita considera apenas jogadores ativos; efeitos de dois rivais distintos (AE-063/064/065) são específicos para 3+ e necessitam de equivalente apropriado em duelos.
-- **Atribuição:** preencher a coluna `Carta atribuída (ID)` apenas quando estiverem definidos os atributos, a origem, a personalidade e o balanceamento daquela carta. Atualmente **120/120 campos de atribuição vazios**.
+- **Atribuição:** preencher a coluna `Carta atribuída (ID)` apenas quando estiverem definidos os atributos, a origem, a personalidade e o balanceamento daquela carta. Atualmente **128/128 campos de atribuição vazios**.
 
 ## Documentos associados
 
