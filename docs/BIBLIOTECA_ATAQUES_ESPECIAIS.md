@@ -1,6 +1,6 @@
-# Dimensions Stacks — Biblioteca de ataques especiais (v1.3)
+# Dimensions Stacks — Biblioteca de habilidades especiais candidatas (v1.4)
 
-> **Catálogo de design, NÃO distribuição definitiva.** São **128 habilidades candidatas**, agrupadas em 13 famílias (12 grupos de 10 e um grupo adicional de 8). Todas se referem a possíveis efeitos para as **cartas novas**, não às identidades físicas antigas. A coluna final **Carta atribuída (ID)** foi deixada **em branco** em todas as linhas para preenchimento posterior, por exemplo `J01`, `V02`, `S01`, `D06`, `M01`, `B01`. O ID `AE-001` identifica a **habilidade**, e a referência física `#09` identifica apenas o ataque antigo que inspirou a mecânica. Uma habilidade pode ser reutilizada em mais de uma carta se o autor aprovar.
+> **Catálogo de design, NÃO distribuição definitiva.** São **129 habilidades candidatas**, agrupadas em 13 famílias (12 grupos de 10 e um grupo adicional de 8). Todas se referem a possíveis efeitos para as **cartas novas**, não às identidades físicas antigas. A coluna final **Carta atribuída (ID)** foi deixada **em branco** em todas as linhas para preenchimento posterior, por exemplo `J01`, `V02`, `S01`, `D06`, `M01`, `B01`. O ID `AE-001` identifica a **habilidade**, e a referência física `#09` identifica apenas o ataque antigo que inspirou a mecânica. Uma habilidade pode ser reutilizada em mais de uma carta se o autor aprovar.
 
 ## Princípios obrigatórios e cuidados
 
@@ -21,13 +21,13 @@
 
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-001 | Impulso de Poder | Sua carta de combate recebe +15 em Poder nesta disputa. | novo | Teste |  |
+| AE-001 | Impulso de Ataque | Sua carta de combate recebe +15 em Ataque nesta disputa. | novo | Teste |  |
 | AE-002 | Muralha de Defesa | Sua carta de combate recebe +15 em Defesa nesta disputa. | novo | Teste |  |
 | AE-003 | Clarividência | Sua carta de combate recebe +15 em Inteligência nesta disputa. | novo | Teste |  |
 | AE-004 | Arrancada | Sua carta de combate recebe +15 em Velocidade nesta disputa. | novo | Teste |  |
 | AE-005 | Reforço flexível | Sua carta de combate recebe +15 em um atributo à sua escolha nesta disputa. | #15 | Teste |  |
 | AE-006 | Dupla resistência | Uma carta de combate sua recebe +15 Defesa e +20 Velocidade nesta disputa. | #27 | Teste |  |
-| AE-007 | Ímpeto ofensivo | Sua carta de combate recebe +10 Poder e +10 Inteligência nesta disputa. | novo | Teste |  |
+| AE-007 | Ímpeto ofensivo | Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa. | novo | Teste |  |
 | AE-008 | Guarda equilibrada | Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa. | novo | Teste |  |
 | AE-009 | Superação | Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa. | novo | Teste |  |
 | AE-010 | Ataque em dupla | Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate. | #09 | Regra-base |  |
@@ -38,14 +38,14 @@
 
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-011 | Poder → Inteligência | Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Poder; Poder permanece igual. | #22 (adaptação) | Teste |  |
-| AE-012 | Inteligência → Poder | Substitua o valor de Poder pelo valor que a carta possui em Inteligência; Inteligência permanece igual. | novo | Teste |  |
-| AE-013 | Poder → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Poder; Poder permanece igual. | #21 (adaptação) | Teste |  |
-| AE-014 | Velocidade → Poder | Substitua o valor de Poder pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
+| AE-011 | Ataque → Inteligência | Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Ataque; Ataque permanece igual. | #22 (adaptação) | Teste |  |
+| AE-012 | Inteligência → Ataque | Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual. | novo | Teste |  |
+| AE-013 | Ataque → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Ataque; Ataque permanece igual. | #21 (adaptação) | Teste |  |
+| AE-014 | Velocidade → Ataque | Substitua o valor de Ataque pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
 | AE-015 | Defesa → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
 | AE-016 | Inteligência → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. | #20 (adaptação) | Teste |  |
-| AE-017 | Poder → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Poder; Poder permanece igual. | novo | Teste |  |
-| AE-018 | Defesa → Poder | Substitua o valor de Poder pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
+| AE-017 | Ataque → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Ataque; Ataque permanece igual. | novo | Teste |  |
+| AE-018 | Defesa → Ataque | Substitua o valor de Ataque pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
 | AE-019 | Inteligência → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. | novo | Teste |  |
 | AE-020 | Velocidade → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
 
@@ -54,7 +54,7 @@
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-021 | Atributo universal | Escolha um atributo: todos, inclusive você, devem disputar nele. Conflitos de imposição seguem o GDD. | #57/#58/#04 | Regra-base |  |
-| AE-022 | Par ofensivo | Antes de declarar atributos, determine que todos usem o par Poder/Defesa nesta disputa. | novo | Teste |  |
+| AE-022 | Par ofensivo | Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa. | novo | Teste |  |
 | AE-023 | Par mental | Antes de declarar atributos, determine que todos usem o par Inteligência/Velocidade nesta disputa. | novo | Teste |  |
 | AE-024 | Ataque obrigatório | Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você. | novo | Teste |  |
 | AE-025 | Defesa obrigatória | Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você. | novo | Teste |  |
@@ -173,12 +173,12 @@
 
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
-| AE-101 | Capturar atacante | Se Poder + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção |  |
-| AE-102 | Capturar defensor | Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Poder + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção |  |
+| AE-101 | Capturar atacante | Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção |  |
+| AE-102 | Capturar defensor | Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Ataque + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção |  |
 | AE-103 | Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. | #54 (escopo aprovado) | Atenção |  |
 
 | AE-105 | Defesa que captura | Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la. | novo | Teste |  |
-| AE-106 | Ataque que bane | Se vencer usando Poder ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada. | novo | Teste |  |
+| AE-106 | Ataque que bane | Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada. | novo | Teste |  |
 | AE-107 | Iniciativa contra fracos | Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa. | novo | Atenção |  |
 | AE-108 | Negar captura inimiga | Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor. | novo | Teste |  |
 | AE-109 | Duelo condicionado | Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece. | novo | Experimental |  |
@@ -207,16 +207,25 @@
 | --- | --- | --- | --- | --- | --- |
 | AE-121 | Defesa → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Defesa; Defesa permanece igual. | novo | Teste |  |
 | AE-122 | Velocidade → Defesa | Substitua o valor de Defesa pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. | novo | Teste |  |
-| AE-123 | Permutar Poder e Inteligência | Troque entre si os números de Poder e Inteligência da mesma carta; ambos mudam. | novo | Teste |  |
-| AE-124 | Permutar Poder e Velocidade | Troque entre si os números de Poder e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
-| AE-125 | Permutar Poder e Defesa | Troque entre si os números de Poder e Defesa da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-123 | Permutar Ataque e Inteligência | Troque entre si os números de Ataque e Inteligência da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-124 | Permutar Ataque e Velocidade | Troque entre si os números de Ataque e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
+| AE-125 | Permutar Ataque e Defesa | Troque entre si os números de Ataque e Defesa da mesma carta; ambos mudam. | novo | Teste |  |
 | AE-126 | Permutar Inteligência e Velocidade | Troque entre si os números de Inteligência e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
 | AE-127 | Permutar Inteligência e Defesa | Troque entre si os números de Inteligência e Defesa da mesma carta; ambos mudam. | novo | Teste |  |
 | AE-128 | Permutar Defesa e Velocidade | Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
 
 **Registro de exclusão:** o efeito incondicional da carta física **#52** e seu ID anterior **AE-104** foram removidos deste catálogo atribuído. O ID foi reservado para não renumerar as habilidades. O novo **AE-129** é um conceito raro diferente, ainda sujeito à aprovação final.
 
+**Reação defensiva:** a habilidade **AE-130** foi adicionada para cancelar a última habilidade especial ainda pendente. A resposta pode entrar quando surgir uma ameaça, **antes de sua resolução**; não desfaz efeitos já concluídos. A janela detalhada de reações defensivas permanece uma proposta no GDD. Ter timing de resposta não cria segunda ativação voluntária gratuita, salvo habilidade expressa.
+
 **Ativação voluntária confirmada:** **1 carta especial preparada por combate**, escolhida e ativada no turno desejado. Somente habilidades com permissão explícita podem permitir duas. **Nenhuma das 128 entradas atuais é automaticamente uma autorização genérica para ativar duas cartas**: esta eventual mecânica deve ser proposta/aprovada explicitamente. A especial **AE-111** força todas as especiais preparadas do alvo (até duas), criando exceção não voluntária; **AE-112** repete um efeito sem autorizar virar uma segunda especial. A ordem entre jogadores e a janela precisa ainda precisam de definição no GDD.
+
+
+## N. Reações e contramedidas novas (1)
+
+| ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
+| --- | --- | --- | --- | --- | --- |
+| AE-130 | Anular a última habilidade | **REAÇÃO DEFENSIVA.** Quando uma habilidade especial for ativada e ainda não tiver resolvido seu efeito, anule a **última habilidade pendente**. A carta anulada é consumida e vai ao Buraco Negro. Não desfaz efeitos já concluídos. | novo, solicitado pelo autor | Teste; texto proposto |  |
 
 ## Regras propostas de integridade (antes de programar)
 
@@ -228,7 +237,7 @@
 - **Antigo #52 excluído:** o ID **AE-104 foi aposentado**, não recebe carta atribuída. **AE-129** é uma **proposta nova e rara**, com vitória automática que respeita a natureza ataque/defesa do atributo declarado, não o antigo efeito de captura incondicional. **AE-103** afeta só as cartas normais de combate, jamais a área de especiais preparadas.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
 - **Efeitos com 2/3/4 jogadores:** em duelo, direita e esquerda apontam ao mesmo oponente. AE-063/064/065 podem ser gastas mesmo sem vantagem; não serão convertidas obrigatoriamente em novas habilidades. AE-036 exige dois adversários distintos para seu efeito completo.
-- **Atribuição:** preencher a coluna `Carta atribuída (ID)` apenas quando estiverem definidos os atributos, a origem, a personalidade e o balanceamento daquela carta. Atualmente **128/128 campos de atribuição vazios**.
+- **Atribuição:** preencher a coluna `Carta atribuída (ID)` apenas quando estiverem definidos os atributos, a origem, a personalidade e o balanceamento daquela carta. Atualmente **129/129 campos de atribuição vazios**.
 
 ## Documentos associados
 
