@@ -29,13 +29,13 @@
 | 47 | Kate Fira | CARTA DEFESA: Impeça qualquer ataque especial neste turno. | complementado pelo autor; foto antiga indicava CARTA DUPLA |
 | 48 | Igor Wody | CARTA DEFESA: Impeça qualquer ataque neste turno contra você | IA, verificar |
 | 49 | Temi Lokat | CARTA DEFESA: Impeça o rival de te vencer neste turno | complementado; conferir interpretação |
-| 50 | Raum Cedar | CARTA ATAQUE... e menciona descartar uma carta aleatória. | parcial |
+| 50 | Raum Cedar | CARTA ATAQUE... Obrigue cada jogador a descartar uma carta aleatória ao Buraco Negro. | complementado; começo incompleto |
 | 51 | Lissan Tellus (Lorane) | CARTA ATAQUE... | parcial |
-| 52 | Luar Engeal | CARTA CORINGA... | parcial |
+| 52 | Luar Engeal | CARTA CORINGA: Vença este turno e roube as cartas dos adversários para si | complementado; conferir |
 | 53 | Atrum Morlet | CARTA ATAQUE... | parcial |
 | 54 | Angia Lux | CARTA CORINGA: Impede qualquer ataque e mande todas as cartas em jogo ao buraco negro exceto a sua | IA, verificar |
 | 56 | Jalled Badrock | Roube duas cartas aleatorias do buraco negro | IA, verificar |
-| 62 | Anasin | Utilize um ataque especial... | parcial |
+| 62 | Anasin | Utilize um ataque especial mais de uma vez, ma descarte duas cartas a sua escolha ao Buraco Negro | complementado; 'ma' como recebido |
 
 ## Identificações adicionais
 
