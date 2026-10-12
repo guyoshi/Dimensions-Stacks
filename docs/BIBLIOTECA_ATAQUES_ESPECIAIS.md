@@ -1,4 +1,4 @@
-# Dimensions Stacks — Biblioteca de ataques especiais (v1.1)
+# Dimensions Stacks — Biblioteca de ataques especiais (v1.2)
 
 > **Catálogo de design, NÃO distribuição definitiva.** São **128 habilidades candidatas**, agrupadas em 13 famílias (12 grupos de 10 e um grupo adicional de 8). Todas se referem a possíveis efeitos para as **cartas novas**, não às identidades físicas antigas. A coluna final **Carta atribuída (ID)** foi deixada **em branco** em todas as linhas para preenchimento posterior, por exemplo `J01`, `V02`, `S01`, `D06`, `M01`, `B01`. O ID `AE-001` identifica a **habilidade**, e a referência física `#09` identifica apenas o ataque antigo que inspirou a mecânica. Uma habilidade pode ser reutilizada em mais de uma carta se o autor aprovar.
 
@@ -73,7 +73,7 @@
 | AE-033 | Sorte à direita | Pegue 1 carta aleatória do baralho ativo do adversário à direita, excluindo cartas comprometidas. | novo | Teste |  |
 | AE-034 | Sorte à esquerda | Pegue 1 carta aleatória do baralho ativo do adversário à esquerda, excluindo cartas comprometidas. | novo | Teste |  |
 | AE-035 | Saque livre | Escolha um adversário e tome 1 carta aleatória de seu baralho ativo, sem afetar cartas preparadas. | #02 | Teste |  |
-| AE-036 | Saque coletivo | Tome 1 carta aleatória do baralho ativo de cada adversário ativo, se houver; exclua cartas de combate e especiais preparados. | #34 (var.) | Atenção |  |
+| AE-036 | Saque de dois rivais | Roube uma carta aleatória do baralho ativo de cada um de dois adversários distintos; cartas de combate e especiais preparados não são alvos. Sem dois adversários distintos, a condição integral não é atendida. | #34 (adaptação) | Condicional 3+ |  |
 | AE-037 | Recompensa ofensiva | Se vencer atacando, tome também a próxima carta do topo do baralho ativo de um adversário derrotado. | novo | Atenção |  |
 | AE-038 | Recompensa defensiva | Se vencer defendendo, tome a próxima carta do topo do baralho ativo de um adversário derrotado, sem modificar o destino das cartas de combate. | novo | Atenção |  |
 | AE-039 | Saque revelado | Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem. | novo | Atenção |  |
@@ -115,9 +115,9 @@
 | --- | --- | --- | --- | --- | --- |
 | AE-061 | Reservas giratórias à direita | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à direita. | #35 | Atenção |  |
 | AE-062 | Reservas giratórias à esquerda | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda. | novo | Atenção |  |
-| AE-063 | Troca entre vizinhos | Faça o jogador ativo à esquerda trocar 1 carta ativa escolhida por ele com 1 carta ativa escolhida pelo jogador ativo à direita. | #40 | Condicional 3+ |  |
-| AE-064 | Transferência de reserva | Pegue 1 carta aleatória da reserva do rival à esquerda e entregue-a à reserva do rival à direita, sem ficar com ela. | #43 (var.) | Condicional 3+ |  |
-| AE-065 | Tríplice transferência | Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda para o baralho ativo do rival à direita, sem ficar com elas. | #43 | Condicional 3+ |  |
+| AE-063 | Troca entre vizinhos | Faça o jogador à esquerda trocar 1 carta ativa escolhida com o da direita. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto. | #40 | Sem ganho em duelos |  |
+| AE-064 | Transferência de reserva | Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem. | #43 (var.) | Sem ganho em duelos |  |
+| AE-065 | Tríplice transferência | Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido. | #43 | Sem ganho em duelos |  |
 | AE-066 | Descarte coletivo | Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro. | #37/#50 | Teste |  |
 | AE-067 | Descarte adversário | Cada adversário ativo envia 1 carta aleatória de seu baralho ativo ao Buraco Negro; você não descarta outra carta além da especial. | #50 (var.) | Atenção |  |
 | AE-068 | Tributo por sacrifício | Sacrifique uma carta normal sua com algum atributo acima de 90; tome 1 carta aleatória do baralho ativo de cada adversário ativo. | #42 | Atenção |  |
@@ -149,7 +149,7 @@
 | AE-084 | Resgate antigo | Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo. | novo | Teste |  |
 | AE-085 | Resgate escolhido | Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo. | novo | Atenção |  |
 | AE-086 | Troca pelo descarte | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá. | novo | Teste |  |
-| AE-087 | Reabastecimento secreto | Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu meio de reserva. | novo | Teste |  |
+| AE-087 | Reabastecimento da reserva | Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral. | #12 (texto corrigido pelo autor) | Teste |  |
 | AE-088 | Retorno imediato | Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta. | novo | Teste |  |
 | AE-089 | Sacrifício duplo | Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias. | novo | Atenção |  |
 | AE-090 | Segunda chance | Se sua carta de combate fosse para o Buraco Negro nesta disputa, coloque-a em vez disso no fim de sua reserva; não preserve vitória nem capture. | novo | Teste |  |
@@ -175,21 +175,22 @@
 | --- | --- | --- | --- | --- | --- |
 | AE-101 | Capturar atacante | Se Poder + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção |  |
 | AE-102 | Capturar defensor | Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Poder + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção |  |
-| AE-103 | Ruína de campo | Anule os demais especiais ainda não resolvidos e envie as cartas de combate dos adversários ao Buraco Negro; preserve somente a sua. | #54 | Experimental |  |
-| AE-104 | Vitória inevitável | Vença automaticamente a disputa e capture todas as cartas de combate adversárias elegíveis. | #52 | Experimental |  |
+| AE-103 | Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. | #54 (escopo aprovado) | Atenção |  |
+
 | AE-105 | Defesa que captura | Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la. | novo | Teste |  |
 | AE-106 | Ataque que bane | Se vencer usando Poder ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada. | novo | Teste |  |
 | AE-107 | Iniciativa contra fracos | Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa. | novo | Atenção |  |
 | AE-108 | Negar captura inimiga | Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor. | novo | Teste |  |
 | AE-109 | Duelo condicionado | Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece. | novo | Experimental |  |
 | AE-110 | Margem estreita | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. | novo | Atenção |  |
+| AE-129 | Triunfo raro | Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Candidato a pouquíssimas cartas raras**, ainda não aprovado como habilidade final. | novo; não é o antigo #52 | Rara, experimental |  |
 
 ## L. Interações entre ataques especiais (10)
 
 | ID | Nome da habilidade | Efeito proposto para a versão PC | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-111 | Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa. | #59 | Regra-base |  |
-| AE-112 | Repetição onerosa | Resolva outra especial sua preparada duas vezes em sequência; descarte também 2 cartas normais escolhidas de seu baralho ativo no Buraco Negro. | #62 (adaptação) | Atenção |  |
+| AE-112 | Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. | #62 (ciclos proibidos) | Atenção |  |
 | AE-113 | Interrupção precisa | Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. | novo | Teste |  |
 | AE-114 | Desvio de alvo | Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você. | novo | Teste |  |
 | AE-115 | Eco de habilidade | Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia. | novo | Atenção |  |
@@ -213,16 +214,18 @@
 | AE-127 | Permutar Inteligência e Defesa | Troque entre si os números de Inteligência e Defesa da mesma carta; ambos mudam. | novo | Teste |  |
 | AE-128 | Permutar Defesa e Velocidade | Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam. | novo | Teste |  |
 
+**Registro de exclusão:** o efeito incondicional da carta física **#52** e seu ID anterior **AE-104** foram removidos deste catálogo atribuído. O ID foi reservado para não renumerar as habilidades. O novo **AE-129** é um conceito raro diferente, ainda sujeito à aprovação final.
+
 ## Regras propostas de integridade (antes de programar)
 
 - **Carta sem habilidade recuperada:** não inventar texto físico; poderá receber qualquer AE aprovada conforme coerência narrativa.
 - **Efeitos de roubo por lado:** todas as famílias que roubam `da direita` possuem pelo menos uma variante `da esquerda`. O lado deve permanecer visível no texto da carta.
 - **Permuta ou cópia:** uma *permuta* entre atributos move ambos os valores; uma *cópia* substitui apenas um valor. Isso evita a ambiguidade dos especiais antigos #20–22.
 - **Efeitos coletivos:** nunca repetir um efeito mais de uma vez por adversário na mesma ativação sem texto expresso. Quando faltar carta em alguma reserva/baralho, afetar somente os alvos válidos (proposta).
-- **Repetição do AE-112:** impedir que repita a si próprio ou outra habilidade de repetição, e aplicar seus custos fora da própria repetição (proposta). Sem esta restrição, a partida pode entrar em loop.
-- **Vitória automática e limpeza global (AE-103 e AE-104):** **não recomendados para o conjunto competitivo inicial** até haver contrajogo e regra clara de prioridade. Estão aqui para análise e possível reformulação, não por terem sido aprovados.
+- **Repetição do AE-112 (direção aprovada: impedir ciclos):** uma ativação repete no máximo uma vez um efeito que não seja repetição/cópia; não pode mirar a si própria ou gerar nova repetição; custos adicionais são pagos integralmente. Especificação operacional sujeita a teste.
+- **Antigo #52 excluído:** o ID **AE-104 foi aposentado**, não recebe carta atribuída. **AE-129** é uma **proposta nova e rara**, com vitória automática que respeita a natureza ataque/defesa do atributo declarado, não o antigo efeito de captura incondicional. **AE-103** afeta só as cartas normais de combate, jamais a área de especiais preparadas.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
-- **Efeitos com 2/3/4 jogadores:** convenção proposta de esquerda/direita considera apenas jogadores ativos; efeitos de dois rivais distintos (AE-063/064/065) são específicos para 3+ e necessitam de equivalente apropriado em duelos.
+- **Efeitos com 2/3/4 jogadores:** em duelo, direita e esquerda apontam ao mesmo oponente. AE-063/064/065 podem ser gastas mesmo sem vantagem; não serão convertidas obrigatoriamente em novas habilidades. AE-036 exige dois adversários distintos para seu efeito completo.
 - **Atribuição:** preencher a coluna `Carta atribuída (ID)` apenas quando estiverem definidos os atributos, a origem, a personalidade e o balanceamento daquela carta. Atualmente **128/128 campos de atribuição vazios**.
 
 ## Documentos associados
