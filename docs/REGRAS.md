@@ -92,7 +92,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 
 **PENDENTE:** se preparar a carta a retira obrigatoriamente do topo do baralho ativo ou de outra zona; se preparar substitui a participação normal daquela carta no turno; prioridade entre jogadores que desejam ativar especiais na mesma janela; limites temporais exatos de reação, escolha de alvo e efeitos que se anulam. **A escolha de qual único especial preparado ativar voluntariamente por combate e em qual rodada pertence ao proprietário**, salvo habilidade que permita dois ou ativação forçada da #59.
 
-**PROPOSTA de sequência de interface (AINDA EM DISCUSSÃO):** preparação pré-combate → escolha de atributos → revelação → janela de especiais e possíveis reações defensivas → comparação → resolução de captura/defesa → descarte dos especiais ativados. A intenção confirmada pelo autor é que defesas **possam reagir a ataques enquanto ainda estão pendentes**, inclusive em janelas mais tardias. Ver a [proposta de prioridade](PRIORIDADE_ESPECIAIS_PROPOSTA.md), cuja sequência detalhada **não foi aprovada**.
+**SEQUÊNCIA-BASE APROVADA (pendências operacionais na seção 24):** preparação pré-combate → escolha de atributos → revelação → janela de especiais e possíveis reações defensivas → comparação → resolução de captura/defesa → descarte dos especiais ativados. A intenção confirmada pelo autor é que defesas **possam reagir a ataques enquanto ainda estão pendentes**, inclusive em janelas mais tardias. Ver o [modelo-base aprovado de prioridade](PRIORIDADE_ESPECIAIS_PROPOSTA.md); casos de pré-revelação e ações simultâneas continuam na lista de pendências.
 
 ## 7. Meio de reserva
 
@@ -250,7 +250,7 @@ Destaques para especificação futura:
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
 
 - O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **87 personagens candidatos** das séries serão distribuídos posteriormente.
-- Foi criada a [biblioteca de **128 ataques especiais candidatos**](BIBLIOTECA_ATAQUES_ESPECIAIS.md), agrupados em 13 famílias, com coluna `Carta atribuída (ID)` vazia em todas as habilidades, para que nenhuma seja atribuída a personagem por acidente.
+- A [biblioteca de **129 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **78 IDs equipados em 87 cartas** e **51 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
 - A [auditoria de **62 posições do baralho físico**](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
 - Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
 - **Habilidade proposta pelo autor, texto parcial:** “roube a última carta do meio de reserva de cada adversário”; consta como **AE-048**, aguardando confirmação do trecho cortado ao final da mensagem.
@@ -285,7 +285,7 @@ Destaques para especificação futura:
 
 Os cinco itens são uma especificação **proposta para operacionalizar o “impedir ciclos”**, não uma mudança nos textos históricos.
 
-### 19.3 Vitórias automáticas raras, não atribuídas
+### 19.3 Vitórias automáticas raras (histórico; AE-129 já atribuído a S01)
 
 O autor aceita que **pouquíssimas cartas** possam ter um especial de vitória automática; isso **não restaura** o original da carta física #52. A habilidade nova deve ser identificada separadamente, e o custo de uso antecipado/forçado será relevante ao balanceamento. Como o critério de raridade, o efeito exato e a resposta defensiva ainda não foram fechados, não inventar regra universal de imunidade/cancelamento.
 
@@ -314,31 +314,31 @@ O autor **aprovou trocar o nome antigo Poder por Ataque**, com sigla **ATQ**. As
 
 **Escala de 0 a 100 para atributos naturais** está **recomendada**, com bônus temporários que podem ultrapassar 100, mas ainda será validada visualmente e em testes de balanceamento.
 
-### 21.2 “Ataque Especial” ou “Habilidade Especial”? (proposta de nomenclatura)
+### 21.2 “Ataque Especial” ou “Habilidade Especial”? (APROVADO na seção 24)
 
-Como algumas cartas **protegem, anulam ou respondem a outras**, recomendo que o termo guarda-chuva seja **Habilidade Especial** (ou o botão curto **Especial / ESP**). As habilidades ganhariam classificações apenas editoriais, como **Ataque, Defesa, Controle, Recuperação ou Coringa**. Esta renomeação **ainda não foi aprovada**; o nome antigo continua registrado em materiais históricos.
+Como algumas cartas **protegem, anulam ou respondem a outras**, recomendo que o termo guarda-chuva seja **Habilidade Especial** (ou o botão curto **Especial / ESP**). As habilidades ganhariam classificações apenas editoriais, como **Ataque, Defesa, Controle, Recuperação ou Coringa**. **Habilidade Especial foi aprovada** como nome na interface; o nome antigo continua registrado em materiais históricos.
 
-### 21.3 Reações defensivas: requisito confirmado, mecanismo proposto
+### 21.3 Reações defensivas: modelo ratificado na seção 24
 
 **Intenção do autor confirmada:** as **habilidades especiais defensivas devem poder ser utilizadas em reação aos ataques adversários em qualquer oportunidade útil do combate**, porque precisam impedir o ataque **antes que ele se conclua**. Não são obrigadas a ser ativadas junto dos ataques ofensivos. A ativação por reação **não cria um segundo uso voluntário gratuito** quando o jogador já gastou sua única especial do combate.
 
-**Mecanismo detalhado a aprovar:** janelas de reação pré-resolução, pilha de efeitos e oportunidade de interromper antes de descartar/capturar. Consultar [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md). **Não concluir retrospectivamente ações já resolvidas**; voltar uma carta capturada por anulação posterior quebraria as zonas e o histórico.
+**Mecanismo-base aprovado posteriormente:** janelas de reação pré-resolução, pilha de efeitos e oportunidade de interromper antes de descartar/capturar. Consultar [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md). **Não concluir retrospectivamente ações já resolvidas**; voltar uma carta capturada por anulação posterior quebraria as zonas e o histórico.
 
-### 21.4 Novo especial solicitado pelo autor
+### 21.4 Novo especial AE-130 (aprovado e atribuído a M02)
 
-**AE-130 — Anular a última habilidade:** o autor solicitou uma habilidade para **anular o último especial jogado**. Proposta de texto técnico: “**REAÇÃO: anule a última habilidade especial que esteja pendente de resolução. A carta anulada vai ao Buraco Negro normalmente. Não desfaça efeitos já resolvidos.**” Esse é um novo ID da [biblioteca de 129 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md). O texto preciso e as janelas ainda requerem aprovação.
+**AE-130 — Anular a última habilidade:** o autor solicitou uma habilidade para **anular o último especial jogado**. Proposta de texto técnico: “**REAÇÃO: anule a última habilidade especial que esteja pendente de resolução. A carta anulada vai ao Buraco Negro normalmente. Não desfaça efeitos já resolvidos.**” Esse é um novo ID da [biblioteca de 129 habilidades candidatas](BIBLIOTECA_ATAQUES_ESPECIAIS.md). O texto da AE-130 está aprovado; a janela-base de reação também, e apenas casos-limite permanecem pendentes.
 
-### 21.5 Fichas de personagens e balanceamento (propostas, não cânone)
+### 21.5 Fichas de personagens e balanceamento (APROVADAS para o jogo; não são cânone)
 
 Foram elaboradas **87 sugestões de fichas**, com descrições de **até 120 caracteres**, perfis numéricos propositalmente variados, habilidades sugeridas e sinalização de fonte/risco de extrapolação: [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md). O autor pediu diferenças importantes de força, incluindo cartas fracas mas negociáveis por efeitos de troca, especialistas e cartas de elite.
 
-**Os oito membros presentes ou futuros de A União** receberam habilidades candidatas de grande impacto: essa é a **diretriz de design solicitada pelo autor**, não a aprovação dos números e AE individuais. **Todos os valores, descrições e AE sugeridos ainda precisam de revisão do autor**, especialmente os personagens sem documentos narrativos confiáveis.
+**Os oito membros presentes ou futuros de A União** receberam habilidades candidatas de grande impacto: essa é a **diretriz de design solicitada pelo autor**, não a aprovação dos números e AE individuais. **Todos os valores, descrições e AE distribuídos foram aprovados pelo autor** como cartas do jogo. Revisar separadamente a documentação literária dos personagens pouco descritos; não alterar números por conta própria.
 
 **Fonte única de autorização para IA implementadora:** [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md). Qualquer decisão ali marcada `PROPOSTA` não pode ser promovida silenciosamente a regra aprovada.
 
-## 22. Ampliação do elenco de Viajantes Dimensionais para 83 candidatos
+## 22. Ampliação histórica 79 → 83 cartas (a coleção atual aprovada contém 87)
 
-O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. Os atributos, descrições e habilidades individuais foram propostos em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e **não aprovados**. A biblioteca permanece com **129 habilidades candidatas**; a coluna de atribuição definitiva segue vazia. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
+O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. As fichas [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) **foram aprovadas posteriormente**, e a biblioteca contém **129 habilidades** com 78 equipadas. Esta seção registra o momento anterior à inclusão Carnam. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
 
 ## 23. Inclusão de quatro integrantes da Família Carnam — total atual 87
 
@@ -346,7 +346,7 @@ O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito 
 
 Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de fotografias; Avó: lente dos óculos; Ingrid: ursinho; Suéten: relógio; Ibliso: coleira**. A documentação de Elos tem status *misto*, embora os seis nomes sejam informados no documento canônico de personagens. **Não declarar que o pai de Vini é Carnam.**
 
-**Total atualizado: 87 cartas candidatas**, das quais **18 de Diário Sobrenatural**. As descrições, valores e habilidades propostas estão em [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md); nenhuma das quatro novas fichas foi aprovada como dado definitivo. A biblioteca segue com **129 habilidades candidatas**, sem atribuição final.
+**Total atualizado: 87 cartas candidatas**, das quais **18 de Diário Sobrenatural**. As descrições, valores e habilidades das quatro novas cartas constam da tabela [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e **foram aprovadas posteriormente pelo autor**. A biblioteca segue com **129 habilidades**, 78 equipadas em 87 cartas aprovadas.
 
 ## 24. Ratificação do baralho e da biblioteca (decisão final do autor: “Aprove tudo”, 12/10/2026)
 
