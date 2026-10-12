@@ -229,10 +229,10 @@ Distribuição atual do maior atributo por carta: **ATQ 19, DEF 20, INT 28, VEL 
 
 | ID | Nome usado nas cartas | Fonte efetiva no manuscrito | Interpretação da habilidade sugerida |
 | --- | --- | --- | --- |
-| V16 | **Facka** | No texto aparece como **Faka**, uma **Aracna jovem**, extrovertida e guia dos irmãos pelos túneis | **AE-100, Confundir próximo turno:** aproveita conhecimento dos caminhos e do ambiente subterrâneo; é abstração lúdica, não prova de magia de confusão |
-| V17 | **Lanigiah** | É **rainha das Aracnas**, de porte gigantesco, e submete Banjo a uma experiência ligada a seus temores e lembranças | **AE-096, Quebrar o plano:** representação estratégica de desorientação e controle; não afirmar que ela altera pilhas de cartas no cânone |
-| V18 | **Grande Pai Gaia** | **Líder dos Obbs de Pinesoto**; usa raízes, troncos e escudos naturais para tentar conter o ataque à aldeia | **AE-103, Ruína de campo:** efeito excepcional inspirado na defesa coletiva de seu povo; ele só atinge cartas normais em combate, nunca especiais preparadas |
-| V19 | **Seti** | **Líder de guerra dos Obbs**; prende os irmãos inicialmente, depois os alimenta, combate invasores e indica caminho de fuga | **AE-105, Defesa que captura:** raízes que prendem inimigos representam captura defensiva |
+| Carta V16 | **Facka** | No texto aparece como **Faka**, uma **Aracna jovem**, extrovertida e guia dos irmãos pelos túneis | **AE-100, Confundir próximo turno:** aproveita conhecimento dos caminhos e do ambiente subterrâneo; é abstração lúdica, não prova de magia de confusão |
+| Carta V17 | **Lanigiah** | É **rainha das Aracnas**, de porte gigantesco, e submete Banjo a uma experiência ligada a seus temores e lembranças | **AE-096, Quebrar o plano:** representação estratégica de desorientação e controle; não afirmar que ela altera pilhas de cartas no cânone |
+| Carta V18 | **Grande Pai Gaia** | **Líder dos Obbs de Pinesoto**; usa raízes, troncos e escudos naturais para tentar conter o ataque à aldeia | **AE-103, Ruína de campo:** efeito excepcional inspirado na defesa coletiva de seu povo; ele só atinge cartas normais em combate, nunca especiais preparadas |
+| Carta V19 | **Seti** | **Líder de guerra dos Obbs**; prende os irmãos inicialmente, depois os alimenta, combate invasores e indica caminho de fuga | **AE-105, Defesa que captura:** raízes que prendem inimigos representam captura defensiva |
 
 **Correção de identificação:** o rei dos Obbs indicado pelo autor é **Gaia**, cujo título narrativo exato é **Grande Pai**; Lanigiah é de outro povo (Aracnas). O Obb que ajuda os irmãos é **Seti**. **Facka/Faka:** manter a grafia solicitada pelo autor para o projeto do jogo, mas padronizar com o manuscrito quando ele decidir o nome definitivo.
 
