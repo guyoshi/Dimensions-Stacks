@@ -175,3 +175,19 @@ Criar para cada carta aprovada um registro com: `id`, `personagem`, `origem`, `l
 Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Documentos associados: [Regras](REGRAS.md) · [Ataques especiais](ATAQUES_ESPECIAIS.md).
 
 
+
+
+## 10. Paleta aprovada de cores por série (12/10/2026)
+
+| Série da carta | Cor-base oficial |
+| --- | --- |
+| Viajantes Dimensionais | **Azul** |
+| Mistério Oculto | **Vermelha** |
+| Ciclo de Jesed | **Amarela** |
+| Série de Édelin / Belfex | **Verde** |
+| Diário Sobrenatural | **Roxo** |
+| Spacetheft | **Preta** |
+
+**A União:** somente selo adicional nos integrantes da equipe, sem cor própria obrigatória e sem duplicar a carta-base. **Nenhuma cor define a raridade, o heroísmo ou a vilania**. Cores não são critérios de ataque/captura.
+
+**Ataques especiais ainda sem atribuição:** o arquivo [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md) tem 128 efeitos candidatos com coluna `Carta atribuída (ID)` totalmente vazia. Atribuir apenas após fixar atributos, papel e identidade de cada personagem.
