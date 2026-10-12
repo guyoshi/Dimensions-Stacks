@@ -33,3 +33,11 @@ Dhawer Flinn #23; Focka #14; Velho-Sábio #11; Celine Backboard #22 (grafia a co
 ## Critério de revisão proposto
 
 Separar transcrição literal, inferência, avaliação de força e proposta. Avaliar sempre consumo da especial, chance de derrota da carta comum, impacto de 2/3/4 jogadores, manipulação do topo do baralho e possíveis combinações de efeitos. Antes de **remover** uma habilidade, experimentar casos de confronto. Reforçar legibilidade com fotografias próximas dos rodapés.
+
+
+## Decisões seguintes do autor: 09, 59 e conflitos simultâneos
+
+- **09 — Duas cartas:** **somar os valores do mesmo atributo nas duas primeiras cartas consecutivas do baralho ativo**. Um valor fraco pode ser compensado pela próxima carta; o custo é comprometer duas cartas de combate **e descartar o ataque especial utilizado**. Não aplicar teto de soma nem substituição pelo maior valor sem testes. Destino das duas cartas após derrota/vitória e caso haja apenas uma carta ativa ainda exigem regra operacional explícita; ver [REGRAS.md](REGRAS.md#14-decisões-confirmadas-especiais-09-e-59-e-choque-de-atributos-12102026).
+- **59 — Especial forçado:** só poderá obrigar o adversário a usar uma carta especial **já preparada na mesa**, à esquerda, aguardando ativação. Não obriga compra ou preparação instantânea de outra carta.
+- **Choque de atributos:** se um jogador obriga Poder e outro Inteligência, comparar o Poder da carta de combate de quem impôs Poder contra a Inteligência da carta de combate de quem impôs Inteligência. **O valor maior determina o atributo de todos os jogadores**. A disputa normal ocorre depois. Empate nesta comparação ainda não foi decidido.
+- **Controle global de atributo (Berry e Helavel):** **MANTER sem enfraquecimento automático**. O custo de consumir a especial e a possibilidade de a carta comum perder são partes essenciais do balanceamento.
