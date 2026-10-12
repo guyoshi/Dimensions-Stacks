@@ -1,0 +1,1306 @@
+{
+  "metadata": {
+    "jogo": "Dimensions Stacks",
+    "tipo": "BIBLIOTECA_DE_HABILIDADES",
+    "quantidade": 129,
+    "status": "PROPOSTA_NAO_APROVADA",
+    "nao_atribuidas": true,
+    "nome_guarda_chuva": "Habilidade Especial PROPOSTO, nao ratificado",
+    "identidade_fisica_nao_vinculante": true,
+    "ID_aposentado": "AE-104",
+    "guia": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
+    "fonte_texto": "docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md"
+  },
+  "habilidades": [
+    {
+      "id": "AE-001",
+      "nome": "Impulso de Ataque",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +15 em Ataque nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-002",
+      "nome": "Muralha de Defesa",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +15 em Defesa nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-003",
+      "nome": "Clarividência",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +15 em Inteligência nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-004",
+      "nome": "Arrancada",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +15 em Velocidade nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-005",
+      "nome": "Reforço flexível",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +15 em um atributo à sua escolha nesta disputa.",
+      "referencia_historica_ou_origem": "#15",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-006",
+      "nome": "Dupla resistência",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Uma carta de combate sua recebe +15 Defesa e +20 Velocidade nesta disputa.",
+      "referencia_historica_ou_origem": "#27",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-007",
+      "nome": "Ímpeto ofensivo",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-008",
+      "nome": "Guarda equilibrada",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-009",
+      "nome": "Superação",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-010",
+      "nome": "Ataque em dupla",
+      "grupo": "Bônus, penalidades e soma",
+      "efeito_integral_proposto": "Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate.",
+      "referencia_historica_ou_origem": "#09",
+      "situacao_de_teste": "Regra-base",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-011",
+      "nome": "Ataque → Inteligência",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Ataque; Ataque permanece igual.",
+      "referencia_historica_ou_origem": "#22 (adaptação)",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-012",
+      "nome": "Inteligência → Ataque",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-013",
+      "nome": "Ataque → Velocidade",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Velocidade pelo valor que sua carta possui em Ataque; Ataque permanece igual.",
+      "referencia_historica_ou_origem": "#21 (adaptação)",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-014",
+      "nome": "Velocidade → Ataque",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Ataque pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-015",
+      "nome": "Defesa → Inteligência",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Inteligência pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-016",
+      "nome": "Inteligência → Defesa",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Defesa pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
+      "referencia_historica_ou_origem": "#20 (adaptação)",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-017",
+      "nome": "Ataque → Defesa",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Defesa pelo valor que sua carta possui em Ataque; Ataque permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-018",
+      "nome": "Defesa → Ataque",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Ataque pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-019",
+      "nome": "Inteligência → Velocidade",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-020",
+      "nome": "Velocidade → Inteligência",
+      "grupo": "Conversões direcionais de atributos",
+      "efeito_integral_proposto": "Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-021",
+      "nome": "Atributo universal",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Escolha um atributo: todos, inclusive você, devem disputar nele. Conflitos de imposição seguem o GDD.",
+      "referencia_historica_ou_origem": "#57/#58/#04",
+      "situacao_de_teste": "Regra-base",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-022",
+      "nome": "Par ofensivo",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-023",
+      "nome": "Par mental",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Antes de declarar atributos, determine que todos usem o par Inteligência/Velocidade nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-024",
+      "nome": "Ataque obrigatório",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-025",
+      "nome": "Defesa obrigatória",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-026",
+      "nome": "Forçar ataque rival",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Escolha um adversário: ele deve usar o atributo de ataque do par vigente.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-027",
+      "nome": "Forçar defesa rival",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Escolha um adversário: ele deve usar o atributo de defesa do par vigente.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-028",
+      "nome": "Proibir o ataque rival",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-029",
+      "nome": "Proibir a defesa rival",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-030",
+      "nome": "Escolha transferida",
+      "grupo": "Controle do confronto e do atributo",
+      "efeito_integral_proposto": "Nesta disputa, escolha qual dos dois atributos do par vigente um adversário utilizará; você continua escolhendo o seu normalmente.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-031",
+      "nome": "Primeira à direita",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Pegue a próxima carta do topo do baralho ativo do adversário à direita, exceto a já comprometida em combate.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-032",
+      "nome": "Primeira à esquerda",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Pegue a próxima carta do topo do baralho ativo do adversário à esquerda, exceto a já comprometida em combate.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-033",
+      "nome": "Sorte à direita",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Pegue 1 carta aleatória do baralho ativo do adversário à direita, excluindo cartas comprometidas.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-034",
+      "nome": "Sorte à esquerda",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Pegue 1 carta aleatória do baralho ativo do adversário à esquerda, excluindo cartas comprometidas.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-035",
+      "nome": "Saque livre",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Escolha um adversário e tome 1 carta aleatória de seu baralho ativo, sem afetar cartas preparadas.",
+      "referencia_historica_ou_origem": "#02",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-036",
+      "nome": "Saque de dois rivais",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Roube uma carta aleatória do baralho ativo de cada um de dois adversários distintos; cartas de combate e especiais preparados não são alvos. Sem dois adversários distintos, a condição integral não é atendida.",
+      "referencia_historica_ou_origem": "#34 (adaptação)",
+      "situacao_de_teste": "Condicional 3+",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-037",
+      "nome": "Recompensa ofensiva",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Se vencer atacando, tome também a próxima carta do topo do baralho ativo de um adversário derrotado.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-038",
+      "nome": "Recompensa defensiva",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Se vencer defendendo, tome a próxima carta do topo do baralho ativo de um adversário derrotado, sem modificar o destino das cartas de combate.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-039",
+      "nome": "Saque revelado",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-040",
+      "nome": "Apreensão limitada",
+      "grupo": "Roubo do baralho ativo",
+      "efeito_integral_proposto": "Escolha um adversário com ao menos 4 cartas ativas fora do combate; pegue 1 carta aleatória de seu baralho ativo.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-041",
+      "nome": "Última da direita",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue a última carta do meio de reserva do adversário à direita.",
+      "referencia_historica_ou_origem": "#38",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-042",
+      "nome": "Última da esquerda",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue a última carta do meio de reserva do adversário à esquerda.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-043",
+      "nome": "Primeira da direita",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue a primeira carta do meio de reserva do adversário à direita.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-044",
+      "nome": "Primeira da esquerda",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue a primeira carta do meio de reserva do adversário à esquerda.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-045",
+      "nome": "Reserva dupla à direita",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue 2 cartas aleatórias do meio de reserva do adversário à direita, se disponíveis.",
+      "referencia_historica_ou_origem": "#17",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-046",
+      "nome": "Reserva dupla à esquerda",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue 2 cartas aleatórias do meio de reserva do adversário à esquerda, se disponíveis.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-047",
+      "nome": "Tributo coletivo",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue 1 carta aleatória da reserva de cada adversário ativo que possua reserva.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-048",
+      "nome": "Última de cada reserva",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Pegue a última carta do meio de reserva de cada adversário ativo que tenha cartas nessa zona.",
+      "referencia_historica_ou_origem": "ideia do autor (frase cortada)",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-049",
+      "nome": "Escolha da reserva",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Escolha um adversário e pegue até 2 cartas aleatórias de sua reserva.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-050",
+      "nome": "Reserva em perigo",
+      "grupo": "Roubo do meio de reserva",
+      "efeito_integral_proposto": "Se um adversário tiver até 3 cartas no baralho ativo, tome a última carta de sua reserva, caso exista.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-051",
+      "nome": "Troca escolhida",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta aleatória do baralho ativo de um adversário.",
+      "referencia_historica_ou_origem": "#01/#30",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-052",
+      "nome": "Troca de combatente",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Tome a carta de combate de um adversário e entregue-lhe 1 carta aleatória do seu baralho ativo; a troca antecede a comparação.",
+      "referencia_historica_ou_origem": "#13",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-053",
+      "nome": "Combatente da direita",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque sua carta de combate pela do adversário à direita antes da comparação.",
+      "referencia_historica_ou_origem": "#10",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-054",
+      "nome": "Combatente da esquerda",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque sua carta de combate pela do adversário à esquerda antes da comparação.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-055",
+      "nome": "Troca de topos à direita",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à direita.",
+      "referencia_historica_ou_origem": "#25",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-056",
+      "nome": "Troca de topos à esquerda",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à esquerda.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-057",
+      "nome": "Passe à esquerda",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda.",
+      "referencia_historica_ou_origem": "#11",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-058",
+      "nome": "Passe à direita",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-059",
+      "nome": "Permuta das reservas à esquerda",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque todo o seu meio de reserva pelo do adversário à esquerda.",
+      "referencia_historica_ou_origem": "#46",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-060",
+      "nome": "Permuta das reservas à direita",
+      "grupo": "Trocas diretas e circulação de cartas",
+      "efeito_integral_proposto": "Troque todo o seu meio de reserva pelo do adversário à direita.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-061",
+      "nome": "Reservas giratórias à direita",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à direita.",
+      "referencia_historica_ou_origem": "#35",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-062",
+      "nome": "Reservas giratórias à esquerda",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-063",
+      "nome": "Troca entre vizinhos",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Faça o jogador à esquerda trocar 1 carta ativa escolhida com o da direita. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto.",
+      "referencia_historica_ou_origem": "#40",
+      "situacao_de_teste": "Sem ganho em duelos",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-064",
+      "nome": "Transferência de reserva",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem.",
+      "referencia_historica_ou_origem": "#43 (var.)",
+      "situacao_de_teste": "Sem ganho em duelos",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-065",
+      "nome": "Tríplice transferência",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido.",
+      "referencia_historica_ou_origem": "#43",
+      "situacao_de_teste": "Sem ganho em duelos",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-066",
+      "nome": "Descarte coletivo",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro.",
+      "referencia_historica_ou_origem": "#37/#50",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-067",
+      "nome": "Descarte adversário",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Cada adversário ativo envia 1 carta aleatória de seu baralho ativo ao Buraco Negro; você não descarta outra carta além da especial.",
+      "referencia_historica_ou_origem": "#50 (var.)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-068",
+      "nome": "Tributo por sacrifício",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Sacrifique uma carta normal sua com algum atributo acima de 90; tome 1 carta aleatória do baralho ativo de cada adversário ativo.",
+      "referencia_historica_ou_origem": "#42",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-069",
+      "nome": "Doação escolhida",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Escolha um adversário: ele deve escolher uma carta de seu próprio baralho ativo para entregar ao fim do seu.",
+      "referencia_historica_ou_origem": "#28",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-070",
+      "nome": "Conquista compensada",
+      "grupo": "Redistribuição coletiva e sacrifício",
+      "efeito_integral_proposto": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido.",
+      "referencia_historica_ou_origem": "#23",
+      "situacao_de_teste": "Experimental",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-071",
+      "nome": "Ausência tática",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota.",
+      "referencia_historica_ou_origem": "#31",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-072",
+      "nome": "Não perder a carta",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada.",
+      "referencia_historica_ou_origem": "#32",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-073",
+      "nome": "Silêncio de especiais",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Anule os ataques especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas.",
+      "referencia_historica_ou_origem": "#47",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-074",
+      "nome": "Imunidade pessoal",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais.",
+      "referencia_historica_ou_origem": "#48",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-075",
+      "nome": "Captura negada",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Escolha um rival: mesmo que ele vença, ele não poderá capturar sua carta de combate nesta disputa.",
+      "referencia_historica_ou_origem": "#49 (adaptação)",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-076",
+      "nome": "Guardião do baralho",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-077",
+      "nome": "Guardião da reserva",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Anule a próxima tentativa de roubar uma carta de sua reserva nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-078",
+      "nome": "Reflexo de roubo",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Se um rival tentar roubar exatamente 1 carta sua, cancele esse roubo e tome 1 carta aleatória do baralho ativo dele.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-079",
+      "nome": "Escudo antecipado",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-080",
+      "nome": "Anular modificador",
+      "grupo": "Defesas, bloqueios e salvamentos",
+      "efeito_integral_proposto": "Cancele até 1 bônus ou redução numérica que tenha sido aplicado à sua carta de combate nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-081",
+      "nome": "Resgate extremo",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Sacrifique 1 carta normal sua que tenha atributo original acima de 90; receba as 3 primeiras cartas do Buraco Negro, se existirem.",
+      "referencia_historica_ou_origem": "#19",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-082",
+      "nome": "Resgate aleatório duplo",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Recupere até 2 cartas aleatórias do Buraco Negro e coloque-as no fim de seu baralho ativo.",
+      "referencia_historica_ou_origem": "#56",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-083",
+      "nome": "Resgate do topo",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Recupere a carta normal mais recente do Buraco Negro para o fim de seu baralho ativo.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-084",
+      "nome": "Resgate antigo",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-085",
+      "nome": "Resgate escolhido",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-086",
+      "nome": "Troca pelo descarte",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-087",
+      "nome": "Reabastecimento da reserva",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral.",
+      "referencia_historica_ou_origem": "#12 (texto corrigido pelo autor)",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-088",
+      "nome": "Retorno imediato",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-089",
+      "nome": "Sacrifício duplo",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-090",
+      "nome": "Segunda chance",
+      "grupo": "Recuperação e manipulação do Buraco Negro",
+      "efeito_integral_proposto": "Se sua carta de combate fosse para o Buraco Negro nesta disputa, coloque-a em vez disso no fim de sua reserva; não preserve vitória nem capture.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-091",
+      "nome": "Revelar a mão",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa.",
+      "referencia_historica_ou_origem": "#41",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-092",
+      "nome": "Próximas três",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-093",
+      "nome": "Espionagem tripla",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-094",
+      "nome": "Inversão de fila",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-095",
+      "nome": "Atrasar a próxima",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-096",
+      "nome": "Quebrar o plano",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo.",
+      "referencia_historica_ou_origem": "#33",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-097",
+      "nome": "Escolha de sete",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo.",
+      "referencia_historica_ou_origem": "#36 (adaptação)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-098",
+      "nome": "Organizar reserva",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-099",
+      "nome": "Reforçar o fim",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Mova a primeira carta de sua reserva para o fim do seu baralho ativo, sem ver seu conteúdo.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-100",
+      "nome": "Confundir próximo turno",
+      "grupo": "Informação e manipulação de ordem",
+      "efeito_integral_proposto": "Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-101",
+      "nome": "Capturar atacante",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
+      "referencia_historica_ou_origem": "#60 (adaptação)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-102",
+      "nome": "Capturar defensor",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Ataque + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
+      "referencia_historica_ou_origem": "#61 (adaptação)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-103",
+      "nome": "Ruína de campo",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente.",
+      "referencia_historica_ou_origem": "#54 (escopo aprovado)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-105",
+      "nome": "Defesa que captura",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-106",
+      "nome": "Ataque que bane",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-107",
+      "nome": "Iniciativa contra fracos",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-108",
+      "nome": "Negar captura inimiga",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-109",
+      "nome": "Duelo condicionado",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Experimental",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-110",
+      "nome": "Margem estreita",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-129",
+      "nome": "Triunfo raro",
+      "grupo": "Capturas condicionais e efeitos decisivos",
+      "efeito_integral_proposto": "Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Candidato a pouquíssimas cartas raras**, ainda não aprovado como habilidade final.",
+      "referencia_historica_ou_origem": "novo; não é o antigo #52",
+      "situacao_de_teste": "Rara, experimental",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-111",
+      "nome": "Ativação forçada",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária.",
+      "referencia_historica_ou_origem": "#59",
+      "situacao_de_teste": "Regra-base",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-112",
+      "nome": "Repetição onerosa",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada.",
+      "referencia_historica_ou_origem": "#62 (ciclos proibidos)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-113",
+      "nome": "Interrupção precisa",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Cancele 1 ataque especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-114",
+      "nome": "Desvio de alvo",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-115",
+      "nome": "Eco de habilidade",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-116",
+      "nome": "Apropriar especial usado",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Ganhe a carta de ataque especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo.",
+      "referencia_historica_ou_origem": "#06 (adaptação)",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-117",
+      "nome": "Preparação exposta",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-118",
+      "nome": "Blindagem de especial",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Atenção",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-119",
+      "nome": "Preparação urgente",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Experimental",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-120",
+      "nome": "Remover alteração",
+      "grupo": "Interações entre ataques especiais",
+      "efeito_integral_proposto": "Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-121",
+      "nome": "Defesa → Velocidade",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Substitua o valor de Velocidade pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-122",
+      "nome": "Velocidade → Defesa",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Substitua o valor de Defesa pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-123",
+      "nome": "Permutar Ataque e Inteligência",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Troque entre si os números de Ataque e Inteligência da mesma carta; ambos mudam.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-124",
+      "nome": "Permutar Ataque e Velocidade",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Troque entre si os números de Ataque e Velocidade da mesma carta; ambos mudam.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-125",
+      "nome": "Permutar Ataque e Defesa",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Troque entre si os números de Ataque e Defesa da mesma carta; ambos mudam.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-126",
+      "nome": "Permutar Inteligência e Velocidade",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Troque entre si os números de Inteligência e Velocidade da mesma carta; ambos mudam.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-127",
+      "nome": "Permutar Inteligência e Defesa",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Troque entre si os números de Inteligência e Defesa da mesma carta; ambos mudam.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-128",
+      "nome": "Permutar Defesa e Velocidade",
+      "grupo": "Conversões faltantes e permutas completas",
+      "efeito_integral_proposto": "Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam.",
+      "referencia_historica_ou_origem": "novo",
+      "situacao_de_teste": "Teste",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    },
+    {
+      "id": "AE-130",
+      "nome": "Anular a última habilidade",
+      "grupo": "Reações e contramedidas novas",
+      "efeito_integral_proposto": "**REAÇÃO DEFENSIVA.** Quando uma habilidade especial for ativada e ainda não tiver resolvido seu efeito, anule a **última habilidade pendente**. A carta anulada é consumida e vai ao Buraco Negro. Não desfaz efeitos já concluídos.",
+      "referencia_historica_ou_origem": "novo, solicitado pelo autor",
+      "situacao_de_teste": "Teste; texto proposto",
+      "carta_atribuida_definitivamente": null,
+      "status": "PROPOSTA_NAO_APROVADA"
+    }
+  ]
+}
