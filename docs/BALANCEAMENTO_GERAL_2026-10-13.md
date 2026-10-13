@@ -92,3 +92,34 @@ Risco: a habilidade pode ter relação narrativa com o personagem; decisão do a
 - Auditoria de especiais: 144 cenários, 0 falhas; simulação dos 129 especiais: 0 falhas; privacidade online: 0 vazamentos.
 - **Ressalva:** 4 cartas fracas (Erick Corvane AE-009, A Avó AE-058, A Engenheira AE-070, Nicolas Corvane AE-057) receberam especiais de impacto baixo; o bot nunca os prepara. Isso é intencional (carta fraca, especial fraco), mas, se o autor quiser que eles tenham mais utilidade, a troca é por especiais mais fortes e deve ser decidida à parte.
 
+## Par forte e especiais apelões (aplicado, 13/10/2026, autorizado pelo autor)
+
+**Regra do par forte.** Fora de A União, uma carta é forte em **um** par (FOR/RES **ou** INT/VEL), nunca nos dois: quem é forte nos dois pares vence quase sempre, seja qual for o atributo sorteado. O par mais fraco de 8 cartas foi comprimido para no máximo 70 (valores acima de 60 comprimidos proporcionalmente; o par forte não mudou). Integrantes de A União ficam como o autor aprovou. O par forte de cada carta foi escolhido pela narrativa (magos e mentes: INT/VEL; corpo e disciplina: FOR/RES) e pode ser trocado.
+
+| Nº | Carta | Par forte | FOR/RES/INT/VEL | Perfil |
+| --- | --- | --- | --- | --- |
+| V05 | Velho-Sábio / Auream | INT/VEL | 62/83/95/39 → 61/70/95/39 | Padrão → Padrão |
+| V10 | Korvo | INT/VEL | 95/79/94/72 → 70/65/94/72 | Elite → Forte |
+| V17 | Lanigiah | INT/VEL | 76/82/95/43 → 67/70/95/43 | Forte → Padrão |
+| V18 | Grande Pai Gaia | FOR/RES | 80/95/89/34 → 80/95/70/34 | Forte → Padrão |
+| D12 | Agouro | INT/VEL | 95/87/92/70 → 70/68/92/70 | Elite → Forte |
+| M02 | Agente Sete | FOR/RES | 83/95/90/80 → 83/95/70/67 | Elite → Forte |
+| M07 | Agente Seis | FOR/RES | 77/94/88/59 → 77/94/70/59 | Forte → Forte |
+| V20 | William McCroys | INT/VEL | 82/78/95/78 → 70/68/95/78 | Elite → Forte |
+
+Vitórias por disputa nas simulações de bots (700 partidas por modo): **maior taxa de uma carta 91% → 77%** (2 jogadores) e 79% → 63% (4 jogadores); desvio entre cartas 18,6 → 16,3 e 18,2 → 15,7. Korvo 91 → 67, Agouro 91 → 61, Agente Sete 85 → 69, Gaia 84 → 68, Velho-Sábio 79 → 67, Agente Seis 78 → 66, McCroys 82 → 74, Lanigiah 83 → 70 (2 jogadores).
+
+**Ainda fortes nos dois pares (não alterados, decisão do autor):** Capitã Nastácia (91/93/82/75), Jelles (93/82/80/65), Vivian, Alekta, Jennifer de Morais e os integrantes de A União com dois pares altos (Jasmey, Releuz, Édelin Lys).
+
+**Especiais mudados (alterações de balanceamento):**
+
+| Especial | Antes | Depois | Motivo |
+| --- | --- | --- | --- |
+| AE-005 Reforço flexível (V20) | +15 | +10 | 89% de vitórias do bot que a usa |
+| AE-007 Ímpeto ofensivo (V18) | +10 FOR e +10 INT | +7 e +7 | 83% |
+
+O bônus pequeno ainda rende muito para o bot porque ele usa a habilidade só quando sabe que vira o resultado; o ganho vem da informação, não do número. Humanos devem sentir menos.
+
+**Apelões na reserva (não atribuir sem reequilibrar):** AE-054 (99%), AE-033/034/035 (89%), AE-109 (84%), AE-003 (80%) estão marcados no campo `revisao` de `habilidades_129.json`. Apelões equipados e não alterados, para o autor decidir: AE-053 (S14), AE-010 (J15), AE-031 (M02), AE-039 (M07), AE-087 (V10), AE-101 (M06) e, em integrantes de A União, AE-129, AE-103, AE-032.
+
+**Quatro cartas com especial que o bot nunca usava** (0 usos por disputa) receberam especiais úteis: Erick Corvane AE-009 → **AE-043**, A Avó AE-058 → **AE-049**, A Engenheira AE-070 → **AE-045**, Nicolas Corvane AE-057 → **AE-050**. Os especiais originais dessas cartas, retirados antes, foram AE-106, AE-093, AE-085 e AE-028 (nessa ordem).

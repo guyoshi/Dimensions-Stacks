@@ -75,16 +75,18 @@
   function bindTop(s) { $$('[data-top]', s).forEach(b => { b.onclick = () => { SND.init(); SND.play('click'); if (b.dataset.top === 'rules') U.rules(); else U.options(); }; }); }
 
   // ---------------------------------------------------------------- início
+  // duração estimada da partida rápida (2 jogadores): ~2 disputas por carta × ~25 s por disputa
+  function quickMin() { const per = (window.DSUI && window.DSUI.CFG && window.DSUI.CFG.per) || 12; return Math.max(3, Math.round(per * 2 * 25 / 60)); }
   function home() {
     const s = $('#menu'); const d = ST.dailyToday(); const p = ST.profile();
     s.innerHTML = `<div class="tabwrap home">
       ${topbar()}
       <section class="brand"><div class="brandmark">${U.logoMark(112)}</div>${`<div class="wmbox"><small>Dimensões Infinitas</small>${wordmark()}</div>`}</section>
       ${p.t.g ? `<div class="tagrow" style="justify-content:center"><span class="tag soft">${p.t.w} vitória${p.t.w === 1 ? '' : 's'} · ${p.t.g} partida${p.t.g === 1 ? '' : 's'}</span></div>` : ''}
-      <button class="playbig" data-go="quick"><span class="pi">${ICO.swords}</span><span class="pt"><b>Jogar</b><small>Partida rápida contra um bot</small></span><span class="pa">${ICO.arrow}</span></button>
+      <button class="playbig" data-go="quick"><span class="pi">${ICO.swords}</span><span class="pt"><b>Jogar</b><small>Partida Rápida (~${quickMin()} minutos)</small></span><span class="pa">${ICO.arrow}</span></button>
       <div class="tiles">
-        <button class="tile" data-go="setup"><span class="ti">${ICO.bot}</span><b>Contra bots</b><small>Treinar e competir</small></button>
         <button class="tile" data-go="online"><span class="ti">${ICO.users}</span><b>Multiplayer</b><small>Criar ou entrar na sala</small></button>
+        <button class="tile" data-go="setup"><span class="ti">${ICO.bot}</span><b>Contra CPU</b><small>Treinar e competir</small></button>
       </div>
       <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia${d.streak > 1 ? ` · ${d.streak} dias seguidos` : ''}</small><b>${d.done ? 'Concluído' : 'Desafio do dia'}</b><span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
     </div>`;
@@ -144,7 +146,7 @@
     const s = $('#chal'); const d = ST.dailyToday(); const wk = ST.weekly(); ST.save();
     s.innerHTML = `<div class="tabwrap">${topbar('Desafios', 'Renovam todo dia e toda semana')}
       <section class="card-d big ${d.done ? 'done' : ''}"><div class="cd-h"><span class="pill">Desafio do dia</span>${d.streak ? `<span class="streak">${ICO.flame}${d.streak} ${d.streak === 1 ? 'dia' : 'dias seguidos'}</span>` : ''}</div>
-        <h2>${esc(d.texto)}</h2><div class="cd-f">${d.done ? '<span class="okpill">✓ Concluído hoje</span>' : '<span class="hint">Vale em partidas contra bots ou online. Volta amanhã com um novo.</span>'}</div>
+        <h2>${esc(d.texto)}</h2><div class="cd-f">${d.done ? '<span class="okpill">✓ Concluído hoje</span>' : '<span class="hint">Vale em partidas contra a CPU ou online. Volta amanhã com um novo.</span>'}</div>
         ${d.done ? '' : '<div class="row"><button class="btn primary" data-go="quick">Jogar agora</button></div>'}</section>
       <h3 class="sec">Missões da semana</h3>
       <div class="missions">${wk.map(w => `<div class="mission ${w.val >= w.meta ? 'done' : ''}"><div class="mt"><b>${esc(w.texto)}</b><span>${w.val}/${w.meta}</span></div><div class="bar"><i style="width:${w.val / w.meta * 100}%"></i></div></div>`).join('')}</div>
@@ -172,7 +174,7 @@
       <section class="pf-head"><button class="pf-av" id="pfAv" aria-label="Trocar avatar">${avatarHTML(p.avatar, p.name || 'Jogador', 84)}<i>✎</i></button>
         <div class="pf-id"><small class="hint">Seu nome</small><div class="pfn" id="pfnRow"><b id="pfNameTxt">${esc(p.name) || 'Sem nome'}</b><button class="ibtn sm" id="pfEdit" aria-label="Editar nome" title="Editar nome">✎</button></div><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Como você quer aparecer" aria-label="Seu nome" value="${esc(p.name)}" autocomplete="off" hidden><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
       <section class="stats">${stat(t.g, 'Partidas')}${stat(t.w, 'Vitórias')}${stat(t.g ? pct + '%' : '—', 'Aproveitamento')}${stat(t.best, 'Maior sequência')}${stat(t.dispW, 'Disputas ganhas')}${stat(t.esp, 'Especiais usados')}</section>
-      <section class="modes"><div><b>Contra bots</b><span>${t.pvb.w}/${t.pvb.g} vitórias</span></div><div><b>Contra pessoas</b><span>${t.pvp.w}/${t.pvp.g} vitórias</span></div><div><b>Online</b><span>${t.online.w}/${t.online.g} vitórias</span></div>${t.g ? `<div><b>Partida média</b><span>${fmtDur(t.dur / t.g)} · ${(t.rounds / t.g).toFixed(1)} rodadas</span></div>` : ''}</section>
+      <section class="modes"><div><b>Contra CPU</b><span>${t.pvb.w}/${t.pvb.g} vitórias</span></div><div><b>Contra pessoas</b><span>${t.pvp.w}/${t.pvp.g} vitórias</span></div><div><b>Online</b><span>${t.online.w}/${t.online.g} vitórias</span></div>${t.g ? `<div><b>Partida média</b><span>${fmtDur(t.dur / t.g)} · ${(t.rounds / t.g).toFixed(1)} rodadas</span></div>` : ''}</section>
       <h3 class="sec">Maestria das cartas <span class="hint">${ST.masteryCount(1)} com emblema</span></h3><div class="mastsec" id="mastsec"></div>
       <h3 class="sec">Buscar jogador</h3><div class="find" id="pfFind"></div>
       <h3 class="sec">Cartas favoritas</h3><div class="favrow" id="favrow"></div>

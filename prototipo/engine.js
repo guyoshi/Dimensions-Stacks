@@ -51,12 +51,12 @@
   modSpec('AE-002', 'Muralha de Resistência', 'Sua carta de combate recebe +15 em Resistência nesta disputa.', { def: 15 });
   modSpec('AE-003', 'Clarividência', 'Sua carta de combate recebe +15 em Inteligência nesta disputa.', { int: 15 });
   modSpec('AE-004', 'Arrancada', 'Sua carta de combate recebe +15 em Velocidade nesta disputa.', { vel: 15 });
-  def('AE-005', 'Reforço flexível', 'Sua carta de combate recebe +15 no atributo que você está usando nesta disputa.', 'Bônus', {
-    apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Reforço flexível', x => { x.stats[a] += 15; }); ctx.say(`${ctx.name(act.pid)} reforça ${ATTR[a].nome}.`); },
-    ai(ctx, pid) { return ctx.flipChance(pid, 15); },
+  def('AE-005', 'Reforço flexível', 'Sua carta de combate recebe +10 no atributo que você está usando nesta disputa.', 'Bônus', {
+    apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Reforço flexível', x => { x.stats[a] += 10; }); ctx.say(`${ctx.name(act.pid)} reforça ${ATTR[a].nome}.`); },
+    ai(ctx, pid) { return ctx.flipChance(pid, 10); },
   });
   modSpec('AE-006', 'Dupla resistência', 'Sua carta de combate recebe +15 Resistência e +20 Velocidade nesta disputa.', { def: 15, vel: 20 });
-  modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +10 Força e +10 Inteligência nesta disputa.', { pod: 10, int: 10 });
+  modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +7 Força e +7 Inteligência nesta disputa.', { pod: 7, int: 7 });
   modSpec('AE-008', 'Guarda equilibrada', 'Sua carta de combate recebe +10 Resistência e +10 Velocidade nesta disputa.', { def: 10, vel: 10 });
   def('AE-009', 'Superação', 'Se o valor original que você escolheu for 40 ou menos, adicione +25 a esse atributo.', 'Bônus', {
     can(ctx, pid) { const e = ctx.entry(pid); return !!e && e.base[e.attr] <= 40; },

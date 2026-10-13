@@ -5,8 +5,8 @@
     "status": "CATALOGO_APROVADO_COM_TESTES_PENDENTES",
     "data_aprovacao": "2026-10-12",
     "total_habilidades": 129,
-    "habilidades_distintas_equipadas": 78,
-    "habilidades_em_reserva": 51,
+    "habilidades_distintas_equipadas": 98,
+    "habilidades_em_reserva": 31,
     "id_aposentado": "AE-104",
     "nome_do_tipo": "Habilidade Especial",
     "aviso": "A aprovacao autoral ratifica ideias/textos existentes e sua atribuicao as 87 fichas, nao certifica equilíbrio nem resolve procedimentos incompletos. Habilidades da reserva nao estao equipadas em carta alguma. Cartas fisicas originais sao historicas."
@@ -51,7 +51,8 @@
       "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: apelão medido (80% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
     },
     {
       "id": "AE-004",
@@ -72,7 +73,7 @@
       "id": "AE-005",
       "nome": "Reforço flexível",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Sua carta de combate recebe +15 em um atributo à sua escolha nesta disputa.",
+      "texto_efeito": "Sua carta de combate recebe +10 em um atributo à sua escolha nesta disputa.",
       "origem_ideia": "#15",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
@@ -81,7 +82,8 @@
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: bônus reduzido de +15 para +10 (apelão: 89% de vitórias do bot que a usa). Alteração de balanceamento."
     },
     {
       "id": "AE-006",
@@ -102,7 +104,7 @@
       "id": "AE-007",
       "nome": "Ímpeto ofensivo",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Sua carta de combate recebe +10 Força e +10 Inteligência nesta disputa.",
+      "texto_efeito": "Sua carta de combate recebe +7 Força e +7 Inteligência nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
@@ -111,7 +113,8 @@
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: bônus reduzido de +10/+10 para +7/+7 (apelão: 83% de vitórias do bot que a usa). Alteração de balanceamento."
     },
     {
       "id": "AE-008",
@@ -135,13 +138,12 @@
       "texto_efeito": "Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V23"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: saiu da carta V23 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
     },
     {
       "id": "AE-010",
@@ -485,7 +487,8 @@
       "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: apelão medido (89% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
     },
     {
       "id": "AE-034",
@@ -498,7 +501,8 @@
       "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: apelão medido (89% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
     },
     {
       "id": "AE-035",
@@ -511,7 +515,8 @@
       "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: apelão medido (89% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
     },
     {
       "id": "AE-036",
@@ -621,11 +626,14 @@
       "texto_efeito": "Pegue a primeira carta do meio de reserva do adversário à direita.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V23"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: atribuída a V23 (substitui AE-009, que o bot nunca usava)."
     },
     {
       "id": "AE-044",
@@ -647,11 +655,14 @@
       "texto_efeito": "Pegue 2 cartas aleatórias do meio de reserva do adversário à direita, se disponíveis.",
       "origem_ideia": "#17",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S16"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: atribuída a S16 (substitui AE-070, que o bot nunca usava)."
     },
     {
       "id": "AE-046",
@@ -705,11 +716,14 @@
       "texto_efeito": "Escolha um adversário e pegue até 2 cartas aleatórias de sua reserva.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: atribuída a D17 (substitui AE-058, que o bot nunca usava)."
     },
     {
       "id": "AE-050",
@@ -718,11 +732,14 @@
       "texto_efeito": "Se um adversário tiver até 3 cartas no baralho ativo, tome a última carta de sua reserva, caso exista.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V22"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: atribuída a V22 (substitui AE-057, que o bot nunca usava)."
     },
     {
       "id": "AE-051",
@@ -780,7 +797,8 @@
       "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: apelão medido (99% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
     },
     {
       "id": "AE-055",
@@ -819,13 +837,12 @@
       "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda.",
       "origem_ideia": "#11",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V22"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: saiu da carta V22 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
     },
     {
       "id": "AE-058",
@@ -834,13 +851,12 @@
       "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "D17"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: saiu da carta D17 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
     },
     {
       "id": "AE-059",
@@ -1011,13 +1027,12 @@
       "texto_efeito": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido.",
       "origem_ideia": "#23",
       "avaliacao_de_risco": "Experimental",
-      "cartas_atribuidas": [
-        "S16"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: saiu da carta S16 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
     },
     {
       "id": "AE-071",
@@ -1582,7 +1597,8 @@
       "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: apelão medido (84% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
     },
     {
       "id": "AE-110",

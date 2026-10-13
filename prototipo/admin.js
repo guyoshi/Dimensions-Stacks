@@ -51,7 +51,7 @@
   }
   const avg = (v, n) => n ? v / n : 0;
   const fmtS = s => { s = Math.round(s); return s >= 60 ? Math.floor(s / 60) + 'm' + String(s % 60).padStart(2, '0') + 's' : s + 's'; };
-  const MODE = { pvp: 'Pessoa × pessoa', pvb: 'Pessoa × bot', bvb: 'Bot × bot' };
+  const MODE = { pvp: 'Pessoa × pessoa', pvb: 'Pessoa × CPU', bvb: 'CPU × CPU' };
 
   // ---------------------------------------------------------------- simulador
   async function simulate(o, prog, stop) {
@@ -59,7 +59,7 @@
     for (let i = 0; i < o.n; i++) {
       if (stop.on) break;
       const diff = o.diff === 'misto' ? ['facil', 'normal', 'dificil'][Math.floor(Math.random() * 3)] : o.diff;
-      const players = [...Array(o.players)].map((_, k) => ({ name: 'Bot ' + (k + 1), bot: true, avatar: k }));
+      const players = [...Array(o.players)].map((_, k) => ({ name: 'CPU ' + (k + 1), bot: true, avatar: k }));
       const rec = st.recorder({ viewer: -1, online: false, humans: 0, n: o.players, diff, per: o.per, sf: o.sf, sim: true });
       let G, res = null;
       G = new E.Game({ players, perPlayer: o.per, difficulty: diff, specialsFrom: o.sf, io: { notify: async (t, d) => { const r = rec.ev(t, d, G); if (r) res = r; } } });
@@ -105,7 +105,7 @@
         <button class="btn sm" data-a="reload">Atualizar</button><button class="btn sm" data-a="invite">Como convidar alguém</button></div>
         <div class="hint">${S.real.filter(m => !m.sim).length} partidas reais no registro · ${S.sims.length} simuladas nesta sessão · ${L.length} na análise</div></section>
 
-      <section class="adm-box"><h3>Simulador (bot × bot)</h3><div class="adm-f">
+      <section class="adm-box"><h3>Simulador (CPU × CPU)</h3><div class="adm-f">
         <label>Partidas <select id="sN">${[20, 50, 100, 200, 500].map(v => `<option${v === 100 ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
         <label>Jogadores <select id="sP"><option>2</option><option>3</option><option selected>4</option></select></label>
         <label>Dificuldade <select id="sD"><option value="misto">Mista</option><option value="facil">Fácil</option><option value="normal" selected>Normal</option><option value="dificil">Difícil</option></select></label>

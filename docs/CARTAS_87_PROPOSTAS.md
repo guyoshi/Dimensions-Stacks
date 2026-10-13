@@ -1,5 +1,7 @@
 # Dimensions Stacks — 87 cartas do baralho aprovado (v1.0)
 
+> **ATENÇÃO — documento histórico (12/10/2026).** Os atributos aqui aparecem como ATQ/DEF e as atribuições de especiais são as antigas. O estado atual (98 cartas, Força/Resistência, um especial diferente por carta) está em [CARTAS_E_ESPECIAIS.md](CARTAS_E_ESPECIAIS.md) e em `dados/oficial/cartas_87.json`.
+
 > **APROVAÇÃO AUTORAL: 12/10/2026, escopo das 87 cartas.** Os 87 nomes/IDs, as descrições impressas, os atributos ATQ/DEF/INT/VEL e os IDs de Habilidade Especial atribuídos na tabela estão **APROVADOS como dados do jogo**. Isto **não** transforma descrições especulativas em fatos dos romances, nem dispensa testes de balanceamento e legibilidade. Fonte de autoridade: [CONTRATO_PARA_IA_IMPLEMENTADORA.md](CONTRATO_PARA_IA_IMPLEMENTADORA.md).
 
 ## 1. Contrato de tamanho e campos

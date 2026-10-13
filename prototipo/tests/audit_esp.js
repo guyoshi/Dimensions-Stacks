@@ -46,9 +46,9 @@ const cnt = (g, pid, z) => g.p(pid)[z].length;
   const spec1 = (id, title, p0stats, attr, expect, extra) => scn(id, title, Object.assign({ n: 2, flip: { 0: true }, attrs: { 0: attr, 1: attr }, world: { f: { 0: p0stats, 1: [30, 30, 30, 30] }, prep: { 0: [id] } },
     check(g, W, c) { c.ok(c.result && c.result.winnerPid === 0, 'P0 venceu: ' + JSON.stringify(c.result)); c.ok(c.result && c.result.value === expect, `valor ${expect}, veio ${c.result && c.result.value}`); } }, extra || {}));
   for (const [id, a] of [['AE-001', 'pod'], ['AE-002', 'def'], ['AE-003', 'int'], ['AE-004', 'vel']]) await spec1(id, `+15 ${a}`, [40, 40, 40, 40], a, 55);
-  await spec1('AE-005', '+15 no atributo usado (vel)', [40, 40, 40, 40], 'vel', 55);
+  await spec1('AE-005', '+10 no atributo usado (vel)', [40, 40, 40, 40], 'vel', 50);
   await spec1('AE-006', '+15 def', [40, 40, 40, 40], 'def', 55); await spec1('AE-006', '+20 vel', [40, 40, 40, 40], 'vel', 60);
-  await spec1('AE-007', '+10 pod', [40, 40, 40, 40], 'pod', 50); await spec1('AE-007', '+10 int', [40, 40, 40, 40], 'int', 50);
+  await spec1('AE-007', '+7 pod', [40, 40, 40, 40], 'pod', 47); await spec1('AE-007', '+7 int', [40, 40, 40, 40], 'int', 47);
   await spec1('AE-008', '+10 def', [40, 40, 40, 40], 'def', 50); await spec1('AE-008', '+10 vel', [40, 40, 40, 40], 'vel', 50);
   await spec1('AE-009', '+25 se original ≤ 40', [35, 35, 35, 35], 'pod', 60);
   await scn('AE-009', 'não funciona com valor > 40 (não é oferecido)', { n: 2, flip: { 0: true }, attrs: { 0: 'pod', 1: 'pod' }, world: { f: { 0: [45, 45, 45, 45], 1: [30, 30, 30, 30] }, prep: { 0: ['AE-009'] } },

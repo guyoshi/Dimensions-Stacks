@@ -246,7 +246,7 @@
       <div class="logo-fan"></div>
       <div class="logo"><small>Dimensões Infinitas</small><b data-t="Dimensions Stacks">Dimensions Stacks</b><i></i></div>
       <div class="menu-list">
-        <button class="btn primary" data-go="setup">▶ Jogar contra bots</button>
+        <button class="btn primary" data-go="setup">▶ Jogar contra a CPU</button>
         <button class="btn" data-go="online">🌐 Jogar online</button>
         <button class="btn" data-go="rules">📖 Como jogar</button>
         <button class="btn" data-go="coll">🃏 Coleção</button>
@@ -260,10 +260,10 @@
   }
 
   // ---- configuração da partida
-  const CFG = Object.assign({ n: 2, seats: [{ name: 'Você', bot: false }, { name: 'Bot Alfa', bot: true }, { name: 'Bot Beta', bot: true }, { name: 'Bot Gama', bot: true }], per: 12, diff: 'normal', sf: 2 }, store.get('cfg', {})); CFG.sf = 2; U.CFG = CFG;
+  const CFG = Object.assign({ n: 2, seats: [{ name: 'Você', bot: false }, { name: 'CPU Alfa', bot: true }, { name: 'CPU Beta', bot: true }, { name: 'CPU Gama', bot: true }], per: 12, diff: 'normal', sf: 2 }, store.get('cfg', {})); CFG.sf = 2; U.CFG = CFG;
   // 100 nomes aleatórios para os bots (sorteados sem repetir na mesa)
   const BOT_NAMES = ['Aldrin Vex','Brisa Tormenta','Cael Duskmoor','Dara Quill','Elric Nox','Fenna Ashgrove','Gorin Pedralta','Hana Zephyr','Ivo Brasa','Jessa Corvin','Kito Marlow','Lysa Rime','Maro Tavish','Nilo Ventura','Orla Fenwick','Pavel Strix','Quira Solen','Rurik Vale','Sabra Lumen','Tobias Wren','Ula Marén','Vesper Kade','Wilmer Dusk','Xara Pell','Yago Brandt','Zelda Moura','Anselmo Rocha','Bianca Nimbus','Caio Mirante','Dalila Orvalho','Eron Faísca','Fabrício Lamar','Gaia Trindade','Heitor Brumas','Iara Solstício','Jorge Calhau','Kira Vento','Leandro Éter','Maya Sombria','Nuno Ferrão','Olívia Cinza','Pietro Arco','Quintino Rio','Rafaela Prisma','Silas Orbe','Tânia Gelo','Ulisses Faro','Vânia Âmbar','Wagner Lótus','Ximena Brasil','Yuri Cometa','Zaíra Nuvem','Abel Quasar','Beca Lunar','Cosme Nebuloso','Duda Cintila','Elio Penumbra','Flora Astral','Gil Meteoro','Hera Zênite','Inácio Vórtice','Jade Eclipse','Kleber Nova','Lia Órbita','Mateus Plasma','Nara Aurora','Otto Pulsar','Pérola Abismo','Rômulo Fóton','Sara Galáxia','Tomé Cósmico','Úrsula Halo','Vicente Ônix','Wanda Brisa','Xavier Opala','Yara Safira','Zeca Turmalina','Alma Ciclone','Bento Granizo','Cíntia Relâmpago','Davi Trovão','Estela Névoa','Fausto Geada','Gisele Ressaca','Hugo Maré','Ísis Orvalho','Jonas Tempestade','Karina Bruma','Lucas Furacão','Mônica Brasa','Nando Rajada','Odete Cinzeiro','Plínio Vendaval','Quitéria Garoa','Ravi Alvorada','Sônia Poente','Túlio Crepúsculo','Vera Zéfiro','Wesley Aurora','Zuri Cintilante'];
-  const isAutoName = n => /^Bot( |$)/.test(n || '') || BOT_NAMES.includes(n);
+  const isAutoName = n => /^(Bot|CPU)( |$)/.test(n || '') || BOT_NAMES.includes(n);
   function randBot(used) { const free = BOT_NAMES.filter(n => !used.includes(n)); const a = free.length ? free : BOT_NAMES; return a[Math.floor(Math.random() * a.length)]; }
   U.randBot = randBot;
   U.rerollBotNames = function (players) { const used = players.filter(p => !p.bot).map(p => p.name); players.forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); return players; };
@@ -271,9 +271,9 @@
   const seatDiff = p => (p && p.diff) || 'normal';   // dificuldade individual de cada bot
   function setup() {
     const s = $('#setup');
-    CFG.seats.forEach((p, i) => { if (i > 0 && !p.bot) { p.bot = true; p.name = 'Bot'; } });
+    CFG.seats.forEach((p, i) => { if (i > 0 && !p.bot) { p.bot = true; p.name = 'CPU'; } });
     if (CFG.seats[0] && !CFG.seats[0].bot) CFG.seats[0].name = U.profileName() || 'Você';   // o nome só se edita no Perfil
-    { const used = CFG.seats.slice(0, CFG.n).filter(p => !(p.bot && /^Bot( |$)/.test(p.name))).map(p => p.name); CFG.seats.slice(0, CFG.n).forEach(p => { if (p.bot && /^Bot( |$)/.test(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
+    { const used = CFG.seats.slice(0, CFG.n).filter(p => !(p.bot && /^(Bot|CPU)( |$)/.test(p.name))).map(p => p.name); CFG.seats.slice(0, CFG.n).forEach(p => { if (p.bot && /^(Bot|CPU)( |$)/.test(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
     const maxPer = Math.min(24, Math.floor(CARTAS.length / CFG.n));
     CFG.per = Math.max(7, Math.min(CFG.per, maxPer));
     const seats = CFG.seats.slice(0, CFG.n);
@@ -283,7 +283,7 @@
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
       <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
         <span class="seatname" data-i="${i}">${esc(p.name)}</span>
-        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para o bot">🎲 Sortear</button>`}
+        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para a CPU">🎲 Sortear</button>`}
         ${p.bot ? `<div class="seatdiff"><span class="hint">Dificuldade</span><div class="seg sm" data-k="sd" data-i="${i}">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${seatDiff(p) === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>` : ''}</div>`).join('')}</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">
@@ -298,15 +298,15 @@
         CFG.seats[i].name = randBot(used); CFG.seats[i].bot = true; store.set('cfg', CFG); return setup();
       }
       if (pre) {
-        if (pre === '1') { CFG.n = 2; CFG.seats[0] = { name: 'Você', bot: false }; CFG.seats[1] = { name: 'Bot', bot: true }; }
-        else if (pre === '3') { CFG.n = 4; CFG.seats[0] = { name: 'Você', bot: false }; for (let i = 1; i < 4; i++) CFG.seats[i] = { name: 'Bot', bot: true }; }
-        else { CFG.n = 3; for (let i = 0; i < 3; i++) CFG.seats[i] = { name: 'Bot', bot: true }; }
+        if (pre === '1') { CFG.n = 2; CFG.seats[0] = { name: 'Você', bot: false }; CFG.seats[1] = { name: 'CPU', bot: true }; }
+        else if (pre === '3') { CFG.n = 4; CFG.seats[0] = { name: 'Você', bot: false }; for (let i = 1; i < 4; i++) CFG.seats[i] = { name: 'CPU', bot: true }; }
+        else { CFG.n = 3; for (let i = 0; i < 3; i++) CFG.seats[i] = { name: 'CPU', bot: true }; }
         store.set('cfg', CFG); return setup();
       }
       if (seg) {
         const k = seg.dataset.k, v = b.dataset.v;
         if (k === 'n') CFG.n = +v; else if (k === 'sd') CFG.seats[+seg.dataset.i].diff = v; else if (k === 'sf') CFG.sf = +v;
-        else if (k === 'bot') { const i = +seg.dataset.i; CFG.seats[i].bot = v === '1'; if (CFG.seats[i].bot && !isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Bot'; if (!CFG.seats[i].bot && isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Jogador ' + (i + 1); }
+        else if (k === 'bot') { const i = +seg.dataset.i; CFG.seats[i].bot = v === '1'; if (CFG.seats[i].bot && !isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'CPU'; if (!CFG.seats[i].bot && isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Jogador ' + (i + 1); }
         store.set('cfg', CFG); return setup();
       }
       if (b.dataset.act === 'back') U.show('menu');
