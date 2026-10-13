@@ -1381,7 +1381,7 @@
     },
     {
       "id": "D01",
-      "nome": "Junior",
+      "nome": "Junior Quissama",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1401,11 +1401,12 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Junior"
     },
     {
       "id": "D02",
-      "nome": "Priscila da Conceição",
+      "nome": "Priscila Fontenelle",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1430,7 +1431,7 @@
     },
     {
       "id": "D03",
-      "nome": "Pedro",
+      "nome": "Pedro Souza",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1450,11 +1451,12 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Pedro"
     },
     {
       "id": "D04",
-      "nome": "Kelly da Conceição",
+      "nome": "Kelly Fontenelle",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1579,7 +1581,7 @@
     },
     {
       "id": "D09",
-      "nome": "Diego",
+      "nome": "Diego Tavolieri",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1599,7 +1601,8 @@
         "fonte": "Autor",
         "confianca": "Baixa"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Diego"
     },
     {
       "id": "D10",
@@ -1701,7 +1704,7 @@
     },
     {
       "id": "D14",
-      "nome": "Filipo",
+      "nome": "Filipo Brandolini",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -2090,7 +2093,7 @@
     },
     {
       "id": "M12",
-      "nome": "James",
+      "nome": "James Harrow",
       "origem": {
         "codigo_serie": "M",
         "cor_base": "vermelha"
@@ -2110,7 +2113,8 @@
         "fonte": "M",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "James"
     },
     {
       "id": "B01",

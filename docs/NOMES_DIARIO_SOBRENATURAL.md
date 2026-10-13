@@ -4,8 +4,8 @@ Pedido do autor: nomes de personagens vêm do livro, não de relação de parent
 
 | Carta | Antes | Agora | Fonte |
 |---|---|---|---|
-| D02 | Priscila | Priscila da Conceição | Livro 1 (trabalho escolar: "Priscila da Conceição") |
-| D04 | Kelly | Kelly da Conceição | Livro 2 (lápide: "Kelly Lorraine da Conceição") |
+| D02 | Priscila | Priscila Fontenelle | decisão do autor: sobrenome francês comum no Brasil, substitui "da Conceição" (Livro 1, trabalho escolar) |
+| D04 | Kelly | Kelly Fontenelle | decisão do autor: substitui "da Conceição" (Livro 2, lápide "Kelly Lorraine da Conceição"); "Lorraine" segue como segundo nome |
 | D05 | Vinicius | Vinícius Silva | Livro 2 (notícia: "Vinícius Silva"); pai "Alan Silva" no Livro 1 |
 | D06 | Jennifer | Jennifer de Morais | Livro 1 ("Jennifer Nathaly de Morais") |
 | D07 | Ingrid Carnam | Ingrid Marques | Livro 1 ("Meu nome é Ingrid Marques"); Carnam é o pai (Carnam Marques) |
@@ -20,3 +20,18 @@ Pedido do autor: nomes de personagens vêm do livro, não de relação de parent
 
 Busca nos dois livros (transcrições integrais, capítulos, canon, resumo, livro.json): Junior, Pedro, Diego e Filipo não têm sobrenome em nenhum trecho. Detalhes: a mãe de Junior é delegada e o "S. Sanderson" do cap. 7 é advogado; Diego é um homem que Priscila conhece na hamburgueria (Livro 2); o pai de Filipo é Mike; Jason tem sobrenome Douglas (sem carta); Ibliso é o cão de Ingrid; a avó é só "Avó"/"Vovó"; a tia é Maria Marques, o primo Gabriel.
 Stats, especiais e fotos não mudaram. O nome anterior fica em `nome_anterior` no `cartas_87.json`.
+
+## Decisões do autor (2026-10-13), a aplicar também no texto dos livros
+
+| Carta | Nome | Observação |
+|---|---|---|
+| D01 | Junior Quissama | nome civil Sérgio Quissama Júnior; origem africana (angolana) sem exposição |
+| D02 | Priscila Fontenelle | substitui "da Conceição" |
+| D04 | Kelly Fontenelle | substitui "da Conceição"; "Lorraine" é segundo nome |
+| D03 | Pedro Souza | |
+| D09 | Diego Tavolieri | pai de Jason; Jason Douglas Tavolieri (Douglas é segundo nome, não sobrenome) |
+| D14 | Filipo Brandolini | só o sobrenome de Filipo aparece no texto; Manu Brandolini é irmã dele e isso só se deduz perto do fim |
+| M12 | James Harrow | Órbita Oráculo |
+
+Manu não tem carta: o sobrenome Brandolini fica só aqui, nunca no texto dos capítulos.
+Os nomes só entram nos capítulos de forma orgânica (uma ou duas aparições por personagem), sem exposição. Edição dos `.md` de `00 - Texto/capitulos` aguardando aprovação dos trechos.
