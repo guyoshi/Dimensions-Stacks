@@ -797,3 +797,12 @@ select option:checked { background-color: #3a4256; color: #fff; }
   animation: uniaura 3.2s ease-in-out infinite; }
 @keyframes uniaura { 0%, 100% { opacity: .72; transform: scale(1); } 50% { opacity: 1; transform: scale(1.035); } }
 @media (prefers-reduced-motion: reduce) { .card[data-uni].up::after { animation: none; } }
+
+.card .usp { display: none; position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.card.up .usp { display: block; }
+.usp i { position: absolute; width: calc(var(--cw) * var(--s)); height: calc(var(--cw) * var(--s)); margin: calc(var(--cw) * var(--s) / -2) 0 0 calc(var(--cw) * var(--s) / -2); opacity: 0;
+  background: radial-gradient(circle, #fff 0 14%, #ffe58f 28%, #ffd25f66 55%, transparent 72%);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  filter: drop-shadow(0 0 3px #ffd25f); animation: uspark var(--d) ease-in-out var(--dl) infinite; }
+@keyframes uspark { 0%, 48%, 100% { opacity: 0; transform: translate(0, 0) scale(.3) rotate(0); } 62% { opacity: 1; transform: translate(calc(var(--dx) / 2), calc(var(--dy) / 2)) scale(1) rotate(45deg); } 90% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.4) rotate(90deg); } }
+@media (prefers-reduced-motion: reduce) { .usp i { animation: none; opacity: 0; } }

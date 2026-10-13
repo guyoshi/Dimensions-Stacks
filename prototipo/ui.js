@@ -60,6 +60,17 @@
       return `<div class="st${d > 0 ? ' mod' : d < 0 ? ' modn' : ''}" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}<b>${st[a]}</b></div>`;
     }).join('');
   }
+  // brilhinhos dourados ao redor das cartas de A União (posições fixas por carta; o CSS os mostra só com a carta virada)
+  function uniSparks(id) {
+    const r = DS_DATA.rng(DS_DATA.hash('uni' + id)), box = el('<div class="usp" aria-hidden="true"></div>');
+    for (let i = 0; i < 12; i++) {
+      const side = i % 4, p = r() * 100, o = -8 + r() * 14;   // ao longo da borda, um pouco para fora/dentro
+      const x = side === 0 ? p : side === 2 ? p : side === 1 ? 100 - o : o, y = side === 1 || side === 3 ? p : side === 0 ? o : 100 - o;
+      const s = el(`<i style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.09 + r() * .09).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
+      box.append(s);
+    }
+    return box;
+  }
   function cardEl(id, o) {
     o = o || {};
     if (typeof id === 'string' && id[0] === '?') {   // carta oculta (online): só o verso, sem nenhum dado da carta
@@ -80,7 +91,7 @@
         <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
         ${c.provisorio ? '<div class="teste">PRÉVIA</div>' : ''}
       </div></div></div></div>`);
-    node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1'; node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
+    node.dataset.serie = c.serie; if (c.uniao) { node.dataset.uni = '1'; node.append(uniSparks(id)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
     if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id), mastery: g.dataset.mast === '1' } : null); }); }
