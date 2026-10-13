@@ -924,3 +924,9 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .seatdiff { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .seg.sm button { min-height: 30px; padding: .3em .7em; font-size: .85em; }
 .onseat .seg.sm { grid-column: auto; }
+
+/* escolha em tela cheia (.order): o painel do especial não pode cobrir as cartas; vira uma faixa compacta no rodapé */
+#layer:has(.order) .fxb { top: auto !important; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); width: min(94%, 440px); padding: 5px 12px; opacity: .92; }
+#layer:has(.order) .fxb .nm { font-size: 14px; margin-top: 0; }
+#layer:has(.order) .fxb .who { font-size: 10px; }
+#layer:has(.order) .fxb .rs { display: none !important; }
