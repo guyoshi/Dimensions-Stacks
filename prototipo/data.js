@@ -4,13 +4,14 @@
 (function (root) {
   'use strict';
 
+  // Ordem das séries (filtros e coleção): definida pelo autor em 13/10/2026.
   const SERIES = {
-    jesed:      { nome: 'Ciclo de Jesed',         titulo: 'Ciclo de Jesed', marca: 'JESED',               cor: '#e9b923', escuro: '#7a5a00', texto: '#1d1400', cor2: '#fff1b0' },
     viajantes:  { nome: 'Viajantes Dimensionais', titulo: 'Viajantes Dimensionais', marca: 'VIAJANTES',           cor: '#2f7bf0', escuro: '#12337a', texto: '#ffffff', cor2: '#a9ccff' },
-    misterio:   { nome: 'Mistério Oculto',        titulo: 'Mistério Oculto', marca: 'MISTÉRIO OCULTO',     cor: '#d8332f', escuro: '#6d100e', texto: '#ffffff', cor2: '#ffb3ad' },
-    belfex:     { nome: 'Édelin Lys', titulo: 'Édelin Lys', marca: 'ÉDELIN LYS', cor: '#2faa5a', escuro: '#0f4a26', texto: '#ffffff', cor2: '#aef0c3' },
     diario:     { nome: 'Diário Sobrenatural',    titulo: 'Diário Sobrenatural', marca: 'DIÁRIO SOBRENATURAL', cor: '#8a4fd6', escuro: '#391768', texto: '#ffffff', cor2: '#d9c0ff' },
+    misterio:   { nome: 'Mistério Oculto',        titulo: 'Mistério Oculto', marca: 'MISTÉRIO OCULTO',     cor: '#d8332f', escuro: '#6d100e', texto: '#ffffff', cor2: '#ffb3ad' },
     spacetheft: { nome: 'Spacetheft',             titulo: 'Spacetheft', marca: 'SPACETHEFT',          cor: '#1b1b22', escuro: '#000000', texto: '#ffffff', cor2: '#9a9aa8' },
+    jesed:      { nome: 'Ciclo de Jesed',         titulo: 'Ciclo de Jesed', marca: 'JESED',               cor: '#e9b923', escuro: '#7a5a00', texto: '#1d1400', cor2: '#fff1b0' },
+    belfex:     { nome: 'Édelin Lys', titulo: 'Édelin Lys', marca: 'ÉDELIN LYS', cor: '#2faa5a', escuro: '#0f4a26', texto: '#ffffff', cor2: '#aef0c3' },
   };
 
   const ATRIBUTOS = [

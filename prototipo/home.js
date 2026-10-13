@@ -101,7 +101,7 @@
   const filtState = { k: 'todas', q: '', sort: 'num', att: '' };
   const norm = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const sumOf = c => c.stats.pod + c.stats.def + c.stats.int + c.stats.vel;
-  const SORTS = [['num', 'Ordem padrão'], ['soma', 'Força total'], ['pod', 'Força'], ['def', 'Resistência'], ['int', 'Inteligência'], ['vel', 'Velocidade'], ['nome', 'Nome (A–Z)'], ['esp', 'Especial (A–Z)'], ['mast', 'Maestria']];
+  const SORTS = [['num', 'Ordem padrão'], ['soma', 'Soma dos atributos'], ['pod', 'Força'], ['def', 'Resistência'], ['int', 'Inteligência'], ['vel', 'Velocidade'], ['nome', 'Nome (A–Z)'], ['esp', 'Especial (A–Z)'], ['mast', 'Maestria']];
   const spOf = c => (U.E.SPECIALS[c.especial] || {});
   const hay = c => norm([c.nome, c.id, SERIES[c.serie].nome, SERIES[c.serie].marca, c.descricao, spOf(c).nome, spOf(c).texto, c.raridade, c.uniao ? 'uniao' : ''].join(' '));
   const topAtt = c => U.AIDS.slice().sort((a, b) => c.stats[b] - c.stats[a])[0];
@@ -112,6 +112,7 @@
     by.mast = (a, b) => { const x = U.mastery(a.id), y = U.mastery(b.id); return ((y && y.xp) || 0) - ((x && x.xp) || 0); };
     U.AIDS.forEach(a => { by[a] = (x, y) => y.stats[a] - x.stats[a] || sumOf(y) - sumOf(x); });
     if (st.sort !== 'num' && by[st.sort]) r = r.slice().sort(by[st.sort]);
+    else if (st.sort === 'num') { const ord = Object.keys(SERIES); r = r.slice().sort((x, y) => ord.indexOf(x.serie) - ord.indexOf(y.serie)); }   // ordem padrão: séries na ordem definida em data.js (estável)
     return r;
   };
   function collTab() {
