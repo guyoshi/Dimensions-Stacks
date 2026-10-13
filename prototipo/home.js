@@ -90,7 +90,6 @@
         <button class="tile" data-go="online"><span class="ti">${ICO.users}</span><b>Multiplayer</b><small>Criar ou entrar na sala</small></button>
       </div>
       <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia${d.streak > 1 ? ` · ${d.streak} dias seguidos` : ''}</small><b>${d.done ? 'Concluído' : 'Desafio do dia'}</b><span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
-      <div class="foot">Dados oficiais v1.0 aprovados pelo autor (12/10/2026) · equilíbrio ainda sem testes rigorosos</div>
     </div>`;
     bindTop(s); fxInto(s);
     s.onclick = e => {

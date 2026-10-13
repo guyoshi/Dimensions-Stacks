@@ -245,7 +245,7 @@
         <button class="btn" data-go="coll">🃏 Coleção</button>
         <button class="btn" data-go="opts">⚙ Opções e sons</button>
       </div>
-      <div class="foot">Atributos, perfis e especiais: dados oficiais v1.0 aprovados pelo autor (12/10/2026) · equilíbrio ainda sem testes rigorosos</div></div>`;
+    </div>`;
     s.prepend(menuFx());
     const fan = $('.logo-fan', s);
     fanIds().forEach((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 108 }); c.style.setProperty('--r', (i - 1) * 9 + 'deg'); c.style.setProperty('--y', (i === 1 ? -10 : 4) + 'px'); fan.append(c); });
