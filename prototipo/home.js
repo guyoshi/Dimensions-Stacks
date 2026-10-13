@@ -85,10 +85,10 @@
       ${p.t.g ? `<div class="tagrow" style="justify-content:center"><span class="tag soft">${p.t.w} vitória${p.t.w === 1 ? '' : 's'} · ${p.t.g} partida${p.t.g === 1 ? '' : 's'}</span></div>` : ''}
       <button class="playbig" data-go="quick"><span class="pi">${ICO.swords}</span><span class="pt"><b>Jogar</b><small>Partida Rápida (~${quickMin()} minutos)</small></span><span class="pa">${ICO.arrow}</span></button>
       <div class="tiles">
-        <button class="tile" data-go="online"><span class="ti">${ICO.users}</span><b>Multiplayer</b><small>Criar ou entrar na sala</small></button>
-        <button class="tile" data-go="setup"><span class="ti">${ICO.bot}</span><b>Contra CPU</b><small>Treinar e competir</small></button>
+        <button class="tile" data-go="online"><span class="ti">${ICO.users}</span><b>Multiplayer</b></button>
+        <button class="tile" data-go="setup"><span class="ti">${ICO.bot}</span><b>Contra CPU</b></button>
       </div>
-      <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia${d.streak > 1 ? ` · ${d.streak} dias seguidos` : ''}</small><b>${d.done ? 'Concluído' : 'Desafio do dia'}</b><span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
+      <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia${d.streak > 1 ? ` · ${d.streak} dias seguidos` : ''}</small>${d.done ? '<b>Concluído</b>' : ''}<span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
     </div>`;
     bindTop(s); fxInto(s);
     s.onclick = e => {

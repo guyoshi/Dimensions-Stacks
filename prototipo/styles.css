@@ -438,7 +438,7 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .playbig .pt small { font-size: 12.5px; font-weight: 700; opacity: .75; margin-top: 3px; }
 
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.tile { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 14px; border-radius: 18px; background: linear-gradient(180deg, #1e2128, #171a20); border: 1px solid var(--line); transition: transform .15s, border-color .2s, box-shadow .2s; min-height: 112px; }
+.tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 14px; border-radius: 18px; background: linear-gradient(180deg, #1e2128, #171a20); border: 1px solid var(--line); transition: transform .15s, border-color .2s, box-shadow .2s; min-height: 112px; }
 .tile:hover { transform: translateY(-2px); border-color: #d6cfba88; box-shadow: 0 10px 24px #0008; }
 .tile .ti { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: #ffffff0f; color: var(--metal); margin-bottom: 6px; }
 .tile .ti svg { width: 22px; height: 22px; }
