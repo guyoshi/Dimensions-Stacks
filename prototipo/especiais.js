@@ -16,7 +16,10 @@
     const nm = (ctx, pid) => ctx.name(pid);
     const maxOf = (e, par) => AID.filter(a => ATTR[a].par === par).reduce((m, a) => Math.max(m, e.stats[a]), 0);
     // ---- apoio à IA ----
-    const oppFlip = (ctx, pid) => ctx.g.botOppFlip(pid);                       // chance de algum rival virar especial
+    const oppFlip = (ctx, pid) => ctx.g.botOppFlip(pid);
+    // na janela de reação o bot sabe o que os rivais viraram: null fora dela; senão hit/miss conforme a categoria revelada
+    const seenCat = (ctx, pid, cats, hit, miss) => { const c = ctx.g.combat; if (!c || !c.react) return null; return ctx.g.foeActs(c, pid).some(a => cats.includes(SP[CARDS[a.card].especial].cat)) ? hit : miss; };
+    const ORR = (v, f) => v == null ? f() : v;                       // chance de algum rival virar especial
     const winnerOf = ctx => { const w = ctx.g.evaluate(ctx.combat, true); return w.winners && w.winners.length === 1 ? w.winners[0] : null; };
     const richest = (ctx, cand) => cand.slice().sort((a, b) => ctx.g.totalCards(ctx.player(b)) - ctx.g.totalCards(ctx.player(a)))[0];
     const pctOf = (e, list) => Math.max(...list.map(a => api.pct(a, e.stats[a])));
@@ -384,7 +387,7 @@
       },
       ai(ctx, pid) { return 0.05 + 0.75 * oppFlip(ctx, pid); },
     });
-    D('AE-074', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).immune++; ctx.say(`${nm(ctx, act.pid)} fica imune ao próximo efeito direcionado.`); }, ai(ctx, pid) { return 0.08 + 0.45 * oppFlip(ctx, pid); } });
+    D('AE-074', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).immune++; ctx.say(`${nm(ctx, act.pid)} fica imune ao próximo efeito direcionado.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição', 'Troca', 'Buraco Negro', 'Captura', 'Controle'], 0.6, 0.05), () => 0.08 + 0.45 * oppFlip(ctx, pid)); } });
     D('AE-075', 'Defesa', {
       async apply(ctx, act) {
         const cand = ctx.entries().filter(e => e.pid !== act.pid).map(e => e.pid); if (!cand.length) return;
@@ -392,10 +395,10 @@
       },
       ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'ataque' ? 0.7 : 0.04; },
     });
-    D('AE-076', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).guardDeck++; ctx.say(`${nm(ctx, act.pid)} guarda o baralho.`); }, ai(ctx, pid) { return 0.05 + 0.4 * oppFlip(ctx, pid); } });
-    D('AE-077', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).guardRes++; ctx.say(`${nm(ctx, act.pid)} guarda a reserva.`); }, ai(ctx, pid) { return 0.05 + 0.4 * oppFlip(ctx, pid); } });
-    D('AE-078', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).reflect++; ctx.say(`${nm(ctx, act.pid)} prepara um reflexo de roubo.`); }, ai(ctx, pid) { return 0.05 + 0.4 * oppFlip(ctx, pid); } });
-    D('AE-079', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.entry(act.pid).noBHBySpecial = true; ctx.say(`${nm(ctx, act.pid)} protege o combatente do Buraco Negro.`); }, ai(ctx, pid) { return 0.04 + 0.3 * oppFlip(ctx, pid); } });
+    D('AE-076', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).guardDeck++; ctx.say(`${nm(ctx, act.pid)} guarda o baralho.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição'], 0.7, 0.04), () => 0.05 + 0.4 * oppFlip(ctx, pid)); } });
+    D('AE-077', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).guardRes++; ctx.say(`${nm(ctx, act.pid)} guarda a reserva.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição'], 0.65, 0.04), () => 0.05 + 0.4 * oppFlip(ctx, pid)); } });
+    D('AE-078', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).reflect++; ctx.say(`${nm(ctx, act.pid)} prepara um reflexo de roubo.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo'], 0.7, 0.04), () => 0.05 + 0.4 * oppFlip(ctx, pid)); } });
+    D('AE-079', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.entry(act.pid).noBHBySpecial = true; ctx.say(`${nm(ctx, act.pid)} protege o combatente do Buraco Negro.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Buraco Negro'], 0.7, 0.04), () => 0.04 + 0.3 * oppFlip(ctx, pid)); } });
     D('AE-080', 'Defesa', {
       phase: 'late', prep: 0.2,
       apply(ctx, act) {
@@ -635,7 +638,7 @@
       },
       ai: () => 0.4,
     });
-    D('AE-114', 'Interação', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).redirect++; ctx.say(`${nm(ctx, act.pid)} prepara um desvio de alvo.`); }, ai(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) ? 0.3 : 0.06; } });
+    D('AE-114', 'Interação', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).redirect++; ctx.say(`${nm(ctx, act.pid)} prepara um desvio de alvo.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição', 'Troca', 'Buraco Negro', 'Captura', 'Controle'], 0.5, 0.05), () => ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) ? 0.3 : 0.06); } });
     D('AE-115', 'Interação', {
       phase: 'echo',
       async apply(ctx, act) {

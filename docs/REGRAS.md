@@ -365,3 +365,15 @@ Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de foto
 **PENDÊNCIAS NÃO RESOLVIDAS PELA APROVAÇÃO GENÉRICA:** como preparar exatamente cartas especiais; a janela pré-revelação exigida por certos textos; a ordem de duas ativações forçadas pela AE-111; destino das duas cartas normais do especial duplo AE-010; empate absoluto após os três critérios; tratamento de alvos/zonas com cartas insuficientes; distribuição justa das 87 cartas; tempo de reação para partidas online; testes de raridade e balanceamento. Estes comportamentos **não podem ser inventados** por outra IA.
 
 **FONTES OFICIAIS PARA CÓDIGO:** [cartas_87.json](../dados/oficial/cartas_87.json), [habilidades_129.json](../dados/oficial/habilidades_129.json) e [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md). A [tabela de 87 cartas](CARTAS_87_PROPOSTAS.md) tem nome histórico mas **conteúdo aprovado**. Cartas físicas antigas permanecem somente referências.
+
+## Janela de reação (13/10/2026, autorizada pelo autor)
+
+**Problema:** um especial que responde a especiais dos rivais (anular, copiar, apropriar, proteger) era decidido às cegas e podia ser gasto em vão.
+
+**Regra:** a janela de especiais passa a ter duas etapas.
+1. **Especiais normais** (e de controle): secretos, virados juntos, como antes.
+2. **Janela de reação:** só abre se **algum rival virou um especial**. Quem tem um **especial reativo** utilizável decide **sabendo o que foi virado**. As escolhas dos reagentes são **secretas e simultâneas** (um reativo não reage a outro reativo). Vale o limite de **um especial por jogador** (companheiras como antes).
+
+Depois disso, todos os efeitos resolvem na ordem de fases de sempre (blindagem → anulações → proteções → principais → cópias → ajustes finais).
+
+**Especiais reativos (13):** AE-073 Silêncio, AE-074 Imunidade pessoal, AE-076 Guardião do baralho, AE-077 Guardião da reserva, AE-078 Reflexo de roubo, AE-079 Escudo antecipado, AE-080 Anular modificador, AE-113 Interrupção precisa, AE-114 Desvio de alvo, AE-115 Eco, AE-116 Apropriar, AE-120 Remover alteração, AE-130 Anular a última habilidade. AE-118 Blindagem **não** é reativo: protege o próprio especial e é declarado junto com ele, como companheira.

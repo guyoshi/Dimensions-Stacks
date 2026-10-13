@@ -386,6 +386,7 @@
     async specialWindow({ stage }) {
       stage = stage || 'main'; V.win = V.win || {}; if (V.win[stage]) return; V.win[stage] = true;
       if (stage === 'ctrl') { banner('Controle de atributos', 'especiais antes de declarar', '#7dd3ff', 1400); caption('Janela de especiais de controle…'); }
+      else if (stage === 'react') { banner('Janela de reação', 'decida sabendo o que foi virado', '#ff9ec7', 1400); caption('Janela de reação: especiais reativos…'); }
       else { banner('Janela de especiais', 'decida em segredo', '#c58cff', 1400); caption('Janela de especiais…'); }
       await sleep(900);
     },
@@ -585,11 +586,16 @@
         }
       },
       async special(p, usable, combat, ctx, stage) {
-        await cover(p); if (U.tip) await U.tip('special');
+        await cover(p); if (U.tip) await U.tip(stage === 'react' ? 'react' : 'special');
         const T = stage === 'ctrl' ? ['virar um especial de controle?', '']
           : stage === 'second' ? ['virar também um segundo especial?', '']
+          : stage === 'react' ? ['reagir com um especial?', '']
           : ['virar um especial?', ''];
         const node = el(`<div class="sheet"><div class="txt" style="flex:1 1 100%"><h3>${esc(p.name)}: ${T[0]}</h3></div></div>`);
+        if (stage === 'react' || stage === 'second') {
+          const seen = ((combat && (combat.acts || (combat.ctrlActs || []).concat(combat.activations || []))) || []).filter(a => a.pid !== p.pid && CARDS[a.card]);
+          if (stage === 'react' && seen.length) node.append(el(`<div class="txt why" style="flex:1 1 100%"><div class="hint">Virados pelos rivais: ${seen.map(a => `<b>${esc(nameOf(a.pid))}</b>: ${esc(E.SPECIALS[CARDS[a.card].especial].nome)}`).join(' · ')}. Você decide agora, sabendo disso. As escolhas dos reagentes são secretas e simultâneas.</div></div>`));
+        }
         usable.forEach(id => {
           const sp = E.SPECIALS[CARDS[id].especial];
           const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div><button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
@@ -600,6 +606,8 @@
           const sp = E.SPECIALS[CARDS[id].especial]; if (!sp) return;
           const why = combat && combat.locked && combat.locked.has(id) ? 'Bloqueado nesta disputa.'
             : sp.phase === 'ctrl' && stage !== 'ctrl' ? 'Especial de controle: só podia ser virado antes da escolha dos atributos.'
+            : sp.react && stage !== 'react' && stage !== 'second' ? 'Especial reativo: você poderá virar depois que os rivais revelarem os especiais deles (se algum rival virar um).'
+            : !sp.react && stage === 'react' ? 'Especial normal: só podia ser virado na janela anterior, antes da reação.'
             : sp.phase !== 'ctrl' && stage === 'ctrl' ? 'Você poderá virar esta depois da revelação (só 1 especial por disputa).'
             : stage === 'second' ? 'Não combina como segundo especial.'
             : 'Não pode ser virado agora: a condição do efeito não é atendida nesta disputa.';
@@ -774,7 +782,7 @@
         orderHand: wrap('orderHand', (p, hand) => [hand]),
         prepare: wrap('prepare', (p, top) => [top]),
         attr: wrap('attr', (p, entry, options, combat, canPrep) => [{ card: entry.card, stats: entry.stats }, options, P.cb(combat, p.pid), canPrep]),
-        special: wrap('special', (p, usable, combat, ctx, stage) => [usable, P.cb(combat, p.pid), null, stage]),
+        special: wrap('special', (p, usable, combat, ctx, stage) => [usable, Object.assign({}, P.cb(combat, p.pid), { acts: (combat.ctrlActs || []).concat(combat.activations || []).map(x => ({ pid: x.pid, card: x.card })) }), null, stage]),   // acts: especiais já virados (públicos), para a janela de reação
         pickCards: async (p, spec) => {
           const peer = seats[p.pid].peer, w = wrap('pickCards', (q, sp) => [plain(sp)]);
           if (!spec.blind || !peer || peer === link.me) return w(p, spec);

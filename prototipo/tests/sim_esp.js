@@ -7,7 +7,8 @@ const orig = {}; Object.values(E.CARDS).forEach(c=>orig[c.id]=c.especial);
 E.Game.prototype.bot_prepare = async function(p){ return p.prepared.length<2 && p.deck.length>=3; };
 E.Game.prototype.bot_special = async function(p, usable){ return usable.length ? usable[0] : null; };
 async function one(id, n, seed, withHuman){
-  Object.values(E.CARDS).forEach(c=>{ c.especial = id; });
+  // reativos só são virados depois que um rival vira algo: metade das cartas leva um especial normal (AE-001) para acionar a janela de reação
+  Object.values(E.CARDS).forEach((c,i)=>{ c.especial = (E.SPECIALS[id] && E.SPECIALS[id].react && i%2) ? 'AE-001' : id; });
   const players=[...Array(n)].map((_,i)=>({name:'B'+i,bot: !(withHuman && i===0),avatar:i}));
   let expected=null; const ev={};
   const io = { notify: async (t)=>{ ev[t]=(ev[t]||0)+1;

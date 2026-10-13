@@ -179,7 +179,7 @@
   });
   def('AE-113', 'Interrupção precisa', 'Cancele 1 especial de um adversário antes da resolução; o especial cancelado é descartado normalmente. (Se ninguém ativar, é desperdiçada.)', 'Interação', {
     phase: 'pre',
-    can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0); },
+    can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) || ctx.activations.some(a => a.pid !== pid && !a.cancelled); },
     async apply(ctx, act) {
       const list = ctx.activations.filter(a => a.pid !== act.pid && !a.cancelled && a.card !== act.card && !ctx.sameTeam(a.pid, act.pid));
       if (!list.length) return ctx.say('Interrupção sem alvo: nada a cancelar.');
@@ -512,8 +512,9 @@
     }
     async mainWindow(combat) {
       const ctx = this.ctxFor(combat); const picks = [];
+      const comp = x => !!SP[CARDS[x].especial].companion;
       for (const pid of combat.order) {
-        const p = this.p(pid); const isMain = c => { const sp = SP[CARDS[c].especial]; return sp && sp.phase !== 'ctrl' && !combat.locked.has(c) && sp.can(ctx, pid); };
+        const p = this.p(pid); const isMain = c => { const sp = SP[CARDS[c].especial]; return sp && sp.phase !== 'ctrl' && !sp.react && !combat.locked.has(c) && sp.can(ctx, pid); };
         let usable = p.prepared.filter(isMain);
         if (!usable.length || (combat.used[pid] || 0) >= 1) continue;
         await this.emit('specialWindow', { pid, usable, stage: 'main' });
@@ -521,12 +522,13 @@
         if (c == null || !usable.includes(c)) continue;
         picks.push({ pid, card: c }); combat.used[pid] = 1;
         // companheiras: um segundo especial só se uma das duas cartas for "companheira"
-        const comp = x => !!SP[CARDS[x].especial].companion;
         const second = p.prepared.filter(x => x !== c && isMain(x) && (comp(c) ? true : comp(x)));
         if (second.length) { const c2 = await this.decide(p, 'special', second, combat, ctx, 'second'); if (c2 != null && second.includes(c2)) picks.push({ pid, card: c2 }); }
       }
       for (const pk of picks) this.activate(combat, pk.pid, pk.card, false);
       if (combat.activations.length) await this.emit('specialsFlip', { combat, acts: combat.activations.slice() });
+      // janela de reação: quem tem especial reativo decide já sabendo o que foi virado (regra de 13/10/2026, autorizada pelo autor)
+      await this.reactWindow(combat);
       for (const ph of PHASES) {
         for (let i = 0; i < combat.activations.length; i++) {
           const a = combat.activations[i]; if (a.done) continue;
@@ -537,6 +539,36 @@
         }
       }
       combat.entries.forEach(e => { if (!e.gone) this.recalc(e); });
+    }
+    // Janela de reação: depois que os especiais normais (e de controle) foram revelados, quem tem um especial REATIVO
+    // (que responde a especiais dos rivais: anular, copiar, apropriar, proteger) decide sabendo o que apareceu.
+    // Só abre para quem tem algum especial reativo utilizável e se ALGUM RIVAL virou um especial; as escolhas são secretas e
+    // simultâneas entre os reagentes (um reativo não reage a outro reativo). Vale a regra de um especial por jogador (companheiras à parte).
+    foeActs(combat, pid) { return combat.ctrlActs.concat(combat.activations).filter(a => a.pid !== pid && !a.cancelled); }
+    async reactWindow(combat) {
+      if (!combat.specialsAllowed) return;
+      const ctx = this.ctxFor(combat); const picks = []; const comp = x => !!SP[CARDS[x].especial].companion;
+      combat.react = true;
+      try {
+        for (const pid of combat.order) {
+          const p = this.p(pid);
+          if (!this.foeActs(combat, pid).length) continue;
+          const mine = combat.activations.filter(a => a.pid === pid);
+          if ((combat.used[pid] || 0) >= 1 && (!mine.length || mine.length >= 2)) continue;
+          const first = mine[0];
+          const usable = p.prepared.filter(c => { const sp = SP[CARDS[c].especial]; return sp && sp.react && !combat.locked.has(c) && sp.can(ctx, pid) && (!first || comp(first.card) || comp(c)); });
+          if (!usable.length) continue;
+          await this.emit('specialWindow', { pid, usable, stage: 'react' });
+          const c = await this.decide(p, 'special', usable, combat, ctx, 'react');
+          if (c == null || !usable.includes(c)) continue;
+          picks.push({ pid, card: c }); combat.used[pid] = (combat.used[pid] || 0) + 1;
+          const second = first ? [] : p.prepared.filter(x => x !== c && SP[CARDS[x].especial] && SP[CARDS[x].especial].react && !combat.locked.has(x) && SP[CARDS[x].especial].can(ctx, pid) && (comp(c) || comp(x)));
+          if (second.length) { const c2 = await this.decide(p, 'special', second, combat, ctx, 'second'); if (c2 != null && second.includes(c2)) picks.push({ pid, card: c2 }); }
+        }
+      } finally { combat.react = false; }
+      if (!picks.length) return;
+      const acts = picks.map(pk => this.activate(combat, pk.pid, pk.card, false)).filter(Boolean);
+      await this.emit('specialsFlip', { combat, acts: acts.slice(), stage: 'react' });
     }
     // efeitos que dependem do resultado (recompensas, pagamentos) e destino dos especiais usados
     async runHooks(combat) {
@@ -758,6 +790,7 @@
     }
     // chance de o adversário o virar um especial nesta disputa (para especiais reativos)
     botOppFlip(pid) {
+      if (this.combat && this.combat.react) return this.foeActs(this.combat, pid).length ? 1 : 0;   // na janela de reação o bot SABE o que foi virado
       let none = 1; this.alive().forEach(o => { if (o === pid) return; const n = this.p(o).prepared.length; none *= 1 - (n >= 2 ? 0.5 : n === 1 ? 0.33 : 0); });
       return 1 - none;
     }
@@ -789,7 +822,7 @@
       p._held = (p._held || 0);
       let best = null, bs = -1;
       usable.forEach(c => {
-        const sp = SP[CARDS[c].especial]; let u = 0; try { u = sp.ai ? sp.ai(ctx, p.pid, c) : 0.4; } catch (e) { u = 0.3; }
+        const sp = SP[CARDS[c].especial]; let u = 0; try { const f = stage === 'react' && sp.ai0 ? sp.ai0 : sp.ai; u = f ? f(ctx, p.pid, c) : 0.4; } catch (e) { u = 0.3; }
         if (p.pol && p.pol.mul != null) u *= p.pol.mul;
         if (u < 0.12 - 0.08 * urg) return;                                                // sem utilidade nesta situação: nem o fácil gasta
         if (this.blindNow(p)) u = 0.5 * u + 0.5 * (0.15 + this.rand() * 0.55);            // leu mal a mesa: avalia com ruído, mas dentro do que faz sentido
@@ -819,12 +852,15 @@
   // Calibração de DOIS LADOS (tests/calib_mirror2.js, 13/10/2026): todas as cartas = X e todos os jogadores o usam (reações incluídas); o focal varre val × aiMul em duelo, 3 e 4 jogadores.
   // [val, mul] só onde superou a política anterior por margem; val 0 = gastar uma carta para prepará-lo rende menos que lutar com ela (o especial é fraco como habilidade).
   const MIRROR = {'AE-009': [0, 1], 'AE-018': [0, 1], 'AE-020': [0, 1], 'AE-024': [0, 1], 'AE-025': [0, 1], 'AE-026': [0, 1], 'AE-027': [0.15, 1.3], 'AE-029': [0, 1], 'AE-040': [1, 0.8], 'AE-051': [0, 1], 'AE-052': [0.15, 1], 'AE-057': [0, 1], 'AE-058': [0, 1], 'AE-063': [0, 1], 'AE-070': [0, 1], 'AE-073': [0.15, 0.3], 'AE-074': [1, 0.3], 'AE-076': [0.3, 0.3], 'AE-077': [0.3, 0.3], 'AE-078': [0.3, 0.3], 'AE-079': [0.6, 0.3], 'AE-080': [1.6, 0.3], 'AE-082': [0.6, 1], 'AE-085': [0.6, 1.3], 'AE-090': [0.3, 0.5], 'AE-091': [0, 1], 'AE-095': [0, 1], 'AE-096': [0, 1], 'AE-100': [0, 1], 'AE-102': [0, 1], 'AE-105': [0.15, 0.5], 'AE-107': [0, 1], 'AE-108': [0, 0.5], 'AE-111': [0, 1], 'AE-112': [0, 1], 'AE-113': [0.15, 0.3], 'AE-114': [0, 1], 'AE-115': [1, 0.3], 'AE-116': [0.3, 0.3], 'AE-118': [0.3, 0.3], 'AE-119': [0, 1], 'AE-120': [0.3, 0.3], 'AE-121': [0, 1], 'AE-122': [0, 1], 'AE-125': [0, 1], 'AE-128': [0, 1], 'AE-130': [0.15, 0.3]};
+  // Especiais REATIVOS (respondem a especiais dos rivais): só são virados na janela de reação, depois da revelação dos demais.
+  const REACT = ['AE-073', 'AE-074', 'AE-076', 'AE-077', 'AE-078', 'AE-079', 'AE-080', 'AE-113', 'AE-114', 'AE-115', 'AE-116', 'AE-120', 'AE-130'];
   function finalize() {
+    REACT.forEach(id => { if (SP[id]) { SP[id].react = true; SP[id].ai0 = SP[id].ai; } });
     NOWANT.forEach(id => { if (SP[id]) SP[id].noWant = true; });
     Object.keys(BOT_VAL).forEach(id => { if (SP[id]) SP[id].val = BOT_VAL[id]; });
     BOT_JUNK.forEach(id => { if (SP[id]) SP[id].val = 0; });
     Object.keys(SP).forEach(id => { if (SP[id].val == null && BOT_VAL[id] == null) SP[id].val = 4 * (SP[id]._v0 ?? 0.4); });
-    Object.keys(MIRROR).forEach(id => { const sp = SP[id]; if (!sp) return; const [v, m] = MIRROR[id]; sp.val = v; if (m !== 1 && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid, c) => f(ctx, pid, c) * m; } });
+    Object.keys(MIRROR).forEach(id => { const sp = SP[id]; if (!sp || sp.react) return; const [v, m] = MIRROR[id]; sp.val = v; if (m !== 1 && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid, c) => f(ctx, pid, c) * m; } });
     Object.keys(TUNE).forEach(id => { const sp = SP[id]; if (!sp) return; const t = TUNE[id]; if (t.val != null) sp.val = t.val; if (t.aiMul != null && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid, c) => f(ctx, pid, c) * t.aiMul; } });
     const CUR = root.DS_CURTOS || {};
     Object.keys(HAB).forEach(id => {
