@@ -578,13 +578,40 @@
    "webp": 192632
   },
   "S15": {
-   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Tersário - conceito 01.png",
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Tersário.png",
    "mtimeMs": 1791886193468,
    "bytes": 3029438,
    "sha1": "19ca98ba30",
    "w": 720,
    "h": 1080,
    "webp": 201784
+  },
+  "S02": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Amanda.png",
+   "mtimeMs": 1791887577533,
+   "bytes": 2862101,
+   "sha1": "c195c3c846",
+   "w": 720,
+   "h": 1080,
+   "webp": 168640
+  },
+  "S03": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Eric.png",
+   "mtimeMs": 1791887324717,
+   "bytes": 2209276,
+   "sha1": "6f34f2f8cc",
+   "w": 720,
+   "h": 1080,
+   "webp": 100758
+  },
+  "S04": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Lias Hardman.png",
+   "mtimeMs": 1791886909799,
+   "bytes": 2485678,
+   "sha1": "b6b6914824",
+   "w": 720,
+   "h": 1080,
+   "webp": 129530
   }
  }
 }
