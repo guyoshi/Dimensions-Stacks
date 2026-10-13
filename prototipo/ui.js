@@ -83,7 +83,7 @@
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
-    const art = IMG[id] ? `<div class="art" style="--im:url('${IMG[id]}')"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"${FOCO[id] != null ? ' style="object-position:50% ' + FOCO[id] + '%' + (SOBE[id] ? ';transform:translateY(-' + SOBE[id] + 'em)' : '') + '"' : ''}></div>`
+    const art = IMG[id] ? `<div class="art" style="--im:url('${IMG[id]}')"><img alt="${esc(c.nome)}" src="${IMG[id]}" loading="lazy" decoding="async" draggable="false"${FOCO[id] != null ? ' style="object-position:50% ' + FOCO[id] + '%' + (SOBE[id] ? ';transform:translateY(-' + SOBE[id] + 'em)' : '') + '"' : ''}></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
@@ -216,11 +216,15 @@
 
 
   // fundo da tela inicial: cartas flutuando (profundidades diferentes) e brilhos que crescem e somem
+  // fundo da tela inicial: montado uma vez e reaproveitado; no celular, menos cartas e menos brilhos
+  let MENU_BG = null;
   function menuFx() {
+    if (MENU_BG) return MENU_BG;
     const rnd = (a, b) => a + Math.random() * (b - a);
+    const lite = (window.matchMedia && window.matchMedia('(pointer: coarse), (max-width: 720px)').matches);
     const bg = el('<div class="menu-bg" aria-hidden="true"><div class="fcards"></div><div class="sparks"></div><div class="vig"></div></div>');
     const pool = Object.keys(CARDS); const withImg = pool.filter(id => IMG[id]); const ids = withImg.length >= 12 ? withImg : withImg.concat(pool.filter(id => !IMG[id]));
-    const fc = $('.fcards', bg), N = 9;
+    const fc = $('.fcards', bg), N = lite ? 5 : 9;
     const order = ids.sort(() => Math.random() - .5);
     for (let i = 0; i < N; i++) {
       const depth = rnd(0, 1); const cw = Math.round(54 + depth * 78); const dur = rnd(46, 90) - depth * 22;
@@ -228,10 +232,11 @@
       w.append(cardEl(order[i % order.length], { up: true, noanim: true, cw })); fc.append(w);
     }
     const sp = $('.sparks', bg), cols = ['#ffffff', '#f1ecdc', '#cfe6ff', '#ffffff', '#e8d9ff'];
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < (lite ? 20 : 64); i++) {
       const sz = rnd(3, 10), big = sz > 7.5;
       sp.append(el(`<span class="sp${big ? ' big' : ''}" style="left:${rnd(1, 99).toFixed(1)}%;top:${rnd(2, 98).toFixed(1)}%;--s:${sz.toFixed(0)}px;--d:${rnd(2.6, 7).toFixed(1)}s;--dl:${(-rnd(0, 7)).toFixed(1)}s;--c:${cols[i % cols.length]};--rt:${rnd(-35, 35).toFixed(0)}deg"><i></i></span>`));
     }
+    MENU_BG = bg;
     return bg;
   }
 

@@ -95,7 +95,7 @@
       const g = b.dataset.go; if (g === 'quick') U.quick(); else if (g === 'setup') U.openSetup(); else if (g === 'online') U.online.open();
     };
   }
-  function fxInto(s) { const old = $('.menu-bg', s); if (old) old.remove(); s.prepend(U.menuFx()); }
+  function fxInto(s) { const bg = U.menuFx(); if (bg.parentNode !== s || s.firstChild !== bg) s.prepend(bg); }
 
   // ---------------------------------------------------------------- coleção (aba)
   const filtState = { k: 'todas', q: '', sort: 'num', att: '' };

@@ -903,3 +903,21 @@ select option:checked { background-color: #3a4256; color: #fff; }
 /* faixa no alto; a arte começa na faixa (rosto nunca fica atrás dela); acima dela só uma fresta, com o eco escurecido da própria arte */
 .face.front .art::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3em; background: var(--im) 50% 0 / cover no-repeat; filter: brightness(.5) saturate(1.1); }
 .face.front .art img { position: absolute; left: 0; top: 1.9em; width: 100%; height: calc(100% - 1.9em); object-position: 50% 0%; }
+
+/* ---------- desempenho: efeitos animados só onde importam ----------
+   Cartas de fundo (.fc) e de vitrine (.noanim: coleção, leque, listas) ficam estáticas; no celular a coleção também.
+   Mantém o quadro e a aura estáticos (visual igual), sem animação, brilhos cintilantes nem filtros animados. */
+.fc .card *, .fc .card::before, .fc .card::after, .fc .card *::before, .fc .card *::after,
+.fc .card .usp { animation: none !important; }
+.fc .card .usp { display: none !important; }
+.fc .card[data-aura]::after { filter: none !important; }
+@media (pointer: coarse), (max-width: 720px) {
+  .card.noanim *, .card.noanim::before, .card.noanim::after, .card.noanim *::before, .card.noanim *::after { animation: none !important; }
+  .card.noanim .usp { display: none !important; }
+  .card.noanim[data-aura="rainbow"]::after { filter: none !important; opacity: .55; }
+  #app::before { animation: none; }
+  .mark .ring, .mark .ring2 { animation: none; }
+  .sp::before { display: none; }
+  .wm::after { animation-duration: 8s; }
+  .fc { will-change: auto; }
+}
