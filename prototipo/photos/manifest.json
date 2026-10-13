@@ -531,6 +531,42 @@
    "w": 720,
    "h": 1080,
    "webp": 229990
+  },
+  "V20": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/William McCroys.png",
+   "mtimeMs": 1791851926453,
+   "bytes": 2423410,
+   "sha1": "f0d4647f08",
+   "w": 720,
+   "h": 1080,
+   "webp": 127982
+  },
+  "V21": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Shirley Ainsworth.png",
+   "mtimeMs": 1791851251710,
+   "bytes": 3116432,
+   "sha1": "140da95d9e",
+   "w": 720,
+   "h": 1080,
+   "webp": 196114
+  },
+  "V22": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Nicolas Corvane.png",
+   "mtimeMs": 1791851578152,
+   "bytes": 2785923,
+   "sha1": "3b53f8880f",
+   "w": 720,
+   "h": 1080,
+   "webp": 184152
+  },
+  "V23": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Erick Corvane.png",
+   "mtimeMs": 1791851840838,
+   "bytes": 2830747,
+   "sha1": "6758fa4528",
+   "w": 720,
+   "h": 1080,
+   "webp": 196534
   }
  }
 }

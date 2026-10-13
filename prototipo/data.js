@@ -80,6 +80,10 @@
     ['V17', 'Lanigiah', 'viajantes', 'Rainha das Aracnas'],
     ['V18', 'Grande Pai Gaia', 'viajantes', 'Líder dos Obbs de Pinesoto'],
     ['V19', 'Seti', 'viajantes', 'Líder de guerra dos Obbs'],
+    ['V20', 'William McCroys', 'viajantes', 'Mago tutor de Belfex, mentor dos gêmeos Corvane'],
+    ['V21', 'Shirley Ainsworth', 'viajantes', 'Senavelita de luz e amiga de Banjo'],
+    ['V22', 'Nicolas Corvane', 'viajantes', 'Gêmeo de Erick, aprendiz de McCroys'],
+    ['V23', 'Erick Corvane', 'viajantes', 'Gêmeo de Nicolas, aprendiz de McCroys'],
     // Spacetheft
     ['S01', 'Jasmey Badrock', 'spacetheft', 'Pirata Dale e protagonista; braço metálico', 1],
     ['S02', 'Amanda', 'spacetheft', 'Aliada de Jasmey, crítica do regime da Lebargan'],

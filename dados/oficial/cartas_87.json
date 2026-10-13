@@ -5,10 +5,10 @@
     "status": "APROVADO_PELO_AUTOR",
     "data_aprovacao": "2026-10-12",
     "idioma": "pt-BR",
-    "total_cartas": 87,
+    "total_cartas": 91,
     "origens": {
       "J": 23,
-      "V": 19,
+      "V": 23,
       "S": 14,
       "D": 18,
       "M": 12,
@@ -31,7 +31,8 @@
     "biblioteca": "dados/oficial/habilidades_129.json",
     "regras": "docs/REGRAS.md",
     "contrato": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
-    "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta."
+    "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta.",
+    "revisao_13_10_2026_novas_cartas": "V20–V23 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação)."
   },
   "cartas": [
     {
@@ -2121,6 +2122,106 @@
         "confianca": "Baixa"
       },
       "status": "APROVADA_PELO_AUTOR"
+    },
+    {
+      "id": "V20",
+      "nome": "William McCroys",
+      "origem": {
+        "codigo_serie": "V",
+        "cor_base": "azul"
+      },
+      "descricao_curta": "Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Gary e depois inocentado.",
+      "atributos": {
+        "ATQ": 82,
+        "DEF": 78,
+        "INT": 96,
+        "VEL": 78
+      },
+      "soma_atributos": 334,
+      "perfil_balanceamento": "Elite",
+      "habilidade_especial_id": "AE-111",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "V-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outras cartas com o mesmo especial), aguardando aprovação."
+    },
+    {
+      "id": "V21",
+      "nome": "Shirley Ainsworth",
+      "origem": {
+        "codigo_serie": "V",
+        "cor_base": "azul"
+      },
+      "descricao_curta": "Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo.",
+      "atributos": {
+        "ATQ": 48,
+        "DEF": 60,
+        "INT": 70,
+        "VEL": 75
+      },
+      "soma_atributos": 253,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-076",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "V-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outras cartas com o mesmo especial), aguardando aprovação."
+    },
+    {
+      "id": "V22",
+      "nome": "Nicolas Corvane",
+      "origem": {
+        "codigo_serie": "V",
+        "cor_base": "azul"
+      },
+      "descricao_curta": "Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo.",
+      "atributos": {
+        "ATQ": 60,
+        "DEF": 72,
+        "INT": 64,
+        "VEL": 53
+      },
+      "soma_atributos": 249,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-028",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "V-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outras cartas com o mesmo especial), aguardando aprovação."
+    },
+    {
+      "id": "V23",
+      "nome": "Erick Corvane",
+      "origem": {
+        "codigo_serie": "V",
+        "cor_base": "azul"
+      },
+      "descricao_curta": "Gêmeo de Nicolas e aprendiz de McCroys; competitivo e provocador, lança chamas, mas recusa Korvo.",
+      "atributos": {
+        "ATQ": 76,
+        "DEF": 28,
+        "INT": 40,
+        "VEL": 59
+      },
+      "soma_atributos": 203,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-106",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "V-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outras cartas com o mesmo especial), aguardando aprovação."
     }
   ]
 }

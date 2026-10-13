@@ -394,7 +394,8 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D02"
+        "D02",
+        "V22"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1072,7 +1073,8 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J05"
+        "J05",
+        "V21"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1510,7 +1512,8 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D15"
+        "D15",
+        "V23"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1597,7 +1600,8 @@
       "origem_ideia": "#59",
       "avaliacao_de_risco": "Regra-base",
       "cartas_atribuidas": [
-        "M10"
+        "M10",
+        "V20"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",

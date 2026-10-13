@@ -1,4 +1,4 @@
-# Dimensions Stacks — Cartas e Habilidades Especiais (87 cartas)
+# Dimensions Stacks — Cartas e Habilidades Especiais (91 cartas)
 
 > Lista de todas as cartas com **número (ID)**, **nome**, **descrição** e **habilidade especial** (forma curta: **especial**). Gerada a partir de `dados/oficial/cartas_87.json` e `dados/oficial/habilidades_129.json`; para atualizar: `python3 prototipo/tools/gerar_lista_cartas.py`.
 
@@ -93,8 +93,12 @@
 | M11 | X | Mistério Oculto | Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar. | 8 | 19 | 99 | 45 | 171 | **AE-093** — Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. |
 | M12 | James | Mistério Oculto | Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana. | 75 | 62 | 96 | 51 | 284 | **AE-086** — Troca pelo descarte | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá. |
 | B01 | Édelin Fils ⭐ | Édelin / Belfex | Édelin Fils pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento. | 92 | 83 | 86 | 80 | 341 | **AE-103** — Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. |
+| V20 | William McCroys 🆕 | Viajantes Dimensionais | Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Gary e depois inocentado. | 82 | 78 | 96 | 78 | 334 | **AE-111** — Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. |
+| V21 | Shirley Ainsworth 🆕 | Viajantes Dimensionais | Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo. | 48 | 60 | 70 | 75 | 253 | **AE-076** — Guardião do baralho | Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa. |
+| V22 | Nicolas Corvane 🆕 | Viajantes Dimensionais | Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo. | 60 | 72 | 64 | 53 | 249 | **AE-028** — Proibir o ataque rival | Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa. |
+| V23 | Erick Corvane 🆕 | Viajantes Dimensionais | Gêmeo de Nicolas e aprendiz de McCroys; competitivo e provocador, lança chamas, mas recusa Korvo. | 76 | 28 | 40 | 59 | 203 | **AE-106** — Ataque que bane | Se vencer usando Ataque ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro. |
 
-⭐ = integrante da União (especial original mantido).
+⭐ = integrante da União (especial original mantido). 🆕 = carta proposta, aguardando aprovação do autor (aparece com a faixa PRÉVIA no jogo).
 
 ## Mudanças de 13/10/2026 (especial anterior → novo)
 
