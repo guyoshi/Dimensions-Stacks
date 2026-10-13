@@ -655,7 +655,11 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .gc .leg li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: center; }
 .gc .leg .n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 12px; background: var(--metal); color: #1a1810; }
 .gc .leg .cico { display: inline-flex; padding: 2px; margin-left: 3px; vertical-align: middle; } .gc .leg .cico svg { width: 14px; height: 14px; }
-@media (max-width: 380px) { .gc .anat { grid-template-columns: 1fr; justify-items: center; } }
+.gc .anatcard { position: relative; padding-right: 62px; display: block; }
+.gc .anatcard .card { display: block; }
+.gc .pin { position: absolute; width: 22px; height: 22px; margin: -11px 0 0; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 12px; background: var(--metal); color: #1a1810; box-shadow: 0 0 0 2px #0e0f13, 0 2px 6px #000a; z-index: 3; }
+.gc .pinl { position: absolute; height: 0; border-top: 1.5px dashed #f6f1e2cc; z-index: 2; pointer-events: none; filter: drop-shadow(0 0 2px #000); }
+@media (max-width: 560px) { .gc .anat { grid-template-columns: 1fr; justify-items: center; } .gc .leg { width: 100%; } }
 
 /* guia: carrossel (arrasta com o dedo; botões só no PC) */
 .gtrack { display: flex; flex: 1; min-height: 330px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; outline: none; -webkit-overflow-scrolling: touch; }

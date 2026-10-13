@@ -48,3 +48,47 @@ Risco: a habilidade pode ter relação narrativa com o personagem; decisão do a
 - **C. Raridade visual (losangos) por poder** = soma + 16 × maior atributo (regressão sobre a força simulada: r ≈ 0,90; no motor, correlação 0,84 contra 0,58 da soma). Cortes: Lendária ≥ 1810 (11 cartas), Épica ≥ 1710 (21), Rara ≥ 1560 (32), Comum abaixo (34). Taxa de vitória média por raridade no motor: Lendária 75%, Épica 57%, Rara 45%, Comum 25%, agora monotônica. O rótulo "Perfil" (soma) segue como informação separada.
 - **Manu (D19)** aprovada pelo autor (atributos 28/44/78/52, AE-093). Faixa "PRÉVIA" removida do jogo (opção e selo).
 - Dados: `dados/oficial/cartas_87.json` (metadata `revisao_13_10_2026_balanceamento`).
+
+## Especiais repetidos (aplicado, 13/10/2026, autorizado pelo autor)
+
+**Pedido:** nenhuma habilidade repetida entre cartas; usar as que estavam sem carta, sem deixar nenhuma carta apelar, e conferir o equilíbrio.
+
+**Antes:** 98 cartas, 78 especiais distintos; 18 especiais repetidos (AE-093 em 4 cartas, outros 17 em 2) e 51 especiais da biblioteca sem carta.
+
+**Método:**
+1. Valor dos 51 especiais livres medido por simulação (`tests/bot_per_special.js`, duelo e 4 jogadores, bot difícil: % de vitória de quem usa × quem nunca usa).
+2. Força de cada carta medida por simulação com especiais desligados (`tests/balanco/cardsim.js`).
+3. Em cada grupo repetido, o especial ficou com quem já combinava melhor (integrantes da União e Manu ficaram com o deles); as outras 20 cartas receberam especiais livres por atribuição ótima (percentil da carta ≈ percentil do especial, regra do autor).
+4. Excluídos do sorteio: **AE-054** (99% de vitória em duelo: apela) e **AE-023** (valor negativo).
+
+**Resultado (20 cartas):**
+
+| Carta | Antes | Agora |
+|---|---|---|
+| J10 Daryon Polar | AE-096 — Quebrar o plano | AE-060 — Permuta das reservas à direita |
+| S03 Eric | AE-069 — Doação escolhida | AE-016 — Inteligência → Resistência |
+| J05 Maletar | AE-076 — Guardião do baralho | AE-124 — Permutar Força e Velocidade |
+| S18 Alekta | AE-116 — Apropriar especial usado | AE-123 — Permutar Força e Inteligência |
+| J12 Rendar | AE-105 — Defesa que captura | AE-052 — Troca de combatente |
+| V23 Erick Corvane | AE-106 — Ataque que bane | AE-009 — Superação |
+| J21 Nefestra | AE-093 — Espionagem tripla | AE-038 — Recompensa defensiva |
+| D17 A Avó | AE-093 — Espionagem tripla | AE-058 — Passe à direita |
+| S17 Luna Stellar | AE-093 — Espionagem tripla | AE-056 — Troca de topos à esquerda |
+| V03 Banjo Lins | AE-080 — Anular modificador | AE-011 — Força → Inteligência |
+| V04 Beatriz Lins | AE-067 — Descarte adversário | AE-127 — Permutar Inteligência e Resistência |
+| V08 Garmand | AE-004 — Arrancada | AE-088 — Retorno imediato |
+| M04 Matt Pontas | AE-100 — Confundir próximo turno | AE-015 — Resistência → Inteligência |
+| V18 Grande Pai Gaia | AE-103 — Ruína de campo | AE-007 — Ímpeto ofensivo |
+| S16 A Engenheira | AE-085 — Resgate escolhido | AE-070 — Conquista compensada |
+| D07 Ingrid Marques | AE-051 — Troca escolhida | AE-029 — Proibir a defesa rival |
+| D10 Sra. Olívia | AE-092 — Próximas três | AE-027 — Forçar defesa rival |
+| M11 X | AE-039 — Saque revelado | AE-042 — Última da esquerda |
+| V22 Nicolas Corvane | AE-028 — Proibir o ataque rival | AE-057 — Passe à esquerda |
+| V20 William McCroys | AE-111 — Ativação forçada | AE-005 — Reforço flexível |
+
+**Verificação de equilíbrio (700 partidas reais de 2 e de 4 jogadores, antes × depois, motor igual):**
+- Desvio padrão da taxa de vitória entre as cartas: duelo 17,7 → 18,6; 4 jogadores 18,2 → 18,2 (sem piora).
+- Carta mais forte continua a mesma (Korvo, 91% no duelo); nenhuma das 20 cartas mudadas virou exceção. As mais altas: Grande Pai Gaia 81 → 84% (duelo), William McCroys 82 → 82%, Alekta 61 → 65%.
+- Auditoria de especiais: 144 cenários, 0 falhas; simulação dos 129 especiais: 0 falhas; privacidade online: 0 vazamentos.
+- **Ressalva:** 4 cartas fracas (Erick Corvane AE-009, A Avó AE-058, A Engenheira AE-070, Nicolas Corvane AE-057) receberam especiais de impacto baixo; o bot nunca os prepara. Isso é intencional (carta fraca, especial fraco), mas, se o autor quiser que eles tenham mais utilidade, a troca é por especiais mais fortes e deve ser decidida à parte.
+

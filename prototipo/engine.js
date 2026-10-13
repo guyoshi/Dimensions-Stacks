@@ -17,7 +17,7 @@
     'Ordem de resolução dos especiais: sentido horário a partir de quem iniciou a disputa.',
     'Especiais usados vão ao Buraco Negro depois que todos os efeitos resolvem (não podem ser recuperados na mesma disputa).',
     'Captura: carta do vencedor primeiro, depois as dos adversários em sentido horário a partir dele.',
-    'Empate absoluto (soma e Ataque+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
+    'Empate absoluto (soma e Força+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
     'Baralho vazio: compra até 6 da reserva; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
     'À direita = próximo jogador ativo no sentido horário; à esquerda = o anterior. Em duelo, ambos são o único adversário.',
     'Especial só é oferecido quando há alvo válido (exceto Interrupção, que depende dos especiais dos outros).',
@@ -47,17 +47,17 @@
       ai(ctx, pid) { const e = ctx.entry(pid); let b = 0; const k = e.attr; b = mods[k] || 0; if (!b) return 0.05; return ctx.flipChance(pid, b); },
     }, extra || {}));
   }
-  modSpec('AE-001', 'Impulso de Ataque', 'Sua carta de combate recebe +15 em Ataque nesta disputa.', { pod: 15 });
-  modSpec('AE-002', 'Muralha de Defesa', 'Sua carta de combate recebe +15 em Defesa nesta disputa.', { def: 15 });
+  modSpec('AE-001', 'Impulso de Força', 'Sua carta de combate recebe +15 em Força nesta disputa.', { pod: 15 });
+  modSpec('AE-002', 'Muralha de Resistência', 'Sua carta de combate recebe +15 em Resistência nesta disputa.', { def: 15 });
   modSpec('AE-003', 'Clarividência', 'Sua carta de combate recebe +15 em Inteligência nesta disputa.', { int: 15 });
   modSpec('AE-004', 'Arrancada', 'Sua carta de combate recebe +15 em Velocidade nesta disputa.', { vel: 15 });
   def('AE-005', 'Reforço flexível', 'Sua carta de combate recebe +15 no atributo que você está usando nesta disputa.', 'Bônus', {
     apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Reforço flexível', x => { x.stats[a] += 15; }); ctx.say(`${ctx.name(act.pid)} reforça ${ATTR[a].nome}.`); },
     ai(ctx, pid) { return ctx.flipChance(pid, 15); },
   });
-  modSpec('AE-006', 'Dupla resistência', 'Sua carta de combate recebe +15 Defesa e +20 Velocidade nesta disputa.', { def: 15, vel: 20 });
-  modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa.', { pod: 10, int: 10 });
-  modSpec('AE-008', 'Guarda equilibrada', 'Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa.', { def: 10, vel: 10 });
+  modSpec('AE-006', 'Dupla resistência', 'Sua carta de combate recebe +15 Resistência e +20 Velocidade nesta disputa.', { def: 15, vel: 20 });
+  modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +10 Força e +10 Inteligência nesta disputa.', { pod: 10, int: 10 });
+  modSpec('AE-008', 'Guarda equilibrada', 'Sua carta de combate recebe +10 Resistência e +10 Velocidade nesta disputa.', { def: 10, vel: 10 });
   def('AE-009', 'Superação', 'Se o valor original que você escolheu for 40 ou menos, adicione +25 a esse atributo.', 'Bônus', {
     can(ctx, pid) { const e = ctx.entry(pid); return !!e && e.base[e.attr] <= 40; },
     apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Superação', x => { x.stats[a] += 25; }); ctx.say(`${ctx.name(act.pid)} supera a própria fraqueza (+25).`); },
@@ -156,11 +156,11 @@
     },
     ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length > 0 && !ctx.mem(pid, o).length) ? 0.5 : 0.06, val: 0.9, want: (g, p) => g.alive().some(o => o !== p.pid && g.p(o).deck.length > 0 && !g.memKnown(p, o).length),
   });
-  def('AE-105', 'Defesa que captura', 'Se vencer usando Defesa ou Velocidade, capture a carta de 1 adversário derrotado em vez de descartá-la.', 'Resolução', {
+  def('AE-105', 'Defesa que captura', 'Se vencer usando Resistência ou Velocidade, capture a carta de 1 adversário derrotado em vez de descartá-la.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).defCapture = true; ctx.say(`${ctx.name(act.pid)} prepara uma defesa que captura.`); },
     ai(ctx, pid) { const e = ctx.entry(pid); return ATTR[e.attr].tipo === 'defesa' && !ctx.isLosing(pid) ? 0.8 : 0.05; },
   });
-  def('AE-106', 'Ataque que bane', 'Se vencer usando Ataque ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro.', 'Resolução', {
+  def('AE-106', 'Ataque que bane', 'Se vencer usando Força ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).atkBanish = true; ctx.say(`${ctx.name(act.pid)} prepara um ataque que bane.`); },
     // [PROPOSTA 13/10/2026] a versão antiga (banir em vez de capturar) era pior que capturar. Agora a captura é mantida e o derrotado perde, além disso, as 2 cartas do topo (com 1 só o especial rendia menos que a carta gasta: medido em tests/calib_mirror2.js).
     ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid === pid && ATTR[w.attr].tipo === 'ataque' && ctx.opps(pid).some(o => ctx.player(o).deck.length >= 2) ? 0.7 : 0.04; }, val: 0.6,
@@ -367,7 +367,7 @@
       if (v > bestOpp) return 0.04; if (v + bonus >= bestOpp) return 0.93; return 0.02;
     }
 
-    // ---- avaliação do vencedor (empates: valor → soma 4 → Ataque+Inteligência) ----
+    // ---- avaliação do vencedor (empates: valor → soma 4 → Força+Inteligência) ----
     evaluate(combat, quiet) {
       const es = combat.entries.filter(e => !e.withdrawn);
       if (es.length < 2) return { winners: [], tie: false, none: true, top: 0 };
@@ -680,7 +680,7 @@
           if (cand.length) { const l = await this.chooseLoser(w, cand, 'De quem a carta do topo vai ao Buraco Negro?'); const nb = (this.cfg && this.cfg.ban106) || 2; for (let n = 0; n < nb && this.p(l.pid).deck.length; n++) { const c = this.p(l.pid).deck.shift(); this.s.bh.push({ id: c, kind: 'normal' }); } this.memTouch({ target: l.pid }, 'discard'); this.log(`${this.p(w.pid).name} bane ${nb > 1 ? 'as ' + nb + ' cartas do topo' : 'a carta do topo'} do baralho de ${this.p(l.pid).name}.`, 'efeito'); }
         }
         result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: w.stats[w.attr] + w.bonus, tb: ev.tb || null };
-        if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela ${ev.tb.stage === 1 ? 'soma dos 4 atributos' : 'soma de Ataque + Inteligência'}: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
+        if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela ${ev.tb.stage === 1 ? 'soma dos 4 atributos' : 'soma de Força + Inteligência'}: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
         this.log(`${this.p(w.pid).name} vence ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit');
       }
       combat.result = result; combat.moves = moves; this.memResolved(moves);

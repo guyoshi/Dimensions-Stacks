@@ -1,4 +1,4 @@
-const E = require('/home/claude/ds-repo/prototipo/engine.js');
+const E = require(process.argv[3] || '/home/claude/ds-repo/prototipo/engine.js');
 const N = +process.argv[2] || 1500;
 (async () => {
   const out = {};
@@ -16,5 +16,5 @@ const N = +process.argv[2] || 1500;
     }
     out[n] = st;
   }
-  require('fs').writeFileSync('/tmp/bal/realsim.json', JSON.stringify(out)); console.log('ok');
+  require('fs').writeFileSync(process.argv[4] || '/tmp/bal/realsim.json', JSON.stringify(out)); console.log('ok');
 })();

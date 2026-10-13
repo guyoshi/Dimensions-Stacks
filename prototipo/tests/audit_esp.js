@@ -73,8 +73,8 @@ const cnt = (g, pid, z) => g.p(pid)[z].length;
   // ---------- Controle 021–030 ----------
   const first = (c, re) => c.logs.find(l => re.test(l));
   await scn('AE-021', 'todos disputam no melhor atributo do usuário', { flip: { 0: true }, world: { f: { 0: [40, 95, 40, 40] }, prep: { 0: ['AE-021'] } },
-    check(g, W, c) { c.ok(c.has(/Todos disputam em Defesa/), 'universal = Defesa'); c.ok(c.reveal.every(e => e.attr === 'def'), 'todos em def: ' + JSON.stringify(c.reveal)); } });
-  await scn('AE-022', 'par Ataque/Defesa', { flip: { 0: true }, attrs: { 0: 'int' }, world: { f: { 0: [40, 40, 90, 90] }, prep: { 0: ['AE-022'] } },
+    check(g, W, c) { c.ok(c.has(/Todos disputam em Resistência/), 'universal = Resistência'); c.ok(c.reveal.every(e => e.attr === 'def'), 'todos em def: ' + JSON.stringify(c.reveal)); } });
+  await scn('AE-022', 'par Força/Resistência', { flip: { 0: true }, attrs: { 0: 'int' }, world: { f: { 0: [40, 40, 90, 90] }, prep: { 0: ['AE-022'] } },
     check(g, W, c) { c.ok(c.reveal.every(e => e.attr === 'pod' || e.attr === 'def'), 'todos em pod/def: ' + JSON.stringify(c.reveal)); } });
   await scn('AE-023', 'par Inteligência/Velocidade', { flip: { 0: true }, attrs: { 0: 'pod' }, world: { f: { 0: [90, 90, 40, 40] }, prep: { 0: ['AE-023'] } },
     check(g, W, c) { c.ok(c.reveal.every(e => e.attr === 'int' || e.attr === 'vel'), 'todos em int/vel: ' + JSON.stringify(c.reveal)); } });

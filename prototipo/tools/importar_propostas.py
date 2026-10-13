@@ -9,7 +9,7 @@ h = json.load(open(os.path.join(base, 'habilidades_129.json'), encoding='utf-8')
 cartas = {}
 for x in c['cartas']:
     a = x['atributos']
-    cartas[x['id']] = {'d': x['descricao_curta'], 's': [a['ATQ'], a['DEF'], a['INT'], a['VEL']],
+    cartas[x['id']] = {'d': x['descricao_curta'], 's': [a['FOR'], a['RES'], a['INT'], a['VEL']],
                        'p': x['perfil_balanceamento'], 'e': x['habilidade_especial_id'],
                        'a': 1 if str(x.get('status', '')).upper().startswith('APROVADA') else 0,
                        'u': 1 if str(x.get('uniao', '')).upper() != 'NAO' else 0}

@@ -22,15 +22,15 @@ Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dime
 
 ## Dados oficiais para implementação
 
-- **[dados/oficial/cartas_87.json](dados/oficial/cartas_87.json)**: 87 cartas com status `APROVADA_PELO_AUTOR`, ATQ/DEF/INT/VEL e Habilidade Especial atribuída.
+- **[dados/oficial/cartas_87.json](dados/oficial/cartas_87.json)**: 87 cartas com status `APROVADA_PELO_AUTOR`, FOR/RES/INT/VEL e Habilidade Especial atribuída.
 - **[dados/oficial/habilidades_129.json](dados/oficial/habilidades_129.json)**: 129 habilidades aprovadas como catálogo de design; 78 equipadas, 51 reservadas para futuras cartas.
 
 **Arquivos antigos em `dados/propostas` não são dados de produção.** Não importar nem reconstruir dados finais a partir deles.
 
 ## Diretrizes aprovadas
 
-- **98 cartas**: 23 Ciclo de Jesed (amarelo), 25 Viajantes (azul), 18 Spacetheft (preto), 19 Diário Sobrenatural (roxo), 12 Mistério Oculto (vermelho) e 1 Série de Édelin (verde).
-- Quatro atributos naturais de **0 a 100**: **Ataque (ATQ), Defesa (DEF), Inteligência (INT), Velocidade (VEL)**.
+- **98 cartas**: 23 Ciclo de Jesed (amarelo), 25 Viajantes (azul), 18 Spacetheft (preto), 19 Diário Sobrenatural (roxo), 12 Mistério Oculto (vermelho) e 1 Édelin Lys (verde).
+- Quatro atributos naturais de **0 a 100**: **Força (FOR), Resistência (RES), Inteligência (INT), Velocidade (VEL)**. Antes de 13/10/2026 eram Ataque (ATQ) e Defesa (DEF); o nome mudou para não confundir com o tipo de vitória (ataque/defesa).
 - **Habilidade Especial (ESP)** é o nome geral, incluindo ataques e defesas, com reações permitidas enquanto a ameaça ainda estiver pendente.
 - **18 cartas por jogador** como configuração inicial para testes (7 ativas, 11 na reserva); partidas de 2–4 jogadores.
 - **A União** preserva a cor original de cada série e recebe selo adicional; sem duplicação. Suas habilidades marcantes estão atribuídas e aprovadas.

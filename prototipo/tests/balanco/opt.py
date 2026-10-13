@@ -1,7 +1,7 @@
 import json,numpy as np,copy
 C=json.load(open('/home/claude/ds-repo/dados/oficial/cartas_87.json'))['cartas']
 ids=[c['id'] for c in C]; n=len(C)
-K=['ATQ','DEF','INT','VEL']
+K=['FOR','RES','INT','VEL']
 V0=np.array([[c['atributos'][k] for k in K] for c in C],dtype=float)
 S=V0.sum(1)
 def meds(V):

@@ -14,9 +14,9 @@
   "habilidades": [
     {
       "id": "AE-001",
-      "nome": "Impulso de Ataque",
+      "nome": "Impulso de Força",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Sua carta de combate recebe +15 em Ataque nesta disputa.",
+      "texto_efeito": "Sua carta de combate recebe +15 em Força nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -27,9 +27,9 @@
     },
     {
       "id": "AE-002",
-      "nome": "Muralha de Defesa",
+      "nome": "Muralha de Resistência",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Sua carta de combate recebe +15 em Defesa nesta disputa.",
+      "texto_efeito": "Sua carta de combate recebe +15 em Resistência nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
@@ -61,7 +61,6 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D09",
         "D18"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
@@ -76,8 +75,10 @@
       "texto_efeito": "Sua carta de combate recebe +15 em um atributo à sua escolha nesta disputa.",
       "origem_ideia": "#15",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V20"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -86,11 +87,11 @@
       "id": "AE-006",
       "nome": "Dupla resistência",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Uma carta de combate sua recebe +15 Defesa e +20 Velocidade nesta disputa.",
+      "texto_efeito": "Uma carta de combate sua recebe +15 Resistência e +20 Velocidade nesta disputa.",
       "origem_ideia": "#27",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S05"
+        "S08"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -101,11 +102,13 @@
       "id": "AE-007",
       "nome": "Ímpeto ofensivo",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Sua carta de combate recebe +10 Ataque e +10 Inteligência nesta disputa.",
+      "texto_efeito": "Sua carta de combate recebe +10 Força e +10 Inteligência nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -114,11 +117,11 @@
       "id": "AE-008",
       "nome": "Guarda equilibrada",
       "categoria": "Bônus, penalidades e soma",
-      "texto_efeito": "Sua carta de combate recebe +10 Defesa e +10 Velocidade nesta disputa.",
+      "texto_efeito": "Sua carta de combate recebe +10 Resistência e +10 Velocidade nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "M05"
+        "V05"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -132,8 +135,10 @@
       "texto_efeito": "Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V23"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -155,26 +160,28 @@
     },
     {
       "id": "AE-011",
-      "nome": "Ataque → Inteligência",
+      "nome": "Força → Inteligência",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Ataque; Ataque permanece igual.",
+      "texto_efeito": "Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Força; Força permanece igual.",
       "origem_ideia": "#22 (adaptação)",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-012",
-      "nome": "Inteligência → Ataque",
+      "nome": "Inteligência → Força",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual.",
+      "texto_efeito": "Substitua o valor de Força pelo valor que a carta possui em Inteligência; Inteligência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "M08"
+        "D11"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -183,9 +190,9 @@
     },
     {
       "id": "AE-013",
-      "nome": "Ataque → Velocidade",
+      "nome": "Força → Velocidade",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Ataque; Ataque permanece igual.",
+      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Força; Força permanece igual.",
       "origem_ideia": "#21 (adaptação)",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -196,9 +203,9 @@
     },
     {
       "id": "AE-014",
-      "nome": "Velocidade → Ataque",
+      "nome": "Velocidade → Força",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Ataque pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "texto_efeito": "Substitua o valor de Força pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -209,39 +216,43 @@
     },
     {
       "id": "AE-015",
-      "nome": "Defesa → Inteligência",
+      "nome": "Resistência → Inteligência",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Inteligência pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "texto_efeito": "Substitua o valor de Inteligência pelo valor que sua carta possui em Resistência; Resistência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "M04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-016",
-      "nome": "Inteligência → Defesa",
+      "nome": "Inteligência → Resistência",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Defesa pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
+      "texto_efeito": "Substitua o valor de Resistência pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
       "origem_ideia": "#20 (adaptação)",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-017",
-      "nome": "Ataque → Defesa",
+      "nome": "Força → Resistência",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Defesa pelo valor que sua carta possui em Ataque; Ataque permanece igual.",
+      "texto_efeito": "Substitua o valor de Resistência pelo valor que sua carta possui em Força; Força permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J23"
+        "V09"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -250,9 +261,9 @@
     },
     {
       "id": "AE-018",
-      "nome": "Defesa → Ataque",
+      "nome": "Resistência → Força",
       "categoria": "Conversões direcionais de atributos",
-      "texto_efeito": "Substitua o valor de Ataque pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "texto_efeito": "Substitua o valor de Força pelo valor que sua carta possui em Resistência; Resistência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -306,11 +317,11 @@
       "id": "AE-022",
       "nome": "Par ofensivo",
       "categoria": "Controle do confronto e do atributo",
-      "texto_efeito": "Antes de declarar atributos, determine que todos usem o par Ataque/Defesa nesta disputa.",
+      "texto_efeito": "Antes de declarar atributos, determine que todos usem o par Força/Resistência nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J18"
+        "D05"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -338,7 +349,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S11"
+        "S07"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -366,7 +377,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "M12"
+        "D02"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -380,8 +391,10 @@
       "texto_efeito": "Escolha um adversário: ele deve usar o atributo de defesa do par vigente.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -394,8 +407,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D02",
-        "V22"
+        "M08"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -409,8 +421,10 @@
       "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -438,7 +452,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D05"
+        "M02"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -453,7 +467,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S12"
+        "M01"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -520,7 +534,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J09"
+        "J03"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -534,8 +548,10 @@
       "texto_efeito": "Se vencer defendendo, tome a próxima carta do topo do baralho ativo de um adversário derrotado, sem modificar o destino das cartas de combate.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J21"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -548,8 +564,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "V03",
-        "S17"
+        "M07"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -577,7 +592,7 @@
       "origem_ideia": "#38",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V09"
+        "S04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -591,8 +606,10 @@
       "texto_efeito": "Pegue a última carta do meio de reserva do adversário à esquerda.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "M11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -715,7 +732,7 @@
       "origem_ideia": "#01/#30",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V14"
+        "V25"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -729,8 +746,10 @@
       "texto_efeito": "Tome a carta de combate de um adversário e entregue-lhe 1 carta aleatória do seu baralho ativo; a troca antecede a comparação.",
       "origem_ideia": "#13",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J12"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -771,7 +790,7 @@
       "origem_ideia": "#25",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V11"
+        "D15"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -785,8 +804,10 @@
       "texto_efeito": "Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à esquerda.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -798,8 +819,10 @@
       "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda.",
       "origem_ideia": "#11",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V22"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -811,8 +834,10 @@
       "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -839,8 +864,10 @@
       "texto_efeito": "Troque todo o seu meio de reserva pelo do adversário à direita.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -868,7 +895,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "V07"
+        "J19"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -883,7 +910,7 @@
       "origem_ideia": "#40",
       "avaliacao_de_risco": "Sem ganho em duelos",
       "cartas_atribuidas": [
-        "M04"
+        "V14"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -925,7 +952,7 @@
       "origem_ideia": "#37/#50",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D11"
+        "D13"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -940,7 +967,6 @@
       "origem_ideia": "#50 (var.)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "V04",
         "S15"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
@@ -956,7 +982,7 @@
       "origem_ideia": "#42",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "V10"
+        "S11"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -971,8 +997,7 @@
       "origem_ideia": "#28",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J04",
-        "S03"
+        "J04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -986,8 +1011,10 @@
       "texto_efeito": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido.",
       "origem_ideia": "#23",
       "avaliacao_de_risco": "Experimental",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S16"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -1000,7 +1027,7 @@
       "origem_ideia": "#31",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D03"
+        "J22"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1015,7 +1042,7 @@
       "origem_ideia": "#32",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J19"
+        "J18"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1075,7 +1102,6 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J05",
         "V21"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
@@ -1121,7 +1147,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V06"
+        "J23"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1136,7 +1162,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S06"
+        "V24"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1166,7 +1192,7 @@
       "origem_ideia": "#56",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "M09"
+        "S06"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1196,7 +1222,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D07"
+        "D03"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1211,8 +1237,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "D04",
-        "S16"
+        "D04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1227,7 +1252,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D10"
+        "M12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1242,7 +1267,7 @@
       "origem_ideia": "#12 (texto corrigido pelo autor)",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J02"
+        "V10"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1256,8 +1281,10 @@
       "texto_efeito": "Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V08"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
@@ -1270,7 +1297,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J22"
+        "J16"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1300,7 +1327,7 @@
       "origem_ideia": "#41",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J20"
+        "D08"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1315,8 +1342,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D08",
-        "D16"
+        "M05"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1331,9 +1357,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D17",
-        "J21",
-        "M11"
+        "D19"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1348,7 +1372,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "M03"
+        "D09"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1363,7 +1387,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V08"
+        "V11"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1378,8 +1402,7 @@
       "origem_ideia": "#33",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J10",
-        "V17"
+        "J02"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1394,7 +1417,7 @@
       "origem_ideia": "#36 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "V05"
+        "V07"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1409,7 +1432,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D01"
+        "D16"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1424,7 +1447,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S07"
+        "D01"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1439,7 +1462,6 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J16",
         "V16"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
@@ -1451,11 +1473,11 @@
       "id": "AE-101",
       "nome": "Capturar atacante",
       "categoria": "Capturas condicionais e efeitos decisivos",
-      "texto_efeito": "Se Ataque + Inteligência da carta de combate de um adversário for maior que Defesa + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
+      "texto_efeito": "Se Força + Inteligência da carta de combate de um adversário for maior que Resistência + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
       "origem_ideia": "#60 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "S08"
+        "M06"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1466,7 +1488,7 @@
       "id": "AE-102",
       "nome": "Capturar defensor",
       "categoria": "Capturas condicionais e efeitos decisivos",
-      "texto_efeito": "Se Defesa + Velocidade da carta de combate de um adversário for maior ou igual a Ataque + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
+      "texto_efeito": "Se Resistência + Velocidade da carta de combate de um adversário for maior ou igual a Força + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
       "origem_ideia": "#61 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [],
@@ -1483,8 +1505,7 @@
       "origem_ideia": "#54 (escopo aprovado)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "B01",
-        "V18"
+        "B01"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1495,11 +1516,10 @@
       "id": "AE-105",
       "nome": "Defesa que captura",
       "categoria": "Capturas condicionais e efeitos decisivos",
-      "texto_efeito": "Se vencer usando Defesa ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la.",
+      "texto_efeito": "Se vencer usando Resistência ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J12",
         "V19"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
@@ -1511,12 +1531,11 @@
       "id": "AE-106",
       "nome": "Ataque que bane",
       "categoria": "Capturas condicionais e efeitos decisivos",
-      "texto_efeito": "Se vencer usando Ataque ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro.",
+      "texto_efeito": "Se vencer usando Força ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D15",
-        "V23"
+        "J20"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1545,7 +1564,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D13"
+        "V17"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1603,8 +1622,7 @@
       "origem_ideia": "#59",
       "avaliacao_de_risco": "Regra-base",
       "cartas_atribuidas": [
-        "M10",
-        "V20"
+        "M10"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1634,7 +1652,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J17"
+        "S05"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1664,7 +1682,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "M01"
+        "S12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1679,8 +1697,7 @@
       "origem_ideia": "#06 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J03",
-        "S18"
+        "J09"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1695,7 +1712,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "M06"
+        "J17"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1710,7 +1727,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "M07"
+        "M09"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1738,7 +1755,7 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S04"
+        "M03"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1747,9 +1764,9 @@
     },
     {
       "id": "AE-121",
-      "nome": "Defesa → Velocidade",
+      "nome": "Resistência → Velocidade",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Defesa; Defesa permanece igual.",
+      "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Resistência; Resistência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -1760,9 +1777,9 @@
     },
     {
       "id": "AE-122",
-      "nome": "Velocidade → Defesa",
+      "nome": "Velocidade → Resistência",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Substitua o valor de Defesa pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
+      "texto_efeito": "Substitua o valor de Resistência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -1773,35 +1790,39 @@
     },
     {
       "id": "AE-123",
-      "nome": "Permutar Ataque e Inteligência",
+      "nome": "Permutar Força e Inteligência",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Troque entre si os números de Ataque e Inteligência da mesma carta; ambos mudam.",
+      "texto_efeito": "Troque entre si os números de Força e Inteligência da mesma carta; ambos mudam.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-124",
-      "nome": "Permutar Ataque e Velocidade",
+      "nome": "Permutar Força e Velocidade",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Troque entre si os números de Ataque e Velocidade da mesma carta; ambos mudam.",
+      "texto_efeito": "Troque entre si os números de Força e Velocidade da mesma carta; ambos mudam.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-125",
-      "nome": "Permutar Ataque e Defesa",
+      "nome": "Permutar Força e Resistência",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Troque entre si os números de Ataque e Defesa da mesma carta; ambos mudam.",
+      "texto_efeito": "Troque entre si os números de Força e Resistência da mesma carta; ambos mudam.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -1825,22 +1846,24 @@
     },
     {
       "id": "AE-127",
-      "nome": "Permutar Inteligência e Defesa",
+      "nome": "Permutar Inteligência e Resistência",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Troque entre si os números de Inteligência e Defesa da mesma carta; ambos mudam.",
+      "texto_efeito": "Troque entre si os números de Inteligência e Resistência da mesma carta; ambos mudam.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-128",
-      "nome": "Permutar Defesa e Velocidade",
+      "nome": "Permutar Resistência e Velocidade",
       "categoria": "Conversões faltantes e permutas completas",
-      "texto_efeito": "Troque entre si os números de Defesa e Velocidade da mesma carta; ambos mudam.",
+      "texto_efeito": "Troque entre si os números de Resistência e Velocidade da mesma carta; ambos mudam.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [],
@@ -1857,7 +1880,7 @@
       "origem_ideia": "novo, solicitado pelo autor",
       "avaliacao_de_risco": "Teste; texto proposto",
       "cartas_atribuidas": [
-        "M02"
+        "V06"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",

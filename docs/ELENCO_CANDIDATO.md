@@ -192,7 +192,7 @@ Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/d
 | Viajantes Dimensionais | **Azul** |
 | Mistério Oculto | **Vermelha** |
 | Ciclo de Jesed | **Amarela** |
-| Série de Édelin / Belfex | **Verde** |
+| Édelin Lys (Belfex) | **Verde** |
 | Diário Sobrenatural | **Roxo** |
 | Spacetheft | **Preta** |
 

@@ -180,14 +180,14 @@
     const me = V.humans === 1 ? V.viewer : -1, N = pid => pid === me ? 'você' : nameOf(pid), Nc = pid => pid === me ? 'Você' : nameOf(pid);
     if (c.none) return 'Sem disputa: menos de duas cartas ficaram na mesa.';
     const live = c.rows.filter(r => !r.withdrawn);
-    if (c.tie) return `Empate absoluto: mesmo valor, mesma soma dos 4 atributos e mesma soma de Ataque + Inteligência. As cartas voltam aos donos.`;
+    if (c.tie) return `Empate absoluto: mesmo valor, mesma soma dos 4 atributos e mesma soma de Força + Inteligência. As cartas voltam aos donos.`;
     const w = live.find(r => r.pid === c.winnerPid); if (!w) return '';
     const others = live.filter(r => r !== w).sort((a, b) => (b.total || 0) - (a.total || 0)), L = others[0];
     const wa = ATT[w.attr].nome, out = [];
     const iWon = w.pid === me, iLost = me >= 0 && !iWon && live.some(r => r.pid === me);
     const bonusOf = r => r.parts.filter(m => m.d !== 0);
     if (w.autoWin) out.push(`${Nc(w.pid)} venceu automaticamente por efeito de um especial, sem comparar valores.`);
-    else if (c.tb) out.push(`O maior valor (${c.tb.top}) empatou; o desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma de Ataque + Inteligência'} deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
+    else if (c.tb) out.push(`O maior valor (${c.tb.top}) empatou; o desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma de Força + Inteligência'} deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
     else if (L) {
       const lead = `${wa} ${w.total} de ${N(w.pid)} contra ${ATT[L.attr] ? ATT[L.attr].nome : '—'} ${L.total} de ${N(L.pid)}`;
       out.push(iLost ? `Você perdeu porque ${lead}.` : iWon ? `Você venceu: ${lead}.` : `${Nc(w.pid)} venceu: ${lead}.`);
@@ -214,7 +214,7 @@
       if (r.extra.length) lines.push(`<div class="cl up"><span>Cartas extras (${r.extra.map(x => esc(cname(x))).join(', ')})</span><b>${sgn(r.bonus)}</b></div>`);
       return `<div class="crow${win ? ' win' : ''}${r.gone ? ' gone' : ''}"><h4><span style="color:${PCOL[r.pid]}">${esc(nameOf(r.pid))}</span><em>${a ? esc(a.nome) : 'sem atributo'}${win ? ' · vencedor' : ''}${r.gone ? ' · carta removida' : ''}</em></h4>${lines.join('')}<div class="cl tot"><span>Total</span><b>${r.total == null ? '—' : r.total}</b></div></div>`;
     }).join('');
-    const tb = c.tb ? `<p class="ctb">Empate em ${c.tb.top} → desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma Ataque + Inteligência'}: ${c.tb.list.map(x => esc(nameOf(x.pid)) + ' ' + x.v).join(' × ')}.</p>` : '';
+    const tb = c.tb ? `<p class="ctb">Empate em ${c.tb.top} → desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma Força + Inteligência'}: ${c.tb.list.map(x => esc(nameOf(x.pid)) + ' ' + x.v).join(' × ')}.</p>` : '';
     const acts = c.acts.length ? `<p class="cacts">Especiais: ${c.acts.map(a => `<span class="${a.cancelled ? 'x' : ''}">${esc(nameOf(a.pid))} · ${esc(a.nome)}${a.cancelled ? ' (anulado)' : ''}${a.forced ? ' (forçado)' : ''}</span>`).join(' ')}</p>` : '';
     const fx = (c.fx && c.fx.length) ? `<details class="cfx"><summary>Efeitos aplicados (${c.fx.length})</summary>${c.fx.map(t => `<p>${esc(t)}</p>`).join('')}</details>` : '';
     const wd = rest.length ? `<p class="cacts">Desistiram: ${rest.map(r => esc(nameOf(r.pid))).join(', ')}.</p>` : '';
@@ -482,7 +482,7 @@
         FX.burst(cx, cy, { n: 80, speed: 9, life: 70, up: 2 });
         setTimeout(() => FX.burst(cx, cy, { n: 40, speed: 5, life: 60, colors: atk ? ['#ff7a45', '#fff', '#e9dfc0'] : ['#8fd6ff', '#fff', '#4aa8ff'] }), 300);
         tipId = U.tip ? ['reveal', atk ? 'capture' : 'bh'].find(x => !U.tipSeen(x)) : null;
-        const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Ataque + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
+        const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Força + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
         banner(`${nameOf(w)} vence!`, tb ? tbTxt : `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 3600 : 2100);
         caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
         await sleep(tb ? 3400 : 2100);

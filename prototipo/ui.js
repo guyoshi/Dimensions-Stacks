@@ -335,14 +335,14 @@
       <h3>Objetivo</h3><p>Derrotar todos os adversários. Quem fica sem cartas (baralho e reserva) é eliminado.</p>
       <h3>Montagem</h3><p>Cada jogador recebe o mesmo número de cartas. <b>7 formam o baralho ativo</b>, na ordem que você escolher (a 1ª é jogada primeiro). O restante vira a <b>reserva</b>: quando seu baralho esvazia, você compra até 6 dela.</p>
       <h3>Disputa</h3><ol><li>Todos colocam a carta do topo <b>virada para baixo</b>.</li>
-      <li>O <b>iniciador</b> (sorteado na 1ª; depois, em sentido horário) escolhe <i>qualquer</i> atributo: Ataque, Defesa, Inteligência ou Velocidade.</li>
-      <li>Os demais escolhem, <b>em segredo</b>, um dos dois atributos do mesmo par: <b>Ataque / Defesa</b> ou <b>Inteligência / Velocidade</b>.</li>
+      <li>O <b>iniciador</b> (sorteado na 1ª; depois, em sentido horário) escolhe <i>qualquer</i> atributo: Força, Resistência, Inteligência ou Velocidade.</li>
+      <li>Os demais escolhem, <b>em segredo</b>, um dos dois atributos do mesmo par: <b>Força / Resistência</b> ou <b>Inteligência / Velocidade</b>.</li>
       <li>As cartas são viradas. O <b>maior valor</b> no atributo escolhido vence.</li></ol>
-      <h3>Ataque × Defesa</h3><ul><li><b>Ataque e Inteligência são ofensivos:</b> o vencedor leva as cartas dos perdedores para o fim do seu baralho.</li>
-      <li><b>Defesa e Velocidade são defesa:</b> o vencedor só recupera a própria carta; as dos perdedores vão para o <b>Buraco Negro</b>, fora do jogo.</li></ul>
+      <h3>Ofensivos × Defensivos</h3><ul><li><b>Força e Inteligência são ofensivos:</b> o vencedor leva as cartas dos perdedores para o fim do seu baralho.</li>
+      <li><b>Resistência e Velocidade são defensivos:</b> o vencedor só recupera a própria carta; as dos perdedores vão para o <b>Buraco Negro</b>, fora do jogo.</li></ul>
       <h3>Raridade (losangos)</h3><p>Os losangos no pé da carta mostram a raridade: <b>◆ Comum</b> (fosca), <b>◆◆ Rara</b> (borda prateada), <b>◆◆◆ Épica</b> (borda dourada com reflexo holográfico) e <b>◆◆◆◆ Lendária</b> (moldura dourada ornamentada, losangos dourados). A raridade segue o poder real da carta (soma dos atributos mais o maior atributo, que pesa muito). As cartas da <b>União</b> são únicas e fogem da regra: aura e moldura arco-íris. Ao virar uma Lendária ou da União, a mesa recebe um clarão e um som próprio.</p>
-      <h3>Empates</h3><p>Maior valor do atributo → maior soma dos 4 atributos → maior Ataque + Inteligência. Se ainda empatar, ninguém vence e as cartas voltam aos donos.</p>
-      <h3>Habilidades especiais</h3><p>A partir da 2ª rodada, na hora de escolher o atributo você pode clicar em <b>Usar como especial</b>: a carta da mesa sai do combate e fica fechada ao seu lado (até 2 por vez), e a próxima do baralho entra no lugar. Depois que as cartas são reveladas, cada jogador decide em segredo se <b>vira</b> um especial (no máximo 1 por disputa, mais um especial <i>companheiro</i> quando houver); os virados são revelados juntos, resolvem em sentido horário (proteções e cancelamentos primeiro) e depois vão ao Buraco Negro. Os especiais de <b>controle</b> (Atributo universal, Par ofensivo, Ataque obrigatório…) são virados <i>antes</i> de declarar os atributos. Os especiais mudam números, roubam, trocam, espiam, protegem, cancelam…</p>
+      <h3>Empates</h3><p>Maior valor do atributo → maior soma dos 4 atributos → maior Força + Inteligência. Se ainda empatar, ninguém vence e as cartas voltam aos donos.</p>
+      <h3>Habilidades especiais</h3><p>A partir da 2ª rodada, na hora de escolher o atributo você pode clicar em <b>Usar como especial</b>: a carta da mesa sai do combate e fica fechada ao seu lado (até 2 por vez), e a próxima do baralho entra no lugar. Depois que as cartas são reveladas, cada jogador decide em segredo se <b>vira</b> um especial (no máximo 1 por disputa, mais um especial <i>companheiro</i> quando houver); os virados são revelados juntos, resolvem em sentido horário (proteções e cancelamentos primeiro) e depois vão ao Buraco Negro. Os especiais de <b>controle</b> (Atributo universal, Par ofensivo, Ataque obrigatório…) são virados <i>antes</i> de declarar os atributos. Os especiais <b>reativos</b> (anular, copiar, apropriar, proteger) só abrem depois que algum rival virou um especial: quem os tem decide sabendo o que foi virado. Os especiais mudam números, roubam, trocam, espiam, protegem, cancelam…</p>
       <h3>Rodadas</h3><p>Uma rodada termina quando todos os jogadores vivos já iniciaram uma disputa.</p>
       <details><summary>Regras provisórias adotadas (o GDD ainda não definiu)</summary><ul>${E.PROPOSTAS.map(p => `<li>${esc(p)}</li>`).join('')}</ul></details>
       <details><summary>Habilidades implementadas neste protótipo (${sp.length} de ${Object.keys(E.SPECIALS).length})</summary><ul>${sp.map(x => `<li><b>${esc(x.nome)}</b> <span class="hint">(${esc(x.id)})</span> — ${esc(x.texto)}</li>`).join('')}</ul></details>
@@ -357,7 +357,7 @@
     const chips = $('.chips', wrap), grid = $('.cgrid', wrap);
     const keys = ['todas', ...Object.keys(SERIES), 'uniao'];
     function draw() {
-      chips.innerHTML = keys.map(k => `<button data-k="${k}" class="${filt === k ? 'on' : ''}">${k === 'todas' ? 'Todas' : k === 'uniao' ? 'A União' : SERIES[k].marca}</button>`).join('');
+      chips.innerHTML = keys.map(k => `<button data-k="${k}" class="${filt === k ? 'on' : ''}">${k === 'todas' ? 'Todas' : k === 'uniao' ? 'A União' : SERIES[k].nome}</button>`).join('');
       grid.replaceChildren(...CARTAS.filter(c => filt === 'todas' || (filt === 'uniao' ? c.uniao : c.serie === filt)).map(c => cardEl(c.id, { up: true, noanim: true, cw: 112, click: true })));
     }
     chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; filt = b.dataset.k; SND.play('tick'); draw(); };

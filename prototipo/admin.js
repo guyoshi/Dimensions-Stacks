@@ -31,7 +31,7 @@
   ST.onMatch((s, ctx) => { if (ctx && ctx.shared) push(s); });
 
   // ---------------------------------------------------------------- agregação
-  const ATN = { pod: 'Poder', def: 'Defesa', int: 'Inteligência', vel: 'Velocidade' };
+  const ATN = { pod: 'Força', def: 'Resistência', int: 'Inteligência', vel: 'Velocidade' };
   function aggregate(list) {
     const A = { n: list.length, dur: 0, rounds: 0, combats: 0, spec: 0, ties: 0, limit: 0, cards: {}, att: { pod: 0, def: 0, int: 0, vel: 0 }, first: { g: 0, w: 0 }, modes: {}, winBy: {} };
     list.forEach(m => {
@@ -189,7 +189,7 @@
         const c = await caps(); const out = $('#aiOut', root); if (!c.sample) { out.textContent = 'IA indisponível neste contexto.'; return; }
         const dg = digest(aggregate(filtered())); b.disabled = true; out.textContent = 'Analisando…';
         try {
-          const r = await c.sample([{ role: 'user', content: 'Você é analista de balanceamento do jogo de cartas "Dimensions Stacks" (disputas simultâneas por atributos Poder/Defesa/Inteligência/Velocidade; cada carta tem um especial; vence quem fica com todas as cartas). Com os números agregados abaixo (z = desvio da taxa de vitória da carta em relação à média), responda em português, objetivo e em tópicos curtos: 1) cartas apelonas e fracas, com hipótese do porquê (atributos/especial); 2) atributos ou especiais dominantes; 3) duração e ritmo das partidas, vantagem de quem começa; 4) 5 ajustes concretos sugeridos, em ordem de prioridade; 5) o que testar a seguir. Avise quando a amostra for pequena.\n\nDADOS:\n' + JSON.stringify(dg) }], { cache: false, modelTier: 'default', onText: u => { out.textContent = u.text; } });
+          const r = await c.sample([{ role: 'user', content: 'Você é analista de balanceamento do jogo de cartas "Dimensions Stacks" (disputas simultâneas por atributos Força/Resistência/Inteligência/Velocidade; cada carta tem um especial; vence quem fica com todas as cartas). Com os números agregados abaixo (z = desvio da taxa de vitória da carta em relação à média), responda em português, objetivo e em tópicos curtos: 1) cartas apelonas e fracas, com hipótese do porquê (atributos/especial); 2) atributos ou especiais dominantes; 3) duração e ritmo das partidas, vantagem de quem começa; 4) 5 ajustes concretos sugeridos, em ordem de prioridade; 5) o que testar a seguir. Avise quando a amostra for pequena.\n\nDADOS:\n' + JSON.stringify(dg) }], { cache: false, modelTier: 'default', onText: u => { out.textContent = u.text; } });
           out.textContent = r.text;
         } catch (er) { out.textContent = 'Falha na análise: ' + (er && er.message || er && er.code || er); }
         b.disabled = false;

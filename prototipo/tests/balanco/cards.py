@@ -1,6 +1,6 @@
 import json,statistics as st
 C=json.load(open('/home/claude/ds-repo/dados/oficial/cartas_87.json'))['cartas']
-K=['ATQ','DEF','INT','VEL']; PAIR={'ATQ':('ATQ','DEF'),'DEF':('ATQ','DEF'),'INT':('INT','VEL'),'VEL':('INT','VEL')}
+K=['FOR','RES','INT','VEL']; PAIR={'FOR':('FOR','RES'),'RES':('FOR','RES'),'INT':('INT','VEL'),'VEL':('INT','VEL')}
 V=[{k:c['atributos'][k] for k in K} for c in C]
 n=len(C)
 def tb(a,b):  # 1 se a vence b
@@ -11,7 +11,7 @@ def beats(va,sa_card,vb,sb_card):
     if va!=vb: return 1 if va>vb else 0
     ta=sum(sa_card.values());tb_=sum(sb_card.values())
     if ta!=tb_: return 1 if ta>tb_ else 0
-    ta=sa_card['ATQ']+sa_card['INT'];tb_=sb_card['ATQ']+sb_card['INT']
+    ta=sa_card['FOR']+sa_card['INT'];tb_=sb_card['FOR']+sb_card['INT']
     if ta!=tb_: return 1 if ta>tb_ else 0
     return .5
 def duel(i,j):

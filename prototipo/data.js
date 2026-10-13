@@ -8,14 +8,14 @@
     jesed:      { nome: 'Ciclo de Jesed',         titulo: 'Ciclo de Jesed', marca: 'JESED',               cor: '#e9b923', escuro: '#7a5a00', texto: '#1d1400', cor2: '#fff1b0' },
     viajantes:  { nome: 'Viajantes Dimensionais', titulo: 'Viajantes Dimensionais', marca: 'VIAJANTES',           cor: '#2f7bf0', escuro: '#12337a', texto: '#ffffff', cor2: '#a9ccff' },
     misterio:   { nome: 'Mistério Oculto',        titulo: 'Mistério Oculto', marca: 'MISTÉRIO OCULTO',     cor: '#d8332f', escuro: '#6d100e', texto: '#ffffff', cor2: '#ffb3ad' },
-    belfex:     { nome: 'Série de Édelin', titulo: 'Série de Édelin', marca: 'SÉRIE DE ÉDELIN', cor: '#2faa5a', escuro: '#0f4a26', texto: '#ffffff', cor2: '#aef0c3' },
+    belfex:     { nome: 'Édelin Lys', titulo: 'Édelin Lys', marca: 'ÉDELIN LYS', cor: '#2faa5a', escuro: '#0f4a26', texto: '#ffffff', cor2: '#aef0c3' },
     diario:     { nome: 'Diário Sobrenatural',    titulo: 'Diário Sobrenatural', marca: 'DIÁRIO SOBRENATURAL', cor: '#8a4fd6', escuro: '#391768', texto: '#ffffff', cor2: '#d9c0ff' },
     spacetheft: { nome: 'Spacetheft',             titulo: 'Spacetheft', marca: 'SPACETHEFT',          cor: '#1b1b22', escuro: '#000000', texto: '#ffffff', cor2: '#9a9aa8' },
   };
 
   const ATRIBUTOS = [
-    { id: 'pod', nome: 'Ataque',       abre: 'ATQ', tipo: 'ataque', par: 0 },
-    { id: 'def', nome: 'Defesa',       abre: 'DEF', tipo: 'defesa', par: 0 },
+    { id: 'pod', nome: 'Força',        abre: 'FOR', tipo: 'ataque', par: 0 },
+    { id: 'def', nome: 'Resistência',  abre: 'RES', tipo: 'defesa', par: 0 },
     { id: 'int', nome: 'Inteligência', abre: 'INT', tipo: 'ataque', par: 1 },
     { id: 'vel', nome: 'Velocidade',   abre: 'VEL', tipo: 'defesa', par: 1 },
   ];
@@ -143,7 +143,7 @@
     ['M11', 'X', 'misterio', 'Figura do núcleo investigativo/conspiratório'],
     ['M12', 'James Harrow', 'misterio', 'Personagem de relevância ideológica na trama'],
     // Belfex
-    ['B01', 'Édelin Lys', 'belfex', 'Série de Édelin', 1],
+    ['B01', 'Édelin Lys', 'belfex', 'Édelin Lys', 1],
   ];
 
   // ---------- gerador de dados PROVISÓRIOS (determinístico por id) ----------

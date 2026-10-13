@@ -39,13 +39,13 @@
   const DAILY = [
     { id: 'int2', texto: 'Vença uma partida ganhando 2 disputas com Inteligência.', ok: m => m.won && m.my.att.int >= 2 },
     { id: 'esp1', texto: 'Vença uma partida usando um especial.', ok: m => m.won && m.my.esp >= 1 },
-    { id: 'vd', texto: 'Na mesma partida, ganhe uma disputa com Velocidade e outra com Defesa.', ok: m => m.my.att.vel >= 1 && m.my.att.def >= 1 },
+    { id: 'vd', texto: 'Na mesma partida, ganhe uma disputa com Velocidade e outra com Resistência.', ok: m => m.my.att.vel >= 1 && m.my.att.def >= 1 },
     { id: 'n3', texto: 'Vença uma partida de 3 ou mais jogadores.', ok: m => m.won && m.n >= 3 },
     { id: 'r11', texto: 'Vença uma partida em até 11 rodadas.', ok: m => m.won && m.rounds <= 11 },
     { id: 'd8', texto: 'Ganhe 8 disputas em uma única partida.', ok: m => m.my.disp >= 8 },
     { id: 'esp3', texto: 'Use 3 especiais em uma partida.', ok: m => m.my.esp >= 3 },
     { id: 'hard', texto: 'Vença uma partida contra bots no nível Difícil.', ok: m => m.won && m.diff === 'dificil' && m.humans === 1 },
-    { id: 'pod2', texto: 'Vença uma partida ganhando 2 disputas com Ataque.', ok: m => m.won && m.my.att.pod >= 2 },
+    { id: 'pod2', texto: 'Vença uma partida ganhando 2 disputas com Força.', ok: m => m.won && m.my.att.pod >= 2 },
   ];
   function dailyToday() { const k = dayKey(); const p = profile(); const def = DAILY[dayIdx() % DAILY.length]; if (!p.daily || p.daily.key !== k) { p.daily = { key: k, id: def.id, done: false, streak: (p.daily && p.daily.streak) || 0, last: (p.daily && p.daily.last) || null }; } return Object.assign({}, def, { done: !!p.daily.done, streak: p.daily.streak || 0 }); }
 
@@ -81,7 +81,7 @@
     { id: 'online_play', nome: 'Convite aceito', desc: 'Jogue uma partida online.', prog: p => [p.t.online.g, 1] },
     { id: 'online_win', nome: 'Rival de verdade', desc: 'Vença uma partida contra outra pessoa.', prog: p => [p.t.pvp.w, 1] },
     { id: 'hard_win', nome: 'Domadora de bots', desc: 'Vença bots no nível Difícil.', flag: true },
-    { id: 'attrs_all', nome: 'Quatro dimensões', desc: 'Ganhe disputas com Ataque, Defesa, Inteligência e Velocidade.', prog: p => [AT.filter(a => p.t.att[a] > 0).length, 4] },
+    { id: 'attrs_all', nome: 'Quatro dimensões', desc: 'Ganhe disputas com Força, Resistência, Inteligência e Velocidade.', prog: p => [AT.filter(a => p.t.att[a] > 0).length, 4] },
     { id: 'fast_win', nome: 'Relâmpago', desc: 'Vença uma partida em até 9 rodadas.', flag: true },
     { id: 'comeback', nome: 'Virada épica', desc: 'Vença depois de chegar a 3 cartas ou menos.', flag: true },
     { id: 'fav_5', nome: 'Colecionadora', desc: 'Favorite 5 cartas.', prog: p => [p.fav.length, 5] },

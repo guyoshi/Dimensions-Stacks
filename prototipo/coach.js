@@ -23,9 +23,9 @@
       <div class="two"><div><small>Ofensivos</small>${OFF}<em>quem vence leva as cartas</em></div><div><small>Defensivos</small>${DEF}<em>as cartas perdedoras vão ao Buraco Negro</em></div></div>` },
     attr_follow: { t: 'Agora é a sua vez de responder', b: `<p>Você só pode escolher <b>dentro do mesmo par</b> do atributo iniciado — e em <b>segredo</b>:</p>
       <div class="two"><div><small>Par 1</small>${ai('pod')} ${ai('def')}</div><div><small>Par 2</small>${ai('int')} ${ai('vel')}</div></div><p class="mut">Ex.: se iniciaram em Inteligência, você escolhe entre Inteligência e Velocidade.</p>` },
-    reveal: { t: 'Revelação', b: `<p>Vence o <b>maior valor</b> do atributo escolhido, mesmo que os atributos sejam diferentes do par (Inteligência 82 contra Velocidade 82, por exemplo).</p><p>Se houver empate, o desempate é a <b>soma dos 4 atributos</b> da carta; depois, <b>Ataque + Inteligência</b>.</p>`, hint: true },
-    capture: { t: 'Ataque ou Inteligência venceu', b: `<p>O vencedor <b>leva as cartas</b> dos perdedores para o fim do seu baralho.</p>`, hint: true },
-    bh: { t: 'Buraco Negro', b: `<p>Quando <b>Defesa ou Velocidade</b> vencem, só o vencedor recupera a própria carta. As cartas dos perdedores vão para o <b>Buraco Negro</b> e saem do jogo.</p>`, hint: true },
+    reveal: { t: 'Revelação', b: `<p>Vence o <b>maior valor</b> do atributo escolhido, mesmo que os atributos sejam diferentes do par (Inteligência 82 contra Velocidade 82, por exemplo).</p><p>Se houver empate, o desempate é a <b>soma dos 4 atributos</b> da carta; depois, <b>Força + Inteligência</b>.</p>`, hint: true },
+    capture: { t: 'Força ou Inteligência venceu', b: `<p>O vencedor <b>leva as cartas</b> dos perdedores para o fim do seu baralho.</p>`, hint: true },
+    bh: { t: 'Buraco Negro', b: `<p>Quando <b>Resistência ou Velocidade</b> vencem, só o vencedor recupera a própria carta. As cartas dos perdedores vão para o <b>Buraco Negro</b> e saem do jogo.</p>`, hint: true },
     refill: { t: 'Reserva', b: `<p>Seu baralho acabou: você comprou cartas da <b>reserva</b> (até 6). Sem baralho e sem reserva, você é eliminado.</p>`, hint: true },
     round2: { t: 'Rodada 2: especiais liberados', b: `<p>Agora, ao escolher o atributo, aparece o botão <b>✦ Usar como especial</b>. A carta sai da disputa e fica <b>fechada ao seu lado</b>; outra entra no lugar.</p><p>Depois da revelação, você decide <b>em segredo</b> se vira o especial (no máximo 1 por disputa).</p>`, hint: true },
     react: { t: 'Janela de reação', b: `<p>Algum rival virou um especial. Se você tem um <b>especial reativo</b> (anular, copiar, apropriar, proteger), decida agora, <b>sabendo o que foi virado</b>.</p><p>Os reagentes decidem em segredo e ao mesmo tempo. Se não quiser, <b>mantenha fechado</b>.</p>` },
@@ -57,24 +57,36 @@
     { t: 'O objetivo', ic: '🏆', b: () => `<div class="demo backs">${back(5, 50)}</div><p>Cada jogador começa com um monte de cartas. <b>Fique com todas</b>: quem perde todas as suas (baralho e reserva) é eliminado, e vence o último de pé.</p>` },
     { t: 'Seu baralho', ic: '🃏', b: () => `<div class="demo deck">${[1, 2, 3, 4, 5, 6, 7].map(i => `<div class="dk">${U.cardEl('J08', { up: false, noanim: true, cw: 40 }).outerHTML}<i>${i === 1 ? 'topo' : i}</i></div>`).join('')}<div class="dk res"><div class="stk">${back(1, 40)}</div><i>reserva</i></div></div>
       <p>Antes de começar você <b>arrasta as cartas</b> para escolher a ordem. As <b>7 primeiras</b> formam o baralho; o restante é a <b>reserva</b>, que entra quando o baralho esvazia.</p>` },
-    { t: 'A carta', ic: '🎴', b: () => `<div class="anat">${cardImg(150)}<ul class="leg"><li><span class="n">1</span>Série, no topo</li><li><span class="n">2</span>Nome do personagem</li><li><span class="n">3</span>Especial da carta</li><li><span class="n">4</span>Atributos: Ataque, Defesa, Inteligência e Velocidade</li><li><span class="n">5</span>Losangos: raridade. ◆ Comum (fosca) · ◆◆ Rara (borda prateada) · ◆◆◆ Épica (borda dourada e reflexo holográfico) · ◆◆◆◆ Lendária (moldura dourada ornamentada, losangos dourados)</li></ul></div><p class="mut">Toque numa carta, no jogo ou na coleção, para ver todos os detalhes. As cartas da <b>União</b> são únicas: fogem da regra, com aura e moldura arco-íris.</p>` },
+    { t: 'A carta', ic: '🎴', b: () => `<div class="anat"><div class="anatcard" data-pins>${U.cardEl('J08', { up: true, noanim: true, cw: 158 }).outerHTML}</div><ul class="leg"><li><span class="n">1</span>Série, no topo</li><li><span class="n">2</span>Nome do personagem</li><li><span class="n">3</span>Especial da carta</li><li><span class="n">4</span>Atributos: Força, Resistência, Inteligência e Velocidade</li><li><span class="n">5</span>Losangos: raridade. ◆ Comum (fosca) · ◆◆ Rara (borda prateada) · ◆◆◆ Épica (borda dourada e reflexo holográfico) · ◆◆◆◆ Lendária (moldura dourada ornamentada, losangos dourados)</li></ul></div><p class="mut">Toque numa carta, no jogo ou na coleção, para ver todos os detalhes. As cartas da <b>União</b> são únicas: fogem da regra, com aura e moldura arco-íris.</p>` },
     { t: 'Uma disputa', ic: '⚔️', b: () => `<ol class="steps"><li><span class="n">1</span><div class="mn">${back(1, 34)}</div><p>Todos põem a carta do topo <b>virada para baixo</b>.</p></li>
       <li><span class="n">2</span><div class="mn attrs">${ai('pod', '')}${ai('def', '')}${ai('int', '')}${ai('vel', '')}</div><p>O <b>iniciador</b> escolhe qualquer atributo.</p></li>
       <li><span class="n">3</span><div class="mn lock">🔒</div><p>Os outros escolhem <b>em segredo</b>, dentro do mesmo par.</p></li>
-      <li><span class="n">4</span><div class="mn">${cardImg(46)}</div><p>As cartas são viradas: <b>o maior valor vence</b>.</p></li></ol>` },
+      <li><span class="n">4</span><div class="mn">${U.cardEl('J08', { up: true, noanim: true, cw: 46 }).outerHTML}</div><p>As cartas são viradas: <b>o maior valor vence</b>.</p></li></ol>` },
     { t: 'Os 4 atributos', ic: '✦', b: () => `<div class="grid2"><div class="pair"><small>Par 1</small>${ai('pod')}<span class="vs">ou</span>${ai('def')}</div><div class="pair"><small>Par 2</small>${ai('int')}<span class="vs">ou</span>${ai('vel')}</div></div>
       <div class="two"><div><small>Ofensivos</small>${OFF}<em>o vencedor <b>leva</b> as cartas dos perdedores</em></div><div><small>Defensivos</small>${DEF}<em>o vencedor só recupera a sua; as outras vão ao <b>Buraco Negro</b></em></div></div>
       <p class="mut">O iniciador escolhe entre os 4; quem responde fica no par do iniciador.</p>` },
     { t: 'Quem vence', ic: '⚖️', b: () => `<div class="duel"><div>${ai('int', '')}<b>82</b></div><span>×</span><div>${ai('vel', '')}<b>82</b></div></div>
       <p>Vence o <b>maior número</b>, mesmo que os atributos sejam diferentes. Empatou? Desempate em ordem:</p>
-      <ol class="tb"><li>Maior <b>soma dos 4 atributos</b> da carta</li><li>Maior <b>Ataque + Inteligência</b></li><li>Ainda igual: ninguém vence e as cartas voltam aos donos</li></ol>` },
+      <ol class="tb"><li>Maior <b>soma dos 4 atributos</b> da carta</li><li>Maior <b>Força + Inteligência</b></li><li>Ainda igual: ninguém vence e as cartas voltam aos donos</li></ol>` },
     { t: 'Buraco Negro e reserva', ic: '🌀', b: () => `<div class="demo bhd"><div class="bhv"></div><span>→</span><div class="mn" style="flex-wrap:nowrap;gap:6px">${back(2, 30)}</div></div>
-      <p>Cartas perdidas em <b>Defesa ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra até 6 da <b>reserva</b>. Sem baralho e sem reserva, você está eliminado.</p>` },
+      <p>Cartas perdidas em <b>Resistência ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra até 6 da <b>reserva</b>. Sem baralho e sem reserva, você está eliminado.</p>` },
     { t: 'Habilidades especiais', ic: '✨', b: () => `<div class="demo"><button class="btn sm fake" tabindex="-1">✦ Usar como especial</button></div>
       <p>Liberados a partir da <b>Rodada 2</b>. Ao escolher o atributo, você pode tirar a carta da mesa e deixá-la <b>fechada ao seu lado</b>; a próxima do baralho entra no lugar.</p>
       <p>Depois da revelação, cada jogador decide <b>em segredo</b> se vira um especial (máximo 1 por disputa). Os efeitos são diferentes em cada carta.</p><p>Especiais <b>reativos</b> (anular, copiar, apropriar, proteger) são virados depois: se um rival virou um especial, você decide <b>sabendo qual foi</b>.</p>` },
     { t: 'Rodadas e fim', ic: '🏁', b: () => `<p>Uma <b>rodada</b> termina quando todos os jogadores vivos já iniciaram uma disputa; depois disso o iniciador gira em sentido horário.</p><p>Se a partida passar do limite de disputas, vence quem tiver <b>mais cartas</b>.</p><p class="mut">Durante as primeiras partidas, o jogo vai avisando cada regra nova na hora em que ela aparece.</p>` },
   ];
+  // etiquetas numeradas sobre a carta real do slide "A carta": cada número aponta para o elemento certo (mesmos números da legenda)
+  function pins(root) {
+    const box = $('[data-pins]', root); if (!box) return; $$('.pinl, .pin', box).forEach(x => x.remove());
+    const card = $('.card', box); if (!card) return; const b0 = box.getBoundingClientRect(), cr = card.getBoundingClientRect(); if (!cr.width) return;
+    [['.cband .ser', 1], ['.nome', 2], ['.espc', 3], ['.stats', 4], ['.rar', 5]].forEach(([sel, k]) => {
+      const t = $(sel, card); if (!t) return; const rg = document.createRange(); rg.selectNodeContents(t); const r = rg.getBoundingClientRect(); if (!r.width) return;
+      const y = r.top + r.height / 2 - b0.top, x1 = r.right - b0.left + 3, x2 = cr.right - b0.left;
+      const px = x2 + (k % 2 ? 8 : 34);   // números pares ficam mais afastados: etiquetas vizinhas não se sobrepõem
+      if (px > x1) box.append(el(`<i class="pinl" style="left:${x1}px;top:${y}px;width:${px - x1}px"></i>`));
+      box.append(el(`<span class="pin" style="left:${px}px;top:${y}px">${k}</span>`));
+    });
+  }
   U.rulesFull = U.rules;
   U.rules = function () {
     SND.play('click'); let i = 0;
@@ -105,6 +117,6 @@
     function mv(e) { if (!dr) return; const dx = e.clientX - dr.x; if (!dr.moved && Math.abs(dx) > 5) { dr.moved = true; track.classList.add('drag'); } if (dr.moved) track.scrollLeft = dr.l - dx; }
     function up(e) { if (!dr) return; const d = dr; dr = null; track.classList.remove('drag'); if (d.moved) { const dx = e.clientX - d.x; const k = Math.abs(dx) > 50 ? i + (dx < 0 ? 1 : -1) : Math.round(track.scrollLeft / track.clientWidth); goTo(k); } }
     new MutationObserver(() => { if (!n.isConnected) { window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); } }).observe(U.layer(), { childList: true });
-    U.layer().appendChild(n); paint(); track.focus({ preventScroll: true });
+    U.layer().appendChild(n); paint(); track.focus({ preventScroll: true }); requestAnimationFrame(() => pins(n)); setTimeout(() => pins(n), 400);
   };
 })();

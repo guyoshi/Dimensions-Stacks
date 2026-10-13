@@ -101,7 +101,7 @@
   const filtState = { k: 'todas', q: '', sort: 'num', att: '' };
   const norm = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const sumOf = c => c.stats.pod + c.stats.def + c.stats.int + c.stats.vel;
-  const SORTS = [['num', 'Ordem padrão'], ['soma', 'Força total'], ['pod', 'Ataque'], ['def', 'Defesa'], ['int', 'Inteligência'], ['vel', 'Velocidade'], ['nome', 'Nome (A–Z)'], ['esp', 'Especial (A–Z)'], ['mast', 'Maestria']];
+  const SORTS = [['num', 'Ordem padrão'], ['soma', 'Força total'], ['pod', 'Força'], ['def', 'Resistência'], ['int', 'Inteligência'], ['vel', 'Velocidade'], ['nome', 'Nome (A–Z)'], ['esp', 'Especial (A–Z)'], ['mast', 'Maestria']];
   const spOf = c => (U.E.SPECIALS[c.especial] || {});
   const hay = c => norm([c.nome, c.id, SERIES[c.serie].nome, SERIES[c.serie].marca, c.descricao, spOf(c).nome, spOf(c).texto, c.raridade, c.uniao ? 'uniao' : ''].join(' '));
   const topAtt = c => U.AIDS.slice().sort((a, b) => c.stats[b] - c.stats[a])[0];
@@ -117,7 +117,7 @@
   function collTab() {
     const s = $('#coll'); const fav = new Set(ST.profile().fav);
     const keys = ['todas', 'fav', ...Object.keys(SERIES), 'uniao'];
-    const label = k => k === 'todas' ? 'Todas' : k === 'fav' ? '★ Favoritas' : k === 'uniao' ? 'A União' : SERIES[k].marca;
+    const label = k => k === 'todas' ? 'Todas' : k === 'fav' ? '★ Favoritas' : k === 'uniao' ? 'A União' : SERIES[k].nome;
     s.innerHTML = `<div class="tabwrap">${topbar('Coleção', `${CARTAS.length} cartas · ${Object.keys(IMG).length} com foto`)}
       <div class="cfilter"><input id="cq" type="search" placeholder="Nome, série ou especial…" aria-label="Buscar cartas" autocomplete="off" value="${esc(filtState.q)}">
         <select id="csort" aria-label="Ordenar">${SORTS.map(([v, t]) => `<option value="${v}"${filtState.sort === v ? ' selected' : ''}>${v === 'num' ? t : 'Ordenar: ' + t}</option>`).join('')}</select></div>

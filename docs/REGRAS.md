@@ -117,7 +117,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 | Viajantes Dimensionais | **Azul** | VIAJANTES |
 | Mistério Oculto | **Vermelha** | MISTÉRIO OCULTO |
 | Ciclo de Jesed | **Amarela** | JESED |
-| Série de Édelin | **Verde** | SÉRIE DE ÉDELIN |
+| Édelin Lys | **Verde** | ÉDELIN LYS |
 | Diário Sobrenatural | **Roxo** | DIÁRIO SOBRENATURAL |
 | Spacetheft | **Preta** | SPACETHEFT |
 
@@ -377,3 +377,14 @@ Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de foto
 Depois disso, todos os efeitos resolvem na ordem de fases de sempre (blindagem → anulações → proteções → principais → cópias → ajustes finais).
 
 **Especiais reativos (13):** AE-073 Silêncio, AE-074 Imunidade pessoal, AE-076 Guardião do baralho, AE-077 Guardião da reserva, AE-078 Reflexo de roubo, AE-079 Escudo antecipado, AE-080 Anular modificador, AE-113 Interrupção precisa, AE-114 Desvio de alvo, AE-115 Eco, AE-116 Apropriar, AE-120 Remover alteração, AE-130 Anular a última habilidade. AE-118 Blindagem **não** é reativo: protege o próprio especial e é declarado junto com ele, como companheira.
+
+## Nomenclatura dos atributos (13/10/2026, autorizada pelo autor)
+
+Os atributos **Ataque** e **Defesa** passam a se chamar **Força (FOR)** e **Resistência (RES)**; **Inteligência (INT)** e **Velocidade (VEL)** não mudam. O objetivo é não confundir o atributo com o **tipo de vitória**: vencer com Força ou Inteligência é vencer **atacando** (captura as cartas); vencer com Resistência ou Velocidade é vencer **defendendo** (as cartas dos perdedores vão ao Buraco Negro). Regras e números não mudam. Onde este documento (histórico) diz "Ataque" ou "Defesa" como atributo, leia Força ou Resistência. Nos dados, as chaves `ATQ`/`DEF` viraram `FOR`/`RES`.
+
+Os especiais de **tipo** mantêm o nome: Ataque obrigatório, Defesa obrigatória, Forçar/Proibir ataque ou defesa rival, Ataque que bane, Defesa que captura e Ataque em dupla.
+
+## Sem especiais repetidos (13/10/2026, autorizada pelo autor)
+
+Cada carta tem um especial diferente (98 cartas, 98 especiais). As 20 cartas que repetiam especial receberam especiais antes sem carta; a lista está em `docs/CARTAS_E_ESPECIAIS.md` e no campo `revisao_13_10_2026_especiais_repetidos` de `dados/oficial/cartas_87.json`.
+

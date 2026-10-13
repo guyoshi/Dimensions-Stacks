@@ -2,7 +2,7 @@
 const E = require('../engine.js'); const N = +process.argv[2] || 60; const only = process.argv[3] && process.argv[3] !== '*' ? process.argv[3].split(',') : null; const NP = +process.argv[4] || 2; const diffArg = process.argv[5] || 'dificil';
 const orig = {}; Object.values(E.CARDS).forEach(c => orig[c.id] = c.especial);
 (async () => {
-  const used = [...new Set(Object.values(orig))].sort(); const res = [];
+  const used = (only || [...new Set(Object.values(orig))]).slice().sort(); const res = [];
   for (const id of used) {
     if (only && !only.includes(id)) continue;
     Object.values(E.CARDS).forEach(c => { c.especial = id; });

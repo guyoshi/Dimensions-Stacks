@@ -47,7 +47,7 @@ const has = (g, pid, c) => g.p(pid).deck.includes(c) || g.p(pid).reserve.include
     check(g, s, logs) { ok(logs.some(l => /Todos disputam em/.test(l)), 'log de atributo universal'); ok(logs.filter(l => /inicia em/.test(l)).length === 1, 'iniciou'); } });
   await run('Ataque obrigatório (AE-024): ninguém usa defesa', { flip: { 0: true }, players: 3, attrs: { 0: 'def', 1: 'def', 2: 'vel' },
     setup(g) { const cs = [0, 1, 2].map(() => plain(50, 50, 50, 50)); D(g, 0, [cs[0], plain(1, 1, 1, 1)], [sp('AE-024')]); D(g, 1, [cs[1], plain(1, 1, 1, 1)], []); D(g, 2, [cs[2], plain(1, 1, 1, 1)], []); return {}; },
-    check(g, s, logs) { ok(logs.some(l => /inicia em (Ataque|Inteligência)/.test(l)), 'iniciador forçado a atacar'); ok(g.combat === null, 'terminou'); } });
+    check(g, s, logs) { ok(logs.some(l => /inicia em (Força|Inteligência)/.test(l)), 'iniciador forçado a atacar'); ok(g.combat === null, 'terminou'); } });
   await run('Ativação forçada (AE-111) + Repetição (AE-112) do alvo', { flip: { 0: ['AE-111'] },
     setup(g) { const a = plain(50, 50, 50, 50), b = plain(50, 50, 50, 50), s0 = sp('AE-111'), t1 = sp('AE-001'), t2 = sp('AE-112'); D(g, 0, [a, plain(1, 1, 1, 1), plain(1, 1, 1, 1), plain(1, 1, 1, 1)], [s0]); D(g, 1, [b, plain(1, 1, 1, 1), plain(1, 1, 1, 1), plain(1, 1, 1, 1)], [t1, t2]); return { t1, t2 }; },
     check(g, { t1, t2 }, logs) { ok(g.p(1).prepared.length === 0, 'P1 teve os 2 especiais virados'); ok(logs.some(l => /repete/.test(l)), 'Repetição onerosa repetiu o efeito'); ok(g.s.bh.some(x => x.id === t1) && g.s.bh.some(x => x.id === t2), 'especiais foram ao Buraco Negro'); } });

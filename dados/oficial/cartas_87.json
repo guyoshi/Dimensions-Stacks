@@ -15,8 +15,8 @@
       "B": 1
     },
     "atributos": [
-      "ATQ",
-      "DEF",
+      "FOR",
+      "RES",
       "INT",
       "VEL"
     ],
@@ -33,7 +33,9 @@
     "contrato": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
     "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta.",
     "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação). V24 Maria Santoro e V25 Eshley Damaris (Viajantes Dimensionais) também adicionadas a pedido do autor, com o mesmo status.",
-    "revisao_13_10_2026_balanceamento": "Autorizado pelo autor em 13/10/2026 (ver docs/BALANCEAMENTO_GERAL_2026-10-13.md): (A) troca de habilidades entre 6 pares de cartas (Hyde/Vek, Agente Sete/Erla, Mark Polar/Alyra, Vivian/Kord, X/Luna Stellar, Lias Hardman/Diana); (B) teto de 95 por atributo; (C) raridade visual (losangos) pelo poder = soma + 16 x maior atributo. Atributos e perfis recalculados onde o teto alterou a soma."
+    "revisao_13_10_2026_balanceamento": "Autorizado pelo autor em 13/10/2026 (ver docs/BALANCEAMENTO_GERAL_2026-10-13.md): (A) troca de habilidades entre 6 pares de cartas (Hyde/Vek, Agente Sete/Erla, Mark Polar/Alyra, Vivian/Kord, X/Luna Stellar, Lias Hardman/Diana); (B) teto de 95 por atributo; (C) raridade visual (losangos) pelo poder = soma + 16 x maior atributo. Atributos e perfis recalculados onde o teto alterou a soma.",
+    "revisao_13_10_2026_especiais_repetidos": "Autorizado pelo autor em 13/10/2026: nenhum especial se repete entre cartas. 20 cartas que repetiam especial receberam especiais antes sem carta, casando a força da carta com o valor do especial (simulação). J10 AE-096→AE-060; S03 AE-069→AE-016; J05 AE-076→AE-124; S18 AE-116→AE-123; J12 AE-105→AE-052; V23 AE-106→AE-009; J21 AE-093→AE-038; D17 AE-093→AE-058; S17 AE-093→AE-056; V03 AE-080→AE-011; V04 AE-067→AE-127; V08 AE-004→AE-088; M04 AE-100→AE-015; V18 AE-103→AE-007; S16 AE-085→AE-070; D07 AE-051→AE-029; D10 AE-092→AE-027; M11 AE-039→AE-042; V22 AE-028→AE-057; V20 AE-111→AE-005",
+    "revisao_13_10_2026_atributos_renomeados": "Autorizado pelo autor em 13/10/2026: atributos Ataque e Defesa passam a se chamar Força (FOR) e Resistência (RES), para não confundir com o tipo de vitória (ataque/defesa). As regras e os números não mudam; as chaves ATQ/DEF dos dados viraram FOR/RES. Os especiais de tipo (Ataque obrigatório, Defesa obrigatória, Forçar/Proibir ataque ou defesa, Ataque que bane, Defesa que captura, Ataque em dupla) mantêm o nome."
   },
   "cartas": [
     {
@@ -45,8 +47,8 @@
       },
       "descricao_curta": "Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência.",
       "atributos": {
-        "ATQ": 43,
-        "DEF": 65,
+        "FOR": 43,
+        "RES": 65,
         "INT": 83,
         "VEL": 22
       },
@@ -69,8 +71,8 @@
       },
       "descricao_curta": "Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície.",
       "atributos": {
-        "ATQ": 24,
-        "DEF": 82,
+        "FOR": 24,
+        "RES": 82,
         "INT": 75,
         "VEL": 38
       },
@@ -93,8 +95,8 @@
       },
       "descricao_curta": "Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas.",
       "atributos": {
-        "ATQ": 72,
-        "DEF": 70,
+        "FOR": 72,
+        "RES": 70,
         "INT": 94,
         "VEL": 74
       },
@@ -117,8 +119,8 @@
       },
       "descricao_curta": "Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle.",
       "atributos": {
-        "ATQ": 83,
-        "DEF": 72,
+        "FOR": 83,
+        "RES": 72,
         "INT": 66,
         "VEL": 52
       },
@@ -141,14 +143,14 @@
       },
       "descricao_curta": "Construtor vigoroso, aprende a erguer abrigos numa terra onde as antigas técnicas já não bastam.",
       "atributos": {
-        "ATQ": 78,
-        "DEF": 87,
+        "FOR": 78,
+        "RES": 87,
         "INT": 58,
         "VEL": 30
       },
       "soma_atributos": 253,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-076",
+      "habilidade_especial_id": "AE-124",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J1",
@@ -165,8 +167,8 @@
       },
       "descricao_curta": "Ecoante conhecedora de plantas e remédios, enfrenta o desconhecido sem deixar de cuidar dos outros.",
       "atributos": {
-        "ATQ": 12,
-        "DEF": 35,
+        "FOR": 12,
+        "RES": 35,
         "INT": 83,
         "VEL": 19
       },
@@ -189,8 +191,8 @@
       },
       "descricao_curta": "Jovem sobrevivente, encontra coragem no cuidado mútuo e aprende a seguir mesmo diante da perda.",
       "atributos": {
-        "ATQ": 48,
-        "DEF": 51,
+        "FOR": 48,
+        "RES": 51,
         "INT": 62,
         "VEL": 73
       },
@@ -213,8 +215,8 @@
       },
       "descricao_curta": "Soberana Polar diplomática, prefere acordos à violência e luta para preservar seu povo.",
       "atributos": {
-        "ATQ": 47,
-        "DEF": 68,
+        "FOR": 47,
+        "RES": 68,
         "INT": 91,
         "VEL": 48
       },
@@ -237,8 +239,8 @@
       },
       "descricao_curta": "Soberana orgulhosa e determinada, responde à ameaça com força e exige obediência.",
       "atributos": {
-        "ATQ": 80,
-        "DEF": 70,
+        "FOR": 80,
+        "RES": 70,
         "INT": 63,
         "VEL": 61
       },
@@ -261,14 +263,14 @@
       },
       "descricao_curta": "Conselheiro hábil em fabricar versões dos fatos, usa o medo e a política para mover uma guerra.",
       "atributos": {
-        "ATQ": 38,
-        "DEF": 44,
+        "FOR": 38,
+        "RES": 44,
         "INT": 90,
         "VEL": 47
       },
       "soma_atributos": 219,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-096",
+      "habilidade_especial_id": "AE-060",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J2",
@@ -285,8 +287,8 @@
       },
       "descricao_curta": "Calandrir leal às soberanas, coloca o dever de protegê-las acima da própria segurança.",
       "atributos": {
-        "ATQ": 87,
-        "DEF": 88,
+        "FOR": 87,
+        "RES": 88,
         "INT": 57,
         "VEL": 72
       },
@@ -309,14 +311,14 @@
       },
       "descricao_curta": "Caçador Fendelar experiente, transforma a destruição de seu povo em resistência determinada.",
       "atributos": {
-        "ATQ": 86,
-        "DEF": 64,
+        "FOR": 86,
+        "RES": 64,
         "INT": 72,
         "VEL": 78
       },
       "soma_atributos": 300,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-105",
+      "habilidade_especial_id": "AE-052",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J2",
@@ -333,8 +335,8 @@
       },
       "descricao_curta": "Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias.",
       "atributos": {
-        "ATQ": 40,
-        "DEF": 70,
+        "FOR": 40,
+        "RES": 70,
         "INT": 89,
         "VEL": 61
       },
@@ -357,8 +359,8 @@
       },
       "descricao_curta": "Jovem Calandrir disciplinado, mantém os ritos e o dever mesmo quando a política muda de rumo.",
       "atributos": {
-        "ATQ": 79,
-        "DEF": 83,
+        "FOR": 79,
+        "RES": 83,
         "INT": 55,
         "VEL": 59
       },
@@ -381,8 +383,8 @@
       },
       "descricao_curta": "Veterano de quatro dedos, retorna à arena para impedir que uma nova guerra destrua os civis.",
       "atributos": {
-        "ATQ": 92,
-        "DEF": 86,
+        "FOR": 92,
+        "RES": 86,
         "INT": 68,
         "VEL": 45
       },
@@ -405,8 +407,8 @@
       },
       "descricao_curta": "Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran.",
       "atributos": {
-        "ATQ": 36,
-        "DEF": 41,
+        "FOR": 36,
+        "RES": 41,
         "INT": 90,
         "VEL": 93
       },
@@ -429,8 +431,8 @@
       },
       "descricao_curta": "Conselheira sagaz, lê as engrenagens do poder e aprende a agir antes de ter todas as certezas.",
       "atributos": {
-        "ATQ": 29,
-        "DEF": 43,
+        "FOR": 29,
+        "RES": 43,
         "INT": 95,
         "VEL": 52
       },
@@ -453,8 +455,8 @@
       },
       "descricao_curta": "Soberano carismático de Kaeliran, confia na continuidade de sua dinastia e adia decisões difíceis.",
       "atributos": {
-        "ATQ": 57,
-        "DEF": 76,
+        "FOR": 57,
+        "RES": 76,
         "INT": 84,
         "VEL": 44
       },
@@ -477,8 +479,8 @@
       },
       "descricao_curta": "Calandrir firme e disciplinada, protege Kaeliran com coragem e um sentido inflexível do dever.",
       "atributos": {
-        "ATQ": 84,
-        "DEF": 91,
+        "FOR": 84,
+        "RES": 91,
         "INT": 74,
         "VEL": 64
       },
@@ -501,8 +503,8 @@
       },
       "descricao_curta": "Anciã guardiã da memória familiar, preserva antigas histórias sem revelar todos os seus segredos.",
       "atributos": {
-        "ATQ": 8,
-        "DEF": 24,
+        "FOR": 8,
+        "RES": 24,
         "INT": 87,
         "VEL": 12
       },
@@ -525,14 +527,14 @@
       },
       "descricao_curta": "Jovem sem um braço, busca nas lembranças respostas para a origem e a perda de sua família.",
       "atributos": {
-        "ATQ": 16,
-        "DEF": 30,
+        "FOR": 16,
+        "RES": 30,
         "INT": 91,
         "VEL": 37
       },
       "soma_atributos": 174,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-093",
+      "habilidade_especial_id": "AE-038",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J4",
@@ -549,8 +551,8 @@
       },
       "descricao_curta": "Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama.",
       "atributos": {
-        "ATQ": 50,
-        "DEF": 53,
+        "FOR": 50,
+        "RES": 53,
         "INT": 72,
         "VEL": 85
       },
@@ -573,8 +575,8 @@
       },
       "descricao_curta": "Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado.",
       "atributos": {
-        "ATQ": 82,
-        "DEF": 79,
+        "FOR": 82,
+        "RES": 79,
         "INT": 57,
         "VEL": 70
       },
@@ -597,8 +599,8 @@
       },
       "descricao_curta": "Irmão mais velho dos Lins, controla a própria densidade e assume riscos para proteger os irmãos.",
       "atributos": {
-        "ATQ": 85,
-        "DEF": 90,
+        "FOR": 85,
+        "RES": 90,
         "INT": 58,
         "VEL": 52
       },
@@ -621,8 +623,8 @@
       },
       "descricao_curta": "Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha.",
       "atributos": {
-        "ATQ": 94,
-        "DEF": 70,
+        "FOR": 94,
+        "RES": 70,
         "INT": 74,
         "VEL": 78
       },
@@ -645,14 +647,14 @@
       },
       "descricao_curta": "Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir.",
       "atributos": {
-        "ATQ": 80,
-        "DEF": 38,
+        "FOR": 80,
+        "RES": 38,
         "INT": 73,
         "VEL": 64
       },
       "soma_atributos": 255,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-080",
+      "habilidade_especial_id": "AE-011",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -669,14 +671,14 @@
       },
       "descricao_curta": "A mais nova dos Lins, manifesta fogo e caos em um poder difícil de controlar.",
       "atributos": {
-        "ATQ": 93,
-        "DEF": 31,
+        "FOR": 93,
+        "RES": 31,
         "INT": 48,
         "VEL": 55
       },
       "soma_atributos": 227,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-067",
+      "habilidade_especial_id": "AE-127",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -693,8 +695,8 @@
       },
       "descricao_curta": "Mentor dos irmãos em Belfex, guarda conhecimento antigo sobre Korvo e a Sociedade de Tayo.",
       "atributos": {
-        "ATQ": 62,
-        "DEF": 83,
+        "FOR": 62,
+        "RES": 83,
         "INT": 95,
         "VEL": 39
       },
@@ -717,8 +719,8 @@
       },
       "descricao_curta": "Édion da Vigilância, enfrenta Korvo com disciplina e desconfiança mesmo contra a própria instituição.",
       "atributos": {
-        "ATQ": 78,
-        "DEF": 79,
+        "FOR": 78,
+        "RES": 79,
         "INT": 83,
         "VEL": 73
       },
@@ -741,8 +743,8 @@
       },
       "descricao_curta": "Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada.",
       "atributos": {
-        "ATQ": 35,
-        "DEF": 65,
+        "FOR": 35,
+        "RES": 65,
         "INT": 86,
         "VEL": 42
       },
@@ -765,14 +767,14 @@
       },
       "descricao_curta": "Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes.",
       "atributos": {
-        "ATQ": 69,
-        "DEF": 79,
+        "FOR": 69,
+        "RES": 79,
         "INT": 72,
         "VEL": 59
       },
       "soma_atributos": 279,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-004",
+      "habilidade_especial_id": "AE-088",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -789,8 +791,8 @@
       },
       "descricao_curta": "Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex.",
       "atributos": {
-        "ATQ": 76,
-        "DEF": 48,
+        "FOR": 76,
+        "RES": 48,
         "INT": 62,
         "VEL": 91
       },
@@ -813,8 +815,8 @@
       },
       "descricao_curta": "Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites.",
       "atributos": {
-        "ATQ": 95,
-        "DEF": 79,
+        "FOR": 95,
+        "RES": 79,
         "INT": 94,
         "VEL": 72
       },
@@ -837,8 +839,8 @@
       },
       "descricao_curta": "Ligado à Vigilância, serve secretamente aos interesses do mago Korvo.",
       "atributos": {
-        "ATQ": 51,
-        "DEF": 47,
+        "FOR": 51,
+        "RES": 47,
         "INT": 60,
         "VEL": 70
       },
@@ -861,8 +863,8 @@
       },
       "descricao_curta": "Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos.",
       "atributos": {
-        "ATQ": 85,
-        "DEF": 58,
+        "FOR": 85,
+        "RES": 58,
         "INT": 80,
         "VEL": 70
       },
@@ -885,8 +887,8 @@
       },
       "descricao_curta": "Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo.",
       "atributos": {
-        "ATQ": 83,
-        "DEF": 68,
+        "FOR": 83,
+        "RES": 68,
         "INT": 59,
         "VEL": 76
       },
@@ -909,8 +911,8 @@
       },
       "descricao_curta": "Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás.",
       "atributos": {
-        "ATQ": 11,
-        "DEF": 39,
+        "FOR": 11,
+        "RES": 39,
         "INT": 38,
         "VEL": 20
       },
@@ -933,8 +935,8 @@
       },
       "descricao_curta": "Aprendiz em Tayo, destaca-se pela confiança e pela atitude provocadora diante dos colegas.",
       "atributos": {
-        "ATQ": 66,
-        "DEF": 76,
+        "FOR": 66,
+        "RES": 76,
         "INT": 86,
         "VEL": 92
       },
@@ -957,8 +959,8 @@
       },
       "descricao_curta": "Jovem Aracna curiosa e falante, guia os irmãos Lins pelos túneis subterrâneos de Belfex.",
       "atributos": {
-        "ATQ": 36,
-        "DEF": 40,
+        "FOR": 36,
+        "RES": 40,
         "INT": 75,
         "VEL": 89
       },
@@ -981,8 +983,8 @@
       },
       "descricao_curta": "Rainha das Aracnas, combina imponência e astúcia ao testar a coragem de Banjo na grande caverna.",
       "atributos": {
-        "ATQ": 76,
-        "DEF": 82,
+        "FOR": 76,
+        "RES": 82,
         "INT": 95,
         "VEL": 43
       },
@@ -1005,14 +1007,14 @@
       },
       "descricao_curta": "Líder dos Obbs de Pinesoto, ergue raízes e troncos vivos para proteger seu povo dos invasores.",
       "atributos": {
-        "ATQ": 80,
-        "DEF": 95,
+        "FOR": 80,
+        "RES": 95,
         "INT": 89,
         "VEL": 34
       },
       "soma_atributos": 298,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-103",
+      "habilidade_especial_id": "AE-007",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -1029,8 +1031,8 @@
       },
       "descricao_curta": "Líder de guerra dos Obbs, supera a desconfiança inicial e ajuda os irmãos durante o ataque a Pinesoto.",
       "atributos": {
-        "ATQ": 79,
-        "DEF": 85,
+        "FOR": 79,
+        "RES": 85,
         "INT": 66,
         "VEL": 82
       },
@@ -1053,8 +1055,8 @@
       },
       "descricao_curta": "Pirata Dale impulsivo e carismático, sobrevive com um braço metálico e desafia o código da Lebargan.",
       "atributos": {
-        "ATQ": 92,
-        "DEF": 76,
+        "FOR": 92,
+        "RES": 76,
         "INT": 72,
         "VEL": 88
       },
@@ -1077,8 +1079,8 @@
       },
       "descricao_curta": "Aliada de Jasmey, questiona as ordens de Jelles e ajuda a desafiar o domínio da Lebargan.",
       "atributos": {
-        "ATQ": 56,
-        "DEF": 82,
+        "FOR": 56,
+        "RES": 82,
         "INT": 73,
         "VEL": 65
       },
@@ -1101,14 +1103,14 @@
       },
       "descricao_curta": "Irmão de Amanda, sarcástico e curioso, arrisca tudo ao disputar o Olho de Domongo.",
       "atributos": {
-        "ATQ": 48,
-        "DEF": 47,
+        "FOR": 48,
+        "RES": 47,
         "INT": 77,
         "VEL": 86
       },
       "soma_atributos": 258,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-069",
+      "habilidade_especial_id": "AE-016",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S",
@@ -1125,8 +1127,8 @@
       },
       "descricao_curta": "Engenheiro inventivo, transforma sucata em soluções e mantém a esperança entre companheiros.",
       "atributos": {
-        "ATQ": 18,
-        "DEF": 41,
+        "FOR": 18,
+        "RES": 41,
         "INT": 95,
         "VEL": 30
       },
@@ -1149,8 +1151,8 @@
       },
       "descricao_curta": "Companheiro vigoroso da tripulação de Jasmey, oferece proteção quando a força é necessária.",
       "atributos": {
-        "ATQ": 78,
-        "DEF": 81,
+        "FOR": 78,
+        "RES": 81,
         "INT": 51,
         "VEL": 51
       },
@@ -1173,8 +1175,8 @@
       },
       "descricao_curta": "Mecânico leal e aliado de Hardman, enfrenta os perigos do espaço ao lado dos companheiros.",
       "atributos": {
-        "ATQ": 69,
-        "DEF": 79,
+        "FOR": 69,
+        "RES": 79,
         "INT": 65,
         "VEL": 44
       },
@@ -1197,8 +1199,8 @@
       },
       "descricao_curta": "Integrante da equipe de Jasmey, enfrenta o cativeiro e a fuga com seus aliados.",
       "atributos": {
-        "ATQ": 55,
-        "DEF": 76,
+        "FOR": 55,
+        "RES": 76,
         "INT": 65,
         "VEL": 51
       },
@@ -1221,8 +1223,8 @@
       },
       "descricao_curta": "Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo.",
       "atributos": {
-        "ATQ": 83,
-        "DEF": 70,
+        "FOR": 83,
+        "RES": 70,
         "INT": 89,
         "VEL": 65
       },
@@ -1245,8 +1247,8 @@
       },
       "descricao_curta": "Capitã lendária da Lebargan, comanda com discrição uma das naves mais temidas do espaço.",
       "atributos": {
-        "ATQ": 91,
-        "DEF": 93,
+        "FOR": 91,
+        "RES": 93,
         "INT": 82,
         "VEL": 75
       },
@@ -1269,8 +1271,8 @@
       },
       "descricao_curta": "Comandante brutal da Lebargan, governa pelo medo e busca o poder escondido na Aurora.",
       "atributos": {
-        "ATQ": 93,
-        "DEF": 82,
+        "FOR": 93,
+        "RES": 82,
         "INT": 80,
         "VEL": 65
       },
@@ -1293,8 +1295,8 @@
       },
       "descricao_curta": "Criatura despertada na Aurora, alvo da obsessão de Jelles e ameaça envolta em mistério.",
       "atributos": {
-        "ATQ": 95,
-        "DEF": 95,
+        "FOR": 95,
+        "RES": 95,
         "INT": 22,
         "VEL": 32
       },
@@ -1317,8 +1319,8 @@
       },
       "descricao_curta": "Dale leal ao antigo código, deixa o ressentimento transformar sua relação com Jasmey.",
       "atributos": {
-        "ATQ": 75,
-        "DEF": 64,
+        "FOR": 75,
+        "RES": 64,
         "INT": 59,
         "VEL": 68
       },
@@ -1341,8 +1343,8 @@
       },
       "descricao_curta": "Capitão pirata rival, negocia sob pressão e disputa vantagens nos perigos do espaço.",
       "atributos": {
-        "ATQ": 81,
-        "DEF": 74,
+        "FOR": 81,
+        "RES": 74,
         "INT": 84,
         "VEL": 57
       },
@@ -1365,8 +1367,8 @@
       },
       "descricao_curta": "Rival provocador de Jasmey, surpreende ao participar da ruptura contra Jelles.",
       "atributos": {
-        "ATQ": 80,
-        "DEF": 53,
+        "FOR": 80,
+        "RES": 53,
         "INT": 49,
         "VEL": 85
       },
@@ -1389,8 +1391,8 @@
       },
       "descricao_curta": "Escritor e amigo de Pedro, tenta organizar relatos marcados por culpa e eventos sobrenaturais.",
       "atributos": {
-        "ATQ": 21,
-        "DEF": 35,
+        "FOR": 21,
+        "RES": 35,
         "INT": 82,
         "VEL": 46
       },
@@ -1414,8 +1416,8 @@
       },
       "descricao_curta": "Irmã mais velha de Kelly, enfrenta perdas e conflitos ao seguir os rastros do sobrenatural.",
       "atributos": {
-        "ATQ": 39,
-        "DEF": 77,
+        "FOR": 39,
+        "RES": 77,
         "INT": 75,
         "VEL": 58
       },
@@ -1439,8 +1441,8 @@
       },
       "descricao_curta": "Amigo impulsivo de Junior, desafia o medo e o luto enquanto busca proteger quem ama.",
       "atributos": {
-        "ATQ": 52,
-        "DEF": 39,
+        "FOR": 52,
+        "RES": 39,
         "INT": 59,
         "VEL": 74
       },
@@ -1464,8 +1466,8 @@
       },
       "descricao_curta": "Leitora inteligente, investiga segredos sobrenaturais na tentativa de reparar antigas culpas.",
       "atributos": {
-        "ATQ": 14,
-        "DEF": 26,
+        "FOR": 14,
+        "RES": 26,
         "INT": 91,
         "VEL": 38
       },
@@ -1489,8 +1491,8 @@
       },
       "descricao_curta": "Jovem manco e marcado pela violência, tenta escapar do peso do passado e da reputação familiar.",
       "atributos": {
-        "ATQ": 78,
-        "DEF": 52,
+        "FOR": 78,
+        "RES": 52,
         "INT": 62,
         "VEL": 48
       },
@@ -1514,8 +1516,8 @@
       },
       "descricao_curta": "Sensível aos espíritos e às visões, Jennifer procura compreender o dom que a isola dos outros.",
       "atributos": {
-        "ATQ": 71,
-        "DEF": 77,
+        "FOR": 71,
+        "RES": 77,
         "INT": 91,
         "VEL": 70
       },
@@ -1539,14 +1541,14 @@
       },
       "descricao_curta": "Espírito da família Carnam, carrega uma história de sofrimento e manipulação sobrenatural.",
       "atributos": {
-        "ATQ": 74,
-        "DEF": 75,
+        "FOR": 74,
+        "RES": 75,
         "INT": 68,
         "VEL": 53
       },
       "soma_atributos": 270,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-051",
+      "habilidade_especial_id": "AE-029",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1",
@@ -1564,8 +1566,8 @@
       },
       "descricao_curta": "Jovem que deseja ser jornalista, investiga acontecimentos estranhos para encontrar respostas.",
       "atributos": {
-        "ATQ": 27,
-        "DEF": 38,
+        "FOR": 27,
+        "RES": 38,
         "INT": 82,
         "VEL": 64
       },
@@ -1589,8 +1591,8 @@
       },
       "descricao_curta": "Personagem de Diário Sobrenatural ainda sem perfil narrativo verificável nos materiais consultados.",
       "atributos": {
-        "ATQ": 36,
-        "DEF": 42,
+        "FOR": 36,
+        "RES": 42,
         "INT": 46,
         "VEL": 48
       },
@@ -1614,14 +1616,14 @@
       },
       "descricao_curta": "Senhora que vive na casa da serra; conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre.",
       "atributos": {
-        "ATQ": 8,
-        "DEF": 34,
+        "FOR": 8,
+        "RES": 34,
         "INT": 90,
         "VEL": 13
       },
       "soma_atributos": 145,
       "perfil_balanceamento": "Azar",
-      "habilidade_especial_id": "AE-092",
+      "habilidade_especial_id": "AE-027",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D2-histórico",
@@ -1639,8 +1641,8 @@
       },
       "descricao_curta": "Demônio executor ligado à Besta da Carnificina, explora o medo das suas vítimas.",
       "atributos": {
-        "ATQ": 90,
-        "DEF": 69,
+        "FOR": 90,
+        "RES": 69,
         "INT": 54,
         "VEL": 71
       },
@@ -1663,8 +1665,8 @@
       },
       "descricao_curta": "Entidade manipuladora, Agouro se alimenta do sofrimento e influencia os vivos e os espíritos.",
       "atributos": {
-        "ATQ": 95,
-        "DEF": 87,
+        "FOR": 95,
+        "RES": 87,
         "INT": 92,
         "VEL": 70
       },
@@ -1687,8 +1689,8 @@
       },
       "descricao_curta": "Espírito da família Carnam, um dos elos de uma tragédia que atravessa gerações.",
       "atributos": {
-        "ATQ": 62,
-        "DEF": 71,
+        "FOR": 62,
+        "RES": 71,
         "INT": 55,
         "VEL": 35
       },
@@ -1712,8 +1714,8 @@
       },
       "descricao_curta": "Jovem ligado à história de Manu, procura enfrentar os perigos que a cercam.",
       "atributos": {
-        "ATQ": 34,
-        "DEF": 46,
+        "FOR": 34,
+        "RES": 46,
         "INT": 63,
         "VEL": 65
       },
@@ -1737,8 +1739,8 @@
       },
       "descricao_curta": "Demônio dos sentidos em forma do pai da Família Carnam (Carnam Marques), relacionado a um Elo marcado pela violência e por uma arma.",
       "atributos": {
-        "ATQ": 68,
-        "DEF": 52,
+        "FOR": 68,
+        "RES": 52,
         "INT": 52,
         "VEL": 31
       },
@@ -1762,8 +1764,8 @@
       },
       "descricao_curta": "Demônio dos sentidos em forma da mãe da Família Carnam (Isabela), cujo Elo é um álbum de fotografias ligado às lembranças do passado.",
       "atributos": {
-        "ATQ": 23,
-        "DEF": 39,
+        "FOR": 23,
+        "RES": 39,
         "INT": 66,
         "VEL": 46
       },
@@ -1787,14 +1789,14 @@
       },
       "descricao_curta": "Demônio dos sentidos em forma da avó da Família Carnam, ligada à lente dos óculos que preserva seu vínculo sobrenatural.",
       "atributos": {
-        "ATQ": 8,
-        "DEF": 35,
+        "FOR": 8,
+        "RES": 35,
         "INT": 81,
         "VEL": 16
       },
       "soma_atributos": 140,
       "perfil_balanceamento": "Azar",
-      "habilidade_especial_id": "AE-093",
+      "habilidade_especial_id": "AE-058",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "D1-Carnam",
@@ -1812,8 +1814,8 @@
       },
       "descricao_curta": "Demônio dos sentidos em forma do cão da Família Carnam (Ibliso), ligado à coleira que integra os misteriosos Elos manipulados por Agouro.",
       "atributos": {
-        "ATQ": 54,
-        "DEF": 42,
+        "FOR": 54,
+        "RES": 42,
         "INT": 25,
         "VEL": 92
       },
@@ -1837,8 +1839,8 @@
       },
       "descricao_curta": "Detetive observador e obstinado, conecta pistas improváveis enquanto enfrenta suas próprias sombras.",
       "atributos": {
-        "ATQ": 53,
-        "DEF": 58,
+        "FOR": 53,
+        "RES": 58,
         "INT": 95,
         "VEL": 76
       },
@@ -1861,8 +1863,8 @@
       },
       "descricao_curta": "Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais.",
       "atributos": {
-        "ATQ": 83,
-        "DEF": 95,
+        "FOR": 83,
+        "RES": 95,
         "INT": 90,
         "VEL": 80
       },
@@ -1885,8 +1887,8 @@
       },
       "descricao_curta": "Figura decisiva no passado de Hyde, enfrenta a dor com humor, curiosidade e humanidade.",
       "atributos": {
-        "ATQ": 18,
-        "DEF": 31,
+        "FOR": 18,
+        "RES": 31,
         "INT": 72,
         "VEL": 78
       },
@@ -1909,14 +1911,14 @@
       },
       "descricao_curta": "Advogado habilidoso e sarcástico, abre caminhos por favores, influência e brechas jurídicas.",
       "atributos": {
-        "ATQ": 24,
-        "DEF": 38,
+        "FOR": 24,
+        "RES": 38,
         "INT": 91,
         "VEL": 61
       },
       "soma_atributos": 214,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-100",
+      "habilidade_especial_id": "AE-015",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1933,8 +1935,8 @@
       },
       "descricao_curta": "Mentor moral de Hyde, ensina a fazer perguntas difíceis antes de condenar os outros.",
       "atributos": {
-        "ATQ": 12,
-        "DEF": 42,
+        "FOR": 12,
+        "RES": 42,
         "INT": 84,
         "VEL": 20
       },
@@ -1957,8 +1959,8 @@
       },
       "descricao_curta": "Nome de um inimigo cuja perseguição conduz Hyde por uma trama de segredos e identidades.",
       "atributos": {
-        "ATQ": 68,
-        "DEF": 53,
+        "FOR": 68,
+        "RES": 53,
         "INT": 86,
         "VEL": 59
       },
@@ -1981,8 +1983,8 @@
       },
       "descricao_curta": "Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização.",
       "atributos": {
-        "ATQ": 77,
-        "DEF": 94,
+        "FOR": 77,
+        "RES": 94,
         "INT": 88,
         "VEL": 59
       },
@@ -2005,8 +2007,8 @@
       },
       "descricao_curta": "Cientista da SPAGE, desenvolveu uma interface para acompanhar a saúde cerebral de astronautas.",
       "atributos": {
-        "ATQ": 19,
-        "DEF": 32,
+        "FOR": 19,
+        "RES": 32,
         "INT": 95,
         "VEL": 39
       },
@@ -2029,8 +2031,8 @@
       },
       "descricao_curta": "Richard Falkner, chamado Bulldog, integra o universo investigativo de Mistério Oculto.",
       "atributos": {
-        "ATQ": 81,
-        "DEF": 86,
+        "FOR": 81,
+        "RES": 86,
         "INT": 66,
         "VEL": 54
       },
@@ -2053,8 +2055,8 @@
       },
       "descricao_curta": "Luzitano deixado na Terra pela Luz após os eventos de Órbita Oráculo.",
       "atributos": {
-        "ATQ": 76,
-        "DEF": 92,
+        "FOR": 76,
+        "RES": 92,
         "INT": 87,
         "VEL": 82
       },
@@ -2077,14 +2079,14 @@
       },
       "descricao_curta": "Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar.",
       "atributos": {
-        "ATQ": 8,
-        "DEF": 19,
+        "FOR": 8,
+        "RES": 19,
         "INT": 95,
         "VEL": 45
       },
       "soma_atributos": 167,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-039",
+      "habilidade_especial_id": "AE-042",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -2101,8 +2103,8 @@
       },
       "descricao_curta": "Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana.",
       "atributos": {
-        "ATQ": 75,
-        "DEF": 62,
+        "FOR": 75,
+        "RES": 62,
         "INT": 95,
         "VEL": 51
       },
@@ -2126,8 +2128,8 @@
       },
       "descricao_curta": "Édelin Lys pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento.",
       "atributos": {
-        "ATQ": 92,
-        "DEF": 83,
+        "FOR": 92,
+        "RES": 83,
         "INT": 86,
         "VEL": 80
       },
@@ -2150,14 +2152,14 @@
       },
       "descricao_curta": "Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Gary e depois inocentado.",
       "atributos": {
-        "ATQ": 82,
-        "DEF": 78,
+        "FOR": 82,
+        "RES": 78,
         "INT": 95,
         "VEL": 78
       },
       "soma_atributos": 333,
       "perfil_balanceamento": "Elite",
-      "habilidade_especial_id": "AE-111",
+      "habilidade_especial_id": "AE-005",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -2175,8 +2177,8 @@
       },
       "descricao_curta": "Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo.",
       "atributos": {
-        "ATQ": 48,
-        "DEF": 60,
+        "FOR": 48,
+        "RES": 60,
         "INT": 70,
         "VEL": 75
       },
@@ -2200,14 +2202,14 @@
       },
       "descricao_curta": "Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo.",
       "atributos": {
-        "ATQ": 60,
-        "DEF": 72,
+        "FOR": 60,
+        "RES": 72,
         "INT": 64,
         "VEL": 53
       },
       "soma_atributos": 249,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-028",
+      "habilidade_especial_id": "AE-057",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -2225,14 +2227,14 @@
       },
       "descricao_curta": "Gêmeo de Nicolas e aprendiz de McCroys; competitivo e provocador, lança chamas, mas recusa Korvo.",
       "atributos": {
-        "ATQ": 76,
-        "DEF": 28,
+        "FOR": 76,
+        "RES": 28,
         "INT": 40,
         "VEL": 59
       },
       "soma_atributos": 203,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-106",
+      "habilidade_especial_id": "AE-009",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",
@@ -2250,8 +2252,8 @@
       },
       "descricao_curta": "Aprendiz tímida e gentil vinda da 3ª dimensão; ergue barreiras de vento. Melhor amiga de Eshley, deixa o treino cedo.",
       "atributos": {
-        "ATQ": 38,
-        "DEF": 82,
+        "FOR": 38,
+        "RES": 82,
         "INT": 66,
         "VEL": 69
       },
@@ -2275,8 +2277,8 @@
       },
       "descricao_curta": "Dimensal órfã criada pela avó, sonhava treinar com Tayo; veloz e curiosa, faz passes certeiros no Fulgor Dourado.",
       "atributos": {
-        "ATQ": 45,
-        "DEF": 62,
+        "FOR": 45,
+        "RES": 62,
         "INT": 75,
         "VEL": 88
       },
@@ -2300,8 +2302,8 @@
       },
       "descricao_curta": "Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan.",
       "atributos": {
-        "ATQ": 82,
-        "DEF": 55,
+        "FOR": 82,
+        "RES": 55,
         "INT": 18,
         "VEL": 72
       },
@@ -2325,14 +2327,14 @@
       },
       "descricao_curta": "Cientista mística de biotecnologia que revive Jasmey e lhe dá um braço novo; diz não interferir, mas interfere.",
       "atributos": {
-        "ATQ": 20,
-        "DEF": 38,
+        "FOR": 20,
+        "RES": 38,
         "INT": 80,
         "VEL": 31
       },
       "soma_atributos": 169,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-085",
+      "habilidade_especial_id": "AE-070",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-manuscrito",
@@ -2350,14 +2352,14 @@
       },
       "descricao_curta": "Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo.",
       "atributos": {
-        "ATQ": 38,
-        "DEF": 52,
+        "FOR": 38,
+        "RES": 52,
         "INT": 85,
         "VEL": 80
       },
       "soma_atributos": 255,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-093",
+      "habilidade_especial_id": "AE-056",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-manuscrito",
@@ -2375,14 +2377,14 @@
       },
       "descricao_curta": "Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto.",
       "atributos": {
-        "ATQ": 84,
-        "DEF": 70,
+        "FOR": 84,
+        "RES": 70,
         "INT": 68,
         "VEL": 88
       },
       "soma_atributos": 310,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-116",
+      "habilidade_especial_id": "AE-123",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-manuscrito",
@@ -2400,8 +2402,8 @@
       },
       "descricao_curta": "Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve.",
       "atributos": {
-        "ATQ": 28,
-        "DEF": 44,
+        "FOR": 28,
+        "RES": 44,
         "INT": 78,
         "VEL": 52
       },
