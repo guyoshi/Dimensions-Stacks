@@ -421,7 +421,9 @@
         this.s.combats++;
         // rodada: todos os ativos iniciaram uma vez
         this.s.initiated.add(this.s.initiator);
-        if (this.alive().every(pid => this.s.initiated.has(pid))) { this.s.round++; this.s.initiated = new Set(); this.log(`— Rodada ${this.s.round} —`, 'rodada'); await this.emit('round', { round: this.s.round }); }
+        const roundDone = this.alive().every(pid => this.s.initiated.has(pid));
+        await this.refill();   // compras e eliminações aparecem ANTES do aviso de nova rodada (a contagem da rodada não muda)
+        if (roundDone) { this.s.round++; this.s.initiated = new Set(); if (!this.checkEnd()) { this.log(`— Rodada ${this.s.round} —`, 'rodada'); await this.emit('round', { round: this.s.round }); } }
         this.s.initiator = this.nextAlive(this.s.initiator);
         if (this.checkEnd()) break;
       }
