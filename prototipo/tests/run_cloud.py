@@ -17,7 +17,7 @@ try:
     pg.goto('http://localhost:8774/_page.html'); pg.wait_for_timeout(800)
     pg.click('#nav [data-tab=prof]'); pg.wait_for_timeout(400)
     uid = pg.inner_text('#pfUid'); print('uid', uid)
-    pg.fill('#pfName', 'Taina'); pg.wait_for_timeout(3500)
+    pg.click('#pfEdit'); pg.fill('#pfName', 'Taina'); pg.keyboard.press('Enter'); pg.wait_for_timeout(3500)
     print('db', pg.evaluate("JSON.stringify(window.__db.players)"))
     pg.fill('#fq', uid); pg.click('#fgo'); pg.wait_for_timeout(600); print('busca id:', pg.inner_text('#fout')[:90].replace('\n', ' | '))
     pg.fill('#fq', 'taina'); pg.click('#fgo'); pg.wait_for_timeout(600); print('busca nome:', pg.inner_text('#fout')[:60].replace('\n', ' | '))

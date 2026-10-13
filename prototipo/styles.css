@@ -819,3 +819,10 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .usp i::after { content: ""; position: absolute; inset: -90%; border-radius: 50%; background: radial-gradient(circle, #ffe9a040 0, #ffd25f1c 30%, transparent 62%); }
 .sp { filter: drop-shadow(0 0 2px var(--c)) drop-shadow(0 0 5px color-mix(in srgb, var(--c) 75%, transparent)); }
 .sp i { background: radial-gradient(circle, #fff 0, #fff 15%, var(--c) 42%, color-mix(in srgb, var(--c) 45%, transparent) 78%, color-mix(in srgb, var(--c) 12%, transparent) 100%); }
+
+/* nome: texto fixo + lápis; o campo só aparece ao editar (Perfil) */
+.pf-id [hidden] { display: none !important; }
+.pfn { display: flex; align-items: center; gap: 8px; }
+.pfn b { font-family: var(--f-disp); font-size: 1.25em; color: var(--ink); overflow-wrap: anywhere; }
+.pfn .ibtn { flex: none; }
+.seatname { min-width: 0; padding: .55em .7em; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }

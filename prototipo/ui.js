@@ -264,6 +264,7 @@
   function setup() {
     const s = $('#setup');
     CFG.seats.forEach((p, i) => { if (i > 0 && !p.bot) { p.bot = true; p.name = 'Bot'; } });
+    if (CFG.seats[0] && !CFG.seats[0].bot) CFG.seats[0].name = U.profileName() || 'Você';   // o nome só se edita no Perfil
     { const used = CFG.seats.slice(0, CFG.n).filter(p => !(p.bot && /^Bot( |$)/.test(p.name))).map(p => p.name); CFG.seats.slice(0, CFG.n).forEach(p => { if (p.bot && /^Bot( |$)/.test(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
     const maxPer = Math.min(24, Math.floor(CARTAS.length / CFG.n));
     CFG.per = Math.max(7, Math.min(CFG.per, maxPer));
@@ -273,7 +274,7 @@
       <div class="lbl">Jogadores</div>
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
       <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
-        <input type="text" maxlength="14" value="${esc(p.name)}" data-i="${i}" aria-label="Nome do jogador ${i + 1}">
+        <span class="seatname" data-i="${i}">${esc(p.name)}</span>
         ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para o bot">🎲 Sortear</button>`}</div>`).join('')}</div>
       <div class="lbl">Dificuldade dos bots</div>
       <div class="seg" data-k="diff">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${CFG.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>
@@ -309,7 +310,6 @@
     };
     s.oninput = e => {
       if (e.target.id === 'per') { CFG.per = +e.target.value; $('#perv', s).textContent = CFG.per; store.set('cfg', CFG); }
-      else if (e.target.dataset.i != null && e.target.type === 'text') { CFG.seats[+e.target.dataset.i].name = e.target.value; const av = e.target.closest('.seatcfg').querySelector('.avatar'); av.textContent = (e.target.value[0] || '?').toUpperCase(); store.set('cfg', CFG); }
     };
   }
 

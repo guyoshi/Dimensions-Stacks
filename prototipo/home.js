@@ -172,7 +172,7 @@
     const stat = (v, l) => `<div class="stat"><b>${v}</b><small>${l}</small></div>`;
     s.innerHTML = `<div class="tabwrap">${topbar('Perfil')}
       <section class="pf-head"><button class="pf-av" id="pfAv" aria-label="Trocar avatar">${avatarHTML(p.avatar, p.name || 'Jogador', 84)}<i>✎</i></button>
-        <div class="pf-id"><label for="pfName" class="hint">Seu nome</label><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Como você quer aparecer" value="${esc(p.name)}" autocomplete="off"><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
+        <div class="pf-id"><small class="hint">Seu nome</small><div class="pfn" id="pfnRow"><b id="pfNameTxt">${esc(p.name) || 'Sem nome'}</b><button class="ibtn sm" id="pfEdit" aria-label="Editar nome" title="Editar nome">✎</button></div><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Como você quer aparecer" aria-label="Seu nome" value="${esc(p.name)}" autocomplete="off" hidden><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
       <section class="stats">${stat(t.g, 'Partidas')}${stat(t.w, 'Vitórias')}${stat(t.g ? pct + '%' : '—', 'Aproveitamento')}${stat(t.best, 'Maior sequência')}${stat(t.dispW, 'Disputas ganhas')}${stat(t.esp, 'Especiais usados')}</section>
       <section class="modes"><div><b>Contra bots</b><span>${t.pvb.w}/${t.pvb.g} vitórias</span></div><div><b>Contra pessoas</b><span>${t.pvp.w}/${t.pvp.g} vitórias</span></div><div><b>Online</b><span>${t.online.w}/${t.online.g} vitórias</span></div>${t.g ? `<div><b>Partida média</b><span>${fmtDur(t.dur / t.g)} · ${(t.rounds / t.g).toFixed(1)} rodadas</span></div>` : ''}</section>
       <h3 class="sec">Maestria das cartas <span class="hint">${ST.masteryCount(1)} com emblema</span></h3><div class="mastsec" id="mastsec"></div>
@@ -191,7 +191,11 @@
       ms.onclick = e => { const b = e.target.closest('.mrow'); if (b) { SND.play('click'); U.zoom(b.dataset.id, { list: top.map(m => m.id), mastery: true }); } }; }
     const fr = $('#favrow', s);
     if (p.fav.length) fr.append(...p.fav.slice(0, 12).map(id => cardEl(id, { up: true, noanim: true, cw: 76, click: true }))); else fr.innerHTML = '<p class="hint">Abra uma carta na Coleção e toque em ☆ para favoritá-la.</p>';
-    const nm = $('#pfName', s); nm.oninput = () => { ST.setName(nm.value); const av = $('#pfAv', s); av.innerHTML = avatarHTML(ST.profile().avatar, nm.value || 'Jogador', 84) + '<i>✎</i>'; };
+    const nm = $('#pfName', s), row = $('#pfnRow', s);   // o nome só se edita aqui: toque no lápis, digite e confirme com Enter (ou ao sair do campo)
+    const commit = () => { ST.setName(nm.value); const n = ST.profile().name; $('#pfNameTxt', s).textContent = n || 'Sem nome'; const av = $('#pfAv', s); av.innerHTML = avatarHTML(ST.profile().avatar, n || 'Jogador', 84) + '<i>✎</i>'; nm.hidden = true; row.hidden = false; };
+    $('#pfEdit', s).onclick = () => { SND.play('click'); row.hidden = true; nm.hidden = false; nm.value = ST.profile().name || ''; nm.focus(); nm.select(); };
+    nm.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); nm.blur(); } else if (e.key === 'Escape') { nm.value = ST.profile().name || ''; nm.blur(); } };
+    nm.onblur = commit;
     $('#pfAv', s).onclick = () => { SND.play('click'); avatarPicker(() => profTab()); };
     let sure = false; const rb = $('#pfReset', s); rb.onclick = () => { if (!sure) { sure = true; rb.textContent = 'Toque de novo para apagar tudo'; return; } ST.reset(); profTab(); };
     const cp = $('#pfCopy', s); cp.onclick = async () => { try { await navigator.clipboard.writeText(ST.uid()); cp.textContent = 'Copiado'; } catch (e) { cp.textContent = ST.uid(); } };
