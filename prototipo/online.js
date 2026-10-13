@@ -79,7 +79,7 @@
       on(topic, fn) { // fn(obj, msg)
         (hs[topic] = hs[topic] || []).push(fn);
         if (hs[topic].length === 1) off.push(room.on(topic, msg => {
-          if (msg.isMe || msg.sameTab) return; const x = msg.data; if (!x || typeof x !== 'object') return;
+          if (msg.sameTab) return; const x = msg.data; if (!x || typeof x !== 'object') return;
           if (x.to && x.to !== link.me) return;
           let obj;
           if ('d' in x) obj = x.d;
@@ -142,7 +142,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       if (!link) { busy(false); return flash('Não foi possível abrir a conexão online neste aparelho.', 'err'); }
       if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN + ' [detalhe: ' + (U.roomWhy || '?') + ']', 'err'); }
       await link.presence({ n: name, u: myUid(), v: VER }); await sleep(1100);
-      if (link.peers().some(p => !p.isMe && p.presence && p.presence.h)) { await link.leave(); continue; } // código já em uso
+      if (link.peers().some(p => !p.sameTab && p.presence && p.presence.h)) { await link.leave(); continue; } // código já em uso
       return lobbyHost(link, code, name);
     }
     busy(false); flash('Não consegui criar uma sala livre. Tente de novo.', 'err');
@@ -154,7 +154,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN + ' [detalhe: ' + (U.roomWhy || '?') + ']', 'err'); }
     await link.presence({ n: name, u: myUid(), v: VER });
     let host = null; const t0 = Date.now();
-    while (Date.now() - t0 < 6000) { host = link.peers().find(p => !p.isMe && p.presence && p.presence.h); if (host) break; await sleep(250); }
+    while (Date.now() - t0 < 6000) { host = link.peers().find(p => !p.sameTab && p.presence && p.presence.h); if (host) break; await sleep(250); }
     if (!host) { await link.leave(); busy(false); return flash('Sala não encontrada. Confira o código (e se o anfitrião ainda está nela).', 'err'); }
     if (host.presence.v !== VER) { await link.leave(); busy(false); return flash('Versões diferentes do jogo. Recarregue a página e tente de novo.', 'err'); }
     if (host.presence.go) { await link.leave(); busy(false); return flash('Essa partida já começou.', 'err'); }
@@ -205,7 +205,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       <div class="row" style="margin-bottom:6px"><button class="btn sm" data-a="copy">📋 Copiar código</button><span class="hint">${sess.link.mode === 'local' ? 'modo local (mesmo navegador)' : 'passe este código para quem vai jogar'}</span></div>
       <div class="lbl">Jogadores (${hum.length} humano${hum.length === 1 ? '' : 's'})</div>
       <div class="seats">${slots.map((p, i) => `<div class="seatcfg onseat"><div class="avatar" style="--pc:${PCOL[i]}">${p ? esc((p.presence.n || '?')[0].toUpperCase()) : '🤖'}</div>
-        <div class="onnm"><b>${p ? esc(p.presence.n) : 'Bot'}</b>${p && p.presence.u ? ` <small class="uid">${esc(p.presence.u)}</small>` : ''}${p ? (p.presence.h ? ' <span class="pill">anfitrião</span>' : '') + (p.isMe ? ' <span class="pill me">você</span>' : '') : ' <span class="hint">completa a vaga</span>'}</div><span></span></div>`).join('')}</div>
+        <div class="onnm"><b>${p ? esc(p.presence.n) : 'Bot'}</b>${p && p.presence.u ? ` <small class="uid">${esc(p.presence.u)}</small>` : ''}${p ? (p.presence.h ? ' <span class="pill">anfitrião</span>' : '') + (p.sameTab ? ' <span class="pill me">você</span>' : '') : ' <span class="hint">completa a vaga</span>'}</div><span></span></div>`).join('')}</div>
       ${isHost ? `<div class="lbl">Lugares na mesa</div>
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${N === n ? 'on' : ''}" ${hum.length > n ? 'disabled' : ''}>${n}</button>`).join('')}</div>
       <div class="hint">Vagas sem humano são preenchidas por bots.</div>
