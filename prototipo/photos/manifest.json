@@ -684,6 +684,123 @@
    "w": 720,
    "h": 1080,
    "webp": 120588
+  },
+  "S10": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Jelles.png",
+   "mtimeMs": 1791893014984,
+   "bytes": 2482020,
+   "sha1": "38095953b4",
+   "w": 720,
+   "h": 1080,
+   "webp": 126100
+  },
+  "S11": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/A Besta.png",
+   "mtimeMs": 1791893740970,
+   "bytes": 3228817,
+   "sha1": "b4241564d6",
+   "w": 720,
+   "h": 1080,
+   "webp": 242988
+  },
+  "S12": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Vek.png",
+   "mtimeMs": 1791892243263,
+   "bytes": 2031971,
+   "sha1": "895c498ba7",
+   "w": 720,
+   "h": 1080,
+   "webp": 79122
+  },
+  "S16": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Engenheira.png",
+   "mtimeMs": 1791892904825,
+   "bytes": 3146780,
+   "sha1": "13d3705f6d",
+   "w": 720,
+   "h": 1080,
+   "webp": 192956
+  },
+  "S17": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Luna Stellar.png",
+   "mtimeMs": 1791891876241,
+   "bytes": 2592272,
+   "sha1": "a16f139954",
+   "w": 720,
+   "h": 1080,
+   "webp": 134300
+  },
+  "S18": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Alekta.png",
+   "mtimeMs": 1791891449007,
+   "bytes": 2860106,
+   "sha1": "4c4b87eddc",
+   "w": 720,
+   "h": 1080,
+   "webp": 182930
+  },
+  "M01": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Hyde.png",
+   "mtimeMs": 1791892204047,
+   "bytes": 2366564,
+   "sha1": "bc60f5727f",
+   "w": 720,
+   "h": 1080,
+   "webp": 103368
+  },
+  "M02": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Sete.png",
+   "mtimeMs": 1791892979412,
+   "bytes": 2053336,
+   "sha1": "1e9a9a6fe5",
+   "w": 720,
+   "h": 1080,
+   "webp": 67752
+  },
+  "M03": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Diana.png",
+   "mtimeMs": 1791893139647,
+   "bytes": 2434482,
+   "sha1": "0671a64553",
+   "w": 720,
+   "h": 1080,
+   "webp": 96682
+  },
+  "M04": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Matt Pontas.png",
+   "mtimeMs": 1791893231730,
+   "bytes": 2174435,
+   "sha1": "baff433bed",
+   "w": 720,
+   "h": 1080,
+   "webp": 82020
+  },
+  "M05": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Padre Tomas.png",
+   "mtimeMs": 1791893307339,
+   "bytes": 2259451,
+   "sha1": "e644dd33c8",
+   "w": 720,
+   "h": 1080,
+   "webp": 76872
+  },
+  "M06": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Benjamin Karnudo.png",
+   "mtimeMs": 1791893408359,
+   "bytes": 2137754,
+   "sha1": "a6d0a950f4",
+   "w": 720,
+   "h": 1080,
+   "webp": 67450
+  },
+  "M11": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/X.png",
+   "mtimeMs": 1791893657613,
+   "bytes": 1906692,
+   "sha1": "4f4b2d23ea",
+   "w": 720,
+   "h": 1080,
+   "webp": 77100
   }
  }
 }
