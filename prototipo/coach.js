@@ -72,7 +72,7 @@
       <p>Cartas perdidas em <b>Defesa ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra até 6 da <b>reserva</b>. Sem baralho e sem reserva, você está eliminado.</p>` },
     { t: 'Habilidades especiais', ic: '✨', b: () => `<div class="demo"><button class="btn sm fake" tabindex="-1">✦ Usar como especial</button></div>
       <p>Liberados a partir da <b>Rodada 2</b>. Ao escolher o atributo, você pode tirar a carta da mesa e deixá-la <b>fechada ao seu lado</b>; a próxima do baralho entra no lugar.</p>
-      <p>Depois da revelação, cada jogador decide <b>em segredo</b> se vira um especial (máximo 1 por disputa). Os efeitos são diferentes em cada carta.</p>` },
+      <p>Depois da revelação, cada jogador decide <b>em segredo</b> se vira um especial (máximo 1 por disputa). Os efeitos são diferentes em cada carta.</p><p>Especiais <b>reativos</b> (anular, copiar, apropriar, proteger) são virados depois: se um rival virou um especial, você decide <b>sabendo qual foi</b>.</p>` },
     { t: 'Rodadas e fim', ic: '🏁', b: () => `<p>Uma <b>rodada</b> termina quando todos os jogadores vivos já iniciaram uma disputa; depois disso o iniciador gira em sentido horário.</p><p>Se a partida passar do limite de disputas, vence quem tiver <b>mais cartas</b>.</p><p class="mut">Durante as primeiras partidas, o jogo vai avisando cada regra nova na hora em que ela aparece.</p>` },
   ];
   U.rulesFull = U.rules;
