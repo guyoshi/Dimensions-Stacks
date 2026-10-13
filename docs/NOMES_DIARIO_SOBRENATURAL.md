@@ -34,4 +34,19 @@ Stats, especiais e fotos não mudaram. O nome anterior fica em `nome_anterior` n
 | M12 | James Harrow | Órbita Oráculo |
 
 Manu não tem carta: o sobrenome Brandolini fica só aqui, nunca no texto dos capítulos.
-Os nomes só entram nos capítulos de forma orgânica (uma ou duas aparições por personagem), sem exposição. Edição dos `.md` de `00 - Texto/capitulos` aguardando aprovação dos trechos.
+Os nomes só entram nos capítulos de forma orgânica (uma ou duas aparições por personagem), sem exposição. 
+## Trechos aplicados nos capítulos (2026-10-13)
+
+| Nome | Livro/capítulo | Trecho |
+|---|---|---|
+| Pedro Souza | L2 cap. 2 | "na chamada da escola, onde eu era “Souza, Pedro”" |
+| Pedro Souza | L1 cap. 9 | "— Pedro Souza, nada de doce hoje — disse meu pai." |
+| Filipo Brandolini | L2 cap. 2 | "— Filipo Brandolini. Aqui é História —" e a folha da atividade de Química |
+| Diego Tavolieri | L2 cap. 3 | "— Diego Tavolieri — o homem disse" |
+| Diego Tavolieri | L2 cap. 13 | "empregada do Sr. Tavolieri" |
+| Priscila Fontenelle | L1 cap. 19 | capa do trabalho "ESCOLA RAFAEL COELHO – Priscila Fontenelle, Jason Douglas, Vitória Carmo" |
+| Kelly Fontenelle | L2 cap. 6 | lápide "Kelly Lorraine Fontenelle" |
+| Junior Quissama | L1 cap. 25 | inspetor: "– Sérgio Quissama Júnior, da 8.ª C?" |
+| Vinicius Silva | L1 cap. 37 | correção de "Vinicius Souza" (inconsistência com os outros capítulos e com o sobrenome do Pedro) |
+
+James Harrow (M12) não aparece nos capítulos existentes do Órbita Oráculo; só carta e docs. Canon atualizado em `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens.md` (seção "Sobrenomes"). `Livro.docx` e as transcrições não foram tocados: o `.docx` precisa ser reexportado dos `.md`.

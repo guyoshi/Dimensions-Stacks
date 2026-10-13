@@ -801,6 +801,33 @@
    "w": 720,
    "h": 1080,
    "webp": 77100
+  },
+  "M07": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Agente Seis.png",
+   "mtimeMs": 1791894039397,
+   "bytes": 2030778,
+   "sha1": "c76745b364",
+   "w": 720,
+   "h": 1080,
+   "webp": 43770
+  },
+  "M08": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Dra. Helena Valença.png",
+   "mtimeMs": 1791894215788,
+   "bytes": 2189595,
+   "sha1": "1d9e5d03cc",
+   "w": 720,
+   "h": 1080,
+   "webp": 83822
+  },
+  "M09": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Richard Falkner.png",
+   "mtimeMs": 1791894998859,
+   "bytes": 2446296,
+   "sha1": "58edc3d82c",
+   "w": 720,
+   "h": 1080,
+   "webp": 44712
   }
  }
 }

@@ -97,15 +97,15 @@ Fonte: `Diário Sobrenatural/1 - Os Elos das Sombras/01 - Canon/02 - Personagens
 
 | # | Personagem | Referência narrativa |
 | --- | --- | --- |
-| D01 | Junior | Escritor e organizador futuro dos relatos |
-| D02 | Priscila | Irmã de Kelly e protagonista |
-| D03 | Pedro | Melhor amigo de Junior |
-| D04 | Kelly | Investigação sobrenatural e culpa ligada a Enzo |
+| D01 | Junior Quissama | Escritor e organizador futuro dos relatos |
+| D02 | Priscila Fontenelle | Irmã de Kelly e protagonista |
+| D03 | Pedro Souza | Melhor amigo de Junior |
+| D04 | Kelly Fontenelle | Investigação sobrenatural e culpa ligada a Enzo |
 | D05 | Vinicius (Vini) | Protagonista marcado por conflitos familiares |
 | D06 | Jennifer | Visões e sensibilidade a espíritos |
 | D07 | Ingrid Carnam | Espírito, integrante da família Carnam |
 | D08 | Glenda | Personagem do livro 2; deseja ser jornalista e investiga acontecimentos sobrenaturais |
-| D09 | Diego | Nome selecionado pelo autor; detalhes de habilidade ainda a confirmar nos manuscritos |
+| D09 | Diego Tavolieri | Nome selecionado pelo autor; detalhes de habilidade ainda a confirmar nos manuscritos |
 | D10 | Avó de Kelly | Ligada ao passado de Alvorada Alegre e ao conhecimento sobre barreiras sobrenaturais; nome próprio pendente |
 | D11 | Cara-de-Larva | Demônio executor ligado à Besta da Carnificina, presente no livro 2 |
 | D12 | Agouro | Entidade sobrenatural e agente de manipulação |

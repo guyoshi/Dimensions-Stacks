@@ -88,5 +88,8 @@ window.CARD_IMAGES = {
  "M04": "photos/M04.webp?v=baff433bed",
  "M05": "photos/M05.webp?v=e644dd33c8",
  "M06": "photos/M06.webp?v=a6d0a950f4",
- "M11": "photos/M11.webp?v=4f4b2d23ea"
+ "M11": "photos/M11.webp?v=4f4b2d23ea",
+ "M07": "photos/M07.webp?v=c76745b364",
+ "M08": "photos/M08.webp?v=1d9e5d03cc",
+ "M09": "photos/M09.webp?v=58edc3d82c"
 };
