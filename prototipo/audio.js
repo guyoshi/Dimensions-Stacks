@@ -9,7 +9,7 @@
     capture: 'captura de carta', blackhole: 'carta engolida pelo Buraco Negro', special: 'especial preparado',
     specialFlip: 'especial virado', slash: 'ataque vencedor', shield: 'defesa vencedora', round: 'nova rodada',
     refill: 'compra da reserva', elim: 'jogador eliminado', victory: 'vitória na partida', defeat: 'derrota na partida',
-    steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', menu: 'ambiente do menu / mesa (loop)',
+    steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', legend: 'carta lendária / da União revelada', menu: 'ambiente do menu / mesa (loop)',
   };
 
   const S = {
@@ -95,6 +95,7 @@
       capture() { S.noise(0.28, 'bandpass', 500, 2600, 0.18, 0, 2); S.tone(S.note(79), 0.3, 'triangle', 0.14, 0.18); S.tone(S.note(84), 0.45, 'triangle', 0.12, 0.27); },
       blackhole() { S.tone(520, 1.0, 'sine', 0.2, 0, 35); S.tone(260, 1.0, 'sawtooth', 0.07, 0, 30); S.noise(0.95, 'lowpass', 1400, 80, 0.22); S.tone(46, 0.9, 'sine', 0.35, 0.1); },
       special() { [0, 1, 2, 3].forEach(i => S.tone(S.note(76 + i * 3), 0.5, 'sine', 0.08, i * 0.07)); S.noise(0.5, 'highpass', 4000, 8000, 0.05, 0, 1); },
+      legend() { [79, 84, 88, 91, 96].forEach((n, i) => { S.tone(S.note(n), 0.9, 'triangle', 0.13, i * 0.07); S.tone(S.note(n + 12), 0.7, 'sine', 0.05, i * 0.07 + 0.02); }); S.tone(S.note(55), 1.0, 'sine', 0.22, 0, 49); S.noise(0.9, 'bandpass', 4000, 9000, 0.08, 0.05, 3); },
       specialFlip() { S.tone(200, 0.9, 'sine', 0.2, 0, 1600); S.tone(S.note(84), 0.9, 'triangle', 0.1, 0.3); S.tone(S.note(91), 0.9, 'triangle', 0.08, 0.34); S.noise(0.8, 'bandpass', 800, 7000, 0.12, 0, 4); S.tone(70, 0.6, 'sine', 0.35, 0.65, 40); },
       slash() { S.noise(0.2, 'highpass', 2200, 7000, 0.3, 0, 1); S.tone(900, 0.12, 'sawtooth', 0.1, 0, 200); },
       shield() { S.tone(S.note(81), 0.7, 'square', 0.07); S.tone(S.note(81) * 1.505, 0.6, 'square', 0.05); S.tone(S.note(93), 0.9, 'sine', 0.1, 0.01); S.noise(0.1, 'highpass', 5000, 8000, 0.14); },

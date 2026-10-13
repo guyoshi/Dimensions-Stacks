@@ -850,3 +850,47 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .modal .x, .logdrawer > .btn.ghost.sm { width: 40px; height: 40px; min-height: 40px; padding: 0; font-size: 18px; line-height: 1; border-radius: 12px; background: #ffffff10; box-shadow: 0 0 0 1px #ffffff22 inset; cursor: pointer; }
 .modal .x:hover, .logdrawer > .btn.ghost.sm:hover { background: #ffffff26; box-shadow: 0 0 0 1px var(--gold) inset, 0 0 14px #ffd25f33; transform: none; filter: none; }
 .modal .x:active { transform: scale(.94); }
+
+/* ============ RARIDADE: moldura por tier (comum fosca · rara prata · épica ouro + holo · lendária ouro ornamentado) ============ */
+.card:not([data-uni]).rar-comum .face.front { box-shadow: inset 0 0 0 .1em #ffffff1f; filter: saturate(.92); }
+.card:not([data-uni]).rar-rara .face.front { box-shadow: inset 0 0 0 .16em #e8edf5, inset 0 0 0 .26em #7d8594; }
+.card:not([data-uni]).rar-rara .face.front .in::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background: repeating-linear-gradient(135deg, #ffffff0a 0 .12em, transparent .12em .5em); mix-blend-mode: screen; }
+.card:not([data-uni]).rar-epica .face.front { box-shadow: inset 0 0 0 .18em #ffd25f, inset 0 0 0 .3em #8a5a00, inset 0 0 2.2em #ffe9a0bb, 0 0 .9em #ffd25f44; }
+.card:not([data-uni]).rar-epica .face.front::after { background: linear-gradient(115deg, transparent 12%, #ff7ab055 32%, #ffd25f55 42%, #7dffb055 52%, #6cc6ff55 62%, #b394ff55 72%, transparent 88%); background-size: 260% 100%; animation: holo 7s ease-in-out infinite; opacity: 1; mix-blend-mode: screen; }
+.card:not([data-uni]).rar-lendaria .face.front { box-shadow: inset 0 0 0 .2em #ffe9a0, inset 0 0 0 .32em #8a5a00, inset 0 0 0 .42em #ffd25f, inset 0 0 1.6em #ffd25f88, 0 0 1.2em #ffd25f66; }
+.card:not([data-uni]).rar-lendaria .face.front::after { background: linear-gradient(115deg, transparent 18%, #ff7ab040 34%, #ffe08a66 44%, #7dffb040 52%, #6cc6ff40 60%, #b394ff40 68%, transparent 84%), linear-gradient(115deg, transparent 38%, #fff8 48%, #fff3c888 52%, transparent 62%); background-size: 260% 100%, 250% 100%; animation: holo 5s ease-in-out infinite, shine 4.5s infinite; opacity: 1; mix-blend-mode: screen; }
+.card:not([data-uni]).rar-lendaria .face.front::before { content: ""; position: absolute; inset: .55em; border-radius: .8em; pointer-events: none; z-index: 3;
+  border: .09em solid #ffe9a0aa; box-shadow: 0 0 .5em #ffd25f66 inset;
+  background: radial-gradient(circle at 0 0, #ffe9a0 0 .22em, transparent .26em), radial-gradient(circle at 100% 0, #ffe9a0 0 .22em, transparent .26em), radial-gradient(circle at 0 100%, #ffe9a0 0 .22em, transparent .26em), radial-gradient(circle at 100% 100%, #ffe9a0 0 .22em, transparent .26em); }
+@keyframes holo { 0% { background-position: 130% 0, 120% 0; } 55%, 100% { background-position: -90% 0, -80% 0; } }
+/* losangos do nível máximo (lendária) são dourados */
+.card.rar-lendaria .bot .rar { color: #ffd25f; text-shadow: 0 0 .45em #ffb02e, 0 .06em .25em #000; }
+
+/* ============ A UNIÃO: fora da regra de raridade — moldura prismática e aura arco-íris (únicas) ============ */
+.card[data-uni] .face.front { box-shadow: inset 0 0 0 .1em #ffffff55, 0 0 .9em #ffffff44; }
+.card[data-uni] .face.front::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: .3em; pointer-events: none; z-index: 4;
+  background: conic-gradient(from 0deg, #ff5f6d, #ffc371, #f9f871, #7dffb0, #6cc6ff, #b394ff, #ff7ab0, #ff5f6d);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); animation: prism 6s linear infinite; }
+.card[data-uni] .face.front::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: linear-gradient(115deg, transparent 15%, #ff7ab044 30%, #ffd25f44 40%, #7dffb044 50%, #6cc6ff44 60%, #b394ff44 70%, transparent 85%); background-size: 260% 100%; animation: holo 5s ease-in-out infinite; mix-blend-mode: screen; }
+@keyframes prism { to { filter: hue-rotate(360deg); } }
+/* aura externa: arco-íris (União) ou dourada (lendária); só com a carta virada */
+.card[data-uni] { isolation: isolate; }
+.card[data-aura].up::after { content: ""; position: absolute; inset: calc(var(--cw) * -.04); border-radius: calc(var(--cw) * .15); pointer-events: none; z-index: -1; animation: none; box-shadow: none; transform: none; }
+.card[data-aura="gold"] { isolation: isolate; }
+.card[data-aura="gold"].up::after { inset: 0; border-radius: calc(var(--cw) * .12); box-shadow: 0 0 calc(var(--cw) * .09) calc(var(--cw) * .015) #ffd25fcc, 0 0 calc(var(--cw) * .28) calc(var(--cw) * .05) #ffb02e88, 0 0 calc(var(--cw) * .6) calc(var(--cw) * .06) #ffd25f44; animation: uniaura 3.2s ease-in-out infinite; }
+.card[data-aura="rainbow"].up::after { background: conic-gradient(from 0deg, #ff5f6d, #ffc371, #f9f871, #7dffb0, #6cc6ff, #b394ff, #ff7ab0, #ff5f6d); filter: blur(calc(var(--cw) * .07)); opacity: .85; animation: rainaura 6s linear infinite; }
+@keyframes rainaura { 0% { filter: blur(calc(var(--cw) * .07)) hue-rotate(0); transform: scale(1); } 50% { transform: scale(1.04); } 100% { filter: blur(calc(var(--cw) * .07)) hue-rotate(360deg); transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .card[data-aura].up::after, .card[data-uni] .face.front::before, .card[data-uni] .face.front::after, .card .face.front::after { animation: none !important; } }
+/* brilhinhos: cor por variável (dourado por padrão; arco-íris na União) */
+.usp i::before { background: radial-gradient(circle, #fff 0, #fff 16%, var(--sc, #ffeba8) 38%, color-mix(in srgb, var(--sc2, #ffd25f) 80%, transparent) 66%, color-mix(in srgb, var(--sc2, #ffd25f) 14%, transparent) 100%); }
+.usp i { filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 calc(var(--cw) * .02) var(--sc2, #ffd25f)) drop-shadow(0 0 calc(var(--cw) * .045) color-mix(in srgb, var(--sc2, #ffb02e) 40%, transparent)); }
+.usp i::after { background: radial-gradient(circle, color-mix(in srgb, var(--sc, #ffe9a0) 18%, transparent) 0, color-mix(in srgb, var(--sc2, #ffd25f) 10%, transparent) 14%, color-mix(in srgb, var(--sc2, #ffd25f) 6%, transparent) 30%, color-mix(in srgb, var(--sc2, #ffd25f) 3%, transparent) 50%, transparent 100%); }
+
+/* revelação: flash curto na carta lendária / da União (a comum não recebe nada; a épica, um brilho discreto) */
+.slot .card.flash::before { content: ""; position: absolute; left: 50%; top: 50%; width: 220%; aspect-ratio: 1; transform: translate(-50%, -50%) scale(.2); border-radius: 50%; pointer-events: none; z-index: 6;
+  background: radial-gradient(circle, #fff 0, #fff7c8cc 18%, #ffd25f66 38%, transparent 66%); animation: revflash .9s ease-out forwards; }
+.slot .card.flash[data-uni]::before { background: radial-gradient(circle, #fff 0, #ffffffcc 14%, #ff7ab066 30%, #7dffb055 46%, #6cc6ff55 58%, transparent 70%); }
+.slot .card.flash.soft::before { animation-duration: .6s; opacity: .55; }
+@keyframes revflash { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); } }

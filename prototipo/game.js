@@ -326,10 +326,13 @@
       if (last) { slot.classList.remove('tremble'); slot.classList.add('charging'); await sleep(1300); }
       slot.classList.remove('tremble', 'charging');
       let ci = cardIn(e.pid); if (ci && ci.dataset.hidden && e.card && e.card !== '?') { const real = cardEl(e.card, { stats: e.stats }); ci.replaceWith(real); ci = real; void ci.offsetWidth; }   // online: a carta do rival só chega agora
-      ci.classList.add('up'); SND.play(last ? 'reveal' : 'flip');
+      ci.classList.add('up');
+      const cd = e.card && e.card !== '?' ? CARDS[e.card] : null, big = cd && (cd.uniao || cd.raridade === 'lendaria');
+      SND.play(big ? 'legend' : (last ? 'reveal' : 'flip'));
+      if (big || (cd && cd.raridade === 'epica')) { ci.classList.add('flash'); if (!big) ci.classList.add('soft'); setTimeout(() => ci.classList.remove('flash', 'soft'), 1000); }
       await sleep(430);
       updateSlot(e);
-      const r = slot.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: last ? 36 : 14, speed: last ? 7 : 4, life: 40, size: 2.4 });
+      const r = slot.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, Object.assign({ n: last ? 36 : 14, speed: last ? 7 : 4, life: 40, size: 2.4 }, big ? { n: 48, speed: 8, colors: cd.uniao ? ['#ff7ab0', '#ffd25f', '#7dffb0', '#6cc6ff', '#b394ff'] : ['#fff3c8', '#ffd25f', '#ffb02e'] } : {}));
       await sleep(last ? 900 : 520);
     }
     arena.classList.remove('suspense');

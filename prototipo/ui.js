@@ -61,12 +61,12 @@
     }).join('');
   }
   // brilhinhos dourados ao redor das cartas de A União (posições fixas por carta; o CSS os mostra só com a carta virada)
-  function uniSparks(id) {
+  function uniSparks(id, rainbow) {
     const r = DS_DATA.rng(DS_DATA.hash('uni' + id)), box = el('<div class="usp" aria-hidden="true"></div>');
     for (let i = 0; i < 26; i++) {
       const side = i % 4, p = r() * 100, o = -6 + r() * 12;   // ao longo da borda, um pouco para fora/dentro
       const x = side === 0 ? p : side === 2 ? p : side === 1 ? 100 - o : o, y = side === 1 || side === 3 ? p : side === 0 ? o : 100 - o;
-      const s = el(`<i style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.035 + r() * .04).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
+      const hue = Math.round(r() * 360), s = el(`<i style="${rainbow ? '--sc:hsl(' + hue + ' 100% 72%);--sc2:hsl(' + hue + ' 100% 62%);' : ''}left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.035 + r() * .04).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
       box.append(s);
     }
     return box;
@@ -91,7 +91,8 @@
         <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
         ${c.provisorio ? '<div class="teste">PRÉVIA</div>' : ''}
       </div></div></div></div>`);
-    node.dataset.serie = c.serie; if (c.uniao) { node.dataset.uni = '1'; node.append(uniSparks(id)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
+    node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1';
+    if (c.uniao || c.raridade === 'lendaria') { node.dataset.aura = c.uniao ? 'rainbow' : 'gold'; node.append(uniSparks(id, c.uniao)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
     if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id), mastery: g.dataset.mast === '1' } : null); }); }
@@ -333,6 +334,7 @@
       <li>As cartas são viradas. O <b>maior valor</b> no atributo escolhido vence.</li></ol>
       <h3>Ataque × Defesa</h3><ul><li><b>Ataque e Inteligência são ofensivos:</b> o vencedor leva as cartas dos perdedores para o fim do seu baralho.</li>
       <li><b>Defesa e Velocidade são defesa:</b> o vencedor só recupera a própria carta; as dos perdedores vão para o <b>Buraco Negro</b>, fora do jogo.</li></ul>
+      <h3>Raridade (losangos)</h3><p>Os losangos no pé da carta mostram a raridade: <b>◆ Comum</b> (fosca), <b>◆◆ Rara</b> (borda prateada), <b>◆◆◆ Épica</b> (borda dourada com reflexo holográfico) e <b>◆◆◆◆ Lendária</b> (moldura dourada ornamentada, losangos dourados). As cartas da <b>União</b> são únicas e fogem da regra: aura e moldura arco-íris. Ao virar uma Lendária ou da União, a mesa recebe um clarão e um som próprio.</p>
       <h3>Empates</h3><p>Maior valor do atributo → maior soma dos 4 atributos → maior Ataque + Inteligência. Se ainda empatar, ninguém vence e as cartas voltam aos donos.</p>
       <h3>Habilidades especiais</h3><p>A partir da 2ª rodada, na hora de escolher o atributo você pode clicar em <b>Usar como especial</b>: a carta da mesa sai do combate e fica fechada ao seu lado (até 2 por vez), e a próxima do baralho entra no lugar. Depois que as cartas são reveladas, cada jogador decide em segredo se <b>vira</b> um especial (no máximo 1 por disputa, mais um especial <i>companheiro</i> quando houver); os virados são revelados juntos, resolvem em sentido horário (proteções e cancelamentos primeiro) e depois vão ao Buraco Negro. Os especiais de <b>controle</b> (Atributo universal, Par ofensivo, Ataque obrigatório…) são virados <i>antes</i> de declarar os atributos. Os especiais mudam números, roubam, trocam, espiam, protegem, cancelam…</p>
       <h3>Rodadas</h3><p>Uma rodada termina quando todos os jogadores vivos já iniciaram uma disputa.</p>
