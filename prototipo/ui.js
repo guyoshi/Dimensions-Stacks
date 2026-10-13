@@ -148,7 +148,7 @@
     function build(cid) {
       const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial], cs = (opts.stats && opts.stats[cid]) || c.stats;
       const wrap = el(`<div class="zoomwrap"></div>`);
-      wrap.append(cardEl(cid, { up: true, noanim: true, cw: w, stats: cs }));
+      wrap.append(cardEl(cid, { up: true, cw: w, stats: cs }));
       const max = 100;
       wrap.append(el(`<div class="meta">
         <h2>${esc(c.nome)}</h2>
