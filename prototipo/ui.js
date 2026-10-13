@@ -85,7 +85,7 @@
     const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
       <div class="face front"><div class="in">${art}<div class="shade"></div>
-        <div class="mark"><span class="ser">${esc(s.titulo || s.marca)}</span></div>
+        <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(id.slice(1))}</span></div>
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
         <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>

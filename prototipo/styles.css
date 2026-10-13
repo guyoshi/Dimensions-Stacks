@@ -832,3 +832,15 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .usp i::after { inset: -320%; background: radial-gradient(circle, #ffe9a02e 0, #ffe29a22 12%, #ffd25f16 26%, #ffd25f0c 42%, #ffd25f05 58%, #ffd25f02 74%, transparent 100%); }
 .sp { filter: drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 3px color-mix(in srgb, var(--c) 70%, transparent)); }
 .sp::before { inset: -300%; background: radial-gradient(circle, color-mix(in srgb, var(--c) 20%, transparent) 0, color-mix(in srgb, var(--c) 14%, transparent) 12%, color-mix(in srgb, var(--c) 8%, transparent) 28%, color-mix(in srgb, var(--c) 4%, transparent) 46%, color-mix(in srgb, var(--c) 1.5%, transparent) 66%, transparent 100%); }
+
+/* faixa da série (no lugar do oval): deixa um pouco da arte aparecer acima; número da carta no extremo direito */
+.face.front .cband { position: absolute; left: 0; right: 0; top: 1.7em; height: 2.3em; display: flex; align-items: stretch; color: var(--t); font-size: .78em;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 82%, #fff) 0, var(--c) 46%, color-mix(in srgb, var(--c) 78%, #000) 100%);
+  box-shadow: 0 .25em .7em #000b, inset 0 .1em 0 #ffffff55, inset 0 -.1em 0 #00000055; }
+.face.front .cband::before, .face.front .cband::after { content: ""; position: absolute; left: 0; right: 0; height: .09em; background: linear-gradient(90deg, transparent, #ffffffaa 20%, #ffffffaa 80%, transparent); opacity: .55; pointer-events: none; }
+.face.front .cband::before { top: -.28em; } .face.front .cband::after { bottom: -.28em; }
+.face.front .cband .ser { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; justify-content: center; padding: 0 .4em 0 1em; font-weight: 900; font-size: .94em; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+.face.front .cband .cno { flex: none; display: flex; align-items: center; gap: .3em; padding: 0 .8em 0 .7em; background: linear-gradient(180deg, #0000002e, #00000066); border-left: .09em solid #ffffff55; font-weight: 900; font-size: 1.02em; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.face.front .cband .cno small { font-size: .62em; opacity: .75; letter-spacing: .08em; }
+.card[data-serie="spacetheft"] .cband { background: linear-gradient(180deg, #3a3b46, #1b1b22 55%, #0d0d12); box-shadow: 0 .25em .7em #000b, inset 0 .1em 0 #ffffff33, inset 0 -.1em 0 #00000088; }
+.face.front .uni { top: 4.9em; }

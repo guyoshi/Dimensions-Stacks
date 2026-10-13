@@ -18,7 +18,12 @@
       <circle cx="60" cy="60" r="56" fill="url(#lg${i})"/>
       <g class="ring"><circle cx="60" cy="60" r="54" fill="none" stroke="url(#lr${i})" stroke-width="3" stroke-linecap="round" stroke-dasharray="250 90"/></g>
       <g class="ring2"><circle cx="60" cy="60" r="47" fill="none" stroke="#f6f1e2" stroke-opacity=".5" stroke-width="1" stroke-dasharray="1.5 7" stroke-linecap="round"/></g>
-      <image href="selo.png" x="30.5" y="22" width="59" height="76" preserveAspectRatio="xMidYMid meet"/></svg>`;
+      <g transform="translate(60 63)">
+        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#14161b" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(-20) translate(-8 0)" opacity=".85"/>
+        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#191c22" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(20) translate(8 0)" opacity=".92"/>
+        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#1d2027" stroke="url(#lm${i})" stroke-width="1.8"/>
+        <image href="selo.png" x="-11" y="-15" width="22" height="28.2" preserveAspectRatio="xMidYMid meet"/>
+      </g></svg>`;
   };
   const wordmark = () => `<b class="wm" data-t="Dimensions Stacks">Dimensions Stacks</b>`;
 
