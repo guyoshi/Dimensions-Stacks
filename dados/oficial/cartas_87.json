@@ -1676,7 +1676,7 @@
     },
     {
       "id": "D13",
-      "nome": "Suéten",
+      "nome": "Suéten Marques",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1696,7 +1696,8 @@
         "fonte": "D1",
         "confianca": "Média"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Suéten"
     },
     {
       "id": "D14",

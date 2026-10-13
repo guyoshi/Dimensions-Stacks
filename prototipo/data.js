@@ -116,7 +116,7 @@
     ['D10', 'Sra. Olívia', 'diario', 'Senhora da casa na serra; ligada ao passado de Alvorada Alegre'],
     ['D11', 'Cara-de-Larva', 'diario', 'Demônio executor ligado à Besta da Carnificina'],
     ['D12', 'Agouro', 'diario', 'Entidade sobrenatural e agente de manipulação'],
-    ['D13', 'Suéten', 'diario', 'Integrante do conjunto de espíritos/Elos Carnam'],
+    ['D13', 'Suéten Marques', 'diario', 'Integrante do conjunto de espíritos/Elos Carnam'],
     ['D14', 'Filipo', 'diario', 'Personagem do livro 2; ligado a Manu'],
     ['D15', 'O Pai', 'diario', 'Demônio dos sentidos com a forma do pai Carnam'],
     ['D16', 'A Mãe', 'diario', 'Demônio dos sentidos com a forma da mãe Isabela; Elo no álbum de fotografias'],

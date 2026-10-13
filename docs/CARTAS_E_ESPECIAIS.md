@@ -74,7 +74,7 @@
 | D10 | Sra. Olívia | Diário Sobrenatural | Senhora que vive na casa da serra; conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre. | 8 | 34 | 90 | 13 | 145 | **AE-092** — Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. |
 | D11 | Cara-de-Larva | Diário Sobrenatural | Demônio executor ligado à Besta da Carnificina, explora o medo das suas vítimas. | 90 | 69 | 54 | 71 | 284 | **AE-012** — Inteligência → Ataque | Substitua o valor de Ataque pelo valor que a carta possui em Inteligência; Inteligência permanece igual. |
 | D12 | Agouro | Diário Sobrenatural | Entidade manipuladora, Agouro se alimenta do sofrimento e influencia os vivos e os espíritos. | 97 | 87 | 92 | 70 | 346 | **AE-081** — Resgate extremo | Sacrifique 1 carta normal sua que tenha atributo original acima de 90; receba as 3 primeiras cartas do Buraco Negro, se existirem. |
-| D13 | Suéten | Diário Sobrenatural | Espírito da família Carnam, um dos elos de uma tragédia que atravessa gerações. | 62 | 71 | 55 | 35 | 223 | **AE-066** — Descarte coletivo | Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro. |
+| D13 | Suéten Marques | Diário Sobrenatural | Espírito da família Carnam, um dos elos de uma tragédia que atravessa gerações. | 62 | 71 | 55 | 35 | 223 | **AE-066** — Descarte coletivo | Cada jogador ativo, inclusive você, envia 1 carta aleatória de seu baralho ativo ao Buraco Negro. |
 | D14 | Filipo | Diário Sobrenatural | Jovem ligado à história de Manu, procura enfrentar os perigos que a cercam. | 34 | 46 | 63 | 65 | 208 | **AE-077** — Guardião da reserva | Anule a próxima tentativa de roubar uma carta de sua reserva nesta disputa. |
 | D15 | O Pai | Diário Sobrenatural | Demônio dos sentidos em forma do pai da Família Carnam (Carnam Marques), relacionado a um Elo marcado pela violência e por uma arma. | 68 | 52 | 52 | 31 | 203 | **AE-055** — Troca de topos à direita | Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à direita. |
 | D16 | A Mãe | Diário Sobrenatural | Demônio dos sentidos em forma da mãe da Família Carnam (Isabela), cujo Elo é um álbum de fotografias ligado às lembranças do passado. | 23 | 39 | 66 | 46 | 174 | **AE-098** — Organizar reserva | Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada. |
@@ -139,7 +139,7 @@
 | D09 Diego | 172 | AE-004 — Arrancada | AE-094 — Inversão de fila |
 | D10 Sra. Olívia | 145 | AE-086 — Troca pelo descarte | AE-092 — Próximas três |
 | D11 Cara-de-Larva | 284 | AE-066 — Descarte coletivo | AE-012 — Inteligência → Ataque |
-| D13 Suéten | 223 | AE-108 — Negar captura inimiga | AE-066 — Descarte coletivo |
+| D13 Suéten Marques | 223 | AE-108 — Negar captura inimiga | AE-066 — Descarte coletivo |
 | D15 O Pai | 203 | AE-106 — Ataque que bane | AE-055 — Troca de topos à direita |
 | D16 A Mãe | 174 | AE-092 — Próximas três | AE-098 — Organizar reserva |
 | M03 Diana | 199 | AE-094 — Inversão de fila | AE-041 — Última da direita |
