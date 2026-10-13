@@ -29,7 +29,6 @@
 | Ativação forçada | **AE-111**, derivada do efeito físico #59, faz o alvo ativar **todas** as suas especiais já preparadas (até duas), sem sacar novas. |
 | Recuperação | Efeito #12: 2 cartas aleatórias do Buraco Negro para o fim da própria reserva. |
 | Limpeza | Efeito #54/AE-103 atinge somente cartas **normais colocadas em combate**, não cartas especiais preparadas. |
-| Repetição | AE-112: efeito pode ser repetido com custo, **sem ciclos infinitos**. Não repetir outra repetição/cópia indefinidamente. |
 | Defesa reativa | **Aprovado o modelo de janelas de resposta antes de o ataque ser concluído.** Reações podem interromper efeitos pendentes e resolver antes deles; efeitos já resolvidos não são desfeitos retroativamente. Passar não gasta especial, e reagir não cria uma segunda ativação voluntária gratuita. |
 | Prioridade-base | Iniciador do combate oferece primeira oportunidade; prioridade segue **circularmente em sentido horário**; efeitos especiais respondidos entram em **pilha de resolução inversa (último a entrar, primeiro a resolver)**. Uma defesa pode interromper uma ameaça pendente no momento pertinente. Detalhes ainda não fixados estão na seção 4. |
 | Contraespecial | **AE-130** anula a última habilidade especial **pendente** de resolução. Não anula habilidades já concluídas; ambas as cartas especiais ativadas são consumidas normalmente. |

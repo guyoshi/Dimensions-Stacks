@@ -6,6 +6,10 @@ raiz = os.path.join(os.path.dirname(__file__), '..', '..')
 c = json.load(open(os.path.join(raiz, 'dados/oficial/cartas_87.json'), encoding='utf-8'))['cartas']
 h = {x['id']: x for x in json.load(open(os.path.join(raiz, 'dados/oficial/habilidades_129.json'), encoding='utf-8'))['habilidades']}
 antes_p = os.path.join(raiz, 'dados/historico/cartas_87_antes_2026-10-13.json')
+hab_antes_p = os.path.join(raiz, 'dados/historico/habilidades_129_antes_2026-10-13.json')
+raw_h = json.load(open(hab_antes_p, encoding='utf-8')) if os.path.exists(hab_antes_p) else {}
+raw_h = raw_h.get('habilidades', raw_h) if isinstance(raw_h, dict) else raw_h
+nome_antes = {x['id']: x.get('nome', x['id']) for x in raw_h} if isinstance(raw_h, list) else {}
 antes = {x['id']: x['habilidade_especial_id'] for x in json.load(open(antes_p, encoding='utf-8'))['cartas']} if os.path.exists(antes_p) else {}
 serie = {'J': 'Ciclo de Jesed', 'V': 'Viajantes Dimensionais', 'S': 'Spacetheft', 'D': 'Diário Sobrenatural', 'M': 'Mistério Oculto', 'B': 'Édelin Lys'}
 o = ['# Dimensions Stacks — Cartas e Habilidades Especiais (%d cartas)' % len(c), '',
@@ -24,6 +28,6 @@ if antes:
     o += ['', '## Mudanças de 13/10/2026 (especial anterior → novo)', '', '| Carta | Soma | Antes | Agora |', '| --- | ---: | --- | --- |']
     for x in c:
         if antes.get(x['id']) and antes[x['id']] != x['habilidade_especial_id']:
-            o.append('| %s %s | %d | %s — %s | %s — %s |' % (x['id'], x['nome'], x['soma_atributos'], antes[x['id']], h[antes[x['id']]]['nome'], x['habilidade_especial_id'], h[x['habilidade_especial_id']]['nome']))
+            o.append('| %s %s | %d | %s — %s | %s — %s |' % (x['id'], x['nome'], x['soma_atributos'], antes[x['id']], (h[antes[x['id']]]['nome'] if antes[x['id']] in h else nome_antes.get(antes[x['id']], antes[x['id']]) + ' (retirado)'), x['habilidade_especial_id'], h[x['habilidade_especial_id']]['nome']))
 open(os.path.join(raiz, 'docs/CARTAS_E_ESPECIAIS.md'), 'w', encoding='utf-8').write('\n'.join(o) + '\n')
 print('ok', len(c), 'cartas')

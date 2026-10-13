@@ -18,7 +18,7 @@
     'Especiais usados vão ao Buraco Negro depois que todos os efeitos resolvem (não podem ser recuperados na mesma disputa).',
     'Captura: carta do vencedor primeiro, depois as dos adversários em sentido horário a partir dele.',
     'Empate absoluto (soma e Força+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
-    'Baralho vazio: compra até 6 da reserva; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
+    'Baralho vazio: compra até 6 da reserva e o jogador reordena as cartas recebidas; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
     'À direita = próximo jogador ativo no sentido horário; à esquerda = o anterior. Em duelo, ambos são o único adversário.',
     'Especial só é oferecido quando há alvo válido (exceto Interrupção, que depende dos especiais dos outros).',
     'Limite de segurança: após 400 disputas vence quem tiver mais cartas.',
@@ -43,6 +43,7 @@
   const bhU = ctx => Math.min(0.85, 0.3 + 0.15 * ctx.bhNormal().length);
   function modSpec(id, nome, texto, mods, extra) {
     def(id, nome, texto, 'Bônus', Object.assign({
+      fx: st => { const o = Object.assign({}, st); for (const k in mods) o[k] += mods[k]; return o; },   // prévia mostrada ao jogador
       apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, nome, x => { for (const k in mods) x.stats[k] += mods[k]; }); ctx.say(`${ctx.name(act.pid)} ganha bônus de atributo.`); },
       ai(ctx, pid) { const e = ctx.entry(pid); let b = 0; const k = e.attr; b = mods[k] || 0; if (!b) return 0.05; return ctx.flipChance(pid, b); },
     }, extra || {}));
@@ -52,6 +53,7 @@
   modSpec('AE-003', 'Clarividência', 'Sua carta de combate recebe +15 em Inteligência nesta disputa.', { int: 15 });
   modSpec('AE-004', 'Arrancada', 'Sua carta de combate recebe +15 em Velocidade nesta disputa.', { vel: 15 });
   def('AE-005', 'Reforço flexível', 'Sua carta de combate recebe +10 no atributo que você está usando nesta disputa.', 'Bônus', {
+    fx: (st, at) => { const o = Object.assign({}, st); if (at) o[at] += 10; return o; },
     apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Reforço flexível', x => { x.stats[a] += 10; }); ctx.say(`${ctx.name(act.pid)} reforça ${ATTR[a].nome}.`); },
     ai(ctx, pid) { return ctx.flipChance(pid, 10); },
   });
@@ -66,6 +68,7 @@
   modSpec('AE-140', 'Mente afiada', 'Sua carta de combate recebe +20 em Inteligência nesta disputa.', { int: 20 });
   modSpec('AE-142', 'Reflexos de aço', 'Sua carta de combate recebe +15 em Resistência e +15 em Velocidade nesta disputa.', { def: 15, vel: 15 });
   def('AE-009', 'Superação', 'Se o valor original que você escolheu for 40 ou menos, adicione +25 a esse atributo.', 'Bônus', {
+    fx: (st, at) => { const o = Object.assign({}, st); if (at && st[at] <= 40) o[at] += 25; return o; },
     can(ctx, pid) { const e = ctx.entry(pid); return !!e && e.base[e.attr] <= 40; },
     apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Superação', x => { x.stats[a] += 25; }); ctx.say(`${ctx.name(act.pid)} supera a própria fraqueza (+25).`); },
     ai(ctx, pid) { return ctx.flipChance(pid, 25); },
@@ -87,6 +90,7 @@
   ];
   CONV.forEach(([id, from, to]) => {
     def(id, `${ATTR[from].nome} → ${ATTR[to].nome}`, `Substitua o valor de ${ATTR[to].nome} da sua carta de combate pelo de ${ATTR[from].nome}; o de ${ATTR[from].nome} não muda.`, 'Conversão', {
+      fx: st => Object.assign({}, st, { [to]: st[from] }),
       apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, 'Conversão', x => { x.stats[to] = x.stats[from]; }); ctx.say(`${ctx.name(act.pid)} converte ${ATTR[from].nome} em ${ATTR[to].nome}.`); },
       ai(ctx, pid) { const e = ctx.entry(pid); if (e.attr !== to) return 0.03; const d = e.stats[from] - e.stats[to]; return d <= 0 ? 0 : ctx.flipChance(pid, d); },
     });
@@ -398,7 +402,12 @@
       for (const pid of this.order()) {
         const p = this.p(pid);
         if (p.deck.length === 0) {
-          if (p.reserve.length > 0) { const take = p.reserve.splice(0, 6); p.deck.push(...take); this.log(`${p.name} compra ${take.length} cartas da reserva.`); await this.emit('refill', { pid, cards: take }); }
+          if (p.reserve.length > 0) {
+            let take = p.reserve.splice(0, 6);
+            // quem compra da reserva reordena as cartas que entram: sempre há estratégia, nunca sorte
+            if (take.length > 1) { let ord = p.bot ? this.botOrderHand(take, p) : (this.io.orderHand ? await this.io.orderHand(p, take.slice(), { refill: true }) : take); if (!ord || ord.length !== take.length || ord.slice().sort().join() !== take.slice().sort().join()) ord = take; take = ord.slice(); }
+            p.deck.push(...take); this.log(`${p.name} compra ${take.length} cartas da reserva.`); await this.emit('refill', { pid, cards: take });
+          }
           else { await this.eliminate(pid); }
         }
       }

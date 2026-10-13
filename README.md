@@ -13,7 +13,7 @@ Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dime
 | [Regras e GDD v1.2](docs/REGRAS.md) | Mecânicas confirmadas, última seção de ratificação e pendências |
 | **[Cartas e especiais (nº, nome, descrição, especial)](docs/CARTAS_E_ESPECIAIS.md)** | Lista simples das 98 cartas com a habilidade especial de cada uma e o registro da reatribuição de 13/10/2026 |
 | **[Bots, níveis e calibração](docs/BOTS_E_NIVEIS.md)** | Níveis fácil/médio/difícil, memória dos bots, calibração de dois lados e especiais candidatos a reforço |
-| **[129 Habilidades Especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)** | **98 efeitos diferentes equipados (um por carta)**, 43 guardados para expansões |
+| **[138 Habilidades Especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)** | **98 efeitos diferentes equipados (um por carta)**, 40 guardados para expansões |
 | [Modelo-base aprovado de reações defensivas](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | Prioridade circular, reações antes da resolução e contraespecial AE-130 |
 | [Elenco das cartas](docs/ELENCO_CANDIDATO.md) | Origem narrativa, identidade e membros da União |
 | [Checklist de validação](docs/CHECKLIST_VALIDACAO.md) | Validação documental e testes de partidas ainda necessários |
@@ -21,7 +21,7 @@ Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dime
 ## Dados oficiais para implementação
 
 - **[dados/oficial/cartas_87.json](dados/oficial/cartas_87.json)**: 98 cartas com status `APROVADA_PELO_AUTOR`, FOR/RES/INT/VEL e Habilidade Especial atribuída.
-- **[dados/oficial/habilidades_129.json](dados/oficial/habilidades_129.json)**: 129 habilidades aprovadas como catálogo de design (141 com as 12 criadas em 13 e 14/10/2026); 98 equipadas, 43 reservadas para futuras cartas.
+- **[dados/oficial/habilidades_129.json](dados/oficial/habilidades_129.json)**: 129 habilidades aprovadas como catálogo de design (138 hoje: 3 retiradas em 14/10/2026 e 12 criadas em 13 e 14/10/2026); 98 equipadas, 40 reservadas para futuras cartas.
 
 **Arquivos antigos em `dados/propostas` não são dados de produção.** Não importar nem reconstruir dados finais a partir deles.
 

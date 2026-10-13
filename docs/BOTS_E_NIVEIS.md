@@ -50,7 +50,6 @@ Nestes, usar o especial rende menos do que lutar com a carta; o bot só os prepa
 | AE-091 | Revelar a mão | D08 |
 | AE-092 | Próximas três | D10, M05 |
 | AE-094 | Inversão de fila | D09 |
-| AE-095 | Atrasar a próxima | V11 |
 | AE-096 | Quebrar o plano | J02, J10 |
 | AE-098 | Organizar reserva | D16 |
 | AE-099 | Reforçar o fim | D01 |
@@ -59,7 +58,6 @@ Nestes, usar o especial rende menos do que lutar com a carta; o bot só os prepa
 | AE-107 | Iniciativa contra fracos | — |
 | AE-108 | Negar captura inimiga | V17 |
 | AE-111 | Ativação forçada | M10 |
-| AE-112 | Repetição onerosa | D06 |
 | AE-114 | Desvio de alvo | V12 |
 | AE-119 | Preparação urgente | — |
 | AE-121 | Defesa → Velocidade | — |

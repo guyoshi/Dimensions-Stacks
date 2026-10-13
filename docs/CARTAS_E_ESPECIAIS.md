@@ -26,7 +26,7 @@
 | J13 | Nynestra | Ciclo de Jesed | Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias. | 40 | 70 | 89 | 61 | 260 | **AE-061** — Reservas giratórias à direita | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à direita. |
 | J14 | Cal Kadrir | Ciclo de Jesed | Jovem Calandrir disciplinado, mantém os ritos e o dever mesmo quando a política muda de rumo. | 79 | 83 | 55 | 59 | 276 | **AE-002** — Muralha de Resistência | Sua carta de combate recebe +15 em Resistência nesta disputa. |
 | J15 | Dareth Quatro-Dedos | Ciclo de Jesed | Veterano de quatro dedos, retorna à arena para impedir que uma nova guerra destrua os civis. | 92 | 86 | 68 | 45 | 291 | **AE-010** — Ataque em dupla | Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate. |
-| J16 | Elis | Ciclo de Jesed | Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran. | 36 | 41 | 90 | 93 | 260 | **AE-089** — Sacrifício duplo | Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias. |
+| J16 | Elis | Ciclo de Jesed | Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran. | 36 | 41 | 90 | 93 | 260 | **AE-089** — Sacrifício por três | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias de lá. |
 | J17 | Selina | Ciclo de Jesed | Conselheira sagaz, lê as engrenagens do poder e aprende a agir antes de ter todas as certezas. | 29 | 43 | 95 | 52 | 219 | **AE-117** — Preparação exposta | Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas. |
 | J18 | Vetarius Polar | Ciclo de Jesed | Soberano carismático de Kaeliran, confia na continuidade de sua dinastia e adia decisões difíceis. | 57 | 76 | 84 | 44 | 261 | **AE-072** — Não perder a carta | Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada. |
 | J19 | Kerath Polar | Ciclo de Jesed | Calandrir firme e disciplinada, protege Kaeliran com coragem e um sentido inflexível do dever. | 84 | 91 | 74 | 64 | 313 | **AE-062** — Reservas giratórias à esquerda | Cada jogador ativo passa simultaneamente toda a própria reserva ao jogador ativo à esquerda. |
@@ -44,7 +44,7 @@
 | V08 | Garmand | Viajantes Dimensionais | Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes. | 69 | 79 | 72 | 59 | 279 | **AE-044** — Primeira da esquerda | Pegue a primeira carta do meio de reserva do adversário à esquerda. |
 | V09 | Ricochet Bombergue | Viajantes Dimensionais | Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex. | 76 | 48 | 62 | 91 | 277 | **AE-139** — Disparada | Sua carta de combate recebe +20 em Velocidade nesta disputa. |
 | V10 | Korvo | Viajantes Dimensionais | Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites. | 70 | 65 | 94 | 72 | 301 | **AE-087** — Reabastecimento da reserva | Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral. |
-| V11 | Gary | Viajantes Dimensionais | Ligado à Vigilância, serve secretamente aos interesses do mago Korvo. | 51 | 47 | 60 | 70 | 228 | **AE-095** — Atrasar a próxima | Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho. |
+| V11 | Gary | Viajantes Dimensionais | Ligado à Vigilância, serve secretamente aos interesses do mago Korvo. | 51 | 47 | 60 | 70 | 228 | **AE-003** — Clarividência | Sua carta de combate recebe +15 em Inteligência nesta disputa. |
 | V12 | Anasin | Viajantes Dimensionais | Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos. | 85 | 58 | 80 | 70 | 293 | **AE-114** — Desvio de alvo | Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você. |
 | V13 | Saliens | Viajantes Dimensionais | Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo. | 83 | 68 | 59 | 76 | 286 | **AE-046** — Reserva dupla à esquerda | Pegue 2 cartas aleatórias do meio de reserva do adversário à esquerda, se disponíveis. |
 | V14 | Tio Frank | Viajantes Dimensionais | Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás. | 11 | 39 | 38 | 20 | 108 | **AE-063** — Troca entre vizinhos | Escolha, às cegas (pela posição no baralho ativo), 1 carta do jogador à esquerda e 1 do jogador à direita: elas trocam de dono. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto. |
@@ -72,7 +72,7 @@
 | D03 | Pedro Souza | Diário Sobrenatural | Amigo impulsivo de Junior, desafia o medo e o luto enquanto busca proteger quem ama. | 52 | 39 | 59 | 74 | 224 | **AE-132** — Quebrar o melhor | Escolha um adversário: o maior atributo da carta de combate dele cai 25 nesta disputa. |
 | D04 | Kelly Fontenelle | Diário Sobrenatural | Leitora inteligente, investiga segredos sobrenaturais na tentativa de reparar antigas culpas. | 14 | 26 | 91 | 38 | 169 | **AE-085** — Resgate escolhido | Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo. |
 | D05 | Vinícius Silva | Diário Sobrenatural | Jovem manco e marcado pela violência, tenta escapar do peso do passado e da reputação familiar. | 78 | 52 | 62 | 48 | 240 | **AE-022** — Par ofensivo | Antes de declarar atributos, determine que todos usem o par Força/Resistência nesta disputa. |
-| D06 | Jennifer de Morais ⭐ | Diário Sobrenatural | Sensível aos espíritos e às visões, Jennifer procura compreender o dom que a isola dos outros. | 66 | 70 | 91 | 70 | 297 | **AE-112** — Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada. |
+| D06 | Jennifer de Morais ⭐ | Diário Sobrenatural | Sensível aos espíritos e às visões, Jennifer procura compreender o dom que a isola dos outros. | 66 | 70 | 91 | 70 | 297 | **AE-109** — Duelo condicionado | Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece. |
 | D07 | Ingrid Marques | Diário Sobrenatural | Espírito da família Carnam, carrega uma história de sofrimento e manipulação sobrenatural. | 74 | 75 | 68 | 53 | 270 | **AE-029** — Proibir a defesa rival | Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa. |
 | D08 | Glenda Mendes | Diário Sobrenatural | Jovem que deseja ser jornalista, investiga acontecimentos estranhos para encontrar respostas. | 27 | 38 | 82 | 64 | 211 | **AE-091** — Revelar a mão | Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa. |
 | D09 | Diego Tavolieri | Diário Sobrenatural | Personagem de Diário Sobrenatural ainda sem perfil narrativo verificável nos materiais consultados. | 36 | 42 | 46 | 48 | 172 | **AE-094** — Inversão de fila | Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo. |
@@ -96,7 +96,7 @@
 | M09 | Richard Falkner (Bulldog) | Mistério Oculto | Richard Falkner, chamado Bulldog, integra o universo investigativo de Mistério Oculto. | 81 | 86 | 66 | 54 | 287 | **AE-036** — Saque de dois rivais | Roube uma carta aleatória do baralho ativo de cada um de dois adversários distintos; cartas de combate e especiais preparados não são alvos. Sem dois adversários distintos, a condição integral não é atendida. |
 | M10 | Releuz (nome temporário) ⭐ | Mistério Oculto | Luzitano deixado na Terra pela Luz após os eventos de Órbita Oráculo. | 65 | 70 | 87 | 82 | 304 | **AE-111** — Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. |
 | M11 | X | Mistério Oculto | Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar. | 8 | 19 | 95 | 45 | 167 | **AE-042** — Última da esquerda | Pegue a última carta do meio de reserva do adversário à esquerda. |
-| M12 | James Harrow | Mistério Oculto | Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana. | 75 | 62 | 95 | 51 | 283 | **AE-086** — Troca pelo descarte | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá. |
+| M12 | James Harrow | Mistério Oculto | Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana. | 75 | 62 | 95 | 51 | 283 | **AE-102** — Capturar defensor | Se Resistência + Velocidade da carta de combate de um adversário for maior ou igual a Força + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. |
 | B01 | Édelin Lys ⭐ | Édelin Lys | Édelin Lys pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento. | 92 | 83 | 70 | 68 | 313 | **AE-103** — Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. |
 | V20 | William McCroys | Viajantes Dimensionais | Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Gary e depois inocentado. | 70 | 68 | 95 | 78 | 311 | **AE-005** — Reforço flexível | Sua carta de combate recebe +10 em um atributo à sua escolha nesta disputa. |
 | V21 | Shirley Ainsworth | Viajantes Dimensionais | Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo. | 48 | 60 | 70 | 75 | 253 | **AE-141** — Intimidar | Escolha um adversário: a carta de combate dele perde 12 em Força e 12 em Inteligência nesta disputa. |
@@ -124,13 +124,13 @@
 | J10 Daryon Polar | 219 | AE-096 — Quebrar o plano | AE-060 — Permuta das reservas à direita |
 | J11 Cal Edran | 304 | AE-074 — Imunidade pessoal | AE-014 — Velocidade → Força |
 | J12 Rendar | 300 | AE-105 — Defesa que captura | AE-052 — Troca de combatente |
-| J16 Elis | 260 | AE-100 — Confundir próximo turno | AE-089 — Sacrifício duplo |
+| J16 Elis | 260 | AE-100 — Confundir próximo turno | AE-089 — Sacrifício por três |
 | J17 Selina | 219 | AE-113 — Interrupção precisa | AE-117 — Preparação exposta |
 | J18 Vetarius Polar | 261 | AE-022 — Par ofensivo | AE-072 — Não perder a carta |
 | J19 Kerath Polar | 313 | AE-072 — Não perder a carta | AE-062 — Reservas giratórias à esquerda |
 | J20 Jelatira | 131 | AE-091 — Revelar a mão | AE-106 — Ataque que bane |
 | J21 Nefestra | 174 | AE-093 — Espionagem tripla | AE-038 — Recompensa defensiva |
-| J22 Sefter | 260 | AE-089 — Sacrifício duplo | AE-071 — Ausência tática |
+| J22 Sefter | 260 | AE-089 — Sacrifício por três | AE-071 — Ausência tática |
 | J23 Kedran | 288 | AE-017 — Força → Resistência | AE-125 — Permutar Força e Resistência |
 | V01 Breno Lins | 285 | AE-078 — Reflexo de roubo | AE-001 — Impulso de Força |
 | V03 Banjo Lins | 255 | AE-039 — Saque revelado | AE-011 — Força → Inteligência |
@@ -138,10 +138,10 @@
 | V05 Velho-Sábio / Auream | 265 | AE-097 — Escolha de sete | AE-008 — Guarda equilibrada |
 | V06 Erla | 313 | AE-079 — Escudo antecipado | AE-130 — Anular a última habilidade |
 | V07 Lucas Veline | 228 | AE-062 — Reservas giratórias à esquerda | AE-140 — Mente afiada |
-| V08 Garmand | 279 | AE-095 — Atrasar a próxima | AE-044 — Primeira da esquerda |
+| V08 Garmand | 279 | AE-095 — Atrasar a próxima (retirado) | AE-044 — Primeira da esquerda |
 | V09 Ricochet Bombergue | 277 | AE-041 — Última da direita | AE-139 — Disparada |
 | V10 Korvo | 301 | AE-068 — Tributo por sacrifício | AE-087 — Reabastecimento da reserva |
-| V11 Gary | 228 | AE-055 — Troca de topos à direita | AE-095 — Atrasar a próxima |
+| V11 Gary | 228 | AE-055 — Troca de topos à direita | AE-003 — Clarividência |
 | V14 Tio Frank | 108 | AE-051 — Troca escolhida | AE-063 — Troca entre vizinhos |
 | V17 Lanigiah | 275 | AE-096 — Quebrar o plano | AE-108 — Negar captura inimiga |
 | V18 Grande Pai Gaia | 279 | AE-103 — Ruína de campo | AE-007 — Ímpeto ofensivo |
@@ -158,10 +158,11 @@
 | D02 Priscila Fontenelle | 249 | AE-028 — Proibir o ataque rival | AE-026 — Forçar ataque rival |
 | D03 Pedro Souza | 224 | AE-071 — Ausência tática | AE-132 — Quebrar o melhor |
 | D05 Vinícius Silva | 240 | AE-031 — Primeira à direita | AE-022 — Par ofensivo |
+| D06 Jennifer de Morais | 297 | AE-112 — Repetição onerosa (retirado) | AE-109 — Duelo condicionado |
 | D07 Ingrid Marques | 270 | AE-084 — Resgate antigo | AE-029 — Proibir a defesa rival |
 | D08 Glenda Mendes | 211 | AE-092 — Próximas três | AE-091 — Revelar a mão |
 | D09 Diego Tavolieri | 172 | AE-004 — Arrancada | AE-094 — Inversão de fila |
-| D10 Sra. Olívia | 145 | AE-086 — Troca pelo descarte | AE-027 — Forçar defesa rival |
+| D10 Sra. Olívia | 145 | AE-086 — Troca pelo descarte (retirado) | AE-027 — Forçar defesa rival |
 | D11 Cara-de-Larva | 284 | AE-066 — Descarte coletivo | AE-012 — Inteligência → Força |
 | D13 Suéten Marques | 223 | AE-108 — Negar captura inimiga | AE-066 — Descarte coletivo |
 | D14 Filipo Brandolini | 208 | AE-077 — Guardião da reserva | AE-131 — Enfraquecer |
@@ -178,4 +179,4 @@
 | M08 Dra. Helena Valença | 185 | AE-012 — Inteligência → Força | AE-028 — Proibir o ataque rival |
 | M09 Richard Falkner (Bulldog) | 287 | AE-082 — Resgate aleatório duplo | AE-036 — Saque de dois rivais |
 | M11 X | 167 | AE-093 — Espionagem tripla | AE-042 — Última da esquerda |
-| M12 James Harrow | 283 | AE-026 — Forçar ataque rival | AE-086 — Troca pelo descarte |
+| M12 James Harrow | 283 | AE-026 — Forçar ataque rival | AE-102 — Capturar defensor |

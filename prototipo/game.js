@@ -546,7 +546,7 @@
     return {
       notify: async (type, data) => { if (TM.el && TM.el.classList.contains('passive')) tmrStop(); if (U.rec) { try { const r = U.rec.ev(type, data, G); if (r) U.lastRec = r; } catch (e) { console.error('rec', e); } } const f = H[type]; if (f) { try { await f(data || {}); } catch (e) { if (e === 'abort') throw e; console.error('UI', type, e); } } },
       log: (text, cls) => { V.logs.push({ text, cls }); if (V.fxLines && cls === 'efeito') V.fxLines.push(text); if (cls !== 'prep' && !(FXB && cls === 'efeito')) caption(text, cls === 'vit'); const d = $('.logdrawer .lg'); if (d) d.append(el(`<p class="${cls}">${esc(text)}</p>`)); },
-      orderHand: (p, hand) => orderHand(p, hand),
+      orderHand: (p, hand, o) => orderHand(p, hand, o),
       async prepare(p, top) {
         const c = CARDS[top], sp = E.SPECIALS[c.especial];
         if (V.noPrep[p.pid]) return false;
@@ -596,9 +596,18 @@
           const seen = ((combat && (combat.acts || (combat.ctrlActs || []).concat(combat.activations || []))) || []).filter(a => a.pid !== p.pid && CARDS[a.card]);
           if (stage === 'react' && seen.length) node.append(el(`<div class="txt why" style="flex:1 1 100%"><div class="hint">Virados pelos rivais: ${seen.map(a => `<b>${esc(nameOf(a.pid))}</b>: ${esc(E.SPECIALS[CARDS[a.card].especial].nome)}`).join(' · ')}. Você decide agora, sabendo disso. As escolhas dos reagentes são secretas e simultâneas.</div></div>`));
         }
+        const me = combat && combat.entries && combat.entries.find(x => x.pid === p.pid);
+        // prévia do que o especial faz na carta de combate (bônus e conversões): o jogador vê o resultado antes de escolher
+        const preview = sp => {
+          if (!me || !sp.fx || !me.stats) return '';
+          let nx; try { nx = sp.fx(me.stats, me.attr); } catch (e) { return ''; }
+          const ch = AIDS.filter(a => nx[a] !== me.stats[a]); if (!ch.length) return '<div class="spt prev">Sem efeito na sua carta agora.</div>';
+          const parts = ch.map(a => a === me.attr ? `<b>${ATT[a].nome} (usado): ${me.stats[a]} → ${nx[a]}</b>` : `${ATT[a].nome} ${me.stats[a]} → ${nx[a]}`);
+          return `<div class="spt prev">Sua carta: ${parts.join(' · ')}</div>`;
+        };
         usable.forEach(id => {
           const sp = E.SPECIALS[CARDS[id].especial];
-          const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div><button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
+          const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div>${preview(sp)}<button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
           $('.cb', pk).append(cardEl(id, { up: true, noanim: true, cw: 72 })); node.append(pk);
         });
         // outros especiais preparados que não aparecem como opção: explica por que
@@ -658,14 +667,15 @@
     };
   }
 
-  function orderHand(p, hand) {
+  function orderHand(p, hand, o) {
+    const rf = !!(o && o.refill);
     return (async () => {
       await cover(p);
       return new Promise((res, rej) => {
         const run = U.run; run.rej.add(rej);
         let arr = hand.slice(), sel = -1, last = 0;
-        const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: monte seu baralho</h2>
-          <div class="hint"><b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.</div></div>
+        const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: ${rf ? 'reordene as cartas da reserva' : 'monte seu baralho'}</h2>
+          <div class="hint">${rf ? 'Seu baralho acabou: estas cartas vieram da reserva. ' : ''}<b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.</div></div>
           <div class="grid"></div><div class="info"></div>
           <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);
@@ -780,7 +790,7 @@
           return local.notify(type, data);
         },
         log: (text, cls) => { local.log(text, cls); logq.push([text, cls || '']); if (!flushing) { flushing = true; queueMicrotask(() => { flushing = false; send({ n: ++seq, t: 'log', lg: logq.splice(0) }); }); } },
-        orderHand: wrap('orderHand', (p, hand) => [hand]),
+        orderHand: wrap('orderHand', (p, hand, o) => [hand, o]),
         prepare: wrap('prepare', (p, top) => [top]),
         attr: wrap('attr', (p, entry, options, combat, canPrep) => [{ card: entry.card, stats: entry.stats }, options, P.cb(combat, p.pid), canPrep]),
         special: wrap('special', (p, usable, combat, ctx, stage) => [usable, Object.assign({}, P.cb(combat, p.pid), { acts: (combat.ctrlActs || []).concat(combat.activations || []).map(x => ({ pid: x.pid, card: x.card })) }), null, stage]),   // acts: especiais já virados (públicos), para a janela de reação

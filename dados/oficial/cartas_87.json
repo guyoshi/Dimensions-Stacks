@@ -847,7 +847,7 @@
       },
       "soma_atributos": 228,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-095",
+      "habilidade_especial_id": "AE-003",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -1524,7 +1524,7 @@
       },
       "soma_atributos": 297,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-112",
+      "habilidade_especial_id": "AE-109",
       "uniao": "FUTURA_INTEGRANTE",
       "base_narrativa": {
         "fonte": "D1",
@@ -2111,7 +2111,7 @@
       },
       "soma_atributos": 283,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-086",
+      "habilidade_especial_id": "AE-102",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",

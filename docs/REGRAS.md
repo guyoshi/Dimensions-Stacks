@@ -96,7 +96,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 
 ## 7. Meio de reserva
 
-- Quando o baralho ativo de alguém acabar, o jogador compra **mais 6 cartas da própria reserva** (decisão do autor em 13/10/2026; o manual anterior dizia 7).
+- Quando o baralho ativo de alguém acabar, o jogador compra **mais 6 cartas da própria reserva** (decisão do autor em 13/10/2026; o manual anterior dizia 7). **Desde 14/10/2026 o jogador reordena as cartas recém-compradas** antes de elas entrarem no baralho (o bot também as ordena); a ordem da reserva continua aleatória no início da partida.
 - Habilidades especiais específicos podem permitir retirar cartas da própria reserva ou da de um adversário.
 - **PENDENTE:** quando restarem menos de 6 na reserva; reposição durante uma disputa; se o jogador fica temporariamente sem carta de combate; quando se declara eliminação na presença de cartas especiais preparadas.
 
@@ -250,7 +250,7 @@ Destaques para especificação futura:
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
 
 - O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **87 personagens candidatos** das séries serão distribuídos posteriormente.
-- A [biblioteca de **129 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **98 IDs equipados em 98 cartas (um por carta)** e **43 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
+- A [biblioteca de **138 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **98 IDs equipados em 98 cartas (um por carta)** e **40 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
 - A auditoria de **62 posições do baralho físico** registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
 - Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
 - **Habilidade proposta pelo autor, texto parcial:** “roube a última carta do meio de reserva de cada adversário”; consta como **AE-048**, aguardando confirmação do trecho cortado ao final da mensagem.
@@ -299,7 +299,7 @@ O autor aceita que **pouquíssimas cartas** possam ter um especial de vitória a
 
 1. Uma habilidade cujo texto **explicitamente permita ativar duas cartas especiais no mesmo combate** pode superar o limite normal. Ainda será necessário criar/aprovar o texto e o custo das habilidades que concederem essa exceção.
 2. **AE-111 / especial antigo #59 (ativação forçada):** se outro jogador for obrigado a ativar seus especiais preparados, deverá usar **todos os que possuir preparados (até dois)** naquele confronto, mesmo ultrapassando a ativação voluntária normal. Não permite puxar cartas não preparadas.
-3. **AE-112 / especial antigo #62 (repetir efeito):** repetir uma vez o **efeito** de outra especial conforme seus custos e restrições não significa automaticamente ativar uma **segunda carta especial diferente**. A mecânica de repetição não concede, sozinha, permissão genérica para virar a outra carta preparada. Manter proteção contra ciclos.
+3. *(Retirado em 14/10/2026: AE-112, o especial de repetição, deixou de existir.)*
 
 **Exemplo:** um jogador guarda dois especiais preparados, A e B. Numa disputa, pode voluntariamente usar A **ou** B; o outro continua preparado. Poderá usar o restante numa rodada posterior. Somente um efeito específico de ativação dupla ou a imposição de #59 poderá fazê-lo consumir ambos na mesma disputa.
 
@@ -356,7 +356,7 @@ Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de foto
 
 **CONFIGURAÇÃO INICIAL APROVADA PARA TESTES:** distribuir **18 cartas a cada jogador**, sendo **7 no baralho ativo** e **11 na reserva**, em partidas com 2–4 jogadores. Quantidades na partida: **36, 54 e 72** respectivamente. A coleção tem 87 cartas; **como sortear/selecionar as cartas da coleção sem viés permanece PENDENTE**. O baralho de 18 é ponto de partida autorizado, não afirmação de duração equilibrada.
 
-**PRIORIDADE E DEFESA APROVADAS COMO MODELO:** prioridade circular a partir do iniciador em sentido horário; quando uma especial é jogada, uma defesa pode ser ativada **em resposta enquanto o efeito ainda está pendente**, entrando antes dele na pilha (resolução inversa, última a entrar é a primeira a resolver). Uma defesa pode reagir antes da captura/descarte normal se seu texto permitir. Depois de resolvido o efeito, não existe cancelamento retroativo. **Passar não consome especial.** Uma especial defensiva ativada voluntariamente **consome o único uso voluntário normal do combate**, salvo permissão explícita para uma segunda. **AE-130** anula **a última habilidade especial pendente** e não devolve a carta especial anulada. **AE-111** força todas as especiais preparadas até duas. **AE-112** não pode criar ciclos infinitos.
+**PRIORIDADE E DEFESA APROVADAS COMO MODELO:** prioridade circular a partir do iniciador em sentido horário; quando uma especial é jogada, uma defesa pode ser ativada **em resposta enquanto o efeito ainda está pendente**, entrando antes dele na pilha (resolução inversa, última a entrar é a primeira a resolver). Uma defesa pode reagir antes da captura/descarte normal se seu texto permitir. Depois de resolvido o efeito, não existe cancelamento retroativo. **Passar não consome especial.** Uma especial defensiva ativada voluntariamente **consome o único uso voluntário normal do combate**, salvo permissão explícita para uma segunda. **AE-130** anula **a última habilidade especial pendente** e não devolve a carta especial anulada. **AE-111** força todas as especiais preparadas até duas.
 
 **EXCLUSÕES PRESERVADAS:** antigos efeitos físicos **#18, #24 e #52** retirados; **AE-104** aposentado. O novo **AE-129 Triunfo Raro** não é o antigo #52 e foi aprovado **para S01 Jasmey Badrock**, sem eliminar testes de raridade, reações e equilíbrio. A habilidade de ruína **AE-103** afeta somente **cartas normais do campo de combate**, não especiais preparadas.
 

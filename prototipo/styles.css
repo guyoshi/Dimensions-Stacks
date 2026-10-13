@@ -934,3 +934,5 @@ select option:checked { background-color: #3a4256; color: #fff; }
 #layer:has(.order) .fxb .nm { font-size: 14px; margin-top: 0; }
 #layer:has(.order) .fxb .who { font-size: 10px; }
 #layer:has(.order) .fxb .rs { display: none !important; }
+
+.specpick .spt.prev { color: var(--gold2); font-weight: 700; }

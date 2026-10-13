@@ -7,7 +7,7 @@
 | Arquivo | Status | Conteúdo |
 | --- | --- | --- |
 | [cartas_87.json](cartas_87.json) | `APROVADO_PELO_AUTOR` | **98 cartas** (o nome do arquivo ficou de quando eram 87), cada uma com ID, nome, origem, descrição curta, atributos FOR/RES/INT/VEL, soma, perfil, especial e se integra A União. |
-| [habilidades_129.json](habilidades_129.json) | `CATALOGO_APROVADO_COM_TESTES_PENDENTES` | **129 Habilidades Especiais**, sendo 98 efeitos diferentes equipados (um por carta) e 43 sem nenhuma atribuição, reservados a expansões. |
+| [habilidades_129.json](habilidades_129.json) | `CATALOGO_APROVADO_COM_TESTES_PENDENTES` | **138 Habilidades Especiais** (129 originais − 3 retiradas + 12 criadas), sendo 98 efeitos diferentes equipados (um por carta) e 40 sem nenhuma atribuição, reservados a expansões. |
 
 **Chaves do JSON das cartas:** `cartas[].id`, `nome`, `origem`, `descricao_curta`, `atributos.{FOR,RES,INT,VEL}`, `soma_atributos`, `perfil_balanceamento`, `habilidade_especial_id`, `uniao`, `base_narrativa`, `status`.
 

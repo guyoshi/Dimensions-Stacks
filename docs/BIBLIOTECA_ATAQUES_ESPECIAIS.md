@@ -1,6 +1,6 @@
-# Dimensions Stacks — Biblioteca de 141 habilidades especiais, catálogo aprovado (v2.0)
+# Dimensions Stacks — Biblioteca de 138 habilidades especiais, catálogo aprovado (v2.0)
 
-> **APROVAÇÃO AUTORAL (12/10/2026):** 141 habilidades (129 originais + 12 criadas em 13 e 14/10/2026) permanecem como repertório do jogo, das quais **98 têm atribuição em 98 cartas (atualizado em 13/10/2026)** e **43 ainda não equipam nenhuma carta**. A coluna `Carta atribuída (ID)` indica as associações oficiais. A aceitação do catálogo não equivale a comprovação de balanceamento e não autoriza inventar procedimentos pendentes. Os nomes físicos antigos são somente referências históricas.
+> **APROVAÇÃO AUTORAL (12/10/2026):** 138 habilidades (129 originais − 3 retiradas em 14/10/2026 + 12 criadas em 13 e 14/10/2026) permanecem como repertório do jogo, das quais **98 têm atribuição em 98 cartas (atualizado em 13/10/2026)** e **40 ainda não equipam nenhuma carta**. A coluna `Carta atribuída (ID)` indica as associações oficiais. A aceitação do catálogo não equivale a comprovação de balanceamento e não autoriza inventar procedimentos pendentes. Os nomes físicos antigos são somente referências históricas.
 
 ## Princípios obrigatórios e cuidados
 
@@ -13,7 +13,7 @@
 7. **Tempo/ordem de efeitos ainda requer regra global**, antes do protótipo. Alguns efeitos requerem ativação antes da escolha/revelação dos atributos, outros depois e antes do resultado, e outros na resolução. Não tentar implementar todos num único momento indistinto.
 8. **Risco:** `Teste` = efeito plausível para primeira rodada de protótipos; `Atenção` = efeito viável, mas pode escalar ou exigir regra; `Experimental` = alto risco de quebrar equilíbrio, prioridade ou condição de vitória; `Regra-base` = mecânica essencial ratificada pelo autor; `Condicional 3+` = precisa adaptação para duelos.
 9. **Cores por origem:** Viajantes Dimensionais **azul**; Mistério Oculto **vermelho**; Ciclo de Jesed **amarelo**; série de Édelin/Belfex **verde**; Diário Sobrenatural **roxo**; Spacetheft **preta**. A União recebe **selo independente**, não é cor ou categoria de ataque. **Nenhuma habilidade deve exigir cor de série como requisito de força ou captura.**
-10. **Ativação por combate, regra aprovada:** o jogador pode ativar voluntariamente **somente 1 especial preparado por combate**. **Exceção:** uma habilidade específica pode permitir 2 ativações voluntárias no mesmo combate. **AE-111 (#59)** força todas as especiais já preparadas do alvo, até 2, mesmo sem consentimento. **AE-112** repete um efeito e **não concede ativação genérica de outra carta preparada**. Ainda estão em discussão: origem das cartas preparadas, janelas e prioridade, destino quando faltarem cartas, empate final e efeitos sobre duas cartas normais do AE-010.
+10. **Ativação por combate, regra aprovada:** o jogador pode ativar voluntariamente **somente 1 especial preparado por combate**. **Exceção:** uma habilidade específica pode permitir 2 ativações voluntárias no mesmo combate. **AE-111 (#59)** força todas as especiais já preparadas do alvo, até 2, mesmo sem consentimento. Ainda estão em discussão: origem das cartas preparadas, janelas e prioridade, destino quando faltarem cartas, empate final e efeitos sobre duas cartas normais do AE-010.
 
 **Legendas de origem:** `#NN` = inspiração de carta física; `novo` = habilidade proposta; `#NN (adaptação)` = propositalmente diferente do original. As escolhas de bônus, limiares e quantidades propostas precisam ser testadas.
 
@@ -23,7 +23,7 @@
 | --- | --- | --- | --- | --- | --- |
 | AE-001 | Impulso de Força | Sua carta de combate recebe +15 em Força nesta disputa. | novo | Teste | V01 |
 | AE-002 | Muralha de Resistência | Sua carta de combate recebe +15 em Resistência nesta disputa. | novo | Teste | J14 |
-| AE-003 | Clarividência | Sua carta de combate recebe +15 em Inteligência nesta disputa. | novo | Teste | — |
+| AE-003 | Clarividência | Sua carta de combate recebe +15 em Inteligência nesta disputa. | novo | Teste | V11 |
 | AE-004 | Arrancada | Sua carta de combate recebe +15 em Velocidade nesta disputa. | novo | Teste | D18 |
 | AE-005 | Reforço flexível | Sua carta de combate recebe +10 em um atributo à sua escolha nesta disputa. | #15 | Teste | V20 |
 | AE-006 | Dupla resistência | Uma carta de combate sua recebe +15 Resistência e +20 Velocidade nesta disputa. | #27 | Teste | S08 |
@@ -139,7 +139,7 @@
 | AE-079 | Escudo antecipado | Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa. | novo | Teste | — |
 | AE-080 | Anular modificador | Cancele até 1 bônus ou redução numérica que tenha sido aplicado à sua carta de combate nesta disputa. | novo | Teste | — |
 
-## I. Recuperação e manipulação do Buraco Negro (10)
+## I. Recuperação e manipulação do Buraco Negro (9)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
@@ -148,13 +148,12 @@
 | AE-083 | Resgate do topo | Recupere a carta normal mais recente do Buraco Negro para o fim de seu baralho ativo. | novo | Teste | J06 |
 | AE-084 | Resgate antigo | Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo. | novo | Teste | — |
 | AE-085 | Resgate escolhido | Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo. | novo | Atenção | D04 |
-| AE-086 | Troca pelo descarte | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá. | novo | Teste | M12 |
 | AE-087 | Reabastecimento da reserva | Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral. | #12 (texto corrigido pelo autor) | Teste | V10 |
 | AE-088 | Retorno imediato | Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta. | novo | Teste | — |
-| AE-089 | Sacrifício duplo | Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias. | novo | Atenção | J16 |
+| AE-089 | Sacrifício por três | Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias de lá. | novo | Atenção | J16 |
 | AE-090 | Segunda chance | Se sua carta de combate fosse para o Buraco Negro nesta disputa, coloque-a em vez disso no fim de sua reserva; não preserve vitória nem capture. | novo | Teste | — |
 
-## J. Informação e manipulação de ordem (10)
+## J. Informação e manipulação de ordem (9)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
@@ -162,7 +161,6 @@
 | AE-092 | Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. | novo | Teste | — |
 | AE-093 | Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. | novo | Teste | D19 |
 | AE-094 | Inversão de fila | Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo. | novo | Teste | D09 |
-| AE-095 | Atrasar a próxima | Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho. | novo | Teste | V11 |
 | AE-096 | Quebrar o plano | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. | #33 | Atenção | J02 |
 | AE-097 | Escolha de sete | Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo. | #36 (adaptação) | Atenção | — |
 | AE-098 | Organizar reserva | Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada. | novo | Teste | D16 |
@@ -174,23 +172,22 @@
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-101 | Capturar atacante | Se Força + Inteligência da carta de combate de um adversário for maior que Resistência + Velocidade, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #60 (adaptação) | Atenção | M06 |
-| AE-102 | Capturar defensor | Se Resistência + Velocidade da carta de combate de um adversário for maior ou igual a Força + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção | — |
+| AE-102 | Capturar defensor | Se Resistência + Velocidade da carta de combate de um adversário for maior ou igual a Força + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. | #61 (adaptação) | Atenção | M12 |
 | AE-103 | Ruína de campo | Impeça ataques contra você nesta disputa e envie ao Buraco Negro somente as cartas normais que os adversários colocaram em combate; preserve a sua carta de combate. Não descarta as cartas especiais preparadas. A interação com especiais ativados continua pendente. | #54 (escopo aprovado) | Atenção | B01 |
 | AE-104 | *(aposentada)* | ID reservado e sem habilidade: o antigo efeito físico #52 foi excluído (ver registro de exclusão abaixo). | — | — | — |
 | AE-105 | Defesa que captura | Se vencer usando Resistência ou Velocidade, capture a carta de combate de 1 adversário derrotado, em vez de descartá-la. | novo | Teste | — |
 | AE-106 | Ataque que bane | Se vencer usando Força ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro. | novo | Teste | J20 |
 | AE-107 | Iniciativa contra fracos | Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa. | novo | Atenção | — |
 | AE-108 | Negar captura inimiga | Se perder para um atributo de ataque, sua carta de combate vai ao Buraco Negro, não ao baralho do vencedor. | novo | Teste | V17 |
-| AE-109 | Duelo condicionado | Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece. | novo | Experimental | — |
+| AE-109 | Duelo condicionado | Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece. | novo | Experimental | D06 |
 | AE-110 | Margem estreita | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. | novo | Atenção | J01 |
 | AE-129 | Triunfo raro | Vença automaticamente a comparação de atributos desta disputa, desde que esse especial não seja anulado. O destino das cartas segue o atributo que você declarou: ataque captura e defesa descarta. **Candidato a pouquíssimas cartas raras**, ainda não aprovado como habilidade final. | novo; não é o antigo #52 | Rara, experimental | S01 |
 
-## L. Interações entre habilidades especiais (10)
+## L. Interações entre habilidades especiais (9)
 
 | ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |
 | --- | --- | --- | --- | --- | --- |
 | AE-111 | Ativação forçada | Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária. | #59 | Regra-base | M10 |
-| AE-112 | Repetição onerosa | Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada. | #62 (ciclos proibidos) | Atenção | D06 |
 | AE-113 | Interrupção precisa | Cancele 1 habilidade especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente. | novo | Teste | — |
 | AE-114 | Desvio de alvo | Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você. | novo | Teste | V12 |
 | AE-115 | Eco de habilidade | Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia. | novo | Atenção | — |
@@ -218,7 +215,7 @@
 
 **Reação defensiva:** a habilidade **AE-130** foi adicionada para cancelar a última habilidade especial ainda pendente. A resposta pode entrar quando surgir uma ameaça, **antes de sua resolução**; não desfaz efeitos já concluídos. A janela detalhada de reações defensivas permanece uma proposta no GDD. Ter timing de resposta não cria segunda ativação voluntária gratuita, salvo habilidade expressa.
 
-**Ativação voluntária confirmada:** **1 carta especial preparada por combate**, escolhida e ativada no turno desejado. Somente habilidades com permissão explícita podem permitir duas. **Nenhuma das 129 entradas atuais é automaticamente uma autorização genérica para ativar duas cartas**: esta eventual mecânica deve ser proposta/aprovada explicitamente. A especial **AE-111** força todas as especiais preparadas do alvo (até duas), criando exceção não voluntária; **AE-112** repete um efeito sem autorizar virar uma segunda especial. A ordem entre jogadores e a janela precisa ainda precisam de definição no GDD.
+**Ativação voluntária confirmada:** **1 carta especial preparada por combate**, escolhida e ativada no turno desejado. Somente habilidades com permissão explícita podem permitir duas. **Nenhuma das 129 entradas atuais é automaticamente uma autorização genérica para ativar duas cartas**: esta eventual mecânica deve ser proposta/aprovada explicitamente. A especial **AE-111** força todas as especiais preparadas do alvo (até duas), criando exceção não voluntária. A ordem entre jogadores e a janela precisa ainda precisam de definição no GDD.
 
 
 ## N. Reações e contramedidas novas (1)
@@ -252,11 +249,10 @@ Criadas a pedido do autor: as primeiras que **reduzem atributos do rival** (AE-1
 - **Efeitos de roubo por lado:** todas as famílias que roubam `da direita` possuem pelo menos uma variante `da esquerda`. O lado deve permanecer visível no texto da carta.
 - **Permuta ou cópia:** uma *permuta* entre atributos move ambos os valores; uma *cópia* substitui apenas um valor. Isso evita a ambiguidade dos especiais antigos #20–22.
 - **Efeitos coletivos:** nunca repetir um efeito mais de uma vez por adversário na mesma ativação sem texto expresso. Quando faltar carta em alguma reserva/baralho, afetar somente os alvos válidos (proposta).
-- **Repetição do AE-112 (direção aprovada: impedir ciclos):** uma ativação repete no máximo uma vez um efeito que não seja repetição/cópia; não pode mirar a si própria ou gerar nova repetição; custos adicionais são pagos integralmente. Especificação operacional sujeita a teste.
 - **Antigo #52 excluído:** o ID **AE-104 foi aposentado**, não recebe carta atribuída. **AE-129** é uma **proposta nova e rara**, com vitória automática que respeita a natureza ataque/defesa do atributo declarado, não o antigo efeito de captura incondicional. **AE-103** afeta só as cartas normais de combate, jamais a área de especiais preparadas.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
 - **Efeitos com 2/3/4 jogadores:** em duelo, direita e esquerda apontam ao mesmo oponente. AE-063/064/065 podem ser gastas mesmo sem vantagem; não serão convertidas obrigatoriamente em novas habilidades. AE-036 exige dois adversários distintos para seu efeito completo.
-- **Atribuição aprovada:** **98 habilidades distintas** estão equipadas nas **98 cartas oficiais** (uma habilidade diferente por carta, desde 13/10/2026); **43 seguem sem carta atribuída**, preservadas para futuras expansões. Duplicações de uma mesma habilidade em personagens diferentes são permitidas. Consulte [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md), cujo conteúdo passou ao estado **APROVADO**, e [o JSON oficial](../dados/oficial/habilidades_129.json).
+- **Atribuição aprovada:** **98 habilidades distintas** estão equipadas nas **98 cartas oficiais** (uma habilidade diferente por carta, desde 13/10/2026); **40 seguem sem carta atribuída**, preservadas para futuras expansões. Duplicações de uma mesma habilidade em personagens diferentes são permitidas. Consulte [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md), cujo conteúdo passou ao estado **APROVADO**, e [o JSON oficial](../dados/oficial/habilidades_129.json).
 
 ## Documentos associados
 

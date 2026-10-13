@@ -440,17 +440,6 @@
       },
       ai(ctx, pid, c) { const l = ctx.bhNormal(); return l.length ? gainU(Math.max(...l.map(sum)) - costC(c)) : 0; },
     });
-    D('AE-086', 'Buraco Negro', {
-      can(ctx, pid) { return ctx.player(pid).deck.length >= 1 && ctx.bhNormal().length > 0; },
-      async apply(ctx, act) {
-        const p = ctx.player(act.pid); if (!p.deck.length) return;
-        const [c] = await ctx.askCards(act.pid, { title: 'Troca pelo descarte: qual carta enviar ao Buraco Negro?', hint: 'Você recupera até 2 cartas normais aleatórias de lá.', cards: p.deck.slice(), min: 1, max: 1 }, () => lowest(p.deck, 1));
-        p.deck.splice(p.deck.indexOf(c), 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid: act.pid, card: c });
-        for (let n = 0; n < 2; n++) { const l = ctx.bhNormal().filter(x => x !== c); if (!l.length) break; const r = l[Math.floor(ctx.rand() * l.length)]; ctx.fromBH(r); p.deck.push(r); await ctx.emit('rescue', { pid: act.pid, card: r }); }
-        ctx.say(`${nm(ctx, act.pid)} troca pelo descarte.`);
-      },
-      ai(ctx, pid, c) { const l = ctx.bhNormal(), d = ctx.player(pid).deck; if (!l.length || !d.length) return 0; return gainU(Math.min(2, l.length) * avgSum(l) - sum(lowest(d, 1)[0]) - costC(c)); },
-    });
     D('AE-087', 'Buraco Negro', {
       can(ctx) { return ctx.bhAll().length > 0; },
       async apply(ctx, act) {
@@ -467,13 +456,13 @@
     D('AE-089', 'Buraco Negro', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 2 && ctx.bhNormal().length > 0; },
       async apply(ctx, act) {
-        const p = ctx.player(act.pid); const n = Math.min(2, p.deck.length); if (!n) return;
-        const cs = await ctx.askCards(act.pid, { title: 'Sacrifício duplo: escolha 2 cartas para o Buraco Negro', hint: 'Você recupera até 3 cartas normais aleatórias de lá.', cards: p.deck.slice(), min: n, max: n }, () => lowest(p.deck, n));
+        const p = ctx.player(act.pid); if (!p.deck.length) return;
+        const cs = await ctx.askCards(act.pid, { title: 'Sacrifício por três: escolha 1 carta para o Buraco Negro', hint: 'Você recupera até 3 cartas normais aleatórias de lá.', cards: p.deck.slice(), min: 1, max: 1 }, () => lowest(p.deck, 1));
         for (const c of cs) { p.deck.splice(p.deck.indexOf(c), 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid: act.pid, card: c }); }
         for (let k = 0; k < 3; k++) { const l = ctx.bhNormal().filter(x => !cs.includes(x)); if (!l.length) break; const r = l[Math.floor(ctx.rand() * l.length)]; ctx.fromBH(r); p.deck.push(r); await ctx.emit('rescue', { pid: act.pid, card: r }); }
-        ctx.say(`${nm(ctx, act.pid)} faz um sacrifício duplo.`);
+        ctx.say(`${nm(ctx, act.pid)} sacrifica uma carta e recupera outras do Buraco Negro.`);
       },
-      ai(ctx, pid, c) { const l = ctx.bhNormal(), d = ctx.player(pid).deck; if (l.length < 2 || d.length < 2) return 0.04; return gainU(Math.min(3, l.length) * avgSum(l) - lowest(d, 2).reduce((t, x) => t + sum(x), 0) - costC(c)); },
+      ai(ctx, pid, c) { const l = ctx.bhNormal(), d = ctx.player(pid).deck; if (l.length < 2 || d.length < 2) return 0.04; return gainU(Math.min(3, l.length) * avgSum(l) - lowest(d, 1).reduce((t, x) => t + sum(x), 0) - costC(c)); },
     });
 
     // ================================================================ informação e manipulação de ordem
@@ -498,16 +487,6 @@
       can(ctx, pid) { return ctx.player(pid).deck.length >= 2; },
       async apply(ctx, act) { const p = ctx.player(act.pid); const n = Math.min(3, p.deck.length); p.deck.splice(0, n, ...p.deck.slice(0, n).reverse()); ctx.say(`${nm(ctx, act.pid)} inverte a fila das próximas ${n} cartas.`); await ctx.emit('reorder', { pid: act.pid }); },
       ai(ctx, pid) { const v = ctx.player(pid).deck.slice(0, 3); if (v.length < 2) return 0; const g = orderScore(ctx, pid, v.slice().reverse()) - orderScore(ctx, pid, v); return g >= 40 ? 0.7 : g >= 20 ? 0.4 : 0.04; }, prep: 0.4, val: 0.5,
-    });
-    D('AE-095', 'Informação', {
-      can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length >= 2); },
-      async apply(ctx, act) {
-        const cand = ctx.opps(act.pid).filter(o => ctx.player(o).deck.length >= 2); if (!cand.length) return ctx.say('Nenhum adversário com mais de uma carta ativa.');
-        const t = await ctx.target(act.pid, cand, 'Atrasar a próxima carta de quem?', c => c.slice().sort((a, b) => (ctx.foeNext(act.pid, b) ? sum(ctx.foeNext(act.pid, b)) : 0) - (ctx.foeNext(act.pid, a) ? sum(ctx.foeNext(act.pid, a)) : 0))[0]); if (t == null) return;
-        const d = ctx.player(t).deck; if (d.length) d.push(d.shift()); ctx.say(`${nm(ctx, act.pid)} atrasa a próxima carta de ${nm(ctx, t)}.`); await ctx.emit('reorder', { pid: t });
-      },
-      // só vale se lembro que a próxima dele é forte; às cegas é jogar uma moeda
-      val: 0.5, ai(ctx, pid) { const ks = ctx.opps(pid).map(o => ctx.foeNext(pid, o)).filter(Boolean); if (!ks.length) return 0.18; return Math.max(...ks.map(sum)) >= MEANSUM + 25 ? 0.85 : 0.05; },
     });
     D('AE-096', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length + ctx.player(o).reserve.length > 0); },
@@ -670,27 +649,11 @@
     });
 
     // ================================================================ interações entre especiais
-    D('AE-112', 'Interação', {
-      phase: 'echo', companion: true, prep: 0.15,
-      can(ctx, pid) { return ctx.player(pid).prepared.length >= 2 || ctx.activations.some(a => a.pid === pid); },
-      async apply(ctx, act) {
-        const a2 = ctx.activations.find(a => a.pid === act.pid && a !== act && a.done && !a.cancelled && ['main', 'guard'].includes(SP[CARDS[a.card].especial].phase || 'main'));
-        if (!a2) return ctx.say('Repetição sem efeito: nenhum outro especial seu foi ativado.');
-        const p = ctx.player(act.pid); const n = Math.min(2, p.deck.length);
-        if (n) {
-          const cs = await ctx.askCards(act.pid, { title: 'Repetição onerosa: descarte 2 cartas do baralho ativo', cards: p.deck.slice(), min: n, max: n }, () => lowest(p.deck, n));
-          for (const c of cs) { p.deck.splice(p.deck.indexOf(c), 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid: act.pid, card: c }); }
-        }
-        const sp2 = SP[CARDS[a2.card].especial]; ctx.say(`${nm(ctx, act.pid)} repete ${sp2.nome}.`);
-        await sp2.apply(ctx, { pid: act.pid, card: act.card, copy: true });
-      },
-      ai: () => 0.4,
-    });
     D('AE-114', 'Interação', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).redirect++; ctx.say(`${nm(ctx, act.pid)} prepara um desvio de alvo.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição', 'Troca', 'Buraco Negro', 'Captura', 'Controle'], 0.5, 0.05), () => ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) ? 0.3 : 0.06); } });
     D('AE-115', 'Interação', {
       phase: 'echo',
       async apply(ctx, act) {
-        const list = ctx.activations.filter(a => a.pid !== act.pid && a.done && !a.cancelled && ['main', 'guard'].includes(SP[CARDS[a.card].especial].phase || 'main') && !['AE-112', 'AE-115'].includes(SP[CARDS[a.card].especial].id));
+        const list = ctx.activations.filter(a => a.pid !== act.pid && a.done && !a.cancelled && ['main', 'guard'].includes(SP[CARDS[a.card].especial].phase || 'main') && !['AE-115'].includes(SP[CARDS[a.card].especial].id));
         if (!list.length) return ctx.say('Eco sem efeito: nenhum especial adversário foi ativado.');
         const owners = [...new Set(list.map(a => a.pid))]; const o = owners.length === 1 ? owners[0] : await ctx.pick(act.pid, owners, 'Copiar o especial de quem?');
         const a2 = list.find(a => a.pid === o); const sp2 = SP[CARDS[a2.card].especial];
@@ -744,11 +707,13 @@
 
     // ================================================================ conversões e permutas
     const conv = (id, from, to) => D(id, 'Conversão', {
+      fx: st => Object.assign({}, st, { [to]: st[from] }),
       apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, 'Conversão', x => { x.stats[to] = x.stats[from]; }); ctx.say(`${nm(ctx, act.pid)} converte ${ATTR[from].nome} em ${ATTR[to].nome}.`); },
       ai(ctx, pid) { const e = ctx.entry(pid); if (e.attr !== to) return 0.03; const d = e.stats[from] - e.stats[to]; return d <= 0 ? 0 : ctx.flipChance(pid, d); },
     });
     conv('AE-121', 'def', 'vel'); conv('AE-122', 'vel', 'def');
     const perm = (id, x, y) => D(id, 'Conversão', {
+      fx: st => Object.assign({}, st, { [x]: st[y], [y]: st[x] }),
       apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, 'Permuta', s => { const t = s.stats[x]; s.stats[x] = s.stats[y]; s.stats[y] = t; }); ctx.say(`${nm(ctx, act.pid)} permuta ${ATTR[x].nome} e ${ATTR[y].nome}.`); },
       ai(ctx, pid) { const e = ctx.entry(pid); if (e.attr !== x && e.attr !== y) return 0.03; const o = e.attr === x ? y : x; const d = e.stats[o] - e.stats[e.attr]; return d <= 0 ? 0 : ctx.flipChance(pid, d); },
     });

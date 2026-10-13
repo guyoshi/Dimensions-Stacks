@@ -163,3 +163,13 @@ AE-131, AE-132 e AE-134 têm valor alto no bot porque ele só os usa quando sabe
 **Trocas de especial (antes → depois):** M03 Diana AE-120 → AE-134 · D14 Filipo AE-077 → AE-131 · D03 Pedro AE-084 → AE-132 · V07 Lucas AE-097 → AE-140 · J07 Mariv AE-090 → AE-136 · S11 A Besta AE-068 → AE-133 · V21 Shirley AE-076 → AE-141 · V24 Maria Santoro AE-080 → AE-138 · S05 Kord AE-113 → AE-137 · S12 Vek AE-115 → AE-135 · J09 Alyra AE-116 → AE-040 · V09 Ricochet AE-017 → AE-139 · V08 Garmand AE-088 → AE-044 · V01 Breno AE-078 → AE-001 · M09 Richard AE-118 → AE-036 · J23 Kedran AE-079 → AE-125 · J11 Cal Edran AE-074 → AE-014 · V19 Seti AE-105 → AE-142 · M05 Padre Tomas AE-092 → AE-068.
 
 Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_129.json`).
+
+## Ajustes de 14/10/2026 (autorizados pelo autor)
+
+- **AE-094 Inversão de fila** mantido.
+- **AE-089 Sacrifício duplo → Sacrifício por três (J16 Elis):** agora envia **1 carta escolhida** do baralho ativo ao Buraco Negro e recupera **até 3 aleatórias** de lá (antes: mandava 2 e recuperava até 3).
+- **Especiais retirados** (removidos do catálogo e dos docs de AE; voltam apenas se o autor quiser): **AE-112** Repetição onerosa (repetir um especial descartando 2 cartas), **AE-095** Atrasar a próxima (mover a próxima carta do rival ao fim do baralho) e **AE-086** Troca pelo descarte (1 carta ao Buraco Negro, recuperar até 2). Catálogo: 129 − 3 + 12 = **138 habilidades**; 98 equipadas, 40 na reserva.
+- **Substitutos nas cartas que os tinham:** D06 Jennifer de Morais AE-109 · V11 Gary AE-003 · M12 James Harrow AE-102.
+- **Prévia de conversão:** em especiais que convertem ou somam atributos (Resistência passa a valer a Inteligência etc.), a folha de escolha mostra "Sua carta: atributo a → b" com os valores resultantes antes de o jogador confirmar.
+- **Reordenar ao comprar da reserva:** o jogador reordena as cartas que acabou de comprar (até 6). O bot ordena sozinho. Início da partida: a ordem da reserva segue aleatória (a mão inicial já é ordenada pelo jogador).
+

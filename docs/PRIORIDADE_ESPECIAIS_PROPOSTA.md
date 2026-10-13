@@ -8,7 +8,7 @@
 2. O jogador escolhe **qual** das especiais preparadas quer usar e **em qual rodada**. Pode guardar duas cartas especiais preparadas à sua esquerda.
 3. **Uso forçado AE-111 (original #59):** o alvo é obrigado a utilizar **todas as especiais já preparadas**, até duas, mesmo violando o limite voluntário normal.
 4. Depois de ativada, a carta especial vai ao **Buraco Negro**, inclusive se um efeito contrário anular sua habilidade (regra de custo e descarte).
-5. **Especial de repetição AE-112 (original #62):** não permitir ciclos de repetição; repetir **efeito** não vira voluntariamente uma segunda carta especial preparada.
+5. *(Retirado em 14/10/2026: o especial de repetição AE-112 deixou de existir.)*
 6. **AE-103 (original #54):** “cartas em jogo” são somente **as cartas normais apresentadas em combate**, não especiais preparadas.
 7. O autor aprovou renomear **Poder** para **Ataque (ATQ)**. Os pares ficam **ATQ/DEF** e **INT/VEL**.
 8. Conflito entre duas imposições de atributos diferentes: comparar nas cartas de quem impôs o valor do atributo que cada uma impõe; vence o maior. Desempate geral: valor usado → soma de quatro atributos → ATQ+INT; empate absoluto ainda aberto.
@@ -91,7 +91,6 @@ Essas descrições constituem o **modelo aprovado** de interação; permanecem a
 
 **AE-111 uso forçado:** a carta que obriga uso resolve na pilha; quando resolver, coloca na pilha as até duas especiais que o alvo já preparou. **Procedimento-base aceito:** o dono do alvo escolhe a ordem e os alvos legais; cada efeito forçado também oferece oportunidade de resposta defensiva. Quem já gastou uma especial voluntária não ganha outra por isso: essas ativações são **forçadas**.
 
-**AE-112 repetição:** repetir uma vez o efeito de uma especial já resolvida **não ativa uma segunda carta especial preparada**. A repetição só acontece depois de pagar o custo e não pode apontar para outra repetição ou cópia.
 
 **Duas habilidades que impõem atributos:** se ambas permanecerem válidas após cancelamentos e reações, aplicar a regra de valor maior já aprovada, não 'a última jogada sempre vence'.
 

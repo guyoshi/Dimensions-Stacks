@@ -27,7 +27,7 @@
 3. Ataque vencedor captura; Defesa/Velocidade vencedoras protegem a própria e enviam derrotadas ao Buraco Negro.
 4. Até duas especiais preparadas; **uma ativação voluntária por combate**, salvo autorização textual expressa para duas. AE-111 força todas as preparadas, até duas.
 5. **Reações defensivas aprovadas:** podem interromper efeitos ainda pendentes; resolução inversa de respostas; custo mesmo da especial anulada. Não alterar efeitos já concluídos.
-6. **AE-130** anula a última especial pendente. **AE-112** não cria ciclos. **AE-103** só interfere nas cartas normais em combate.
+6. **AE-130** anula a última especial pendente. **AE-103** só interfere nas cartas normais em combate.
 7. **AE-010** soma o mesmo atributo de duas cartas consecutivas (o destino de ambas ainda não está especificado).
 8. **AE-129** permite triunfo raro da carta S01, sujeito à janela de contrajogo aprovada.
 9. Histórico físico **#18, #24 e #52** eliminado do jogo ativo; não restaurar.

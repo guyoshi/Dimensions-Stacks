@@ -17,10 +17,19 @@ for i, l in enumerate(lines):
         out.append(row(H[m.group(1)])); n += 1
         if m.group(1) == 'AE-103' and (i + 1 >= len(lines) or not lines[i + 1].startswith('| AE-104')):
             out.append(AP)
+    elif m and m.group(1) not in H and m.group(1) != 'AE-104':
+        continue   # habilidade retirada do catálogo: a linha sai do documento
     elif l == '' and out and out[-1].startswith('| AE-103') is False and i + 1 < len(lines) and lines[i + 1].startswith('| AE-105'):
         continue   # linha em branco que quebrava a tabela do grupo K
     else:
         out.append(l)
+# contagem de linhas de cada seção no título "## X. Nome (N)"
+import re as _re
+hs = [i for i, l in enumerate(out) if _re.match(r'^## [A-Z]\. .*\(\d+\)$', l)]
+for k, i in enumerate(hs):
+    j = hs[k + 1] if k + 1 < len(hs) else len(out)
+    cnt = sum(1 for l in out[i:j] if _re.match(r'^\| AE-\d{3} \|', l) and not l.startswith('| AE-104'))
+    out[i] = _re.sub(r'\(\d+\)$', '(%d)' % cnt, out[i])
 # habilidades criadas depois do catálogo original (AE-131 em diante): seção própria
 novas = [h for i, h in sorted(H.items()) if i > 'AE-130']
 if novas and not any(l.startswith('## O. ') for l in out):

@@ -4,12 +4,19 @@
     "versao_biblioteca": "1.0",
     "status": "CATALOGO_APROVADO_COM_TESTES_PENDENTES",
     "data_aprovacao": "2026-10-12",
-    "total_habilidades": 141,
+    "total_habilidades": 138,
     "habilidades_distintas_equipadas": 98,
-    "habilidades_em_reserva": 43,
+    "habilidades_em_reserva": 40,
     "id_aposentado": "AE-104",
     "nome_do_tipo": "Habilidade Especial",
-    "aviso": "A aprovacao autoral ratifica ideias/textos existentes e sua atribuicao as 87 fichas, nao certifica equilíbrio nem resolve procedimentos incompletos. Habilidades da reserva nao estao equipadas em carta alguma. Cartas fisicas originais sao historicas."
+    "aviso": "A aprovacao autoral ratifica ideias/textos existentes e sua atribuicao as 87 fichas, nao certifica equilíbrio nem resolve procedimentos incompletos. Habilidades da reserva nao estao equipadas em carta alguma. Cartas fisicas originais sao historicas.",
+    "ids_aposentados": [
+      "AE-104",
+      "AE-086",
+      "AE-095",
+      "AE-112"
+    ],
+    "aviso_aposentadas_14_10_2026": "AE-086 (Troca pelo descarte), AE-095 (Atrasar a próxima) e AE-112 (Repetição onerosa) foram retiradas do catálogo a pedido do autor em 14/10/2026: o autor não viu vantagem em mantê-las."
   },
   "habilidades": [
     {
@@ -49,12 +56,14 @@
       "texto_efeito": "Sua carta de combate recebe +15 em Inteligência nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: apelão medido (80% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
+      "revisao": "2026-10-13: apelão medido (80% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar. 2026-10-14: atribuída a V11 (substitui especial retirado a pedido do autor)."
     },
     {
       "id": "AE-004",
@@ -1263,21 +1272,6 @@
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
-      "id": "AE-086",
-      "nome": "Troca pelo descarte",
-      "categoria": "Recuperação e manipulação do Buraco Negro",
-      "texto_efeito": "Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 2 cartas normais aleatórias de lá.",
-      "origem_ideia": "novo",
-      "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "M12"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
-      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
-      "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
-    },
-    {
       "id": "AE-087",
       "nome": "Reabastecimento da reserva",
       "categoria": "Recuperação e manipulação do Buraco Negro",
@@ -1308,9 +1302,9 @@
     },
     {
       "id": "AE-089",
-      "nome": "Sacrifício duplo",
+      "nome": "Sacrifício por três",
       "categoria": "Recuperação e manipulação do Buraco Negro",
-      "texto_efeito": "Envie 2 cartas normais escolhidas de seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias.",
+      "texto_efeito": "Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias de lá.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
@@ -1319,7 +1313,8 @@
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: alterada a pedido do autor (antes: sacrificava 2 cartas e recuperava até 3; nome anterior Sacrifício duplo). Alteração de balanceamento."
     },
     {
       "id": "AE-090",
@@ -1388,21 +1383,6 @@
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
         "D09"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
-      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
-      "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
-    },
-    {
-      "id": "AE-095",
-      "nome": "Atrasar a próxima",
-      "categoria": "Informação e manipulação de ordem",
-      "texto_efeito": "Mova a próxima carta do topo do baralho ativo de um adversário para o final do próprio baralho.",
-      "origem_ideia": "novo",
-      "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V11"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
@@ -1505,11 +1485,14 @@
       "texto_efeito": "Se Resistência + Velocidade da carta de combate de um adversário for maior ou igual a Força + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo.",
       "origem_ideia": "#61 (adaptação)",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "M12"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a M12 (substitui especial retirado a pedido do autor)."
     },
     {
       "id": "AE-103",
@@ -1591,12 +1574,14 @@
       "texto_efeito": "Antes da revelação, escolha um adversário e um atributo: se ele tiver 80 ou mais nesse atributo, capture sua carta de combate após a disputa; caso contrário, nada acontece.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Experimental",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D06"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: apelão medido (84% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
+      "revisao": "2026-10-13: apelão medido (84% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar. 2026-10-14: atribuída a D06 (substitui especial retirado a pedido do autor)."
     },
     {
       "id": "AE-110",
@@ -1637,21 +1622,6 @@
       "avaliacao_de_risco": "Regra-base",
       "cartas_atribuidas": [
         "M10"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
-      "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
-      "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
-    },
-    {
-      "id": "AE-112",
-      "nome": "Repetição onerosa",
-      "categoria": "Interações entre habilidades especiais",
-      "texto_efeito": "Repita uma única vez o efeito de outro especial seu já ativado nesta disputa; descarte 2 cartas adicionais de seu baralho ativo à sua escolha no Buraco Negro. Não repita esta habilidade, outra repetição ou uma cópia de habilidade. Repetir um efeito não autoriza virar outra carta especial preparada.",
-      "origem_ideia": "#62 (ciclos proibidos)",
-      "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [
-        "D06"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
