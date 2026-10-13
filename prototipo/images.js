@@ -54,5 +54,9 @@ window.CARD_IMAGES = {
  "D15": "photos/D15.webp?v=07635fdad8",
  "D16": "photos/D16.webp?v=6b3325a2be",
  "D17": "photos/D17.webp?v=15f9fa5990",
- "D18": "photos/D18.webp?v=f374e54823"
+ "D18": "photos/D18.webp?v=f374e54823",
+ "V16": "photos/V16.webp?v=a3dabf1f4c",
+ "V17": "photos/V17.webp?v=297b21d4e6",
+ "V18": "photos/V18.webp?v=7384e14740",
+ "V19": "photos/V19.webp?v=ec5682aa1f"
 };

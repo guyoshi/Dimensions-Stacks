@@ -495,6 +495,42 @@
    "w": 720,
    "h": 1080,
    "webp": 117210
+  },
+  "V16": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Faka.png",
+   "mtimeMs": 1791850573416,
+   "bytes": 3219488,
+   "sha1": "a3dabf1f4c",
+   "w": 720,
+   "h": 1080,
+   "webp": 215014
+  },
+  "V17": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Lanigiah.png",
+   "mtimeMs": 1791850620362,
+   "bytes": 3447148,
+   "sha1": "297b21d4e6",
+   "w": 720,
+   "h": 1080,
+   "webp": 217076
+  },
+  "V18": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Grande Pai Gaia.png",
+   "mtimeMs": 1791850800552,
+   "bytes": 3410640,
+   "sha1": "7384e14740",
+   "w": 720,
+   "h": 1080,
+   "webp": 248562
+  },
+  "V19": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Seti.png",
+   "mtimeMs": 1791850978642,
+   "bytes": 3091094,
+   "sha1": "ec5682aa1f",
+   "w": 720,
+   "h": 1080,
+   "webp": 229990
   }
  }
 }
