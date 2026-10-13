@@ -826,3 +826,9 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .pfn b { font-family: var(--f-disp); font-size: 1.25em; color: var(--ink); overflow-wrap: anywhere; }
 .pfn .ibtn { flex: none; }
 .seatname { min-width: 0; padding: .55em .7em; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+
+/* brilhinhos bem pequenos e numerosos; halo largo bem transparente que se dissolve no vazio */
+.usp i { filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 calc(var(--cw) * .02) #ffd25f) drop-shadow(0 0 calc(var(--cw) * .045) #ffb02e66); }
+.usp i::after { inset: -320%; background: radial-gradient(circle, #ffe9a02e 0, #ffe29a22 12%, #ffd25f16 26%, #ffd25f0c 42%, #ffd25f05 58%, #ffd25f02 74%, transparent 100%); }
+.sp { filter: drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 3px color-mix(in srgb, var(--c) 70%, transparent)); }
+.sp::before { inset: -300%; background: radial-gradient(circle, color-mix(in srgb, var(--c) 20%, transparent) 0, color-mix(in srgb, var(--c) 14%, transparent) 12%, color-mix(in srgb, var(--c) 8%, transparent) 28%, color-mix(in srgb, var(--c) 4%, transparent) 46%, color-mix(in srgb, var(--c) 1.5%, transparent) 66%, transparent 100%); }

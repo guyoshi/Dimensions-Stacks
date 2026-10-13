@@ -63,10 +63,10 @@
   // brilhinhos dourados ao redor das cartas de A União (posições fixas por carta; o CSS os mostra só com a carta virada)
   function uniSparks(id) {
     const r = DS_DATA.rng(DS_DATA.hash('uni' + id)), box = el('<div class="usp" aria-hidden="true"></div>');
-    for (let i = 0; i < 12; i++) {
-      const side = i % 4, p = r() * 100, o = -8 + r() * 14;   // ao longo da borda, um pouco para fora/dentro
+    for (let i = 0; i < 26; i++) {
+      const side = i % 4, p = r() * 100, o = -6 + r() * 12;   // ao longo da borda, um pouco para fora/dentro
       const x = side === 0 ? p : side === 2 ? p : side === 1 ? 100 - o : o, y = side === 1 || side === 3 ? p : side === 0 ? o : 100 - o;
-      const s = el(`<i style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.09 + r() * .09).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
+      const s = el(`<i style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.035 + r() * .04).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
       box.append(s);
     }
     return box;
@@ -224,8 +224,8 @@
       w.append(cardEl(order[i % order.length], { up: true, noanim: true, cw })); fc.append(w);
     }
     const sp = $('.sparks', bg), cols = ['#ffffff', '#f1ecdc', '#cfe6ff', '#ffffff', '#e8d9ff'];
-    for (let i = 0; i < 24; i++) {
-      const sz = rnd(7, 24), big = sz > 17;
+    for (let i = 0; i < 64; i++) {
+      const sz = rnd(3, 10), big = sz > 7.5;
       sp.append(el(`<span class="sp${big ? ' big' : ''}" style="left:${rnd(1, 99).toFixed(1)}%;top:${rnd(2, 98).toFixed(1)}%;--s:${sz.toFixed(0)}px;--d:${rnd(2.6, 7).toFixed(1)}s;--dl:${(-rnd(0, 7)).toFixed(1)}s;--c:${cols[i % cols.length]};--rt:${rnd(-35, 35).toFixed(0)}deg"><i></i></span>`));
     }
     return bg;
