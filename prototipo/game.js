@@ -533,12 +533,13 @@
             <div class="grid"></div><div class="info"></div>
             <div class="row" style="justify-content:center">${max > 1 || min === 0 ? '<button class="btn sm" data-a="clr">Limpar</button>' : ''}<button class="btn primary" data-a="ok">Confirmar ▶</button></div></div>`);
           const W = window.innerWidth - 32; let cw = Math.floor((W - 6 * 10) / 6); if (cw < 70) cw = Math.floor((W - 3 * 10) / 3); cw = Math.max(64, Math.min(104, cw));
-          function info() { const c = CARDS[last], sp = E.SPECIALS[c.especial]; $('.info', ov).innerHTML = `<b>${esc(c.nome)}</b> · ${AIDS.map(a => `<span class="ico" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}${c.stats[a]}</span>`).join(' ')}<br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}`; }
+          function info() { if (spec.blind) { $('.info', ov).textContent = 'Cartas viradas para baixo: escolha pela posição no baralho (1ª = topo).'; return; } const c = CARDS[last], sp = E.SPECIALS[c.especial]; $('.info', ov).innerHTML = `<b>${esc(c.nome)}</b> · ${AIDS.map(a => `<span class="ico" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}${c.stats[a]}</span>`).join(' ')}<br>✦ <b>${esc(sp.nome)}</b> — ${esc(sp.texto)}`; }
           function draw() {
             const g = $('.grid', ov);
             g.replaceChildren(...spec.cards.map(id => {
               const i = sel.indexOf(id); const w = el(`<div class="oc${i >= 0 ? ' sel' : ''}">${i >= 0 ? `<div class="no">${spec.ordered ? i + 1 : '✓'}</div>` : ''}</div>`);
-              w.append(cardEl(id, { up: true, noanim: true, cw }));
+              w.append(cardEl(id, { up: !spec.blind, noanim: true, cw }));
+              if (spec.blind) w.append(el(`<div class="pos" style="position:absolute;left:6px;bottom:6px;background:#000b;color:var(--gold2);border-radius:10px;padding:1px 8px;font-weight:800;font-size:12px">${spec.cards.indexOf(id) + 1}ª</div>`));
               w.onclick = () => { SND.play('tick'); last = id; if (i >= 0) sel.splice(i, 1); else if (max === 1) sel = [id]; else if (sel.length < max) sel.push(id); draw(); };
               return w;
             }));

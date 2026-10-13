@@ -161,5 +161,81 @@
  "V15": {
   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Brenda.png",
   "mtimeMs": 1791821588723
+ },
+ "D01": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Junior.png",
+  "mtimeMs": 1791847605807,
+  "alt": [
+   "Diário Sobrenatural/2 - A Alvorada das Ilusões/.../Junior.png"
+  ]
+ },
+ "D02": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Priscila.png",
+  "mtimeMs": 1791845860168
+ },
+ "D03": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Pedro.png",
+  "mtimeMs": 1791822884211
+ },
+ "D04": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Kelly.png",
+  "mtimeMs": 1791822949607
+ },
+ "D05": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Vini.png",
+  "mtimeMs": 1791847667820
+ },
+ "D06": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Jennifer.png",
+  "mtimeMs": 1791847421036
+ },
+ "D07": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Ingrid.png",
+  "mtimeMs": 1791823707554
+ },
+ "D08": {
+  "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Glenda.png",
+  "mtimeMs": 1791824493704
+ },
+ "D09": {
+  "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Diego.png",
+  "mtimeMs": 1791825779273
+ },
+ "D10": {
+  "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Sra. Olívia.png",
+  "mtimeMs": 1791824994163,
+  "nota": "Suposição: Avó de Kelly = Sra. Olívia (livro 2). Confirmar com o autor."
+ },
+ "D11": {
+  "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Cara-de-Larva.png",
+  "mtimeMs": 1791824355238
+ },
+ "D12": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Entidades/Agouro.png",
+  "mtimeMs": 1791824254501
+ },
+ "D13": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Suéten.png",
+  "mtimeMs": 1791823747992
+ },
+ "D14": {
+  "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Filipo.png",
+  "mtimeMs": 1791824918884
+ },
+ "D15": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Carnam - Pai.png",
+  "mtimeMs": 1791823482471
+ },
+ "D16": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Isabela - Mãe.png",
+  "mtimeMs": 1791823523105
+ },
+ "D17": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Avó.png",
+  "mtimeMs": 1791823858328
+ },
+ "D18": {
+  "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Ibliso.png",
+  "mtimeMs": 1791823782795
  }
 }

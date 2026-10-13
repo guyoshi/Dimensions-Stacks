@@ -877,7 +877,7 @@
       "id": "AE-063",
       "nome": "Troca entre vizinhos",
       "categoria": "Redistribuição coletiva e sacrifício",
-      "texto_efeito": "Faça o jogador à esquerda trocar 1 carta ativa escolhida com o da direita. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto.",
+      "texto_efeito": "Escolha, às cegas (pela posição no baralho ativo), 1 carta do jogador à esquerda e 1 do jogador à direita: elas trocam de dono. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto.",
       "origem_ideia": "#40",
       "avaliacao_de_risco": "Sem ganho em duelos",
       "cartas_atribuidas": [
@@ -886,7 +886,8 @@
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: redesenho autorizado pelo autor (AE-106) / interpretação de \"escolhida\" (AE-063); texto anterior em dados/historico"
     },
     {
       "id": "AE-064",
@@ -1505,7 +1506,7 @@
       "id": "AE-106",
       "nome": "Ataque que bane",
       "categoria": "Capturas condicionais e efeitos decisivos",
-      "texto_efeito": "Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.",
+      "texto_efeito": "Se vencer usando Ataque ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
@@ -1514,7 +1515,8 @@
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-13: redesenho autorizado pelo autor (antes: banir em vez de capturar). Com 1 carta o especial rendia menos que a carta gasta (calib_mirror2); com 2 fica positivo. Texto anterior em dados/historico."
     },
     {
       "id": "AE-107",

@@ -1,7 +1,7 @@
 // Usar especiais deve valer a pena: bot que usa especiais × bot que nunca usa (duelo e 3 jogadores).
 const E = require('../engine.js'); const N = +process.argv[2] || 80; const diff = process.argv[3] || 'dificil';
 (async () => {
-  for (const n of [2, 3]) {
+  for (const n of [2, 3, 4]) {
     let w = 0, l = 0, d = 0;
     for (let k = 0; k < N; k++) {
       const players = [...Array(n)].map((_, i) => ({ name: 'B' + i, bot: true, avatar: i, noSpecial: i > 0 }));

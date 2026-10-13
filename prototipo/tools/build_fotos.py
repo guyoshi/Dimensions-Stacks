@@ -11,10 +11,17 @@ if '--q' in sys.argv: Q = int(sys.argv[sys.argv.index('--q') + 1])
 mp = json.load(open(os.path.join(here, 'fotos_map.json'), encoding='utf-8'))
 out = os.path.join(proj, 'photos'); os.makedirs(out, exist_ok=True)
 man = {}; imgs = {}; missing = []
+# incremental: fotos cuja origem não está no STAGE_ROOT (ex.: não copiadas desta vez) mantêm o webp e o manifest anteriores
+old = {}
+try: old = json.load(open(os.path.join(proj, 'photos', 'manifest.json'), encoding='utf-8')).get('fotos', {})
+except Exception: pass
 for cid, v in mp.items():
     if cid.startswith('_'): continue
     p = os.path.join(stage, v['src'])
-    if not os.path.exists(p): missing.append((cid, v['src'])); continue
+    if not os.path.exists(p):
+        if cid in old and os.path.exists(os.path.join(out, cid + '.webp')): man[cid] = old[cid]; imgs[cid] = f"photos/{cid}.webp?v={old[cid]['sha1']}"
+        else: missing.append((cid, v['src']))
+        continue
     raw = open(p, 'rb').read(); h = hashlib.sha1(raw).hexdigest()[:10]
     im = Image.open(p).convert('RGB')
     if im.width > W: im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)

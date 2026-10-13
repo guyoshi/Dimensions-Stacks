@@ -284,16 +284,30 @@
     }
     rotateRes('AE-061', 'R'); rotateRes('AE-062', 'L');
     D('AE-063', 'Redistribuição', {
+      // [PROPOSTA] "carta ativa escolhida": quem usa escolhe, às cegas (pela posição no baralho ativo), 1 carta de cada vizinho; as duas trocam de dono.
+      // Quem lembra o que há nos baralhos (memória do bot) tira uma carta forte do líder e entrega uma fraca; sem memória, a escolha é ao acaso.
       async apply(ctx, act) {
         const L = ctx.left(act.pid), R = ctx.right(act.pid);
         if (L == null || R == null || L === R) return ctx.say('Em duelo a troca não produz ganho líquido: o especial é gasto.');
         const dl = ctx.player(L).deck, dr = ctx.player(R).deck; if (!dl.length || !dr.length) return ctx.say('Um dos vizinhos não tem cartas ativas.');
-        const [cl] = await ctx.askCards(L, { title: `Troca entre vizinhos: dê 1 carta a ${nm(ctx, R)}`, cards: dl.slice(), min: 1, max: 1 }, () => lowest(dl, 1));
-        const [cr] = await ctx.askCards(R, { title: `Troca entre vizinhos: dê 1 carta a ${nm(ctx, L)}`, cards: dr.slice(), min: 1, max: 1 }, () => lowest(dr, 1));
+        const tot = q => ctx.g.totalCards(ctx.player(q)); const strongL = tot(L) >= tot(R);
+        const kL = ctx.mem(act.pid, L).slice(), kR = ctx.mem(act.pid, R).slice();
+        const choose = (k, deck, strong) => () => { const kn = k.filter(c => deck.includes(c)); if (kn.length) return [strong ? highest(kn, 1)[0] : lowest(kn, 1)[0]]; return [deck[Math.floor(ctx.rand() * deck.length)]]; };
+        const [cl] = await ctx.askCards(act.pid, { title: `Troca entre vizinhos: escolha 1 carta do baralho de ${nm(ctx, L)}`, hint: 'Estão viradas para baixo: escolha pela posição.', cards: dl.slice(), blind: true, min: 1, max: 1 }, choose(kL, dl, strongL));
+        const [cr] = await ctx.askCards(act.pid, { title: `Troca entre vizinhos: escolha 1 carta do baralho de ${nm(ctx, R)}`, hint: 'Estão viradas para baixo: escolha pela posição.', cards: dr.slice(), blind: true, min: 1, max: 1 }, choose(kR, dr, !strongL));
         dl.splice(dl.indexOf(cl), 1); dr.splice(dr.indexOf(cr), 1); dr.push(cl); dl.push(cr);
-        ctx.say(`${nm(ctx, L)} e ${nm(ctx, R)} trocam cartas.`); await ctx.emit('steal', { from: L, to: R, card: cl }); await ctx.emit('steal', { from: R, to: L, card: cr });
+        ctx.say(`${nm(ctx, act.pid)} faz ${nm(ctx, L)} e ${nm(ctx, R)} trocarem cartas.`); await ctx.emit('steal', { from: L, to: R, card: cl }); await ctx.emit('steal', { from: R, to: L, card: cr });
+        ctx.learn(act.pid, L, kL.filter(c => c !== cl)); ctx.learn(act.pid, R, kR.filter(c => c !== cr));   // quem escolheu sabe o que mudou de lugar
       },
-      ai: () => 0.03, prep: 0.3, val: 0,   // vizinhos escolhem o que dar: sem ganho para quem usa
+      ai(ctx, pid) {
+        const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02;
+        const tot = q => ctx.g.totalCards(ctx.player(q)); const strongL = tot(L) >= tot(R), S = strongL ? L : R, W = strongL ? R : L;
+        if (Math.abs(tot(L) - tot(R)) < 2) return 0.04;
+        const kS = ctx.mem(pid, S), kW = ctx.mem(pid, W); if (!kS.length && !kW.length) return 0.04;
+        const best = kS.length ? Math.max(...kS.map(sum)) : MEANSUM, worst = kW.length ? Math.min(...kW.map(sum)) : MEANSUM, g = best - worst;
+        return g >= 70 ? 0.8 : g >= 45 ? 0.55 : g >= 25 ? 0.3 : 0.04;
+      },
+      prep: 0.3, val: 0.4,
     });
     D('AE-064', 'Redistribuição', {
       async apply(ctx, act) {

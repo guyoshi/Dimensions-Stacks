@@ -160,10 +160,10 @@
     apply(ctx, act) { ctx.entry(act.pid).defCapture = true; ctx.say(`${ctx.name(act.pid)} prepara uma defesa que captura.`); },
     ai(ctx, pid) { const e = ctx.entry(pid); return ATTR[e.attr].tipo === 'defesa' && !ctx.isLosing(pid) ? 0.8 : 0.05; },
   });
-  def('AE-106', 'Ataque que bane', 'Se vencer usando Ataque ou Inteligência, escolha 1 adversário derrotado: a carta dele vai ao Buraco Negro em vez de ser capturada.', 'Resolução', {
+  def('AE-106', 'Ataque que bane', 'Se vencer usando Ataque ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).atkBanish = true; ctx.say(`${ctx.name(act.pid)} prepara um ataque que bane.`); },
-    // Banir só tira do vencedor a carta que ele capturaria: nenhum bot escolhe isso de propósito.
-    val: 0.04, ai() { return 0.03; },
+    // [PROPOSTA 13/10/2026] a versão antiga (banir em vez de capturar) era pior que capturar. Agora a captura é mantida e o derrotado perde, além disso, as 2 cartas do topo (com 1 só o especial rendia menos que a carta gasta: medido em tests/calib_mirror2.js).
+    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid === pid && ATTR[w.attr].tipo === 'ataque' && ctx.opps(pid).some(o => ctx.player(o).deck.length >= 2) ? 0.7 : 0.04; }, val: 0.6,
   });
   def('AE-108', 'Negar captura inimiga', 'Se perder para um atributo de ataque, sua carta vai ao Buraco Negro, não ao baralho do vencedor.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).negateCapture = true; ctx.say(`${ctx.name(act.pid)} nega a captura da própria carta.`); },
@@ -216,7 +216,7 @@
       const cfg = this.cfg, n = cfg.players.length;
       const per = Math.max(7, cfg.perPlayer);
       const ids = shuffle(D.CARTAS.map(c => c.id), this.rand).slice(0, per * n);
-      this.s.players = cfg.players.map((pc, i) => ({ pid: i, name: pc.name, bot: !!pc.bot, avatar: pc.avatar, diff: pc.diff, noSpecial: !!pc.noSpecial, deck: [], reserve: [], prepared: [], alive: true }));
+      this.s.players = cfg.players.map((pc, i) => ({ pid: i, name: pc.name, bot: !!pc.bot, avatar: pc.avatar, diff: pc.diff, noSpecial: !!pc.noSpecial, pol: pc.pol, deck: [], reserve: [], prepared: [], alive: true }));
       const hands = []; let k = 0;
       for (let i = 0; i < n; i++) hands.push(ids.slice(k, k += 7));
       const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
@@ -627,14 +627,12 @@
         const clock = (pid) => this.order(w.pid).indexOf(pid);
         losers.sort((a, b) => clock(a.pid) - clock(b.pid));
         if (!claimed.has(w)) back(w);
-        let special = null; // um perdedor escolhido por 105/106
-        if (attack && w.atkBanish && losers.length) { const cand = losers.filter(l => !l.saveOnLoss); if (cand.length) special = await this.chooseLoser(w, cand, 'Qual carta vai ao Buraco Negro?'); }
+        let special = null; // um perdedor escolhido por 105
         if (!attack && w.defCapture && losers.length) { const cand = losers.filter(l => !l.saveOnLoss); if (cand.length) special = await this.chooseLoser(w, cand, 'Qual carta capturar?'); }
         for (const l of losers) {
           if (l.saveOnLoss) { back(l); continue; }
           const blocked = l.noCaptureBy.has(w.pid);
           if (attack || w.compCapture) {
-            if (attack && w.atkBanish && special === l && !l.noBHBySpecial) { toBH(l); continue; }
             if (attack && l.negateCapture) { toBH(l); continue; }
             if (blocked) { back(l); this.log(`${this.p(l.pid).name} impede a captura da própria carta.`, 'res'); continue; }
             capture(l, w.pid);
@@ -642,6 +640,10 @@
             if (w.defCapture && special === l) { if (blocked) toBH(l); else capture(l, w.pid); continue; }
             toBH(l);
           }
+        }
+        if (attack && w.atkBanish) {   // AE-106: depois de capturar, a carta do topo do baralho de 1 derrotado vai ao Buraco Negro
+          const cand = losers.filter(l => !l.saveOnLoss && !l.noBHBySpecial && this.p(l.pid).deck.length > 0);
+          if (cand.length) { const l = await this.chooseLoser(w, cand, 'De quem a carta do topo vai ao Buraco Negro?'); const nb = (this.cfg && this.cfg.ban106) || 2; for (let n = 0; n < nb && this.p(l.pid).deck.length; n++) { const c = this.p(l.pid).deck.shift(); this.s.bh.push({ id: c, kind: 'normal' }); } this.memTouch({ target: l.pid }, 'discard'); this.log(`${this.p(w.pid).name} bane ${nb > 1 ? 'as ' + nb + ' cartas do topo' : 'a carta do topo'} do baralho de ${this.p(l.pid).name}.`, 'efeito'); }
         }
         result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: w.stats[w.attr] + w.bonus, tb: ev.tb || null };
         if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela ${ev.tb.stage === 1 ? 'soma dos 4 atributos' : 'soma de Ataque + Inteligência'}: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
@@ -661,7 +663,7 @@
     skill(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: 0.1, normal: 0.6, dificil: 1 }[d] ?? 0.6; }
     // Nível do bot: blind = chance de NÃO ler o estado da mesa (escolhe sem olhar adversários/cartas); lapse = chance de errar a escolha do atributo; ord = ruído ao ordenar a mão.
     // cap = quantas cartas seguintes de um rival ele consegue guardar de uma espiada; forget = chance de esquecer o que viu a cada disputa; mist = chance de errar o custo ao decidir se sacrifica a carta como especial
-    lvl(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: { blind: 0.25, lapse: 0.14, ord: 80, cap: 3, forget: 0.08, mist: 0.4 }, normal: { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }, dificil: { blind: 0, lapse: 0.01, ord: 30, cap: 99, forget: 0.002, mist: 0.01 } }[d] || { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }; }
+    lvl(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: { blind: 0.25, lapse: 0.14, ord: 80, cap: 3, forget: 0.08, mist: 0.4 }, normal: { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }, dificil: { blind: 0, lapse: 0.01, ord: 30, cap: 10, forget: 0.002, mist: 0.01 } }[d] || { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }; }
     // ---- memória do bot (modelo de fila). Para cada rival, a ordem do baralho que ele conhece; null = carta que não viu.
     // Cartas jogadas voltam ao fim do baralho de quem as ganha: depois de uma volta o bot já sabe a ordem, sem gastar especial.
     // Espiadas preenchem o início mais cedo. Níveis baixos guardam menos cartas (cap) e esquecem mais (forget).
@@ -729,7 +731,8 @@
     }
     // ---- IA dos especiais ----
     // Valor típico de cada especial para quem o prepara (0..1). Define quanto vale gastar uma carta de combate como especial.
-    botVal(sp) {
+    botVal(sp, p) {
+      if (p && p.pol && p.pol.val != null) return p.pol.val;                           // (testes) política individual para medir um especial contra espelhos
       if (sp.val != null) return sp.val;
       const byCat = { 'Bônus': 1.6, 'Conversão': 1.2, 'Controle': 1, 'Roubo': 3, 'Troca': 1, 'Redistribuição': 0.8, 'Defesa': 1.2, 'Buraco Negro': 1.4, 'Informação': 0.2, 'Captura': 1.5, 'Interação': 1 };
       return byCat[sp.cat] ?? 1;
@@ -751,8 +754,8 @@
       if (p.prepared.length >= 2 || p.noSpecial) return false;
       if (p.deck.length < 3 && p.reserve.length < 3) return false;
       if (sp.minOpps && this.alive().length - 1 < sp.minOpps) return false;
-      if (this.botVal(sp) < 0.15 * (1 - this.botUrgency()) || !this.botPrepWant(p, sp)) return false;
-      const sk = this.skill(p), urg = this.botUrgency(), V = this.botVal(sp) * (sp.prep == null ? 1 : 0.5 + 0.5 * Math.min(1, sp.prep * 2)) + 1.5 * urg;
+      if (this.botVal(sp, p) < 0.15 * (1 - this.botUrgency()) || !this.botPrepWant(p, sp)) return false;
+      const sk = this.skill(p), urg = this.botUrgency(), V = this.botVal(sp, p) * (sp.prep == null ? 1 : 0.5 + 0.5 * Math.min(1, sp.prep * 2)) + 1.5 * urg;
       // carta como combatente vale ~ (2·P(vencer) − 1) cartas; como especial vale V. Carta fraca rende mais virando especial.
       const mine = sum4(CARDS[topCard].stats), pc0 = SUMS.filter(x => x <= mine).length / SUMS.length;
       let pcs = 0, nf = 0; this.alive().forEach(o => { if (o === p.pid) return; nf++; const k = this.foeNow(p, o); pcs += k ? 1 / (1 + Math.exp(-(mine - sum4(CARDS[k].stats)) / 35)) : pc0; });   // rival conhecido: compara de verdade
@@ -768,6 +771,7 @@
       let best = null, bs = -1;
       usable.forEach(c => {
         const sp = SP[CARDS[c].especial]; let u = 0; try { u = sp.ai ? sp.ai(ctx, p.pid, c) : 0.4; } catch (e) { u = 0.3; }
+        if (p.pol && p.pol.mul != null) u *= p.pol.mul;
         if (u < 0.12 - 0.08 * urg) return;                                                // sem utilidade nesta situação: nem o fácil gasta
         if (this.blindNow(p)) u = 0.5 * u + 0.5 * (0.15 + this.rand() * 0.55);            // leu mal a mesa: avalia com ruído, mas dentro do que faz sentido
         u += Math.min(0.2, 0.06 * p._held);                           // carta parada na mão: vale usar
@@ -787,18 +791,22 @@
   // Calibração dos bots (medida com tests/calib_val.js: varre val e aiMul de cada especial em duelo e em 3 jogadores; reativos/informação usam estimativa de projeto)
   // [antiga] (tests/bot_per_special.js): val = quanto vale gastar uma carta de combate para preparar; aiMul = escala da vontade de virar.
   // Valor de cada especial em "cartas de diferença" (medido com tests/bot_per_special.js: % de vitórias do bot que usa × o que nunca usa, (v-38)/12).
-  const BOT_VAL = { 'AE-002': 0.6, 'AE-004': 0.6, 'AE-006': 0.6, 'AE-008': 0.6, 'AE-010': 1.6, 'AE-012': 0.6, 'AE-017': 0.5, 'AE-021': 0.15, 'AE-022': 0.3, 'AE-024': 0.3, 'AE-026': 0.3, 'AE-028': 0.15, 'AE-030': 0.6, 'AE-031': 2.5, 'AE-032': 1.6, 'AE-037': 0.6, 'AE-039': 2.5, 'AE-041': 0.15, 'AE-046': 1, 'AE-047': 1.6, 'AE-048': 1.6, 'AE-051': 0.4, 'AE-053': 1, 'AE-055': 0.15, 'AE-056': 0.15, 'AE-059': 1, 'AE-061': 1, 'AE-062': 1, 'AE-063': 0.05, 'AE-064': 0.05, 'AE-065': 0.1, 'AE-066': 0.2, 'AE-067': 0.5, 'AE-068': 0.3, 'AE-069': 1, 'AE-071': 0.15, 'AE-072': 0.15, 'AE-073': 0.8, 'AE-074': 0.9, 'AE-075': 0.15, 'AE-076': 0.7, 'AE-077': 0.6, 'AE-078': 0.7, 'AE-079': 0.7, 'AE-080': 0.3, 'AE-081': 1, 'AE-082': 0.3, 'AE-083': 0.3, 'AE-084': 0.2, 'AE-085': 0.3, 'AE-086': 0.6, 'AE-087': 2.5, 'AE-089': 0.3, 'AE-090': 0.7, 'AE-091': 0.3, 'AE-092': 0.1, 'AE-093': 0.25, 'AE-094': 0.1, 'AE-095': 0.25, 'AE-096': 0.4, 'AE-097': 0.2, 'AE-098': 0.1, 'AE-099': 0.1, 'AE-100': 0.3, 'AE-101': 0.3, 'AE-103': 1, 'AE-105': 0.9, 'AE-106': 0.05, 'AE-108': 0.8, 'AE-110': 0.3, 'AE-111': 0.9, 'AE-112': 0.8, 'AE-113': 0.9, 'AE-114': 0.8, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.15, 'AE-118': 0.6, 'AE-119': 0.15, 'AE-120': 0.3, 'AE-129': 2.5, 'AE-130': 1 };
+  const BOT_VAL = { 'AE-002': 0.6, 'AE-004': 0.6, 'AE-006': 0.6, 'AE-008': 0.6, 'AE-010': 1.6, 'AE-012': 0.6, 'AE-017': 0.5, 'AE-021': 0.15, 'AE-022': 0.3, 'AE-024': 0.3, 'AE-026': 0.3, 'AE-028': 0.15, 'AE-030': 0.6, 'AE-031': 2.5, 'AE-032': 1.6, 'AE-037': 0.6, 'AE-039': 2.5, 'AE-041': 0.15, 'AE-046': 1, 'AE-047': 1.6, 'AE-048': 1.6, 'AE-051': 0.4, 'AE-053': 1, 'AE-055': 0.15, 'AE-056': 0.15, 'AE-059': 1, 'AE-061': 1, 'AE-062': 1, 'AE-063': 0.4, 'AE-064': 0.05, 'AE-065': 0.1, 'AE-066': 0.2, 'AE-067': 0.5, 'AE-068': 0.3, 'AE-069': 1, 'AE-071': 0.15, 'AE-072': 0.15, 'AE-073': 0.8, 'AE-074': 0.9, 'AE-075': 0.15, 'AE-076': 0.7, 'AE-077': 0.6, 'AE-078': 0.7, 'AE-079': 0.7, 'AE-080': 0.3, 'AE-081': 1, 'AE-082': 0.3, 'AE-083': 0.3, 'AE-084': 0.2, 'AE-085': 0.3, 'AE-086': 0.6, 'AE-087': 2.5, 'AE-089': 0.3, 'AE-090': 0.7, 'AE-091': 0.3, 'AE-092': 0.1, 'AE-093': 0.25, 'AE-094': 0.1, 'AE-095': 0.25, 'AE-096': 0.4, 'AE-097': 0.2, 'AE-098': 0.1, 'AE-099': 0.1, 'AE-100': 0.3, 'AE-101': 0.3, 'AE-103': 1, 'AE-105': 0.9, 'AE-106': 0.6, 'AE-108': 0.8, 'AE-110': 0.3, 'AE-111': 0.9, 'AE-112': 0.8, 'AE-113': 0.9, 'AE-114': 0.8, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.15, 'AE-118': 0.6, 'AE-119': 0.15, 'AE-120': 0.3, 'AE-129': 2.5, 'AE-130': 1 };
   // sem utilidade para o bot (ele não consegue tirar proveito): nunca prepara
   const BOT_RATE = 1;
   const SUMS = D.CARTAS.map(c => sum4(c.stats)).sort((x, y) => x - y);
-  const BOT_JUNK = ['AE-106', 'AE-063'];
+  const BOT_JUNK = [];
   const TUNE = { 'AE-002': { aiMul: 0.65 }, 'AE-004': { aiMul: 0.65 }, 'AE-006': { aiMul: 0.65 }, 'AE-008': { aiMul: 0.65 }, 'AE-010': { aiMul: 0.65 }, 'AE-012': { aiMul: 0.65 }, 'AE-021': { aiMul: 0.65 }, 'AE-022': { aiMul: 0.35 }, 'AE-030': { aiMul: 0.65 }, 'AE-031': { aiMul: 0.65 }, 'AE-032': { aiMul: 0.65 }, 'AE-037': { aiMul: 0.65 }, 'AE-039': { aiMul: 0.65 }, 'AE-041': { aiMul: 0.65 }, 'AE-046': { aiMul: 0.65 }, 'AE-047': { aiMul: 0.65 }, 'AE-048': { aiMul: 0.65 }, 'AE-059': { aiMul: 0.65 }, 'AE-061': { aiMul: 0.35 }, 'AE-062': { aiMul: 0.35 }, 'AE-069': { aiMul: 0.65 }, 'AE-071': { aiMul: 0.35 }, 'AE-072': { aiMul: 0.35 }, 'AE-075': { aiMul: 0.65 }, 'AE-081': { aiMul: 0.65 }, 'AE-082': { aiMul: 0.35 }, 'AE-101': { aiMul: 0.65 }, 'AE-103': { aiMul: 0.65 }, 'AE-110': { aiMul: 0.65 }, 'AE-129': { aiMul: 0.35 } };
+  // Calibração de DOIS LADOS (tests/calib_mirror2.js, 13/10/2026): todas as cartas = X e todos os jogadores o usam (reações incluídas); o focal varre val × aiMul em duelo, 3 e 4 jogadores.
+  // [val, mul] só onde superou a política anterior por margem; val 0 = gastar uma carta para prepará-lo rende menos que lutar com ela (o especial é fraco como habilidade).
+  const MIRROR = {'AE-009': [0, 1], 'AE-018': [0, 1], 'AE-020': [0, 1], 'AE-024': [0, 1], 'AE-025': [0, 1], 'AE-026': [0, 1], 'AE-027': [0.15, 1.3], 'AE-029': [0, 1], 'AE-040': [1, 0.8], 'AE-051': [0, 1], 'AE-052': [0.15, 1], 'AE-057': [0, 1], 'AE-058': [0, 1], 'AE-063': [0, 1], 'AE-070': [0, 1], 'AE-073': [0.15, 0.3], 'AE-074': [1, 0.3], 'AE-076': [0.3, 0.3], 'AE-077': [0.3, 0.3], 'AE-078': [0.3, 0.3], 'AE-079': [0.6, 0.3], 'AE-080': [1.6, 0.3], 'AE-082': [0.6, 1], 'AE-085': [0.6, 1.3], 'AE-090': [0.3, 0.5], 'AE-091': [0, 1], 'AE-095': [0, 1], 'AE-096': [0, 1], 'AE-100': [0, 1], 'AE-102': [0, 1], 'AE-105': [0.15, 0.5], 'AE-107': [0, 1], 'AE-108': [0, 0.5], 'AE-111': [0, 1], 'AE-112': [0, 1], 'AE-113': [0.15, 0.3], 'AE-114': [0, 1], 'AE-115': [1, 0.3], 'AE-116': [0.3, 0.3], 'AE-118': [0.3, 0.3], 'AE-119': [0, 1], 'AE-120': [0.3, 0.3], 'AE-121': [0, 1], 'AE-122': [0, 1], 'AE-125': [0, 1], 'AE-128': [0, 1], 'AE-130': [0.15, 0.3]};
   function finalize() {
     NOWANT.forEach(id => { if (SP[id]) SP[id].noWant = true; });
     Object.keys(BOT_VAL).forEach(id => { if (SP[id]) SP[id].val = BOT_VAL[id]; });
     BOT_JUNK.forEach(id => { if (SP[id]) SP[id].val = 0; });
     Object.keys(SP).forEach(id => { if (SP[id].val == null && BOT_VAL[id] == null) SP[id].val = 4 * (SP[id]._v0 ?? 0.4); });
-    Object.keys(TUNE).forEach(id => { const sp = SP[id]; if (!sp) return; const t = TUNE[id]; if (t.val != null) sp.val = t.val; if (t.aiMul != null && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid) => f(ctx, pid) * t.aiMul; } });
+    Object.keys(MIRROR).forEach(id => { const sp = SP[id]; if (!sp) return; const [v, m] = MIRROR[id]; sp.val = v; if (m !== 1 && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid, c) => f(ctx, pid, c) * m; } });
+    Object.keys(TUNE).forEach(id => { const sp = SP[id]; if (!sp) return; const t = TUNE[id]; if (t.val != null) sp.val = t.val; if (t.aiMul != null && sp.ai) { const f = sp.ai; sp.ai = (ctx, pid, c) => f(ctx, pid, c) * t.aiMul; } });
     const CUR = root.DS_CURTOS || {};
     Object.keys(HAB).forEach(id => {
       const h = HAB[id], tx = CUR[id] || h[1];
