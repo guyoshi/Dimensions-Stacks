@@ -6,8 +6,8 @@
 
 | Arquivo | Status | Conteúdo |
 | --- | --- | --- |
-| [cartas_87.json](cartas_87.json) | `APROVADO_PELO_AUTOR` (87) + 8 propostas | **95 cartas** (87 aprovadas + V20–V23 e S15–S18 aguardando aprovação, ver [NOVAS_CARTAS_V20_V23](../../docs/NOVAS_CARTAS_V20_V23.md)), cada uma com ID, nome, origem e cor, descrição curta, atributos ATQ/DEF/INT/VEL, soma, perfil, especial e indicação de A União. |
-| [habilidades_129.json](habilidades_129.json) | `CATALOGO_APROVADO_COM_TESTES_PENDENTES` | **129 Habilidades Especiais**, sendo 78 efeitos diferentes equipados em 87 cartas e 51 sem nenhuma atribuição, reservados a expansões. |
+| [cartas_87.json](cartas_87.json) | `APROVADO_PELO_AUTOR` | **98 cartas** (o nome do arquivo ficou de quando eram 87), cada uma com ID, nome, origem, descrição curta, atributos FOR/RES/INT/VEL, soma, perfil, especial e se integra A União. |
+| [habilidades_129.json](habilidades_129.json) | `CATALOGO_APROVADO_COM_TESTES_PENDENTES` | **129 Habilidades Especiais**, sendo 98 efeitos diferentes equipados (um por carta) e 43 sem nenhuma atribuição, reservados a expansões. |
 
 **Chaves do JSON das cartas:** `cartas[].id`, `nome`, `origem`, `descricao_curta`, `atributos.{FOR,RES,INT,VEL}`, `soma_atributos`, `perfil_balanceamento`, `habilidade_especial_id`, `uniao`, `base_narrativa`, `status`.
 

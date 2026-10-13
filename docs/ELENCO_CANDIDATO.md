@@ -180,7 +180,7 @@ O autor confirmou sete integrantes na formação informada e Jennifer como futur
 
 Criar para cada carta aprovada um registro com: `id`, `personagem`, `origem`, `livro_base`, `descrição_sem_spoiler`, `ATQ`, `DEF`, `INT`, `VEL`, `especial_id`, `raridade`, `filiação`, `estado_canônico`, `fonte` e `status_de_aprovação`. Não misturar a ficha narrativa com a matemática de balanceamento.
 
-Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Documentos associados: [Regras](REGRAS.md) · [Ataques especiais](ATAQUES_ESPECIAIS.md).
+Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/dimensoesinfinitas). Documentos associados: [Regras](REGRAS.md) · [Ataques especiais](BIBLIOTECA_ATAQUES_ESPECIAIS.md).
 
 
 

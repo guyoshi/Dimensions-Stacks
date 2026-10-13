@@ -39,7 +39,7 @@
 - **#24 — Primus Tenesy:** **retirado** do conjunto ativo a pedido do autor. Permanece somente como registro da carta física.
 - **#59 — William McCroys:** obriga usar **todas as cartas de ataques especiais já preparadas na mesa**, até duas. Não atinge cartas da reserva ou do baralho ativo.
 - **Empates de atributo:** valor do atributo disputado → soma dos quatro atributos → soma de Poder + Inteligência; empate persistente ainda não definido.
-- **Novas leituras feitas por IA** não têm o mesmo nível de confiança que transcrições feitas pelo autor: ver [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md).
+- **Novas leituras feitas por IA** não têm o mesmo nível de confiança que transcrições feitas pelo autor: ver LEITURAS_IA_PENDENTES_2026-10-12.md.
 
 ## 2. Auditoria inicial de design, separada da fonte primária
 
@@ -94,7 +94,7 @@
 
 ## 5. Próximo passo
 
-Prosseguir com a transcrição dos ataques físicos restantes. Manter texto original distinto de versão digital proposta, risco de balanceamento e decisão formal do autor. A fonte do inventário fotográfico legado está em [ATAQUES_ESPECIAIS.md](ATAQUES_ESPECIAIS.md). As regras já ratificadas estão em [REGRAS.md](REGRAS.md).
+Prosseguir com a transcrição dos ataques físicos restantes. Manter texto original distinto de versão digital proposta, risco de balanceamento e decisão formal do autor. A fonte do inventário fotográfico legado está em [ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md). As regras já ratificadas estão em [REGRAS.md](REGRAS.md).
 
 ## Situação atual deste conjunto de 23 cartas
 

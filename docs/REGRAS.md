@@ -149,7 +149,7 @@ Cuidar da acessibilidade: moldura preta com texto de alto contraste, moldura ama
 - Esclarecimentos do autor: vitória por eliminação, combate com primeira carta, confronto defesa x defesa, até duas cartas especiais preparadas e baralho ativo crescente.
 - Cânone narrativo: [Dimensões Infinitas](https://github.com/guyoshi/dimensoesinfinitas).
 
-Documentos complementares: [Habilidades especiais](ATAQUES_ESPECIAIS.md) · [Elenco candidato](ELENCO_CANDIDATO.md).
+Documentos complementares: [Habilidades especiais](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [Elenco candidato](ELENCO_CANDIDATO.md).
 
 
 ## 13. Esclarecimento do autor sobre custo de especiais (12/10/2026)
@@ -219,12 +219,12 @@ Destaques para especificação futura:
 - **Especial #19 (Sagrado Senhor da Morte):** o autor confirmou que **'Baralho Negro' significa Buraco Negro**. Usar apenas **Buraco Negro** na documentação funcional; preservar nota de divergência com a transcrição anterior. A regra de sacrificar uma carta com atributo superior a 90 em troca das três primeiras do Buraco Negro continua disponível para análise.
 - **Especial #59 (William McCroys):** obriga o jogador escolhido a **usar todas as cartas de habilidade especial que já tiver preparado à esquerda na mesa**, no máximo duas. A formulação nova 'todas em mãos' **não autoriza puxar cartas não preparadas de outras zonas**.
 - **Desempate geral:** valor individual → soma dos quatro atributos → soma **Poder + Inteligência**. Empate persistente depois desses três critérios continua pendente.
-- **Leituras por IA de outras cartas:** registrar como **provisórias**, nunca como texto confirmado. Consultar [LEITURAS_IA_PENDENTES_2026-10-12.md](LEITURAS_IA_PENDENTES_2026-10-12.md).
+- **Leituras por IA de outras cartas:** registrar como **provisórias**, nunca como texto confirmado. Consultar LEITURAS_IA_PENDENTES_2026-10-12.md.
 
 
 ## 17. Inventário ampliado e novas questões mecânicas (12/10/2026)
 
-**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com habilidades especiais **não recuperados**. Ver [inventário principal](ATAQUES_ESPECIAIS.md) e [tabela de leituras ainda provisórias](LEITURAS_IA_PENDENTES_2026-10-12.md).
+**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com habilidades especiais **não recuperados**. Ver [inventário principal](BIBLIOTECA_ATAQUES_ESPECIAIS.md) e tabela de leituras ainda provisórias.
 
 ### Efeitos recentemente ampliados (origem: texto reconstruído por IA e fornecido pelo autor)
 
@@ -250,8 +250,8 @@ Destaques para especificação futura:
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
 
 - O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **87 personagens candidatos** das séries serão distribuídos posteriormente.
-- A [biblioteca de **129 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **98 IDs equipados em 98 cartas (um por carta)** e **31 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
-- A [auditoria de **62 posições do baralho físico**](AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
+- A [biblioteca de **129 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **98 IDs equipados em 98 cartas (um por carta)** e **43 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
+- A auditoria de **62 posições do baralho físico** registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
 - Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
 - **Habilidade proposta pelo autor, texto parcial:** “roube a última carta do meio de reserva de cada adversário”; consta como **AE-048**, aguardando confirmação do trecho cortado ao final da mensagem.
 - **Fatores para balanceamento:** custo irreversível do próprio especial, risco para a carta normal, alcance do efeito com 2/3/4 jogadores, zonas afetadas, janela de ativação, direito a contra-ataque e prevenção de cadeias infinitas de recuperação/cópia.
@@ -330,7 +330,7 @@ Como algumas cartas **protegem, anulam ou respondem a outras**, recomendo que o 
 
 ### 21.5 Fichas de personagens e balanceamento (APROVADAS para o jogo; não são cânone)
 
-Foram elaboradas **87 sugestões de fichas**, com descrições de **até 120 caracteres**, perfis numéricos propositalmente variados, habilidades sugeridas e sinalização de fonte/risco de extrapolação: [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md). O autor pediu diferenças importantes de força, incluindo cartas fracas mas negociáveis por efeitos de troca, especialistas e cartas de elite.
+Foram elaboradas **87 sugestões de fichas**, com descrições de **até 120 caracteres**, perfis numéricos propositalmente variados, habilidades sugeridas e sinalização de fonte/risco de extrapolação: [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md). O autor pediu diferenças importantes de força, incluindo cartas fracas mas negociáveis por efeitos de troca, especialistas e cartas de elite.
 
 **Os oito membros presentes ou futuros de A União** receberam habilidades candidatas de grande impacto: essa é a **diretriz de design solicitada pelo autor**, não a aprovação dos números e AE individuais. **Todos os valores, descrições e AE distribuídos foram aprovados pelo autor** como cartas do jogo. Revisar separadamente a documentação literária dos personagens pouco descritos; não alterar números por conta própria.
 
@@ -338,7 +338,7 @@ Foram elaboradas **87 sugestões de fichas**, com descrições de **até 120 car
 
 ## 22. Ampliação histórica 79 → 83 cartas (a coleção atual aprovada contém 87)
 
-O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. As fichas [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) **foram aprovadas posteriormente**, e a biblioteca contém **129 habilidades** com 78 equipadas. Esta seção registra o momento anterior à inclusão Carnam. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
+O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. As fichas [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md) **foram aprovadas posteriormente**, e a biblioteca contém **129 habilidades** com 78 equipadas. Esta seção registra o momento anterior à inclusão Carnam. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
 
 ## 23. Inclusão de quatro integrantes da Família Carnam — total atual 87
 
@@ -346,7 +346,7 @@ O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito 
 
 Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de fotografias; Avó: lente dos óculos; Ingrid: ursinho; Suéten: relógio; Ibliso: coleira**. A documentação de Elos tem status *misto*, embora os seis nomes sejam informados no documento canônico de personagens. **Não declarar que o pai de Vini é Carnam.**
 
-**Total atualizado: 87 cartas candidatas**, das quais **18 de Diário Sobrenatural**. As descrições, valores e habilidades das quatro novas cartas constam da tabela [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md) e **foram aprovadas posteriormente pelo autor**. A biblioteca segue com **129 habilidades**, 78 equipadas em 87 cartas aprovadas.
+**Total atualizado: 87 cartas candidatas**, das quais **18 de Diário Sobrenatural**. As descrições, valores e habilidades das quatro novas cartas constam da tabela [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md) e **foram aprovadas posteriormente pelo autor**. A biblioteca segue com **129 habilidades**, 78 equipadas em 87 cartas aprovadas.
 
 ## 24. Ratificação do baralho e da biblioteca (decisão final do autor: “Aprove tudo”, 12/10/2026)
 
@@ -364,7 +364,7 @@ Elos documentados: **Carnam: arma ligada ao pai de Vini; Isabela: álbum de foto
 
 **PENDÊNCIAS NÃO RESOLVIDAS PELA APROVAÇÃO GENÉRICA:** como preparar exatamente cartas especiais; a janela pré-revelação exigida por certos textos; a ordem de duas ativações forçadas pela AE-111; destino das duas cartas normais do especial duplo AE-010; empate absoluto após os três critérios; tratamento de alvos/zonas com cartas insuficientes; distribuição justa das 87 cartas; tempo de reação para partidas online; testes de raridade e balanceamento. Estes comportamentos **não podem ser inventados** por outra IA.
 
-**FONTES OFICIAIS PARA CÓDIGO:** [cartas_87.json](../dados/oficial/cartas_87.json), [habilidades_129.json](../dados/oficial/habilidades_129.json) e [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md). A [tabela de 87 cartas](CARTAS_87_PROPOSTAS.md) tem nome histórico mas **conteúdo aprovado**. Cartas físicas antigas permanecem somente referências.
+**FONTES OFICIAIS PARA CÓDIGO:** [cartas_87.json](../dados/oficial/cartas_87.json), [habilidades_129.json](../dados/oficial/habilidades_129.json) e [contrato para IA implementadora](CONTRATO_PARA_IA_IMPLEMENTADORA.md). A [tabela de 87 cartas](CARTAS_E_ESPECIAIS.md) tem nome histórico mas **conteúdo aprovado**. Cartas físicas antigas permanecem somente referências.
 
 ## Janela de reação (13/10/2026, autorizada pelo autor)
 

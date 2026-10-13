@@ -2,28 +2,26 @@
 
 Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dimensões Infinitas**.
 
-> **STATUS: BARALHO APROVADO PELO AUTOR (12/10/2026).** O conteúdo inicial tem **87 cartas oficiais e 129 habilidades no catálogo**. O jogo **ainda não está programado ou balanceado por testes**. Leia o [contrato para outra IA](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md) antes de modificar qualquer dado.
+> **STATUS: BARALHO APROVADO PELO AUTOR (12/10/2026).** O conteúdo inicial tem **98 cartas oficiais e 129 habilidades no catálogo**. O jogo **ainda não está programado ou balanceado por testes**. Leia o [contrato para outra IA](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md) antes de modificar qualquer dado.
 
 ## Documentação principal
 
 | Documento | Finalidade |
 | --- | --- |
-| **[Baralho oficial v1.0](docs/BARALHO_OFICIAL.md)** | **Comece aqui:** status da aprovação, 87 cartas, distribuição e links de produção |
+| **[Baralho oficial v1.0](docs/BARALHO_OFICIAL.md)** | **Comece aqui:** status da aprovação, 98 cartas, distribuição e links de produção |
 | **[Contrato de regras para IA](docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md)** | Distingue o que foi aprovado de questões operacionais ainda pendentes |
 | [Regras e GDD v1.2](docs/REGRAS.md) | Mecânicas confirmadas, última seção de ratificação e pendências |
-| **[Cartas e especiais (nº, nome, descrição, especial)](docs/CARTAS_E_ESPECIAIS.md)** | Lista simples das 87 cartas com a habilidade especial de cada uma e o registro da reatribuição de 13/10/2026 |
+| **[Cartas e especiais (nº, nome, descrição, especial)](docs/CARTAS_E_ESPECIAIS.md)** | Lista simples das 98 cartas com a habilidade especial de cada uma e o registro da reatribuição de 13/10/2026 |
 | **[Bots, níveis e calibração](docs/BOTS_E_NIVEIS.md)** | Níveis fácil/médio/difícil, memória dos bots, calibração de dois lados e especiais candidatos a reforço |
-| **[87 cartas aprovadas, fichas completas](docs/CARTAS_87_PROPOSTAS.md)** | Tabela de descrições, atributos e habilidades. O nome `PROPOSTAS` é histórico; **conteúdo aprovado** |
-| **[129 Habilidades Especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)** | **78 efeitos diferentes equipados em 87 cartas**, 51 guardados para expansões |
+| **[129 Habilidades Especiais](docs/BIBLIOTECA_ATAQUES_ESPECIAIS.md)** | **98 efeitos diferentes equipados (um por carta)**, 43 guardados para expansões |
 | [Modelo-base aprovado de reações defensivas](docs/PRIORIDADE_ESPECIAIS_PROPOSTA.md) | Prioridade circular, reações antes da resolução e contraespecial AE-130 |
-| [Elenco das 87 cartas](docs/ELENCO_CANDIDATO.md) | Origem narrativa, identidade e membros da União |
+| [Elenco das cartas](docs/ELENCO_CANDIDATO.md) | Origem narrativa, identidade e membros da União |
 | [Checklist de validação](docs/CHECKLIST_VALIDACAO.md) | Validação documental e testes de partidas ainda necessários |
-| [Auditoria do baralho físico](docs/AUDITORIA_BALANCEAMENTO_ESPECIAIS.md) | Material histórico apenas para inspiração, não a versão final das cartas |
 
 ## Dados oficiais para implementação
 
-- **[dados/oficial/cartas_87.json](dados/oficial/cartas_87.json)**: 87 cartas com status `APROVADA_PELO_AUTOR`, FOR/RES/INT/VEL e Habilidade Especial atribuída.
-- **[dados/oficial/habilidades_129.json](dados/oficial/habilidades_129.json)**: 129 habilidades aprovadas como catálogo de design; 78 equipadas, 51 reservadas para futuras cartas.
+- **[dados/oficial/cartas_87.json](dados/oficial/cartas_87.json)**: 98 cartas com status `APROVADA_PELO_AUTOR`, FOR/RES/INT/VEL e Habilidade Especial atribuída.
+- **[dados/oficial/habilidades_129.json](dados/oficial/habilidades_129.json)**: 129 habilidades aprovadas como catálogo de design (141 com as 12 criadas em 13 e 14/10/2026); 98 equipadas, 43 reservadas para futuras cartas.
 
 **Arquivos antigos em `dados/propostas` não são dados de produção.** Não importar nem reconstruir dados finais a partir deles.
 

@@ -21,5 +21,14 @@ for i, l in enumerate(lines):
         continue   # linha em branco que quebrava a tabela do grupo K
     else:
         out.append(l)
+# habilidades criadas depois do catálogo original (AE-131 em diante): seção própria
+novas = [h for i, h in sorted(H.items()) if i > 'AE-130']
+if novas and not any(l.startswith('## O. ') for l in out):
+    k = next(i for i, l in enumerate(out) if l.startswith('## Regras propostas de integridade'))
+    sec = ['## O. Novas habilidades criadas em 13 e 14/10/2026 (%d)' % len(novas), '',
+           'Criadas a pedido do autor: as primeiras que **reduzem atributos do rival** (AE-131 a AE-134 e AE-141), o conjunto de bônus de AE-135 a AE-140 e AE-142, que substituiu especiais com valor medido abaixo de 47%. Os números de vitórias vêm de `tests/bot_per_special.js` e estão em [BALANCEAMENTO_GERAL_2026-10-13.md](BALANCEAMENTO_GERAL_2026-10-13.md).', '',
+           '| ID | Nome da habilidade | Efeito definido no catálogo (requer testes) | Referência física | Situação | Carta atribuída (ID) |', '| --- | --- | --- | --- | --- | --- |']
+    sec += [row(h) for h in novas] + ['']
+    out[k:k] = sec
 open(P, 'w', encoding='utf8').write('\n'.join(out))
 print('linhas regeneradas:', n)

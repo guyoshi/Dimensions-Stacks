@@ -6,7 +6,7 @@
 
 1. **Este contrato e as decisões mais recentes do autor** têm prioridade sobre avisos históricos “proposto” espalhados em documentos anteriores.
 2. [REGRAS.md](REGRAS.md): mecânicas, aprovações e **pendências operacionais**.
-3. [CARTAS_87_PROPOSTAS.md](CARTAS_87_PROPOSTAS.md): apesar do nome antigo do arquivo, é a **tabela de 87 cartas APROVADAS**.
+3. [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md): apesar do nome antigo do arquivo, é a **tabela de 87 cartas APROVADAS**.
 4. [BIBLIOTECA_ATAQUES_ESPECIAIS.md](BIBLIOTECA_ATAQUES_ESPECIAIS.md): **129 habilidades**, com coluna final preenchida para 78 efeitos distintos utilizados nas 87 cartas. As outras **51 permanecem no catálogo para expansão**.
 5. [PRIORIDADE_ESPECIAIS_PROPOSTA.md](PRIORIDADE_ESPECIAIS_PROPOSTA.md): o nome do arquivo é histórico; **a pilha de reações defensivas e prioridade circular fica aprovada como modelo-base**, com os casos-limite indicados mais adiante pendentes de especificação.
 6. **JSON oficial:** [87 cartas](../dados/oficial/cartas_87.json) e [129 habilidades](../dados/oficial/habilidades_129.json), ambos com status de aprovação. São os dados estruturados atuais para outra IA.
@@ -75,7 +75,6 @@ A aprovação “Aprove tudo” ratifica as **opções propostas existentes**, m
 
 ## 6. Referências
 
-- [Fichas aprovadas (arquivo com nome histórico)](CARTAS_87_PROPOSTAS.md)
 - [JSON oficial de cartas](../dados/oficial/cartas_87.json)
 - [Catálogo aprovado de habilidades](BIBLIOTECA_ATAQUES_ESPECIAIS.md)
 - [JSON oficial de habilidades](../dados/oficial/habilidades_129.json)

@@ -107,7 +107,7 @@ Essas descrições constituem o **modelo aprovado** de interação; permanecem a
 
 **Resumo:** a prioridade circular, a pilha de resolução inversa e a defesa reativa enquanto a ameaça ainda está pendente foram **aprovadas**. A implementação deve aguardar decisão apenas dos casos-limite da seção 7, sem alterar livremente as regras-base.
 
-[Voltar ao GDD](REGRAS.md) · [Biblioteca de 129 candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [87 fichas propostas](CARTAS_87_PROPOSTAS.md).
+[Voltar ao GDD](REGRAS.md) · [Biblioteca de 129 candidatos](BIBLIOTECA_ATAQUES_ESPECIAIS.md) · [87 fichas propostas](CARTAS_E_ESPECIAIS.md).
 
 ## 8. Ratificação por “Aprove tudo”
 

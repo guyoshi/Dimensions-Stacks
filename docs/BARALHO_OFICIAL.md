@@ -7,7 +7,7 @@ Esta é a página de entrada oficial para outra IA ou desenvolvedor. O baralho i
 ## Documentos oficiais de produção
 
 - **[JSON oficial das 87 cartas](../dados/oficial/cartas_87.json)**: dados estruturados com `status: APROVADA_PELO_AUTOR`.
-- **[Tabela das 87 cartas, descrições e habilidades](CARTAS_87_PROPOSTAS.md)**: apesar do nome histórico “PROPOSTAS”, seu conteúdo **foi aprovado pelo autor** e não é mais uma proposta.
+- **[Tabela das 87 cartas, descrições e habilidades](CARTAS_E_ESPECIAIS.md)**: apesar do nome histórico “PROPOSTAS”, seu conteúdo **foi aprovado pelo autor** e não é mais uma proposta.
 - **[Biblioteca de 129 Habilidades Especiais](BIBLIOTECA_ATAQUES_ESPECIAIS.md)**: **78 efeitos distintos equipados** em 87 cartas e **51 efeitos de reserva** para futuras expansões.
 - **[JSON oficial das 129 habilidades](../dados/oficial/habilidades_129.json)**: mostra as cartas atribuídas a cada habilidade e quais permanecem sem uso.
 - **[GDD vigente](REGRAS.md)** e **[contrato para outra IA](CONTRATO_PARA_IA_IMPLEMENTADORA.md)**: regras aprovadas e procedimentos ainda não decididos.

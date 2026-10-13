@@ -58,6 +58,13 @@
   modSpec('AE-006', 'Dupla resistência', 'Sua carta de combate recebe +15 Resistência e +20 Velocidade nesta disputa.', { def: 15, vel: 20 });
   modSpec('AE-007', 'Ímpeto ofensivo', 'Sua carta de combate recebe +7 Força e +7 Inteligência nesta disputa.', { pod: 7, int: 7 });
   modSpec('AE-008', 'Guarda equilibrada', 'Sua carta de combate recebe +10 Resistência e +10 Velocidade nesta disputa.', { def: 10, vel: 10 });
+  modSpec('AE-135', 'Vigor', 'Sua carta de combate recebe +12 em Força e +12 em Resistência nesta disputa.', { pod: 12, def: 12 });
+  modSpec('AE-136', 'Lucidez veloz', 'Sua carta de combate recebe +12 em Inteligência e +12 em Velocidade nesta disputa.', { int: 12, vel: 12 });
+  modSpec('AE-137', 'Golpe pesado', 'Sua carta de combate recebe +20 em Força nesta disputa.', { pod: 20 });
+  modSpec('AE-138', 'Rocha', 'Sua carta de combate recebe +20 em Resistência nesta disputa.', { def: 20 });
+  modSpec('AE-139', 'Disparada', 'Sua carta de combate recebe +20 em Velocidade nesta disputa.', { vel: 20 });
+  modSpec('AE-140', 'Mente afiada', 'Sua carta de combate recebe +20 em Inteligência nesta disputa.', { int: 20 });
+  modSpec('AE-142', 'Reflexos de aço', 'Sua carta de combate recebe +15 em Resistência e +15 em Velocidade nesta disputa.', { def: 15, vel: 15 });
   def('AE-009', 'Superação', 'Se o valor original que você escolheu for 40 ou menos, adicione +25 a esse atributo.', 'Bônus', {
     can(ctx, pid) { const e = ctx.entry(pid); return !!e && e.base[e.attr] <= 40; },
     apply(ctx, act) { const e = ctx.entry(act.pid), a = e.attr; ctx.addMod(e, act.pid, 'Superação', x => { x.stats[a] += 25; }); ctx.say(`${ctx.name(act.pid)} supera a própria fraqueza (+25).`); },
@@ -552,17 +559,17 @@
       try {
         for (const pid of combat.order) {
           const p = this.p(pid);
-          if (!this.foeActs(combat, pid).length) continue;
+          const foeSp = this.foeActs(combat, pid).length > 0;   // sem especial rival virado, só abrem a janela os de reação que não dependem dele (reactAlways)
           const mine = combat.activations.filter(a => a.pid === pid);
           if ((combat.used[pid] || 0) >= 1 && (!mine.length || mine.length >= 2)) continue;
           const first = mine[0];
-          const usable = p.prepared.filter(c => { const sp = SP[CARDS[c].especial]; return sp && sp.react && !combat.locked.has(c) && sp.can(ctx, pid) && (!first || comp(first.card) || comp(c)); });
+          const usable = p.prepared.filter(c => { const sp = SP[CARDS[c].especial]; return sp && sp.react && (foeSp || sp.reactAlways) && !combat.locked.has(c) && sp.can(ctx, pid) && (!first || comp(first.card) || comp(c)); });
           if (!usable.length) continue;
           await this.emit('specialWindow', { pid, usable, stage: 'react' });
           const c = await this.decide(p, 'special', usable, combat, ctx, 'react');
           if (c == null || !usable.includes(c)) continue;
           picks.push({ pid, card: c }); combat.used[pid] = (combat.used[pid] || 0) + 1;
-          const second = first ? [] : p.prepared.filter(x => x !== c && SP[CARDS[x].especial] && SP[CARDS[x].especial].react && !combat.locked.has(x) && SP[CARDS[x].especial].can(ctx, pid) && (comp(c) || comp(x)));
+          const second = first ? [] : p.prepared.filter(x => x !== c && SP[CARDS[x].especial] && SP[CARDS[x].especial].react && (foeSp || SP[CARDS[x].especial].reactAlways) && !combat.locked.has(x) && SP[CARDS[x].especial].can(ctx, pid) && (comp(c) || comp(x)));
           if (second.length) { const c2 = await this.decide(p, 'special', second, combat, ctx, 'second'); if (c2 != null && second.includes(c2)) picks.push({ pid, card: c2 }); }
         }
       } finally { combat.react = false; }
@@ -839,7 +846,7 @@
   // Nomes/textos oficiais da PROPOSTA (habilidades_129.json) sobrepõem os de cada especial implementado.
   const HAB = (D && D.HABILIDADES) || {};
   // especiais cuja condição só existe durante a disputa (não dá para checar na preparação)
-  const NOWANT = ['AE-009', 'AE-052', 'AE-053', 'AE-054', 'AE-071', 'AE-101', 'AE-102', 'AE-103', 'AE-109', 'AE-107', 'AE-112', 'AE-111', 'AE-113', 'AE-117', 'AE-130', 'AE-115', 'AE-116', 'AE-073', 'AE-074', 'AE-114'];
+  const NOWANT = ['AE-131', 'AE-132', 'AE-133', 'AE-134', 'AE-141', 'AE-009', 'AE-052', 'AE-053', 'AE-054', 'AE-071', 'AE-101', 'AE-102', 'AE-103', 'AE-109', 'AE-107', 'AE-112', 'AE-111', 'AE-113', 'AE-117', 'AE-130', 'AE-115', 'AE-116', 'AE-073', 'AE-074', 'AE-114'];
   // Calibração dos bots (medida com tests/calib_val.js: varre val e aiMul de cada especial em duelo e em 3 jogadores; reativos/informação usam estimativa de projeto)
   // [antiga] (tests/bot_per_special.js): val = quanto vale gastar uma carta de combate para preparar; aiMul = escala da vontade de virar.
   // Valor de cada especial em "cartas de diferença" (medido com tests/bot_per_special.js: % de vitórias do bot que usa × o que nunca usa, (v-38)/12).
@@ -853,9 +860,10 @@
   // [val, mul] só onde superou a política anterior por margem; val 0 = gastar uma carta para prepará-lo rende menos que lutar com ela (o especial é fraco como habilidade).
   const MIRROR = {'AE-009': [0, 1], 'AE-018': [0, 1], 'AE-020': [0, 1], 'AE-024': [0, 1], 'AE-025': [0, 1], 'AE-026': [0, 1], 'AE-027': [0.15, 1.3], 'AE-029': [0, 1], 'AE-040': [1, 0.8], 'AE-051': [0, 1], 'AE-052': [0.15, 1], 'AE-057': [0, 1], 'AE-058': [0, 1], 'AE-063': [0, 1], 'AE-070': [0, 1], 'AE-073': [0.15, 0.3], 'AE-074': [1, 0.3], 'AE-076': [0.3, 0.3], 'AE-077': [0.3, 0.3], 'AE-078': [0.3, 0.3], 'AE-079': [0.6, 0.3], 'AE-080': [1.6, 0.3], 'AE-082': [0.6, 1], 'AE-085': [0.6, 1.3], 'AE-090': [0.3, 0.5], 'AE-091': [0, 1], 'AE-095': [0, 1], 'AE-096': [0, 1], 'AE-100': [0, 1], 'AE-102': [0, 1], 'AE-105': [0.15, 0.5], 'AE-107': [0, 1], 'AE-108': [0, 0.5], 'AE-111': [0, 1], 'AE-112': [0, 1], 'AE-113': [0.15, 0.3], 'AE-114': [0, 1], 'AE-115': [1, 0.3], 'AE-116': [0.3, 0.3], 'AE-118': [0.3, 0.3], 'AE-119': [0, 1], 'AE-120': [0.3, 0.3], 'AE-121': [0, 1], 'AE-122': [0, 1], 'AE-125': [0, 1], 'AE-128': [0, 1], 'AE-130': [0.15, 0.3]};
   // Especiais REATIVOS (respondem a especiais dos rivais): só são virados na janela de reação, depois da revelação dos demais.
-  const REACT = ['AE-073', 'AE-074', 'AE-076', 'AE-077', 'AE-078', 'AE-079', 'AE-080', 'AE-113', 'AE-114', 'AE-115', 'AE-116', 'AE-120', 'AE-130'];
+  const REACT = ['AE-073', 'AE-074', 'AE-076', 'AE-077', 'AE-078', 'AE-079', 'AE-080', 'AE-113', 'AE-114', 'AE-115', 'AE-116', 'AE-120', 'AE-130', 'AE-134'];
   function finalize() {
     REACT.forEach(id => { if (SP[id]) { SP[id].react = true; SP[id].ai0 = SP[id].ai; } });
+    if (SP['AE-134']) SP['AE-134'].reactAlways = true;
     NOWANT.forEach(id => { if (SP[id]) SP[id].noWant = true; });
     Object.keys(BOT_VAL).forEach(id => { if (SP[id]) SP[id].val = BOT_VAL[id]; });
     BOT_JUNK.forEach(id => { if (SP[id]) SP[id].val = 0; });

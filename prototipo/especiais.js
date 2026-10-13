@@ -611,6 +611,54 @@
       apply(ctx, act) { ctx.entry(act.pid).autoWin = true; ctx.say(`${nm(ctx, act.pid)} vence a comparação de atributos!`); },
       ai(ctx, pid) { return ctx.isLosing(pid) ? 0.95 : 0.06; },
     });
+    // ================================================================ redução de atributos do rival (13/10/2026, autorizado pelo autor)
+    const foeEntries = (ctx, pid) => ctx.entries().filter(e => e.pid !== pid && !e.withdrawn);
+    const aimWinner = (ctx, c) => { const w = winnerOf(ctx); return w && c.includes(w.pid) ? w.pid : c[0]; };   // o bot mira em quem está vencendo
+    const cut = (e, k, n) => x => { x.stats[k] = Math.max(0, x.stats[k] - n); };
+    D('AE-131', 'Redução', {
+      can(ctx, pid) { return foeEntries(ctx, pid).length > 0; },
+      async apply(ctx, act) {
+        const t = await ctx.target(act.pid, foeEntries(ctx, act.pid).map(e => e.pid), 'Enfraquecer qual adversário?', c => aimWinner(ctx, c)); if (t == null) return;
+        const te = ctx.entry(t); AID.forEach(k => ctx.addMod(te, act.pid, 'Enfraquecer', cut(te, k, 15)));
+        ctx.say(`${nm(ctx, t)} perde 15 em todos os atributos.`);
+      },
+      ai(ctx, pid) { return ctx.isLosing(pid) ? clamp01(ctx.flipChance(pid, 15)) : 0.04; },
+    });
+    D('AE-132', 'Redução', {
+      can(ctx, pid) { return foeEntries(ctx, pid).length > 0; },
+      async apply(ctx, act) {
+        const t = await ctx.target(act.pid, foeEntries(ctx, act.pid).map(e => e.pid), 'Quebrar o melhor atributo de qual adversário?', c => aimWinner(ctx, c)); if (t == null) return;
+        const te = ctx.entry(t); const k = AID.slice().sort((a, b) => te.stats[b] - te.stats[a])[0];
+        ctx.addMod(te, act.pid, 'Quebrar o melhor', cut(te, k, 25)); ctx.say(`${nm(ctx, t)} perde 25 em ${ATTR[k].nome}, o melhor atributo da carta.`);
+      },
+      ai(ctx, pid) { return ctx.isLosing(pid) ? clamp01(0.6 * ctx.flipChance(pid, 25)) : 0.04; },
+    });
+    D('AE-133', 'Redução', {
+      can(ctx, pid) { return foeEntries(ctx, pid).length > 0 && !!ctx.entry(pid); },
+      apply(ctx, act) {
+        const k = ctx.entry(act.pid).attr; foeEntries(ctx, act.pid).forEach(te => ctx.addMod(te, act.pid, 'Desgaste coletivo', cut(te, k, 8)));
+        ctx.say(`Todos os rivais perdem 8 em ${ATTR[k].nome}.`);
+      },
+      ai(ctx, pid) { return ctx.isLosing(pid) ? clamp01(0.7 * ctx.flipChance(pid, 8)) : 0.04; },
+    });
+    [['AE-141', ['pod', 'int'], 'Intimidar qual adversário?', 'Intimidar']].forEach(([id, ks, q, lab]) => D(id, 'Redução', {
+      can(ctx, pid) { return foeEntries(ctx, pid).length > 0; },
+      async apply(ctx, act) {
+        const t = await ctx.target(act.pid, foeEntries(ctx, act.pid).map(e => e.pid), q, c => aimWinner(ctx, c)); if (t == null) return;
+        const te = ctx.entry(t); ks.forEach(k => ctx.addMod(te, act.pid, lab, cut(te, k, 12))); ctx.say(`${nm(ctx, t)} perde 12 em ${ks.map(k => ATTR[k].nome).join(' e ')}.`);
+      },
+      ai(ctx, pid) { return ctx.isLosing(pid) ? clamp01(0.75 * ctx.flipChance(pid, 12)) : 0.04; },
+    }));
+    D('AE-134', 'Reação', {
+      phase: 'late',
+      can(ctx, pid) { return foeEntries(ctx, pid).some(e => e.attr); },
+      async apply(ctx, act) {
+        const cand = foeEntries(ctx, act.pid).filter(e => e.attr).map(e => e.pid); const t = await ctx.target(act.pid, cand, 'Cortar o atributo de qual adversário?', c => aimWinner(ctx, c)); if (t == null) return;
+        const te = ctx.entry(t), k = te.attr; ctx.addMod(te, act.pid, 'Cortar o par', cut(te, k, 20)); ctx.say(`${nm(ctx, t)} perde 20 em ${ATTR[k].nome}.`);
+      },
+      // na janela de reação as cartas já estão viradas: o bot sabe se os 20 viram o resultado
+      ai(ctx, pid) { return ctx.isLosing(pid) ? clamp01(ctx.flipChance(pid, 20)) : 0.03; },
+    });
     D('AE-130', 'Reação', {
       phase: 'pre',
       async apply(ctx, act) {

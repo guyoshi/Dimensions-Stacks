@@ -606,6 +606,7 @@
           const sp = E.SPECIALS[CARDS[id].especial]; if (!sp) return;
           const why = combat && combat.locked && combat.locked.has(id) ? 'Bloqueado nesta disputa.'
             : sp.phase === 'ctrl' && stage !== 'ctrl' ? 'Especial de controle: só podia ser virado antes da escolha dos atributos.'
+            : sp.reactAlways && stage !== 'react' && stage !== 'second' ? 'Especial reativo: você poderá virar depois que todas as cartas forem reveladas, já sabendo o resultado.'
             : sp.react && stage !== 'react' && stage !== 'second' ? 'Especial reativo: você poderá virar depois que os rivais revelarem os especiais deles (se algum rival virar um).'
             : !sp.react && stage === 'react' ? 'Especial normal: só podia ser virado na janela anterior, antes da reação.'
             : sp.phase !== 'ctrl' && stage === 'ctrl' ? 'Você poderá virar esta depois da revelação (só 1 especial por disputa).'

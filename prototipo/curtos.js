@@ -128,5 +128,17 @@
 "AE-127": "Troca entre si os valores de Inteligência e Resistência da carta.",
 "AE-128": "Troca entre si os valores de Resistência e Velocidade da carta.",
 "AE-129": "Vence a comparação desta disputa automaticamente (ataque captura, defesa descarta).",
-"AE-130": "Reação: anula a última habilidade pendente; a carta vai ao Buraco Negro."
+"AE-130": "Reação: anula a última habilidade pendente; a carta vai ao Buraco Negro.",
+"AE-131": "Um rival perde 15 em todos os atributos.",
+"AE-132": "O maior atributo da carta de um rival cai 25.",
+"AE-133": "No seu atributo, todos os rivais perdem 8.",
+"AE-134": "Reação: um rival perde 20 no atributo que escolheu.",
+"AE-135": "+12 Força e +12 Resistência.",
+"AE-136": "+12 Inteligência e +12 Velocidade.",
+"AE-137": "+20 Força.",
+"AE-138": "+20 Resistência.",
+"AE-139": "+20 Velocidade.",
+"AE-140": "+20 Inteligência.",
+"AE-141": "Um rival perde 12 em Força e em Inteligência.",
+"AE-142": "+15 Resistência e +15 Velocidade."
 }; })(typeof window !== "undefined" ? window : globalThis);

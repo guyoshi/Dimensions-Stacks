@@ -15,7 +15,7 @@
 - [x] Cores: V azul, M vermelho, J amarelo, B verde, D roxo, S preto.
 - [x] Núcleo Carnam: D07 Ingrid, D13 Suéten, D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso; D17 ≠ D10 Avó de Kelly.
 - [x] Núcleo Viajantes adicional: V16 Facka (Faka no manuscrito), V17 Lanigiah, V18 Grande Pai Gaia e V19 Seti.
-- [x] [JSON oficial de cartas](../dados/oficial/cartas_87.json) e [tabela Markdown aprovada](CARTAS_87_PROPOSTAS.md) devem manter a mesma identidade, textos, atributos e IDs de especial.
+- [x] [JSON oficial de cartas](../dados/oficial/cartas_87.json) e [tabela Markdown aprovada](CARTAS_E_ESPECIAIS.md) devem manter a mesma identidade, textos, atributos e IDs de especial.
 - [x] [JSON oficial de habilidades](../dados/oficial/habilidades_129.json) e [biblioteca Markdown](BIBLIOTECA_ATAQUES_ESPECIAIS.md) devem registrar as mesmas cartas por habilidade.
 
 **[x] significa validação documental e de dados**, não simulação do combate nem teste de layout.

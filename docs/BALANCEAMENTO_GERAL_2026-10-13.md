@@ -109,7 +109,20 @@ Risco: a habilidade pode ter relação narrativa com o personagem; decisão do a
 
 Vitórias por disputa nas simulações de bots (700 partidas por modo): **maior taxa de uma carta 91% → 77%** (2 jogadores) e 79% → 63% (4 jogadores); desvio entre cartas 18,6 → 16,3 e 18,2 → 15,7. Korvo 91 → 67, Agouro 91 → 61, Agente Sete 85 → 69, Gaia 84 → 68, Velho-Sábio 79 → 67, Agente Seis 78 → 66, McCroys 82 → 74, Lanigiah 83 → 70 (2 jogadores).
 
-**Ainda fortes nos dois pares (não alterados, decisão do autor):** Capitã Nastácia (91/93/82/75), Jelles (93/82/80/65), Vivian, Alekta, Jennifer de Morais e os integrantes de A União com dois pares altos (Jasmey, Releuz, Édelin Lys).
+**Segunda leva (autorizada pelo autor em 14/10/2026):** a mesma regra aplicada a Capitã Nastácia, Jelles, Vivian, Alekta, Jennifer de Morais e aos integrantes de A União Jasmey, Releuz e Édelin Lys.
+
+| Nº | Carta | Par forte | FOR/RES/INT/VEL | Perfil |
+| --- | --- | --- | --- | --- |
+| S01 | Jasmey Badrock | FOR/RES | 92/76/72/88 → 92/76/64/70 | Elite → Forte |
+| S08 | Vivian | INT/VEL | 83/70/89/65 → 70/64/89/65 | Forte → Forte |
+| S09 | Capitã Nastácia | FOR/RES | 91/93/82/75 → 91/93/70/67 | Elite → Elite |
+| S10 | Jelles | FOR/RES | 93/82/80/65 → 93/82/70/62 | Elite → Forte |
+| D06 | Jennifer de Morais | INT/VEL | 71/77/91/70 → 66/70/91/70 | Forte → Forte |
+| M10 | Releuz (nome temporário) | INT/VEL | 76/92/87/82 → 65/70/87/82 | Elite → Forte |
+| B01 | Édelin Lys | FOR/RES | 92/83/86/80 → 92/83/70/68 | Elite → Forte |
+| S18 | Alekta | INT/VEL | 84/70/68/88 → 70/64/68/88 | Forte → Forte |
+
+Resultado final (700 partidas por modo, bots): maior taxa de uma carta 91% → 74% (2 jogadores) e 79% → 62% (4 jogadores); desvio entre cartas 18,6 → 14,3 e 18,2 → 14,0. Releuz caiu de 62% para 49% (2 jogadores), e Nastácia de 69% para 56%.
 
 **Especiais mudados (alterações de balanceamento):**
 
@@ -123,3 +136,30 @@ O bônus pequeno ainda rende muito para o bot porque ele usa a habilidade só qu
 **Apelões na reserva (não atribuir sem reequilibrar):** AE-054 (99%), AE-033/034/035 (89%), AE-109 (84%), AE-003 (80%) estão marcados no campo `revisao` de `habilidades_129.json`. Apelões equipados e não alterados, para o autor decidir: AE-053 (S14), AE-010 (J15), AE-031 (M02), AE-039 (M07), AE-087 (V10), AE-101 (M06) e, em integrantes de A União, AE-129, AE-103, AE-032.
 
 **Quatro cartas com especial que o bot nunca usava** (0 usos por disputa) receberam especiais úteis: Erick Corvane AE-009 → **AE-043**, A Avó AE-058 → **AE-049**, A Engenheira AE-070 → **AE-045**, Nicolas Corvane AE-057 → **AE-050**. Os especiais originais dessas cartas, retirados antes, foram AE-106, AE-093, AE-085 e AE-028 (nessa ordem).
+
+## Especiais de baixo valor trocados e especiais novos (14/10/2026, autorizado pelo autor)
+
+**Critério:** valor medido abaixo de 47% de vitórias para o bot que usa o especial (quem nunca usa vence 48%). O AE-068 Tributo por sacrifício saiu de S11 A Besta e foi para M05 Padre Tomas, o personagem mais fraco, a pedido do autor. Ficaram de fora o AE-073 de V15 Brenda (integrante de A União), o AE-093 de D19 Manu (aprovado pelo autor) e o AE-130 de V06 Erla (pedido do autor).
+
+**Especiais novos criados (12; texto completo na seção O da biblioteca):**
+
+| ID | Nome | Efeito | Valor 2 jog. | Carta |
+| --- | --- | --- | ---: | --- |
+| AE-131 | Enfraquecer | Rival perde 15 em todos os atributos | 94% | D14 Filipo |
+| AE-132 | Quebrar o melhor | Maior atributo do rival cai 25 | 88% | D03 Pedro |
+| AE-133 | Desgaste coletivo | Todos os rivais perdem 8 no atributo que você usa | 56% | S11 A Besta |
+| AE-134 | Cortar o par | Reação, após a revelação: rival perde 20 no atributo que escolheu | 97% | M03 Diana |
+| AE-135 | Vigor | +12 Força e +12 Resistência | 64% | S12 Vek |
+| AE-136 | Lucidez veloz | +12 Inteligência e +12 Velocidade | 73% | J07 Mariv |
+| AE-137 | Golpe pesado | +20 Força | 65% | S05 Kord |
+| AE-138 | Rocha | +20 Resistência | 54% | V24 Maria Santoro |
+| AE-139 | Disparada | +20 Velocidade | 55% | V09 Ricochet |
+| AE-140 | Mente afiada | +20 Inteligência | 78% | V07 Lucas |
+| AE-141 | Intimidar | Rival perde 12 em Força e Inteligência | 71% | V21 Shirley |
+| AE-142 | Reflexos de aço | +15 Resistência e +15 Velocidade | 61% | V19 Seti |
+
+AE-131, AE-132 e AE-134 têm valor alto no bot porque ele só os usa quando sabe que viram o resultado; por isso foram para as cartas mais fracas, e nenhuma carta com eles passou de 35% de vitórias. O AE-134 é o primeiro especial de reação que não depende de um especial rival: a janela de reação abre para quem o tem preparado.
+
+**Trocas de especial (antes → depois):** M03 Diana AE-120 → AE-134 · D14 Filipo AE-077 → AE-131 · D03 Pedro AE-084 → AE-132 · V07 Lucas AE-097 → AE-140 · J07 Mariv AE-090 → AE-136 · S11 A Besta AE-068 → AE-133 · V21 Shirley AE-076 → AE-141 · V24 Maria Santoro AE-080 → AE-138 · S05 Kord AE-113 → AE-137 · S12 Vek AE-115 → AE-135 · J09 Alyra AE-116 → AE-040 · V09 Ricochet AE-017 → AE-139 · V08 Garmand AE-088 → AE-044 · V01 Breno AE-078 → AE-001 · M09 Richard AE-118 → AE-036 · J23 Kedran AE-079 → AE-125 · J11 Cal Edran AE-074 → AE-014 · V19 Seti AE-105 → AE-142 · M05 Padre Tomas AE-092 → AE-068.
+
+Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_129.json`).

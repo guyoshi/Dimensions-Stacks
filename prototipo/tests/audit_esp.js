@@ -219,6 +219,20 @@ const cnt = (g, pid, z) => g.p(pid)[z].length;
   await scn('AE-129', 'vence a comparação', { n: 2, flip: { 0: true }, attrs: { 0: 'pod', 1: 'pod' }, world: { f: { 0: [5, 5, 5, 5], 1: [90, 90, 90, 90] }, prep: { 0: ['AE-129'] } }, check(g, W, c) { c.ok(c.result.winnerPid === 0, 'P0 venceu'); c.ok(inD(g, 0, W.F[1]), 'captura (ataque)'); } });
   await scn('AE-130', 'anula a última habilidade pendente', { n: 2, flip: { 0: true, 1: true }, attrs: { 0: 'pod', 1: 'pod' }, world: { f: { 0: [60, 60, 60, 60], 1: [50, 50, 50, 50] }, prep: { 0: ['AE-130'], 1: ['AE-001'] } }, check(g, W, c) { c.ok(c.result.winnerPid === 0, 'P0 vence'); c.ok(inBH(g, W.S[1][0]), 'especial de P1 consumido'); } });
 
+  // ---------- redução de atributos do rival 131–134 ----------
+  const rd = (id, title, f1, attr, expectV, who, extra) => scn(id, title, Object.assign({ n: 2, flip: { 0: true }, attrs: { 0: attr, 1: attr }, world: { f: { 0: [50, 50, 50, 50], 1: f1 }, prep: { 0: [id] } },
+    check(g, W, c) { c.ok(c.result && c.result.winnerPid === who, `vencedor P${who}: ` + JSON.stringify(c.result)); c.ok(c.result && c.result.value === expectV, `valor ${expectV}, veio ${c.result && c.result.value}`); } }, extra || {}));
+  await rd('AE-131', 'rival perde 15 em tudo', [60, 60, 60, 60], 'pod', 50, 0);
+  await rd('AE-132', 'maior atributo do rival cai 25', [30, 40, 70, 30], 'int', 50, 0);
+  await rd('AE-133', 'todos os rivais perdem 8 no atributo usado', [55, 55, 55, 55], 'vel', 50, 0);
+  await scn('AE-134', 'reação: o rival perde 20 depois da revelação', { n: 2, flip: { 0: true }, attrs: { 0: 'pod', 1: 'pod' }, world: { f: { 0: [50, 50, 50, 50], 1: [65, 65, 65, 65] }, prep: { 0: ['AE-134'] } },
+    check(g, W, c) { c.ok(c.result && c.result.winnerPid === 0 && c.result.value === 50, 'P0 50 > P1 45: ' + JSON.stringify(c.result)); } });
+
+  await spec1('AE-135', '+12 pod', [40, 40, 40, 40], 'pod', 52); await spec1('AE-135', '+12 def', [40, 40, 40, 40], 'def', 52);
+  await spec1('AE-136', '+12 int', [40, 40, 40, 40], 'int', 52); await spec1('AE-136', '+12 vel', [40, 40, 40, 40], 'vel', 52);
+  for (const [id, a] of [['AE-137', 'pod'], ['AE-138', 'def'], ['AE-139', 'vel'], ['AE-140', 'int']]) await spec1(id, `+20 ${a}`, [40, 40, 40, 40], a, 60);
+  await rd('AE-141', 'rival perde 12 em Força e Inteligência', [60, 60, 60, 60], 'pod', 50, 0);
+  await spec1('AE-142', '+15 def', [40, 40, 40, 40], 'def', 55); await spec1('AE-142', '+15 vel', [40, 40, 40, 40], 'vel', 55);
   const all = Object.keys(E.SPECIALS).filter(k => !E.SPECIALS[k].stub); const miss = all.filter(k => !covered.has(k));
   if (!only) console.log('sem cenário:', miss.join(' ') || 'nenhum');
   console.log(`cenários ${total}, falhas ${fails}`);
