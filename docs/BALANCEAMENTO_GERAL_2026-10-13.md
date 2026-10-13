@@ -1,6 +1,6 @@
 # Balanceamento geral — 2026-10-13
 
-Status: **análise e propostas. Nenhum dado oficial (cartas_87.json, habilidades_129.json) foi alterado.** Aplicar só com "OK" do autor.
+Status: **A, B e C APLICADOS com autorização do autor em 13/10/2026** (ver seção "Aplicado" no fim). Análise original abaixo.
 
 Escopo: 97 cartas (Manu/D19 entrou depois e não foi simulada) × 78 habilidades. Scripts e dados brutos em `prototipo/tests/balanco/`.
 
@@ -41,3 +41,10 @@ Risco: a habilidade pode ter relação narrativa com o personagem; decisão do a
 - Rodar o otimizador em segundo plano e validar A e B no motor (sobrescrevendo `E.CARDS[id].stats` e `.especial`).
 - Simular com bot que use habilidades reativas.
 - Simular Manu (D19).
+
+## Aplicado (autorizado pelo autor, 13/10/2026)
+- **A. Trocas de habilidade** (6 pares): Hyde AE-032, Vek AE-115 · Agente Sete AE-031, Erla AE-130 · Mark Polar AE-037, Alyra AE-116 · Vivian AE-006, Kord AE-113 · X AE-039, Luna Stellar AE-093 · Lias Hardman AE-041, Diana AE-120.
+- **B. Teto de 95 por atributo.** Alterou 13 cartas (J17, V05, V10, V18, S04, S11, D12, M01, M02, M08, M11, M12, V20); soma e perfil recalculados. Hyde passou de Forte para Padrão. Validação: o efeito sobre a dispersão de força é pequeno (desvio-padrão da taxa de vitória 18,4 → 18,9; a força é relativa, então baixar picos isolados quase não muda o ranking). O teto vale como regra de design, não como correção de equilíbrio.
+- **C. Raridade visual (losangos) por poder** = soma + 16 × maior atributo (regressão sobre a força simulada: r ≈ 0,90; no motor, correlação 0,84 contra 0,58 da soma). Cortes: Lendária ≥ 1810 (11 cartas), Épica ≥ 1710 (21), Rara ≥ 1560 (32), Comum abaixo (34). Taxa de vitória média por raridade no motor: Lendária 75%, Épica 57%, Rara 45%, Comum 25%, agora monotônica. O rótulo "Perfil" (soma) segue como informação separada.
+- **Manu (D19)** aprovada pelo autor (atributos 28/44/78/52, AE-093). Faixa "PRÉVIA" removida do jogo (opção e selo).
+- Dados: `dados/oficial/cartas_87.json` (metadata `revisao_13_10_2026_balanceamento`).

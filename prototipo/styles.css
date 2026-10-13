@@ -294,8 +294,6 @@ button.rerollbot:active { transform: scale(.96); }
 .st.mod b { color: #7dffb0; }
 .st.modn b { color: #ff8a8a; }
 .card[data-attr="pod"] .st[data-a="pod"], .card[data-attr="def"] .st[data-a="def"], .card[data-attr="int"] .st[data-a="int"], .card[data-attr="vel"] .st[data-a="vel"] { border-color: var(--gold); background: linear-gradient(180deg, #5a3d0a, #1a1810); box-shadow: 0 0 .9em var(--gold); transform: translateY(-.35em) scale(1.12); }
-.face.front .teste { position: absolute; right: -2.6em; top: 3.6em; transform: rotate(40deg); background: #ff5a7a; color: #fff; font-size: .62em; font-weight: 900; letter-spacing: .1em; padding: .15em 3em; box-shadow: 0 .2em .5em #0008; }
-body.noteste .face.front .teste { display: none; }
 .rar-lendaria .face.front::after, .rar-epica .face.front::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 38%, #fff6 48%, #f1ecdc66 52%, transparent 62%); background-size: 250% 100%; animation: shine 9s ease-in-out infinite; mix-blend-mode: screen; }
 .rar-epica .face.front::after { animation-duration: 12s; opacity: .5; }
 .rar-lendaria .face.front { box-shadow: inset 0 0 0 .25em #f1ecdc, 0 0 1.4em #f1ecdc88; }

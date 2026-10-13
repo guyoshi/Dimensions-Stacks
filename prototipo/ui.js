@@ -23,11 +23,10 @@
   U.store = store;
 
   // ---------------------------------------------------------------- opções
-  const S = Object.assign({ master: .8, sfx: 1, music: .35, musicOn: true, speed: 'normal', showTest: true, reduce: false }, store.get('opts', {}));
+  const S = Object.assign({ master: .8, sfx: 1, music: .35, musicOn: true, speed: 'normal', reduce: false }, store.get('opts', {}));
   U.S = S;
   Object.defineProperty(S, 'k', { enumerable: false, get() { return { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; } });
   function applyOpts() {
-    document.body.classList.toggle('noteste', !S.showTest);
     document.body.classList.toggle('reduce', !!S.reduce);
     SND.vol.master = S.master; SND.vol.sfx = S.sfx; SND.vol.music = S.music; SND.musicOn = S.musicOn;
     if (SND.ctx) { SND.setVol('master', S.master); SND.setVol('sfx', S.sfx); SND.setVol('music', S.music); SND.setMusic(S.musicOn); }
@@ -92,7 +91,6 @@
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
         <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
-        ${c.provisorio ? '<div class="teste">PRÉVIA</div>' : ''}
       </div></div></div></div>`);
     node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1';
     if (c.uniao || c.raridade === 'lendaria') { node.dataset.aura = c.uniao ? 'rainbow' : 'gold'; node.append(uniSparks(id, c.uniao)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
@@ -342,7 +340,7 @@
       <li>As cartas são viradas. O <b>maior valor</b> no atributo escolhido vence.</li></ol>
       <h3>Ataque × Defesa</h3><ul><li><b>Ataque e Inteligência são ofensivos:</b> o vencedor leva as cartas dos perdedores para o fim do seu baralho.</li>
       <li><b>Defesa e Velocidade são defesa:</b> o vencedor só recupera a própria carta; as dos perdedores vão para o <b>Buraco Negro</b>, fora do jogo.</li></ul>
-      <h3>Raridade (losangos)</h3><p>Os losangos no pé da carta mostram a raridade: <b>◆ Comum</b> (fosca), <b>◆◆ Rara</b> (borda prateada), <b>◆◆◆ Épica</b> (borda dourada com reflexo holográfico) e <b>◆◆◆◆ Lendária</b> (moldura dourada ornamentada, losangos dourados). As cartas da <b>União</b> são únicas e fogem da regra: aura e moldura arco-íris. Ao virar uma Lendária ou da União, a mesa recebe um clarão e um som próprio.</p>
+      <h3>Raridade (losangos)</h3><p>Os losangos no pé da carta mostram a raridade: <b>◆ Comum</b> (fosca), <b>◆◆ Rara</b> (borda prateada), <b>◆◆◆ Épica</b> (borda dourada com reflexo holográfico) e <b>◆◆◆◆ Lendária</b> (moldura dourada ornamentada, losangos dourados). A raridade segue o poder real da carta (soma dos atributos mais o maior atributo, que pesa muito). As cartas da <b>União</b> são únicas e fogem da regra: aura e moldura arco-íris. Ao virar uma Lendária ou da União, a mesa recebe um clarão e um som próprio.</p>
       <h3>Empates</h3><p>Maior valor do atributo → maior soma dos 4 atributos → maior Ataque + Inteligência. Se ainda empatar, ninguém vence e as cartas voltam aos donos.</p>
       <h3>Habilidades especiais</h3><p>A partir da 2ª rodada, na hora de escolher o atributo você pode clicar em <b>Usar como especial</b>: a carta da mesa sai do combate e fica fechada ao seu lado (até 2 por vez), e a próxima do baralho entra no lugar. Depois que as cartas são reveladas, cada jogador decide em segredo se <b>vira</b> um especial (no máximo 1 por disputa, mais um especial <i>companheiro</i> quando houver); os virados são revelados juntos, resolvem em sentido horário (proteções e cancelamentos primeiro) e depois vão ao Buraco Negro. Os especiais de <b>controle</b> (Atributo universal, Par ofensivo, Ataque obrigatório…) são virados <i>antes</i> de declarar os atributos. Os especiais mudam números, roubam, trocam, espiam, protegem, cancelam…</p>
       <h3>Rodadas</h3><p>Uma rodada termina quando todos os jogadores vivos já iniciaram uma disputa.</p>
@@ -376,7 +374,6 @@
       <div class="optrow"><span>Dicas durante a partida</span><div class="seg" data-o="help"><button data-v="1" class="${S.help !== false ? 'on' : ''}">Ligadas</button><button data-v="0" class="${S.help === false ? 'on' : ''}">Desligadas</button></div></div>
       <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
       <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
-      <div class="optrow"><span>Faixa "PRÉVIA"</span><div class="seg" data-o="showTest"><button data-v="1" class="${S.showTest ? 'on' : ''}">Mostrar</button><button data-v="0" class="${!S.showTest ? 'on' : ''}">Ocultar</button></div></div>
       <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div></div>`);
     n.addEventListener('input', e => { const o = e.target.dataset.o; if (!o) return; S[o] = +e.target.value; applyOpts(); });
     n.addEventListener('click', e => {

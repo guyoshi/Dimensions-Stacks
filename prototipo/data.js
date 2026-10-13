@@ -25,6 +25,10 @@
   const PROP = root.DS_PROPOSTAS || null;
   // perfil proposto -> estilo visual da carta (efeito cosmético; raridade oficial ainda pendente)
   const PERFIL_ESTILO = { 'Elite': 'lendaria', 'Forte': 'epica', 'Padrão': 'rara', 'Modesta': 'comum', 'Frágil': 'comum', 'Azar': 'comum' };
+  // Raridade visual (autorizada em 13/10/2026): poder real = soma dos 4 atributos + 16 x maior atributo (o pico decide mais que a soma).
+  // Cortes: Lendária >= 1810 (~10%), Épica >= 1710 (~21%), Rara >= 1560 (~34%), Comum abaixo.
+  const poder = st => st[0] + st[1] + st[2] + st[3] + 16 * Math.max(st[0], st[1], st[2], st[3]);
+  const raridadePoder = st => { const p = poder(st); return p >= 1810 ? 'lendaria' : p >= 1710 ? 'epica' : p >= 1560 ? 'rara' : 'comum'; };
 
   const RARIDADES = {
     comum:    { nome: 'Comum' },
@@ -185,12 +189,12 @@
         proposta: !!pr && !pr.a,
         aprovada: !!(pr && pr.a),
         stats: { pod: st[0], def: st[1], int: st[2], vel: st[3] },
-        raridade: d.raridade || (pr ? PERFIL_ESTILO[pr.p] || 'comum' : g.raridade),
+        raridade: d.raridade || (pr ? raridadePoder(st) : g.raridade),
         especial: d.especial || (pr ? pr.e : g.especial),
         provisorio: !definitiva && !(pr && pr.a),
       };
     });
   }
 
-  root.DS_DATA = { SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: montarCartas(), HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
+  root.DS_DATA = { poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: montarCartas(), HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
 })(typeof window !== 'undefined' ? window : globalThis);

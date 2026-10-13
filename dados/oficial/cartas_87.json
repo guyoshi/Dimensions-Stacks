@@ -32,7 +32,8 @@
     "regras": "docs/REGRAS.md",
     "contrato": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
     "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta.",
-    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação). V24 Maria Santoro e V25 Eshley Damaris (Viajantes Dimensionais) também adicionadas a pedido do autor, com o mesmo status."
+    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação). V24 Maria Santoro e V25 Eshley Damaris (Viajantes Dimensionais) também adicionadas a pedido do autor, com o mesmo status.",
+    "revisao_13_10_2026_balanceamento": "Autorizado pelo autor em 13/10/2026 (ver docs/BALANCEAMENTO_GERAL_2026-10-13.md): (A) troca de habilidades entre 6 pares de cartas (Hyde/Vek, Agente Sete/Erla, Mark Polar/Alyra, Vivian/Kord, X/Luna Stellar, Lias Hardman/Diana); (B) teto de 95 por atributo; (C) raridade visual (losangos) pelo poder = soma + 16 x maior atributo. Atributos e perfis recalculados onde o teto alterou a soma."
   },
   "cartas": [
     {
@@ -99,7 +100,7 @@
       },
       "soma_atributos": 310,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-116",
+      "habilidade_especial_id": "AE-037",
       "uniao": "INTEGRANTE",
       "base_narrativa": {
         "fonte": "J1/J3/J4",
@@ -243,7 +244,7 @@
       },
       "soma_atributos": 274,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-037",
+      "habilidade_especial_id": "AE-116",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J2",
@@ -430,10 +431,10 @@
       "atributos": {
         "ATQ": 29,
         "DEF": 43,
-        "INT": 96,
+        "INT": 95,
         "VEL": 52
       },
-      "soma_atributos": 220,
+      "soma_atributos": 219,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-117",
       "uniao": "NAO",
@@ -694,10 +695,10 @@
       "atributos": {
         "ATQ": 62,
         "DEF": 83,
-        "INT": 96,
+        "INT": 95,
         "VEL": 39
       },
-      "soma_atributos": 280,
+      "soma_atributos": 279,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-008",
       "uniao": "NAO",
@@ -723,7 +724,7 @@
       },
       "soma_atributos": 313,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-031",
+      "habilidade_especial_id": "AE-130",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V",
@@ -812,12 +813,12 @@
       },
       "descricao_curta": "Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites.",
       "atributos": {
-        "ATQ": 98,
+        "ATQ": 95,
         "DEF": 79,
         "INT": 94,
         "VEL": 72
       },
-      "soma_atributos": 343,
+      "soma_atributos": 340,
       "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-087",
       "uniao": "NAO",
@@ -1005,11 +1006,11 @@
       "descricao_curta": "Líder dos Obbs de Pinesoto, ergue raízes e troncos vivos para proteger seu povo dos invasores.",
       "atributos": {
         "ATQ": 80,
-        "DEF": 99,
+        "DEF": 95,
         "INT": 89,
         "VEL": 34
       },
-      "soma_atributos": 302,
+      "soma_atributos": 298,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-103",
       "uniao": "NAO",
@@ -1126,12 +1127,12 @@
       "atributos": {
         "ATQ": 18,
         "DEF": 41,
-        "INT": 96,
+        "INT": 95,
         "VEL": 30
       },
-      "soma_atributos": 185,
+      "soma_atributos": 184,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-120",
+      "habilidade_especial_id": "AE-041",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-misto",
@@ -1155,7 +1156,7 @@
       },
       "soma_atributos": 261,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-006",
+      "habilidade_especial_id": "AE-113",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-misto",
@@ -1227,7 +1228,7 @@
       },
       "soma_atributos": 307,
       "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-113",
+      "habilidade_especial_id": "AE-006",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S",
@@ -1292,12 +1293,12 @@
       },
       "descricao_curta": "Criatura despertada na Aurora, alvo da obsessão de Jelles e ameaça envolta em mistério.",
       "atributos": {
-        "ATQ": 100,
-        "DEF": 100,
+        "ATQ": 95,
+        "DEF": 95,
         "INT": 22,
         "VEL": 32
       },
-      "soma_atributos": 254,
+      "soma_atributos": 244,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-068",
       "uniao": "NAO",
@@ -1323,7 +1324,7 @@
       },
       "soma_atributos": 266,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-032",
+      "habilidade_especial_id": "AE-115",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-misto",
@@ -1662,12 +1663,12 @@
       },
       "descricao_curta": "Entidade manipuladora, Agouro se alimenta do sofrimento e influencia os vivos e os espíritos.",
       "atributos": {
-        "ATQ": 97,
+        "ATQ": 95,
         "DEF": 87,
         "INT": 92,
         "VEL": 70
       },
-      "soma_atributos": 346,
+      "soma_atributos": 344,
       "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-081",
       "uniao": "NAO",
@@ -1838,12 +1839,12 @@
       "atributos": {
         "ATQ": 53,
         "DEF": 58,
-        "INT": 100,
+        "INT": 95,
         "VEL": 76
       },
-      "soma_atributos": 287,
-      "perfil_balanceamento": "Forte",
-      "habilidade_especial_id": "AE-115",
+      "soma_atributos": 282,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-032",
       "uniao": "INTEGRANTE",
       "base_narrativa": {
         "fonte": "M",
@@ -1861,13 +1862,13 @@
       "descricao_curta": "Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais.",
       "atributos": {
         "ATQ": 83,
-        "DEF": 96,
+        "DEF": 95,
         "INT": 90,
         "VEL": 80
       },
-      "soma_atributos": 349,
+      "soma_atributos": 348,
       "perfil_balanceamento": "Elite",
-      "habilidade_especial_id": "AE-130",
+      "habilidade_especial_id": "AE-031",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -1891,7 +1892,7 @@
       },
       "soma_atributos": 199,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-041",
+      "habilidade_especial_id": "AE-120",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -2006,10 +2007,10 @@
       "atributos": {
         "ATQ": 19,
         "DEF": 32,
-        "INT": 96,
+        "INT": 95,
         "VEL": 39
       },
-      "soma_atributos": 186,
+      "soma_atributos": 185,
       "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-028",
       "uniao": "NAO",
@@ -2078,12 +2079,12 @@
       "atributos": {
         "ATQ": 8,
         "DEF": 19,
-        "INT": 99,
+        "INT": 95,
         "VEL": 45
       },
-      "soma_atributos": 171,
+      "soma_atributos": 167,
       "perfil_balanceamento": "Frágil",
-      "habilidade_especial_id": "AE-093",
+      "habilidade_especial_id": "AE-039",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "M",
@@ -2102,10 +2103,10 @@
       "atributos": {
         "ATQ": 75,
         "DEF": 62,
-        "INT": 96,
+        "INT": 95,
         "VEL": 51
       },
-      "soma_atributos": 284,
+      "soma_atributos": 283,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-086",
       "uniao": "NAO",
@@ -2151,10 +2152,10 @@
       "atributos": {
         "ATQ": 82,
         "DEF": 78,
-        "INT": 96,
+        "INT": 95,
         "VEL": 78
       },
-      "soma_atributos": 334,
+      "soma_atributos": 333,
       "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-111",
       "uniao": "NAO",
@@ -2356,7 +2357,7 @@
       },
       "soma_atributos": 255,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-039",
+      "habilidade_especial_id": "AE-093",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "S-manuscrito",
@@ -2412,8 +2413,8 @@
         "fonte": "D2",
         "confianca": "Alta"
       },
-      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Sem sobrenome na carta (o parentesco com Filipo só deve ser deduzido perto do fim do Livro 2). Descrição sem os segredos da trama; atributos e especial propostos pela IA (AE-093 Espionagem tripla combina com as visões de Manu), aguardando aprovação."
+      "status": "APROVADA_PELO_AUTOR",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor; atributos e especial (AE-093) confirmados pelo autor em 13/10/2026. Sem sobrenome na carta (o parentesco com Filipo só deve ser deduzido perto do fim do Livro 2). Descrição sem os segredos da trama."
     }
   ]
 }
