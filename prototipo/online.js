@@ -187,7 +187,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   const remember = code => { try { store.set('lastRoom', { code, t: Date.now() }); } catch (e) { } };
   function lobbyHost(link, code, name) {
     remember(code);
-    sess = { link, role: 'host', code, name, join: [], unsub: [], cfg: Object.assign({ n: 2, per: 12, diff: 'normal' }, store.get('onlineCfg', {}), { sf: window.__dsSf === 1 ? 1 : 2 }) };
+    sess = { link, role: 'host', code, name, join: [], unsub: [], cfg: Object.assign({ n: 2, per: 12, diff: 'normal', bd: ['normal', 'normal', 'normal'] }, store.get('onlineCfg', {}), { sf: window.__dsSf === 1 ? 1 : 2 }) };
     link.presence({ n: name, u: myUid(), h: 1, v: VER, cfg: sess.cfg });
     sess.unsub.push(link.onPeers(() => renderLobby()));
     U.show('online'); renderLobby();
@@ -206,7 +206,8 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
 
   function renderLobby() {
     if (!sess) return; const s = section(), isHost = sess.role === 'host';
-    const hum = humansOrdered(); const cfg = sess.cfg || (hum[0] && hum[0].presence.cfg) || { n: 2, per: 12, diff: 'normal', sf: 2 };
+    const hum = humansOrdered(); const cfg = sess.cfg || (hum[0] && hum[0].presence.cfg) || { n: 2, per: 12, diff: 'normal', bd: ['normal', 'normal', 'normal'], sf: 2 };
+    const bdOf = k => ((cfg.bd || [])[k]) || cfg.diff || 'normal'; const DF = [['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']];
     const N = Math.max(cfg.n || 2, Math.min(4, hum.length));
     const slots = []; for (let i = 0; i < N; i++) slots.push(hum[i] || null);
     const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N));
@@ -217,15 +218,13 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       <div class="row" style="margin-bottom:6px"><button class="btn sm" data-a="copy">📋 Copiar código</button><span class="hint">${sess.link.mode === 'local' ? 'modo local (mesmo navegador)' : 'passe este código para quem vai jogar'}</span></div>
       <div class="lbl">Jogadores (${hum.length} humano${hum.length === 1 ? '' : 's'})</div>
       <div class="seats">${slots.map((p, i) => `<div class="seatcfg onseat"><div class="avatar" style="--pc:${PCOL[i]}">${p ? esc((p.presence.n || '?')[0].toUpperCase()) : '🤖'}</div>
-        <div class="onnm"><b>${p ? esc(p.presence.n) : 'Bot'}</b>${p && p.presence.u ? ` <small class="uid">${esc(p.presence.u)}</small>` : ''}${p ? (p.presence.h ? ' <span class="pill">anfitrião</span>' : '') + (p.sameTab ? ' <span class="pill me">você</span>' : '') : ' <span class="hint">completa a vaga</span>'}</div><span></span></div>`).join('')}</div>
+        <div class="onnm"><b>${p ? esc(p.presence.n) : 'Bot'}</b>${p && p.presence.u ? ` <small class="uid">${esc(p.presence.u)}</small>` : ''}${p ? (p.presence.h ? ' <span class="pill">anfitrião</span>' : '') + (p.sameTab ? ' <span class="pill me">você</span>' : '') : ' <span class="hint">completa a vaga</span>'}</div>${p ? '<span></span>' : isHost ? `<div class="seg sm" data-k="bd" data-i="${i - hum.length}">${DF.map(([v, t]) => `<button data-v="${v}" class="${bdOf(i - hum.length) === v ? 'on' : ''}">${t}</button>`).join('')}</div>` : `<span class="pill">${(DF.find(x => x[0] === bdOf(i - hum.length)) || DF[1])[1]}</span>`}</div>`).join('')}</div>
       ${isHost ? `<div class="lbl">Lugares na mesa</div>
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${N === n ? 'on' : ''}" ${hum.length > n ? 'disabled' : ''}>${n}</button>`).join('')}</div>
-      <div class="hint">Vagas sem humano são preenchidas por bots.</div>
-      <div class="lbl">Dificuldade dos bots</div>
-      <div class="seg" data-k="diff">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${cfg.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>
+      <div class="hint">Vagas sem humano são preenchidas por bots; escolha a dificuldade de cada um na lista acima.</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${per}" id="per">`
-        : `<div class="onwait">${sess.rejoining ? 'Voltando para a partida em andamento…' : 'Aguardando o anfitrião iniciar a partida…'}</div><div class="hint">Mesa de ${N} · bots ${({ facil: 'fáceis', normal: 'normais', dificil: 'difíceis' })[cfg.diff] || 'normais'} · ${per} cartas por jogador</div>`}
+        : `<div class="onwait">${sess.rejoining ? 'Voltando para a partida em andamento…' : 'Aguardando o anfitrião iniciar a partida…'}</div><div class="hint">Mesa de ${N} · ${per} cartas por jogador</div>`}
       <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-a="leave">← Sair da sala</button>${isHost ? `<button class="btn primary" data-a="start" ${canStart ? '' : 'disabled'}>Começar ▶</button>` : ''}</div>
     </div></div>`;
     s.onclick = async e => {
@@ -235,7 +234,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       if (a === 'copy') { try { await navigator.clipboard.writeText(sess.code); b.textContent = '✔ Copiado'; } catch (er) { b.textContent = sess.code; } return; }
       if (a === 'start') return start();
       const seg = b.closest('.seg'); if (seg && isHost) {
-        const k = seg.dataset.k, v = b.dataset.v; sess.cfg[k] = k === 'diff' ? v : +v; store.set('onlineCfg', sess.cfg);
+        const k = seg.dataset.k, v = b.dataset.v; if (k === 'bd') { const bd = (sess.cfg.bd || ['normal', 'normal', 'normal']).slice(); bd[+b.closest('.seg').dataset.i] = v; sess.cfg.bd = bd; } else sess.cfg[k] = +v; store.set('onlineCfg', sess.cfg);
         sess.link.presence({ cfg: sess.cfg }); renderLobby();
       }
     };
@@ -246,7 +245,8 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   function seatsFor(hum, N) {
     const used = []; const uniq = n => { let x = n || 'Jogador', k = 2; while (used.includes(x)) x = (n || 'Jogador') + ' ' + (k++); used.push(x); return x; };
     const seats = hum.map(p => ({ name: uniq(p.presence.n), bot: false, peer: p.peer, u: p.presence.u || '' }));
-    while (seats.length < N) seats.push({ name: uniq(U.randBot(used)), bot: true, peer: null });
+    const bd = (sess && sess.cfg && sess.cfg.bd) || []; let k = 0;
+    while (seats.length < N) seats.push({ name: uniq(U.randBot(used)), bot: true, peer: null, diff: bd[k++] || 'normal' });
     return seats;
   }
   async function start(again) {
@@ -269,7 +269,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       leave: () => leaveRoom(true),
       again: sess.role === 'host' ? () => {
         const present = new Set(link.peers().map(p => p.peer));
-        const seats = go.seats.map(s => s.peer && !present.has(s.peer) ? { name: s.name, bot: true, peer: null } : s);
+        const seats = go.seats.map(s => s.peer && !present.has(s.peer) ? { name: s.name, bot: true, peer: null, diff: 'normal' } : s);
         sess.lastSeats = seats; start(seats);
       } : null,
     };

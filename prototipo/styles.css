@@ -919,3 +919,8 @@ select option:checked { background-color: #3a4256; color: #fff; }
   .wm::after { animation-duration: 8s; }
   .fc { will-change: auto; }
 }
+
+/* dificuldade individual de cada bot */
+.seatdiff { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.seg.sm button { min-height: 30px; padding: .3em .7em; font-size: .85em; }
+.onseat .seg.sm { grid-column: auto; }

@@ -709,7 +709,7 @@
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
-    newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: cfg.difficulty, per: cfg.perPlayer, sf: cfg.specialsFrom, shared: true });
+    newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, shared: true });
     G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
@@ -725,13 +725,15 @@
   }
   U.plain = plain;
 
+  // dificuldade registrada: a comum a todos os bots; se forem mistas, 'misto' (não conta para a conquista de nível Difícil)
+  const recDiff = (list, dflt) => { const d = [...new Set((list || []).filter(p => p.bot).map(p => p.diff || dflt || 'normal'))]; return d.length === 1 ? d[0] : d.length ? 'misto' : (dflt || 'normal'); };
   U.startOnline = async function (ctl) {
     lastCfg = null; SND.init(); U.killRun(); U.newRun(); U.onlineOff && U.onlineOff(); $$('#layer > *').forEach(x => x.remove());
     if (!FX.cv) FX.init();
     const seats = ctl.seats, host = ctl.role === 'host', link = ctl.link, cfg = ctl.cfg;
     V = { n: seats.length, humans: 1, online: true, ctl, viewer: ctl.viewer, noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
-    newRec({ viewer: ctl.viewer, online: true, humans: seats.filter(s => !s.bot).length, n: seats.length, diff: cfg.diff, per: cfg.per, sf: cfg.sf, shared: host });
+    newRec({ viewer: ctl.viewer, online: true, humans: seats.filter(s => !s.bot).length, n: seats.length, diff: recDiff(seats, cfg.diff), per: cfg.per, sf: cfg.sf, shared: host });
     const local = makeIO(), off = [], pending = new Map(); let seq = 0, closed = false;
     U.onlineOff = () => { closed = true; off.forEach(f => { try { f(); } catch (e) { } }); pending.forEach(q => q.finish(undefined)); pending.clear(); };
     const send = (o, to) => { if (!closed) link.send('ev', o, to).catch(() => { }); };
@@ -783,7 +785,7 @@
         pickAttr: wrap('pickAttr', (p, spec) => [plain(spec)]),
         chooseTarget: wrap('chooseTarget', (p, cands, label) => [cands, label]),
       };
-      const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i }));
+      const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i, diff: s.bot ? s.diff : undefined }));
       G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, seed: cfg.seed, io });
       U.game = G;
       // queda de conexão: carência de 25 s (reconexões rápidas são normais); depois um CPU assume, com aviso na tela. O jogador pode voltar ao lugar.

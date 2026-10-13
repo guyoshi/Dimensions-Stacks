@@ -268,6 +268,7 @@
   U.randBot = randBot;
   U.rerollBotNames = function (players) { const used = players.filter(p => !p.bot).map(p => p.name); players.forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); return players; };
   function rollBots(seats, n) { const used = seats.slice(0, n).filter(p => !(p.bot && isAutoName(p.name))).map(p => p.name); seats.slice(0, n).forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
+  const seatDiff = p => (p && p.diff) || 'normal';   // dificuldade individual de cada bot
   function setup() {
     const s = $('#setup');
     CFG.seats.forEach((p, i) => { if (i > 0 && !p.bot) { p.bot = true; p.name = 'Bot'; } });
@@ -282,9 +283,8 @@
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
       <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
         <span class="seatname" data-i="${i}">${esc(p.name)}</span>
-        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para o bot">🎲 Sortear</button>`}</div>`).join('')}</div>
-      <div class="lbl">Dificuldade dos bots</div>
-      <div class="seg" data-k="diff">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${CFG.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>
+        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para o bot">🎲 Sortear</button>`}
+        ${p.bot ? `<div class="seatdiff"><span class="hint">Dificuldade</span><div class="seg sm" data-k="sd" data-i="${i}">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${seatDiff(p) === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>` : ''}</div>`).join('')}</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">
       <div class="hint">7 formam o baralho ativo; o restante vai para a reserva. Mais cartas = partida mais longa.<br>Para jogar contra outras pessoas, cada uma no seu aparelho, use <b>Multiplayer</b> no Início.</div>
@@ -305,13 +305,13 @@
       }
       if (seg) {
         const k = seg.dataset.k, v = b.dataset.v;
-        if (k === 'n') CFG.n = +v; else if (k === 'diff') CFG.diff = v; else if (k === 'sf') CFG.sf = +v;
+        if (k === 'n') CFG.n = +v; else if (k === 'sd') CFG.seats[+seg.dataset.i].diff = v; else if (k === 'sf') CFG.sf = +v;
         else if (k === 'bot') { const i = +seg.dataset.i; CFG.seats[i].bot = v === '1'; if (CFG.seats[i].bot && !isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Bot'; if (!CFG.seats[i].bot && isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Jogador ' + (i + 1); }
         store.set('cfg', CFG); return setup();
       }
       if (b.dataset.act === 'back') U.show('menu');
       if (b.dataset.act === 'go') {
-        const players = CFG.seats.slice(0, CFG.n).map((p, i) => ({ name: (p.name || '').trim() || (p.bot ? randBot([]) : 'Jogador ' + (i + 1)), bot: !!p.bot, avatar: i }));
+        const players = CFG.seats.slice(0, CFG.n).map((p, i) => ({ name: (p.name || '').trim() || (p.bot ? randBot([]) : 'Jogador ' + (i + 1)), bot: !!p.bot, avatar: i, diff: p.bot ? seatDiff(p) : undefined }));
         store.set('cfg', CFG); U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2 });
       }
     };
@@ -324,7 +324,7 @@
   U.openSetup = function () { if (CFG.seats[0] && !CFG.seats[0].bot && (CFG.seats[0].name === 'Você' || !CFG.seats[0].name) && U.profileName()) CFG.seats[0].name = U.profileName(); rollBots(CFG.seats, CFG.n); setup(); U.show('setup'); };
   U.quick = function () {
     SND.init(); const me = U.profileName() || 'Você';
-    const players = [{ name: me, bot: false, avatar: 0 }, { name: randBot([me]), bot: true, avatar: 1 }];
+    const players = [{ name: me, bot: false, avatar: 0 }, { name: randBot([me]), bot: true, avatar: 1, diff: CFG.diff || 'normal' }];
     U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2 });
   };
 
