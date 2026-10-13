@@ -61,6 +61,8 @@
     }).join('');
   }
   // brilhinhos dourados ao redor das cartas de A União (posições fixas por carta; o CSS os mostra só com a carta virada)
+  // enquadramento vertical da arte (0 = topo da foto, 100 = base): cartas cujo personagem fica baixo na foto
+  const FOCO = { V16: 100, V19: 100 };
   function uniSparks(id, rainbow) {
     const r = DS_DATA.rng(DS_DATA.hash('uni' + id)), box = el('<div class="usp" aria-hidden="true"></div>');
     for (let i = 0; i < 26; i++) {
@@ -80,7 +82,7 @@
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
-    const art = IMG[id] ? `<div class="art" style="--im:url('${IMG[id]}')"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"></div>`
+    const art = IMG[id] ? `<div class="art" style="--im:url('${IMG[id]}')"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"${FOCO[id] != null ? ' style="object-position:50% ' + FOCO[id] + '%"' : ''}></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
