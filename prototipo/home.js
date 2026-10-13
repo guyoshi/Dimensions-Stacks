@@ -18,13 +18,7 @@
       <circle cx="60" cy="60" r="56" fill="url(#lg${i})"/>
       <g class="ring"><circle cx="60" cy="60" r="54" fill="none" stroke="url(#lr${i})" stroke-width="3" stroke-linecap="round" stroke-dasharray="250 90"/></g>
       <g class="ring2"><circle cx="60" cy="60" r="47" fill="none" stroke="#f6f1e2" stroke-opacity=".5" stroke-width="1" stroke-dasharray="1.5 7" stroke-linecap="round"/></g>
-      <g transform="translate(60 63)">
-        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#14161b" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(-20) translate(-8 0)" opacity=".85"/>
-        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#191c22" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(20) translate(8 0)" opacity=".92"/>
-        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#1d2027" stroke="url(#lm${i})" stroke-width="1.8"/>
-        <path d="M0 -10 L5 0 L0 10 L-5 0 Z" fill="none" stroke="#7fdcff" stroke-width="1.4"/>
-        <circle cx="0" cy="0" r="1.6" fill="#f6f1e2"/>
-      </g></svg>`;
+      <image href="selo.png" x="30.5" y="22" width="59" height="76" preserveAspectRatio="xMidYMid meet"/></svg>`;
   };
   const wordmark = () => `<b class="wm" data-t="Dimensions Stacks">Dimensions Stacks</b>`;
 
