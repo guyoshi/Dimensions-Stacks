@@ -5,11 +5,11 @@
     "status": "APROVADO_PELO_AUTOR",
     "data_aprovacao": "2026-10-12",
     "idioma": "pt-BR",
-    "total_cartas": 91,
+    "total_cartas": 95,
     "origens": {
       "J": 23,
       "V": 23,
-      "S": 14,
+      "S": 18,
       "D": 18,
       "M": 12,
       "B": 1
@@ -32,7 +32,7 @@
     "regras": "docs/REGRAS.md",
     "contrato": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
     "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta.",
-    "revisao_13_10_2026_novas_cartas": "V20–V23 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação)."
+    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação)."
   },
   "cartas": [
     {
@@ -2222,6 +2222,106 @@
       },
       "status": "PROPOSTA_AGUARDANDO_APROVACAO",
       "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outras cartas com o mesmo especial), aguardando aprovação."
+    },
+    {
+      "id": "S15",
+      "nome": "Tersário",
+      "origem": {
+        "codigo_serie": "S",
+        "cor_base": "preta"
+      },
+      "descricao_curta": "Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan.",
+      "atributos": {
+        "ATQ": 82,
+        "DEF": 55,
+        "INT": 18,
+        "VEL": 72
+      },
+      "soma_atributos": 227,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-067",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "S-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito de A Lenda da Aurora; atributos e especial propostos pela IA (soma alinhada à de cartas com o mesmo especial), aguardando aprovação. Sem foto ainda."
+    },
+    {
+      "id": "S16",
+      "nome": "A Engenheira",
+      "origem": {
+        "codigo_serie": "S",
+        "cor_base": "preta"
+      },
+      "descricao_curta": "Cientista mística de biotecnologia que revive Jasmey e lhe dá um braço novo; diz não interferir, mas interfere.",
+      "atributos": {
+        "ATQ": 20,
+        "DEF": 38,
+        "INT": 80,
+        "VEL": 31
+      },
+      "soma_atributos": 169,
+      "perfil_balanceamento": "Azar",
+      "habilidade_especial_id": "AE-085",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "S-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito de A Lenda da Aurora; atributos e especial propostos pela IA (soma alinhada à de cartas com o mesmo especial), aguardando aprovação. Sem foto ainda."
+    },
+    {
+      "id": "S17",
+      "nome": "Luna Stellar",
+      "origem": {
+        "codigo_serie": "S",
+        "cor_base": "preta"
+      },
+      "descricao_curta": "Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo.",
+      "atributos": {
+        "ATQ": 38,
+        "DEF": 52,
+        "INT": 85,
+        "VEL": 80
+      },
+      "soma_atributos": 255,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-039",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "S-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito de A Lenda da Aurora; atributos e especial propostos pela IA (soma alinhada à de cartas com o mesmo especial), aguardando aprovação. Sem foto ainda."
+    },
+    {
+      "id": "S18",
+      "nome": "Alekta",
+      "origem": {
+        "codigo_serie": "S",
+        "cor_base": "preta"
+      },
+      "descricao_curta": "Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto.",
+      "atributos": {
+        "ATQ": 84,
+        "DEF": 70,
+        "INT": 68,
+        "VEL": 88
+      },
+      "soma_atributos": 310,
+      "perfil_balanceamento": "Forte",
+      "habilidade_especial_id": "AE-116",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "S-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito de A Lenda da Aurora; atributos e especial propostos pela IA (soma alinhada à de cartas com o mesmo especial), aguardando aprovação. Sem foto ainda."
     }
   ]
 }

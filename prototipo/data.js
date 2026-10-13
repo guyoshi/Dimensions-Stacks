@@ -99,6 +99,10 @@
     ['S12', 'Vek', 'spacetheft', 'Pirata, companheiro ligado à Saezi'],
     ['S13', 'Capitão Tzough', 'spacetheft', 'Capitão pirata rival'],
     ['S14', 'Genrir', 'spacetheft', 'Rival de Jasmey'],
+    ['S15', 'Tersário', 'spacetheft', 'Predador cósmico solto na doca da Lebargan'],
+    ['S16', 'A Engenheira', 'spacetheft', 'Cientista de biotecnologia que revive Jasmey'],
+    ['S17', 'Luna Stellar', 'spacetheft', 'Sedutora ambígua que rouba a nave de Jasmey'],
+    ['S18', 'Alekta', 'spacetheft', 'Pirata feroz da Fera Sideral'],
     // Diário Sobrenatural
     ['D01', 'Junior', 'diario', 'Escritor e organizador futuro dos relatos'],
     ['D02', 'Priscila', 'diario', 'Irmã de Kelly e protagonista'],

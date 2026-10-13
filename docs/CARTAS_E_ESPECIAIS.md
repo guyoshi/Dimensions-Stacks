@@ -1,4 +1,4 @@
-# Dimensions Stacks — Cartas e Habilidades Especiais (91 cartas)
+# Dimensions Stacks — Cartas e Habilidades Especiais (95 cartas)
 
 > Lista de todas as cartas com **número (ID)**, **nome**, **descrição** e **habilidade especial** (forma curta: **especial**). Gerada a partir de `dados/oficial/cartas_87.json` e `dados/oficial/habilidades_129.json`; para atualizar: `python3 prototipo/tools/gerar_lista_cartas.py`.
 
@@ -97,6 +97,10 @@
 | V21 | Shirley Ainsworth 🆕 | Viajantes Dimensionais | Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo. | 48 | 60 | 70 | 75 | 253 | **AE-076** — Guardião do baralho | Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa. |
 | V22 | Nicolas Corvane 🆕 | Viajantes Dimensionais | Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo. | 60 | 72 | 64 | 53 | 249 | **AE-028** — Proibir o ataque rival | Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa. |
 | V23 | Erick Corvane 🆕 | Viajantes Dimensionais | Gêmeo de Nicolas e aprendiz de McCroys; competitivo e provocador, lança chamas, mas recusa Korvo. | 76 | 28 | 40 | 59 | 203 | **AE-106** — Ataque que bane | Se vencer usando Ataque ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro. |
+| S15 | Tersário 🆕 | Spacetheft | Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan. | 82 | 55 | 18 | 72 | 227 | **AE-067** — Descarte adversário | Cada adversário ativo envia 1 carta aleatória de seu baralho ativo ao Buraco Negro; você não descarta outra carta além da especial. |
+| S16 | A Engenheira 🆕 | Spacetheft | Cientista mística de biotecnologia que revive Jasmey e lhe dá um braço novo; diz não interferir, mas interfere. | 20 | 38 | 80 | 31 | 169 | **AE-085** — Resgate escolhido | Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo. |
+| S17 | Luna Stellar 🆕 | Spacetheft | Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo. | 38 | 52 | 85 | 80 | 255 | **AE-039** — Saque revelado | Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem. |
+| S18 | Alekta 🆕 | Spacetheft | Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto. | 84 | 70 | 68 | 88 | 310 | **AE-116** — Apropriar especial usado | Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. |
 
 ⭐ = integrante da União (especial original mantido). 🆕 = carta proposta, aguardando aprovação do autor (aparece com a faixa PRÉVIA no jogo).
 
