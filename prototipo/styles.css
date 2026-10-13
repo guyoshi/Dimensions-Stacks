@@ -734,3 +734,40 @@ button, .playbig, .daily, [data-act], [data-go], [data-tab], [data-top] { -webki
 
 .invsteps { margin: 8px 0 14px; padding-left: 1.3em; display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.45; color: var(--ink); text-align: left; }
 .invsteps li::marker { color: var(--gold); font-weight: 900; }
+
+/* coleção: busca e ordenação */
+.cfilter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.cfilter input, .cfilter select { background: #ffffff0d; border: 1px solid #ffffff22; color: var(--ink); border-radius: 12px; padding: .5em .8em; font: inherit; font-size: 14px; min-height: 40px; min-width: 0; }
+.cfilter input { flex: 1 1 200px; } .cfilter select { flex: 0 1 180px; }
+.cfilter input:focus, .cfilter select:focus { outline: 2px solid var(--nexus); outline-offset: 1px; }
+#cattr { margin-top: 6px; align-items: center; } #ccount { margin: 8px 0 4px; min-height: 1em; }
+
+/* Ver cálculo */
+.calcpill { position: absolute; right: 10px; bottom: 54px; z-index: 35; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: #15171cf0; color: var(--gold2); font: 800 13px var(--f-body); cursor: pointer; box-shadow: 0 4px 14px #000a; animation: ban2 .4s ease both; }
+.calcpill:hover { border-color: var(--nexus); }
+@keyframes ban2 { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.calc { display: flex; flex-direction: column; gap: 12px; min-width: min(420px, 82vw); }
+.crows { display: flex; flex-wrap: wrap; gap: 10px; }
+.crow { flex: 1 1 170px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg2); display: flex; flex-direction: column; gap: 4px; }
+.crow.win { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.crow.gone { opacity: .6; }
+.crow h4 { margin: 0 0 4px; display: flex; flex-direction: column; font-size: 14px; } .crow h4 em { font-style: normal; font-size: 12px; color: var(--ink2); }
+.cl { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; } .cl i { color: var(--ink2); font-style: normal; font-size: 11px; }
+.cl.up b { color: #7dffb0; } .cl.dn b { color: #ff8a8a; }
+.cl.tot { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 4px; font-weight: 800; font-size: 15px; font-variant-numeric: tabular-nums; }
+.ctb, .cacts { margin: 0; font-size: 12.5px; color: var(--ink2); } .cacts .x { text-decoration: line-through; color: #ff8a8a; margin-right: 6px; }
+.cwhy { margin: 0; font-size: 14px; line-height: 1.45; padding: 10px; border-left: 3px solid var(--gold); background: #ffffff0d; border-radius: 4px; }
+.cfx { font-size: 12.5px; color: var(--ink2); } .cfx summary { cursor: pointer; } .cfx p { margin: 3px 0 0; }
+
+/* Maestria por carta */
+.memb { position: absolute; left: 3px; bottom: 3px; z-index: 6; line-height: 0; filter: drop-shadow(0 1px 3px #000c); pointer-events: none; }
+.memp { display: inline-block; width: 30px; height: 30px; border-radius: 50%; border: 1.5px dashed var(--line); flex: none; }
+.mast { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #ffffff08; }
+.mast .mh { display: flex; align-items: center; gap: 10px; } .mast .mh > div { display: flex; flex-direction: column; } .mast .mh svg { flex: none; }
+.mast .bar { height: 6px; border-radius: 99px; background: #ffffff1a; overflow: hidden; } .mast .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--nexus), var(--nexus2)); }
+.mastsec { display: flex; flex-direction: column; gap: 10px; }
+.mlegend { display: flex; flex-wrap: wrap; gap: 8px; } .mlegend span { display: flex; align-items: center; gap: 6px; padding: 5px 10px 5px 6px; border: 1px solid var(--line); border-radius: 99px; font-size: 12px; } .mlegend small { color: var(--ink2); }
+.mtop { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.mrow { display: flex; align-items: center; gap: 10px; text-align: left; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg2); color: var(--ink); cursor: pointer; font-family: inherit; min-width: 0; }
+.mrow:hover { border-color: var(--nexus); } .mrow .mn { display: flex; flex-direction: column; min-width: 0; } .mrow small { color: var(--ink2); font-size: 11.5px; }
+.unlocks .u.mu svg { color: inherit; width: 20px; height: 20px; }

@@ -209,7 +209,7 @@
     nextAlive(pid) { const n = this.s.players.length; for (let k = 1; k <= n; k++) { const x = (pid + k) % n; if (this.p(x).alive) return x; } return pid; }
     prevAlive(pid) { const n = this.s.players.length; for (let k = 1; k <= n; k++) { const x = (pid - k + n * 2) % n; if (this.p(x).alive) return x; } return pid; }
     async emit(type, data) { if (type === 'steal' || type === 'discard' || type === 'reorder' || type === 'extra' || type === 'swapCard') this.memTouch(data || {}, type); if (this.io.notify) await this.io.notify(type, data || {}); }
-    log(text, cls) { this.logs.push({ text, cls: cls || '' }); if (this.io.log) this.io.log(text, cls || ''); }
+    log(text, cls) { if (cls === 'efeito' && this.combat) (this.combat.fx = this.combat.fx || []).push(text); this.logs.push({ text, cls: cls || '' }); if (this.io.log) this.io.log(text, cls || ''); }
     totalCards(p) { return p.deck.length + p.reserve.length + p.prepared.length; }
 
     async setup() {
@@ -650,7 +650,24 @@
         this.log(`${this.p(w.pid).name} vence ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit');
       }
       combat.result = result; combat.moves = moves; this.memResolved(moves);
-      await this.emit('resolved', { combat, result, moves });
+      let calc = null; try { calc = this.calcSummary(combat, ev, result); } catch (err) { calc = null; }
+      await this.emit('resolved', { combat, result, moves, calc });
+    }
+    // resumo público da disputa (para "Ver cálculo"): valores, bônus por origem, anulações e desempate
+    calcSummary(combat, ev, result) {
+      const rows = [];
+      for (const e of combat.entries) {
+        const a = e.attr, r = { pid: e.pid, card: e.card, attr: a, base: a ? e.base[a] : null, withdrawn: !!e.withdrawn, gone: !!e.gone, autoWin: !!e.autoWin, margin: !!e.margin, parts: [], extra: (e.extra || []).slice(), bonus: e.bonus || 0, total: a ? e.stats[a] + (e.bonus || 0) : null, sum4: sum4(e.stats) };
+        if (a) {
+          const t = { stats: Object.assign({}, e.base) }; let prev = t.stats[a];
+          for (const m of e.mods) { if (m.off) continue; const probe = Object.assign({}, e, { stats: t.stats }); try { m.fn(probe); } catch (err) { /* ignora */ }
+            const d = t.stats[a] - prev; prev = t.stats[a]; r.parts.push({ src: m.src, label: m.label, d, other: m.src !== e.pid }); }
+          r.statsAfter = e.stats[a];
+        }
+        rows.push(r);
+      }
+      const acts = (combat.activations || []).map(a => ({ pid: a.pid, card: a.card, nome: (SP[CARDS[a.card].especial] || {}).nome || '', cancelled: !!a.cancelled, forced: !!a.forced }));
+      return { rows, acts, fx: (combat.fx || []).slice(0, 14), top: ev && ev.top, tb: ev && ev.tb || null, none: !!(ev && ev.none), tie: !!(ev && ev.tie), type: result.type, winnerPid: result.winnerPid, attr: result.attr || null };
     }
     async chooseLoser(w, cand, label) {
       if (cand.length === 1) return cand[0];

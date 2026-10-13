@@ -13,7 +13,7 @@
   const mkUid = () => { let x = 'DS-'; for (let i = 0; i < 6; i++) x += ALPHA[Math.floor(Math.random() * ALPHA.length)]; return x; };
   const blank = () => ({ v: 1, uid: mkUid(), name: '', avatar: null, fav: [], since: Date.now(),
     t: { g: 0, w: 0, l: 0, streak: 0, best: 0, disp: 0, dispW: 0, esp: 0, att: att0(), online: { g: 0, w: 0 }, pvb: { g: 0, w: 0 }, pvp: { g: 0, w: 0 }, rounds: 0, dur: 0 },
-    cards: {}, ach: {}, daily: {}, weekly: {}, hist: [] });
+    cards: {}, mast: {}, ach: {}, daily: {}, weekly: {}, hist: [] });
 
   let P = null;
   function load() {
@@ -59,6 +59,16 @@
   function weekly() { const k = weekKey(); const p = profile(); if (!p.weekly || p.weekly.key !== k) p.weekly = { key: k, win: 0, esp: 0, disp: 0, g: 0 }; return WEEKLY.map(w => ({ id: w.id, texto: w.texto, meta: w.meta, val: Math.min(w.meta, w.get(p.weekly) || 0) })); }
 
   // ---------------------------------------------------------------- conquistas
+  // ---------------------------------------------------------------- maestria por carta
+  // Reconhecimento e personalização apenas: não altera nenhum atributo nem regra. XP = usos×1 + disputas vencidas×3 + especiais resolvidos×2.
+  const MAST_AT = [3, 8, 18, 35, 60], MAST_NOME = ['Sem emblema', 'Iniciado', 'Veterano', 'Mestre', 'Lenda', 'Dimensional'], MAST_XP = { u: 1, w: 3, s: 2 };
+  function masteryOf(id, pr) {
+    const p = pr || profile(), m = (p.mast && p.mast[id]) || { u: 0, w: 0, s: 0 }, xp = m.u * MAST_XP.u + m.w * MAST_XP.w + m.s * MAST_XP.s; let lv = 0;
+    MAST_AT.forEach((t, i) => { if (xp >= t) lv = i + 1; });
+    return { id, xp, lv, u: m.u, w: m.w, s: m.s, from: lv ? MAST_AT[lv - 1] : 0, to: lv < MAST_AT.length ? MAST_AT[lv] : null, nome: MAST_NOME[lv] };
+  }
+  const masteryList = () => { const p = profile(); return Object.keys(p.mast || {}).map(id => masteryOf(id, p)).filter(m => m.xp > 0).sort((a, b) => b.xp - a.xp); };
+  const masteryCount = lv => masteryList().filter(m => m.lv >= lv).length;
   const ACH = [
     { id: 'first_game', nome: 'Primeiro salto', desc: 'Jogue sua primeira partida.', prog: p => [p.t.g, 1] },
     { id: 'first_win', nome: 'Nexo aberto', desc: 'Vença uma partida.', prog: p => [p.t.w, 1] },
@@ -76,6 +86,9 @@
     { id: 'comeback', nome: 'Virada épica', desc: 'Vença depois de chegar a 3 cartas ou menos.', flag: true },
     { id: 'fav_5', nome: 'Colecionadora', desc: 'Favorite 5 cartas.', prog: p => [p.fav.length, 5] },
     { id: 'cards_30', nome: 'Elenco amplo', desc: 'Jogue com 30 cartas diferentes.', prog: p => [Object.keys(p.used || {}).length, 30] },
+    { id: 'mast_1', nome: 'Primeiro emblema', desc: 'Leve uma carta ao nível Iniciado de maestria.', prog: p => [Object.keys(p.mast || {}).filter(id => masteryOf(id, p).lv >= 1).length, 1] },
+    { id: 'mast_3', nome: 'Mestre de carta', desc: 'Leve uma carta ao nível Mestre de maestria.', prog: p => [Object.keys(p.mast || {}).filter(id => masteryOf(id, p).lv >= 3).length, 1] },
+    { id: 'mast_10', nome: 'Elenco veterano', desc: 'Tenha 10 cartas com emblema de maestria.', prog: p => [Object.keys(p.mast || {}).filter(id => masteryOf(id, p).lv >= 1).length, 10] },
   ];
   function achievements() { const p = profile(); return ACH.map(a => { const pr = a.prog ? a.prog(p) : null; return { id: a.id, nome: a.nome, desc: a.desc, done: !!p.ach[a.id], at: p.ach[a.id] || null, val: pr ? Math.min(pr[0], pr[1]) : (p.ach[a.id] ? 1 : 0), meta: pr ? pr[1] : 1 }; }); }
   function checkAch(m, out) {
@@ -104,10 +117,11 @@
   function recorder(ctx) {
     const m = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), t0: Date.now(), n: ctx.n, humans: ctx.humans, mode: ctx.humans >= 2 ? 'pvp' : ctx.humans === 1 ? 'pvb' : 'bvb', online: !!ctx.online,
       diff: ctx.diff, per: ctx.per, sf: ctx.sf, v: 1, cards: {}, att: {}, spec: 0, combats: 0, ties: 0, rounds: 1, winner: null, dur: 0, bh: 0, players: [], left: [], first: null };
-    const me = { att: att0(), esp: 0, disp: 0, min: 99, used: {} };
+    const me = { att: att0(), esp: 0, disp: 0, min: 99, used: {}, cards: {} };
+    const mc = id => (me.cards[id] = me.cards[id] || { u: 0, w: 0, s: 0 });
     const cd = id => (m.cards[id] = m.cards[id] || { p: 0, w: 0, l: 0, s: 0 });
     const pa = pid => (m.att[pid] = m.att[pid] || att0());
-    let done = false;
+    let done = false; const counted = new Set();
     return {
       m,
       ev(type, data, G) {
@@ -115,14 +129,16 @@
         try {
           if (type === 'setup' && G) { m.players = G.s.players.map(p => ({ name: p.name, bot: !!p.bot })); }
           else if (type === 'ready' && G) { m.first = G.s.initiator; }
-          else if (type === 'commit') { (data.combat.entries || []).forEach(e => { cd(e.card).p++; if (e.pid === ctx.viewer) me.used[e.card] = 1; }); }
+          else if (type === 'combatStart') { counted.clear(); }
+          else if (type === 'commit' || type === 'reveal') { (data.combat.entries || []).forEach(e => { if (!e.card || e.card[0] === '?' || counted.has(e.pid)) return; counted.add(e.pid); cd(e.card).p++; if (e.pid === ctx.viewer) { me.used[e.card] = 1; mc(e.card).u++; } }); }   // online: a carta do rival só é conhecida na revelação
           else if (type === 'specialsFlip') { (data.acts || []).forEach(a => { cd(a.card).s++; m.spec++; if (a.pid === ctx.viewer) me.esp++; }); }
+          else if (type === 'effectEnd') { const a = data.act; if (a && a.pid === ctx.viewer && !a.forced && a.card && a.card[0] !== '?') mc(a.card).s++; }   // habilidade própria resolvida (não anulada)
           else if (type === 'resolved') {
             m.combats++; const r = data.result || {}; const w = r.winnerPid;
             if (w == null || r.type === 'tie' || r.type === 'none') m.ties++;
             else {
               pa(w)[r.attr]++; if (w === ctx.viewer) { me.att[r.attr]++; me.disp++; }
-              (data.combat.entries || []).forEach(e => { if (e.pid === w) cd(e.card).w++; else cd(e.card).l++; });
+              (data.combat.entries || []).forEach(e => { if (e.pid === w) { cd(e.card).w++; if (w === ctx.viewer) mc(e.card).w++; } else cd(e.card).l++; });
             }
           }
           else if (type === 'combatEnd' && G && ctx.viewer >= 0) { const p = G.p(ctx.viewer); if (p) me.min = Math.min(me.min, p.deck.length + p.reserve.length + p.prepared.length); }
@@ -158,6 +174,8 @@
       const dl = dailyToday(), def = DAILY.find(x => x.id === dl.id);
       if (!p.daily.done && def && def.ok(mm)) { p.daily.done = true; out.daily = true; const y = dayKey(new Date(Date.now() - 864e5)); p.daily.streak = (p.daily.last === y ? p.daily.streak : 0) + 1; p.daily.last = dayKey(); }
       p.used = p.used || {}; Object.keys(me.used).forEach(id => { p.used[id] = 1; });
+      p.mast = p.mast || {}; out.mast = [];
+      Object.keys(me.cards).forEach(id => { const b = masteryOf(id, p).lv, c = p.mast[id] = p.mast[id] || { u: 0, w: 0, s: 0 }; c.u += me.cards[id].u; c.w += me.cards[id].w; c.s += me.cards[id].s; const a = masteryOf(id, p); if (a.lv > b) out.mast.push({ id, from: b, to: a.lv, nome: a.nome }); });
       p.hist.push({ at: m.t0, won, mode: m.mode, n: m.n, rounds: m.rounds }); while (p.hist.length > 30) p.hist.shift();
       out.mm = mm; checkAch(mm, out.ach); save(); out.won = won;
     }
@@ -165,5 +183,5 @@
     return out;
   }
 
-  root.DSSTATS = { uid, regenUid, onChange, profile, save, setName, setAvatar, toggleFav, isFav, achievements, dailyToday, weekly, recorder, matches, onMatch, dayKey, DAILY, ACH, WEEKLY, reset() { const u = P && P.uid; P = blank(); if (u) P.uid = u; save(); wr(MKEY, []); } };
+  root.DSSTATS = { MAST_AT, MAST_NOME, MAST_XP, mastery: masteryOf, masteryList, masteryCount, uid, regenUid, onChange, profile, save, setName, setAvatar, toggleFav, isFav, achievements, dailyToday, weekly, recorder, matches, onMatch, dayKey, DAILY, ACH, WEEKLY, reset() { const u = P && P.uid; P = blank(); if (u) P.uid = u; save(); wr(MKEY, []); } };
 })(typeof window !== 'undefined' ? window : globalThis);

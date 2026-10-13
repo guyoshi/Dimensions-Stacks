@@ -62,6 +62,10 @@
   }
   function cardEl(id, o) {
     o = o || {};
+    if (typeof id === 'string' && id[0] === '?') {   // carta oculta (online): só o verso, sem nenhum dado da carta
+      const h = el('<div class="card' + (o.noanim ? ' noanim' : '') + '" data-hidden="1" data-id="?"><div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div><div class="face front"></div></div></div></div>');
+      if (o.cw) h.style.setProperty('--cw', o.cw + 'px'); return h;
+    }
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
@@ -79,7 +83,7 @@
     node.dataset.serie = c.serie; node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
-    if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id) } : null); }); }
+    if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id), mastery: g.dataset.mast === '1' } : null); }); }
     return node;
   }
   function updateCard(node, stats, attr) {
@@ -103,6 +107,25 @@
     U.layer().appendChild(m);
     return { node: m, close };
   };
+
+  // ---------------------------------------------------------------- emblemas de maestria (arte própria em SVG)
+  // 1 Iniciado (bronze, 1 divisa) · 2 Veterano (prata, 2) · 3 Mestre (ouro, 3) · 4 Lenda (platina, estrela e asas) · 5 Dimensional (losango com órbita)
+  const EMB = [null,
+    { a: '#d99a66', b: '#6b3f22', ink: '#2b1608' }, { a: '#eef2f8', b: '#7b8594', ink: '#262c36' }, { a: '#ffe08a', b: '#a8741a', ink: '#3a2606' },
+    { a: '#d6f7ff', b: '#2f9bc0', ink: '#06303f' }, { a: '#7fdcff', b: '#b394ff', ink: '#120a2e' }];
+  let embN = 0;
+  U.emblem = function (lv, size) {
+    lv = Math.max(0, Math.min(5, lv | 0)); if (!lv) return ''; const c = EMB[lv], id = 'emb' + (++embN), sz = size || 24;
+    const chev = n => Array.from({ length: n }, (_, i) => { const y = 25 + i * 6 - (n - 1) * 3; return `<path d="M15 ${y} L24 ${y - 6} L33 ${y}" fill="none" stroke="${c.ink}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`; }).join('');
+    let inner;
+    if (lv <= 3) inner = chev(lv);
+    else if (lv === 4) inner = `<path d="M24 12 L26.9 19.6 L35 20 L28.7 25.2 L30.8 33 L24 28.6 L17.2 33 L19.3 25.2 L13 20 L21.1 19.6 Z" fill="${c.ink}"/><path d="M5 20 L1.5 14 L1.5 30 L5 29 Z M43 20 L46.5 14 L46.5 30 L43 29 Z" fill="${c.b}"/>`;
+    else inner = `<ellipse cx="24" cy="24" rx="17" ry="6.5" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.4" transform="rotate(-24 24 24)"/><path d="M24 11 L33 24 L24 37 L15 24 Z" fill="${c.ink}"/><path d="M24 16 L29 24 L24 32 L19 24 Z" fill="url(#${id}g)"/><circle cx="38" cy="14" r="1.8" fill="#fff"/><circle cx="9" cy="34" r="1.3" fill="#fff"/>`;
+    return `<svg class="emb e${lv}" viewBox="0 0 48 48" width="${sz}" height="${sz}" role="img" aria-label="Maestria: ${esc(window.DSSTATS ? window.DSSTATS.MAST_NOME[lv] : '')}"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c.a}"/><stop offset="1" stop-color="${c.b}"/></linearGradient></defs>`
+      + `<path d="M24 2.5 L43.5 13.5 L43.5 34.5 L24 45.5 L4.5 34.5 L4.5 13.5 Z" fill="url(#${id}g)" stroke="${c.ink}" stroke-opacity=".55" stroke-width="1.4"/>`
+      + `<path d="M24 6.5 L40 15.5 L40 32.5 L24 41.5 L8 32.5 L8 15.5 Z" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>${inner}</svg>`;
+  };
+  U.mastery = id => window.DSSTATS ? window.DSSTATS.mastery(id) : null;
   U.zoom = function (id, opts) {
     opts = opts || {};
     const list = opts.list && opts.list.length > 1 ? opts.list : null;
@@ -121,6 +144,10 @@
         <div><b>✦ ${esc(sp ? sp.nome : '—')}</b><br><span class="hint">${esc(sp ? sp.texto : '')}</span>${sp && sp.stub ? '<br><span class="hint">⚠ Efeito ainda não implementado neste protótipo.</span>' : ''}</div>
         ${c.descricao ? `<p>${esc(c.descricao)}</p>` : ''}
         ${c.nota ? `<div class="hint">Nota do elenco: ${esc(c.nota)}</div>` : ''}</div>`));
+      if (opts.mastery && window.DSSTATS) {
+        const m = window.DSSTATS.mastery(cid), pct = m.to ? Math.min(100, Math.round((m.xp - m.from) / (m.to - m.from) * 100)) : 100;
+        wrap.querySelector('.meta').append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}. Só reconhecimento: não altera atributos.</small></div>`));
+      }
       const meta = $('.meta', wrap), fb = el('<button class="btn sm favbtn" type="button"></button>');
       const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = (f ? U.ICO.star : U.ICO.starO) + (f ? 'Favorita' : 'Favoritar'); fb.classList.toggle('on', !!f); };
       fb.onclick = () => { SND.play('click'); const r = window.DSSTATS.toggleFav(cid); paint(); document.querySelectorAll('.card[data-id="' + cid + '"]').forEach(x => { if (!x.closest('.zoomwrap')) x.classList.toggle('isfav', r.fav); }); if (r.unlocked && r.unlocked.length) U.toast('Conquista: ' + r.unlocked.map(a => a.nome).join(', ')); };

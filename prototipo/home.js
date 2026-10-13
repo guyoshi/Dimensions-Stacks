@@ -102,21 +102,43 @@
   function fxInto(s) { const old = $('.menu-bg', s); if (old) old.remove(); s.prepend(U.menuFx()); }
 
   // ---------------------------------------------------------------- coleção (aba)
-  const filtState = { k: 'todas' };
+  const filtState = { k: 'todas', q: '', sort: 'num', att: '' };
+  const norm = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const sumOf = c => c.stats.pod + c.stats.def + c.stats.int + c.stats.vel;
+  const SORTS = [['num', 'Ordem padrão'], ['soma', 'Força total'], ['pod', 'Ataque'], ['def', 'Defesa'], ['int', 'Inteligência'], ['vel', 'Velocidade'], ['nome', 'Nome (A–Z)'], ['esp', 'Especial (A–Z)'], ['mast', 'Maestria']];
+  const spOf = c => (U.E.SPECIALS[c.especial] || {});
+  const hay = c => norm([c.nome, c.id, SERIES[c.serie].nome, SERIES[c.serie].marca, c.descricao, spOf(c).nome, spOf(c).texto, c.raridade, c.uniao ? 'uniao' : ''].join(' '));
+  const topAtt = c => U.AIDS.slice().sort((a, b) => c.stats[b] - c.stats[a])[0];
+  U.collFilter = function (list, st, fav) {   // exposto para teste
+    const q = norm(st.q).split(/\s+/).filter(Boolean);
+    let r = list.filter(c => (st.k === 'todas' || (st.k === 'fav' ? fav.has(c.id) : st.k === 'uniao' ? c.uniao : c.serie === st.k)) && (!st.att || topAtt(c) === st.att) && q.every(t => hay(c).includes(t)));
+    const by = { soma: (a, b) => sumOf(b) - sumOf(a), nome: (a, b) => a.nome.localeCompare(b.nome, 'pt'), esp: (a, b) => (spOf(a).nome || '').localeCompare(spOf(b).nome || '', 'pt') };
+    by.mast = (a, b) => { const x = U.mastery(a.id), y = U.mastery(b.id); return ((y && y.xp) || 0) - ((x && x.xp) || 0); };
+    U.AIDS.forEach(a => { by[a] = (x, y) => y.stats[a] - x.stats[a] || sumOf(y) - sumOf(x); });
+    if (st.sort !== 'num' && by[st.sort]) r = r.slice().sort(by[st.sort]);
+    return r;
+  };
   function collTab() {
     const s = $('#coll'); const fav = new Set(ST.profile().fav);
     const keys = ['todas', 'fav', ...Object.keys(SERIES), 'uniao'];
     const label = k => k === 'todas' ? 'Todas' : k === 'fav' ? '★ Favoritas' : k === 'uniao' ? 'A União' : SERIES[k].marca;
     s.innerHTML = `<div class="tabwrap">${topbar('Coleção', `${CARTAS.length} cartas · ${Object.keys(IMG).length} com foto`)}
-      <div class="chips" id="cchips"></div><div class="cgrid" id="cgrid"></div></div>`;
+      <div class="cfilter"><input id="cq" type="search" placeholder="Nome, série ou especial…" aria-label="Buscar cartas" autocomplete="off" value="${esc(filtState.q)}">
+        <select id="csort" aria-label="Ordenar">${SORTS.map(([v, t]) => `<option value="${v}"${filtState.sort === v ? ' selected' : ''}>${v === 'num' ? t : 'Ordenar: ' + t}</option>`).join('')}</select></div>
+      <div class="chips" id="cchips"></div><div class="chips" id="cattr" aria-label="Atributo mais forte"></div><p class="hint" id="ccount"></p><div class="cgrid" id="cgrid" data-mast="1"></div></div>`;
     bindTop(s);
-    const chips = $('#cchips', s), grid = $('#cgrid', s);
+    const chips = $('#cchips', s), grid = $('#cgrid', s), attr = $('#cattr', s), cnt = $('#ccount', s);
     function draw() {
       chips.innerHTML = keys.map(k => `<button data-k="${k}" class="${filtState.k === k ? 'on' : ''}"${SERIES[k] ? ` style="--sc:${SERIES[k].cor}"` : ''}>${SERIES[k] ? '<i class="sdot"></i>' : ''}${esc(label(k))}</button>`).join('');
-      const f = filtState.k, list = CARTAS.filter(c => f === 'todas' || (f === 'fav' ? fav.has(c.id) : f === 'uniao' ? c.uniao : c.serie === f));
-      grid.replaceChildren(...(list.length ? list.map(c => { const n = cardEl(c.id, { up: true, noanim: true, cw: 104, click: true }); if (fav.has(c.id)) n.classList.add('isfav'); return n; }) : [el('<p class="hint" style="grid-column:1/-1">Nenhuma carta favorita ainda. Abra uma carta e toque em ☆ para favoritar.</p>')]));
+      attr.innerHTML = '<span class="hint">Maior atributo:</span>' + [['', 'Qualquer'], ...U.AIDS.map(a => [a, U.ATT[a].nome])].map(([a, t]) => `<button data-a="${a}" class="${filtState.att === a ? 'on' : ''}">${esc(t)}</button>`).join('');
+      const list = U.collFilter(CARTAS, filtState, fav);
+      { const mc = ST.masteryCount(1); cnt.textContent = (list.length === CARTAS.length ? '' : `${list.length} de ${CARTAS.length} cartas`) + (mc ? `${list.length === CARTAS.length ? '' : ' · '}${mc} ${mc === 1 ? 'carta com emblema' : 'cartas com emblema'} de maestria` : ''); }
+      grid.replaceChildren(...(list.length ? list.map(c => { const n = cardEl(c.id, { up: true, noanim: true, cw: 104, click: true }); if (fav.has(c.id)) n.classList.add('isfav'); const m = U.mastery(c.id); if (m && m.lv) { n.append(el(`<span class="memb" title="Maestria: ${esc(m.nome)} (${m.xp} XP)">${U.emblem(m.lv, 26)}</span>`)); } return n; }) : [el(`<p class="hint" style="grid-column:1/-1">${filtState.k === 'fav' && !filtState.q && !filtState.att ? 'Nenhuma carta favorita ainda. Abra uma carta e toque em ☆ para favoritar.' : 'Nenhuma carta encontrada com esses filtros.'}</p>`)]));
     }
     chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; filtState.k = b.dataset.k; SND.play('tick'); draw(); };
+    attr.onclick = e => { const b = e.target.closest('button'); if (!b) return; filtState.att = b.dataset.a; SND.play('tick'); draw(); };
+    let t = 0; $('#cq', s).oninput = e => { filtState.q = e.target.value; clearTimeout(t); t = setTimeout(draw, 120); };
+    $('#csort', s).onchange = e => { filtState.sort = e.target.value; SND.play('tick'); draw(); };
     draw();
   }
 
@@ -154,6 +176,7 @@
         <div class="pf-id"><label for="pfName" class="hint">Seu nome</label><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Como você quer aparecer" value="${esc(p.name)}" autocomplete="off"><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
       <section class="stats">${stat(t.g, 'Partidas')}${stat(t.w, 'Vitórias')}${stat(t.g ? pct + '%' : '—', 'Aproveitamento')}${stat(t.best, 'Maior sequência')}${stat(t.dispW, 'Disputas ganhas')}${stat(t.esp, 'Especiais usados')}</section>
       <section class="modes"><div><b>Contra bots</b><span>${t.pvb.w}/${t.pvb.g} vitórias</span></div><div><b>Contra pessoas</b><span>${t.pvp.w}/${t.pvp.g} vitórias</span></div><div><b>Online</b><span>${t.online.w}/${t.online.g} vitórias</span></div>${t.g ? `<div><b>Partida média</b><span>${fmtDur(t.dur / t.g)} · ${(t.rounds / t.g).toFixed(1)} rodadas</span></div>` : ''}</section>
+      <h3 class="sec">Maestria das cartas <span class="hint">${ST.masteryCount(1)} com emblema</span></h3><div class="mastsec" id="mastsec"></div>
       <h3 class="sec">Buscar jogador</h3><div class="find" id="pfFind"></div>
       <h3 class="sec">Cartas favoritas</h3><div class="favrow" id="favrow"></div>
       <h3 class="sec">Conquistas <span class="hint">${ach.filter(a => a.done).length}/${ach.length}</span></h3>
@@ -162,6 +185,11 @@
       <div class="row" style="margin-top:12px"><button class="btn ghost sm" id="pfReset">Apagar dados deste aparelho</button></div>
     </div>`;
     bindTop(s);
+    { const ms = $('#mastsec', s), top = ST.masteryList().slice(0, 6);
+      ms.innerHTML = `<div class="mlegend">${ST.MAST_NOME.slice(1).map((n, i) => `<span>${U.emblem(i + 1, 22)}<b>${esc(n)}</b><small>${ST.MAST_AT[i]} XP</small></span>`).join('')}</div>`
+        + (top.length ? `<div class="mtop">${top.map(m => `<button class="mrow" data-id="${m.id}">${U.emblem(m.lv, 30) || '<span class="memp"></span>'}<span class="mn"><b>${esc(CARTAS.find(c => c.id === m.id).nome)}</b><small>${m.xp} XP · ${m.u} usos · ${m.w} vitórias · ${m.s} especiais</small></span></button>`).join('')}</div>` : '<p class="hint">Cada uso, disputa vencida e especial resolvido rende XP à carta. Os emblemas são só reconhecimento: não alteram atributos.</p>')
+        + '<p class="hint">XP: 1 por uso · 3 por disputa vencida · 2 por especial resolvido.</p>';
+      ms.onclick = e => { const b = e.target.closest('.mrow'); if (b) { SND.play('click'); U.zoom(b.dataset.id, { list: top.map(m => m.id), mastery: true }); } }; }
     const fr = $('#favrow', s);
     if (p.fav.length) fr.append(...p.fav.slice(0, 12).map(id => cardEl(id, { up: true, noanim: true, cw: 76, click: true }))); else fr.innerHTML = '<p class="hint">Abra uma carta na Coleção e toque em ☆ para favoritá-la.</p>';
     const nm = $('#pfName', s); nm.oninput = () => { ST.setName(nm.value); const av = $('#pfAv', s); av.innerHTML = avatarHTML(ST.profile().avatar, nm.value || 'Jogador', 84) + '<i>✎</i>'; };

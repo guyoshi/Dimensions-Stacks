@@ -151,10 +151,11 @@
   function shell() {
     $('#game').innerHTML = `<header class="hud"><button class="ibtn" id="bMenu" title="Menu">☰</button>
       <div class="mid"><b>DIMENSIONS STACKS</b><div id="hSub"></div></div>
-      <button class="ibtn" id="bLog" title="Registro">📜</button><button class="ibtn" id="bSnd" title="Som">🔊</button><button class="ibtn" id="bSpd" title="Velocidade">⏩</button></header>
+      <button class="ibtn" id="bCalc" title="Ver cálculo da última disputa" disabled>🧮</button><button class="ibtn" id="bLog" title="Registro">📜</button><button class="ibtn" id="bSnd" title="Som">🔊</button><button class="ibtn" id="bSpd" title="Velocidade">⏩</button></header>
       <main class="board" id="board"></main><div id="caption"></div><div id="dock" hidden></div>`;
     $('#bMenu').onclick = gameMenu;
     $('#bLog').onclick = toggleLog;
+    $('#bCalc').onclick = () => showCalc();
     $('#bSnd').onclick = () => { V.muted = !V.muted; SND.setVol('master', V.muted ? 0 : S.master); $('#bSnd').textContent = V.muted ? '🔇' : '🔊'; };
     $('#bSpd').onclick = () => { const o = ['lento', 'normal', 'rapido']; S.speed = o[(o.indexOf(S.speed) + 1) % 3]; U.applyOpts(); speedLbl(); };
     speedLbl();
@@ -165,6 +166,60 @@
     const d = el(`<div class="logdrawer"><button class="btn ghost sm" style="float:right">✕</button><h3 style="color:var(--gold2);margin-bottom:10px">Registro</h3><div class="lg"></div></div>`);
     $('.lg', d).append(...V.logs.map(l => el(`<p class="${l.cls}">${esc(l.text)}</p>`)));
     $('button', d).onclick = () => d.remove(); U.layer().appendChild(d); d.scrollTop = d.scrollHeight;
+  }
+
+  // ---------------------------------------------------------------- "Ver cálculo" da última disputa
+  function setCalc(calc) {
+    V.calc = calc || null; const b = $('#bCalc'); if (b) b.disabled = !V.calc;
+    const old = $('#calcpill'); if (old) old.remove();
+    if (V.calc && !V.calc.none) { const pill = el(`<button class="calcpill" id="calcpill">🧮 ${V.humans === 1 && V.calc.winnerPid != null && V.calc.winnerPid !== V.viewer ? 'Por que perdi?' : 'Ver cálculo'}</button>`); pill.onclick = () => showCalc(); const g = $('#game'); if (g) g.appendChild(pill); }
+  }
+  const sgn = n => (n > 0 ? '+' : n < 0 ? '−' : '±') + Math.abs(n);
+  const cname = id => (CARDS[id] ? CARDS[id].nome : 'carta oculta');
+  function calcWhy(c) {
+    const me = V.humans === 1 ? V.viewer : -1, N = pid => pid === me ? 'você' : nameOf(pid), Nc = pid => pid === me ? 'Você' : nameOf(pid);
+    if (c.none) return 'Sem disputa: menos de duas cartas ficaram na mesa.';
+    const live = c.rows.filter(r => !r.withdrawn);
+    if (c.tie) return `Empate absoluto: mesmo valor, mesma soma dos 4 atributos e mesma soma de Ataque + Inteligência. As cartas voltam aos donos.`;
+    const w = live.find(r => r.pid === c.winnerPid); if (!w) return '';
+    const others = live.filter(r => r !== w).sort((a, b) => (b.total || 0) - (a.total || 0)), L = others[0];
+    const wa = ATT[w.attr].nome, out = [];
+    const iWon = w.pid === me, iLost = me >= 0 && !iWon && live.some(r => r.pid === me);
+    const bonusOf = r => r.parts.filter(m => m.d !== 0);
+    if (w.autoWin) out.push(`${Nc(w.pid)} venceu automaticamente por efeito de um especial, sem comparar valores.`);
+    else if (c.tb) out.push(`O maior valor (${c.tb.top}) empatou; o desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma de Ataque + Inteligência'} deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
+    else if (L) {
+      const lead = `${wa} ${w.total} de ${N(w.pid)} contra ${ATT[L.attr] ? ATT[L.attr].nome : '—'} ${L.total} de ${N(L.pid)}`;
+      out.push(iLost ? `Você perdeu porque ${lead}.` : iWon ? `Você venceu: ${lead}.` : `${Nc(w.pid)} venceu: ${lead}.`);
+      if (w.margin !== true && L.margin) out.push(`${Nc(L.pid)} tinha uma regra de margem que o permitia disputar o desempate.`);
+    }
+    // causas por bônus
+    if (!w.autoWin) {
+      const wb = bonusOf(w).filter(m => m.d > 0), lb = bonusOf(L || {parts: []});
+      wb.filter(m => m.other).forEach(m => out.push(`Habilidade de ${N(m.src)} (${m.label}) deu ${sgn(m.d)} ${wa} a ${N(w.pid)}.`));
+      wb.filter(m => !m.other).forEach(m => out.push(`${Nc(w.pid)} ganhou ${sgn(m.d)} ${wa} com ${m.label}.`));
+      if (w.bonus) out.push(`Cartas extras somaram ${sgn(w.bonus)} para ${N(w.pid)}.`);
+      if (L) { lb.filter(m => m.d < 0).forEach(m => out.push(`${m.label}${m.other ? ' de ' + N(m.src) : ''} reduziu ${sgn(m.d)} o atributo de ${N(L.pid)}.`)); if (L.bonus) out.push(`${Nc(L.pid)} recebeu ${sgn(L.bonus)} de cartas extras, sem alcançar o valor.`); }
+    }
+    c.acts.filter(a => a.cancelled).forEach(a => out.push(`O especial ${a.nome} de ${N(a.pid)} foi anulado.`));
+    return out.join(' ');
+  }
+  function showCalc() {
+    const c = V.calc; if (!c) return; SND.play('click');
+    const rows = c.rows.filter(r => !r.withdrawn || r.gone), rest = c.rows.filter(r => r.withdrawn && !r.gone);
+    const html = rows.map(r => {
+      const win = r.pid === c.winnerPid, a = r.attr && ATT[r.attr];
+      const lines = [`<div class="cl"><span>Base · ${esc(cname(r.card))}</span><b>${r.base == null ? '—' : r.base}</b></div>`];
+      r.parts.filter(m => m.d !== 0).forEach(m => lines.push(`<div class="cl ${m.d > 0 ? 'up' : 'dn'}"><span>${esc(m.label)}${m.other ? ' <i>(de ' + esc(nameOf(m.src)) + ')</i>' : ''}</span><b>${sgn(m.d)}</b></div>`));
+      if (r.extra.length) lines.push(`<div class="cl up"><span>Cartas extras (${r.extra.map(x => esc(cname(x))).join(', ')})</span><b>${sgn(r.bonus)}</b></div>`);
+      return `<div class="crow${win ? ' win' : ''}${r.gone ? ' gone' : ''}"><h4><span style="color:${PCOL[r.pid]}">${esc(nameOf(r.pid))}</span><em>${a ? esc(a.nome) : 'sem atributo'}${win ? ' · vencedor' : ''}${r.gone ? ' · carta removida' : ''}</em></h4>${lines.join('')}<div class="cl tot"><span>Total</span><b>${r.total == null ? '—' : r.total}</b></div></div>`;
+    }).join('');
+    const tb = c.tb ? `<p class="ctb">Empate em ${c.tb.top} → desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma Ataque + Inteligência'}: ${c.tb.list.map(x => esc(nameOf(x.pid)) + ' ' + x.v).join(' × ')}.</p>` : '';
+    const acts = c.acts.length ? `<p class="cacts">Especiais: ${c.acts.map(a => `<span class="${a.cancelled ? 'x' : ''}">${esc(nameOf(a.pid))} · ${esc(a.nome)}${a.cancelled ? ' (anulado)' : ''}${a.forced ? ' (forçado)' : ''}</span>`).join(' ')}</p>` : '';
+    const fx = (c.fx && c.fx.length) ? `<details class="cfx"><summary>Efeitos aplicados (${c.fx.length})</summary>${c.fx.map(t => `<p>${esc(t)}</p>`).join('')}</details>` : '';
+    const wd = rest.length ? `<p class="cacts">Desistiram: ${rest.map(r => esc(nameOf(r.pid))).join(', ')}.</p>` : '';
+    const n = el(`<div class="calc"><h2 style="color:var(--gold2)">Cálculo da disputa</h2><div class="crows">${html}</div>${tb}${acts}${wd}${fx}<p class="cwhy">${esc(calcWhy(c))}</p></div>`);
+    U.modal(n);
   }
   function gameMenu() {
     SND.play('click');
@@ -268,7 +323,8 @@
       const e = order[i], last = i === order.length - 1 && order.length > 1, slot = V.slots[e.pid];
       if (last) { slot.classList.remove('tremble'); slot.classList.add('charging'); await sleep(1300); }
       slot.classList.remove('tremble', 'charging');
-      cardIn(e.pid).classList.add('up'); SND.play(last ? 'reveal' : 'flip');
+      let ci = cardIn(e.pid); if (ci && ci.dataset.hidden && e.card && e.card !== '?') { const real = cardEl(e.card, { stats: e.stats }); ci.replaceWith(real); ci = real; void ci.offsetWidth; }   // online: a carta do rival só chega agora
+      ci.classList.add('up'); SND.play(last ? 'reveal' : 'flip');
       await sleep(430);
       updateSlot(e);
       const r = slot.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: last ? 36 : 14, speed: last ? 7 : 4, life: 40, size: 2.4 });
@@ -289,7 +345,7 @@
       banner('Que comece!', `${nameOf(G.s.initiator)} inicia`, null, 1500); await sleep(900);
     },
     async combatStart({ initiator, round }) {
-      V.init = initiator; V.win = {}; refresh();
+      V.init = initiator; V.win = {}; { const cp = $('#calcpill'); if (cp) cp.remove(); } refresh();
       caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · especiais liberam na Rodada 2' : '')); await sleep(350);
     },
     async prepare({ pid }) {
@@ -407,8 +463,8 @@
         await Promise.all(chips.map((c, i) => sleep(i * 150).then(() => cl[c.dataset.card] != null ? fly(c, seatDeck(cl[c.dataset.card]), { ms: 800, id: c.dataset.card, cw: 70, arc: 40 }) : fly(c, $('#bh'), { ms: 700, id: c.dataset.card, cw: 70, s1: .05, r1: 420, fade: true })))); strip.remove(); }
       pulseBH(); await sleep(150);
     },
-    async resolved({ combat, result, moves }) {
-      updateAll(); let tipId = null;
+    async resolved({ combat, result, moves, calc }) {
+      updateAll(); let tipId = null; setCalc(calc);
       if (result.type === 'tie' || result.type === 'none') {
         banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700);
       } else {
@@ -472,6 +528,7 @@
     const r = U.lastRec; U.lastRec = null; if (!r) return ''; const I = U.ICO || {}; const L = [];
     if (r.daily) L.push(`<div class="u">${I.medal || ''}Desafio do dia concluído</div>`);
     (r.ach || []).forEach(a => L.push(`<div class="u">${I.medal || ''}Conquista: ${esc(a.nome)}</div>`));
+    (r.mast || []).forEach(m => L.push(`<div class="u mu">${U.emblem(m.to, 20)}Maestria: ${esc(CARDS[m.id] ? CARDS[m.id].nome : m.id)} → ${esc(m.nome)}</div>`));
     return L.length ? `<div class="unlocks">${L.join('')}</div>` : '';
   }
   function newRec(ctx) {
@@ -653,20 +710,7 @@
     const leaveNow = (msg) => { U.killRun(); U.onlineOff(); const n = el(`<div class="modal"><div class="box"><div class="final"><h1>${esc(msg)}</h1><div class="row" style="justify-content:center"><button class="btn primary">Voltar ao menu</button></div></div></div></div>`); $('button', n).onclick = () => { n.remove(); V.ctl.leave(); }; U.layer().appendChild(n); };
 
     if (host) {
-      let combatOn = false, initAnn = false, revealed = false;
-      const serCombat = c => c ? ({ initiator: c.initiator, order: c.order, specialsAllowed: c.specialsAllowed, ctl: { universal: !!(c.ctl && c.ctl.universal) },
-        entries: c.entries.map(e => ({ pid: e.pid, card: e.card, stats: e.stats, bonus: e.bonus, extra: e.extra, attr: (revealed || (initAnn && e.pid === c.initiator)) ? e.attr : null, withdrawn: !!e.withdrawn, gone: !!e.gone })) }) : null;
-      const serEvent = (type, data) => {
-        const o = {}; for (const k in data) { const v = data[k];
-          if (k === 'combat') o.combat = serCombat(v); else if (k === 'usable' || k === 'ctx') continue;
-          else if (k === 'act') o.act = { pid: v.pid, card: v.card, forced: !!v.forced };
-          else if (k === 'acts') o.acts = v.map(a => ({ pid: a.pid, card: a.card, forced: !!a.forced }));
-          else if (k === 'spec') o.spec = { nome: v.nome, texto: v.texto };
-          else { const r = plain(v); if (r !== undefined) o[k] = r; } }
-        if (type === 'prepare') delete o.card; return o;
-      };
-      const state = () => ({ players: G.s.players.map(p => ({ pid: p.pid, name: p.name, bot: p.bot, avatar: p.avatar, alive: p.alive, deck: p.deck.slice(), reserve: p.reserve.slice(), prepared: p.prepared.slice() })),
-        bh: G.s.bh.map(x => x.kind === 'normal' ? x.id : x.id + ':' + x.kind), round: G.s.round, combats: G.s.combats, initiator: G.s.initiator, over: G.s.over, winner: G.s.winner, byLimit: G.s.byLimit });
+      const P = window.DSPriv.create({ get s() { return G.s; } });   // visão por jogador: só as próprias cartas privadas saem do anfitrião
       let logq = [], flushing = false;
       let askSeq = 0;
       const fbOf = (kind, p, a) => kind === 'orderHand' ? G.botOrderHand(a[0]) : (G['bot_' + kind] ? G['bot_' + kind](p, ...a) : undefined);
@@ -685,25 +729,31 @@
       const wrap = (kind, mk) => async (p, ...a) => {
         const peer = seats[p.pid].peer;
         if (!peer || peer === link.me) { send({ n: ++seq, t: 'waiting', pid: p.pid, tl: tlOf(kind) }); return timed(tlOf(kind), () => local[kind](p, ...a), () => fbOf(kind, p, a)); }
-        return remoteAsk(p, kind, mk(...a), () => fbOf(kind, p, a));
+        return remoteAsk(p, kind, mk(p, ...a), () => fbOf(kind, p, a));
       };
       const io = {
         notify: async (type, data) => {
-          if (type === 'combatStart') { combatOn = true; initAnn = false; revealed = false; } else if (type === 'initiatorAttr') initAnn = true; else if (type === 'reveal') revealed = true;
-          const o = { n: ++seq, t: type, d: serEvent(type, data || {}), st: state() }; if (combatOn && G.combat && type !== 'combatEnd') o.cb = serCombat(G.combat); else if (type === 'combatEnd') o.cb = null;
-          let skip = false, to; if (type === 'peek') { to = seats[data.pid] && seats[data.pid].peer; if (!to || to === link.me) skip = true; }
-          if (!skip) send(o, to);
-          if (type === 'combatEnd') combatOn = false;
+          P.note(type); const n = ++seq; data = data || {};
+          const view = i => { const o = { n, t: type, d: P.ev(type, data, i), st: P.state(i) }; if (P.f.combatOn && G.combat && type !== 'combatEnd') o.cb = P.cb(G.combat, i); else if (type === 'combatEnd') o.cb = null; return o; };
+          if (type === 'peek') { const to = seats[data.pid] && seats[data.pid].peer; if (to && to !== link.me) send(view(data.pid), to); }
+          else seats.forEach((s, i) => { if (s.peer && s.peer !== link.me && !s.bot) send(view(i), s.peer); });
+          if (type === 'combatEnd') P.f.combatOn = false;
           return local.notify(type, data);
         },
         log: (text, cls) => { local.log(text, cls); logq.push([text, cls || '']); if (!flushing) { flushing = true; queueMicrotask(() => { flushing = false; send({ n: ++seq, t: 'log', lg: logq.splice(0) }); }); } },
-        orderHand: wrap('orderHand', hand => [hand]),
-        prepare: wrap('prepare', top => [top]),
-        attr: wrap('attr', (entry, options, combat, canPrep) => [{ card: entry.card, stats: entry.stats }, options, serCombat(combat), canPrep]),
-        special: wrap('special', (usable, combat, ctx, stage) => [usable, serCombat(combat), null, stage]),
-        pickCards: wrap('pickCards', spec => [plain(spec)]),
-        pickAttr: wrap('pickAttr', spec => [plain(spec)]),
-        chooseTarget: wrap('chooseTarget', (cands, label) => [cands, label]),
+        orderHand: wrap('orderHand', (p, hand) => [hand]),
+        prepare: wrap('prepare', (p, top) => [top]),
+        attr: wrap('attr', (p, entry, options, combat, canPrep) => [{ card: entry.card, stats: entry.stats }, options, P.cb(combat, p.pid), canPrep]),
+        special: wrap('special', (p, usable, combat, ctx, stage) => [usable, P.cb(combat, p.pid), null, stage]),
+        pickCards: async (p, spec) => {
+          const peer = seats[p.pid].peer, w = wrap('pickCards', (q, sp) => [plain(sp)]);
+          if (!spec.blind || !peer || peer === link.me) return w(p, spec);
+          const b = P.blind(spec);   // escolha às cegas: o convidado só vê posições
+          const r = await remoteAsk(p, 'pickCards', [plain(b.spec)], () => fbOf('pickCards', p, [spec]));
+          return Array.isArray(r) ? r.map(x => b.map[x] || x) : r;
+        },
+        pickAttr: wrap('pickAttr', (p, spec) => [plain(spec)]),
+        chooseTarget: wrap('chooseTarget', (p, cands, label) => [cands, label]),
       };
       const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i }));
       G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, seed: cfg.seed, io });

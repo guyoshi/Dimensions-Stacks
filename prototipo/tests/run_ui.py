@@ -61,12 +61,16 @@ try:
           stage: !!document.querySelector('.stage'),
           fxb: !!document.querySelector('.fxb.done'),
           susp: !!document.querySelector('.arena.suspense'),
-          modal: !!document.querySelector('.modal:not(:has(.final))')
+          modal: !!document.querySelector('.modal:not(:has(.final))'),
+          calc: !!document.querySelector('#calcpill')
         })""")
         def snap(name, wait=600):
           if name not in shots:
             pg.wait_for_timeout(wait); print('scroll', name, pg.evaluate("[document.scrollingElement.scrollLeft,document.scrollingElement.scrollTop,...['#app','#game'].map(q=>{const e=document.querySelector(q);return e?[e.scrollLeft,e.scrollTop]:null})]")); print('dbg',name,pg.evaluate("(()=>{const w=document.querySelector('.arenaWrap'),a=document.querySelector('.arena');const r=a.getBoundingClientRect();return [w.clientWidth,w.clientHeight,a.style.getPropertyValue('--cw'),Math.round(r.height),getComputedStyle(a).gridTemplateRows]})()")); pg.screenshot(path=f'{out}/{tag}_{name}.png'); shots[name] = 1
         if st['final']: snap('final'); done = True; break
+        if st['calc'] and not st['modal'] and shots.get('_calcn', 0) < 3:
+          shots['_calcn'] = shots.get('_calcn', 0) + 1; k = shots['_calcn']
+          pg.click('#calcpill'); pg.wait_for_timeout(400); pg.screenshot(path=f'{out}/calc{k}_{tag}.png'); print('CALC', k, pg.evaluate("document.querySelector('.calc').innerText.replace(/\\n+/g,' | ')")[:700]); pg.keyboard.press('Escape'); pg.wait_for_timeout(200); continue
         if st['order']:
           snap('order'); pg.click('.order [data-a=best]'); pg.wait_for_timeout(200); pg.click('.order [data-a=ok]'); continue
         if st['cover']: pg.click('.cover button'); continue
