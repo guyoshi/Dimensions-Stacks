@@ -776,3 +776,14 @@ button, .playbig, .daily, [data-act], [data-go], [data-tab], [data-top] { -webki
 select { color-scheme: dark; }
 select option, select optgroup { background-color: #1d2027; color: #ede7d6; }
 select option:checked { background-color: #3a4256; color: #fff; }
+
+/* desktop: a arte da carta fica grande, à esquerda do texto e dos atributos */
+@media (min-width: 900px) and (min-height: 640px) {
+  #dock { max-height: 60%; padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); }
+  #dock .sheet.pick1 { max-width: 920px; grid-template-columns: auto minmax(0, 1fr); column-gap: 26px; row-gap: 8px; align-items: center; }
+  #dock .sheet.pick1 .cardbox { grid-column: 1; grid-row: 1 / span 3; align-self: center; }
+  #dock .sheet.pick1 .txt { grid-column: 2; grid-row: 1; }
+  #dock .sheet.pick1 .attrs { grid-column: 2; grid-row: 2; }
+  #dock .sheet.pick1 .spline { grid-column: 2; grid-row: 3; }
+  #dock .sheet.pick1 .attrbtn { min-height: 58px; }
+}

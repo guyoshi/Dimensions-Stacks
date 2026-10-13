@@ -561,11 +561,23 @@
           : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`;
-        const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div></div>
+        const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div></div>
           <div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
           ${spLine(entry.card, combat, canPrep)}</div>`);
-        $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: Math.min(96, V.cw || 96), stats: entry.stats }));
-        return ask(node, '.attrbtn, .prepbtn');
+          const big = window.matchMedia && window.matchMedia('(min-width: 900px) and (min-height: 640px)').matches;
+          $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats }));
+          return node; };
+        for (;;) {
+          const v = await ask(mk(), '.attrbtn, .prepbtn');
+          if (v !== '@prep') return v;
+          // mostra o que o especial faz e só então confirma
+          const sp = E.SPECIALS[CARDS[entry.card].especial];
+          const cf = el(`<div class="sheet"><div class="txt"><h3>✦ ${esc(sp.nome)}</h3><div class="hint">${esc(sp.texto)}</div>
+            ${sp.stub ? '<div class="hint">⚠ Efeito ainda não implementado: ao virar, nada acontece e a carta vai ao Buraco Negro.</div>' : ''}
+            <div class="hint">A carta sai do combate, fica fechada ao seu lado e a próxima do baralho entra no lugar.</div>
+            <div class="row"><button class="btn primary sm" data-v="go">Usar como especial</button><button class="btn sm" data-v="back">Voltar</button></div></div></div>`);
+          if (await ask(cf, '[data-v]') === 'go') return v;
+        }
       },
       async special(p, usable, combat, ctx, stage) {
         await cover(p); if (U.tip) await U.tip('special');

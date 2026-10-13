@@ -96,7 +96,7 @@
 "AE-094": "Inverte a ordem das suas 3 próximas cartas.",
 "AE-095": "Manda a próxima carta de um rival para o fim do baralho dele.",
 "AE-096": "Mistura baralho e reserva de um rival; ele refaz o baralho com 5 cartas.",
-"AE-097": "Escolhe até 7 cartas da sua reserva e as põe no topo, na ordem que quiser.",
+"AE-097": "Você olha sua reserva, escolhe até 7 cartas e as põe no topo do baralho, na ordem que quiser: serão as próximas que você joga.",
 "AE-098": "Vê as 4 primeiras cartas da sua reserva e as reordena.",
 "AE-099": "Move a primeira carta da reserva para o fim do baralho.",
 "AE-100": "Vê 3 cartas de um rival e escolhe qual fica no topo.",
