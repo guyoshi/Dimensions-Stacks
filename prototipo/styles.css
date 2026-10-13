@@ -771,3 +771,8 @@ button, .playbig, .daily, [data-act], [data-go], [data-tab], [data-top] { -webki
 .mrow { display: flex; align-items: center; gap: 10px; text-align: left; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg2); color: var(--ink); cursor: pointer; font-family: inherit; min-width: 0; }
 .mrow:hover { border-color: var(--nexus); } .mrow .mn { display: flex; flex-direction: column; min-width: 0; } .mrow small { color: var(--ink2); font-size: 11.5px; }
 .unlocks .u.mu svg { color: inherit; width: 20px; height: 20px; }
+
+/* listas suspensas nativas: fundo opaco escuro e texto claro (antes o texto ficava branco sobre a lista branca) */
+select { color-scheme: dark; }
+select option, select optgroup { background-color: #1d2027; color: #ede7d6; }
+select option:checked { background-color: #3a4256; color: #fff; }

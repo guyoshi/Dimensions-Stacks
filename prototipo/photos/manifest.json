@@ -516,12 +516,12 @@
   },
   "V18": {
    "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Grande Pai Gaia.png",
-   "mtimeMs": 1791850800552,
-   "bytes": 3410640,
-   "sha1": "7384e14740",
+   "mtimeMs": 1791852291334,
+   "bytes": 3267787,
+   "sha1": "cdc85d5430",
    "w": 720,
    "h": 1080,
-   "webp": 248562
+   "webp": 259226
   },
   "V19": {
    "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Seti.png",
@@ -567,6 +567,24 @@
    "w": 720,
    "h": 1080,
    "webp": 196534
+  },
+  "S01": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Jasmey Badrock.png",
+   "mtimeMs": 1791885398830,
+   "bytes": 2987736,
+   "sha1": "0389793b1a",
+   "w": 720,
+   "h": 1080,
+   "webp": 192632
+  },
+  "S15": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Tersário - conceito 01.png",
+   "mtimeMs": 1791886193468,
+   "bytes": 3029438,
+   "sha1": "19ca98ba30",
+   "w": 720,
+   "h": 1080,
+   "webp": 201784
   }
  }
 }
