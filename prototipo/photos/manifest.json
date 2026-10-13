@@ -846,6 +846,24 @@
    "w": 720,
    "h": 1080,
    "webp": 67190
+  },
+  "V24": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Maria Santoro.png",
+   "mtimeMs": 1791851398260,
+   "bytes": 2590967,
+   "sha1": "b0b66dddef",
+   "w": 720,
+   "h": 1080,
+   "webp": 127614
+  },
+  "V25": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Eshley Damaris.png",
+   "mtimeMs": 1791851334987,
+   "bytes": 2736846,
+   "sha1": "09662d0236",
+   "w": 720,
+   "h": 1080,
+   "webp": 168974
   }
  }
 }

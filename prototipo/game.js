@@ -590,6 +590,17 @@
           const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div><button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
           $('.cb', pk).append(cardEl(id, { up: true, noanim: true, cw: 72 })); node.append(pk);
         });
+        // outros especiais preparados que não aparecem como opção: explica por que
+        (p.prepared || []).filter(id => CARDS[id] && !usable.includes(id)).forEach(id => {
+          const sp = E.SPECIALS[CARDS[id].especial]; if (!sp) return;
+          const why = combat && combat.locked && combat.locked.has(id) ? 'Bloqueado nesta disputa.'
+            : sp.phase === 'ctrl' && stage !== 'ctrl' ? 'Especial de controle: só podia ser virado antes da escolha dos atributos.'
+            : sp.phase !== 'ctrl' && stage === 'ctrl' ? 'Você poderá virar esta depois da revelação (só 1 especial por disputa).'
+            : stage === 'second' ? 'Não combina como segundo especial.'
+            : 'Não pode ser virado agora: a condição do efeito não é atendida nesta disputa.';
+          const pk = el(`<div class="specpick off"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div><div class="spt why">${why}</div></div></div>`);
+          $('.cb', pk).append(cardEl(id, { up: true, noanim: true, cw: 72 })); node.append(pk);
+        });
         node.append(el('<button class="btn" data-v="none">Manter fechado</button>'));
         const v = await ask(node, '[data-v]'); return v === 'none' ? null : v;
       },

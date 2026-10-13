@@ -30,6 +30,7 @@ async function scn(id, title, o) {
     async bot_attr(p, entry, options) { const w = attrs[p.pid]; return w && options.includes(w) ? w : options[0]; }
   }
   const g = new G({ players, perPlayer: 7, seed: o.seed || 5, specialsFrom: 1, io: { log: t => logs.push(t), notify: async (t, d) => { ev.push({ t, d }); if (t === 'reveal') reveal = d.combat.entries.map(e => ({ pid: e.pid, attr: e.attr, v: e.stats[e.attr] + e.bonus, card: e.card })); if (t === 'resolved') result = d.result; } } });
+  g.blindNow = () => false; // sem falhas aleatórias de bot: o teste verifica o efeito, não a sorte do sorteio
   g._done = new Set(); await g.setup(); g.s.initiator = 0;
   const W = world(g, o.world); if (o.setup) o.setup(g, W);
   const tot = () => { const a = []; g.s.players.forEach(p => a.push(...p.deck, ...p.reserve, ...p.prepared)); g.s.bh.forEach(x => a.push(x.id)); return a; };

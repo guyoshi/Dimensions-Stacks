@@ -84,6 +84,8 @@
     ['V21', 'Shirley Ainsworth', 'viajantes', 'Senavelita de luz e amiga de Banjo'],
     ['V22', 'Nicolas Corvane', 'viajantes', 'Gêmeo de Erick, aprendiz de McCroys'],
     ['V23', 'Erick Corvane', 'viajantes', 'Gêmeo de Nicolas, aprendiz de McCroys'],
+    ['V24', 'Maria Santoro', 'viajantes', 'Aprendiz de Belfex e melhor amiga de Eshley'],
+    ['V25', 'Eshley Damaris', 'viajantes', 'Aprendiz veloz criada pela avó dimensal'],
     // Spacetheft
     ['S01', 'Jasmey Badrock', 'spacetheft', 'Pirata Dale e protagonista; braço metálico', 1],
     ['S02', 'Amanda', 'spacetheft', 'Aliada de Jasmey, crítica do regime da Lebargan'],

@@ -40,3 +40,22 @@ Também a pedido do autor: **Tersário, A Engenheira, Luna Stellar e Alekta** (*
 - **Alekta:** pirata de Tzough, sarcástica, orgulhosa e ágil; seduz Jasmey, planeja fugir com ele, depois o entrega ao capitão e reaparece na fuga, sendo deixada para trás.
 
 Pontos a conferir: atributos/especiais são propostas da IA (efeitos já equipados; AE-067, AE-085, AE-039 e AE-116 passam a ter duas cartas); falta foto das quatro; o Tersário é uma criatura (não um personagem individual), confirmar se deve ser carta única.
+
+---
+
+# Novas cartas V24–V25 (13/10/2026) — Viajantes Dimensionais, aguardando aprovação
+
+A pedido do autor: **Maria Santoro** e **Eshley Damaris** (*A Patrulha de Korvo*). Baralho: **97 cartas**. Mesmo status (`PROPOSTA_AGUARDANDO_APROVACAO`, faixa PRÉVIA). Fotos: `Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/`.
+
+| ID | Carta | ATQ | DEF | INT | VEL | Soma | Perfil | Especial | Por quê |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
+| V24 | Maria Santoro | 38 | 82 | 66 | 69 | 255 | Padrão | **AE-080 Anular modificador** | Cria barreiras de vento: anula um bônus ou redução na carta em combate. DEF alta (barreira), ATQ baixo (tímida). Soma alinhada a V03 Banjo (255). |
+| V25 | Eshley Damaris | 45 | 62 | 75 | 88 | 270 | Padrão | **AE-051 Troca escolhida** | Joga marqe no Fulgor Dourado, passa a bola e faz troca de jogadas com os aliados: troca 1 carta sua por 1 aleatória de um rival. VEL alta, INT boa (curiosa, estudiosa). Soma alinhada a D07 Ingrid (270). |
+
+## Base narrativa (manuscrito)
+- **Maria:** tímida e gentil, vem da 3ª dimensão, mora com a mãe e o irmãozinho e cuida dele; usa barreiras de vento no dassi e monta uma lárida celestial; melhor amiga de Eshley, deixa o colar para Beatriz e é eliminada nos desafios, partindo com o tutor Leon.
+- **Eshley:** dimensal de Neredis, órfã criada pela avó (que não passou no teste de dimensal); usa óculos, cuida de volhas, é curiosa e cheia de energia; joga marqe com Beatriz, Banjo e Shirley nos Drakons do Fulgor Dourado.
+
+## Pontos a conferir pelo autor
+1. Atributos, perfil e especial são propostas da IA, como nas demais; reatribuir se preferir outro especial.
+2. Ambos os especiais já estavam equipados em outras cartas (AE-080 passa a ter 2 cartas, AE-051 também).

@@ -787,3 +787,5 @@ select option:checked { background-color: #3a4256; color: #fff; }
   #dock .sheet.pick1 .spline { grid-column: 2; grid-row: 3; }
   #dock .sheet.pick1 .attrbtn { min-height: 58px; }
 }
+.specpick.off { opacity: .55; filter: grayscale(.6); }
+.specpick .why { color: var(--gold2); font-style: italic; }

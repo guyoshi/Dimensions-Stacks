@@ -20,7 +20,7 @@ try:
     pg.click('[data-tab=coll], [data-go=coll]'); pg.wait_for_selector('#cgrid .card')
     n = lambda: pg.evaluate("document.querySelectorAll('#cgrid .card').length")
     names = lambda: pg.evaluate("[...document.querySelectorAll('#cgrid .card')].map(c => c.dataset.id)")
-    chk(n() == 95, "todas as 95 cartas")
+    chk(n() == 97, "todas as 97 cartas")
     pg.fill('#cq', 'kaelina'); pg.wait_for_timeout(300); chk(names() == ['J08'], 'busca por nome (Kaelina → J08): %s' % names())
     pg.fill('#cq', 'DIARIO sobrenatural'); pg.wait_for_timeout(300); chk(n() == 18 and all(x.startswith('D') for x in names()), 'busca sem acento/caixa por série: %d' % n())
     pg.fill('#cq', 'buraco negro'); pg.wait_for_timeout(300); chk(0 < n() < 20, 'busca por texto de especial (buraco negro): %d cartas' % n())

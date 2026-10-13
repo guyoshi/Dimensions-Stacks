@@ -5,10 +5,10 @@
     "status": "APROVADO_PELO_AUTOR",
     "data_aprovacao": "2026-10-12",
     "idioma": "pt-BR",
-    "total_cartas": 95,
+    "total_cartas": 97,
     "origens": {
       "J": 23,
-      "V": 23,
+      "V": 25,
       "S": 18,
       "D": 18,
       "M": 12,
@@ -32,7 +32,7 @@
     "regras": "docs/REGRAS.md",
     "contrato": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
     "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta.",
-    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação)."
+    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação). V24 Maria Santoro e V25 Eshley Damaris (Viajantes Dimensionais) também adicionadas a pedido do autor, com o mesmo status."
   },
   "cartas": [
     {
@@ -2239,6 +2239,56 @@
       },
       "status": "PROPOSTA_AGUARDANDO_APROVACAO",
       "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outras cartas com o mesmo especial), aguardando aprovação."
+    },
+    {
+      "id": "V24",
+      "nome": "Maria Santoro",
+      "origem": {
+        "codigo_serie": "V",
+        "cor_base": "azul"
+      },
+      "descricao_curta": "Aprendiz tímida e gentil vinda da 3ª dimensão; ergue barreiras de vento. Melhor amiga de Eshley, deixa o treino cedo.",
+      "atributos": {
+        "ATQ": 38,
+        "DEF": 82,
+        "INT": 66,
+        "VEL": 69
+      },
+      "soma_atributos": 255,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-080",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "V-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outra carta com o mesmo especial), aguardando aprovação."
+    },
+    {
+      "id": "V25",
+      "nome": "Eshley Damaris",
+      "origem": {
+        "codigo_serie": "V",
+        "cor_base": "azul"
+      },
+      "descricao_curta": "Dimensal órfã criada pela avó, sonhava treinar com Tayo; veloz e curiosa, faz passes certeiros no Fulgor Dourado.",
+      "atributos": {
+        "ATQ": 45,
+        "DEF": 62,
+        "INT": 75,
+        "VEL": 88
+      },
+      "soma_atributos": 270,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-051",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "V-manuscrito",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outra carta com o mesmo especial), aguardando aprovação."
     },
     {
       "id": "S15",
