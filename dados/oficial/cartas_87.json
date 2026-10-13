@@ -2262,8 +2262,8 @@
         "fonte": "V-manuscrito",
         "confianca": "Alta"
       },
-      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outra carta com o mesmo especial), aguardando aprovação."
+      "status": "APROVADA_PELO_AUTOR",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outra carta com o mesmo especial), aguardando aprovação. Atributos aprovados pelo autor em 13/10/2026; especial segue como proposta."
     },
     {
       "id": "V25",
@@ -2287,8 +2287,8 @@
         "fonte": "V-manuscrito",
         "confianca": "Alta"
       },
-      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outra carta com o mesmo especial), aguardando aprovação."
+      "status": "APROVADA_PELO_AUTOR",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito; atributos e especial propostos pela IA (soma alinhada à de outra carta com o mesmo especial), aguardando aprovação. Atributos aprovados pelo autor em 13/10/2026; especial segue como proposta."
     },
     {
       "id": "S15",
