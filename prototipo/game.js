@@ -223,7 +223,7 @@
   }
   function gameMenu() {
     SND.play('click');
-    const n = el(`<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px"><h2 style="color:var(--gold2)">Pausa</h2>
+    const n = el(`<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px"><h2 style="color:var(--gold2)">Pausa</h2>${V.online && V.ctl && V.ctl.link ? `<div class="hint">Sala <b style="color:var(--gold2);letter-spacing:.2em">${esc(V.ctl.link.code)}</b> · se a conexão cair, abra Multiplayer e toque em "Voltar à sala" para retomar do ponto onde parou.</div>` : ''}
       <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button>${V.online ? '' : '<button class="btn" data-a="n">↻ Reiniciar partida</button>'}<button class="btn" data-a="q">${V.online ? 'Sair da partida' : 'Abandonar partida'}</button></div>`);
     const m = U.modal(n); let sure = false, sureN = false;
     n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a;
@@ -243,7 +243,7 @@
       const ps = V.pos[p.pid];
       const seat = el(`<div class="seat pos-${ps}${ps === 'b' ? ' me' : ''}" data-pid="${p.pid}" style="--pc:${PCOL[p.pid]}">
         <div class="avatar" style="--pc:${PCOL[p.pid]}">${esc(p.name[0].toUpperCase())}</div>
-        <div class="who"><div class="nm">${esc(p.name)}${p.bot ? ' 🤖' : ''} <span class="turnflag" hidden>INICIA</span></div>
+        <div class="who"><div class="nm">${esc(p.name)}<span class="bt">${p.bot ? ' 🤖' : ''}</span> <span class="turnflag" hidden>INICIA</span></div>
         <div class="cnt"><span title="Baralho ativo"><i class="mini"></i><b class="cd">0</b></span><span title="Reserva"><i class="mini res"></i><b class="cr">0</b></span><span class="prepslots" title="Especiais preparados"><i class="prepslot"></i><i class="prepslot"></i></span></div></div></div>`);
       V.seats[p.pid] = seat;
       const host = ps === 'b' ? '.r-bot' : ps === 'l' ? '.sideL' : ps === 'r' ? '.sideR' : '.r-top';
@@ -274,12 +274,12 @@
       const seat = V.seats[p.pid]; if (!seat) return;
       $('.cd', seat).textContent = p.deck.length; $('.cr', seat).textContent = p.reserve.length;
       $$('.prepslot', seat).forEach((x, i) => x.classList.toggle('on', i < p.prepared.length));
-      seat.classList.toggle('dead', !p.alive);
+      seat.classList.toggle('dead', !p.alive); { const bt = $('.bt', seat); if (bt) bt.textContent = p.bot ? ' 🤖' : ''; }
       const turn = V.init === p.pid && p.alive && !s.over;
       seat.classList.toggle('turn', turn); $('.turnflag', seat).hidden = !turn;
     });
     const bh = $('#bhn'); if (bh) bh.textContent = s.bh.length;
-    const sub = $('#hSub'); if (sub) sub.textContent = `Rodada ${s.round} · Disputa ${Math.min(s.combats + 1, 9999)}${V.init != null ? ' · inicia ' + nameOf(V.init) : ''}`;
+    const sub = $('#hSub'); if (sub) sub.textContent = `Rodada ${s.round} · Disputa ${Math.min(s.combats + 1, 9999)}${V.init != null ? ' · inicia ' + nameOf(V.init) : ''}${V.online && V.ctl && V.ctl.link ? ' · Sala ' + V.ctl.link.code : ''}`;
   }
   function pulseBH() { const b = $('#bh'); if (!b) return; b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse'); refresh(); }
 
@@ -786,11 +786,39 @@
       const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i }));
       G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, seed: cfg.seed, io });
       U.game = G;
-      off.push(link.onPeers(ch => ch.left.forEach(pe => {
-        const i = seats.findIndex(s => s.peer === pe.peer); if (i < 0 || !G.p(i) || G.p(i).bot) return;
-        G.p(i).bot = true; G.log(`${G.p(i).name} desconectou. Um bot assumiu o lugar.`, 'efeito');
-        pending.forEach(q => { if (q.peer === pe.peer) q.finish(undefined); });
-      })));
+      // queda de conexão: carência de 25 s (reconexões rápidas são normais); depois um CPU assume, com aviso na tela. O jogador pode voltar ao lugar.
+      const grace = new Map(), present = peer => !!peer && link.peers().some(p => p.peer === peer);
+      const notice = (title, sub) => { banner(title, sub, '#ffd25f', 3200); send({ n: ++seq, t: 'notice', title, sub }); };
+      const publishRj = () => { if (closed) return; const rj = seats.map((s, i) => ({ s, i })).filter(x => x.s.u && x.s.peer !== link.me && G.p(x.i) && (G.p(x.i).bot || !present(x.s.peer))).map(x => ({ i: x.i, u: x.s.u, n: x.s.name })); link.presence({ rj }).catch(() => { }); };
+      const toBot = i => {
+        const p = G.p(i); if (!p || p.bot || closed) return; const old = seats[i].peer;
+        p.bot = true; G.log(`${p.name} saiu da partida. Um CPU assumiu o lugar.`, 'efeito');
+        notice(`${p.name} saiu`, 'Um CPU assumiu o lugar');
+        pending.forEach(q => { if (q.peer === old) q.finish(undefined); }); publishRj();
+      };
+      const sync = i => { const peer = seats[i].peer; if (!peer || closed) return; send({ n: ++seq, t: 'sync', st: P.state(i), cb: P.f.combatOn && G.combat ? P.cb(G.combat, i) : null }, peer); };
+      off.push(link.onPeers(ch => {
+        ch.left.forEach(pe => {
+          const i = seats.findIndex(s => s.peer === pe.peer); if (i < 0 || !G.p(i) || G.p(i).bot || grace.has(pe.peer)) return;
+          notice(`${G.p(i).name} perdeu a conexão`, 'Aguardando 25 s antes de passar para o CPU');
+          grace.set(pe.peer, setTimeout(() => { grace.delete(pe.peer); if (!closed && seats[i].peer === pe.peer && !present(pe.peer)) toBot(i); }, 25000));
+        });
+        ch.joined.forEach(pe => { if (grace.has(pe.peer)) { clearTimeout(grace.get(pe.peer)); grace.delete(pe.peer); const i = seats.findIndex(s => s.peer === pe.peer); if (i >= 0) { notice(`${G.p(i).name} voltou`, 'Conexão restabelecida'); sync(i); } } });
+        publishRj();
+      }));
+      off.push(() => grace.forEach(t => clearTimeout(t)));
+      off.push(link.on('msg', (d, m) => {
+        if (!d || d.t !== 'rejoin') return;
+        const i = seats.findIndex((s, k) => k === d.i && s.peer !== link.me && ((s.u && s.u === d.u) || s.name === d.n)); if (i < 0 || !G.p(i)) return;
+        const old = seats[i].peer; if (old && old !== m.peer && present(old)) return;   // o dono original ainda está conectado
+        if (grace.has(old)) { clearTimeout(grace.get(old)); grace.delete(old); }
+        pending.forEach(q => { if (q.peer === old) q.finish(undefined); });
+        const was = G.p(i).bot || old !== m.peer; seats[i].peer = m.peer; G.p(i).bot = false;
+        if (was) { G.log(`${G.p(i).name} voltou e reassumiu o lugar do CPU.`, 'efeito'); notice(`${G.p(i).name} voltou`, 'Reassumiu o lugar do CPU'); }
+        publishRj();
+        link.send('go', Object.assign({}, cfg, { seats: seats.map(s => ({ name: s.name, bot: s.bot, peer: s.peer, u: s.u })), rejoin: i }), m.peer).catch(() => { });
+        setTimeout(() => sync(i), 900); setTimeout(() => sync(i), 3000);
+      }));
       try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
       return;
     }
@@ -800,19 +828,22 @@
       p(pid) { return this.s.players[pid]; }, alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); } };
     U.game = G;
     const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit'].forEach(k => { G.s[k] = st[k]; }); };
-    let last = 0, queue = Promise.resolve(); const answered = new Map(), inflight = new Set();
+    let last = 0, synced = !ctl.rejoin, queue = Promise.resolve(); const answered = new Map(), inflight = new Set();
     const enqueue = fn => { queue = queue.then(fn).catch(e => { if (e !== 'abort') console.error('online', e); }); };
     off.push(link.on('ev', (m, msg) => {
       if (msg.peer !== ctl.hostPeer || m.n <= last) return; last = m.n;
+      if (m.t === 'notice') { banner(m.title, m.sub, '#ffd25f', 3200); return; }
+      if (ctl.rejoin && !synced && m.t !== 'sync') return;   // reentrada: só acompanha depois do primeiro retrato da mesa
       enqueue(async () => {
         if (m.st) applyState(m.st); if (m.cb !== undefined) V.combat = m.cb;
+        if (m.t === 'sync') { synced = true; if (!Object.keys(V.seats).length) buildBoard(); V.init = G.s.initiator; refresh(); banner('Você voltou à partida', V.online && V.ctl ? 'Sala ' + V.ctl.link.code : '', '#7dffb0', 2600); caption('Você voltou à partida.'); return; }
         if (m.t === 'log') { m.lg.forEach(([t, c]) => local.log(t, c)); return; }
         if (m.t === 'waiting') { const p = G.p(m.pid); if (p) { caption(m.pid === V.viewer ? 'Sua vez de decidir.' : `Aguardando ${p.name}…`); if (m.pid !== V.viewer && m.tl) tmrStart(m.tl + 2, { label: p.name }); } return; }
         await local.notify(m.t, m.d || {});
       });
     }));
     off.push(link.on('ask', (m, msg) => {
-      if (msg.peer !== ctl.hostPeer) return;
+      if (msg.peer !== ctl.hostPeer || (ctl.rejoin && !synced)) return;
       if (answered.has(m.id)) { link.send('ans', { id: m.id, v: answered.get(m.id) }).catch(() => { }); return; }
       if (inflight.has(m.id)) return; inflight.add(m.id);
       enqueue(async () => {
@@ -821,7 +852,13 @@
         link.send('ans', { id: m.id, v: out }).catch(() => { });
       });
     }));
-    off.push(link.onPeers(() => { if (!closed && !link.peers().some(p => p.peer === ctl.hostPeer) && !G.s.over) leaveNow('O anfitrião saiu da partida.'); }));
+    let hostGone = null;   // carência: queda curta de conexão não derruba a partida
+    off.push(link.onPeers(() => {
+      if (closed || G.s.over) return; const has = link.peers().some(p => p.peer === ctl.hostPeer);
+      if (has) { if (hostGone) { clearTimeout(hostGone); hostGone = null; caption('Conexão restabelecida.'); } }
+      else if (!hostGone) { caption('Reconectando à sala…'); hostGone = setTimeout(() => { hostGone = null; if (!closed && !G.s.over && !link.peers().some(p => p.peer === ctl.hostPeer)) leaveNow('O anfitrião saiu da partida. Sala ' + link.code + ': se ele voltar, use "Voltar à sala".'); }, 25000); }
+    }));
+    off.push(() => { if (hostGone) clearTimeout(hostGone); });
   };
 
   // toque numa carta da mesa: abre a carta grande (a minha, ou as viradas dos outros), com os valores já alterados por efeitos

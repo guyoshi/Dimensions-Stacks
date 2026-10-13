@@ -106,6 +106,7 @@
   function genCode() { let s = ''; for (let i = 0; i < 4; i++) s += CODE_CH[Math.floor(Math.random() * CODE_CH.length)]; return s; }
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+  function lastRoom() { try { const r = store.get('lastRoom', null); return r && r.code && Date.now() - r.t < 6 * 3600e3 ? r.code : ''; } catch (e) { return ''; } }
   function entry(msg, kind) {
     const s = section(); const nm = myName();
     const canReal = !!(window.claude && window.claude.use);
@@ -113,12 +114,12 @@
       <h2>Multiplayer</h2>
       <p class="hint">Cada jogador no seu aparelho. Um cria a sala e passa o código; os outros entram com ele.${canReal ? '' : '<br><b>Modo local:</b> aqui só funciona entre abas do mesmo navegador (útil para testar). Online de verdade, só abrindo pelo link do Claude.'}</p>
       <div class="who">${nm ? `${U.avatarHTML ? U.avatarHTML(window.DSSTATS.profile().avatar, nm, 40) : ''}<div class="whot"><b>${esc(nm)}</b><small>${esc(myUid())}</small></div>` : '<div class="whot"><b>Você ainda não tem um nome</b><small>Defina no Perfil para jogar online.</small></div>'}<button class="btn sm" data-a="prof">${nm ? 'Editar no Perfil' : 'Ir ao Perfil'}</button></div>
-      <div class="row" style="margin-top:14px"><button class="btn primary" data-a="create">Criar sala</button></div>
+      <div class="row" style="margin-top:14px"><button class="btn primary" data-a="create">Criar sala</button>${lastRoom() ? `<button class="btn" data-a="back2">↩ Voltar à sala ${esc(lastRoom())}</button>` : ''}</div>
       <div class="lbl" style="margin-top:16px">Ou entrar com um código</div>
       <div class="row"><input type="text" id="onCode" maxlength="4" placeholder="KX7Q" class="txtin codein" autocapitalize="characters" autocomplete="off"><button class="btn" data-a="join">Entrar</button></div>
       <div class="onmsg ${kind || ''}" id="onMsg">${esc(msg || '')}</div>
       <div class="row" style="margin-top:12px"><button class="btn ghost" data-a="back">← Voltar</button></div></div></div>`;
-    const inp = $('#onCode', s); inp.oninput = () => { inp.value = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); };
+    const inp = $('#onCode', s); if (lastRoom()) inp.value = lastRoom(); inp.oninput = () => { inp.value = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); };
     s.onclick = async e => {
       const b = e.target.closest('[data-a]'); if (!b) return; SND.init(); SND.play('click');
       const a = b.dataset.a;
@@ -127,6 +128,7 @@
       const name = myName();
       if (!name) return flash('Defina seu nome no Perfil primeiro.', 'err');
       if (a === 'create') return doCreate(name);
+      if (a === 'back2') { inp.value = lastRoom(); return doJoin(name, lastRoom()); }
       if (a === 'join') { const c = inp.value.trim(); if (c.length !== 4) return flash('O código tem 4 letras/números.', 'err'); return doJoin(name, c); }
     };
   }
@@ -157,7 +159,14 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     while (Date.now() - t0 < 6000) { host = link.peers().find(p => !p.sameTab && p.presence && p.presence.h); if (host) break; await sleep(250); }
     if (!host) { await link.leave(); busy(false); return flash('Sala não encontrada. Confira o código (e se o anfitrião ainda está nela).', 'err'); }
     if (host.presence.v !== VER) { await link.leave(); busy(false); return flash('Versões diferentes do jogo. Recarregue a página e tente de novo.', 'err'); }
-    if (host.presence.go) { await link.leave(); busy(false); return flash('Essa partida já começou.', 'err'); }
+    if (host.presence.go) {
+      const rj = (host.presence.rj || []).find(x => (x.u && x.u === myUid()) || x.n === name);
+      if (!rj) { await link.leave(); busy(false); return flash('Essa partida já começou e não há lugar livre para você (só quem estava jogando pode voltar).', 'err'); }
+      lobbyGuest(link, code, name, host.peer); sess.rejoining = true; renderLobby();
+      const ask = () => link.send('msg', { t: 'rejoin', u: myUid(), n: name, i: rj.i }, host.peer).catch(() => { });
+      ask(); let tries = 0; const iv = setInterval(() => { if (!sess || sess.started || ++tries > 8) return clearInterval(iv); ask(); }, 2500);
+      sess.unsub.push(() => clearInterval(iv)); return;
+    }
     const humans = link.peers().filter(p => p.presence && p.presence.n).length;
     if (humans > 4) { await link.leave(); busy(false); return flash('Sala cheia (máximo 4 jogadores).', 'err'); }
     lobbyGuest(link, code, name, host.peer);
@@ -175,13 +184,16 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   async function leaveRoom(toMenu) { const s = sess; stopSess(); if (s) await s.link.leave(); if (toMenu !== false) { U.show('menu'); } }
   U.onlineLeave = () => leaveRoom(true);
 
+  const remember = code => { try { store.set('lastRoom', { code, t: Date.now() }); } catch (e) { } };
   function lobbyHost(link, code, name) {
+    remember(code);
     sess = { link, role: 'host', code, name, join: [], unsub: [], cfg: Object.assign({ n: 2, per: 12, diff: 'normal' }, store.get('onlineCfg', {}), { sf: window.__dsSf === 1 ? 1 : 2 }) };
     link.presence({ n: name, u: myUid(), h: 1, v: VER, cfg: sess.cfg });
     sess.unsub.push(link.onPeers(() => renderLobby()));
     U.show('online'); renderLobby();
   }
   function lobbyGuest(link, code, name, hostPeer) {
+    remember(code);
     sess = { link, role: 'guest', code, name, hostPeer, join: [], unsub: [] };
     sess.unsub.push(link.onPeers(ch => {
       const h = link.peers().find(p => p.peer === hostPeer);
@@ -213,7 +225,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       <div class="seg" data-k="diff">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${cfg.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${per}" id="per">`
-        : `<div class="onwait">Aguardando o anfitrião iniciar a partida…</div><div class="hint">Mesa de ${N} · bots ${({ facil: 'fáceis', normal: 'normais', dificil: 'difíceis' })[cfg.diff] || 'normais'} · ${per} cartas por jogador</div>`}
+        : `<div class="onwait">${sess.rejoining ? 'Voltando para a partida em andamento…' : 'Aguardando o anfitrião iniciar a partida…'}</div><div class="hint">Mesa de ${N} · bots ${({ facil: 'fáceis', normal: 'normais', dificil: 'difíceis' })[cfg.diff] || 'normais'} · ${per} cartas por jogador</div>`}
       <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-a="leave">← Sair da sala</button>${isHost ? `<button class="btn primary" data-a="start" ${canStart ? '' : 'disabled'}>Começar ▶</button>` : ''}</div>
     </div></div>`;
     s.onclick = async e => {
@@ -233,7 +245,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   // ---------------------------------------------------------------- início
   function seatsFor(hum, N) {
     const used = []; const uniq = n => { let x = n || 'Jogador', k = 2; while (used.includes(x)) x = (n || 'Jogador') + ' ' + (k++); used.push(x); return x; };
-    const seats = hum.map(p => ({ name: uniq(p.presence.n), bot: false, peer: p.peer }));
+    const seats = hum.map(p => ({ name: uniq(p.presence.n), bot: false, peer: p.peer, u: p.presence.u || '' }));
     while (seats.length < N) seats.push({ name: uniq(U.randBot(used)), bot: true, peer: null });
     return seats;
   }
@@ -250,10 +262,10 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   // uma partida (anfitrião ou convidado): hand-off para game.js
   function begin(go) {
     if (!sess) return; const link = sess.link; const me = link.me;
-    const viewer = go.seats.findIndex(x => x.peer === me); if (viewer < 0) return;
+    const viewer = go.rejoin != null ? go.rejoin : go.seats.findIndex(x => x.peer === me); if (viewer < 0) return;
     sess.started = true;
     const ctl = {
-      role: sess.role, link, seats: go.seats, viewer, cfg: go, hostPeer: sess.hostPeer || me,
+      role: sess.role, link, seats: go.seats, viewer, cfg: go, rejoin: go.rejoin != null, hostPeer: sess.hostPeer || me,
       leave: () => leaveRoom(true),
       again: sess.role === 'host' ? () => {
         const present = new Set(link.peers().map(p => p.peer));
