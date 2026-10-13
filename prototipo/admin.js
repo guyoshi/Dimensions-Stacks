@@ -125,6 +125,11 @@
         ${!hot.length && !cold.length ? '<div class="hint">Nenhuma carta fora do esperado ainda — rode mais partidas.</div>' : ''}
         <div class="tblw tall"><table class="adm-t" id="cardT"><thead><tr>${th('nome', 'Carta')}${th('p', 'Em jogo')}${th('k', 'Disputas')}${th('wr', 'Vitória')}${th('z', 'z')}${th('sr', 'Especial')}</tr></thead><tbody>${rows.map(r => `<tr class="${r.z > 2 ? 'hot' : r.z < -2 ? 'cold' : ''}"><td><i class="sdot" style="background:${SERIES[r.serie] ? SERIES[r.serie].cor : '#888'}"></i>${esc(r.nome)}</td><td>${r.p}</td><td>${r.k}</td><td>${Math.round(r.wr * 100)}%</td><td>${r.z.toFixed(1)}</td><td>${r.s ? Math.round(r.sr * 100) + '%' : '—'}</td></tr>`).join('') || '<tr><td colspan="6">Sem dados</td></tr>'}</tbody></table></div></section>
 
+      <section class="adm-box"><h3>Sons do jogo</h3>
+        <div class="slots">${Object.entries(U.SND.SLOTS).filter(([k]) => k !== 'menu').map(([k, t]) => `<div><button class="btn sm" data-a="snd" data-k="${k}" style="min-height:28px;padding:.2em .6em" aria-label="Ouvir ${esc(t)}">▶</button><span>${esc(t)}</span></div>`).join('')}</div>
+        <div class="adm-f" style="margin-top:10px"><span class="hint" style="align-self:center">Trilhas:</span>
+          <button class="btn sm" data-a="mus" data-v="menu">Ambiente do menu</button><button class="btn sm" data-a="mus" data-v="0">Partida · normal</button><button class="btn sm" data-a="mus" data-v="1">Partida · tensão</button><button class="btn sm" data-a="mus" data-v="2">Partida · clímax</button><button class="btn ghost sm" data-a="mus" data-v="stop">Parar</button></div>
+        <p class="hint">A trilha da partida só toca com a música ligada nas opções. Na partida real, a tensão e o clímax duram um trecho e voltam ao normal.</p></section>
       <section class="adm-box"><h3>Análise com IA</h3><div class="adm-f"><button class="btn primary sm" data-a="ai"${A.n ? '' : ' disabled'}>Analisar balanceamento</button><button class="btn ghost sm" data-a="dl"${A.n ? '' : ' disabled'}>Baixar dados (JSON)</button></div><div class="aiout" id="aiOut"></div></section>
     </div>`;
   }
@@ -144,7 +149,15 @@
       const b = e.target.closest('[data-a],th[data-s]'); if (!b) return;
       if (b.dataset.s) { if (S.sort === b.dataset.s) S.dir *= -1; else { S.sort = b.dataset.s; S.dir = b.dataset.s === 'nome' ? 1 : -1; } return paint(); }
       const a = b.dataset.a;
-      if (a === 'close') { root.remove(); root = null; stopSim.on = true; }
+      if (a === 'close') { root.remove(); root = null; stopSim.on = true; U.SND.setMode('menu'); }
+      else if (a === 'snd') { U.SND.init(); U.SND.play(b.dataset.k); }
+      else if (a === 'mus') {
+        const SND = U.SND, v = b.dataset.v; SND.init(); if (!SND.ctx) return;
+        if (v === 'stop') { SND.stopMusic(); return; }
+        if (v === 'menu') { SND.stopMusic(); SND.setMode('menu'); return; }
+        SND.setMode('game'); const m = SND.matchNodes; if (!m) return;
+        m.level = +v; m.req = +v; m.hold = v === '0' ? 0 : SND.ctx.currentTime + 40; m.cool = 0;
+      }
       else if (a === 'invite') {
         const m = el(`<div class="modal"><div class="box"><h2>Como convidar alguém</h2>
           <ol class="invsteps">

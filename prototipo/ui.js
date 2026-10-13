@@ -356,15 +356,6 @@
     draw(); SND.play('click'); U.modal(wrap);
   }
 
-  // ---- lista de sons
-  function soundList() {
-    const n = el(`<div><h2 style="color:var(--gold2);margin-bottom:6px">Lista de sons</h2>
-      <div class="slots">${Object.entries(SND.SLOTS).filter(([k]) => k !== 'menu').map(([k, t]) => `<div><button class="btn sm" data-snd="${k}" style="min-height:28px;padding:.2em .6em" aria-label="Ouvir ${esc(t)}">▶</button><span>${esc(t)}</span></div>`).join('')}</div>
-      <div class="row" style="margin-top:14px"><button class="btn ghost sm" data-back>← Opções</button></div></div>`);
-    n.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; SND.init(); if (b.dataset.snd) return SND.play(b.dataset.snd); if (b.hasAttribute('data-back')) { const x = n.closest('.modal'); const cl = x && $('.x', x); if (cl) cl.click(); options(); } });
-    SND.play('click'); U.modal(n);
-  }
-
   // ---- opções
   function options() {
     const n = el(`<div><h2 style="color:var(--gold2);margin-bottom:6px">Opções</h2>
@@ -376,12 +367,10 @@
       <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
       <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
       <div class="optrow"><span>Faixa "PRÉVIA"</span><div class="seg" data-o="showTest"><button data-v="1" class="${S.showTest ? 'on' : ''}">Mostrar</button><button data-v="0" class="${!S.showTest ? 'on' : ''}">Ocultar</button></div></div>
-      <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div>
-      <div class="optrow"><span>Sons do jogo</span><button class="btn sm" data-sounds>Ver sons</button></div></div>`);
+      <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div></div>`);
     n.addEventListener('input', e => { const o = e.target.dataset.o; if (!o) return; S[o] = +e.target.value; applyOpts(); });
     n.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return; SND.init();
-      if (b.hasAttribute('data-sounds')) { const x = n.closest('.modal'); const cl = x && $('.x', x); if (cl) cl.click(); return soundList(); }
       if (b.dataset.snd) return SND.play(b.dataset.snd);
       if (b.hasAttribute('data-tipsreset')) { U.tipsReset && U.tipsReset(); b.textContent = 'Pronto ✓'; return; }
       const seg = b.closest('.seg'); if (!seg) return; const o = seg.dataset.o, v = b.dataset.v;
