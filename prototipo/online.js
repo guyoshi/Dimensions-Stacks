@@ -19,7 +19,11 @@
 
   // ---------------------------------------------------------------- sala: real (room) ou local (BroadcastChannel)
   async function realRoom(name) {
-    try { if (!window.claude || !window.claude.use) return null; const room = await window.claude.use('room'); if (!room) return null; return await room.join(name); } catch (e) { console.warn('room', e); return null; }
+    try {
+      if (!window.claude || !window.claude.use) { U.roomWhy = 'sem runtime'; return null; }
+      const room = await window.claude.use('room'); if (!room) { U.roomWhy = 'room indisponível (use retornou null)'; return null; }
+      return await room.join(name);
+    } catch (e) { console.warn('room', e); U.roomWhy = 'join: ' + ((e && (e.code || e.message)) || e); return null; }
   }
   function mockRoom(name) {
     if (typeof BroadcastChannel === 'undefined') return null;
@@ -136,7 +140,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     for (let t = 0; t < 6; t++) {
       const code = genCode(); const link = await openLink(code);
       if (!link) { busy(false); return flash('Não foi possível abrir a conexão online neste aparelho.', 'err'); }
-      if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN, 'err'); }
+      if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN + ' [detalhe: ' + (U.roomWhy || '?') + ']', 'err'); }
       await link.presence({ n: name, u: myUid(), v: VER }); await sleep(1100);
       if (link.peers().some(p => !p.isMe && p.presence && p.presence.h)) { await link.leave(); continue; } // código já em uso
       return lobbyHost(link, code, name);
@@ -147,7 +151,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     busy(true); flash('Procurando a sala…');
     const link = await openLink(code);
     if (!link) { busy(false); return flash('Não foi possível abrir a conexão online neste aparelho.', 'err'); }
-    if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN, 'err'); }
+    if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN + ' [detalhe: ' + (U.roomWhy || '?') + ']', 'err'); }
     await link.presence({ n: name, u: myUid(), v: VER });
     let host = null; const t0 = Date.now();
     while (Date.now() - t0 < 6000) { host = link.peers().find(p => !p.isMe && p.presence && p.presence.h); if (host) break; await sleep(250); }
