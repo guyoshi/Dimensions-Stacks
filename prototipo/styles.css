@@ -936,3 +936,7 @@ select option:checked { background-color: #3a4256; color: #fff; }
 #layer:has(.order) .fxb .rs { display: none !important; }
 
 .specpick .spt.prev { color: var(--gold2); font-weight: 700; }
+
+.zoombox .spbox { padding: 10px 12px; border-radius: 12px; background: #ffffff0d; border: 1px solid var(--line); line-height: 1.45; }
+.zoombox .spbox b { color: var(--gold2); }
+.zoombox .spbox span { color: var(--ink); font-size: 14px; }
