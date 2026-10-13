@@ -66,7 +66,7 @@
     for (let i = 0; i < 26; i++) {
       const side = i % 4, p = r() * 100, o = -6 + r() * 12;   // ao longo da borda, um pouco para fora/dentro
       const x = side === 0 ? p : side === 2 ? p : side === 1 ? 100 - o : o, y = side === 1 || side === 3 ? p : side === 0 ? o : 100 - o;
-      const hue = Math.round(r() * 360), s = el(`<i style="${rainbow ? '--sc:hsl(' + hue + ' 100% 72%);--sc2:hsl(' + hue + ' 100% 62%);' : ''}left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.035 + r() * .04).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
+      const hue = Math.round(r() * 360), s = el(`<i style="${rainbow ? '--sc:hsl(' + hue + ' 100% 72%);--sc2:hsl(' + hue + ' 100% 62%);' : ''}left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--s:${(.016 + r() * .022).toFixed(3)};--d:${(2.4 + r() * 3).toFixed(1)}s;--dl:${(-r() * 6).toFixed(1)}s;--dx:${((r() - .5) * 16).toFixed(0)}%;--dy:${(-8 - r() * 18).toFixed(0)}%"></i>`);
       box.append(s);
     }
     return box;
@@ -80,7 +80,7 @@
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
-    const art = IMG[id] ? `<div class="art"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"></div>`
+    const art = IMG[id] ? `<div class="art" style="--im:url('${IMG[id]}')"><img alt="${esc(c.nome)}" src="${IMG[id]}" draggable="false"></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>

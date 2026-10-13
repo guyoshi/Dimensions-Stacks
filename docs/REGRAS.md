@@ -117,7 +117,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 | Viajantes Dimensionais | **Azul** | VIAJANTES |
 | Mistério Oculto | **Vermelha** | MISTÉRIO OCULTO |
 | Ciclo de Jesed | **Amarela** | JESED |
-| Série de Édelin / Belfex (nome da série pendente) | **Verde** | BELFEX |
+| Série de Édelin | **Verde** | SÉRIE DE ÉDELIN |
 | Diário Sobrenatural | **Roxo** | DIÁRIO SOBRENATURAL |
 | Spacetheft | **Preta** | SPACETHEFT |
 

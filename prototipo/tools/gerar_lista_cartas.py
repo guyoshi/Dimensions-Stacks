@@ -7,7 +7,7 @@ c = json.load(open(os.path.join(raiz, 'dados/oficial/cartas_87.json'), encoding=
 h = {x['id']: x for x in json.load(open(os.path.join(raiz, 'dados/oficial/habilidades_129.json'), encoding='utf-8'))['habilidades']}
 antes_p = os.path.join(raiz, 'dados/historico/cartas_87_antes_2026-10-13.json')
 antes = {x['id']: x['habilidade_especial_id'] for x in json.load(open(antes_p, encoding='utf-8'))['cartas']} if os.path.exists(antes_p) else {}
-serie = {'J': 'Ciclo de Jesed', 'V': 'Viajantes Dimensionais', 'S': 'Spacetheft', 'D': 'Diário Sobrenatural', 'M': 'Mistério Oculto', 'B': 'Édelin / Belfex'}
+serie = {'J': 'Ciclo de Jesed', 'V': 'Viajantes Dimensionais', 'S': 'Spacetheft', 'D': 'Diário Sobrenatural', 'M': 'Mistério Oculto', 'B': 'Série de Édelin'}
 o = ['# Dimensions Stacks — Cartas e Habilidades Especiais (%d cartas)' % len(c), '',
      '> Lista de todas as cartas com **número (ID)**, **nome**, **descrição** e **habilidade especial** (forma curta: **especial**). Gerada a partir de `dados/oficial/cartas_87.json` e `dados/oficial/habilidades_129.json`; para atualizar: `python3 prototipo/tools/gerar_lista_cartas.py`.', '',
      '**Reatribuição de 13/10/2026 (autorizada pelo autor):** o custo de usar um especial é a própria carta, então a força da carta passou a acompanhar o valor do especial. Especiais de informação e ordenação (espiar, reordenar, trocas sem ganho) ficam em cartas **fracas**; os mais poderosos ficam em cartas **fortes**. Os 8 integrantes da União mantiveram os especiais aprovados. A tabela de mudanças está no fim.', '',
