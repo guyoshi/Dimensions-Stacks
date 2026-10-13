@@ -126,6 +126,8 @@
       if (a === 'join') { const c = inp.value.trim(); if (c.length !== 4) return flash('O código tem 4 letras/números.', 'err'); return doJoin(name, c); }
     };
   }
+const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Claude só libera multiplayer para quem tem permissão de Colaborador ou Editor no jogo, logado). Peça ao dono para convidar seu e-mail como Editor e abra o jogo de novo pelo convite.';
+  function noReal(link) { return !!(link && link.mode === 'local' && window.claude && window.claude.use); }
   function flash(t, kind) { const m = $('#onMsg'); if (m) { m.textContent = t; m.className = 'onmsg ' + (kind || ''); } }
   function busy(on) { $$('#online button').forEach(b => { b.disabled = !!on; }); }
 
@@ -134,6 +136,7 @@
     for (let t = 0; t < 6; t++) {
       const code = genCode(); const link = await openLink(code);
       if (!link) { busy(false); return flash('Não foi possível abrir a conexão online neste aparelho.', 'err'); }
+      if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN, 'err'); }
       await link.presence({ n: name, u: myUid(), v: VER }); await sleep(1100);
       if (link.peers().some(p => !p.isMe && p.presence && p.presence.h)) { await link.leave(); continue; } // código já em uso
       return lobbyHost(link, code, name);
@@ -144,6 +147,7 @@
     busy(true); flash('Procurando a sala…');
     const link = await openLink(code);
     if (!link) { busy(false); return flash('Não foi possível abrir a conexão online neste aparelho.', 'err'); }
+    if (noReal(link)) { await link.leave(); busy(false); return flash(NOCONN, 'err'); }
     await link.presence({ n: name, u: myUid(), v: VER });
     let host = null; const t0 = Date.now();
     while (Date.now() - t0 < 6000) { host = link.peers().find(p => !p.isMe && p.presence && p.presence.h); if (host) break; await sleep(250); }
