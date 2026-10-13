@@ -844,3 +844,9 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .face.front .cband .cno small { font-size: .62em; opacity: .75; letter-spacing: .08em; }
 .card[data-serie="spacetheft"] .cband { background: linear-gradient(180deg, #3a3b46, #1b1b22 55%, #0d0d12); box-shadow: 0 .25em .7em #000b, inset 0 .1em 0 #ffffff33, inset 0 -.1em 0 #00000088; }
 .face.front .uni { top: 4.9em; }
+
+/* botão de fechar: o quadrado inteiro reage ao mouse (antes só o glifo do X) */
+.btn.ghost:hover { background: #ffffff1c; box-shadow: 0 0 0 1px var(--gold) inset; }
+.modal .x, .logdrawer > .btn.ghost.sm { width: 40px; height: 40px; min-height: 40px; padding: 0; font-size: 18px; line-height: 1; border-radius: 12px; background: #ffffff10; box-shadow: 0 0 0 1px #ffffff22 inset; cursor: pointer; }
+.modal .x:hover, .logdrawer > .btn.ghost.sm:hover { background: #ffffff26; box-shadow: 0 0 0 1px var(--gold) inset, 0 0 14px #ffd25f33; transform: none; filter: none; }
+.modal .x:active { transform: scale(.94); }
