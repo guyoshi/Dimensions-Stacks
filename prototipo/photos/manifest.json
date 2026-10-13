@@ -570,12 +570,12 @@
   },
   "S01": {
    "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Jasmey Badrock.png",
-   "mtimeMs": 1791885398830,
-   "bytes": 2987736,
-   "sha1": "0389793b1a",
+   "mtimeMs": 1791890657414,
+   "bytes": 2893960,
+   "sha1": "5c25db2e8e",
    "w": 720,
    "h": 1080,
-   "webp": 192632
+   "webp": 187934
   },
   "S15": {
    "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Tersário.png",
@@ -621,6 +621,69 @@
    "w": 720,
    "h": 1080,
    "webp": 177178
+  },
+  "S05": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Kord.png",
+   "mtimeMs": 1791888421809,
+   "bytes": 2604157,
+   "sha1": "7a40d4a07d",
+   "w": 720,
+   "h": 1080,
+   "webp": 160292
+  },
+  "S06": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/O'reilly.png",
+   "mtimeMs": 1791888625137,
+   "bytes": 2828402,
+   "sha1": "36c09e084a",
+   "w": 720,
+   "h": 1080,
+   "webp": 162664
+  },
+  "S07": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Buni.png",
+   "mtimeMs": 1791889070730,
+   "bytes": 2913270,
+   "sha1": "faae4634e8",
+   "w": 720,
+   "h": 1080,
+   "webp": 217756
+  },
+  "S08": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Vivian.png",
+   "mtimeMs": 1791889211709,
+   "bytes": 2779344,
+   "sha1": "1634c408dd",
+   "w": 720,
+   "h": 1080,
+   "webp": 132140
+  },
+  "S09": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Capitã Nastácia.png",
+   "mtimeMs": 1791889703820,
+   "bytes": 2936166,
+   "sha1": "69853f8916",
+   "w": 720,
+   "h": 1080,
+   "webp": 148606
+  },
+  "S13": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Capitão Tzough.png",
+   "mtimeMs": 1791889976109,
+   "bytes": 2318181,
+   "sha1": "f72ca2a632",
+   "w": 720,
+   "h": 1080,
+   "webp": 136450
+  },
+  "S14": {
+   "src": "Spacetheft/1 - A Lenda da Aurora/02 - Assets/Personagens/Genrir.png",
+   "mtimeMs": 1791890546065,
+   "bytes": 2442135,
+   "sha1": "9eb477127a",
+   "w": 720,
+   "h": 1080,
+   "webp": 120588
   }
  }
 }
