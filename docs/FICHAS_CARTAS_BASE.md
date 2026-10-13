@@ -31,8 +31,8 @@
 
 | ID | Personagem | ATQ* | DEF | INT | VEL | Soma | Especial (AE) | Selo União | Estado |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
-| J01 | Jokara | — | — | — | — | — | — | — | A definir |
-| J02 | Nestira | — | — | — | — | — | — | — | A definir |
+| J01 | Jokara Amarëa | — | — | — | — | — | — | — | A definir |
+| J02 | Nestira Amarëa | — | — | — | — | — | — | — | A definir |
 | J03 | Mark Polar | — | — | — | — | — | — | Sim | A definir |
 | J04 | Gabasteri | — | — | — | — | — | — | — | A definir |
 | J05 | Maletar | — | — | — | — | — | — | — | A definir |

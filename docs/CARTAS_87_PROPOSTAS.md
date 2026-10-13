@@ -17,8 +17,8 @@
 
 | ID | Nome da carta | Descrição curta (até 120) | Tamanho | ATQ | DEF | INT | VEL | Soma | Perfil | Especial sugerido | A União | Fonte | Grau |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- |
-| J01 | Jokara | Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência. | 99 | 43 | 65 | 83 | 22 | 213 | Modesta | AE-110 |  | J1 | Alta |
-| J02 | Nestira | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 92 | 24 | 82 | 75 | 38 | 219 | Modesta | AE-096 |  | J1 | Alta |
+| J01 | Jokara Amarëa | Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência. | 99 | 43 | 65 | 83 | 22 | 213 | Modesta | AE-110 |  | J1 | Alta |
+| J02 | Nestira Amarëa | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 92 | 24 | 82 | 75 | 38 | 219 | Modesta | AE-096 |  | J1 | Alta |
 | J03 | Mark Polar | Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas. | 92 | 72 | 70 | 94 | 74 | 310 | Forte | AE-116 | ⭐ União | J1/J3/J4 | Alta |
 | J04 | Gabasteri | Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle. | 98 | 83 | 72 | 66 | 52 | 273 | Padrão | AE-069 |  | J1 | Alta |
 | J05 | Maletar | Construtor vigoroso, aprende a erguer abrigos numa terra onde as antigas técnicas já não bastam. | 96 | 78 | 87 | 58 | 30 | 253 | Padrão | AE-076 |  | J1 | Alta |

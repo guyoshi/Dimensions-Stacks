@@ -37,7 +37,7 @@
   "cartas": [
     {
       "id": "J01",
-      "nome": "Jokara",
+      "nome": "Jokara Amarëa",
       "origem": {
         "codigo_serie": "J",
         "cor_base": "amarela"
@@ -61,7 +61,7 @@
     },
     {
       "id": "J02",
-      "nome": "Nestira",
+      "nome": "Nestira Amarëa",
       "origem": {
         "codigo_serie": "J",
         "cor_base": "amarela"

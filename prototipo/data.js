@@ -37,8 +37,8 @@
   // u = selo A União.
   const R = [
     // Ciclo de Jesed
-    ['J01', 'Jokara', 'jesed', 'Protagonista eterí; observadora e perseverante'],
-    ['J02', 'Nestira', 'jesed', 'Sobrevivência, espiritualidade e cuidado prático'],
+    ['J01', 'Jokara Amarëa', 'jesed', 'Protagonista eterí; observadora e perseverante'],
+    ['J02', 'Nestira Amarëa', 'jesed', 'Sobrevivência, espiritualidade e cuidado prático'],
     ['J03', 'Mark Polar', 'jesed', 'Identidade principal da carta', 1],
     ['J04', 'Gabasteri', 'jesed', 'Sobrevivente experiente e controlador'],
     ['J05', 'Maletar', 'jesed', 'Construtor e referência protetora'],

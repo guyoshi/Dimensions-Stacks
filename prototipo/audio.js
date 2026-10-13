@@ -153,9 +153,10 @@
       const c = this.ctx, M = this.MATCH, self = this;
       const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 1.2); bus.connect(this.musicGain);
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.connect(bus);
+      const pad = c.createBiquadFilter(); pad.type = 'lowpass'; pad.frequency.value = 1500; pad.Q.value = 0.5; pad.connect(bus);
       const dl = c.createDelay(1); dl.delayTime.value = 0.29; const fb = c.createGain(); fb.gain.value = 0.28; const dg = c.createGain(); dg.gain.value = 0.35; dl.connect(fb); fb.connect(dl); dl.connect(dg); dg.connect(bus);
       const nb = c.createBuffer(1, c.sampleRate, c.sampleRate), nd = nb.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-      const st = { level: 0, bpm: M.bpm[0], step: 0, next: c.currentTime + 0.15, ending: false, bus, timer: null, loop: 0 };
+      const st = { level: 0, req: 0, hold: 0, cool: 0, tr: 0, bpm: M.bpm[0], step: 0, next: c.currentTime + 0.15, ending: false, bus, timer: null, loop: 0 };
       const osc = (f, type, t, dur, vol, dest, glide) => { const o = c.createOscillator(), g = c.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (glide) o.frequency.exponentialRampToValueAtTime(glide, t + dur);
         g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + 0.05); };
       const nz = (t, dur, ftype, f, vol, dest) => { const s = c.createBufferSource(); s.buffer = nb; s.loop = true; const fl = c.createBiquadFilter(); fl.type = ftype; fl.frequency.value = f; fl.Q.value = 0.9;
@@ -167,6 +168,8 @@
         g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(fl); fl.connect(g); g.connect(lp); g.connect(dl); o.start(t); o.stop(t + dur + 0.05); };
       const sched = (stp, t, spb) => {
         const lv = st.level, bar = Math.floor(stp / 16) % 8, s16 = stp % 16, ci = bar % 4, ch = M.chords[ci];
+        if (s16 === 0) st.tr = lv >= 2 ? 2 : 0;   // no clímax a música sobe um tom (modulação) e volta ao tom original depois
+        const tr = st.tr || 0;
         // bateria
         if (s16 % 4 === 0) { if (lv >= 1 || s16 === 0 || s16 === 8 || (s16 === 12 && bar % 2 === 1)) kick(t, s16 === 0 ? 1 : .8); }
         if (lv >= 2 && s16 % 4 === 2 && bar % 2 === 1) kick(t, .55);
@@ -175,14 +178,15 @@
         if (s16 % 2 === 0) hat(t, s16 % 4 === 2 ? 1 : .55); else if (lv >= 1) hat(t, .4);
         if (lv >= 2 && s16 % 2 === 1) hat(t + spb / 2, .3);
         // baixo
-        if (M.bassSteps.includes(s16)) osc(self.note(M.bass[ci]), 'triangle', t, spb * (s16 === 13 ? 1.4 : 2.2), 0.36, bus), osc(self.note(M.bass[ci]), 'sine', t, spb * 2, 0.22, bus);
+        if (M.bassSteps.includes(s16)) osc(self.note(M.bass[ci] + tr), 'triangle', t, spb * (s16 === 13 ? 1.4 : 2.2), 0.36, bus), osc(self.note(M.bass[ci] + tr), 'sine', t, spb * 2, 0.22, bus);
         // pad suave no primeiro tempo do compasso
-        if (s16 === 0) ch.forEach(n => osc(self.note(n), 'sine', t, spb * 15, 0.045, lp));
+        if (s16 === 0) { ch.forEach(n => osc(self.note(n + tr), 'sine', t, spb * 15, 0.045, lp));
+          if (lv >= 1) { ch.forEach((n, k) => { osc(self.note(n + 12 + tr), 'sawtooth', t, spb * 16, 0.016, pad); osc(self.note(n + 12 + tr) * 1.004, 'sawtooth', t, spb * 16, 0.016, pad); }); osc(self.note(ch[0] + 24 + tr), 'sine', t + spb * 2, spb * 12, 0.03, dl); } }
         // arpejo: colcheias normalmente, semicolcheias quando a tensão sobe
         const arpOn = lv >= 1 ? true : s16 % 2 === 0;
         if (arpOn) { const seq = [0, 1, 2, 1, 2, 1, 0, 1], n = ch[seq[(lv >= 1 ? s16 : s16 / 2) % 8]] + 12; pluck(self.note(n), t, spb * 1.4, lv >= 1 ? 0.085 : 0.07); }
         // gancho melódico nos compassos 3 e 4 de cada frase de 4; a cada 2 voltas muda a última nota
-        if (bar % 4 >= 2) { const h = (bar % 4 === 2 ? M.hook : M.hook2); h.forEach(([s, n], k) => { if (s === s16) { const nn = (self.matchNodes.loop % 2 && k === h.length - 1 && bar % 4 === 3) ? n + 5 : n; osc(self.note(nn), 'triangle', t, spb * 2.2, 0.11, lp); osc(self.note(nn + 12), 'sine', t, spb * 1.4, 0.03, dl); } }); }
+        if (bar % 4 >= 2 || lv >= 1) { const h = (bar % 4 === 2 ? M.hook : M.hook2); h.forEach(([s, n], k) => { if (s === s16) { const nn = (self.matchNodes.loop % 2 && k === h.length - 1 && bar % 4 === 3) ? n + 5 : n; osc(self.note(nn + tr), 'triangle', t, spb * (lv >= 1 ? 3.2 : 2.2), 0.11, lp); osc(self.note(nn + 12 + tr), 'sine', t, spb * 1.4, 0.03, dl); if (lv >= 1) { osc(self.note(nn + 4 + tr), 'triangle', t + 0.012, spb * 3, 0.05, lp); osc(self.note(nn + 7 + tr), 'sine', t + 0.02, spb * 3, 0.035, dl); } } }); }
         // subida de ruído a cada 2 compassos no clímax
         if (lv >= 2 && s16 === 0 && bar % 2 === 0) { const s = c.createBufferSource(); s.buffer = nb; s.loop = true; const fl = c.createBiquadFilter(); fl.type = 'bandpass'; fl.Q.value = 2; fl.frequency.setValueAtTime(500, t); fl.frequency.exponentialRampToValueAtTime(7000, t + spb * 30);
           const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06, t + spb * 28); g.gain.exponentialRampToValueAtTime(0.0001, t + spb * 32); s.connect(fl); fl.connect(g); g.connect(lp); s.start(t); s.stop(t + spb * 32 + 0.05); }
@@ -191,6 +195,7 @@
       this.matchNodes = st;
       st.timer = setInterval(() => {
         if (!self.musicOn || st.ending) return;
+        if (st.level > 0 && c.currentTime > st.hold) { st.level = 0; st.cool = c.currentTime + 30; }   // volta ao que era
         const target = M.bpm[st.level];
         while (st.next < c.currentTime + 0.22) {
           st.bpm += (target - st.bpm) * (st.level > 0 ? 0.045 : 0.03);   // acelera aos poucos até o novo andamento
@@ -199,7 +204,12 @@
         }
       }, 40);
     },
-    matchLevel(l) { if (this.matchNodes && !this.matchNodes.ending) this.matchNodes.level = Math.max(0, Math.min(2, l | 0)); },
+    matchLevel(l) {   // a versão "intensa" dura só um trecho e volta ao groove normal; só reaparece se a tensão subir de novo ou após uma pausa
+      const m = this.matchNodes; if (!m || m.ending) return; l = Math.max(0, Math.min(2, l | 0)); const now = this.ctx.currentTime;
+      if (l > m.level && (l > m.req || now > m.cool)) { m.level = l; m.hold = now + (l >= 2 ? 24 : 16); }
+      if (l === 0) { m.level = 0; m.hold = 0; }
+      m.req = l;
+    },
     matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); },
     stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; this.matchNodes = null; },
   };

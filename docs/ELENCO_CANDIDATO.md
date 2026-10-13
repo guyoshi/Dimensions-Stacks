@@ -17,8 +17,8 @@ Fontes: fichas canônicas **02 - Personagens.md** de *Ruínas dos Céus*, *Guerr
 
 | # | Personagem | Livro-base | Identidade a preservar |
 | --- | --- | --- | --- |
-| J01 | Jokara | Ruínas dos Céus | Protagonista eterí; observadora e perseverante |
-| J02 | Nestira | Ruínas dos Céus | Sobrevivência, espiritualidade e cuidado prático |
+| J01 | Jokara Amarëa | Ruínas dos Céus | Protagonista eterí; observadora e perseverante |
+| J02 | Nestira Amarëa | Ruínas dos Céus | Sobrevivência, espiritualidade e cuidado prático |
 | J03 | Mark Polar | Ciclo de Jesed | Identidade principal da carta; não criar duplicatas por pseudônimos ou identidades temporais |
 | J04 | Gabasteri | Ruínas dos Céus | Sobrevivente experiente e controlador |
 | J05 | Maletar | Ruínas dos Céus | Construtor e referência protetora |

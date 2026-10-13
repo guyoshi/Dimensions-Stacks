@@ -6,8 +6,8 @@
 
 | Nº | Carta | Série | Descrição | ATQ | DEF | INT | VEL | Soma | Especial | Efeito do especial |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
-| J01 | Jokara | Ciclo de Jesed | Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência. | 43 | 65 | 83 | 22 | 213 | **AE-110** — Margem estreita | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. |
-| J02 | Nestira | Ciclo de Jesed | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 24 | 82 | 75 | 38 | 219 | **AE-096** — Quebrar o plano | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. |
+| J01 | Jokara Amarëa | Ciclo de Jesed | Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência. | 43 | 65 | 83 | 22 | 213 | **AE-110** — Margem estreita | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. |
+| J02 | Nestira Amarëa | Ciclo de Jesed | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 24 | 82 | 75 | 38 | 219 | **AE-096** — Quebrar o plano | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. |
 | J03 | Mark Polar ⭐ | Ciclo de Jesed | Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas. | 72 | 70 | 94 | 74 | 310 | **AE-116** — Apropriar especial usado | Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. |
 | J04 | Gabasteri | Ciclo de Jesed | Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle. | 83 | 72 | 66 | 52 | 273 | **AE-069** — Doação escolhida | Escolha um adversário: ele deve escolher uma carta de seu próprio baralho ativo para entregar ao fim do seu. |
 | J05 | Maletar | Ciclo de Jesed | Construtor vigoroso, aprende a erguer abrigos numa terra onde as antigas técnicas já não bastam. | 78 | 87 | 58 | 30 | 253 | **AE-076** — Guardião do baralho | Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa. |
@@ -110,7 +110,7 @@
 
 | Carta | Soma | Antes | Agora |
 | --- | ---: | --- | --- |
-| J02 Nestira | 219 | AE-087 — Reabastecimento da reserva | AE-096 — Quebrar o plano |
+| J02 Nestira Amarëa | 219 | AE-087 — Reabastecimento da reserva | AE-096 — Quebrar o plano |
 | J16 Elis | 260 | AE-100 — Confundir próximo turno | AE-089 — Sacrifício duplo |
 | J17 Selina | 220 | AE-113 — Interrupção precisa | AE-117 — Preparação exposta |
 | J18 Vetarius Polar | 261 | AE-022 — Par ofensivo | AE-072 — Não perder a carta |
