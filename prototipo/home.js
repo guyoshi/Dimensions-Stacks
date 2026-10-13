@@ -80,9 +80,7 @@
     s.innerHTML = `<div class="tabwrap home">
       ${topbar()}
       <section class="brand"><div class="brandmark">${U.logoMark(112)}</div>${`<div class="wmbox"><small>Dimensões Infinitas</small>${wordmark()}</div>`}</section>
-      <section class="hero"><div class="eyebrow">O Nexo está aberto</div><h1>Cada dimensão tem seus campeões.</h1>
-        <p>${CARTAS.length} cartas. Um universo. Infinitas possibilidades de confronto.</p>
-        ${p.t.g ? `<div class="tagrow"><span class="tag soft">${p.t.w} vitória${p.t.w === 1 ? '' : 's'} · ${p.t.g} partida${p.t.g === 1 ? '' : 's'}</span></div>` : ''}</section>
+      ${p.t.g ? `<div class="tagrow" style="justify-content:center"><span class="tag soft">${p.t.w} vitória${p.t.w === 1 ? '' : 's'} · ${p.t.g} partida${p.t.g === 1 ? '' : 's'}</span></div>` : ''}
       <button class="playbig" data-go="quick"><span class="pi">${ICO.swords}</span><span class="pt"><b>Jogar</b><small>Partida rápida contra um bot</small></span><span class="pa">${ICO.arrow}</span></button>
       <div class="tiles">
         <button class="tile" data-go="setup"><span class="ti">${ICO.bot}</span><b>Contra bots</b><small>Treinar e competir</small></button>
