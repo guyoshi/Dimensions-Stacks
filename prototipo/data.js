@@ -124,6 +124,7 @@
     ['D16', 'A Mãe', 'diario', 'Demônio dos sentidos com a forma da mãe Isabela; Elo no álbum de fotografias'],
     ['D17', 'A Avó', 'diario', 'Demônio dos sentidos com a forma da avó; Elo nas lentes dos óculos'],
     ['D18', 'O Cão', 'diario', 'Demônio dos sentidos com a forma do cão Ibliso; Elo na coleira'],
+    ['D19', 'Manu', 'diario', 'Jovem sem memória ligada a Alvorada Alegre'],
     // Mistério Oculto
     ['M01', 'Hyde', 'misterio', 'Investigador, observação e raciocínio lógico', 1],
     ['M02', 'Agente Sete', 'misterio', 'Ex-SPAGE, investigação e estratégia operacional'],

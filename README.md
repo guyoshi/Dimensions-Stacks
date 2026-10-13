@@ -29,7 +29,7 @@ Jogo competitivo de cartas para PC ambientado nas séries interligadas de **Dime
 
 ## Diretrizes aprovadas
 
-- **87 cartas**: 23 Ciclo de Jesed (amarelo), 19 Viajantes (azul), 14 Spacetheft (preto), 18 Diário Sobrenatural (roxo), 12 Mistério Oculto (vermelho) e 1 Belfex/Édelin (verde).
+- **98 cartas**: 23 Ciclo de Jesed (amarelo), 25 Viajantes (azul), 18 Spacetheft (preto), 19 Diário Sobrenatural (roxo), 12 Mistério Oculto (vermelho) e 1 Série de Édelin (verde).
 - Quatro atributos naturais de **0 a 100**: **Ataque (ATQ), Defesa (DEF), Inteligência (INT), Velocidade (VEL)**.
 - **Habilidade Especial (ESP)** é o nome geral, incluindo ataques e defesas, com reações permitidas enquanto a ameaça ainda estiver pendente.
 - **18 cartas por jogador** como configuração inicial para testes (7 ativas, 11 na reserva); partidas de 2–4 jogadores.

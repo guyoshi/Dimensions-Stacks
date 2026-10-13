@@ -33,7 +33,7 @@ Stats, especiais e fotos não mudaram. O nome anterior fica em `nome_anterior` n
 | D14 | Filipo Brandolini | só o sobrenome de Filipo aparece no texto; Manu Brandolini é irmã dele e isso só se deduz perto do fim |
 | M12 | James Harrow | Órbita Oráculo |
 
-Manu não tem carta: o sobrenome Brandolini fica só aqui, nunca no texto dos capítulos.
+Manu agora tem carta (D19, 13/10/2026), **sem sobrenome**: o Brandolini fica só aqui, nunca no texto dos capítulos nem na carta.
 Os nomes só entram nos capítulos de forma orgânica (uma ou duas aparições por personagem), sem exposição. 
 ## Trechos aplicados nos capítulos (2026-10-13)
 

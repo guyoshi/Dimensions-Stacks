@@ -5,12 +5,12 @@
     "status": "APROVADO_PELO_AUTOR",
     "data_aprovacao": "2026-10-12",
     "idioma": "pt-BR",
-    "total_cartas": 97,
+    "total_cartas": 98,
     "origens": {
       "J": 23,
       "V": 25,
       "S": 18,
-      "D": 18,
+      "D": 19,
       "M": 12,
       "B": 1
     },
@@ -2389,6 +2389,31 @@
       },
       "status": "APROVADA_PELO_AUTOR",
       "observacao": "Carta criada em 13/10/2026 a pedido do autor. Descrição baseada no manuscrito de A Lenda da Aurora; atributos e especial propostos pela IA (soma alinhada à de cartas com o mesmo especial), aguardando aprovação. Sem foto ainda. Atributos e especial aprovados pelo autor em 13/10/2026."
+    },
+    {
+      "id": "D19",
+      "nome": "Manu",
+      "origem": {
+        "codigo_serie": "D",
+        "cor_base": "roxa"
+      },
+      "descricao_curta": "Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve.",
+      "atributos": {
+        "ATQ": 28,
+        "DEF": 44,
+        "INT": 78,
+        "VEL": 52
+      },
+      "soma_atributos": 202,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-093",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "D2",
+        "confianca": "Alta"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 13/10/2026 a pedido do autor. Sem sobrenome na carta (o parentesco com Filipo só deve ser deduzido perto do fim do Livro 2). Descrição sem os segredos da trama; atributos e especial propostos pela IA (AE-093 Espionagem tripla combina com as visões de Manu), aguardando aprovação."
     }
   ]
 }

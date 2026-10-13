@@ -59,3 +59,20 @@ A pedido do autor: **Maria Santoro** e **Eshley Damaris** (*A Patrulha de Korvo*
 ## Pontos a conferir pelo autor
 1. Atributos, perfil e especial são propostas da IA, como nas demais; reatribuir se preferir outro especial.
 2. Ambos os especiais já estavam equipados em outras cartas (AE-080 passa a ter 2 cartas, AE-051 também).
+
+---
+
+# Nova carta D19 (13/10/2026) — Diário Sobrenatural, aguardando aprovação
+
+A pedido do autor: **Manu** (*A Alvorada das Ilusões*). Baralho: **98 cartas**. Status `PROPOSTA_AGUARDANDO_APROVACAO` (faixa PRÉVIA). Foto: `Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Manu.png`.
+
+| ID | Carta | ATQ | DEF | INT | VEL | Soma | Perfil | Especial | Por quê |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
+| D19 | Manu | 28 | 44 | 78 | 52 | 202 | Modesta | **AE-093 Espionagem tripla** | As "visões" de Manu: ver as 3 próximas cartas de um rival. Vulnerável em combate (ATQ e DEF baixos), percepção alta, mas com INT contida (78) para não virar carta de pico. Efeito fraco, coerente com carta Modesta. |
+
+## Base narrativa (manuscrito, Livro 2)
+Jovem encontrada por Junior sem lembrar quem é ("acho que me chamo Manu"), de Alvorada Alegre; encara o nada como quem *escuta*; teme dormir. **Nome sem sobrenome** e descrição sem os segredos da trama, para o leitor só deduzir o parentesco com Filipo perto do fim.
+
+## Pontos a conferir pelo autor
+1. Atributos, perfil e especial são propostas da IA; reatribuir se preferir outro especial. AE-093 passa a ter quatro cartas (Nefestra, X, A Avó e Manu).
+2. A descrição cita "encontrada por Junior" e "sem memória" (já revelados nos primeiros capítulos do Livro 2); nada sobre a origem de Manu nem sobre Filipo.

@@ -1,4 +1,4 @@
-# Dimensions Stacks — Cartas e Habilidades Especiais (97 cartas)
+# Dimensions Stacks — Cartas e Habilidades Especiais (98 cartas)
 
 > Lista de todas as cartas com **número (ID)**, **nome**, **descrição** e **habilidade especial** (forma curta: **especial**). Gerada a partir de `dados/oficial/cartas_87.json` e `dados/oficial/habilidades_129.json`; para atualizar: `python3 prototipo/tools/gerar_lista_cartas.py`.
 
@@ -103,6 +103,7 @@
 | S16 | A Engenheira | Spacetheft | Cientista mística de biotecnologia que revive Jasmey e lhe dá um braço novo; diz não interferir, mas interfere. | 20 | 38 | 80 | 31 | 169 | **AE-085** — Resgate escolhido | Escolha 1 carta normal do Buraco Negro para recuperar ao final de seu baralho ativo. |
 | S17 | Luna Stellar | Spacetheft | Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo. | 38 | 52 | 85 | 80 | 255 | **AE-039** — Saque revelado | Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem. |
 | S18 | Alekta | Spacetheft | Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto. | 84 | 70 | 68 | 88 | 310 | **AE-116** — Apropriar especial usado | Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. |
+| D19 | Manu 🆕 | Diário Sobrenatural | Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve. | 28 | 44 | 78 | 52 | 202 | **AE-093** — Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. |
 
 ⭐ = integrante da União (especial original mantido). 🆕 = carta proposta, aguardando aprovação do autor (aparece com a faixa PRÉVIA no jogo).
 
