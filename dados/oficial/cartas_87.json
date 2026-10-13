@@ -2118,12 +2118,12 @@
     },
     {
       "id": "B01",
-      "nome": "Édelin Fils",
+      "nome": "Édelin Lys",
       "origem": {
         "codigo_serie": "B",
         "cor_base": "verde"
       },
-      "descricao_curta": "Édelin Fils pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento.",
+      "descricao_curta": "Édelin Lys pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento.",
       "atributos": {
         "ATQ": 92,
         "DEF": 83,

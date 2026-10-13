@@ -103,7 +103,7 @@
 | M10 | Releuz (nome temporário) | Luzitano deixado na Terra pela Luz após os eventos de Órbita Oráculo. | 69 | 76 | 92 | 87 | 82 | 337 | Elite | AE-111 | ⭐ União | Autor | Baixa |
 | M11 | X | Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar. | 98 | 8 | 19 | 99 | 45 | 171 | Frágil | AE-093 |  | M | Alta |
 | M12 | James | Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana. | 93 | 75 | 62 | 96 | 51 | 284 | Padrão | AE-086 |  | M | Alta |
-| B01 | Édelin Fils | Édelin Fils pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento. | 101 | 92 | 83 | 86 | 80 | 341 | Elite | AE-103 | ⭐ União | Autor | Baixa |
+| B01 | Édelin Lys | Édelin Lys pertence à história de Belfex, cuja documentação narrativa ainda está em desenvolvimento. | 101 | 92 | 83 | 86 | 80 | 341 | Elite | AE-103 | ⭐ União | Autor | Baixa |
 
 ## 3. Efeito legível da habilidade indicada
 
@@ -208,7 +208,7 @@
 - **Autor:** `Nome/identidade fornecido(a) pelo autor, sem perfil narrativo seguro localizado`
 - **J1/J3/J4:** `Cânones de Ruínas dos Céus, Dinastia Polar e Herdeiros das Cinzas; identidade temporal de Mark`
 
-A entrada **D09 Diego** não tem perfil verificável no material consultado; por isso sua descrição **não atribui feitos**, e números/especial são placeholders deliberadamente especulativos. **M09 Richard Falkner (Bulldog), M10 Releuz e B01 Édelin Fils** dependem de descrição canônica adicional para que seus poderes e especiais sejam fundamentados; características de espécie ou importância narrativa não são automaticamente poderes de combate. O roteiro do segundo Diário é um documento **histórico**: mudanças futuras podem alterar as descrições e atribuições.
+A entrada **D09 Diego** não tem perfil verificável no material consultado; por isso sua descrição **não atribui feitos**, e números/especial são placeholders deliberadamente especulativos. **M09 Richard Falkner (Bulldog), M10 Releuz e B01 Édelin Lys** dependem de descrição canônica adicional para que seus poderes e especiais sejam fundamentados; características de espécie ou importância narrativa não são automaticamente poderes de combate. O roteiro do segundo Diário é um documento **histórico**: mudanças futuras podem alterar as descrições e atribuições.
 
 ## 5. Diretrizes de balanceamento e validação
 

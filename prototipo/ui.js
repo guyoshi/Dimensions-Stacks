@@ -80,7 +80,7 @@
         <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
         ${c.provisorio ? '<div class="teste">PRÉVIA</div>' : ''}
       </div></div></div></div>`);
-    node.dataset.serie = c.serie; node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
+    node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1'; node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
     if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id), mastery: g.dataset.mast === '1' } : null); }); }
@@ -204,7 +204,7 @@
   function menuFx() {
     const rnd = (a, b) => a + Math.random() * (b - a);
     const bg = el('<div class="menu-bg" aria-hidden="true"><div class="fcards"></div><div class="sparks"></div><div class="vig"></div></div>');
-    const pool = Object.keys(CARDS); const withImg = pool.filter(id => IMG[id]); const ids = withImg.concat(pool.filter(id => !IMG[id])).slice(0, 40);
+    const pool = Object.keys(CARDS); const withImg = pool.filter(id => IMG[id]); const ids = withImg.length >= 12 ? withImg : withImg.concat(pool.filter(id => !IMG[id]));
     const fc = $('.fcards', bg), N = 9;
     const order = ids.sort(() => Math.random() - .5);
     for (let i = 0; i < N; i++) {

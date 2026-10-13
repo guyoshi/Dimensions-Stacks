@@ -158,7 +158,7 @@ Documentos complementares: [Habilidades especiais](ATAQUES_ESPECIAIS.md) · [Ele
 
 **Decisão editorial visual confirmada:** o autor aprovou **cores por série**, deixando de associar verde a heróis e vermelho a vilões. Selos identificam A União e raridade sem duplicar obrigatoriamente personagens.
 
-**Filiação oficial de A União:** Bruno Lins Lee, Brenda, Hyde, Releuz (provisório), Jasmey Badrock, Mark Polar (também grafado Pollar em registros antigos), Édelin Fils; Jennifer ingressa futuramente. Hyde é a cabeça/liderança indicada para o grupo; **identidade do fundador ainda não fechada**. Ver [elenco candidato](ELENCO_CANDIDATO.md#7-a-união--filiação-oficial-sem-duplicar-cartas).
+**Filiação oficial de A União:** Bruno Lins Lee, Brenda, Hyde, Releuz (provisório), Jasmey Badrock, Mark Polar (também grafado Pollar em registros antigos), Édelin Lys; Jennifer ingressa futuramente. Hyde é a cabeça/liderança indicada para o grupo; **identidade do fundador ainda não fechada**. Ver [elenco candidato](ELENCO_CANDIDATO.md#7-a-união--filiação-oficial-sem-duplicar-cartas).
 
 ## 14. Decisões confirmadas: especiais 09 e 59 e choque de atributos (12/10/2026)
 

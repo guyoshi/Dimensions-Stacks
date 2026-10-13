@@ -789,3 +789,11 @@ select option:checked { background-color: #3a4256; color: #fff; }
 }
 .specpick.off { opacity: .55; filter: grayscale(.6); }
 .specpick .why { color: var(--gold2); font-style: italic; }
+
+/* aura dourada das cartas de A União (só com a carta virada para cima, para não revelar cartas fechadas) */
+.card[data-uni] { isolation: isolate; }
+.card[data-uni].up::after { content: ""; position: absolute; inset: 0; border-radius: calc(var(--cw) * .12); pointer-events: none; z-index: -1;
+  box-shadow: 0 0 calc(var(--cw) * .09) calc(var(--cw) * .015) #ffd25fcc, 0 0 calc(var(--cw) * .28) calc(var(--cw) * .05) #ffb02e88, 0 0 calc(var(--cw) * .6) calc(var(--cw) * .06) #ffd25f44;
+  animation: uniaura 3.2s ease-in-out infinite; }
+@keyframes uniaura { 0%, 100% { opacity: .72; transform: scale(1); } 50% { opacity: 1; transform: scale(1.035); } }
+@media (prefers-reduced-motion: reduce) { .card[data-uni].up::after { animation: none; } }

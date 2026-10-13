@@ -138,7 +138,7 @@
     ['M11', 'X', 'misterio', 'Figura do núcleo investigativo/conspiratório'],
     ['M12', 'James Harrow', 'misterio', 'Personagem de relevância ideológica na trama'],
     // Belfex
-    ['B01', 'Édelin Fils', 'belfex', 'Série de Édelin / Belfex', 1],
+    ['B01', 'Édelin Lys', 'belfex', 'Série de Édelin / Belfex', 1],
   ];
 
   // ---------- gerador de dados PROVISÓRIOS (determinístico por id) ----------

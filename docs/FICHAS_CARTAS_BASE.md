@@ -152,7 +152,7 @@
 
 | ID | Personagem | ATQ* | DEF | INT | VEL | Soma | Especial (AE) | Selo União | Estado |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
-| B01 | Édelin Fils | — | — | — | — | — | — | Sim | A definir |
+| B01 | Édelin Lys | — | — | — | — | — | — | Sim | A definir |
 
 ## 3. Campos adicionais para ficha individual definitiva
 

@@ -143,7 +143,7 @@ Fonte: `Mistério Oculto/1 - Órbita Oráculo/01 - Canon/90 - Materiais reorgani
 
 | # | Personagem | Estado |
 | --- | --- | --- |
-| B01 | Édelin Fils | Série ambientada/relacionada a Belfex, título ainda não definido. Manter código B (Belfex); aguardar detalhes canônicos antes de atributos e habilidade. |
+| B01 | Édelin Lys | Série ambientada/relacionada a Belfex, título ainda não definido. Manter código B (Belfex); aguardar detalhes canônicos antes de atributos e habilidade. |
 
 ## 7. A União — filiação oficial sem duplicar cartas
 
@@ -157,7 +157,7 @@ O autor confirmou sete integrantes na formação informada e Jennifer como futur
 | U04 | Releuz (provisório) | Mistério Oculto (M10) | Integrante |
 | U05 | Jasmey Badrock | Spacetheft (S01) | Integrante |
 | U06 | Mark Polar | Ciclo de Jesed (J03) | Integrante; grafia correta para as cartas |
-| U07 | Édelin Fils | Belfex (B01) | Integrante |
+| U07 | Édelin Lys | Belfex (B01) | Integrante |
 | U08 | Jennifer (sobrenome pendente) | Diário Sobrenatural (D06) | Entrada futura |
 
 **O selo da União não cria carta duplicada.** Cada personagem tem uma carta-base por origem. Versões alternativas futuras exigem aprovação. **A Luz** designa uma raça/natureza, e não será uma carta de indivíduo; o luzitano é **Releuz**.
