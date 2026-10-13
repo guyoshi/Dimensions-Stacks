@@ -67,5 +67,6 @@ window.CARD_IMAGES = {
  "S15": "photos/S15.webp?v=19ca98ba30",
  "S02": "photos/S02.webp?v=c195c3c846",
  "S03": "photos/S03.webp?v=6f34f2f8cc",
- "S04": "photos/S04.webp?v=b6b6914824"
+ "S04": "photos/S04.webp?v=b6b6914824",
+ "J20": "photos/J20.webp?v=45c98b39a8"
 };

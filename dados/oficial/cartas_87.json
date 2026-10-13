@@ -1405,7 +1405,7 @@
     },
     {
       "id": "D02",
-      "nome": "Priscila",
+      "nome": "Priscila da Conceição",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1425,7 +1425,8 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Priscila"
     },
     {
       "id": "D03",
@@ -1453,7 +1454,7 @@
     },
     {
       "id": "D04",
-      "nome": "Kelly",
+      "nome": "Kelly da Conceição",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1473,11 +1474,12 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Kelly"
     },
     {
       "id": "D05",
-      "nome": "Vinicius (Vini)",
+      "nome": "Vinícius Silva",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1497,11 +1499,12 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Vinicius (Vini)"
     },
     {
       "id": "D06",
-      "nome": "Jennifer",
+      "nome": "Jennifer de Morais",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1521,11 +1524,12 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Jennifer"
     },
     {
       "id": "D07",
-      "nome": "Ingrid Carnam",
+      "nome": "Ingrid Marques",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1545,11 +1549,12 @@
         "fonte": "D1",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Ingrid Carnam"
     },
     {
       "id": "D08",
-      "nome": "Glenda",
+      "nome": "Glenda Mendes",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1569,7 +1574,8 @@
         "fonte": "D2-histórico",
         "confianca": "Média"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Glenda"
     },
     {
       "id": "D09",
@@ -1597,12 +1603,12 @@
     },
     {
       "id": "D10",
-      "nome": "Avó de Kelly",
+      "nome": "Sra. Olívia",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
       },
-      "descricao_curta": "Avó de Kelly, conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre.",
+      "descricao_curta": "Senhora que vive na casa da serra; conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre.",
       "atributos": {
         "ATQ": 8,
         "DEF": 34,
@@ -1617,7 +1623,8 @@
         "fonte": "D2-histórico",
         "confianca": "Média"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Avó de Kelly"
     },
     {
       "id": "D11",
@@ -1693,7 +1700,7 @@
     },
     {
       "id": "D14",
-      "nome": "Filippo (Filipo, grafia a confirmar)",
+      "nome": "Filipo",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
@@ -1713,16 +1720,17 @@
         "fonte": "D2-histórico",
         "confianca": "Média"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Filippo (Filipo, grafia a confirmar)"
     },
     {
       "id": "D15",
-      "nome": "Carnam (pai)",
+      "nome": "O Pai",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
       },
-      "descricao_curta": "Espírito do pai da Família Carnam, relacionado a um Elo marcado pela violência e por uma arma.",
+      "descricao_curta": "Demônio dos sentidos em forma do pai da Família Carnam (Carnam Marques), relacionado a um Elo marcado pela violência e por uma arma.",
       "atributos": {
         "ATQ": 68,
         "DEF": 52,
@@ -1737,16 +1745,17 @@
         "fonte": "D1-Carnam",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Carnam (pai)"
     },
     {
       "id": "D16",
-      "nome": "Isabela",
+      "nome": "A Mãe",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
       },
-      "descricao_curta": "Espírito da Família Carnam, cujo Elo é um álbum de fotografias ligado às lembranças do passado.",
+      "descricao_curta": "Demônio dos sentidos em forma da mãe da Família Carnam (Isabela), cujo Elo é um álbum de fotografias ligado às lembranças do passado.",
       "atributos": {
         "ATQ": 23,
         "DEF": 39,
@@ -1761,16 +1770,17 @@
         "fonte": "D1-Carnam",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Isabela"
     },
     {
       "id": "D17",
-      "nome": "Avó Carnam",
+      "nome": "A Avó",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
       },
-      "descricao_curta": "Avó da Família Carnam, ligada à lente dos óculos que preserva seu vínculo sobrenatural.",
+      "descricao_curta": "Demônio dos sentidos em forma da avó da Família Carnam, ligada à lente dos óculos que preserva seu vínculo sobrenatural.",
       "atributos": {
         "ATQ": 8,
         "DEF": 35,
@@ -1785,16 +1795,17 @@
         "fonte": "D1-Carnam",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Avó Carnam"
     },
     {
       "id": "D18",
-      "nome": "Ibliso (cão)",
+      "nome": "O Cachorro",
       "origem": {
         "codigo_serie": "D",
         "cor_base": "roxa"
       },
-      "descricao_curta": "Cão da Família Carnam, ligado à coleira que integra os misteriosos Elos manipulados por Agouro.",
+      "descricao_curta": "Demônio dos sentidos em forma do cão da Família Carnam (Ibliso), ligado à coleira que integra os misteriosos Elos manipulados por Agouro.",
       "atributos": {
         "ATQ": 54,
         "DEF": 42,
@@ -1809,7 +1820,8 @@
         "fonte": "D1-Carnam",
         "confianca": "Alta"
       },
-      "status": "APROVADA_PELO_AUTOR"
+      "status": "APROVADA_PELO_AUTOR",
+      "nome_anterior": "Ibliso (cão)"
     },
     {
       "id": "M01",
