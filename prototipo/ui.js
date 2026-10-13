@@ -203,7 +203,7 @@
   U.show = function (name) {
     $$('.screen').forEach(s => { s.hidden = s.id !== name; });
     if (U.afterShow) U.afterShow(name);
-    if (name !== 'game') SND.setMusic && S.musicOn && SND.ctx && SND.startMusic();
+    SND.setMode && SND.setMode(name === 'game' ? 'game' : 'menu');
   };
   function screens() {
     const app = $('#app');

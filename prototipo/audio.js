@@ -14,7 +14,7 @@
 
   const S = {
     ctx: null, master: null, sfx: null, musicGain: null, buffers: {}, enabled: true, musicOn: true,
-    vol: { master: 0.8, sfx: 1, music: 0.35 }, musicNodes: null, SLOTS: SLOTS,
+    vol: { master: 0.8, sfx: 1, music: 0.35 }, musicNodes: null, matchNodes: null, mode: 'menu', SLOTS: SLOTS,
 
     init() {
       if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
@@ -118,7 +118,8 @@
     },
 
     // ---------- música ambiente
-    startMusic() {
+    startMusic() { if (!this.ctx) return; if (this.mode === 'game') return this.startMatch(); this.startMenuMusic(); },
+    startMenuMusic() {
       if (!this.ctx || this.musicNodes) return;
       const c = this.ctx;
       if (this.buffers.menu) { const s = c.createBufferSource(); s.buffer = this.buffers.menu; s.loop = true; s.connect(this.musicGain); s.start(); this.musicNodes = { stop: () => { try { s.stop(); } catch (e) { } } }; return; }
@@ -131,7 +132,76 @@
       const timer = setInterval(() => { if (!this.musicOn) return; this.tone(this.note(seq[i++ % seq.length] + 12), 2.8, 'sine', 0.06, 0, null, this.musicGain); }, 4200);
       this.musicNodes = { stop: () => { clearInterval(timer); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 1); setTimeout(() => nodes.forEach(n => { try { n.stop(); } catch (e) { } }), 1100); } };
     },
-    stopMusic() { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } },
+    stopMusic() { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); },
+    // 'menu' = ambiente do início; 'game' = trilha da partida (a do menu é pausada enquanto a partida roda)
+    setMode(m) {
+      this.mode = m;
+      if (!this.ctx || !this.musicOn) return;
+      if (m === 'game') { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.startMatch(); }
+      else { this.stopMatch(); this.startMenuMusic(); }
+    },
+
+    // ---------- trilha da partida: groove procedural em Lá menor, sempre igual no esqueleto e levemente variado a cada volta (não enjoa).
+    // level 0 = ritmo normal · 1 = tensão (acelera e entram batidas) · 2 = clímax (mais rápido, caixa em rolagem, bumbo em todas as batidas)
+    MATCH: {
+      bpm: [98, 112, 126], chords: [[57, 60, 64], [53, 57, 60], [48, 52, 55], [55, 59, 62]], bass: [45, 41, 48, 43],
+      bassSteps: [0, 3, 6, 10, 13], hook: [[0, 76], [3, 79], [6, 81], [10, 79], [12, 76]], hook2: [[0, 74], [3, 76], [6, 79], [10, 76], [12, 74]],
+    },
+    startMatch() {
+      if (!this.ctx || !this.musicOn) return;
+      if (this.matchNodes && !this.matchNodes.ending) return;
+      const c = this.ctx, M = this.MATCH, self = this;
+      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 1.2); bus.connect(this.musicGain);
+      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.connect(bus);
+      const dl = c.createDelay(1); dl.delayTime.value = 0.29; const fb = c.createGain(); fb.gain.value = 0.28; const dg = c.createGain(); dg.gain.value = 0.35; dl.connect(fb); fb.connect(dl); dl.connect(dg); dg.connect(bus);
+      const nb = c.createBuffer(1, c.sampleRate, c.sampleRate), nd = nb.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      const st = { level: 0, bpm: M.bpm[0], step: 0, next: c.currentTime + 0.15, ending: false, bus, timer: null, loop: 0 };
+      const osc = (f, type, t, dur, vol, dest, glide) => { const o = c.createOscillator(), g = c.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (glide) o.frequency.exponentialRampToValueAtTime(glide, t + dur);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + 0.05); };
+      const nz = (t, dur, ftype, f, vol, dest) => { const s = c.createBufferSource(); s.buffer = nb; s.loop = true; const fl = c.createBiquadFilter(); fl.type = ftype; fl.frequency.value = f; fl.Q.value = 0.9;
+        const g = c.createGain(); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); s.connect(fl); fl.connect(g); g.connect(dest); s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.02); };
+      const kick = (t, v) => osc(155, 'sine', t, 0.16, 0.5 * v, bus, 42);
+      const snare = (t, v) => { nz(t, 0.13, 'bandpass', 1900, 0.34 * v, lp); osc(190, 'triangle', t, 0.08, 0.14 * v, bus, 120); };
+      const hat = (t, v) => nz(t, 0.04, 'highpass', 7600, 0.12 * v, lp);
+      const pluck = (f, t, dur, vol) => { const o = c.createOscillator(), g = c.createGain(), fl = c.createBiquadFilter(); o.type = 'sawtooth'; o.frequency.value = f; fl.type = 'lowpass'; fl.Q.value = 3; fl.frequency.setValueAtTime(3200, t); fl.frequency.exponentialRampToValueAtTime(380, t + dur);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(fl); fl.connect(g); g.connect(lp); g.connect(dl); o.start(t); o.stop(t + dur + 0.05); };
+      const sched = (stp, t, spb) => {
+        const lv = st.level, bar = Math.floor(stp / 16) % 8, s16 = stp % 16, ci = bar % 4, ch = M.chords[ci];
+        // bateria
+        if (s16 % 4 === 0) { if (lv >= 1 || s16 === 0 || s16 === 8 || (s16 === 12 && bar % 2 === 1)) kick(t, s16 === 0 ? 1 : .8); }
+        if (lv >= 2 && s16 % 4 === 2 && bar % 2 === 1) kick(t, .55);
+        if (s16 === 4 || s16 === 12) snare(t, lv >= 1 ? 1 : .6);
+        if (lv >= 2 && bar % 4 === 3 && s16 >= 12) { snare(t, .55 + (s16 - 12) * .12); snare(t + spb / 2, .6 + (s16 - 12) * .12); }   // rolagem no fim da frase
+        if (s16 % 2 === 0) hat(t, s16 % 4 === 2 ? 1 : .55); else if (lv >= 1) hat(t, .4);
+        if (lv >= 2 && s16 % 2 === 1) hat(t + spb / 2, .3);
+        // baixo
+        if (M.bassSteps.includes(s16)) osc(self.note(M.bass[ci]), 'triangle', t, spb * (s16 === 13 ? 1.4 : 2.2), 0.36, bus), osc(self.note(M.bass[ci]), 'sine', t, spb * 2, 0.22, bus);
+        // pad suave no primeiro tempo do compasso
+        if (s16 === 0) ch.forEach(n => osc(self.note(n), 'sine', t, spb * 15, 0.045, lp));
+        // arpejo: colcheias normalmente, semicolcheias quando a tensão sobe
+        const arpOn = lv >= 1 ? true : s16 % 2 === 0;
+        if (arpOn) { const seq = [0, 1, 2, 1, 2, 1, 0, 1], n = ch[seq[(lv >= 1 ? s16 : s16 / 2) % 8]] + 12; pluck(self.note(n), t, spb * 1.4, lv >= 1 ? 0.085 : 0.07); }
+        // gancho melódico nos compassos 3 e 4 de cada frase de 4; a cada 2 voltas muda a última nota
+        if (bar % 4 >= 2) { const h = (bar % 4 === 2 ? M.hook : M.hook2); h.forEach(([s, n], k) => { if (s === s16) { const nn = (self.matchNodes.loop % 2 && k === h.length - 1 && bar % 4 === 3) ? n + 5 : n; osc(self.note(nn), 'triangle', t, spb * 2.2, 0.11, lp); osc(self.note(nn + 12), 'sine', t, spb * 1.4, 0.03, dl); } }); }
+        // subida de ruído a cada 2 compassos no clímax
+        if (lv >= 2 && s16 === 0 && bar % 2 === 0) { const s = c.createBufferSource(); s.buffer = nb; s.loop = true; const fl = c.createBiquadFilter(); fl.type = 'bandpass'; fl.Q.value = 2; fl.frequency.setValueAtTime(500, t); fl.frequency.exponentialRampToValueAtTime(7000, t + spb * 30);
+          const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06, t + spb * 28); g.gain.exponentialRampToValueAtTime(0.0001, t + spb * 32); s.connect(fl); fl.connect(g); g.connect(lp); s.start(t); s.stop(t + spb * 32 + 0.05); }
+        if (stp % 128 === 127) self.matchNodes.loop++;
+      };
+      this.matchNodes = st;
+      st.timer = setInterval(() => {
+        if (!self.musicOn || st.ending) return;
+        const target = M.bpm[st.level];
+        while (st.next < c.currentTime + 0.22) {
+          st.bpm += (target - st.bpm) * (st.level > 0 ? 0.045 : 0.03);   // acelera aos poucos até o novo andamento
+          const spb = 60 / st.bpm / 4;
+          sched(st.step, st.next, spb); st.next += spb; st.step++;
+        }
+      }, 40);
+    },
+    matchLevel(l) { if (this.matchNodes && !this.matchNodes.ending) this.matchNodes.level = Math.max(0, Math.min(2, l | 0)); },
+    matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); },
+    stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; this.matchNodes = null; },
   };
   root.Sound = S;
 })(typeof window !== 'undefined' ? window : globalThis);

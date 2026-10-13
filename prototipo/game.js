@@ -268,6 +268,8 @@
   function refresh() {
     if (!G || !V.seats[0] && !Object.keys(V.seats).length) return;
     const s = G.s;
+    { const al = s.players.filter(p => p.alive), mc = al.length ? Math.min(...al.map(p => p.deck.length + p.reserve.length)) : 99;   // trilha: acelera perto do fim
+      SND.matchLevel && SND.matchLevel(al.length <= 2 && mc <= 2 ? 2 : (al.length <= 2 && mc <= 5) || mc <= 2 ? 1 : 0); }
     s.players.forEach(p => {
       const seat = V.seats[p.pid]; if (!seat) return;
       $('.cd', seat).textContent = p.deck.length; $('.cr', seat).textContent = p.reserve.length;
@@ -508,7 +510,7 @@
     },
     async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
-      refresh(); const s = G.s; const human = winner != null && (V.online ? winner === V.viewer : !G.p(winner).bot); const anyHuman = V.humans > 0;
+      SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const human = winner != null && (V.online ? winner === V.viewer : !G.p(winner).bot); const anyHuman = V.humans > 0;
       SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
       if (winner != null && (human || !anyHuman)) FX.confetti();
       const w = winner != null ? G.p(winner) : null;
