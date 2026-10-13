@@ -828,6 +828,24 @@
    "w": 720,
    "h": 1080,
    "webp": 44712
+  },
+  "M10": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/Releuz.png",
+   "mtimeMs": 1791897668621,
+   "bytes": 2521190,
+   "sha1": "b722423dd5",
+   "w": 720,
+   "h": 1080,
+   "webp": 116012
+  },
+  "M12": {
+   "src": "Mistério Oculto/1 - Órbita Oráculo/02 - Assets/Personagens/James Hollow.png",
+   "mtimeMs": 1791897437484,
+   "bytes": 2033809,
+   "sha1": "822d3e7d71",
+   "w": 720,
+   "h": 1080,
+   "webp": 67190
   }
  }
 }
