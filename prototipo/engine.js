@@ -18,7 +18,7 @@
     'Especiais usados vão ao Buraco Negro depois que todos os efeitos resolvem (não podem ser recuperados na mesma disputa).',
     'Captura: carta do vencedor primeiro, depois as dos adversários em sentido horário a partir dele.',
     'Empate absoluto (soma e Ataque+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
-    'Baralho vazio: compra até 7 da reserva; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
+    'Baralho vazio: compra até 6 da reserva; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
     'À direita = próximo jogador ativo no sentido horário; à esquerda = o anterior. Em duelo, ambos são o único adversário.',
     'Especial só é oferecido quando há alvo válido (exceto Interrupção, que depende dos especiais dos outros).',
     'Limite de segurança: após 400 disputas vence quem tiver mais cartas.',
@@ -391,7 +391,7 @@
       for (const pid of this.order()) {
         const p = this.p(pid);
         if (p.deck.length === 0) {
-          if (p.reserve.length > 0) { const take = p.reserve.splice(0, 7); p.deck.push(...take); this.log(`${p.name} compra ${take.length} cartas da reserva.`); await this.emit('refill', { pid, cards: take }); }
+          if (p.reserve.length > 0) { const take = p.reserve.splice(0, 6); p.deck.push(...take); this.log(`${p.name} compra ${take.length} cartas da reserva.`); await this.emit('refill', { pid, cards: take }); }
           else { await this.eliminate(pid); }
         }
       }

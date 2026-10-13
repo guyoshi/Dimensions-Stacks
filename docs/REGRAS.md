@@ -96,9 +96,9 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 
 ## 7. Meio de reserva
 
-- Quando o baralho ativo de alguém acabar, o jogador compra **mais 7 cartas da própria reserva**, como estabelece o manual.
+- Quando o baralho ativo de alguém acabar, o jogador compra **mais 6 cartas da própria reserva** (decisão do autor em 13/10/2026; o manual anterior dizia 7).
 - Habilidades especiais específicos podem permitir retirar cartas da própria reserva ou da de um adversário.
-- **PENDENTE:** quando restarem menos de 7 na reserva; reposição durante uma disputa; se o jogador fica temporariamente sem carta de combate; quando se declara eliminação na presença de cartas especiais preparadas.
+- **PENDENTE:** quando restarem menos de 6 na reserva; reposição durante uma disputa; se o jogador fica temporariamente sem carta de combate; quando se declara eliminação na presença de cartas especiais preparadas.
 
 ## 8. Proibições e restrições originais
 
@@ -139,7 +139,7 @@ Cuidar da acessibilidade: moldura preta com texto de alto contraste, moldura ama
 1. Preparação de especial: origem exata da carta e se sua preparação consome a jogada.
 2. Quantos especiais podem ser ativados numa mesma disputa: 1 ou 2?
 3. Empate após a soma dos quatro atributos e regra específica da defesa.
-4. Reserva com menos de 7 cartas e condição exata de eliminação.
+4. Reserva com menos de 6 cartas e condição exata de eliminação.
 5. Efeitos 'à esquerda/direita' com jogadores eliminados.
 6. Tamanho de baralho global e modo de distribuição de cartas ao iniciar.
 
@@ -205,7 +205,7 @@ Destaques para especificação futura:
 5. **#27 — Kiw Tenesy:** *Adicione 15 de Defesa e 20 de Velocidade a uma carta.* Definir duração e zona válida; não presumir bônus permanente.
 6. **#34 — Master Kang:** *Roube duas cartas, uma de cada jogador.* Com dois jogadores não há dois adversários. **PENDENTE:** versão de duelo ou restrição de uso.
 7. **#35 — Cap. Zoddie:** *Troque os maços de reserva dos jogadores, da esquerda para a direita, começando por você.* Diferenciar da troca apenas com a esquerda (#46) e definir rotação simultânea da mesa.
-8. **#36 — Luna Stellar:** *Veja suas cartas do monte de reserva e separe 7 para usar na ordem.* Definir onde entram essas 7 e como proceder quando restarem menos de 7 na reserva.
+8. **#36 — Luna Stellar:** *Veja suas cartas do monte de reserva e separe 7 para usar na ordem.* Definir onde entram essas 7 e como proceder quando restarem menos de 6 na reserva.
 9. **#59 — William McCroys:** *Obrigue um jogador a usar suas cartas de habilidade especial nessa rodada.* **Já confirmado:** somente as cartas especiais preparadas na mesa podem ser forçadas; **APROVADO:** todas as cartas especiais já preparadas devem ser usadas; ordem e alvos individuais ainda pendentes.
 10. **#60 e #61:** as condições literais se referem a carta **azul** e carta **vermelha**. As cores do jogo digital identificarão séries, não União ou vilania. **PENDENTE:** identificar a carta-alvo e aprovar uma nova condição funcional sem alterar silenciosamente as regras antigas.
 

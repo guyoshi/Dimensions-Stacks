@@ -26,7 +26,7 @@
     reveal: { t: 'Revelação', b: `<p>Vence o <b>maior valor</b> do atributo escolhido, mesmo que os atributos sejam diferentes do par (Inteligência 82 contra Velocidade 82, por exemplo).</p><p>Se houver empate, o desempate é a <b>soma dos 4 atributos</b> da carta; depois, <b>Ataque + Inteligência</b>.</p>`, hint: true },
     capture: { t: 'Ataque ou Inteligência venceu', b: `<p>O vencedor <b>leva as cartas</b> dos perdedores para o fim do seu baralho.</p>`, hint: true },
     bh: { t: 'Buraco Negro', b: `<p>Quando <b>Defesa ou Velocidade</b> vencem, só o vencedor recupera a própria carta. As cartas dos perdedores vão para o <b>Buraco Negro</b> e saem do jogo.</p>`, hint: true },
-    refill: { t: 'Reserva', b: `<p>Seu baralho acabou: você comprou cartas da <b>reserva</b> (até 7). Sem baralho e sem reserva, você é eliminado.</p>`, hint: true },
+    refill: { t: 'Reserva', b: `<p>Seu baralho acabou: você comprou cartas da <b>reserva</b> (até 6). Sem baralho e sem reserva, você é eliminado.</p>`, hint: true },
     round2: { t: 'Rodada 2: especiais liberados', b: `<p>Agora, ao escolher o atributo, aparece o botão <b>✦ Usar como especial</b>. A carta sai da disputa e fica <b>fechada ao seu lado</b>; outra entra no lugar.</p><p>Depois da revelação, você decide <b>em segredo</b> se vira o especial (no máximo 1 por disputa).</p>`, hint: true },
     special: { t: 'Virar um especial?', b: `<p>As cartas já foram reveladas. Se quiser, <b>vire um especial</b> que você deixou fechado: o efeito altera a disputa.</p><p>Todos decidem em segredo e os especiais são virados juntos. Se não quiser, <b>mantenha fechado</b> — ele continua com você.</p>` },
   };
@@ -68,7 +68,7 @@
       <p>Vence o <b>maior número</b>, mesmo que os atributos sejam diferentes. Empatou? Desempate em ordem:</p>
       <ol class="tb"><li>Maior <b>soma dos 4 atributos</b> da carta</li><li>Maior <b>Ataque + Inteligência</b></li><li>Ainda igual: ninguém vence e as cartas voltam aos donos</li></ol>` },
     { t: 'Buraco Negro e reserva', ic: '🌀', b: () => `<div class="demo bhd"><div class="bhv"></div><span>→</span><div class="mn" style="flex-wrap:nowrap;gap:6px">${back(2, 30)}</div></div>
-      <p>Cartas perdidas em <b>Defesa ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra até 7 da <b>reserva</b>. Sem baralho e sem reserva, você está eliminado.</p>` },
+      <p>Cartas perdidas em <b>Defesa ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra até 6 da <b>reserva</b>. Sem baralho e sem reserva, você está eliminado.</p>` },
     { t: 'Habilidades especiais', ic: '✨', b: () => `<div class="demo"><button class="btn sm fake" tabindex="-1">✦ Usar como especial</button></div>
       <p>Liberados a partir da <b>Rodada 2</b>. Ao escolher o atributo, você pode tirar a carta da mesa e deixá-la <b>fechada ao seu lado</b>; a próxima do baralho entra no lugar.</p>
       <p>Depois da revelação, cada jogador decide <b>em segredo</b> se vira um especial (máximo 1 por disputa). Os efeitos são diferentes em cada carta.</p>` },

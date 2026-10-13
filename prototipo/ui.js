@@ -315,7 +315,7 @@
     const sp = Object.values(E.SPECIALS).filter(x => !x.stub);
     const n = el(`<div class="rules"><h2 style="color:var(--gold2)">Como jogar</h2>
       <h3>Objetivo</h3><p>Derrotar todos os adversários. Quem fica sem cartas (baralho e reserva) é eliminado.</p>
-      <h3>Montagem</h3><p>Cada jogador recebe o mesmo número de cartas. <b>7 formam o baralho ativo</b>, na ordem que você escolher (a 1ª é jogada primeiro). O restante vira a <b>reserva</b>: quando seu baralho esvazia, você compra até 7 dela.</p>
+      <h3>Montagem</h3><p>Cada jogador recebe o mesmo número de cartas. <b>7 formam o baralho ativo</b>, na ordem que você escolher (a 1ª é jogada primeiro). O restante vira a <b>reserva</b>: quando seu baralho esvazia, você compra até 6 dela.</p>
       <h3>Disputa</h3><ol><li>Todos colocam a carta do topo <b>virada para baixo</b>.</li>
       <li>O <b>iniciador</b> (sorteado na 1ª; depois, em sentido horário) escolhe <i>qualquer</i> atributo: Ataque, Defesa, Inteligência ou Velocidade.</li>
       <li>Os demais escolhem, <b>em segredo</b>, um dos dois atributos do mesmo par: <b>Ataque / Defesa</b> ou <b>Inteligência / Velocidade</b>.</li>
