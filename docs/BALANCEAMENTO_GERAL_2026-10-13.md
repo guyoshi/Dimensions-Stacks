@@ -210,3 +210,7 @@ Resultado: 0 falhas, conservação de cartas e duplicatas OK, nenhuma partida ch
 Atributos das 25 cartas recalculados pelos rankings do autor (mesmo método e mesma escala de referência congelada, `dados/escala_referencia_2026-10-14.json`), com a regra do par forte. Decisões do autor (`dados/ajustes_autor_calculo.json`): Velho-Sábio com par forte INT/VEL (70/70/95/44); Korvo continua forte em FOR/RES (89/78/70/65); **Korvo e Velho-Sábio são Lendárias (4 losangos)**, fixados e contados na cota da série. Viajantes passa a ter raridade por posição de poder (3 Lendárias, 5 Épicas, 8 Raras, 9 Comuns). Especiais de Viajantes ainda não revisados. Ferramentas: `prototipo/tools/calc_atributos.js` e `prototipo/tools/aplicar_atributos.py`.
 
 Propostas ainda não aplicadas (aguardam decisão do autor): Mistério Oculto (12 cartas) e Édelin Lys (5 cartas), em `dados/proposta_atributos_*`.
+
+## Édelin Lys recalculado (14/10/2026, aprovado pelo autor)
+
+Atributos das 5 cartas pelos rankings do autor, regra do par forte (Édelin isenta, A União): Édelin Lys 87/66/85/61 (Épica), Tack Ergson 18/35/53/70 (Comum), Jork Caravel 37/70/62/80 (Comum), Peredun 70/48/95/49 (Lendária), Primus Senan 66/86/70/31 (Rara). Raridade por posição de poder. Especiais ainda não revisados. Fotos em `Édelin Lys/1 - Promessas do Mar/02 - Assets/Personagens`.

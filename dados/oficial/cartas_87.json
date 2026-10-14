@@ -39,7 +39,8 @@
     "revisao_13_10_2026_par_forte": "Regra de par forte (13/10/2026): cartas fora de A União não podem ser fortes nos dois pares (FOR/RES e INT/VEL). 8 cartas com o par mais fraco comprimido para no máximo 70 (valores acima de 60 comprimidos proporcionalmente). Integrantes de A União preservados. Segunda leva (autorizada pelo autor em 14/10/2026): Capitã Nastácia, Jelles, Vivian, Alekta, Jennifer de Morais e os integrantes de A União Jasmey, Releuz e Édelin Lys.",
     "revisao_14_10_2026_jesed": "Atributos das 23 cartas de Ciclo de Jesed recalculados a partir dos rankings do autor (app de classificação), com a regra do par forte aplicada sempre (par fraco no máximo 70; A União isenta). Autorizado pelo autor em 14/10/2026. Método e dados: prototipo/tools/calc_atributos.js, dados/ranking_jesed_2026-10-14.json, dados/proposta_atributos_jesed_2026-10-14.json. Especiais de Jesed ainda não revisados.",
     "revisao_14_10_2026_belfex": "B02 Tack, B03 Jork, B04 Peredun e B05 Primus adicionadas a pedido do autor (status PROPOSTA_AGUARDANDO_APROVACAO).",
-    "revisao_14_10_2026_viajantes": "Atributos das 25 cartas de Viajantes Dimensionais recalculados a partir dos rankings do autor, com a regra do par forte (Velho-Sábio com par forte INT/VEL por decisão do autor; Korvo mantido forte em FOR/RES). Korvo e Velho-Sábio fixados como Lendárias (4 losangos). Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados."
+    "revisao_14_10_2026_viajantes": "Atributos das 25 cartas de Viajantes Dimensionais recalculados a partir dos rankings do autor, com a regra do par forte (Velho-Sábio com par forte INT/VEL por decisão do autor; Korvo mantido forte em FOR/RES). Korvo e Velho-Sábio fixados como Lendárias (4 losangos). Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
+    "revisao_14_10_2026_belfex_atributos": "Atributos das 5 cartas de Édelin Lys recalculados a partir dos rankings do autor, com a regra do par forte (Édelin isenta, A União); aprovado pelo autor em 14/10/2026. Raridade por posição de poder. Especiais ainda não revisados."
   },
   "cartas": [
     {
@@ -2132,12 +2133,12 @@
       },
       "descricao_curta": "Primeira senavelita, viveu há mais de dois mil anos. Guerreira que manipulava fogo e caos, foi peça-chave no fim do conflito entre velitas e senantes.",
       "atributos": {
-        "FOR": 92,
-        "RES": 83,
-        "INT": 70,
-        "VEL": 68
+        "FOR": 87,
+        "RES": 66,
+        "INT": 85,
+        "VEL": 61
       },
-      "soma_atributos": 313,
+      "soma_atributos": 299,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-103",
       "uniao": "INTEGRANTE",
@@ -2431,13 +2432,13 @@
       },
       "descricao_curta": "Amigo de infância de Édelin, capturado ainda criança por senantes; reaparece revelando magia e um amor antigo.",
       "atributos": {
-        "FOR": 46,
-        "RES": 50,
-        "INT": 58,
-        "VEL": 62
+        "FOR": 18,
+        "RES": 35,
+        "INT": 53,
+        "VEL": 70
       },
-      "soma_atributos": 216,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 176,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-074",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2456,12 +2457,12 @@
       },
       "descricao_curta": "Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar.",
       "atributos": {
-        "FOR": 55,
-        "RES": 60,
-        "INT": 72,
-        "VEL": 78
+        "FOR": 37,
+        "RES": 70,
+        "INT": 62,
+        "VEL": 80
       },
-      "soma_atributos": 265,
+      "soma_atributos": 249,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-092",
       "uniao": "NAO",
@@ -2481,12 +2482,12 @@
       },
       "descricao_curta": "Irmão de Primus que quer depô-lo, usando o discurso de união forçada entre os povos.",
       "atributos": {
-        "FOR": 40,
-        "RES": 46,
-        "INT": 82,
-        "VEL": 70
+        "FOR": 70,
+        "RES": 48,
+        "INT": 95,
+        "VEL": 49
       },
-      "soma_atributos": 238,
+      "soma_atributos": 262,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-116",
       "uniao": "NAO",
@@ -2506,12 +2507,12 @@
       },
       "descricao_curta": "Líder dos senantes e irmão de Peredun; governa um povo marcado pela guerra com os velitas.",
       "atributos": {
-        "FOR": 78,
-        "RES": 82,
-        "INT": 54,
-        "VEL": 48
+        "FOR": 66,
+        "RES": 86,
+        "INT": 70,
+        "VEL": 31
       },
-      "soma_atributos": 262,
+      "soma_atributos": 253,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-097",
       "uniao": "NAO",
