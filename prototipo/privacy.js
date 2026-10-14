@@ -48,7 +48,8 @@
       return o;
     };
     // estado da mesa visto por r: dos outros só as quantidades
-    const state = r => ({ players: G.s.players.map(p => { const own = p.pid === r, h = a => own ? a.slice() : a.map(() => HID);
+    const mates = (r, q) => !!(G.teams && G.teams.some(t => t.includes(r) && t.includes(q)));   // duplas: o parceiro vê baralho, reserva e especiais preparados
+    const state = r => ({ players: G.s.players.map(p => { const own = p.pid === r || mates(r, p.pid), h = a => own ? a.slice() : a.map(() => HID);
         return { pid: p.pid, name: p.name, bot: p.bot, avatar: p.avatar, alive: p.alive, deck: h(p.deck), reserve: h(p.reserve), prepared: h(p.prepared) }; }),
       bh: G.s.bh.map(x => x.kind === 'normal' ? x.id : x.id + ':' + x.kind), round: G.s.round, events: G.s.events || {}, away: G.s.away || [], combats: G.s.combats, initiator: G.s.initiator, over: G.s.over, winner: G.s.winner, winnerTeam: G.s.winnerTeam, byLimit: G.s.byLimit });
     // escolha de cartas às cegas: os ids viram posições ("?0", "?1"…) e a resposta volta ao id real
