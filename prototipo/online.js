@@ -160,10 +160,20 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     if (!host) { await link.leave(); busy(false); return flash('Sala não encontrada. Confira o código (e se o anfitrião ainda está nela).', 'err'); }
     if (host.presence.v !== VER) { await link.leave(); busy(false); return flash('Versões diferentes do jogo. Recarregue a página e tente de novo.', 'err'); }
     if (host.presence.go) {
-      const rj = (host.presence.rj || []).find(x => (x.u && x.u === myUid()) || x.n === name);
-      if (!rj) { await link.leave(); busy(false); return flash('Essa partida já começou e não há lugar livre para você (só quem estava jogando pode voltar).', 'err'); }
+      let rj = (host.presence.rj || []).find(x => (x.u && x.u === myUid()) || x.n === name), take = false;
+      if (!rj) {   // pessoa nova: pode assumir o lugar de uma CPU, se o anfitrião permitir
+        const open = host.presence.open || [];
+        if (!open.length) { await link.leave(); busy(false); return flash('Essa partida já começou e não há lugar livre para você (a entrada pode estar desligada pelo anfitrião).', 'err'); }
+        const pick = await new Promise(res => {
+          const w = el(`<div><h2 style="color:var(--gold2);margin-bottom:6px">Partida em andamento</h2><p class="hint">Escolha o lugar de qual CPU você quer assumir. Você herda o baralho dela.</p><div class="row" style="flex-direction:column;gap:8px;margin-top:10px">${open.map(x => `<button class="btn" data-i="${x.i}">⚙ ${esc(x.n)}</button>`).join('')}<button class="btn ghost" data-i="-1">Cancelar</button></div></div>`);
+          const m = U.modal(w); w.onclick = e => { const b = e.target.closest('[data-i]'); if (!b) return; m.close(); res(+b.dataset.i); };
+        });
+        if (pick < 0) { await link.leave(); busy(false); return flash('Entrada cancelada.'); }
+        rj = { i: pick }; take = true;
+      }
       lobbyGuest(link, code, name, host.peer); sess.rejoining = true; renderLobby();
-      const ask = () => link.send('msg', { t: 'rejoin', u: myUid(), n: name, i: rj.i }, host.peer).catch(() => { });
+      sess.unsub.push(link.on('msg', (d, m) => { if (d && d.t === 'rejoinNo' && m.peer === host.peer && sess && !sess.started) { leaveRoom(false).then(() => { entry('Esse lugar não está mais disponível (outra pessoa entrou, o jogador foi eliminado ou o anfitrião desligou a entrada).', 'err'); U.show('online'); }); } }));
+      const ask = () => link.send('msg', { t: 'rejoin', u: myUid(), n: name, i: rj.i, take }, host.peer).catch(() => { });
       ask(); let tries = 0; const iv = setInterval(() => { if (!sess || sess.started || ++tries > 8) return clearInterval(iv); ask(); }, 2500);
       sess.unsub.push(() => clearInterval(iv)); return;
     }

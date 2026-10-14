@@ -1117,3 +1117,6 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .r-top .seat .cnt { gap: 3px; }
 .r-top .seat .cnt .prepslots { gap: 2px; margin-left: 0; }
 .r-top .seat .prepslot { width: 13px; height: 20px; }
+
+/* enquanto o painel de decisão está aberto, a legenda sob a mesa some (a mesma informação já está no painel) */
+#game:has(#dock:not([hidden])) #caption { visibility: hidden; }

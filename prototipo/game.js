@@ -44,12 +44,14 @@
     const b = el(`<div class="banner" style="--d:${((ms || 1800) * S.k) / 1000}s;${color ? `--bc:${color}` : ''}"><b>${esc(title)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`);
     U.layer().appendChild(b); setTimeout(() => b.remove(), (ms || 1800) * S.k + 100);
   }
+  // dicas completas só nas primeiras 5 partidas do perfil; depois o texto fica reduzido
+  function novice() { try { return !window.DSSTATS || window.DSSTATS.profile().t.g < 5; } catch (e) { return true; } }
   function caption(t, flash) { const c = $('#caption'); if (!c) return; c.textContent = t || ''; c.classList.toggle('flash', !!flash); }
   function spLine(cardId, combat, canPrep) {
     const c = CARDS[cardId], sp = E.SPECIALS[c.especial]; if (!sp) return '';
     const from = (G && G.cfg && G.cfg.specialsFrom) || 2;
     let act = '';
-    if (combat && combat.specialsAllowed === false) act = `<span class="splnote">Especiais a partir da rodada ${from}.</span>`;
+    if (combat && combat.specialsAllowed === false) act = !novice() ? '' : `<span class="splnote">Especiais a partir da rodada ${from}.</span>`;
     else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ ${esc(sp.nome)} · usar como especial</button>`;
     return act ? `<div class="splact">${act}</div>` : '';
   }
@@ -161,7 +163,7 @@
     $('#game').innerHTML = `<header class="hud"><button class="ibtn" id="bMenu" title="Menu">☰</button>
       <div class="mid"><b>DIMENSIONS STACKS</b><div id="hSub"></div></div>
       <button class="ibtn" id="bLog" title="Registro">📜</button><button class="ibtn" id="bSpd" title="Velocidade">⏩</button><button class="ibtn" id="bMore" title="Mais opções" aria-label="Mais opções" aria-expanded="false">⋯</button>
-      <div class="hudmore" id="hudmore" hidden><button class="btn sm" id="bCalc" disabled>🧮 Ver cálculo da última disputa</button><button class="btn sm" id="bSnd">🔊 Som: ligado</button></div></header>
+      <div class="hudmore" id="hudmore" hidden><button class="btn sm" id="bCalc" disabled>🧮 Ver cálculo da última disputa</button><button class="btn sm" id="bSnd">🔊 Som: ligado</button><button class="btn sm" id="bJoin" hidden>🚪 Permitir entrada: ligado</button></div></header>
       <div id="rtrack" hidden></div><main class="board" id="board"></main><div id="caption"></div><div id="dock" hidden></div>`;
     $('#bMenu').onclick = gameMenu; $('#rtrack').onclick = showEvents;
     $('#bLog').onclick = toggleLog;
@@ -169,6 +171,7 @@
     const outMore = e => { if (!hm.contains(e.target) && e.target !== mb) closeMore(); };
     mb.onclick = () => { SND.play('click'); if (!hm.hidden) return closeMore(); hm.hidden = false; mb.setAttribute('aria-expanded', 'true'); setTimeout(() => document.addEventListener('pointerdown', outMore, true), 0); };
     $('#bCalc').onclick = () => { closeMore(); showCalc(); };
+    $('#bJoin').onclick = () => { V.allowJoin = V.allowJoin === false; $('#bJoin').textContent = '🚪 Permitir entrada: ' + (V.allowJoin ? 'ligado' : 'desligado'); if (V.republish) V.republish(); };
     $('#bSnd').onclick = () => { V.muted = !V.muted; SND.setVol('master', V.muted ? 0 : S.master); $('#bSnd').textContent = V.muted ? '🔇 Som: desligado' : '🔊 Som: ligado'; };
     $('#bSpd').onclick = () => { const o = ['lento', 'normal', 'rapido']; S.speed = o[(o.indexOf(S.speed) + 1) % 3]; U.applyOpts(); speedLbl(); };
     speedLbl();
@@ -293,6 +296,8 @@
       seat.classList.toggle('turn', turn); $('.turnflag', seat).hidden = !turn;
     });
     const bh = $('#bhn'); if (bh) bh.textContent = s.bh.length;
+    { const bj = $('#bJoin'); if (bj) bj.hidden = !(V.online && V.ctl && V.ctl.role === 'host'); }
+    s.players.forEach(p => { const seat = V.seats[p.pid]; if (!seat) return; const nt = $('.nt', seat); if (nt && nt.textContent !== p.name) { nt.textContent = p.name; nt.style.fontSize = ''; const av = $('.avatar', seat); if (av && !av.classList.contains('img')) av.textContent = p.name[0].toUpperCase(); const sl = V.slots[p.pid]; if (sl) sl.dataset.name = p.name; } });
     fitNames();
     const sub = $('#hSub'); if (sub) sub.textContent = `${s.events && Object.keys(s.events).length ? '' : 'Rodada ' + s.round + ' · '}Disputa ${Math.min(s.combats + 1, 9999)}${V.online && V.ctl && V.ctl.link ? ' · Sala ' + V.ctl.link.code : ''}`;
   }
@@ -707,7 +712,8 @@
         const txt = combat.ctl && combat.ctl.universal ? `Atributo universal: todos disputam em ${lst}.`
           : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
-          : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`;
+          : novice() ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`
+          : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b> · escolha: ${lst}`;
         const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}</div>` : '';
         const em = entry.evm || {};
         const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}</div>
@@ -958,7 +964,10 @@
       // queda de conexão: carência de 25 s (reconexões rápidas são normais); depois um CPU assume, com aviso na tela. O jogador pode voltar ao lugar.
       const grace = new Map(), present = peer => !!peer && link.peers().some(p => p.peer === peer);
       const notice = (title, sub) => { banner(title, sub, '#ffd25f', 3200); send({ n: ++seq, t: 'notice', title, sub }); };
-      const publishRj = () => { if (closed) return; const rj = seats.map((s, i) => ({ s, i })).filter(x => x.s.u && x.s.peer !== link.me && G.p(x.i) && (G.p(x.i).bot || !present(x.s.peer))).map(x => ({ i: x.i, u: x.s.u, n: x.s.name })); link.presence({ rj }).catch(() => { }); };
+      const publishRj = () => { if (closed) return; const rj = seats.map((s, i) => ({ s, i })).filter(x => x.s.u && x.s.peer !== link.me && G.p(x.i) && (G.p(x.i).bot || !present(x.s.peer))).map(x => ({ i: x.i, u: x.s.u, n: x.s.name }));
+        const open = V.allowJoin === false ? [] : seats.map((s, i) => ({ s, i })).filter(x => x.s.peer !== link.me && G.p(x.i) && G.p(x.i).bot && G.p(x.i).alive && !rj.some(r => r.i === x.i)).map(x => ({ i: x.i, n: x.s.name }));
+        link.presence({ rj, open }).catch(() => { }); };
+      V.republish = publishRj;
       const away = (i, on) => { const a = G.s.away = (G.s.away || []).filter(x => x !== i); if (on) a.push(i); try { refresh(); } catch (e) { } };
       const toBot = i => {
         const p = G.p(i); if (!p || p.bot || closed) return; const old = seats[i].peer;
@@ -979,6 +988,18 @@
       off.push(() => grace.forEach(t => clearTimeout(t)));
       off.push(link.on('msg', (d, m) => {
         if (!d || d.t !== 'rejoin') return;
+        if (d.take) {   // pessoa nova assume o lugar de uma CPU
+          const k = d.i, p = G.p(k), sk = seats[k];
+          const again = sk && sk.peer === m.peer && p && !p.bot;   // pedido repetido: só reenvia
+          const ok = again || (V.allowJoin !== false && p && sk && p.bot && p.alive && sk.peer !== link.me && !seats.some(x => x.peer === m.peer));
+          if (!ok) { link.send('msg', { t: 'rejoinNo' }, m.peer).catch(() => { }); return; }
+          if (!again) {
+            const was = p.name; sk.peer = m.peer; sk.u = d.u || ''; sk.name = String(d.n || was).slice(0, 14); sk.bot = false; p.name = sk.name; p.bot = false;
+            G.log(`${p.name} entrou e assumiu o lugar de ${was}.`, 'efeito'); notice(`${p.name} entrou`, `Assumiu o lugar de ${was}`); publishRj(); refresh();
+          }
+          link.send('go', Object.assign({}, cfg, { seats: seats.map(x => ({ name: x.name, bot: x.bot, peer: x.peer, u: x.u })), rejoin: k }), m.peer).catch(() => { });
+          setTimeout(() => sync(k), 900); setTimeout(() => sync(k), 3000); return;
+        }
         const i = seats.findIndex((s, k) => k === d.i && s.peer !== link.me && ((s.u && s.u === d.u) || s.name === d.n)); if (i < 0 || !G.p(i)) return;
         const old = seats[i].peer; if (old && old !== m.peer && present(old)) return;   // o dono original ainda está conectado
         if (grace.has(old)) { clearTimeout(grace.get(old)); grace.delete(old); } away(i, false);

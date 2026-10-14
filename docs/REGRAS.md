@@ -396,7 +396,7 @@ Cada carta tem um especial diferente (98 cartas, 98 especiais). As 20 cartas que
 Fora de A União, nenhuma carta é forte nos dois pares de atributos (FOR/RES e INT/VEL): o par fraco fica com no máximo 70. Detalhes e lista em `docs/BALANCEAMENTO_GERAL_2026-10-13.md`.
 
 ## Fenômenos dimensionais (14/10/2026, aprovados pelo autor)
-Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo e online; padrão: ligados). A partir da Rodada 2, cada rodada tem 1/3 de chance de ter um fenômeno (rodadas seguidas são possíveis; ~1/3 dos fenômenos vêm na rodada seguinte ao anterior e ~2/3 após 2 ou mais rodadas; nunca mais de 6 rodadas seguidas sem fenômeno; nunca o mesmo tipo duas vezes seguidas). Ajustado em 14/10/2026 a pedido do autor (antes: 30%, nunca seguidas). Sorteio determinístico pela semente da partida. A faixa no topo mostra a rodada atual e as 2 próximas (com o nome do fenômeno, se houver); toque abre a explicação. Na 1ª vez que cada fenômeno aparece, uma caixa explica. Cada fenômeno tem animação de tela própria.
+Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo e online; padrão: ligados). O primeiro fenômeno cai entre as Rodadas 2 e 4; depois, o intervalo até o próximo é de 2, 3 ou 4 rodadas (chance igual: 1/3 "uma com, uma sem, uma com"; 1/3 "uma com, duas sem"; 1/3 "uma com, três sem"). Média: 1 rodada em cada 3 tem fenômeno; nunca em rodadas seguidas; nunca o mesmo tipo duas vezes seguidas. Ajustado em 14/10/2026 a pedido do autor (antes: 30% de chance por rodada, sem regra de intervalo). Sorteio determinístico pela semente da partida. A faixa no topo mostra a rodada atual e as 2 próximas (com o nome do fenômeno, se houver); toque abre a explicação. Na 1ª vez que cada fenômeno aparece, uma caixa explica. Cada fenômeno tem animação de tela própria.
 
 | Fenômeno | Efeito |
 |---|---|
@@ -411,3 +411,8 @@ Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo 
 | Troca Dimensional | Dois atributos de cada carta trocam de valor; o par é sorteado e mostrado na animação. |
 
 Os efeitos de atributo entram na base da carta (não são anulados por especiais que removem modificadores). "Iniciativa Livre" foi descartada pelo autor.
+
+## Reconexão e entrada em partida em andamento (14/10/2026)
+- Queda de conexão: 25 s de espera (indicador amarelo no assento); depois uma CPU assume. Quem caiu volta ao próprio lugar entrando de novo na mesma sala (reconhecido pelo perfil ou pelo nome): mantém o baralho que a CPU deixou.
+- Entrada de pessoa nova: o anfitrião tem o botão "Permitir entrada" (painel ⋯, ligado por padrão). Com ele ligado, quem digita o código de uma partida em andamento escolhe qual CPU substituir e herda o baralho, a reserva e os especiais preparados dela, com o nome da pessoa. O anfitrião é avisado na tela. Só lugares de CPU (vivas) podem ser assumidos.
+- Dicas de texto: nas primeiras 5 partidas do perfil o painel de decisão traz o texto completo; depois, reduzido. A legenda sob a mesa fica oculta enquanto o painel de decisão está aberto.
