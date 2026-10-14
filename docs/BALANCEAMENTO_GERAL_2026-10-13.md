@@ -321,3 +321,7 @@ Médias por raridade (final, 2 jogadores): Lendária 73%, Épica 65%, Rara 51%, 
 ## Mark Polar ajustado (14/10/2026, aprovado pelo autor)
 
 Mark Polar 91/77/91/47 → 88/76/88/46 (era o outlier: 88% de vitórias em duelo; agora cerca de 77% em duelo e 57% em 4 jogadores, 6º lugar). Com o poder menor ele cairia para Épica (Jokara Amarëa 1709 passaria a Lendária), então a raridade Lendária dele foi fixada (`RARIDADE_FIXA` em `data.js` e `raridade_fixa` em `dados/ajustes_autor_calculo.json`), como Korvo e Velho-Sábio; Jokara continua Épica. A Besta: ajuste proposto (INT/VEL 70/70) ainda não aprovado, nada alterado.
+
+## A Besta e Korvo como cartas de destaque (14/10/2026, autorizado pelo autor)
+
+Pedido: duas cartas que causem "caraca" quando jogadas, sem passar de cerca de 80–85% de vitórias e **dentro da regra do par fraco** (máximo 70). A Besta 95/95/49/33 → **95/95/68/70**; Korvo 90/79/67/66 → **95/85/70/68**. Resultado simulado (duelo / 4 jogadores): A Besta 69/72 → **78/74** (1ª nos dois modos); Korvo 67/49 → **75/72**; Mark Polar 77/55; Velho-Sábio 76/72. Nenhuma outra carta mudou; nenhuma raridade mudou; as médias das séries seguem entre 49% e 52% (duelo). Testado: auditoria de especiais 156 cenários, 0 falhas. Para chegar a 80–85% seria preciso exceção à regra do par fraco (INT/VEL 80/80: 84/77), não aplicada.

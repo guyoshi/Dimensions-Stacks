@@ -45,7 +45,8 @@
     "revisao_14_10_2026_spacetheft": "Atributos das 18 cartas de Spacetheft recalculados a partir dos rankings do autor, regra do par forte: Capitã Nastácia FOR/RES e Amanda INT/VEL (decisão do autor); Jasmey (A União) isento. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
     "revisao_14_10_2026_diario": "Atributos das 19 cartas de Diário Sobrenatural recalculados a partir dos rankings do autor, regra do par forte (Agouro FOR/RES, Sra. Olívia FOR/RES, O Pai e Diego Tavolieri INT/VEL por decisão do autor; Jennifer, A União, isenta). Autorizado em 14/10/2026.",
     "revisao_14_10_2026_calibracao_especiais": "Calibração fina dos atributos (88 cartas, dados/calibracao_2026-10-14.json, ordem de poder por série preservada) e reatribuição global de especiais (53 cartas) por equivalência de percentil carta × especial; autorizadas pelo autor em 14/10/2026.",
-    "revisao_14_10_2026_mark_polar": "Mark Polar 91/77/91/47 -> 88/76/88/46 (aprovado pelo autor em 14/10/2026: era o outlier, cerca de 88% de vitórias em duelo)."
+    "revisao_14_10_2026_mark_polar": "Mark Polar 91/77/91/47 -> 88/76/88/46 (aprovado pelo autor em 14/10/2026: era o outlier, cerca de 88% de vitórias em duelo).",
+    "revisao_14_10_2026_besta_korvo": "A Besta 95/95/49/33 -> 95/95/68/70 e Korvo 90/79/67/66 -> 95/85/70/68 (autor, 14/10/2026: cartas de destaque; dentro da regra do par fraco, par fraco no maximo 70)."
   },
   "cartas": [
     {
@@ -825,13 +826,13 @@
       },
       "descricao_curta": "Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites.",
       "atributos": {
-        "FOR": 90,
-        "RES": 79,
-        "INT": 67,
-        "VEL": 66
+        "FOR": 95,
+        "RES": 85,
+        "INT": 70,
+        "VEL": 68
       },
-      "soma_atributos": 302,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 318,
+      "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-049",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1307,11 +1308,11 @@
       "atributos": {
         "FOR": 95,
         "RES": 95,
-        "INT": 49,
-        "VEL": 33
+        "INT": 68,
+        "VEL": 70
       },
-      "soma_atributos": 272,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 328,
+      "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-133",
       "uniao": "NAO",
       "base_narrativa": {

@@ -43,7 +43,7 @@
 | V07 | Lucas Veline | Viajantes Dimensionais | Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada. | 31 | 38 | 72 | 71 | 212 | **AE-070** — Conquista compensada | Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido. |
 | V08 | Garmand | Viajantes Dimensionais | Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes. | 72 | 80 | 70 | 47 | 269 | **AE-044** — Primeira da esquerda | Pegue a primeira carta do meio de reserva do adversário à esquerda. |
 | V09 | Ricochet Bombergue | Viajantes Dimensionais | Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex. | 67 | 57 | 90 | 76 | 290 | **AE-072** — Não perder a carta | Mesmo que perca, sua carta de combate volta ao fim do próprio baralho ativo, em vez de ser capturada ou descartada. |
-| V10 | Korvo | Viajantes Dimensionais | Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites. | 90 | 79 | 67 | 66 | 302 | **AE-049** — Escolha da reserva | Escolha um adversário e pegue até 2 cartas aleatórias de sua reserva. |
+| V10 | Korvo | Viajantes Dimensionais | Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites. | 95 | 85 | 70 | 68 | 318 | **AE-049** — Escolha da reserva | Escolha um adversário e pegue até 2 cartas aleatórias de sua reserva. |
 | V11 | Gary | Viajantes Dimensionais | Ligado à Vigilância, serve secretamente aos interesses do mago Korvo. | 64 | 70 | 63 | 65 | 262 | **AE-058** — Passe à direita | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita. |
 | V12 | Anasin | Viajantes Dimensionais | Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos. | 70 | 52 | 76 | 73 | 271 | **AE-139** — Disparada | Sua carta de combate recebe +20 em Velocidade nesta disputa. |
 | V13 | Saliens | Viajantes Dimensionais | Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo. | 80 | 77 | 56 | 66 | 279 | **AE-119** — Preparação urgente | Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa. |
@@ -63,7 +63,7 @@
 | S08 | Vivian | Spacetheft | Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo. | 9 | 35 | 83 | 86 | 213 | **AE-006** — Dupla resistência | Uma carta de combate sua recebe +15 Resistência e +20 Velocidade nesta disputa. |
 | S09 | Capitã Nastácia | Spacetheft | Capitã lendária da Lebargan, comanda com discrição uma das naves mais temidas do espaço. | 89 | 69 | 70 | 64 | 292 | **AE-048** — Última de cada reserva | Pegue a última carta do meio de reserva de cada adversário ativo que tenha cartas nessa zona. |
 | S10 | Jelles | Spacetheft | Comandante brutal da Lebargan, governa pelo medo e busca o poder escondido na Aurora. | 66 | 46 | 70 | 49 | 231 | **AE-102** — Capturar defensor | Se Resistência + Velocidade da carta de combate de um adversário for maior ou igual a Força + Inteligência, capture essa carta quando o combate terminar, se ainda estiver em jogo. |
-| S11 | A Besta (Aurora) | Spacetheft | Criatura despertada na Aurora, alvo da obsessão de Jelles e ameaça envolta em mistério. | 95 | 95 | 49 | 33 | 272 | **AE-133** — Desgaste coletivo | No atributo que você está usando, as cartas de combate de todos os rivais perdem 8 nesta disputa. |
+| S11 | A Besta (Aurora) | Spacetheft | Criatura despertada na Aurora, alvo da obsessão de Jelles e ameaça envolta em mistério. | 95 | 95 | 68 | 70 | 328 | **AE-133** — Desgaste coletivo | No atributo que você está usando, as cartas de combate de todos os rivais perdem 8 nesta disputa. |
 | S12 | Vek | Spacetheft | Dale leal ao antigo código, deixa o ressentimento transformar sua relação com Jasmey. | 23 | 65 | 71 | 58 | 217 | **AE-029** — Proibir a defesa rival | Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa. |
 | S13 | Capitão Tzough | Spacetheft | Capitão pirata rival, negocia sob pressão e disputa vantagens nos perigos do espaço. | 78 | 66 | 69 | 38 | 251 | **AE-059** — Permuta das reservas à esquerda | Troque todo o seu meio de reserva pelo do adversário à esquerda. |
 | S14 | Genrir | Spacetheft | Rival provocador de Jasmey, surpreende ao participar da ruptura contra Jelles. | 43 | 59 | 69 | 62 | 233 | **AE-092** — Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. |
@@ -148,7 +148,7 @@
 | V07 Lucas Veline | 212 | AE-062 — Reservas giratórias à esquerda | AE-070 — Conquista compensada |
 | V08 Garmand | 269 | AE-095 — Atrasar a próxima (retirado) | AE-044 — Primeira da esquerda |
 | V09 Ricochet Bombergue | 290 | AE-041 — Última da direita | AE-072 — Não perder a carta |
-| V10 Korvo | 302 | AE-068 — Tributo por sacrifício | AE-049 — Escolha da reserva |
+| V10 Korvo | 318 | AE-068 — Tributo por sacrifício | AE-049 — Escolha da reserva |
 | V11 Gary | 262 | AE-055 — Troca de topos à direita | AE-058 — Passe à direita |
 | V12 Anasin | 271 | AE-114 — Desvio de alvo | AE-139 — Disparada |
 | V13 Saliens | 279 | AE-046 — Reserva dupla à esquerda | AE-119 — Preparação urgente |
@@ -163,7 +163,7 @@
 | S07 Buni | 197 | AE-099 — Reforçar o fim | AE-024 — Ataque obrigatório |
 | S08 Vivian | 213 | AE-101 — Capturar atacante | AE-006 — Dupla resistência |
 | S10 Jelles | 231 | AE-047 — Tributo coletivo | AE-102 — Capturar defensor |
-| S11 A Besta (Aurora) | 272 | AE-024 — Ataque obrigatório | AE-133 — Desgaste coletivo |
+| S11 A Besta (Aurora) | 328 | AE-024 — Ataque obrigatório | AE-133 — Desgaste coletivo |
 | S12 Vek | 217 | AE-032 — Primeira à esquerda | AE-029 — Proibir a defesa rival |
 | S14 Genrir | 233 | AE-053 — Combatente da direita | AE-092 — Próximas três |
 | D01 Junior Quissama | 240 | AE-098 — Organizar reserva | AE-038 — Recompensa defensiva |
