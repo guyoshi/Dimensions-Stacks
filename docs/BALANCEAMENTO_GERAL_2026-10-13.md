@@ -171,7 +171,7 @@ Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_1
 - **Especiais retirados** (removidos do catálogo e dos docs de AE; voltam apenas se o autor quiser): **AE-112** Repetição onerosa (repetir um especial descartando 2 cartas), **AE-095** Atrasar a próxima (mover a próxima carta do rival ao fim do baralho) e **AE-086** Troca pelo descarte (1 carta ao Buraco Negro, recuperar até 2). Catálogo: 129 − 3 + 12 = **138 habilidades**; 98 equipadas, 40 na reserva.
 - **Substitutos nas cartas que os tinham:** D06 Jennifer de Morais AE-109 · V11 Gary AE-003 · M12 James Harrow AE-102.
 - **Prévia de conversão:** em especiais que convertem ou somam atributos (Resistência passa a valer a Inteligência etc.), a folha de escolha mostra "Sua carta: atributo a → b" com os valores resultantes antes de o jogador confirmar.
-- **Reordenar ao comprar da reserva:** o jogador reordena as cartas que acabou de comprar (até 6). O bot ordena sozinho. Início da partida: a ordem da reserva segue aleatória (a mão inicial já é ordenada pelo jogador).
+- **Reordenar ao comprar da reserva:** o jogador reordena as cartas que acabou de comprar (até 7; era 6 até 14/10/2026). O bot ordena sozinho. Início da partida: a ordem da reserva segue aleatória (a mão inicial já é ordenada pelo jogador).
 
 
 ## Fenômenos dimensionais — teste de estresse (14/10/2026)

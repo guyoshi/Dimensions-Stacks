@@ -46,7 +46,7 @@
     calc: { t: 'Entenda o resultado', soft: true, b: () => tv('<span class="tch"><b>Ver cálculo</b></span>') + cap('Toque no botão para ver <b>por que</b> alguém ganhou.') },
     evento: { t: 'Fenômeno dimensional', b: ev => { const d = ev && window.DSUI.E.EVENTOS[ev.id]; return `${d ? `<div class="evone"><b>${esc(d.nome)}${ev.id === 'troca' && ev.pair ? ' (' + window.DSUI.ATT[ev.pair[0]].nome + ' ⇄ ' + window.DSUI.ATT[ev.pair[1]].nome + ')' : ''}</b><span>${esc(d.curto)}</span></div>` : ''}`
       + cap('Vale <b>só nesta rodada</b>. A faixa no alto avisa os próximos.'); }, hint: false },
-    refill: { t: 'Reserva', b: () => tv(mini('3', true), arr, mini('3')) + cap('Baralho vazio: você compra cartas da <b>reserva</b> e reordena.'), hint: true },
+    refill: { t: 'Reserva', b: () => tv(mini('3', true), arr, mini('3')) + cap('Baralho vazio: você compra até <b>7</b> cartas da <b>reserva</b> e reordena.'), hint: true },
     elim: { t: 'Eliminado', soft: true, b: () => tv(mini(0), '<span class="plus">+</span>', mini(0, true), arr, '<b>fora</b>') + cap('Sem baralho e sem reserva, o jogador sai da partida.') },
     round2: { t: 'Especiais liberados', b: () => tv('<button class="btn sm fake" tabindex="-1">✦ Usar como especial</button>', arr, slot(true)) + cap('A carta fica <b>fechada ao seu lado</b>; a próxima entra no lugar. Depois você decide se a vira.') },
     react: { t: 'Reagir?', b: () => tv(rch('', 'anular'), rch('', 'copiar'), rch('', 'apropriar'), rch('', 'proteger'), rch('', 'cortar par')) + cap('Alguém virou um especial. Reaja em segredo ou <b>mantenha fechado</b>.') },
@@ -106,7 +106,7 @@
       <p>Vence o <b>maior número</b>, mesmo que os atributos sejam diferentes. Empatou? Desempate em ordem:</p>
       <ol class="tb"><li>Maior <b>soma dos 4 atributos</b> da carta</li><li>Maior <b>Força + Inteligência</b></li><li>Ainda igual: ninguém vence e as cartas voltam aos donos</li></ol>` },
     { t: 'Buraco Negro e reserva', ic: '🌀', b: () => `<div class="demo bhd"><div class="bhv"></div><span>→</span><div class="mn" style="flex-wrap:nowrap;gap:6px">${back(2, 30)}</div></div>
-      <p>Cartas perdidas em <b>Resistência ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra cartas da <b>reserva</b> e <b>reordena</b> as cartas que chegam. Sem baralho e sem reserva, você está eliminado.</p>` },
+      <p>Cartas perdidas em <b>Resistência ou Velocidade</b> vão ao <b>Buraco Negro</b>: saem do jogo.</p><p>Quando seu baralho esvazia, você compra até 7 da <b>reserva</b> e <b>reordena</b> as cartas que chegam. Sem baralho e sem reserva, você está eliminado.</p>` },
     { t: 'Habilidades especiais', ic: '✨', b: () => `<div class="demo"><button class="btn sm fake" tabindex="-1">✦ Usar como especial</button></div>
       <p>Liberados a partir da <b>Rodada 2</b>. Ao escolher o atributo, você pode tirar a carta da mesa e deixá-la <b>fechada ao seu lado</b>; a próxima do baralho entra no lugar.</p>
       <p>Depois da revelação, cada jogador decide <b>em segredo</b> se vira um especial (máximo 1 por disputa). Os efeitos são diferentes em cada carta.</p><p>Especiais <b>reativos</b> (anular, copiar, apropriar, proteger) são virados depois: se um rival virou um especial, você decide <b>sabendo qual foi</b>.</p>` },

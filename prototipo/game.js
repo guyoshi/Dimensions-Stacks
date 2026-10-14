@@ -317,7 +317,7 @@
   // reserva própria, só leitura (sem ordem: a compra pega as primeiras da pilha, que não se conhecem)
   function showReserve(ids) {
     SND.play('click');
-    const w = el(`<div><h2 style="color:var(--gold2)">Sua reserva</h2><p class="hint">${ids.length} carta(s), só para consultar. Quando seu baralho acabar você compra cartas daqui (as primeiras são sorteadas) e então reordena as que chegarem. Toque numa carta para ver os detalhes.</p><div class="cgrid"></div></div>`);
+    const w = el(`<div><h2 style="color:var(--gold2)">Sua reserva</h2><p class="hint">${ids.length} carta(s), só para consultar. Quando seu baralho acabar você compra até 7 delas (as primeiras são sorteadas) e então reordena as que chegarem. Toque numa carta para ver os detalhes.</p><div class="cgrid"></div></div>`);
     $('.cgrid', w).append(...ids.map(id => cardEl(id, { up: true, noanim: true, cw: 96, click: true })));
     U.modal(w);
   }
