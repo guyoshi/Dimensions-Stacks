@@ -822,7 +822,7 @@
       const P = window.DSPriv.create({ get s() { return G.s; } });   // visão por jogador: só as próprias cartas privadas saem do anfitrião
       let logq = [], flushing = false;
       let askSeq = 0;
-      const fbOf = (kind, p, a) => kind === 'orderHand' ? G.botOrderHand(a[0]) : (G['bot_' + kind] ? G['bot_' + kind](p, ...a) : undefined);
+      const fbOf = (kind, p, a) => kind === 'orderHand' ? G.botOrderHand(a[0], p, a[1] && a[1].start) : (G['bot_' + kind] ? G['bot_' + kind](p, ...a) : undefined);
       const remoteAsk = (p, kind, args, fb) => {
         const peer = seats[p.pid].peer; if (!peer || closed) return fb();
         const id = ++askSeq, tl = tlOf(kind); send({ n: ++seq, t: 'waiting', pid: p.pid, tl }); caption(`Aguardando ${p.name}…`); tmrStart(tl + 2, { label: p.name });

@@ -238,16 +238,34 @@
       await this.emit('initiative', { initiator: this.s.initiator });
       for (let i = 0; i < n; i++) {
         const p = this.p(i); let ord;
-        if (p.bot) ord = this.botOrderHand(hands[i], p); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator });
+        if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator });
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
       }
       this.memInit();
       await this.emit('ready', {});
     }
-    botOrderHand(hand, p) { // melhores primeiro, com ruído (maior no fácil)
-      const nz = this.lvl(p).ord;
-      return hand.slice().sort((a, b) => (sum4(CARDS[b].stats) + this.rand() * nz) - (sum4(CARDS[a].stats) + this.rand() * nz));
+    botOrderHand(hand, p, start) { // fácil: melhores primeiro, com ruído; normal/difícil: planejam pela iniciativa e pelo valor dos especiais
+      const L = this.lvl(p), nz = L.ord, n = this.s.players.length, r = () => this.rand() * nz;
+      const diff = (p && p.diff) || this.cfg.difficulty; p = p || {};
+      if (diff === 'facil' || (p && p.ordOld)) return hand.slice().sort((a, b) => (sum4(CARDS[b].stats) + r()) - (sum4(CARDS[a].stats) + r()));
+      const sv = id => { const s = SP[CARDS[id].especial]; return (s && !s.stub && !p.noSpecial ? (s.val || 0) : 0); };
+      const mx = id => Math.max(...Object.values(CARDS[id].stats));
+      if (start == null) return hand.map(id => ({ id, s: sum4(CARDS[id].stats) + 20 * sv(id) + r() })).sort((a, b) => b.s - a.s).map(x => x.id);   // compra da reserva: especiais já valem
+      const first = Math.min(n, hand.length);   // especiais só valem a partir da Rodada 2: as primeiras n cartas entram sem especial
+      const f = hand.map(id => ({ id, s: sum4(CARDS[id].stats) + 0.6 * mx(id) - 30 * sv(id) + r() })).sort((a, b) => b.s - a.s).slice(0, first).map(x => x.id);
+      const rest = hand.filter(id => !f.includes(id)).map(id => ({ id, s: 30 * sv(id) + 0.5 * sum4(CARDS[id].stats) + r() })).sort((a, b) => b.s - a.s).map(x => x.id);
+      // nas posições em que o bot inicia, a carta de maior atributo; nas demais, a mais equilibrada
+      let slots = f.slice();
+      if (start != null && p.pid != null) {
+        const ini = []; for (let k = 0; k < f.length; k++) if ((start + k) % n === p.pid) ini.push(k);
+        const byMax = f.slice().sort((a, b) => mx(b) - mx(a) + (this.rand() - 0.5) * nz * 0.3), out = new Array(f.length);
+        ini.forEach(k => { out[k] = byMax.shift(); });
+        const others = byMax.sort((a, b) => sum4(CARDS[b].stats) - sum4(CARDS[a].stats));
+        for (let k = 0; k < out.length; k++) if (!out[k]) out[k] = others.shift();
+        slots = out;
+      }
+      return slots.concat(rest);
     }
 
     ctxFor(combat) {
