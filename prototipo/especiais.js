@@ -287,7 +287,6 @@
     }
     rotateRes('AE-061', 'R'); rotateRes('AE-062', 'L');
     D('AE-063', 'Redistribuição', {
-      can(ctx) { return !(ctx.g.cfg && ctx.g.cfg.teams); },   // duplas: os dois rivais são parceiros, não há ganho; não se usa
       // [PROPOSTA] "carta ativa escolhida": quem usa escolhe, às cegas (pela posição no baralho ativo), 1 carta de cada vizinho; as duas trocam de dono.
       // Quem lembra o que há nos baralhos (memória do bot) tira uma carta forte do líder e entrega uma fraca; sem memória, a escolha é ao acaso.
       async apply(ctx, act) {
@@ -304,7 +303,7 @@
         ctx.learn(act.pid, L, kL.filter(c => c !== cl)); ctx.learn(act.pid, R, kR.filter(c => c !== cr));   // quem escolheu sabe o que mudou de lugar
       },
       ai(ctx, pid) {
-        const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02;
+        if (ctx.g.cfg && ctx.g.cfg.teams) return 0; const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02;
         const tot = q => ctx.g.totalCards(ctx.player(q)); const strongL = tot(L) >= tot(R), S = strongL ? L : R, W = strongL ? R : L;
         if (Math.abs(tot(L) - tot(R)) < 2) return 0.04;
         const kS = ctx.mem(pid, S), kW = ctx.mem(pid, W); if (!kS.length && !kW.length) return 0.04;
@@ -314,7 +313,6 @@
       prep: 0.3, val: 0.4,
     });
     D('AE-064', 'Redistribuição', {
-      can(ctx) { return !(ctx.g.cfg && ctx.g.cfg.teams); },   // duplas: os dois rivais são parceiros, não há ganho; não se usa
       async apply(ctx, act) {
         const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null || L === R) return ctx.say('Em duelo a carta volta ao mesmo rival: sem vantagem. O especial é gasto.');
         const t = await ctx.hit(act.pid, L); if (t == null) return; if (await ctx.blocked(act.pid, t, 'reserve', 1, 'swap')) return;
@@ -323,17 +321,16 @@
         ctx.say(`${nm(ctx, act.pid)} move uma carta da reserva de ${nm(ctx, t)} para a de ${nm(ctx, R)}.`); await ctx.emit('steal', { from: t, to: R, card: c, zone: 'reserve', dzone: 'reserve' });
       },
       // só em 3+: tira da reserva do líder (à esquerda) e dá a quem está atrás de mim (à direita)
-      ai(ctx, pid) { const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 2 && tot(R) < tot(pid) && ctx.player(L).reserve.length ? 0.5 : 0.03; }, prep: 0.25, val: 0.4,
+      ai(ctx, pid) { if (ctx.g.cfg && ctx.g.cfg.teams) return 0; const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 2 && tot(R) < tot(pid) && ctx.player(L).reserve.length ? 0.5 : 0.03; }, prep: 0.25, val: 0.4,
     });
     D('AE-065', 'Redistribuição', {
-      can(ctx) { return !(ctx.g.cfg && ctx.g.cfg.teams); },   // duplas: os dois rivais são parceiros, não há ganho; não se usa
       async apply(ctx, act) {
         const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null || L === R) return ctx.say('Em duelo a transferência não gera ganho líquido. O especial é gasto.');
         const t = await ctx.hit(act.pid, L); if (t == null) return; if (await ctx.blocked(act.pid, t, 'deck', 3, 'swap')) return;
         const dl = ctx.player(t).deck; for (let n = 0; n < 3 && dl.length; n++) { const c = dl.splice(Math.floor(ctx.rand() * dl.length), 1)[0]; ctx.player(R).deck.push(c); await ctx.emit('steal', { from: t, to: R, card: c }); }
         ctx.say(`${nm(ctx, act.pid)} transfere cartas de ${nm(ctx, t)} para ${nm(ctx, R)}.`);
       },
-      ai(ctx, pid) { const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 3 && tot(R) < tot(pid) ? 0.6 : 0.03; }, prep: 0.25, val: 0.5,
+      ai(ctx, pid) { if (ctx.g.cfg && ctx.g.cfg.teams) return 0; const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 3 && tot(R) < tot(pid) ? 0.6 : 0.03; }, prep: 0.25, val: 0.5,
     });
     D('AE-067', 'Redistribuição', {
       can(ctx, pid) { return ctx.opps(pid).some(o => hasDeck(ctx, o)); },

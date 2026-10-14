@@ -73,4 +73,4 @@ Adaptações no motor:
 
 
 ## Decisão do autor (14/10/2026): AE-063, AE-064 e AE-065 em duplas
-Os dois rivais são parceiros entre si, então mover cartas entre eles não dá ganho (igual ao duelo). Decisão: **não se usam em duplas** (o motor as marca como inutilizáveis nesse modo; bots e jogadores não as ativam). Nos outros modos nada muda.
+Os dois rivais são parceiros entre si, então mover cartas entre eles não dá ganho (igual ao duelo). Decisão: **continuam como estão**; só os bots deixam de usá-las em duplas. O jogador pode usá-las se quiser (efeito sem ganho, como em duelo). Nos outros modos nada muda.
