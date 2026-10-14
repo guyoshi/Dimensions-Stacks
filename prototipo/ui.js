@@ -269,60 +269,50 @@
   U.rerollBotNames = function (players) { const used = players.filter(p => !p.bot).map(p => p.name); players.forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); return players; };
   function rollBots(seats, n) { const used = seats.slice(0, n).filter(p => !(p.bot && isAutoName(p.name))).map(p => p.name); seats.slice(0, n).forEach(p => { if (p.bot && isAutoName(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
   const seatDiff = p => (p && p.diff) || 'normal';   // dificuldade individual de cada bot
+  const LS = { sel: null, swap: false, pop: null };   // estado da tela (seleção, modo trocar)
   function setup() {
     const s = $('#setup');
     CFG.seats.forEach((p, i) => { if (i > 0 && !p.bot) { p.bot = true; p.name = 'CPU'; } });
     if (CFG.seats[0] && !CFG.seats[0].bot) CFG.seats[0].name = U.profileName() || 'Você';   // o nome só se edita no Perfil
-    { const used = CFG.seats.slice(0, CFG.n).filter(p => !(p.bot && /^(Bot|CPU)( |$)/.test(p.name))).map(p => p.name); CFG.seats.slice(0, CFG.n).forEach(p => { if (p.bot && /^(Bot|CPU)( |$)/.test(p.name)) { p.name = randBot(used); used.push(p.name); } }); }
-    const maxPer = Math.min(24, Math.floor(CARTAS.length / CFG.n));
+    if (CFG.mode !== 'duo') CFG.mode = 'ffa';
+    const duo = CFG.mode === 'duo', N = duo ? 4 : CFG.n;
+    rollBots(CFG.seats, N);
+    const maxPer = Math.min(24, Math.floor(CARTAS.length / N));
     CFG.per = Math.max(7, Math.min(CFG.per, maxPer));
-    const seats = CFG.seats.slice(0, CFG.n);
-    s.innerHTML = `<div class="center"><div class="panel">
-      <h2>Nova partida</h2>
-      <div class="lbl">Jogadores</div>
-      <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
-      <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
-        <span class="seatname" data-i="${i}">${esc(p.name)}${i === 0 ? '' : `<button class="rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para a CPU">🎲</button>`}</span>
-        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : ''}
-        ${p.bot ? `<div class="seatdiff"><span class="hint">Dificuldade</span><div class="seg sm" data-k="sd" data-i="${i}">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${seatDiff(p) === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>` : ''}</div>`).join('')}</div>
-      <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
-      <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">
-      <div class="lbl">Fenômenos dimensionais</div>
-      <div class="seg" data-k="ev">${[[1, 'Ligados'], [0, 'Desligados']].map(([v, t]) => `<button data-v="${v}" class="${(CFG.ev === 0 ? 0 : 1) === v ? 'on' : ''}">${t}</button>`).join('')}</div>
-      <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-act="back">← Voltar</button><button class="btn primary" data-act="go">Começar ▶</button></div>
-    </div></div>`;
-    s.onclick = e => {
-      const b = e.target.closest('button'); if (!b) return; SND.init(); SND.play('click');
-      const seg = b.closest('.seg'); const pre = b.dataset.pre;
-      if (b.dataset.reroll != null) {
-        const i = +b.dataset.reroll; const used = CFG.seats.slice(0, CFG.n).filter((p, k) => k !== i).map(p => p.name);
-        CFG.seats[i].name = randBot(used); CFG.seats[i].bot = true; store.set('cfg', CFG); return setup();
-      }
-      if (pre) {
-        if (pre === '1') { CFG.n = 2; CFG.seats[0] = { name: 'Você', bot: false }; CFG.seats[1] = { name: 'CPU', bot: true }; }
-        else if (pre === '3') { CFG.n = 4; CFG.seats[0] = { name: 'Você', bot: false }; for (let i = 1; i < 4; i++) CFG.seats[i] = { name: 'CPU', bot: true }; }
-        else { CFG.n = 3; for (let i = 0; i < 3; i++) CFG.seats[i] = { name: 'CPU', bot: true }; }
-        store.set('cfg', CFG); return setup();
-      }
-      if (seg) {
-        const k = seg.dataset.k, v = b.dataset.v;
-        if (k === 'n') CFG.n = +v; else if (k === 'sd') CFG.seats[+seg.dataset.i].diff = v; else if (k === 'sf') CFG.sf = +v; else if (k === 'ev') CFG.ev = +v;
-        else if (k === 'bot') { const i = +seg.dataset.i; CFG.seats[i].bot = v === '1'; if (CFG.seats[i].bot && !isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'CPU'; if (!CFG.seats[i].bot && isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Jogador ' + (i + 1); }
-        store.set('cfg', CFG); return setup();
-      }
-      if (b.dataset.act === 'back') U.show('menu');
-      if (b.dataset.act === 'go') {
-        const players = CFG.seats.slice(0, CFG.n).map((p, i) => ({ name: (p.name || '').trim() || (p.bot ? randBot([]) : 'Jogador ' + (i + 1)), bot: !!p.bot, avatar: i, diff: p.bot ? seatDiff(p) : undefined }));
-        store.set('cfg', CFG); U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2, events: CFG.ev !== 0 });
-      }
+    if (LS.sel == null || LS.sel >= N) { const k = CFG.seats.slice(0, N).findIndex(p => p.bot); LS.swap = false; LS.sel = k < 0 ? 0 : k; }
+    const me = U.profileName();
+    const m = {
+      role: 'local', title: 'Nova partida', mode: CFG.mode, N, hum: 1, per: CFG.per, ev: CFG.ev !== 0, sel: LS.sel, swap: LS.swap, pop: LS.pop, watchable: true,
+      seats: CFG.seats.slice(0, N).map((p, i) => ({ name: p.name, cpu: !!p.bot, diff: seatDiff(p), me: i === 0 && !p.bot, tag: i === 0 && !p.bot && me ? me : '', fixed: i === 0 })),
     };
-    s.oninput = e => {
-      if (e.target.id === 'per') { CFG.per = +e.target.value; $('#perv', s).textContent = CFG.per; store.set('cfg', CFG); }
-    };
+    LS.pop = null;
+    const save = () => { store.set('cfg', CFG); setup(); };
+    U.lobby.mount(s, m, (a, v) => {
+      if (a === 'back') { LS.sel = null; return U.show('menu'); }
+      if (a === 'mode') { CFG.mode = v; LS.sel = null; LS.pop = [0, 1, 2, 3]; return save(); }
+      if (a === 'n') { CFG.n = v; LS.sel = null; return save(); }
+      if (a === 'per') { CFG.per = Math.max(7, Math.min(maxPer, CFG.per + v)); return save(); }
+      if (a === 'ev') { CFG.ev = CFG.ev === 0 ? 1 : 0; return save(); }
+      if (a === 'seat') {
+        if (LS.swap && LS.sel != null && v !== LS.sel) { if (v === 0 || LS.sel === 0) return; const S = CFG.seats; [S[LS.sel], S[v]] = [S[v], S[LS.sel]]; LS.pop = [LS.sel, v]; LS.swap = false; LS.sel = v; return save(); }
+        LS.sel = v; LS.swap = false; return save();
+      }
+      if (a === 'swap') { LS.swap = true; return setup(); }
+      if (a === 'cancel') { LS.swap = false; return setup(); }
+      if (a === 'shuffle') { const r = CFG.seats.slice(1, 4); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } CFG.seats.splice(1, 3, ...r); LS.pop = [1, 2, 3]; LS.swap = false; return save(); }
+      if (a === 'dice') { const used = CFG.seats.slice(0, N).map(p => p.name); CFG.seats[LS.sel].name = randBot(used); CFG.seats[LS.sel].bot = true; return save(); }
+      if (a === 'diff') { CFG.seats[LS.sel].diff = v; return save(); }
+      if (a === 'watch') { const p = CFG.seats[0]; p.bot = v; p.name = v ? randBot(CFG.seats.slice(1, N).map(x => x.name)) : (U.profileName() || 'Você'); return save(); }
+      if (a === 'start') {
+        const players = CFG.seats.slice(0, N).map((p, i) => ({ name: (p.name || '').trim() || (p.bot ? randBot([]) : 'Jogador ' + (i + 1)), bot: !!p.bot, avatar: i, diff: p.bot ? seatDiff(p) : undefined }));
+        store.set('cfg', CFG); LS.sel = null;
+        U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2, events: CFG.ev !== 0, teams: duo ? [[0, 2], [1, 3]] : null });
+      }
+    });
   }
 
   U.profileName = () => (window.DSSTATS && window.DSSTATS.profile().name) || '';
-  U.openSetup = function () { if (CFG.seats[0] && !CFG.seats[0].bot && (CFG.seats[0].name === 'Você' || !CFG.seats[0].name) && U.profileName()) CFG.seats[0].name = U.profileName(); rollBots(CFG.seats, CFG.n); setup(); U.show('setup'); };
+  U.openSetup = function () { LS.sel = null; LS.swap = false; if (CFG.seats[0] && !CFG.seats[0].bot && (CFG.seats[0].name === 'Você' || !CFG.seats[0].name) && U.profileName()) CFG.seats[0].name = U.profileName(); rollBots(CFG.seats, CFG.n); setup(); U.show('setup'); };
   U.quick = function () {
     SND.init(); const me = U.profileName() || 'Você';
     const players = [{ name: me, bot: false, avatar: 0 }, { name: randBot([me]), bot: true, avatar: 1, diff: CFG.diff || 'normal' }];

@@ -10,7 +10,7 @@ try:
     pg.on('pageerror', lambda e: errs.append(str(e)))
     pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));")
     pg.goto('http://localhost:8770/_page.html'); pg.wait_for_timeout(800)
-    pg.click('[data-go=setup]'); pg.click('[data-act=go]')
+    pg.click('[data-go=setup]'); pg.click('[data-a=start]')
     pg.wait_for_timeout(2500); pg.screenshot(path='tests/shots/drag0.png'); print(pg.evaluate("document.querySelector('.order') ? 'order' : (document.querySelector('.cover button')?'cover':'none')")); pg.wait_for_selector('.order .oc', timeout=15000)
     ids = lambda: pg.evaluate("Array.from(document.querySelectorAll('.order .oc')).map(n=>n.dataset.id).join(',')")
     before = ids(); print('antes ', before)

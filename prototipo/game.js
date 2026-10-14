@@ -898,10 +898,14 @@
     })();
   }
 
+  // duplas: parceiros dividem a cor da dupla (ciano / violeta); sem duplas, cada jogador volta à sua cor
+  const PCOL0 = PCOL.slice();
+  function teamColors(teams) { PCOL.forEach((_, i) => { PCOL[i] = teams ? (teams.findIndex(t => t.includes(i)) === 0 ? 'var(--nexus)' : 'var(--nexus2)') : PCOL0[i]; }); }
+  U.teamColors = teamColors;
   // ---------------------------------------------------------------- iniciar
   U.__tb = tieBreak;   // gancho de teste
   U.startGame = async function (cfg) {
-    lastCfg = cfg; SND.init(); U.killRun(); U.newRun(); $$('#layer > *').forEach(x => x.remove());
+    lastCfg = cfg; SND.init(); U.killRun(); U.newRun(); $$('#layer > *').forEach(x => x.remove()); teamColors(cfg.teams);
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
@@ -982,7 +986,7 @@
         chooseTarget: wrap('chooseTarget', (p, cands, label) => [cands, label]),
       };
       const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i, diff: s.bot ? s.diff : undefined }));
-      G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, events: cfg.ev !== false, teams: cfg.teams || null, seed: cfg.seed, io });
+      teamColors(cfg.teams); G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, events: cfg.ev !== false, teams: cfg.teams || null, seed: cfg.seed, io });
       U.game = G;
       // queda de conexão: carência de 25 s (reconexões rápidas são normais); depois um CPU assume, com aviso na tela. O jogador pode voltar ao lugar.
       const grace = new Map(), present = peer => !!peer && link.peers().some(p => p.peer === peer);
@@ -1038,7 +1042,7 @@
     }
 
     // ----- convidado: espelha o estado e executa as decisões pedidas
-    G = { cfg: { specialsFrom: cfg.sf, teams: cfg.teams || null }, teamOf(pid) { const t = this.cfg.teams; if (!t) return pid; const i = t.findIndex(g => g.includes(pid)); return i < 0 ? pid : 't' + i; }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
+    teamColors(cfg.teams); G = { cfg: { specialsFrom: cfg.sf, teams: cfg.teams || null }, teamOf(pid) { const t = this.cfg.teams; if (!t) return pid; const i = t.findIndex(g => g.includes(pid)); return i < 0 ? pid : 't' + i; }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
       p(pid) { return this.s.players[pid]; }, alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); } };
     U.game = G;
     const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'winnerTeam', 'byLimit', 'events', 'away'].forEach(k => { G.s[k] = st[k]; }); };

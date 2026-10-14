@@ -20,7 +20,7 @@ try:
     host.click('[data-go=online]'); host.evaluate('window.__dsSf = 1'); host.click('[data-a=create]')
     host.wait_for_selector('.roomcode', timeout=8000); code = host.inner_text('.roomcode').strip(); print('codigo', code)
     g.click('[data-go=online]'); g.fill('#onCode', code); g.click('[data-a=join]'); g.wait_for_selector('.onwait', timeout=9000)
-    host.wait_for_function("n=>[...document.querySelectorAll('.onseat .avatar')].filter(a=>a.textContent!=='🤖').length>=n", arg=2, timeout=8000)
+    host.wait_for_function("n=>[...document.querySelectorAll('.lb-sit .lb-av')].filter(a=>!a.querySelector('svg')).length>=n", arg=2, timeout=8000)
     host.click('[data-a=start]'); host.wait_for_selector('#hSub', timeout=8000); g.wait_for_selector('#hSub', timeout=8000)
     time.sleep(1.5)
     print('HUD host:', host.inner_text('#hSub'), '| guest:', g.inner_text('#hSub'))

@@ -10,7 +10,7 @@ try:
     b = p.chromium.launch(); pg = b.new_context(viewport={'width': 390, 'height': 780}, has_touch=True, is_mobile=True, device_scale_factor=2).new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
     pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,speed:'rapido',help:false}));")
     pg.goto('http://localhost:8779/_page.html'); pg.wait_for_timeout(900)
-    pg.click('[data-go=setup]'); pg.click('[data-act=go]'); pg.wait_for_selector('.order .oc', timeout=15000); pg.click('.order [data-a=best]'); pg.click('.order [data-a=ok]')
+    pg.click('[data-go=setup]'); pg.click('[data-a=start]'); pg.wait_for_selector('.order .oc', timeout=15000); pg.click('.order [data-a=best]'); pg.click('.order [data-a=ok]')
     pg.wait_for_selector('#dock:not([hidden]) .attrbtn', timeout=40000); pg.click('#dock .attrbtn >> nth=0')
     pg.wait_for_selector('.slot .card.up', timeout=40000); pg.wait_for_timeout(300)
     cards = pg.query_selector_all('.slot .card.up'); print('cartas viradas na mesa:', len(cards))

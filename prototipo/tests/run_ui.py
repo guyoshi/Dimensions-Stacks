@@ -29,7 +29,7 @@ try:
       pg.screenshot(path=f'{out}/menu_{tag}.png')
       pg.evaluate("document.querySelector('#menu').scrollTo(0, 9999)"); pg.wait_for_timeout(300); pg.screenshot(path=f'{out}/menu2_{tag}.png')
       pg.click('[data-go=setup]'); pg.wait_for_timeout(400); pg.screenshot(path=f'{out}/setup_{tag}.png')
-      pg.click('[data-act=back]'); pg.wait_for_timeout(300)
+      pg.click('[data-a=back]'); pg.wait_for_timeout(300)
       pg.click('#nav [data-tab=coll]'); pg.wait_for_timeout(700); pg.screenshot(path=f'{out}/coll_{tag}.png')
       pg.click('.cgrid .card[data-id=J08]'); pg.wait_for_timeout(500); pg.screenshot(path=f'{out}/zoom_{tag}.png')
       pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
@@ -40,12 +40,13 @@ try:
       pg.click('[data-top=rules]'); pg.wait_for_timeout(400); pg.screenshot(path=f'{out}/rules_{tag}.png')
     elif mode in ('bots', 'human'):
       pg.click('[data-go=setup]'); pg.wait_for_timeout(300)
-      if mode == 'bots': pg.click('.seg[data-k=bot] [data-v="1"]')
-      if os.environ.get('NP'): pg.click(f'.seg[data-k=n] [data-v="{os.environ["NP"]}"]')
+      if mode == 'bots': pg.click('[data-seat="0"]'); pg.click('[data-watch="1"]')
+      if os.environ.get('DUO'): pg.click('[data-mode=duo]')
+      elif os.environ.get('NP'): pg.click(f'[data-n="{os.environ["NP"]}"]')
       pg.wait_for_timeout(200)
       if os.environ.get('SF'): pg.evaluate("window.DSUI.CFG.sf = 1")
       if os.environ.get('ABIL'): pg.evaluate("a => DS_DATA.CARTAS.forEach(c => { c.especial = a; })", os.environ['ABIL'])
-      pg.click('[data-act=go]')
+      pg.click('[data-a=start]')
       t0 = time.time(); shots = {}; n = 0; maxs = float(os.environ.get('MAXS', '240'))
       done = False
       while time.time() - t0 < maxs:

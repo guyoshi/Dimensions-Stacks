@@ -110,15 +110,17 @@
   function entry(msg, kind) {
     const s = section(); const nm = myName();
     const canReal = !!(window.claude && window.claude.use);
-    s.innerHTML = `<div class="center"><div class="panel">
-      <h2>Multiplayer</h2>
-      <p class="hint">Cada jogador no seu aparelho. Um cria a sala e passa o código; os outros entram com ele.${canReal ? '' : '<br><b>Modo local:</b> aqui só funciona entre abas do mesmo navegador (útil para testar). Online de verdade, só abrindo pelo link do Claude.'}</p>
-      <div class="who">${nm ? `${U.avatarHTML ? U.avatarHTML(window.DSSTATS.profile().avatar, nm, 40) : ''}<div class="whot"><b>${esc(nm)}</b><small>${esc(myUid())}</small></div>` : '<div class="whot"><b>Você ainda não tem um nome</b><small>Defina no Perfil para jogar online.</small></div>'}<button class="btn sm" data-a="prof">${nm ? 'Editar no Perfil' : 'Ir ao Perfil'}</button></div>
-      <div class="row" style="margin-top:14px"><button class="btn primary" data-a="create">Criar sala</button>${lastRoom() ? `<button class="btn" data-a="back2">↩ Voltar à sala ${esc(lastRoom())}</button>` : ''}</div>
-      <div class="lbl" style="margin-top:16px">Ou entrar com um código</div>
-      <div class="row"><input type="text" id="onCode" maxlength="4" placeholder="KX7Q" class="txtin codein" autocapitalize="characters" autocomplete="off"><button class="btn" data-a="join">Entrar</button></div>
-      <div class="onmsg ${kind || ''}" id="onMsg">${esc(msg || '')}</div>
-      <div class="row" style="margin-top:12px"><button class="btn ghost" data-a="back">← Voltar</button></div></div></div>`;
+    const L = U.lobbyIcon;
+    s.classList.add('lbs');
+    s.innerHTML = `<div class="lb-app"><div class="lb-hd"><button type="button" class="lb-back" data-a="back" aria-label="Voltar">${L('back')}</button><h1>Multiplayer</h1></div>
+      <div class="lb-entry">
+        <div class="lb-me">${nm ? `${U.avatarHTML ? U.avatarHTML(window.DSSTATS.profile().avatar, nm, 40) : ''}<div class="t"><b>${esc(nm)}</b><small>${esc(myUid())}</small></div>` : '<div class="t"><b>Sem nome</b><small>Defina no Perfil</small></div>'}<button type="button" class="lb-btn" data-a="prof">${nm ? 'Editar' : 'Perfil'}</button></div>
+        <button type="button" class="lb-go" data-a="create">Criar sala</button>
+        ${lastRoom() ? `<button type="button" class="lb-btn" data-a="back2" style="align-self:center">↩ Voltar à sala ${esc(lastRoom())}</button>` : ''}
+        <div class="lb-or">ou entre com o código</div>
+        <div class="lb-join"><input type="text" id="onCode" maxlength="4" placeholder="KX7Q" autocapitalize="characters" autocomplete="off" aria-label="Código da sala"><button type="button" class="lb-btn" data-a="join">Entrar</button></div>
+        <div class="lb-msg ${kind || ''}" id="onMsg">${esc(msg || '')}</div>
+      </div>${canReal ? '' : '<div class="lb-sum">Modo local · só entre abas deste navegador</div>'}</div>`;
     const inp = $('#onCode', s); if (lastRoom()) inp.value = lastRoom(); inp.oninput = () => { inp.value = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); };
     s.onclick = async e => {
       const b = e.target.closest('[data-a]'); if (!b) return; SND.init(); SND.play('click');
@@ -134,7 +136,7 @@
   }
 const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Claude só libera multiplayer para quem tem permissão de Colaborador ou Editor no jogo, logado). Peça ao dono para convidar seu e-mail como Editor e abra o jogo de novo pelo convite.';
   function noReal(link) { return !!(link && link.mode === 'local' && window.claude && window.claude.use); }
-  function flash(t, kind) { const m = $('#onMsg'); if (m) { m.textContent = t; m.className = 'onmsg ' + (kind || ''); } }
+  function flash(t, kind) { const m = $('#onMsg'); if (m) { m.textContent = t; m.className = 'lb-msg ' + (kind || ''); } }
   function busy(on) { $$('#online button').forEach(b => { b.disabled = !!on; }); }
 
   async function doCreate(name) {
@@ -197,14 +199,16 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   const remember = code => { try { store.set('lastRoom', { code, t: Date.now() }); } catch (e) { } };
   function lobbyHost(link, code, name) {
     remember(code);
-    sess = { link, role: 'host', code, name, join: [], unsub: [], cfg: Object.assign({ n: 2, per: 14, diff: 'normal', bd: ['normal', 'normal', 'normal'] }, store.get('onlineCfg', {}), { sf: window.__dsSf === 1 ? 1 : 2 }) }; if (sess.cfg.perV !== 2) { sess.cfg.per = 14; sess.cfg.perV = 2; }
+    const saved = store.get('onlineCfg', {}), used = [name], sd = (saved.cpu || []).map(c => c && c.d);
+    const cpu = [0, 1, 2].map(k => { const n = U.randBot(used); used.push(n); return { n, d: sd[k] || (saved.bd && saved.bd[k]) || 'normal' }; });
+    sess = { link, role: 'host', code, name, join: [], unsub: [], ui: { sel: null, swap: false, pop: null }, cfg: { mode: saved.mode === 'duo' ? 'duo' : 'ffa', n: saved.n || 2, per: saved.perV === 2 ? (saved.per || 14) : 14, perV: 2, ev: saved.ev === 0 ? 0 : 1, diff: 'normal', arr: [], cpu, sf: window.__dsSf === 1 ? 1 : 2 } };
     link.presence({ n: name, u: myUid(), h: 1, v: VER, cfg: sess.cfg });
     sess.unsub.push(link.onPeers(() => renderLobby()));
     U.show('online'); renderLobby();
   }
   function lobbyGuest(link, code, name, hostPeer) {
     remember(code);
-    sess = { link, role: 'guest', code, name, hostPeer, join: [], unsub: [] };
+    sess = { link, role: 'guest', code, name, hostPeer, join: [], unsub: [], ui: { sel: null, swap: false, pop: null } };
     sess.unsub.push(link.onPeers(ch => {
       const h = link.peers().find(p => p.peer === hostPeer);
       if (!h) { const s = sess; if (s && !s.started) { leaveRoom(false).then(() => { entry('O anfitrião saiu da sala.', 'err'); U.show('online'); }); } return; }
@@ -214,59 +218,64 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     U.show('online'); renderLobby();
   }
 
+  // assentos da sala: arr guarda quem senta onde (id do jogador ou '#0'..'#2' = CPU); é normalizado a cada desenho
+  function layoutOf(hum, cfg) {
+    const duo = cfg.mode === 'duo', N = duo ? 4 : Math.max(cfg.n || 2, Math.min(4, hum.length));
+    const ids = hum.map(p => p.peer), isC = t => t[0] === '#';
+    let arr = (cfg.arr || []).filter((t, i, a) => a.indexOf(t) === i && (isC(t) ? +t.slice(1) < 3 : ids.includes(t)));
+    const lastC = () => { for (let k = arr.length - 1; k >= 0; k--) if (isC(arr[k])) return k; return -1; };
+    ids.forEach(id => { if (!arr.includes(id)) { if (arr.length < N) arr.push(id); else { const k = lastC(); if (k >= 0) arr[k] = id; } } });
+    while (arr.length > N) { const k = lastC(); if (k < 0) break; arr.splice(k, 1); }
+    for (let c = 0; arr.length < N; c++) if (!arr.includes('#' + c)) arr.push('#' + c);
+    return { N, arr };
+  }
+  const cpuOf = (cfg, t) => (cfg.cpu || [])[+t.slice(1)] || { n: 'CPU', d: 'normal' };
   function renderLobby() {
-    if (!sess) return; const s = section(), isHost = sess.role === 'host';
-    const hum = humansOrdered(); const cfg = sess.cfg || (hum[0] && hum[0].presence.cfg) || { n: 2, per: 14, diff: 'normal', bd: ['normal', 'normal', 'normal'], sf: 2 };
-    const bdOf = k => ((cfg.bd || [])[k]) || cfg.diff || 'normal'; const DF = [['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']];
-    const N = Math.max(cfg.n || 2, Math.min(4, hum.length));
-    const slots = []; for (let i = 0; i < N; i++) slots.push(hum[i] || null);
-    const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N));
-    const per = Math.max(7, Math.min(cfg.per || 14, maxPer));
-    const canStart = isHost && hum.length >= 1 && N >= 2;
-    s.innerHTML = `<div class="center"><div class="panel">
-      <h2>🌐 Sala <span class="roomcode" title="Código da sala">${esc(sess.code)}</span></h2>
-      <div class="row" style="margin-bottom:6px"><button class="btn sm" data-a="copy">📋 Copiar código</button><span class="hint">${sess.link.mode === 'local' ? 'modo local (mesmo navegador)' : 'passe este código para quem vai jogar'}</span></div>
-      <div class="lbl">Jogadores (${hum.length} humano${hum.length === 1 ? '' : 's'})</div>
-      <div class="seats">${slots.map((p, i) => `<div class="seatcfg onseat"><div class="avatar" style="--pc:${PCOL[i]}">${p ? esc((p.presence.n || '?')[0].toUpperCase()) : '🤖'}</div>
-        <div class="onnm"><b>${p ? esc(p.presence.n) : 'CPU'}</b>${p && p.presence.u ? ` <small class="uid">${esc(p.presence.u)}</small>` : ''}${p ? (p.presence.h ? ' <span class="pill">anfitrião</span>' : '') + (p.sameTab ? ' <span class="pill me">você</span>' : '') : ' <span class="hint">completa a vaga</span>'}</div>${p ? '<span></span>' : isHost ? `<div class="seg sm" data-k="bd" data-i="${i - hum.length}">${DF.map(([v, t]) => `<button data-v="${v}" class="${bdOf(i - hum.length) === v ? 'on' : ''}">${t}</button>`).join('')}</div>` : `<span class="pill">${(DF.find(x => x[0] === bdOf(i - hum.length)) || DF[1])[1]}</span>`}</div>`).join('')}</div>
-      ${isHost ? `<div class="lbl">Lugares na mesa</div>
-      <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${N === n ? 'on' : ''}" ${hum.length > n ? 'disabled' : ''}>${n}</button>`).join('')}</div>
-      <div class="hint">Vagas sem humano são preenchidas pela CPU; escolha a dificuldade de cada um na lista acima.</div>
-      <div class="lbl">Cartas por jogador: <b id="perv">${per}</b></div>
-      <input type="range" min="7" max="${maxPer}" value="${per}" id="per">
-      <div class="lbl">Fenômenos dimensionais</div>
-      <div class="seg" data-k="ev">${[[1, 'Ligados'], [0, 'Desligados']].map(([v, t]) => `<button data-v="${v}" class="${(cfg.ev === 0 ? 0 : 1) === v ? 'on' : ''}">${t}</button>`).join('')}</div>`
-        : `<div class="onwait">${sess.rejoining ? 'Voltando para a partida em andamento…' : 'Aguardando o anfitrião iniciar a partida…'}</div><div class="hint">Mesa de ${N} · ${per} cartas por jogador · fenômenos ${cfg.ev === 0 ? 'desligados' : 'ligados'}</div>`}
-      <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-a="leave">← Sair da sala</button>${isHost ? `<button class="btn primary" data-a="start" ${canStart ? '' : 'disabled'}>Começar ▶</button>` : ''}</div>
-    </div></div>`;
-    s.onclick = async e => {
-      const b = e.target.closest('button'); if (!b || b.disabled) return; SND.init(); SND.play('click');
-      const a = b.dataset.a;
+    if (!sess) return; const s = section(), isHost = sess.role === 'host', ui = sess.ui;
+    const hum = humansOrdered(); const cfg = sess.cfg || (hum[0] && hum[0].presence.cfg) || { mode: 'ffa', n: 2, per: 14, ev: 1, arr: [], cpu: [] };
+    const lay = layoutOf(hum, cfg), N = lay.N, duo = cfg.mode === 'duo', me = sess.link.me;
+    if (isHost && JSON.stringify(cfg.arr) !== JSON.stringify(lay.arr)) { cfg.arr = lay.arr; sess.link.presence({ cfg }); }
+    const byId = Object.fromEntries(hum.map(p => [p.peer, p]));
+    const seats = lay.arr.map(t => { const p = byId[t]; return p ? { name: p.presence.n, cpu: false, me: p.peer === me, host: !!p.presence.h, live: p.peer !== me, tag: p.presence.h ? 'anfitrião' : p.peer === me ? p.presence.n : 'jogador' } : { name: cpuOf(cfg, t).n, cpu: true, diff: cpuOf(cfg, t).d }; });
+    const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N)), per = Math.max(7, Math.min(cfg.per || 14, maxPer));
+    if (ui.sel == null || ui.sel >= N) { const k = seats.findIndex(p => p.cpu); ui.sel = k < 0 ? 0 : k; ui.swap = false; }
+    const m = { role: sess.role, title: 'Sala', code: sess.code, mode: duo ? 'duo' : 'ffa', N, hum: hum.length, seats, sel: ui.sel, swap: ui.swap, pop: ui.pop, per, ev: cfg.ev !== 0, canStart: hum.length >= 1, wait: sess.rejoining ? 'Voltando para a partida' : 'Aguardando o anfitrião' };
+    ui.pop = null;
+    const push = () => { store.set('onlineCfg', sess.cfg); sess.link.presence({ cfg: sess.cfg }); renderLobby(); };
+    U.lobby.mount(s, m, (a, v) => {
       if (a === 'leave') return leaveRoom(true);
-      if (a === 'copy') { try { await navigator.clipboard.writeText(sess.code); b.textContent = '✔ Copiado'; } catch (er) { b.textContent = sess.code; } return; }
+      if (!isHost) return;
+      const c = sess.cfg; c.arr = lay.arr;
       if (a === 'start') return start();
-      const seg = b.closest('.seg'); if (seg && isHost) {
-        const k = seg.dataset.k, v = b.dataset.v; if (k === 'bd') { const bd = (sess.cfg.bd || ['normal', 'normal', 'normal']).slice(); bd[+b.closest('.seg').dataset.i] = v; sess.cfg.bd = bd; } else sess.cfg[k] = +v; store.set('onlineCfg', sess.cfg);
-        sess.link.presence({ cfg: sess.cfg }); renderLobby();
+      if (a === 'mode') { c.mode = v; ui.sel = null; ui.pop = [0, 1, 2, 3]; return push(); }
+      if (a === 'n') { c.n = v; ui.sel = null; return push(); }
+      if (a === 'per') { c.per = Math.max(7, Math.min(maxPer, per + v)); return push(); }
+      if (a === 'ev') { c.ev = c.ev === 0 ? 1 : 0; return push(); }
+      if (a === 'seat') {
+        if (ui.swap && ui.sel != null && v !== ui.sel) { const r = c.arr.slice(); [r[ui.sel], r[v]] = [r[v], r[ui.sel]]; c.arr = r; ui.pop = [ui.sel, v]; ui.swap = false; ui.sel = v; return push(); }
+        ui.sel = v; ui.swap = false; return renderLobby();
       }
-    };
-    s.oninput = e => { if (e.target.id === 'per' && isHost) { sess.cfg.per = +e.target.value; $('#perv', s).textContent = sess.cfg.per; store.set('onlineCfg', sess.cfg); sess.link.presence({ cfg: sess.cfg }); } };
+      if (a === 'swap') { ui.swap = true; return renderLobby(); }
+      if (a === 'cancel') { ui.swap = false; return renderLobby(); }
+      if (a === 'shuffle') { const r = c.arr.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } c.arr = r; ui.pop = [0, 1, 2, 3]; ui.swap = false; return push(); }
+      const t = c.arr[ui.sel]; if (!t || t[0] !== '#') return;
+      if (a === 'dice') { const used = hum.map(p => p.presence.n).concat(c.cpu.map(x => x.n)); c.cpu[+t.slice(1)].n = U.randBot(used); return push(); }
+      if (a === 'diff') { c.cpu[+t.slice(1)].d = v; return push(); }
+    });
   }
 
   // ---------------------------------------------------------------- início
-  function seatsFor(hum, N) {
+  function seatsFor(hum, lay, cfg) {
     const used = []; const uniq = n => { let x = n || 'Jogador', k = 2; while (used.includes(x)) x = (n || 'Jogador') + ' ' + (k++); used.push(x); return x; };
-    const seats = hum.map(p => ({ name: uniq(p.presence.n), bot: false, peer: p.peer, u: p.presence.u || '' }));
-    const bd = (sess && sess.cfg && sess.cfg.bd) || []; let k = 0;
-    while (seats.length < N) seats.push({ name: uniq(U.randBot(used)), bot: true, peer: null, diff: bd[k++] || 'normal' });
-    return seats;
+    const byId = Object.fromEntries(hum.map(p => [p.peer, p]));
+    return lay.arr.map(t => { const p = byId[t]; return p ? { name: uniq(p.presence.n), bot: false, peer: p.peer, u: p.presence.u || '' } : { name: uniq(cpuOf(cfg, t).n), bot: true, peer: null, diff: cpuOf(cfg, t).d }; });
   }
   async function start(again) {
     if (!sess || sess.role !== 'host') return;
-    const hum = humansOrdered(); const cfg = sess.cfg; const N = Math.max(cfg.n || 2, Math.min(4, hum.length));
+    const hum = humansOrdered(); const cfg = sess.cfg; const lay = layoutOf(hum, cfg), N = lay.N;
     const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N)); const per = Math.max(7, Math.min(cfg.per || 14, maxPer));
-    const seats = again && sess.lastSeats ? again : seatsFor(hum, N);
-    const go = { seats, per, diff: cfg.diff || 'normal', sf: cfg.sf === 1 ? 1 : 2, ev: cfg.ev !== 0, seed: (Math.random() * 2 ** 32) >>> 0, ver: VER };
+    const seats = again && sess.lastSeats ? again : seatsFor(hum, lay, cfg);
+    const go = { seats, per, diff: cfg.diff || 'normal', sf: cfg.sf === 1 ? 1 : 2, ev: cfg.ev !== 0, teams: cfg.mode === 'duo' && seats.length === 4 ? [[0, 2], [1, 3]] : null, seed: (Math.random() * 2 ** 32) >>> 0, ver: VER };
     sess.lastSeats = seats; sess.started = true; sess.link.presence({ go: 1 });
     await sess.link.send('go', go); await sleep(250);
     begin(go);

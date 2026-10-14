@@ -1,6 +1,6 @@
 # Modo em duplas (2×2) — protótipo e simulação (14/10/2026)
 
-**Status:** protótipo no motor, desligado por padrão (`cfg.teams = [[0,2],[1,3]]`). Sem interface e sem regra oficial: depende de aprovação do autor. Os modos todos contra todos não mudaram (30 partidas com semente fixa dão o mesmo resultado antes e depois).
+**Status:** regra aprovada pelo autor (14/10/2026) e disponível na interface: botão "Duplas 2×2" na tela de nova partida (contra CPU) e na sala online. Motor: `cfg.teams = [[0,2],[1,3]]`, desligado no modo todos contra todos. Os modos todos contra todos não mudaram (30 partidas com semente fixa dão o mesmo resultado antes e depois).
 
 ## Regras testadas
 - 4 jogadores, assentos alternados (A1, B1, A2, B2): os vizinhos são sempre adversários.

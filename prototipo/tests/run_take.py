@@ -19,7 +19,7 @@ try:
     host = mk('Anfitriao')
     host.click('[data-go=online]'); host.evaluate('window.__dsSf = 1'); host.click('[data-a=create]')
     host.wait_for_selector('.roomcode', timeout=8000); code = host.inner_text('.roomcode').strip(); print('codigo', code)
-    host.click('.seg[data-k=n] [data-v="3"]'); host.wait_for_timeout(300)
+    host.click('[data-n="3"]'); host.wait_for_timeout(300)
     host.click('[data-a=start]'); host.wait_for_selector('#hSub', timeout=8000); time.sleep(1.5)
     for _ in range(20):
         try:

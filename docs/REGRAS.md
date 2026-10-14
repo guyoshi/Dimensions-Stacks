@@ -8,7 +8,7 @@
 
 Jogo de cartas digital para PC, competitivo e com personagens das diferentes séries de **Dimensões Infinitas**. Cada carta futura receberá seu próprio nome, descrição, atributos e uma habilidade especial temática, de acordo com o cânone literário. **Os nomes, biografias e valores das cartas antigas não serão reaproveitados como base**. As habilidades especiais antigos são referências de design, não habilidades já atribuídas aos novos personagens.
 
-- Modalidades: **2, 3 ou 4 jogadores**, todos contra todos (formato proposto para o PC; sem equipes nesta versão).
+- Modalidades: **2, 3 ou 4 jogadores**, todos contra todos, e **Duplas 2×2** (4 jogadores, assentos alternados A1, B1, A2, B2: o parceiro fica à frente). Regras das duplas em `MODO_DUPLAS_2026-10-14.md`: a carta do parceiro nunca é capturada nem vai ao Buraco Negro; quem fica sem cartas recebe metade das cartas do parceiro (pool da dupla) e só cai se o parceiro também não puder; efeitos hostis dos especiais nunca atingem o parceiro; vence a dupla que eliminar os dois adversários.
 - Objetivo: **eliminar todas as cartas disponíveis dos adversários**, incluindo, quando aplicável, o meio de reserva.
 - Vitória: último jogador que ainda possui cartas utilizáveis (interpretação operacional proposta; validar quando reservas e efeitos especiais interagem).
 - Escopo atual: regras, fluxo, balanceamento, inventário de habilidades e elenco. **Não implementar o jogo nesta fase.**

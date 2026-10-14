@@ -59,10 +59,10 @@ try:
     for i, pg in enumerate(pages[1:], 1):
         pg.click('[data-go=online]'); pg.fill('#onCode', code); pg.click('[data-a=join]')
         pg.wait_for_selector('.onwait', timeout=9000)
-    host.wait_for_function("()=>document.querySelectorAll('.onseat .pill.me').length>=1", timeout=5000)
-    host.wait_for_function("n=>[...document.querySelectorAll('.onseat .avatar')].filter(a=>a.textContent!=='🤖').length>=n", arg=nguest+1, timeout=8000)
+    host.wait_for_function("n=>[...document.querySelectorAll('.lb-sit .lb-av')].filter(a=>!a.querySelector('svg')).length>=n", arg=nguest+1, timeout=8000)
     host.screenshot(path=f'{out}/online_lobby_host.png'); pages[1].screenshot(path=f'{out}/online_lobby_guest.png')
-    if seatsN > nguest + 1: host.click(f'.seg[data-k=n] [data-v="{seatsN}"]')
+    if os.environ.get('DUO'): host.click('[data-mode=duo]')
+    elif seatsN > nguest + 1: host.click(f'[data-n="{seatsN}"]')
     host.wait_for_timeout(300)
     host.click('[data-a=start]')
     t0 = time.time(); log = []; done = set(); maxs = float(os.environ.get('MAXS', '300')); shot = False
