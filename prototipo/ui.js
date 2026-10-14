@@ -282,8 +282,8 @@
       <div class="lbl">Jogadores</div>
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${CFG.n === n ? 'on' : ''}">${n}</button>`).join('')}</div>
       <div class="seats" style="margin-top:10px">${seats.map((p, i) => `<div class="seatcfg"><div class="avatar" style="--pc:${PCOL[i]}">${esc((p.name || '?')[0].toUpperCase())}</div>
-        <span class="seatname" data-i="${i}">${esc(p.name)}</span>
-        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : `<button class="pill rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para a CPU">🎲 Sortear</button>`}
+        <span class="seatname" data-i="${i}">${esc(p.name)}${i === 0 ? '' : `<button class="rerollbot" data-reroll="${i}" title="Sortear outro nome" aria-label="Sortear outro nome para a CPU">🎲</button>`}</span>
+        ${i === 0 ? `<div class="seg" data-k="bot" data-i="0"><button data-v="0" class="${!p.bot ? 'on' : ''}">Jogar</button><button data-v="1" class="${p.bot ? 'on' : ''}">Assistir</button></div>` : ''}
         ${p.bot ? `<div class="seatdiff"><span class="hint">Dificuldade</span><div class="seg sm" data-k="sd" data-i="${i}">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${seatDiff(p) === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>` : ''}</div>`).join('')}</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">

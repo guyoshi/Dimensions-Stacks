@@ -65,7 +65,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
 .avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-disp); font-weight: 900; font-size: 18px; color: #14161b; background: radial-gradient(circle at 30% 25%, #fff8, transparent 40%), var(--pc); box-shadow: 0 0 0 2px #0008, 0 0 0 4px var(--pc), 0 0 14px var(--pc); flex: none; }
 .hint { color: var(--ink2); font-size: 13px; line-height: 1.45; }
 .pill { display: inline-flex; align-items: center; gap: 6px; padding: .2em .65em; border-radius: 99px; background: #ffffff14; font-size: 12px; font-weight: 800; }
-button.rerollbot { border: 1px solid var(--line); color: var(--ink); font-family: inherit; cursor: pointer; padding: .45em .8em; min-height: 34px; }
+button.rerollbot { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-left: 6px; width: 28px; height: 28px; padding: 0; border-radius: 9px; border: 1px solid var(--line); background: #ffffff10; color: var(--ink); font-size: 15px; line-height: 1; cursor: pointer; }
 button.rerollbot:hover { background: #ffffff26; }
 button.rerollbot:active { transform: scale(.96); }
 
