@@ -317,3 +317,7 @@ Simulação de 1.500 partidas por modo (bot difícil, 2 e 4 jogadores, especiais
 Médias por raridade (final, 2 jogadores): Lendária 73%, Épica 65%, Rara 51%, Comum 31%. A escada de raridade é monotônica e igual nas seis séries.
 
 **Observações para o autor:** (a) **Mark Polar continua outlier** (cerca de 87–88% de vitórias; 91/77/91/47, três atributos altos que o poder soma+16×pico subestima, mais o AE-037 fixo de A União). Não mexi por estar no topo da ordem de Jesed e ser integrante de A União; sugestão: baixar FOR e INT para cerca de 85 (decisão sua). (b) A dispersão total subiu em relação ao "antes" porque agora a taxa acompanha o poder (correlação 0,30 → 0,95), que é o objetivo; o critério carta forte → especial forte aumenta um pouco essa dispersão com especiais ligados. (c) Testes: auditoria de especiais (156 cenários, 0 falhas), fuzz de especiais (300 jogos, 0 falhas), coleção, maestria.
+
+## Mark Polar ajustado (14/10/2026, aprovado pelo autor)
+
+Mark Polar 91/77/91/47 → 88/76/88/46 (era o outlier: 88% de vitórias em duelo; agora cerca de 77% em duelo e 57% em 4 jogadores, 6º lugar). Com o poder menor ele cairia para Épica (Jokara Amarëa 1709 passaria a Lendária), então a raridade Lendária dele foi fixada (`RARIDADE_FIXA` em `data.js` e `raridade_fixa` em `dados/ajustes_autor_calculo.json`), como Korvo e Velho-Sábio; Jokara continua Épica. A Besta: ajuste proposto (INT/VEL 70/70) ainda não aprovado, nada alterado.

@@ -44,7 +44,8 @@
     "revisao_14_10_2026_misterio": "Atributos das 12 cartas de Mistério Oculto recalculados a partir dos rankings do autor (lista de Força revisada por ele em 14/10), regra do par forte: Agente Seis INT/VEL, Agente Sete FOR/RES (decisão do autor); Releuz e Hyde (A União) isentos. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
     "revisao_14_10_2026_spacetheft": "Atributos das 18 cartas de Spacetheft recalculados a partir dos rankings do autor, regra do par forte: Capitã Nastácia FOR/RES e Amanda INT/VEL (decisão do autor); Jasmey (A União) isento. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
     "revisao_14_10_2026_diario": "Atributos das 19 cartas de Diário Sobrenatural recalculados a partir dos rankings do autor, regra do par forte (Agouro FOR/RES, Sra. Olívia FOR/RES, O Pai e Diego Tavolieri INT/VEL por decisão do autor; Jennifer, A União, isenta). Autorizado em 14/10/2026.",
-    "revisao_14_10_2026_calibracao_especiais": "Calibração fina dos atributos (88 cartas, dados/calibracao_2026-10-14.json, ordem de poder por série preservada) e reatribuição global de especiais (53 cartas) por equivalência de percentil carta × especial; autorizadas pelo autor em 14/10/2026."
+    "revisao_14_10_2026_calibracao_especiais": "Calibração fina dos atributos (88 cartas, dados/calibracao_2026-10-14.json, ordem de poder por série preservada) e reatribuição global de especiais (53 cartas) por equivalência de percentil carta × especial; autorizadas pelo autor em 14/10/2026.",
+    "revisao_14_10_2026_mark_polar": "Mark Polar 91/77/91/47 -> 88/76/88/46 (aprovado pelo autor em 14/10/2026: era o outlier, cerca de 88% de vitórias em duelo)."
   },
   "cartas": [
     {
@@ -104,12 +105,12 @@
       },
       "descricao_curta": "Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas.",
       "atributos": {
-        "FOR": 91,
-        "RES": 77,
-        "INT": 91,
-        "VEL": 47
+        "FOR": 88,
+        "RES": 76,
+        "INT": 88,
+        "VEL": 46
       },
-      "soma_atributos": 306,
+      "soma_atributos": 298,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-037",
       "uniao": "INTEGRANTE",

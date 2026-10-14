@@ -13,7 +13,7 @@
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
 | J01 | Jokara Amarëa | Ciclo de Jesed | Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência. | 54 | 92 | 67 | 24 | 237 | **AE-110** — Margem estreita | Se perder por diferença de até 10 pontos no atributo disputado, trate o confronto com você como empate e aplique os desempates usuais. |
 | J02 | Nestira Amarëa | Ciclo de Jesed | Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície. | 24 | 70 | 61 | 59 | 214 | **AE-096** — Quebrar o plano | Misture as cartas do baralho ativo de um adversário com sua reserva; depois ele separa as primeiras 5 para formar seu novo baralho ativo. |
-| J03 | Mark Polar ⭐ | Ciclo de Jesed | Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas. | 91 | 77 | 91 | 47 | 306 | **AE-037** — Recompensa ofensiva | Se vencer atacando, tome também a próxima carta do topo do baralho ativo de um adversário derrotado. |
+| J03 | Mark Polar ⭐ | Ciclo de Jesed | Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas. | 88 | 76 | 88 | 46 | 298 | **AE-037** — Recompensa ofensiva | Se vencer atacando, tome também a próxima carta do topo do baralho ativo de um adversário derrotado. |
 | J04 | Gabasteri | Ciclo de Jesed | Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle. | 64 | 68 | 69 | 81 | 282 | **AE-004** — Arrancada | Sua carta de combate recebe +15 em Velocidade nesta disputa. |
 | J05 | Maletar | Ciclo de Jesed | Construtor vigoroso, aprende a erguer abrigos numa terra onde as antigas técnicas já não bastam. | 80 | 73 | 61 | 65 | 279 | **AE-124** — Permutar Força e Velocidade | Troque entre si os números de Força e Velocidade da mesma carta; ambos mudam. |
 | J06 | Platisa | Ciclo de Jesed | Ecoante conhecedora de plantas e remédios, enfrenta o desconhecido sem deixar de cuidar dos outros. | 8 | 70 | 80 | 34 | 192 | **AE-083** — Resgate do topo | Recupere a carta normal mais recente do Buraco Negro para o fim de seu baralho ativo. |
@@ -121,7 +121,7 @@
 | Carta | Soma | Antes | Agora |
 | --- | ---: | --- | --- |
 | J02 Nestira Amarëa | 214 | AE-087 — Reabastecimento da reserva | AE-096 — Quebrar o plano |
-| J03 Mark Polar | 306 | AE-116 — Apropriar especial usado | AE-037 — Recompensa ofensiva |
+| J03 Mark Polar | 298 | AE-116 — Apropriar especial usado | AE-037 — Recompensa ofensiva |
 | J04 Gabasteri | 282 | AE-069 — Doação escolhida | AE-004 — Arrancada |
 | J05 Maletar | 279 | AE-076 — Guardião do baralho | AE-124 — Permutar Força e Velocidade |
 | J07 Mariv | 245 | AE-090 — Segunda chance | AE-009 — Superação |
