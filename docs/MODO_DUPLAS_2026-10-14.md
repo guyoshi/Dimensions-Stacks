@@ -48,3 +48,15 @@ Opções no motor (todas desligadas por padrão): `teamShare`, `teamGive`, `team
 | A queda de um jogador derrota a dupla | 16 | 4,6 | 51,4% | 0% (por definição) | 0% |
 
 Leitura: ajudar o parceiro reduz os finais "1 contra 2" (27% → 14%), mas não faz a dupla que cai primeiro virar (continua ≤12%): quem cai primeiro já era a mais fraca. "Queda derrota a dupla" elimina o 1×2 e encurta a partida em 1/3, mas faz cada jogador depender do parceiro. "Ver a carta do parceiro" não foi simulado (os bots não sabem usar a informação); beneficiaria humanos.
+
+## Pool da dupla (`teamPool`) — 1.500 partidas
+Regra: o jogador que fica sem baralho e sem reserva recebe metade das cartas do parceiro (reserva primeiro). Só é eliminado se o parceiro tiver menos de 2 cartas, ou seja, quando a dupla já está praticamente derrotada.
+
+| Variante | Disputas | Rodadas | Dupla A | Terminam com 1 vivo |
+|---|---|---|---|---|
+| Base | 25 | 8,0 | 51,1% | 26% |
+| Reserva compartilhada + doação 2 | 23 | 6,8 | 49,6% | 13% |
+| **Pool da dupla** | 21 | 6,1 | 50,1% | **2%** |
+| Pool + doação 2 | 21 | 6,1 | 49,7% | 2% |
+
+Efeito: praticamente ninguém joga sozinho ou sai da mesa antes do fim; a partida encurta um pouco e o equilíbrio entre as duplas se mantém. A doação adicional não acrescenta nada ao pool.
