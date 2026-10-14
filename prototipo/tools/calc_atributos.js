@@ -9,8 +9,10 @@ const R = JSON.parse(fs.readFileSync(rank, 'utf8')).orders;
 const AT = ['pod', 'def', 'int', 'vel'];
 const all = D.CARTAS;
 const q = (arr, p) => { const s = arr.slice().sort((a, b) => a - b); const x = p * (s.length - 1), i = Math.floor(x), f = x - i; return s[i] + (s[Math.min(i + 1, s.length - 1)] - s[i]) * f; };
-const dist = {}; AT.forEach(a => dist[a] = all.map(c => c.stats[a]));
-const sums = all.map(c => c.stats.pod + c.stats.def + c.stats.int + c.stats.vel);
+// escala de referência congelada (as 98 cartas de 14/10/2026 antes de aplicar qualquer série): mantém todas as séries na mesma régua
+const REF = JSON.parse(fs.readFileSync(require('path').join(__dirname, '..', '..', 'dados', 'escala_referencia_2026-10-14.json'), 'utf8'));
+const dist = {}; AT.forEach((a, i) => dist[a] = REF.map(c => c.s[i]));
+const sums = REF.map(c => c.s[0] + c.s[1] + c.s[2] + c.s[3]);
 const ids = R.geral, n = ids.length;
 const pct = (list, id) => (n - list.indexOf(id) - 0.5) / n;
 const KAPPA = 0.35, CAP = 95, FLOOR = 6;
