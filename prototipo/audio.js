@@ -126,14 +126,15 @@
       if (!this.ctx || this.musicNodes) return;
       const c = this.ctx;
       if (this.buffers.menu) { const s = c.createBufferSource(); s.buffer = this.buffers.menu; s.loop = true; s.connect(this.musicGain); s.start(); this.musicNodes = { stop: () => { try { s.stop(); } catch (e) { } } }; return; }
-      const nodes = [], g = c.createGain(); g.gain.value = 0.0001; g.gain.exponentialRampToValueAtTime(0.5, c.currentTime + 3); g.connect(this.musicGain);
+      const nodes = [], g = c.createGain(); g.gain.value = 0.0001; g.gain.exponentialRampToValueAtTime(0.5, c.currentTime + 0.7); g.connect(this.musicGain);
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700; lp.Q.value = 0.7; lp.connect(g);
       const lfo = c.createOscillator(), lg = c.createGain(); lfo.frequency.value = 0.07; lg.gain.value = 260; lfo.connect(lg); lg.connect(lp.frequency); lfo.start(); nodes.push(lfo);
       [[45, 0], [52, 0], [57, 4], [60, -5], [64, 3]].forEach(([n, det]) => { const o = c.createOscillator(); o.type = n < 50 ? 'sine' : 'sawtooth'; o.frequency.value = this.note(n); o.detune.value = det; const og = c.createGain(); og.gain.value = n < 50 ? 0.5 : 0.07; o.connect(og); og.connect(lp); o.start(); nodes.push(o); });
       // notas esparsas
       const seq = [69, 72, 76, 74, 71, 67]; let i = 0;
+      const first = setTimeout(() => { if (this.musicOn && this.ctx) this.tone(this.note(seq[i++ % seq.length] + 12), 2.8, 'sine', 0.06, 0, null, this.musicGain); }, 500);   // primeira nota logo no início
       const timer = setInterval(() => { if (!this.musicOn) return; this.tone(this.note(seq[i++ % seq.length] + 12), 2.8, 'sine', 0.06, 0, null, this.musicGain); }, 4200);
-      this.musicNodes = { stop: () => { clearInterval(timer); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 1); setTimeout(() => nodes.forEach(n => { try { n.stop(); } catch (e) { } }), 1100); } };
+      this.musicNodes = { stop: () => { clearInterval(timer); clearTimeout(first); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 1); setTimeout(() => nodes.forEach(n => { try { n.stop(); } catch (e) { } }), 1100); } };
     },
     stopMusic() { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); },
     // 'menu' = ambiente do início; 'game' = trilha da partida (a do menu é pausada enquanto a partida roda)
@@ -154,7 +155,7 @@
       if (!this.ctx || !this.musicOn) return;
       if (this.matchNodes && !this.matchNodes.ending) return;
       const c = this.ctx, M = this.MATCH, self = this;
-      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 1.2); bus.connect(this.musicGain);
+      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 0.6); bus.connect(this.musicGain);
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.connect(bus);
       const pad = c.createBiquadFilter(); pad.type = 'lowpass'; pad.frequency.value = 1500; pad.Q.value = 0.5; pad.connect(bus);
       const dl = c.createDelay(1); dl.delayTime.value = 0.29; const fb = c.createGain(); fb.gain.value = 0.28; const dg = c.createGain(); dg.gain.value = 0.35; dl.connect(fb); fb.connect(dl); dl.connect(dg); dg.connect(bus);

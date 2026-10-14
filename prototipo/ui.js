@@ -394,8 +394,10 @@
     const prs = e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled || b.matches('input')) return; b.classList.add('pressing'); const rel = () => { b.classList.remove('pressing'); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.removeEventListener(t, rel)); }; ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.addEventListener(t, rel)); };
     window.addEventListener('pointerdown', prs, true);
     window.addEventListener('click', e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled) return; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); setTimeout(() => b.classList.remove('pop'), 340); try { if (!S.reduce && navigator.vibrate) navigator.vibrate(8); } catch (er) { } }, true);
-    const unlock = () => { SND.init(); window.removeEventListener('pointerdown', unlock); };
-    window.addEventListener('pointerdown', unlock);
+    // o navegador só libera o áudio após um gesto válido: no toque, é o pointerup/touchend/click (pointerdown não vale); tenta em todos até o áudio estar rodando
+    const EVS = ['pointerup', 'touchend', 'click', 'keydown'];
+    const unlock = () => { SND.init(); if (SND.ctx && SND.ctx.state === 'running') EVS.forEach(ev => window.removeEventListener(ev, unlock, true)); else if (SND.ctx) SND.ctx.resume().then(() => { if (SND.ctx.state === 'running') EVS.forEach(ev => window.removeEventListener(ev, unlock, true)); }).catch(() => { }); };
+    EVS.forEach(ev => window.addEventListener(ev, unlock, true));
   };
   U.setupScreen = setup;
 })();
