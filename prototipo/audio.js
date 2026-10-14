@@ -9,7 +9,7 @@
     capture: 'captura de carta', blackhole: 'carta engolida pelo Buraco Negro', special: 'especial preparado',
     specialFlip: 'especial virado', slash: 'ataque vencedor', shield: 'defesa vencedora', round: 'nova rodada',
     refill: 'compra da reserva', elim: 'jogador eliminado', victory: 'vitória na partida', defeat: 'derrota na partida',
-    steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', legend: 'carta lendária / da União revelada', menu: 'ambiente do menu / mesa (loop)',
+    banner: 'aviso na tela (banner)', phenom: 'fenômeno dimensional (início)', steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', legend: 'carta lendária / da União revelada', menu: 'ambiente do menu / mesa (loop)',
   };
 
   const S = {
@@ -73,6 +73,8 @@
     synth: {
       click() { S.tone(1200, 0.05, 'triangle', 0.12, 0, 700); },
       tick() { S.tone(1800, 0.03, 'sine', 0.06); },
+      banner() { S.noise(0.22, 'bandpass', 500, 3200, 0.06, 0, 2); S.tone(S.note(81), 0.14, 'triangle', 0.07, 0.04); S.tone(S.note(88), 0.22, 'triangle', 0.06, 0.1); },
+      phenom() { S.tone(S.note(45), 1.4, 'sine', 0.26, 0, 38); S.tone(S.note(57), 1.1, 'triangle', 0.12, 0.02, 64); S.tone(S.note(69), 0.9, 'sine', 0.08, 0.05); S.noise(0.9, 'bandpass', 300, 5200, 0.12, 0, 1.5); [76, 80, 83, 88].forEach((n, i) => S.tone(S.note(n), 0.5, 'triangle', 0.07, 0.28 + i * 0.09)); },
       deal() { S.noise(0.07, 'lowpass', 2400, 900, 0.18); S.tone(130, 0.08, 'sine', 0.18, 0, 70); },
       place() { S.noise(0.09, 'lowpass', 1800, 500, 0.22); S.tone(95, 0.14, 'sine', 0.3, 0, 55); },
       flip() { S.noise(0.16, 'bandpass', 700, 3800, 0.2, 0, 2); S.tone(420, 0.06, 'triangle', 0.08, 0.1, 880); },

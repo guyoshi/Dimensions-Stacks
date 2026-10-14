@@ -40,6 +40,7 @@
   // ---------------------------------------------------------------- helpers visuais
   function banner(title, sub, color, ms) {
     try { U.layer().querySelectorAll('.banner').forEach(x => x.remove()); } catch (e) { }
+    SND.play('banner');
     const b = el(`<div class="banner" style="--d:${((ms || 1800) * S.k) / 1000}s;${color ? `--bc:${color}` : ''}"><b>${esc(title)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`);
     U.layer().appendChild(b); setTimeout(() => b.remove(), (ms || 1800) * S.k + 100);
   }
@@ -448,7 +449,7 @@
     },
     async eventStart({ round, ev }) {
       const d = E.EVENTOS[ev.id], ui = EVUI[ev.id]; refresh();
-      evFx(ev); SND.play(EVSND[ev.id] || 'round');
+      evFx(ev); SND.play('phenom'); setTimeout(() => SND.play(EVSND[ev.id] || 'round'), 380);
       if (ev.id === 'forca' || ev.id === 'nevoa' || ev.id === 'eco') { const r = innerHeight / 2; FX.burst(innerWidth / 2, r, { n: 50, speed: 7, life: 55, colors: [ui.cor, '#fff'] }); }
       banner(d.nome, ev.id === 'troca' && ev.pair ? `${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome}` : d.curto, ui.cor, 2600); caption(`Fenômeno dimensional: ${evName(ev)}. ${d.txt}`, true);
       await sleep(2400);

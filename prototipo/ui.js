@@ -156,7 +156,7 @@
         <div class="spbox"><b>✦ ${esc(sp ? sp.nome : '—')}</b><br><span>${esc(sp ? sp.texto : '')}</span>${sp && sp.stub ? '<br><span class="hint">⚠ Efeito ainda não implementado neste protótipo.</span>' : ''}</div>
         <div class="stbars">${AIDS.map(a => `<div class="stbar" data-a="${a}">${ICON[a]}<i><s style="width:${Math.min(100, cs[a] / max * 100)}%"></s></i><b>${cs[a]}${cs[a] !== c.stats[a] ? ` <small class="hint">(base ${c.stats[a]})</small>` : ''}</b></div>`).join('')}</div>
         ${c.descricao ? `<p>${esc(c.descricao)}</p>` : ''}
-        ${c.nota ? `<div class="hint">Nota do elenco: ${esc(c.nota)}</div>` : ''}</div>`));
+        </div>`));
       if (opts.mastery && window.DSSTATS) {
         const m = window.DSSTATS.mastery(cid), pct = m.to ? Math.min(100, Math.round((m.xp - m.from) / (m.to - m.from) * 100)) : 100;
         wrap.querySelector('.meta').append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}</small></div>`));
@@ -289,8 +289,6 @@
       <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">
       <div class="lbl">Fenômenos dimensionais</div>
       <div class="seg" data-k="ev">${[[1, 'Ligados'], [0, 'Desligados']].map(([v, t]) => `<button data-v="${v}" class="${(CFG.ev === 0 ? 0 : 1) === v ? 'on' : ''}">${t}</button>`).join('')}</div>
-      <div class="hint">Às vezes uma rodada traz uma regra especial, avisada com antecedência na faixa de rodadas.</div>
-      <div class="hint">7 formam o baralho ativo; o restante vai para a reserva. Mais cartas = partida mais longa.<br>Para jogar contra outras pessoas, cada uma no seu aparelho, use <b>Multiplayer</b> no Início.</div>
       <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-act="back">← Voltar</button><button class="btn primary" data-act="go">Começar ▶</button></div>
     </div></div>`;
     s.onclick = e => {
