@@ -21,7 +21,7 @@ try:
     chk(len(e) == 5 and 'J08:emb e5' in e and 'D01:emb e2' in e and 'J01:emb e4' in e and 'J02:emb e5' in e and 'D02:emb e1' in e, 'emblemas por nível na coleção (J03 com 1 XP sem emblema)')
     pg.select_option('#csort', 'mast'); pg.wait_for_timeout(250)
     top = pg.evaluate("[...document.querySelectorAll('#cgrid .card')].slice(0, 6).map(c => c.dataset.id)"); chk(top[:5] == ['J08', 'J02', 'J01', 'D01', 'D02'] and top[5] == 'J03', 'ordenar por maestria: %s' % top)
-    chk('5 cartas com emblema' in pg.inner_text('#ccount'), 'contagem de emblemas: %s' % pg.inner_text('#ccount'))
+    chk('5 cartas com emblema' in pg.get_attribute('#ccount', 'title'), 'contagem de emblemas: %s' % pg.get_attribute('#ccount', 'title'))
     pg.screenshot(path=os.path.join(proj, 'tests', 'shots', 'mast_colecao.png'))
     pg.click('#cgrid .card[data-id=J08]'); pg.wait_for_selector('.mast'); txt = pg.inner_text('.mast'); print(txt.replace('\n', ' | '))
     chk('Dimensional' in txt and '160 usos' in txt and '100 disputas vencidas' in txt and '60 especiais resolvidos' in txt, 'zoom mostra maestria e contadores')
