@@ -665,14 +665,16 @@
     },
     async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
-      SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const human = winner != null && (V.online ? winner === V.viewer : !G.p(winner).bot); const anyHuman = V.humans > 0;
+      SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const sameT = (a, b) => a === b || !!(G.cfg && G.cfg.teams && G.cfg.teams.some(t => t.includes(a) && t.includes(b))); const human = winner != null && (V.online ? sameT(winner, V.viewer) : (G.cfg && G.cfg.teams ? G.cfg.teams.some(t => t.includes(winner) && t.some(x => !G.p(x).bot)) : !G.p(winner).bot)); const anyHuman = V.humans > 0;
       SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
       if (winner != null && (human || !anyHuman)) FX.confetti();
       const w = winner != null ? G.p(winner) : null;
+      const teams = G.cfg && G.cfg.teams, mates = teams && w ? teams.find(t => t.includes(w.pid)) : null;   // duplas: vence a dupla inteira
       const n = el(`<div class="modal"><div class="box"><div class="final">
-        ${w ? `<div class="avatar" style="--pc:${PCOL[w.pid]};width:84px;height:84px;font-size:40px">${esc(w.name[0].toUpperCase())}</div>` : ''}
-        <h1>${w ? esc(w.name) + ' vence!' : 'Empate!'}</h1>
-        <div class="hint">${s.byLimit ? 'Limite de disputas atingido: vence quem tem mais cartas.' : w ? 'Todos os adversários foram eliminados.' : ''}</div>
+        ${mates ? `<div class="row" style="justify-content:center;gap:10px">${mates.map(pid => `<div class="avatar" style="--pc:${PCOL[pid]};width:72px;height:72px;font-size:34px">${esc(G.p(pid).name[0].toUpperCase())}</div>`).join('')}</div>`
+          : w ? `<div class="avatar" style="--pc:${PCOL[w.pid]};width:84px;height:84px;font-size:40px">${esc(w.name[0].toUpperCase())}</div>` : ''}
+        <h1>${mates ? esc(mates.map(pid => G.p(pid).name).join(' e ')) + ' vencem!' : w ? esc(w.name) + ' vence!' : 'Empate!'}</h1>
+        <div class="hint">${s.byLimit ? (mates ? 'Limite de disputas atingido: vence a dupla com mais cartas.' : 'Limite de disputas atingido: vence quem tem mais cartas.') : w ? (mates ? 'A dupla adversária ficou sem cartas.' : 'Todos os adversários foram eliminados.') : ''}</div>
         <div class="stats"><div><b>${s.combats}</b>disputas</div><div><b>${s.round}</b>rodadas</div><div><b>${s.bh.length}</b>no Buraco Negro</div></div>
         ${unlockHTML()}
         <div class="row" style="justify-content:center">${V.online ? (V.ctl.again ? '<button class="btn primary" data-a="again">Nova partida (mesmos jogadores)</button>' : '<div class="hint" style="width:100%;text-align:center">Aguardando o anfitrião começar outra partida…</div>') : '<button class="btn primary" data-a="again">Jogar de novo</button>'}<button class="btn" data-a="menu">${V.online ? 'Sair da sala' : 'Menu'}</button></div></div></div></div>`);
@@ -904,7 +906,7 @@
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
     newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, shared: true });
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };
@@ -980,7 +982,7 @@
         chooseTarget: wrap('chooseTarget', (p, cands, label) => [cands, label]),
       };
       const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i, diff: s.bot ? s.diff : undefined }));
-      G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, events: cfg.ev !== false, seed: cfg.seed, io });
+      G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, events: cfg.ev !== false, teams: cfg.teams || null, seed: cfg.seed, io });
       U.game = G;
       // queda de conexão: carência de 25 s (reconexões rápidas são normais); depois um CPU assume, com aviso na tela. O jogador pode voltar ao lugar.
       const grace = new Map(), present = peer => !!peer && link.peers().some(p => p.peer === peer);
@@ -1036,10 +1038,10 @@
     }
 
     // ----- convidado: espelha o estado e executa as decisões pedidas
-    G = { cfg: { specialsFrom: cfg.sf }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
+    G = { cfg: { specialsFrom: cfg.sf, teams: cfg.teams || null }, teamOf(pid) { const t = this.cfg.teams; if (!t) return pid; const i = t.findIndex(g => g.includes(pid)); return i < 0 ? pid : 't' + i; }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
       p(pid) { return this.s.players[pid]; }, alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); } };
     U.game = G;
-    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit', 'events', 'away'].forEach(k => { G.s[k] = st[k]; }); };
+    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'winnerTeam', 'byLimit', 'events', 'away'].forEach(k => { G.s[k] = st[k]; }); };
     let last = 0, synced = !ctl.rejoin, queue = Promise.resolve(); const answered = new Map(), inflight = new Set();
     const enqueue = fn => { queue = queue.then(fn).catch(e => { if (e !== 'abort') console.error('online', e); }); };
     off.push(link.on('ev', (m, msg) => {

@@ -501,7 +501,7 @@
             const mate = this.alive().find(x => this.sameTeam(x, pid)); const m = mate != null ? this.p(mate) : null;
             if (m && m.reserve.length > 0) { const n = Math.min(7, Math.ceil(m.reserve.length / 2)); p.reserve.push(...m.reserve.splice(0, n)); this.log(`${p.name} compra ${n} cartas da reserva do parceiro ${m.name}.`, 'efeito'); this.memInit(); }
           }
-          if (p.reserve.length === 0 && this.cfg.teams && this.cfg.teamPool) {   // [teste] pool da dupla: só cai quem não tem de quem receber (parceiro com <2 cartas)
+          if (p.reserve.length === 0 && this.cfg.teams && this.cfg.teamPool !== false) {   // pool da dupla (regra das duplas): só cai quem não tem de quem receber (parceiro com <2 cartas)
             const mate = this.alive().find(x => this.sameTeam(x, pid)); const m = mate != null ? this.p(mate) : null;
             if (m && this.totalCards(m) >= 2) {
               const n = Math.floor(this.totalCards(m) / 2), got = [];

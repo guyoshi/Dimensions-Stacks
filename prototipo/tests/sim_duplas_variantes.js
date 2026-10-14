@@ -1,6 +1,6 @@
 // uso: node sim_duplas_variantes.js [N]  — compara variantes do modo em duplas (bots difíceis, especiais ligados)
 const E = require('../engine.js'); const N = +process.argv[2] || 1000;
-const V = { 'base': {}, 'reserva compartilhada': { teamShare: true }, 'doação 2': { teamGive: 2 }, 'doação 3': { teamGive: 3 }, 'compartilhada+doação 2': { teamShare: true, teamGive: 2 }, 'queda derrota a dupla': { teamFall: true }, 'pool da dupla': { teamPool: true }, 'pool + doação 2': { teamPool: true, teamGive: 2 } };
+const V = { 'base': { teamPool: false }, 'reserva compartilhada': { teamShare: true }, 'doação 2': { teamGive: 2 }, 'doação 3': { teamGive: 3 }, 'compartilhada+doação 2': { teamShare: true, teamGive: 2 }, 'queda derrota a dupla': { teamFall: true }, 'pool da dupla': { teamPool: true }, 'pool + doação 2': { teamPool: true, teamGive: 2 } };
 (async () => {
   for (const [name, ex] of Object.entries(V)) {
     let lonely = 0, pooled = 0, len = 0, rounds = 0, a = 0, crisisWin = 0, crisisN = 0, gave = 0, lim = 0, solo = 0;
