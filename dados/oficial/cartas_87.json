@@ -41,7 +41,8 @@
     "revisao_14_10_2026_belfex": "B02 Tack, B03 Jork, B04 Peredun e B05 Primus adicionadas a pedido do autor (status PROPOSTA_AGUARDANDO_APROVACAO).",
     "revisao_14_10_2026_viajantes": "Atributos das 25 cartas de Viajantes Dimensionais recalculados a partir dos rankings do autor, com a regra do par forte (Velho-Sábio com par forte INT/VEL por decisão do autor; Korvo mantido forte em FOR/RES). Korvo e Velho-Sábio fixados como Lendárias (4 losangos). Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
     "revisao_14_10_2026_belfex_atributos": "Atributos das 5 cartas de Édelin Lys recalculados a partir dos rankings do autor, com a regra do par forte (Édelin isenta, A União); aprovado pelo autor em 14/10/2026. Raridade por posição de poder. Especiais ainda não revisados.",
-    "revisao_14_10_2026_misterio": "Atributos das 12 cartas de Mistério Oculto recalculados a partir dos rankings do autor (lista de Força revisada por ele em 14/10), regra do par forte: Agente Seis INT/VEL, Agente Sete FOR/RES (decisão do autor); Releuz e Hyde (A União) isentos. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados."
+    "revisao_14_10_2026_misterio": "Atributos das 12 cartas de Mistério Oculto recalculados a partir dos rankings do autor (lista de Força revisada por ele em 14/10), regra do par forte: Agente Seis INT/VEL, Agente Sete FOR/RES (decisão do autor); Releuz e Hyde (A União) isentos. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
+    "revisao_14_10_2026_spacetheft": "Atributos das 18 cartas de Spacetheft recalculados a partir dos rankings do autor, regra do par forte: Capitã Nastácia FOR/RES e Amanda INT/VEL (decisão do autor); Jasmey (A União) isento. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados."
   },
   "cartas": [
     {
@@ -1061,12 +1062,12 @@
       },
       "descricao_curta": "Pirata Dale impulsivo e carismático, sobrevive com um braço metálico e desafia o código da Lebargan.",
       "atributos": {
-        "FOR": 92,
-        "RES": 76,
-        "INT": 64,
-        "VEL": 70
+        "FOR": 80,
+        "RES": 70,
+        "INT": 74,
+        "VEL": 62
       },
-      "soma_atributos": 302,
+      "soma_atributos": 286,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-129",
       "uniao": "INTEGRANTE",
@@ -1085,12 +1086,12 @@
       },
       "descricao_curta": "Aliada de Jasmey, questiona as ordens de Jelles e ajuda a desafiar o domínio da Lebargan.",
       "atributos": {
-        "FOR": 56,
-        "RES": 82,
-        "INT": 73,
-        "VEL": 65
+        "FOR": 45,
+        "RES": 70,
+        "INT": 86,
+        "VEL": 70
       },
-      "soma_atributos": 276,
+      "soma_atributos": 271,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-075",
       "uniao": "NAO",
@@ -1109,13 +1110,13 @@
       },
       "descricao_curta": "Irmão de Amanda, sarcástico e curioso, arrisca tudo ao disputar o Olho de Domongo.",
       "atributos": {
-        "FOR": 48,
-        "RES": 47,
-        "INT": 77,
-        "VEL": 86
+        "FOR": 27,
+        "RES": 24,
+        "INT": 74,
+        "VEL": 88
       },
-      "soma_atributos": 258,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 213,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-016",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1133,13 +1134,13 @@
       },
       "descricao_curta": "Engenheiro inventivo, transforma sucata em soluções e mantém a esperança entre companheiros.",
       "atributos": {
-        "FOR": 18,
+        "FOR": 24,
         "RES": 41,
-        "INT": 95,
-        "VEL": 30
+        "INT": 94,
+        "VEL": 49
       },
-      "soma_atributos": 184,
-      "perfil_balanceamento": "Frágil",
+      "soma_atributos": 208,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-041",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1157,12 +1158,12 @@
       },
       "descricao_curta": "Companheiro vigoroso da tripulação de Jasmey, oferece proteção quando a força é necessária.",
       "atributos": {
-        "FOR": 78,
-        "RES": 81,
-        "INT": 51,
-        "VEL": 51
+        "FOR": 82,
+        "RES": 77,
+        "INT": 54,
+        "VEL": 52
       },
-      "soma_atributos": 261,
+      "soma_atributos": 265,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-137",
       "uniao": "NAO",
@@ -1181,13 +1182,13 @@
       },
       "descricao_curta": "Mecânico leal e aliado de Hardman, enfrenta os perigos do espaço ao lado dos companheiros.",
       "atributos": {
-        "FOR": 69,
-        "RES": 79,
-        "INT": 65,
-        "VEL": 44
+        "FOR": 70,
+        "RES": 68,
+        "INT": 84,
+        "VEL": 72
       },
-      "soma_atributos": 257,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 294,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-082",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1205,13 +1206,13 @@
       },
       "descricao_curta": "Integrante da equipe de Jasmey, enfrenta o cativeiro e a fuga com seus aliados.",
       "atributos": {
-        "FOR": 55,
-        "RES": 76,
-        "INT": 65,
-        "VEL": 51
+        "FOR": 60,
+        "RES": 80,
+        "INT": 57,
+        "VEL": 28
       },
-      "soma_atributos": 247,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 225,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-024",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1229,13 +1230,13 @@
       },
       "descricao_curta": "Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo.",
       "atributos": {
-        "FOR": 70,
-        "RES": 64,
-        "INT": 89,
-        "VEL": 65
+        "FOR": 9,
+        "RES": 35,
+        "INT": 83,
+        "VEL": 86
       },
-      "soma_atributos": 288,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 213,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-006",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1253,13 +1254,13 @@
       },
       "descricao_curta": "Capitã lendária da Lebargan, comanda com discrição uma das naves mais temidas do espaço.",
       "atributos": {
-        "FOR": 91,
-        "RES": 93,
+        "FOR": 85,
+        "RES": 65,
         "INT": 70,
-        "VEL": 67
+        "VEL": 60
       },
-      "soma_atributos": 321,
-      "perfil_balanceamento": "Elite",
+      "soma_atributos": 280,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-048",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1277,13 +1278,13 @@
       },
       "descricao_curta": "Comandante brutal da Lebargan, governa pelo medo e busca o poder escondido na Aurora.",
       "atributos": {
-        "FOR": 93,
-        "RES": 82,
-        "INT": 70,
-        "VEL": 62
+        "FOR": 69,
+        "RES": 49,
+        "INT": 73,
+        "VEL": 52
       },
-      "soma_atributos": 307,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 243,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-047",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1303,10 +1304,10 @@
       "atributos": {
         "FOR": 95,
         "RES": 95,
-        "INT": 22,
-        "VEL": 32
+        "INT": 41,
+        "VEL": 25
       },
-      "soma_atributos": 244,
+      "soma_atributos": 256,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-133",
       "uniao": "NAO",
@@ -1325,12 +1326,12 @@
       },
       "descricao_curta": "Dale leal ao antigo código, deixa o ressentimento transformar sua relação com Jasmey.",
       "atributos": {
-        "FOR": 75,
-        "RES": 64,
-        "INT": 59,
-        "VEL": 68
+        "FOR": 28,
+        "RES": 70,
+        "INT": 76,
+        "VEL": 63
       },
-      "soma_atributos": 266,
+      "soma_atributos": 237,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-135",
       "uniao": "NAO",
@@ -1349,13 +1350,13 @@
       },
       "descricao_curta": "Capitão pirata rival, negocia sob pressão e disputa vantagens nos perigos do espaço.",
       "atributos": {
-        "FOR": 81,
-        "RES": 74,
-        "INT": 84,
-        "VEL": 57
+        "FOR": 79,
+        "RES": 67,
+        "INT": 70,
+        "VEL": 39
       },
-      "soma_atributos": 296,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 255,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-059",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1373,13 +1374,13 @@
       },
       "descricao_curta": "Rival provocador de Jasmey, surpreende ao participar da ruptura contra Jelles.",
       "atributos": {
-        "FOR": 80,
-        "RES": 53,
-        "INT": 49,
-        "VEL": 85
+        "FOR": 35,
+        "RES": 51,
+        "INT": 61,
+        "VEL": 54
       },
-      "soma_atributos": 267,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 201,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-053",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2308,13 +2309,13 @@
       },
       "descricao_curta": "Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan.",
       "atributos": {
-        "FOR": 82,
-        "RES": 55,
-        "INT": 18,
-        "VEL": 72
+        "FOR": 90,
+        "RES": 69,
+        "INT": 51,
+        "VEL": 53
       },
-      "soma_atributos": 227,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 263,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-067",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2333,13 +2334,13 @@
       },
       "descricao_curta": "Cientista mística de biotecnologia que revive Jasmey e lhe dá um braço novo; diz não interferir, mas interfere.",
       "atributos": {
-        "FOR": 20,
-        "RES": 38,
-        "INT": 80,
-        "VEL": 31
+        "FOR": 27,
+        "RES": 48,
+        "INT": 95,
+        "VEL": 50
       },
-      "soma_atributos": 169,
-      "perfil_balanceamento": "Frágil",
+      "soma_atributos": 220,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-045",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2358,12 +2359,12 @@
       },
       "descricao_curta": "Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo.",
       "atributos": {
-        "FOR": 38,
-        "RES": 52,
-        "INT": 85,
-        "VEL": 80
+        "FOR": 54,
+        "RES": 58,
+        "INT": 72,
+        "VEL": 69
       },
-      "soma_atributos": 255,
+      "soma_atributos": 253,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-056",
       "uniao": "NAO",
@@ -2384,12 +2385,12 @@
       "descricao_curta": "Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto.",
       "atributos": {
         "FOR": 70,
-        "RES": 64,
-        "INT": 68,
-        "VEL": 88
+        "RES": 42,
+        "INT": 59,
+        "VEL": 75
       },
-      "soma_atributos": 290,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 246,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-123",
       "uniao": "NAO",
       "base_narrativa": {

@@ -3,7 +3,9 @@
   "par_forte": {
     "V05": "INT/VEL",
     "M07": "INT/VEL",
-    "M02": "FOR/RES"
+    "M02": "FOR/RES",
+    "S09": "FOR/RES",
+    "S02": "INT/VEL"
   },
   "raridade_fixa": {
     "V05": "lendaria",

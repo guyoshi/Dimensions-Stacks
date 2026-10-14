@@ -218,3 +218,7 @@ Atributos das 5 cartas pelos rankings do autor, regra do par forte (Édelin isen
 ## Mistério Oculto recalculado (14/10/2026, autorizado pelo autor)
 
 Atributos das 12 cartas pelos rankings do autor (lista de Força revisada por ele em 14/10), regra do par forte, escala de referência congelada. Decisões do autor: Agente Seis INT/VEL, Agente Sete FOR/RES, Releuz mantida (A União). Resultado: Releuz 59/82/94/88 (Lendária), Hyde 67/91/89/68 (Épica), X 49/62/88/66 (Épica), Agente Sete 83/73/66/70 (Épica), Agente Seis 70/53/84/52, Diana 23/70/78/77, James Harrow 81/68/65/48, Benjamin 80/48/42/65, Padre Tomas 35/79/61/34, Matt 41/43/69/61, Helena 10/29/79/42, Richard 73/38/55/20. Raridade por posição de poder. Especiais ainda não revisados. Com isso, Jesed, Viajantes, Édelin Lys e Mistério estão aplicados; faltam Spacetheft e Diário Sobrenatural (ainda não ranqueados).
+
+## Spacetheft recalculado (14/10/2026, autorizado pelo autor)
+
+Atributos das 18 cartas pelos rankings do autor, regra do par forte. Decisões do autor: Capitã Nastácia FOR/RES (85/65/70/60), Amanda INT/VEL (45/70/86/70). Raridade por posição de poder (2 Lendárias: A Besta 95/95/41/25 e A Engenheira 27/48/95/50). Especiais ainda não revisados. Faltava só o Diário Sobrenatural, cuja proposta (dados/proposta_atributos_diario_2026-10-14.json) aguarda decisões do autor.
