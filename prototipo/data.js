@@ -201,7 +201,7 @@
     });
   }
 
-  // Raridade por posição de poder dentro da série (autor, 14/10/2026): 11% Lendária, 21% Épica, 33% Rara, resto Comum.
+  // Raridade por posição de poder dentro da série (autor, 14/10/2026): cerca de 11% Lendária, 21% Épica, 33% Rara, resto Comum (cotas aproximadas, não exatas).
   // Vale para as séries já ranqueadas pelo autor; as demais seguem os cortes fixos acima até serem ranqueadas.
   const SERIES_POR_POSICAO = ['jesed', 'viajantes', 'belfex', 'misterio', 'spacetheft', 'diario'];
   // Raridade fixada pelo autor (14/10/2026): Korvo e Velho-Sábio são Lendárias; ocupam vagas da cota da série.
@@ -213,6 +213,9 @@
       const fx = L.filter(c => RARIDADE_FIXA[c.id]), k = fx.length;
       fx.forEach(c => { c.raridade = RARIDADE_FIXA[c.id]; });
       L.filter(c => !RARIDADE_FIXA[c.id]).forEach((c, i) => { c.raridade = i < cut[0] - k ? 'lendaria' : i < cut[1] - k ? 'epica' : i < cut[2] - k ? 'rara' : 'comum'; });
+      // as cotas são guia, não limite (autor, 14/10/2026): carta claramente mais forte (>= 10 de poder) que a Lendária mais fraca da própria série também é Lendária
+      const pw = c => poder([c.stats.pod, c.stats.def, c.stats.int, c.stats.vel]), leg = L.filter(c => c.raridade === 'lendaria');
+      if (leg.length) { const minL = Math.min.apply(null, leg.map(pw)); L.forEach(c => { if (c.raridade !== 'lendaria' && pw(c) >= minL + 10) c.raridade = 'lendaria'; }); }
     });
     return cartas;
   }
