@@ -70,3 +70,7 @@ Adaptações no motor:
 - Efeitos "todos, inclusive você" (Descarte coletivo, Atributo universal, pares/ataque/defesa obrigatórios) continuam valendo para o parceiro: decisão de design a confirmar.
 - Bots: parceiro vencendo não conta como "estou perdendo", nem como carta rival a bater; o especial do parceiro não é tratado como ameaça.
 - Fraqueza conhecida: Troca entre vizinhos, Transferência de reserva e Tríplice transferência movem cartas entre os dois adversários, que são parceiros entre si, então não geram ganho líquido nas duplas (mesmo caso do duelo).
+
+
+## Decisão do autor (14/10/2026): AE-063, AE-064 e AE-065 em duplas
+Os dois rivais são parceiros entre si, então mover cartas entre eles não dá ganho (igual ao duelo). Decisão: **não se usam em duplas** (o motor as marca como inutilizáveis nesse modo; bots e jogadores não as ativam). Nos outros modos nada muda.

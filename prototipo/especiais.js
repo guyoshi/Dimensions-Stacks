@@ -287,6 +287,7 @@
     }
     rotateRes('AE-061', 'R'); rotateRes('AE-062', 'L');
     D('AE-063', 'Redistribuição', {
+      can(ctx) { return !(ctx.g.cfg && ctx.g.cfg.teams); },   // duplas: os dois rivais são parceiros, não há ganho; não se usa
       // [PROPOSTA] "carta ativa escolhida": quem usa escolhe, às cegas (pela posição no baralho ativo), 1 carta de cada vizinho; as duas trocam de dono.
       // Quem lembra o que há nos baralhos (memória do bot) tira uma carta forte do líder e entrega uma fraca; sem memória, a escolha é ao acaso.
       async apply(ctx, act) {
@@ -313,6 +314,7 @@
       prep: 0.3, val: 0.4,
     });
     D('AE-064', 'Redistribuição', {
+      can(ctx) { return !(ctx.g.cfg && ctx.g.cfg.teams); },   // duplas: os dois rivais são parceiros, não há ganho; não se usa
       async apply(ctx, act) {
         const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null || L === R) return ctx.say('Em duelo a carta volta ao mesmo rival: sem vantagem. O especial é gasto.');
         const t = await ctx.hit(act.pid, L); if (t == null) return; if (await ctx.blocked(act.pid, t, 'reserve', 1, 'swap')) return;
@@ -324,6 +326,7 @@
       ai(ctx, pid) { const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 2 && tot(R) < tot(pid) && ctx.player(L).reserve.length ? 0.5 : 0.03; }, prep: 0.25, val: 0.4,
     });
     D('AE-065', 'Redistribuição', {
+      can(ctx) { return !(ctx.g.cfg && ctx.g.cfg.teams); },   // duplas: os dois rivais são parceiros, não há ganho; não se usa
       async apply(ctx, act) {
         const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null || L === R) return ctx.say('Em duelo a transferência não gera ganho líquido. O especial é gasto.');
         const t = await ctx.hit(act.pid, L); if (t == null) return; if (await ctx.blocked(act.pid, t, 'deck', 3, 'swap')) return;
