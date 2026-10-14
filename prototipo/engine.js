@@ -206,7 +206,7 @@
   // ---------------------------------------------------------------- jogo
   class Game {
     constructor(cfg) {
-      this.cfg = Object.assign({ perPlayer: 12, difficulty: 'normal', maxCombats: 400, seed: (Math.random() * 2 ** 32) >>> 0 }, cfg);
+      this.cfg = Object.assign({ perPlayer: 14, difficulty: 'normal', maxCombats: 400, seed: (Math.random() * 2 ** 32) >>> 0 }, cfg);
       this.io = cfg.io || {};
       this.rand = mkRng(this.cfg.seed);
       this.logs = [];
@@ -238,7 +238,7 @@
       await this.emit('initiative', { initiator: this.s.initiator });
       for (let i = 0; i < n; i++) {
         const p = this.p(i); let ord;
-        if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator });
+        if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator, reserve: p.reserve.slice() });
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
       }

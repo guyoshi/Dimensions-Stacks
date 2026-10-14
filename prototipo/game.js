@@ -290,11 +290,20 @@
     if (!list.length) $('.cgrid', w).outerHTML = '<p class="hint">Vazio por enquanto.</p>';
     U.modal(w);
   }
+  // reserva própria, só leitura (sem ordem: a compra pega as primeiras da pilha, que não se conhecem)
+  function showReserve(ids) {
+    SND.play('click');
+    const w = el(`<div><h2 style="color:var(--gold2)">Sua reserva</h2><p class="hint">${ids.length} carta(s), só para consultar. Quando seu baralho acabar você compra até 6 delas (as primeiras são sorteadas) e então reordena as que chegarem. Toque numa carta para ver os detalhes.</p><div class="cgrid"></div></div>`);
+    $('.cgrid', w).append(...ids.map(id => cardEl(id, { up: true, noanim: true, cw: 96, click: true })));
+    U.modal(w);
+  }
+
   function showMyDeck() {
     const p = G.p(V.viewer); SND.play('click');
-    const w = el(`<div><h2 style="color:var(--gold2)">Seu baralho</h2><p class="hint">Ordem de jogo (1ª = próxima a entrar). Reserva: ${p.reserve.length} carta(s) fechadas.</p><div class="cgrid"></div>${p.prepared.length ? '<h3 style="margin:10px 0;color:var(--gold2)">Especiais preparados</h3><div class="cgrid" id="pp"></div>' : ''}</div>`);
+    const w = el(`<div><h2 style="color:var(--gold2)">Seu baralho</h2><p class="hint">Ordem de jogo (1ª = próxima a entrar). Reserva: ${p.reserve.length} carta(s).</p><div class="cgrid"></div>${p.prepared.length ? '<h3 style="margin:10px 0;color:var(--gold2)">Especiais preparados</h3><div class="cgrid" id="pp"></div>' : ''}</div>`);
     $('.cgrid', w).append(...p.deck.map((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 96, click: true }); const t = el(`<div class="tag" style="position:absolute;top:-8px;left:4px;z-index:3;background:#0b0c10;border:1px solid var(--line);border-radius:99px;padding:0 7px;font-size:11px;font-weight:900">${i + 1}</div>`); c.append(t); return c; }));
     const pp = $('#pp', w); if (pp) pp.append(...p.prepared.map(id => cardEl(id, { up: true, noanim: true, cw: 96, click: true })));
+    if (p.reserve.length) { const rb = el(`<div class="row" style="justify-content:center;margin-top:12px"><button class="btn sm" type="button">Ver minha reserva (${p.reserve.length})</button></div>`); $('button', rb).onclick = () => showReserve(p.reserve.slice()); w.append(rb); }
     U.modal(w);
   }
 
@@ -736,7 +745,7 @@
         const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: ${rf ? 'reordene as cartas da reserva' : 'monte seu baralho'}</h2>
           <div class="hint">${rf ? 'Seu baralho acabou: estas cartas vieram da reserva. ' : ''}<b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.${st != null ? `<br>Iniciativa: <b>${esc(seq)}</b>. <i class="ini">★</i> = disputa em que você inicia (declara o atributo).` : ''}</div></div>
           <div class="grid"></div><div class="info"></div>
-          <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button></div>
+          <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button>${!rf && o && o.reserve && o.reserve.length ? `<button class="btn sm" data-a="res">Ver reserva (${o.reserve.length})</button>` : ''}</div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);
         const W = window.innerWidth - 32;
         let cw = Math.floor((W - 6 * 10) / 7); if (cw < 70) cw = Math.floor((W - 3 * 10) / 4); cw = Math.max(64, Math.min(112, cw));
@@ -773,6 +782,7 @@
           const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a; SND.play('click');
           if (a === 'best') { arr.sort((x, y) => E.sum4(CARDS[y].stats) - E.sum4(CARDS[x].stats)); sel = -1; }
           else if (a === 'mix') { arr.sort(() => Math.random() - .5); sel = -1; }
+          else if (a === 'res') { showReserve(o.reserve); return; }
           else if (a === 'ok') { run.rej.delete(rej); ov.remove(); return res(arr); }
           draw();
         };

@@ -76,7 +76,7 @@
 
   // ---------------------------------------------------------------- início
   // duração estimada da partida rápida (2 jogadores): ~2 disputas por carta × ~25 s por disputa
-  function quickMin() { const per = (window.DSUI && window.DSUI.CFG && window.DSUI.CFG.per) || 12; return Math.max(3, Math.round(per * 2 * 25 / 60)); }
+  function quickMin() { const per = (window.DSUI && window.DSUI.CFG && window.DSUI.CFG.per) || 14; return Math.max(3, Math.round(per * 2 * 25 / 60)); }
   function home() {
     const s = $('#menu'); const d = ST.dailyToday(); const p = ST.profile();
     s.innerHTML = `<div class="tabwrap home">

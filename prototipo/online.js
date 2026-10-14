@@ -187,7 +187,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   const remember = code => { try { store.set('lastRoom', { code, t: Date.now() }); } catch (e) { } };
   function lobbyHost(link, code, name) {
     remember(code);
-    sess = { link, role: 'host', code, name, join: [], unsub: [], cfg: Object.assign({ n: 2, per: 12, diff: 'normal', bd: ['normal', 'normal', 'normal'] }, store.get('onlineCfg', {}), { sf: window.__dsSf === 1 ? 1 : 2 }) };
+    sess = { link, role: 'host', code, name, join: [], unsub: [], cfg: Object.assign({ n: 2, per: 14, diff: 'normal', bd: ['normal', 'normal', 'normal'] }, store.get('onlineCfg', {}), { sf: window.__dsSf === 1 ? 1 : 2 }) }; if (sess.cfg.perV !== 2) { sess.cfg.per = 14; sess.cfg.perV = 2; }
     link.presence({ n: name, u: myUid(), h: 1, v: VER, cfg: sess.cfg });
     sess.unsub.push(link.onPeers(() => renderLobby()));
     U.show('online'); renderLobby();
@@ -206,12 +206,12 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
 
   function renderLobby() {
     if (!sess) return; const s = section(), isHost = sess.role === 'host';
-    const hum = humansOrdered(); const cfg = sess.cfg || (hum[0] && hum[0].presence.cfg) || { n: 2, per: 12, diff: 'normal', bd: ['normal', 'normal', 'normal'], sf: 2 };
+    const hum = humansOrdered(); const cfg = sess.cfg || (hum[0] && hum[0].presence.cfg) || { n: 2, per: 14, diff: 'normal', bd: ['normal', 'normal', 'normal'], sf: 2 };
     const bdOf = k => ((cfg.bd || [])[k]) || cfg.diff || 'normal'; const DF = [['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']];
     const N = Math.max(cfg.n || 2, Math.min(4, hum.length));
     const slots = []; for (let i = 0; i < N; i++) slots.push(hum[i] || null);
     const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N));
-    const per = Math.max(7, Math.min(cfg.per || 12, maxPer));
+    const per = Math.max(7, Math.min(cfg.per || 14, maxPer));
     const canStart = isHost && hum.length >= 1 && N >= 2;
     s.innerHTML = `<div class="center"><div class="panel">
       <h2>🌐 Sala <span class="roomcode" title="Código da sala">${esc(sess.code)}</span></h2>
@@ -252,7 +252,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
   async function start(again) {
     if (!sess || sess.role !== 'host') return;
     const hum = humansOrdered(); const cfg = sess.cfg; const N = Math.max(cfg.n || 2, Math.min(4, hum.length));
-    const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N)); const per = Math.max(7, Math.min(cfg.per || 12, maxPer));
+    const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N)); const per = Math.max(7, Math.min(cfg.per || 14, maxPer));
     const seats = again && sess.lastSeats ? again : seatsFor(hum, N);
     const go = { seats, per, diff: cfg.diff || 'normal', sf: cfg.sf === 1 ? 1 : 2, seed: (Math.random() * 2 ** 32) >>> 0, ver: VER };
     sess.lastSeats = seats; sess.started = true; sess.link.presence({ go: 1 });
