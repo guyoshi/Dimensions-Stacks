@@ -22,21 +22,25 @@
     },
     confetti() {
       if (U.S.reduce) return;
-      for (let k = 0; k < 6; k++) setTimeout(() => this.burst(Math.random() * window.innerWidth, -10, { n: 40, speed: 4, up: -3, g: .09, life: 160, size: 5, sq: true, colors: ['#e9dfc0', '#6cb6ff', '#ff7ab0', '#86f5a4', '#c58cff'] }), k * 250);
+      for (let k = 0; k < 8; k++) setTimeout(() => this.burst(Math.random() * window.innerWidth, -10, { n: 75, speed: 4.2, up: -3, g: .075, life: 170, size: 1.5, colors: ['#e9dfc0', '#6cb6ff', '#ff7ab0', '#86f5a4', '#c58cff', '#ffd25f'] }), k * 220);
     },
     loop() {
       const x = this.x; x.clearRect(0, 0, this.cv.width, this.cv.height);
-      this.ps = this.ps.filter(p => p.life < p.max);
+      this.ps = this.ps.filter(p => p.life < p.max); if (this.ps.length > 900) this.ps.splice(0, this.ps.length - 900);
+      const B = {};   // desenho em lote: uma pincelada por cor e faixa de transparência (leve para celulares)
       for (const p of this.ps) {
         p.life++; p.x += p.vx; p.y += p.vy; p.vy += p.g; p.vx *= .985;
-        x.globalAlpha = Math.max(0, 1 - p.life / p.max); x.fillStyle = p.c;
-        if (p.sq) x.fillRect(p.x, p.y, p.s, p.s * 1.6); else { x.beginPath(); x.arc(p.x, p.y, p.s, 0, 6.3); x.fill(); }
+        const a = Math.max(0, 1 - p.life / p.max);
+        if (p.sq) { x.globalAlpha = a; x.fillStyle = p.c; x.fillRect(p.x, p.y, p.s, p.s * 1.6); continue; }
+        const k = p.c + '|' + Math.ceil(a * 4); (B[k] = B[k] || []).push(p);
       }
+      for (const k in B) { const L = B[k]; x.globalAlpha = Math.ceil(+k.split('|')[1]) / 4 * .95; x.fillStyle = k.split('|')[0]; x.beginPath(); for (const p of L) { x.moveTo(p.x + p.s, p.y); x.arc(p.x, p.y, p.s, 0, 6.3); } x.fill(); }
       x.globalAlpha = 1;
       if (this.ps.length) requestAnimationFrame(() => this.loop()); else this.on = false;
     },
   };
 
+  U.FX = FX;
   // ---------------------------------------------------------------- helpers visuais
   function banner(title, sub, color, ms) {
     try { U.layer().querySelectorAll('.banner').forEach(x => x.remove()); } catch (e) { }
@@ -313,7 +317,7 @@
   // reserva própria, só leitura (sem ordem: a compra pega as primeiras da pilha, que não se conhecem)
   function showReserve(ids) {
     SND.play('click');
-    const w = el(`<div><h2 style="color:var(--gold2)">Sua reserva</h2><p class="hint">${ids.length} carta(s), só para consultar. Quando seu baralho acabar você compra até 6 delas (as primeiras são sorteadas) e então reordena as que chegarem. Toque numa carta para ver os detalhes.</p><div class="cgrid"></div></div>`);
+    const w = el(`<div><h2 style="color:var(--gold2)">Sua reserva</h2><p class="hint">${ids.length} carta(s), só para consultar. Quando seu baralho acabar você compra cartas daqui (as primeiras são sorteadas) e então reordena as que chegarem. Toque numa carta para ver os detalhes.</p><div class="cgrid"></div></div>`);
     $('.cgrid', w).append(...ids.map(id => cardEl(id, { up: true, noanim: true, cw: 96, click: true })));
     U.modal(w);
   }
@@ -322,7 +326,7 @@
     const p = G.p(V.viewer); SND.play('click');
     const w = el(`<div><h2 style="color:var(--gold2)">Seu baralho</h2><p class="hint">Ordem de jogo (1ª = próxima a entrar). Reserva: ${p.reserve.length} carta(s).</p><div class="cgrid"></div>${p.prepared.length ? '<h3 style="margin:10px 0;color:var(--gold2)">Especiais preparados</h3><div class="cgrid" id="pp"></div>' : ''}</div>`);
     $('.cgrid', w).append(...p.deck.map((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 96, click: true }); const t = el(`<div class="tag" style="position:absolute;top:-8px;left:4px;z-index:3;background:#0b0c10;border:1px solid var(--line);border-radius:99px;padding:0 7px;font-size:11px;font-weight:900">${i + 1}</div>`); c.append(t); return c; }));
-    const pp = $('#pp', w); if (pp) pp.append(...p.prepared.map(id => cardEl(id, { up: true, noanim: true, cw: 96, click: true })));
+    const pp = $('#pp', w); if (pp) { pp.className = 'pplist'; p.prepared.forEach(id => { const c = CARDS[id], sp = c && E.SPECIALS[c.especial], row = el(`<div class="prow"><div class="pcard"></div><div class="ptx"><b>✦ ${esc(sp ? sp.nome : '')}</b><p>${esc(sp ? sp.texto : '')}</p></div></div>`); $('.pcard', row).append(cardEl(id, { up: true, noanim: true, cw: 96, click: true })); pp.append(row); }); }
     if (p.reserve.length) { const rb = el(`<div class="row" style="justify-content:center;margin-top:12px"><button class="btn sm" type="button">Ver minha reserva (${p.reserve.length})</button></div>`); $('button', rb).onclick = () => showReserve(p.reserve.slice()); w.append(rb); }
     U.modal(w);
   }

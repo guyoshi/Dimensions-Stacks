@@ -1164,3 +1164,13 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .gmrow.pop { animation: mpop .6s ease; border-color: #b394ff; box-shadow: 0 0 16px #b394ff77; } @keyframes mpop { 40% { transform: scale(1.04); } }
 .coach .me { font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 99px; background: var(--p0); color: #14161b; }
 .coach .tch:not(:has(svg)) b { font-weight: 800; }
+
+/* sem seleção de texto no jogo (exceto campos de texto e código da sala) */
+html, body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select: text; user-select: text; }
+.roomcode { user-select: all; -webkit-user-select: all; }
+/* especiais preparados: carta + o que o especial faz */
+.pplist { display: flex; flex-direction: column; gap: 12px; }
+.pplist .prow { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; padding: 8px; border-radius: 14px; background: #ffffff08; border: 1px solid #ffffff14; }
+.pplist .ptx b { display: block; color: var(--gold2); font-size: 14.5px; margin-bottom: 4px; } .pplist .ptx p { margin: 0; font-size: 13.5px; line-height: 1.45; color: #e2dccb; }
+.coach.spot .box { padding: 10px 12px; } .coach.spot .ch { margin-bottom: 6px; } .coach .leg2 { gap: 6px; } .coach .leg2 li { padding: 4px 8px; } .coach.spot .tipbar { margin-top: 6px; }
