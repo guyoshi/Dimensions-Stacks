@@ -7,7 +7,7 @@
 - Disputa igual à atual com os 4 jogando. Se o vencedor tem o parceiro na mesa, a carta do parceiro volta ao fim do baralho do dono (nunca é capturada nem vai ao Buraco Negro). Só as cartas dos adversários são capturadas/descartadas.
 - Um jogador sem cartas (baralho + reserva) é eliminado; o parceiro segue sozinho. A dupla vence quando os dois adversários caem.
 - Limite de 400 disputas: vence a dupla com mais cartas.
-- Especiais: alvos hostis, "cada adversário", "esquerda/direita" e cancelamentos nunca atingem o parceiro. Efeitos "todos os jogadores" (incluindo quem usa) continuam atingindo o parceiro.
+- Especiais: alvos hostis, "cada adversário", "esquerda/direita" e cancelamentos nunca atingem o parceiro. Efeitos "todos os jogadores" (incluindo quem usa) continuam atingindo o parceiro (confirmado pelo autor em 14/10/2026).
 - "Sem montar": opção `cfg.semMontar` (cartas entram na ordem sorteada, sem a etapa de montagem/reordenação, também na compra da reserva).
 
 ## Resultados (1.500 partidas por linha, bots difíceis, 10 cartas/jogador)
