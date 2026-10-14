@@ -148,6 +148,7 @@
     return new Promise((res, rej) => { const run = U.run; run.rej.add(rej); U.modal(content, Object.assign({}, o, { onclose: () => { run.rej.delete(rej); res(); } })); });
   }
   async function cover(p) {
+    fxHide(true);   // o aviso do especial não pode ficar na frente das telas de escolha
     if (!V || V.humans < 2) return;
     const n = el(`<div class="cover"><div><div class="avatar" style="--pc:${PCOL[p.pid]}">${esc(p.name[0].toUpperCase())}</div><h2>Vez de ${esc(p.name)}</h2><p class="hint">Passe o aparelho. Os outros jogadores não devem olhar.</p><button class="btn primary">Sou ${esc(p.name)} — continuar</button></div></div>`);
     U.layer().appendChild(n);
