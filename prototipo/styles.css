@@ -940,3 +940,9 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .zoombox .spbox { padding: 10px 12px; border-radius: 12px; background: #ffffff0d; border: 1px solid var(--line); line-height: 1.45; }
 .zoombox .spbox b { color: var(--gold2); }
 .zoombox .spbox span { color: var(--ink); font-size: 14px; }
+
+/* sorteio da iniciativa: o destaque percorre os jogadores, desacelera e pisca no escolhido */
+.seat.spot { box-shadow: 0 0 0 3px var(--pc), 0 0 28px var(--pc); transform: scale(1.1); z-index: 6; transition: transform .08s; }
+.seat.winspot { z-index: 6; animation: winspot .3s ease-in-out 5 alternate; box-shadow: 0 0 0 3px var(--gold2), 0 0 34px var(--gold2); transform: scale(1.14); }
+@keyframes winspot { from { filter: brightness(1); } to { filter: brightness(1.9); } }
+.order .no .ini, .order .hint .ini { color: var(--gold2); font-style: normal; font-weight: 900; }

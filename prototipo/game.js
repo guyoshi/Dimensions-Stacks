@@ -344,6 +344,23 @@
     async setup() {
       buildBoard(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
     },
+    async initiative({ initiator }) {
+      V.init = initiator; const n = V.n, seats = G.s.players.map(p => V.seats[p.pid]).filter(Boolean);
+      if (!seats.length) return;
+      const start = Math.floor(Math.random() * n), steps = n * 3 + ((initiator - start + n) % n);
+      banner('Quem começa?', 'Sorteando a iniciativa', null, 1300); await sleep(1100);
+      let cur = -1;
+      for (let i = 0; i <= steps; i++) {
+        const pid = (start + i) % n; if (cur >= 0 && V.seats[cur]) V.seats[cur].classList.remove('spot');
+        cur = pid; const s = V.seats[pid]; if (s) s.classList.add('spot');
+        SND.play('tick');
+        const t = i / steps; await sleep(Math.round(55 + 430 * t * t * t));
+      }
+      const s = V.seats[initiator]; if (s) { s.classList.remove('spot'); s.classList.add('winspot'); }
+      SND.play('legend'); await sleep(1500);
+      if (s) s.classList.remove('winspot');
+      banner(`${nameOf(initiator)} começa!`, 'Agora monte seu baralho', null, 1400); await sleep(1100);
+    },
     async ready() {
       V.init = G.s.initiator; refresh();
       for (let i = 0; i < 4; i++) { SND.play('deal'); await sleep(110); }
@@ -668,20 +685,23 @@
   }
 
   function orderHand(p, hand, o) {
-    const rf = !!(o && o.refill);
+    const rf = !!(o && o.refill), st = o && o.start != null ? o.start : null, N = G.s.players.length;
+    const ini = k => st != null && (st + k) % N === p.pid;
+    const lab = k => (k === 0 ? '1 · TOPO' : String(k + 1)) + (ini(k) ? ' <i class="ini">★</i>' : '');
+    const seq = st != null ? Array.from({ length: N }, (_, i) => G.s.players[(st + i) % N].name).join(' → ') : '';
     return (async () => {
       await cover(p);
       return new Promise((res, rej) => {
         const run = U.run; run.rej.add(rej);
         let arr = hand.slice(), sel = -1, last = 0;
         const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: ${rf ? 'reordene as cartas da reserva' : 'monte seu baralho'}</h2>
-          <div class="hint">${rf ? 'Seu baralho acabou: estas cartas vieram da reserva. ' : ''}<b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.</div></div>
+          <div class="hint">${rf ? 'Seu baralho acabou: estas cartas vieram da reserva. ' : ''}<b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.${st != null ? `<br>Iniciativa: <b>${esc(seq)}</b>. <i class="ini">★</i> = disputa em que você inicia (declara o atributo).` : ''}</div></div>
           <div class="grid"></div><div class="info"></div>
           <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);
         const W = window.innerWidth - 32;
         let cw = Math.floor((W - 6 * 10) / 7); if (cw < 70) cw = Math.floor((W - 3 * 10) / 4); cw = Math.max(64, Math.min(112, cw));
-        function renum() { $$('.oc', $('.grid', ov)).forEach((n, k) => { $('.no', n).textContent = k === 0 ? '1 · TOPO' : k + 1; }); }
+        function renum() { $$('.oc', $('.grid', ov)).forEach((n, k) => { $('.no', n).innerHTML = lab(k); }); }
         function dragStart(ev, w, i0) {
           if (ev.button > 0) return; ev.preventDefault();
           const grid = $('.grid', ov), sx = ev.clientX, sy = ev.clientY; let moving = false, ghost = null;
@@ -704,7 +724,7 @@
         }
         function draw() {
           const g = $('.grid', ov); g.replaceChildren(...arr.map((id, i) => {
-            const w = el(`<div class="oc${sel === i ? ' sel' : ''}"><div class="no">${i === 0 ? '1 · TOPO' : i + 1}</div></div>`);
+            const w = el(`<div class="oc${sel === i ? ' sel' : ''}"><div class="no">${lab(i)}</div></div>`);
             w.dataset.id = id; w.append(cardEl(id, { up: true, noanim: true, cw })); w.addEventListener('pointerdown', ev => dragStart(ev, w, i)); return w;
           }));
           const id = arr[last], c = CARDS[id], sp = E.SPECIALS[c.especial];

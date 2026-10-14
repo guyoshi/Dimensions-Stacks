@@ -96,7 +96,7 @@ O combate é coletivo: um único iniciador e todos os jogadores ainda ativos par
 
 ## 7. Meio de reserva
 
-- Quando o baralho ativo de alguém acabar, o jogador compra **mais 6 cartas da própria reserva** (decisão do autor em 13/10/2026; o manual anterior dizia 7). **Desde 14/10/2026 o jogador reordena as cartas recém-compradas** antes de elas entrarem no baralho (o bot também as ordena); a ordem da reserva continua aleatória no início da partida.
+- Quando o baralho ativo de alguém acabar, o jogador compra **mais 6 cartas da própria reserva** (decisão do autor em 13/10/2026; o manual anterior dizia 7). **Desde 14/10/2026 o jogador reordena as cartas recém-compradas** antes de elas entrarem no baralho (o bot também as ordena); a ordem da reserva continua aleatória no início da partida. **Iniciativa (14/10/2026):** a iniciativa é sorteada **antes** da montagem dos baralhos, com animação (o destaque percorre os jogadores, desacelera e pisca no sorteado); a tela de montagem mostra a ordem de iniciativa e marca com ★ as posições do baralho em que o jogador inicia.
 - Habilidades especiais específicos podem permitir retirar cartas da própria reserva ou da de um adversário.
 - **PENDENTE:** quando restarem menos de 6 na reserva; reposição durante uma disputa; se o jogador fica temporariamente sem carta de combate; quando se declara eliminação na presença de cartas especiais preparadas.
 

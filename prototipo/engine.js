@@ -233,14 +233,15 @@
       const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
       for (let i = 0; i < n; i++) this.p(i).reserve = rest.slice(i * rs, (i + 1) * rs);
       await this.emit('setup', {});
+      this.s.initiator = Math.floor(this.rand() * n);   // sorteada antes da montagem: o jogador planeja a ordem sabendo quem inicia
+      this.log(`${this.p(this.s.initiator).name} sorteia a iniciativa.`);
+      await this.emit('initiative', { initiator: this.s.initiator });
       for (let i = 0; i < n; i++) {
         const p = this.p(i); let ord;
-        if (p.bot) ord = this.botOrderHand(hands[i], p); else ord = await this.io.orderHand(p, hands[i].slice());
+        if (p.bot) ord = this.botOrderHand(hands[i], p); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator });
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
       }
-      this.s.initiator = Math.floor(this.rand() * n);
-      this.log(`${this.p(this.s.initiator).name} sorteia a iniciativa.`);
       this.memInit();
       await this.emit('ready', {});
     }
