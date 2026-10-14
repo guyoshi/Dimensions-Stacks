@@ -7,6 +7,7 @@ const fs = require('fs');
 const [serie, rank, out] = process.argv.slice(2);
 const R = JSON.parse(fs.readFileSync(rank, 'utf8')).orders;
 const AT = ['pod', 'def', 'int', 'vel'];
+const AJ = JSON.parse(fs.readFileSync(require('path').join(__dirname, '..', '..', 'dados', 'ajustes_autor_calculo.json'), 'utf8'));
 const all = D.CARTAS;
 const q = (arr, p) => { const s = arr.slice().sort((a, b) => a - b); const x = p * (s.length - 1), i = Math.floor(x), f = x - i; return s[i] + (s[Math.min(i + 1, s.length - 1)] - s[i]) * f; };
 // escala de referência congelada (as 98 cartas de 14/10/2026 antes de aplicar qualquer série): mantém todas as séries na mesma régua
@@ -33,7 +34,7 @@ const res = ids.map(id => {
   const c = all.find(x => x.id === id), s = c.stats, bruto = AT.map(a => Math.round(val[id][a]));
   const cur = AT.map(a => s[a]);
   const par1 = bruto[0] + bruto[1], par2 = bruto[2] + bruto[3];
-  const forte = par1 >= par2 ? 'FOR/RES' : 'INT/VEL', fraco = par1 >= par2 ? [2, 3] : [0, 1];
+  const forteSel = AJ.par_forte[id] || (par1 >= par2 ? 'FOR/RES' : 'INT/VEL'), forte = forteSel, fraco = forteSel === 'FOR/RES' ? [2, 3] : [0, 1];
   const fracoMax = Math.max(bruto[fraco[0]], bruto[fraco[1]]);
   const conflito = !c.uniao && fracoMax > 70;
   // regra do par forte (autor, 14/10/2026: aplicar sempre): par fraco no máximo 70, valores acima de 60 comprimidos proporcionalmente
@@ -42,7 +43,7 @@ const res = ids.map(id => {
   return { id, nome: c.nome, uniao: c.uniao, atual: cur, prop: v, bruto: conflito ? bruto : null, soma, pico: Math.max(...v), poder: D.poder(v), rar: ((p) => p >= 1810 ? 'lendaria' : p >= 1710 ? 'epica' : p >= 1560 ? 'rara' : 'comum')(D.poder(v)), rarAtual: c.raridade, forte, fracoMax, conflito, ranks: AT.concat('geral').map(a => R[a].indexOf(id) + 1) };
 });
 // raridade proposta por posição de poder na série (proporção 11% / 21% / 33% / resto)
-{ const o = res.slice().sort((a, b) => b.poder - a.poder), cut = [Math.round(n * .11), Math.round(n * .32), Math.round(n * .65)]; o.forEach((r, i) => r.rarP = i < cut[0] ? 'lendaria' : i < cut[1] ? 'epica' : i < cut[2] ? 'rara' : 'comum'); }
+{ const o = res.slice().sort((a, b) => b.poder - a.poder), cut = [Math.round(n * .11), Math.round(n * .32), Math.round(n * .65)]; const fx = o.filter(r => AJ.raridade_fixa[r.id]); fx.forEach(r => r.rarP = AJ.raridade_fixa[r.id]); const k = fx.length; o.filter(r => !AJ.raridade_fixa[r.id]).forEach((r, i) => r.rarP = i < cut[0] - k ? 'lendaria' : i < cut[1] - k ? 'epica' : i < cut[2] - k ? 'rara' : 'comum'); }
 if (out) fs.writeFileSync(out, JSON.stringify(res));
 console.error('ajustes de ordem:', JSON.stringify(inv));
 res.sort((a, b) => b.poder - a.poder).forEach(r => console.log(r.id, r.nome.padEnd(16), 'atual', r.atual.join('/').padEnd(13), 'prop', r.prop.join('/').padEnd(13), 'soma', r.soma, 'pico', r.pico, 'poder', r.poder, r.rarAtual, '->', r.rar, 'P:' + r.rarP, r.forte, r.conflito ? 'CONFLITO(' + r.fracoMax + ')' : '', r.uniao ? 'UNIAO' : ''));

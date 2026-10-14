@@ -204,3 +204,9 @@ Resultado: 0 falhas, conservação de cartas e duplicatas OK, nenhuma partida ch
 **Perfil (soma):** cortes usados nas cartas novas e recalculadas: Azar < 150 · Frágil < 192 · Modesta < 237 · Padrão < 285 · Forte < 318 · Elite ≥ 318.
 
 **Édelin Lys:** B02 Tack, B03 Jork, B04 Peredun, B05 Primus (status PROPOSTA, faixa PRÉVIA). Atributos provisórios 46/50/58/62, 55/60/72/78, 40/46/82/70, 78/82/54/48; especiais provisórios AE-074, AE-092, AE-116 e AE-097 (saíram da reserva; reserva = 36). Descrições sem os desfechos de Tack e Jork. **Sem foto ainda** (não há arquivo dessas personagens na pasta de Édelin Lys).
+
+## Viajantes Dimensionais recalculado (14/10/2026, autorizado pelo autor)
+
+Atributos das 25 cartas recalculados pelos rankings do autor (mesmo método e mesma escala de referência congelada, `dados/escala_referencia_2026-10-14.json`), com a regra do par forte. Decisões do autor (`dados/ajustes_autor_calculo.json`): Velho-Sábio com par forte INT/VEL (70/70/95/44); Korvo continua forte em FOR/RES (89/78/70/65); **Korvo e Velho-Sábio são Lendárias (4 losangos)**, fixados e contados na cota da série. Viajantes passa a ter raridade por posição de poder (3 Lendárias, 5 Épicas, 8 Raras, 9 Comuns). Especiais de Viajantes ainda não revisados. Ferramentas: `prototipo/tools/calc_atributos.js` e `prototipo/tools/aplicar_atributos.py`.
+
+Propostas ainda não aplicadas (aguardam decisão do autor): Mistério Oculto (12 cartas) e Édelin Lys (5 cartas), em `dados/proposta_atributos_*`.

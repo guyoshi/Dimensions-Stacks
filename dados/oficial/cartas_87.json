@@ -38,7 +38,8 @@
     "revisao_13_10_2026_atributos_renomeados": "Autorizado pelo autor em 13/10/2026: atributos Ataque e Defesa passam a se chamar Força (FOR) e Resistência (RES), para não confundir com o tipo de vitória (ataque/defesa). As regras e os números não mudam; as chaves ATQ/DEF dos dados viraram FOR/RES. Os especiais de tipo (Ataque obrigatório, Defesa obrigatória, Forçar/Proibir ataque ou defesa, Ataque que bane, Defesa que captura, Ataque em dupla) mantêm o nome.",
     "revisao_13_10_2026_par_forte": "Regra de par forte (13/10/2026): cartas fora de A União não podem ser fortes nos dois pares (FOR/RES e INT/VEL). 8 cartas com o par mais fraco comprimido para no máximo 70 (valores acima de 60 comprimidos proporcionalmente). Integrantes de A União preservados. Segunda leva (autorizada pelo autor em 14/10/2026): Capitã Nastácia, Jelles, Vivian, Alekta, Jennifer de Morais e os integrantes de A União Jasmey, Releuz e Édelin Lys.",
     "revisao_14_10_2026_jesed": "Atributos das 23 cartas de Ciclo de Jesed recalculados a partir dos rankings do autor (app de classificação), com a regra do par forte aplicada sempre (par fraco no máximo 70; A União isenta). Autorizado pelo autor em 14/10/2026. Método e dados: prototipo/tools/calc_atributos.js, dados/ranking_jesed_2026-10-14.json, dados/proposta_atributos_jesed_2026-10-14.json. Especiais de Jesed ainda não revisados.",
-    "revisao_14_10_2026_belfex": "B02 Tack, B03 Jork, B04 Peredun e B05 Primus adicionadas a pedido do autor (status PROPOSTA_AGUARDANDO_APROVACAO)."
+    "revisao_14_10_2026_belfex": "B02 Tack, B03 Jork, B04 Peredun e B05 Primus adicionadas a pedido do autor (status PROPOSTA_AGUARDANDO_APROVACAO).",
+    "revisao_14_10_2026_viajantes": "Atributos das 25 cartas de Viajantes Dimensionais recalculados a partir dos rankings do autor, com a regra do par forte (Velho-Sábio com par forte INT/VEL por decisão do autor; Korvo mantido forte em FOR/RES). Korvo e Velho-Sábio fixados como Lendárias (4 losangos). Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados."
   },
   "cartas": [
     {
@@ -602,12 +603,12 @@
       },
       "descricao_curta": "Irmão mais velho dos Lins, controla a própria densidade e assume riscos para proteger os irmãos.",
       "atributos": {
-        "FOR": 85,
+        "FOR": 77,
         "RES": 90,
-        "INT": 58,
-        "VEL": 52
+        "INT": 70,
+        "VEL": 65
       },
-      "soma_atributos": 285,
+      "soma_atributos": 302,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-001",
       "uniao": "NAO",
@@ -626,13 +627,13 @@
       },
       "descricao_curta": "Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha.",
       "atributos": {
-        "FOR": 94,
-        "RES": 70,
-        "INT": 74,
-        "VEL": 78
+        "FOR": 79,
+        "RES": 81,
+        "INT": 73,
+        "VEL": 89
       },
-      "soma_atributos": 316,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 322,
+      "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-021",
       "uniao": "INTEGRANTE",
       "base_narrativa": {
@@ -650,13 +651,13 @@
       },
       "descricao_curta": "Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir.",
       "atributos": {
-        "FOR": 80,
-        "RES": 38,
-        "INT": 73,
-        "VEL": 64
+        "FOR": 70,
+        "RES": 65,
+        "INT": 86,
+        "VEL": 86
       },
-      "soma_atributos": 255,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 307,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-011",
       "uniao": "NAO",
       "base_narrativa": {
@@ -674,13 +675,13 @@
       },
       "descricao_curta": "A mais nova dos Lins, manifesta fogo e caos em um poder difícil de controlar.",
       "atributos": {
-        "FOR": 93,
-        "RES": 31,
-        "INT": 48,
-        "VEL": 55
+        "FOR": 91,
+        "RES": 86,
+        "INT": 70,
+        "VEL": 67
       },
-      "soma_atributos": 227,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 314,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-127",
       "uniao": "NAO",
       "base_narrativa": {
@@ -698,12 +699,12 @@
       },
       "descricao_curta": "Mentor dos irmãos em Belfex, guarda conhecimento antigo sobre Korvo e a Sociedade de Tayo.",
       "atributos": {
-        "FOR": 61,
+        "FOR": 70,
         "RES": 70,
         "INT": 95,
-        "VEL": 39
+        "VEL": 44
       },
-      "soma_atributos": 265,
+      "soma_atributos": 279,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-008",
       "uniao": "NAO",
@@ -722,12 +723,12 @@
       },
       "descricao_curta": "Édion da Vigilância, enfrenta Korvo com disciplina e desconfiança mesmo contra a própria instituição.",
       "atributos": {
-        "FOR": 78,
-        "RES": 79,
-        "INT": 83,
-        "VEL": 73
+        "FOR": 70,
+        "RES": 69,
+        "INT": 88,
+        "VEL": 72
       },
-      "soma_atributos": 313,
+      "soma_atributos": 299,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-130",
       "uniao": "NAO",
@@ -746,12 +747,12 @@
       },
       "descricao_curta": "Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada.",
       "atributos": {
-        "FOR": 35,
-        "RES": 65,
-        "INT": 86,
-        "VEL": 42
+        "FOR": 29,
+        "RES": 36,
+        "INT": 70,
+        "VEL": 69
       },
-      "soma_atributos": 228,
+      "soma_atributos": 204,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-140",
       "uniao": "NAO",
@@ -770,12 +771,12 @@
       },
       "descricao_curta": "Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes.",
       "atributos": {
-        "FOR": 69,
-        "RES": 79,
-        "INT": 72,
-        "VEL": 59
+        "FOR": 72,
+        "RES": 80,
+        "INT": 70,
+        "VEL": 47
       },
-      "soma_atributos": 279,
+      "soma_atributos": 269,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-044",
       "uniao": "NAO",
@@ -794,12 +795,12 @@
       },
       "descricao_curta": "Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex.",
       "atributos": {
-        "FOR": 76,
-        "RES": 48,
-        "INT": 62,
-        "VEL": 91
+        "FOR": 64,
+        "RES": 54,
+        "INT": 87,
+        "VEL": 73
       },
-      "soma_atributos": 277,
+      "soma_atributos": 278,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-139",
       "uniao": "NAO",
@@ -818,12 +819,12 @@
       },
       "descricao_curta": "Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites.",
       "atributos": {
-        "FOR": 70,
-        "RES": 65,
-        "INT": 94,
-        "VEL": 72
+        "FOR": 89,
+        "RES": 78,
+        "INT": 70,
+        "VEL": 65
       },
-      "soma_atributos": 301,
+      "soma_atributos": 302,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-087",
       "uniao": "NAO",
@@ -842,13 +843,13 @@
       },
       "descricao_curta": "Ligado à Vigilância, serve secretamente aos interesses do mago Korvo.",
       "atributos": {
-        "FOR": 51,
-        "RES": 47,
+        "FOR": 61,
+        "RES": 67,
         "INT": 60,
-        "VEL": 70
+        "VEL": 62
       },
-      "soma_atributos": 228,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 250,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-003",
       "uniao": "NAO",
       "base_narrativa": {
@@ -866,13 +867,13 @@
       },
       "descricao_curta": "Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos.",
       "atributos": {
-        "FOR": 85,
-        "RES": 58,
-        "INT": 80,
-        "VEL": 70
+        "FOR": 70,
+        "RES": 45,
+        "INT": 69,
+        "VEL": 66
       },
-      "soma_atributos": 293,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 250,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-114",
       "uniao": "NAO",
       "base_narrativa": {
@@ -890,13 +891,13 @@
       },
       "descricao_curta": "Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo.",
       "atributos": {
-        "FOR": 83,
-        "RES": 68,
-        "INT": 59,
-        "VEL": 76
+        "FOR": 74,
+        "RES": 71,
+        "INT": 50,
+        "VEL": 60
       },
-      "soma_atributos": 286,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 255,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-046",
       "uniao": "NAO",
       "base_narrativa": {
@@ -914,12 +915,12 @@
       },
       "descricao_curta": "Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás.",
       "atributos": {
-        "FOR": 11,
-        "RES": 39,
-        "INT": 38,
-        "VEL": 20
+        "FOR": 7,
+        "RES": 30,
+        "INT": 79,
+        "VEL": 30
       },
-      "soma_atributos": 108,
+      "soma_atributos": 146,
       "perfil_balanceamento": "Azar",
       "habilidade_especial_id": "AE-063",
       "uniao": "NAO",
@@ -938,13 +939,13 @@
       },
       "descricao_curta": "Aprendiz em Tayo, destaca-se pela confiança e pela atitude provocadora diante dos colegas.",
       "atributos": {
-        "FOR": 66,
-        "RES": 76,
-        "INT": 86,
-        "VEL": 92
+        "FOR": 78,
+        "RES": 72,
+        "INT": 84,
+        "VEL": 68
       },
-      "soma_atributos": 320,
-      "perfil_balanceamento": "Elite",
+      "soma_atributos": 302,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-073",
       "uniao": "INTEGRANTE",
       "base_narrativa": {
@@ -962,13 +963,13 @@
       },
       "descricao_curta": "Jovem Aracna curiosa e falante, guia os irmãos Lins pelos túneis subterrâneos de Belfex.",
       "atributos": {
-        "FOR": 36,
-        "RES": 40,
-        "INT": 75,
-        "VEL": 89
+        "FOR": 15,
+        "RES": 29,
+        "INT": 28,
+        "VEL": 65
       },
-      "soma_atributos": 240,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 137,
+      "perfil_balanceamento": "Azar",
       "habilidade_especial_id": "AE-100",
       "uniao": "NAO",
       "base_narrativa": {
@@ -986,13 +987,13 @@
       },
       "descricao_curta": "Rainha das Aracnas, combina imponência e astúcia ao testar a coragem de Banjo na grande caverna.",
       "atributos": {
-        "FOR": 67,
-        "RES": 70,
-        "INT": 95,
-        "VEL": 43
+        "FOR": 54,
+        "RES": 52,
+        "INT": 78,
+        "VEL": 39
       },
-      "soma_atributos": 275,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 223,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-108",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1010,13 +1011,13 @@
       },
       "descricao_curta": "Líder dos Obbs de Pinesoto, ergue raízes e troncos vivos para proteger seu povo dos invasores.",
       "atributos": {
-        "FOR": 80,
-        "RES": 95,
-        "INT": 70,
-        "VEL": 34
+        "FOR": 24,
+        "RES": 59,
+        "INT": 63,
+        "VEL": 17
       },
-      "soma_atributos": 279,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 163,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-007",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1034,13 +1035,13 @@
       },
       "descricao_curta": "Líder de guerra dos Obbs, supera a desconfiança inicial e ajuda os irmãos durante o ataque a Pinesoto.",
       "atributos": {
-        "FOR": 79,
-        "RES": 85,
-        "INT": 66,
-        "VEL": 82
+        "FOR": 53,
+        "RES": 43,
+        "INT": 57,
+        "VEL": 27
       },
-      "soma_atributos": 312,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 180,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-142",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2157,11 +2158,11 @@
       "atributos": {
         "FOR": 70,
         "RES": 68,
-        "INT": 95,
-        "VEL": 78
+        "INT": 70,
+        "VEL": 47
       },
-      "soma_atributos": 311,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 255,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-005",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2180,12 +2181,12 @@
       },
       "descricao_curta": "Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo.",
       "atributos": {
-        "FOR": 48,
-        "RES": 60,
-        "INT": 70,
-        "VEL": 75
+        "FOR": 57,
+        "RES": 44,
+        "INT": 67,
+        "VEL": 70
       },
-      "soma_atributos": 253,
+      "soma_atributos": 238,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-141",
       "uniao": "NAO",
@@ -2205,13 +2206,13 @@
       },
       "descricao_curta": "Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo.",
       "atributos": {
-        "FOR": 60,
-        "RES": 72,
-        "INT": 64,
+        "FOR": 39,
+        "RES": 63,
+        "INT": 58,
         "VEL": 53
       },
-      "soma_atributos": 249,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 213,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-050",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2230,13 +2231,13 @@
       },
       "descricao_curta": "Gêmeo de Nicolas e aprendiz de McCroys; competitivo e provocador, lança chamas, mas recusa Korvo.",
       "atributos": {
-        "FOR": 76,
-        "RES": 28,
-        "INT": 40,
-        "VEL": 59
+        "FOR": 37,
+        "RES": 41,
+        "INT": 69,
+        "VEL": 42
       },
-      "soma_atributos": 203,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 189,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-043",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2255,13 +2256,13 @@
       },
       "descricao_curta": "Aprendiz tímida e gentil vinda da 3ª dimensão; ergue barreiras de vento. Melhor amiga de Eshley, deixa o treino cedo.",
       "atributos": {
-        "FOR": 38,
-        "RES": 82,
-        "INT": 66,
-        "VEL": 69
+        "FOR": 17,
+        "RES": 46,
+        "INT": 74,
+        "VEL": 54
       },
-      "soma_atributos": 255,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 191,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-138",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2280,13 +2281,13 @@
       },
       "descricao_curta": "Dimensal órfã criada pela avó, sonhava treinar com Tayo; veloz e curiosa, faz passes certeiros no Fulgor Dourado.",
       "atributos": {
-        "FOR": 45,
-        "RES": 62,
-        "INT": 75,
-        "VEL": 88
+        "FOR": 42,
+        "RES": 66,
+        "INT": 65,
+        "VEL": 51
       },
-      "soma_atributos": 270,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 224,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-051",
       "uniao": "NAO",
       "base_narrativa": {

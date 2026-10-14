@@ -203,12 +203,16 @@
 
   // Raridade por posição de poder dentro da série (autor, 14/10/2026): 11% Lendária, 21% Épica, 33% Rara, resto Comum.
   // Vale para as séries já ranqueadas pelo autor; as demais seguem os cortes fixos acima até serem ranqueadas.
-  const SERIES_POR_POSICAO = ['jesed'];
+  const SERIES_POR_POSICAO = ['jesed', 'viajantes'];
+  // Raridade fixada pelo autor (14/10/2026): Korvo e Velho-Sábio são Lendárias; ocupam vagas da cota da série.
+  const RARIDADE_FIXA = { V10: 'lendaria', V05: 'lendaria' };
   function raridadePorPosicao(cartas) {
     SERIES_POR_POSICAO.forEach(function (sid) {
       const L = cartas.filter(c => c.serie === sid).sort((a, b) => poder([b.stats.pod, b.stats.def, b.stats.int, b.stats.vel]) - poder([a.stats.pod, a.stats.def, a.stats.int, a.stats.vel]) || a.id.localeCompare(b.id));
       const n = L.length, cut = [Math.round(n * 0.11), Math.round(n * 0.32), Math.round(n * 0.65)];
-      L.forEach((c, i) => { c.raridade = i < cut[0] ? 'lendaria' : i < cut[1] ? 'epica' : i < cut[2] ? 'rara' : 'comum'; });
+      const fx = L.filter(c => RARIDADE_FIXA[c.id]), k = fx.length;
+      fx.forEach(c => { c.raridade = RARIDADE_FIXA[c.id]; });
+      L.filter(c => !RARIDADE_FIXA[c.id]).forEach((c, i) => { c.raridade = i < cut[0] - k ? 'lendaria' : i < cut[1] - k ? 'epica' : i < cut[2] - k ? 'rara' : 'comum'; });
     });
     return cartas;
   }
