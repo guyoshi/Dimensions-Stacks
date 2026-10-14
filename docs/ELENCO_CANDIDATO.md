@@ -24,19 +24,19 @@ Fontes: fichas canônicas **02 - Personagens.md** de *Ruínas dos Céus*, *Guerr
 | J05 | Maletar | Ruínas dos Céus | Construtor e referência protetora |
 | J06 | Platisa | Ruínas dos Céus | Ecoante e conhecedora de plantas |
 | J07 | Mariv | Ruínas dos Céus | Sobrevivente, precursor de linhagem futura |
-| J08 | Kaelina | Guerras de Sangue | Soberana diplomática e estrategista |
-| J09 | Alyra | Guerras de Sangue | Soberana impulsiva e belicosa |
+| J08 | Kaelina Polar | Guerras de Sangue | Soberana diplomática e estrategista |
+| J09 | Alyra Polar | Guerras de Sangue | Soberana impulsiva e belicosa |
 | J10 | Daryon Polar | Guerras de Sangue | Conselheiro manipulador |
 | J11 | Cal Edran | Guerras de Sangue | Protetor das soberanas |
 | J12 | Rendar | Guerras de Sangue | Guerreiro ligado aos conflitos e ao clímax |
 | J13 | Nynestra | Guerras de Sangue | Personagem documentada no elenco canônico do livro 2 |
 | J14 | Cal Kadrir | Guerras de Sangue | Calandrir e Primeiro Kae |
-| J15 | Dareth Quatro-Dedos | Dinastia Polar | Personagem central da linha política |
-| J16 | Elis | Dinastia Polar | Núcleo principal, integrante da linha familiar |
-| J17 | Selina | Dinastia Polar | Núcleo principal |
+| J15 | Dareth Polar | Dinastia Polar | Personagem central da linha política |
+| J16 | Elis Nular | Dinastia Polar | Núcleo principal, integrante da linha familiar |
+| J17 | Selina Polar | Dinastia Polar | Núcleo principal |
 
 | J18 | Vetarius Polar | Dinastia Polar | Conspiração e poder Polar |
-| J19 | Kerath Polar | Dinastia Polar | Núcleo de Kaendar |
+| J19 | Cal Kerath | Dinastia Polar | Núcleo de Kaendar |
 | J20 | Jelatira | Herdeiros das Cinzas | Núcleo familiar inicial do livro 4 |
 | J21 | Nefestra | Herdeiros das Cinzas | Eixo temático do passado e da memória |
 | J22 | Sefter | Herdeiros das Cinzas | Núcleo familiar; eixo temático do futuro e da reconstrução |
