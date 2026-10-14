@@ -1308,3 +1308,6 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 .lb-ghost { position: fixed; left: 0; top: 0; z-index: 90; width: 96px; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 4px; filter: drop-shadow(0 10px 18px #000a); }
 .lb-ghost .lb-av { transform: scale(1.1); }
 .lbs.dragging { cursor: grabbing; }
+/* o efeito global de aperto (.pressing) usa transform e deslocava os assentos, que se posicionam com translate(-50%, -50%) */
+.lb-sit.pressing { transform: translate(-50%, -50%) !important; filter: none; transition: none; }
+.lb-sit.pressing .lb-av { transform: none; }
