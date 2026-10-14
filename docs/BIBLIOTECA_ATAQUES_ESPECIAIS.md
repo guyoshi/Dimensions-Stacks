@@ -252,7 +252,7 @@ Criadas a pedido do autor: as primeiras que **reduzem atributos do rival** (AE-1
 - **Antigo #52 excluído:** o ID **AE-104 foi aposentado**, não recebe carta atribuída. **AE-129** é uma **proposta nova e rara**, com vitória automática que respeita a natureza ataque/defesa do atributo declarado, não o antigo efeito de captura incondicional. **AE-103** afeta só as cartas normais de combate, jamais a área de especiais preparadas.
 - **Efeitos de recuperar especial usada (AE-116):** a carta recuperada não pode ser reativada naquela disputa; entra ao fim do baralho ativo do novo dono. Isso reduz ciclos e precisa ser ratificado.
 - **Efeitos com 2/3/4 jogadores:** em duelo, direita e esquerda apontam ao mesmo oponente. AE-063/064/065 podem ser gastas mesmo sem vantagem; não serão convertidas obrigatoriamente em novas habilidades. AE-036 exige dois adversários distintos para seu efeito completo.
-- **Atribuição aprovada:** **98 habilidades distintas** estão equipadas nas **98 cartas oficiais** (uma habilidade diferente por carta, desde 13/10/2026); **40 seguem sem carta atribuída**, preservadas para futuras expansões. Duplicações de uma mesma habilidade em personagens diferentes são permitidas. Consulte [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md), cujo conteúdo passou ao estado **APROVADO**, e [o JSON oficial](../dados/oficial/habilidades_129.json).
+- **Atribuição aprovada:** **102 habilidades distintas** estão equipadas nas **102 cartas oficiais** (uma habilidade diferente por carta, desde 13/10/2026); **40 seguem sem carta atribuída**, preservadas para futuras expansões. Duplicações de uma mesma habilidade em personagens diferentes são permitidas. Consulte [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md), cujo conteúdo passou ao estado **APROVADO**, e [o JSON oficial](../dados/oficial/habilidades_129.json).
 
 ## Documentos associados
 
@@ -263,6 +263,6 @@ Criadas a pedido do autor: as primeiras que **reduzem atributos do rival** (AE-1
 
 ## Aprovação e controle de mudanças
 
-**Autor aprovou todos os dados existentes em 12/10/2026.** As 98 habilidades utilizadas no baralho são parte integrante das fichas oficiais, cada uma associada às cartas indicadas na coluna final. As outras 31 habilidades estão aprovadas como repertório de expansão, **não equipadas**. Textos historicamente contraditórios ou casos-limite que ainda não têm procedimento especificado continuam indicados como necessidade de teste/definição: aprovar um texto de habilidade **não resolve sozinho sua implementação operacional**.
+**Autor aprovou todos os dados existentes em 12/10/2026.** As 102 habilidades utilizadas no baralho são parte integrante das fichas oficiais, cada uma associada às cartas indicadas na coluna final. As outras 31 habilidades estão aprovadas como repertório de expansão, **não equipadas**. Textos historicamente contraditórios ou casos-limite que ainda não têm procedimento especificado continuam indicados como necessidade de teste/definição: aprovar um texto de habilidade **não resolve sozinho sua implementação operacional**.
 
 **Fontes de dados de produção:** [87 cartas](../dados/oficial/cartas_87.json) e [129 habilidades](../dados/oficial/habilidades_129.json). Não utilizar `dados/propostas` como estado atual.

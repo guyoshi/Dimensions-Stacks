@@ -28,14 +28,16 @@ AT.forEach(a => {
   let prev = 1e9; R[a].forEach(id => { let v = Math.min(CAP, Math.max(FLOOR, val[id][a])); if (v >= prev) v = prev - 1; val[id][a] = v; prev = v; });
 });
 const res = ids.map(id => {
-  const c = all.find(x => x.id === id), s = c.stats, v = AT.map(a => Math.round(val[id][a]));
-  const cur = AT.map(a => s[a]); const soma = v.reduce((x, y) => x + y, 0);
-  const par1 = v[0] + v[1], par2 = v[2] + v[3];
+  const c = all.find(x => x.id === id), s = c.stats, bruto = AT.map(a => Math.round(val[id][a]));
+  const cur = AT.map(a => s[a]);
+  const par1 = bruto[0] + bruto[1], par2 = bruto[2] + bruto[3];
   const forte = par1 >= par2 ? 'FOR/RES' : 'INT/VEL', fraco = par1 >= par2 ? [2, 3] : [0, 1];
-  const fracoMax = Math.max(v[fraco[0]], v[fraco[1]]);
+  const fracoMax = Math.max(bruto[fraco[0]], bruto[fraco[1]]);
   const conflito = !c.uniao && fracoMax > 70;
-  let alt = null; if (conflito) { const mx = fracoMax; alt = v.slice(); fraco.forEach(i => { if (v[i] > 60) alt[i] = Math.round(60 + (v[i] - 60) * 10 / (mx - 60)); }); }
-  return { id, nome: c.nome, uniao: c.uniao, atual: cur, prop: v, soma, pico: Math.max(...v), poder: D.poder(v), rar: ((p) => p >= 1810 ? 'lendaria' : p >= 1710 ? 'epica' : p >= 1560 ? 'rara' : 'comum')(D.poder(v)), rarAtual: c.raridade, forte, fracoMax, conflito, alt, ranks: AT.concat('geral').map(a => R[a].indexOf(id) + 1) };
+  // regra do par forte (autor, 14/10/2026: aplicar sempre): par fraco no máximo 70, valores acima de 60 comprimidos proporcionalmente
+  const v = bruto.slice(); if (conflito) fraco.forEach(i => { if (v[i] > 60) v[i] = Math.round(60 + (v[i] - 60) * 10 / (fracoMax - 60)); });
+  const soma = v.reduce((x, y) => x + y, 0);
+  return { id, nome: c.nome, uniao: c.uniao, atual: cur, prop: v, bruto: conflito ? bruto : null, soma, pico: Math.max(...v), poder: D.poder(v), rar: ((p) => p >= 1810 ? 'lendaria' : p >= 1710 ? 'epica' : p >= 1560 ? 'rara' : 'comum')(D.poder(v)), rarAtual: c.raridade, forte, fracoMax, conflito, ranks: AT.concat('geral').map(a => R[a].indexOf(id) + 1) };
 });
 // raridade proposta por posição de poder na série (proporção 11% / 21% / 33% / resto)
 { const o = res.slice().sort((a, b) => b.poder - a.poder), cut = [Math.round(n * .11), Math.round(n * .32), Math.round(n * .65)]; o.forEach((r, i) => r.rarP = i < cut[0] ? 'lendaria' : i < cut[1] ? 'epica' : i < cut[2] ? 'rara' : 'comum'); }

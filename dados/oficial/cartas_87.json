@@ -5,14 +5,14 @@
     "status": "APROVADO_PELO_AUTOR",
     "data_aprovacao": "2026-10-12",
     "idioma": "pt-BR",
-    "total_cartas": 98,
+    "total_cartas": 102,
     "origens": {
       "J": 23,
       "V": 25,
       "S": 18,
       "D": 19,
       "M": 12,
-      "B": 1
+      "B": 5
     },
     "atributos": [
       "FOR",
@@ -36,7 +36,9 @@
     "revisao_13_10_2026_balanceamento": "Autorizado pelo autor em 13/10/2026 (ver docs/BALANCEAMENTO_GERAL_2026-10-13.md): (A) troca de habilidades entre 6 pares de cartas (Hyde/Vek, Agente Sete/Erla, Mark Polar/Alyra, Vivian/Kord, X/Luna Stellar, Lias Hardman/Diana); (B) teto de 95 por atributo; (C) raridade visual (losangos) pelo poder = soma + 16 x maior atributo. Atributos e perfis recalculados onde o teto alterou a soma.",
     "revisao_13_10_2026_especiais_repetidos": "Autorizado pelo autor em 13/10/2026: nenhum especial se repete entre cartas. 20 cartas que repetiam especial receberam especiais antes sem carta, casando a força da carta com o valor do especial (simulação). J10 AE-096→AE-060; S03 AE-069→AE-016; J05 AE-076→AE-124; S18 AE-116→AE-123; J12 AE-105→AE-052; V23 AE-106→AE-009; J21 AE-093→AE-038; D17 AE-093→AE-058; S17 AE-093→AE-056; V03 AE-080→AE-011; V04 AE-067→AE-127; V08 AE-004→AE-088; M04 AE-100→AE-015; V18 AE-103→AE-007; S16 AE-085→AE-070; D07 AE-051→AE-029; D10 AE-092→AE-027; M11 AE-039→AE-042; V22 AE-028→AE-057; V20 AE-111→AE-005",
     "revisao_13_10_2026_atributos_renomeados": "Autorizado pelo autor em 13/10/2026: atributos Ataque e Defesa passam a se chamar Força (FOR) e Resistência (RES), para não confundir com o tipo de vitória (ataque/defesa). As regras e os números não mudam; as chaves ATQ/DEF dos dados viraram FOR/RES. Os especiais de tipo (Ataque obrigatório, Defesa obrigatória, Forçar/Proibir ataque ou defesa, Ataque que bane, Defesa que captura, Ataque em dupla) mantêm o nome.",
-    "revisao_13_10_2026_par_forte": "Regra de par forte (13/10/2026): cartas fora de A União não podem ser fortes nos dois pares (FOR/RES e INT/VEL). 8 cartas com o par mais fraco comprimido para no máximo 70 (valores acima de 60 comprimidos proporcionalmente). Integrantes de A União preservados. Segunda leva (autorizada pelo autor em 14/10/2026): Capitã Nastácia, Jelles, Vivian, Alekta, Jennifer de Morais e os integrantes de A União Jasmey, Releuz e Édelin Lys."
+    "revisao_13_10_2026_par_forte": "Regra de par forte (13/10/2026): cartas fora de A União não podem ser fortes nos dois pares (FOR/RES e INT/VEL). 8 cartas com o par mais fraco comprimido para no máximo 70 (valores acima de 60 comprimidos proporcionalmente). Integrantes de A União preservados. Segunda leva (autorizada pelo autor em 14/10/2026): Capitã Nastácia, Jelles, Vivian, Alekta, Jennifer de Morais e os integrantes de A União Jasmey, Releuz e Édelin Lys.",
+    "revisao_14_10_2026_jesed": "Atributos das 23 cartas de Ciclo de Jesed recalculados a partir dos rankings do autor (app de classificação), com a regra do par forte aplicada sempre (par fraco no máximo 70; A União isenta). Autorizado pelo autor em 14/10/2026. Método e dados: prototipo/tools/calc_atributos.js, dados/ranking_jesed_2026-10-14.json, dados/proposta_atributos_jesed_2026-10-14.json. Especiais de Jesed ainda não revisados.",
+    "revisao_14_10_2026_belfex": "B02 Tack, B03 Jork, B04 Peredun e B05 Primus adicionadas a pedido do autor (status PROPOSTA_AGUARDANDO_APROVACAO)."
   },
   "cartas": [
     {
@@ -48,13 +50,13 @@
       },
       "descricao_curta": "Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência.",
       "atributos": {
-        "FOR": 43,
-        "RES": 65,
-        "INT": 83,
-        "VEL": 22
+        "FOR": 57,
+        "RES": 95,
+        "INT": 70,
+        "VEL": 27
       },
-      "soma_atributos": 213,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 249,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-110",
       "uniao": "NAO",
       "base_narrativa": {
@@ -72,12 +74,12 @@
       },
       "descricao_curta": "Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície.",
       "atributos": {
-        "FOR": 24,
-        "RES": 82,
-        "INT": 75,
-        "VEL": 38
+        "FOR": 22,
+        "RES": 70,
+        "INT": 59,
+        "VEL": 57
       },
-      "soma_atributos": 219,
+      "soma_atributos": 208,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-096",
       "uniao": "NAO",
@@ -96,12 +98,12 @@
       },
       "descricao_curta": "Viajante marcado pelo Ciclo, atravessa épocas e identidades carregando memórias incompletas.",
       "atributos": {
-        "FOR": 72,
-        "RES": 70,
-        "INT": 94,
-        "VEL": 74
+        "FOR": 93,
+        "RES": 79,
+        "INT": 93,
+        "VEL": 49
       },
-      "soma_atributos": 310,
+      "soma_atributos": 314,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-037",
       "uniao": "INTEGRANTE",
@@ -120,13 +122,13 @@
       },
       "descricao_curta": "Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle.",
       "atributos": {
-        "FOR": 83,
-        "RES": 72,
-        "INT": 66,
-        "VEL": 52
+        "FOR": 66,
+        "RES": 70,
+        "INT": 71,
+        "VEL": 83
       },
-      "soma_atributos": 273,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 290,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-069",
       "uniao": "NAO",
       "base_narrativa": {
@@ -144,12 +146,12 @@
       },
       "descricao_curta": "Construtor vigoroso, aprende a erguer abrigos numa terra onde as antigas técnicas já não bastam.",
       "atributos": {
-        "FOR": 78,
-        "RES": 87,
-        "INT": 58,
-        "VEL": 30
+        "FOR": 81,
+        "RES": 74,
+        "INT": 62,
+        "VEL": 66
       },
-      "soma_atributos": 253,
+      "soma_atributos": 283,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-124",
       "uniao": "NAO",
@@ -168,13 +170,13 @@
       },
       "descricao_curta": "Ecoante conhecedora de plantas e remédios, enfrenta o desconhecido sem deixar de cuidar dos outros.",
       "atributos": {
-        "FOR": 12,
-        "RES": 35,
-        "INT": 83,
-        "VEL": 19
+        "FOR": 8,
+        "RES": 70,
+        "INT": 80,
+        "VEL": 34
       },
-      "soma_atributos": 149,
-      "perfil_balanceamento": "Azar",
+      "soma_atributos": 192,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-083",
       "uniao": "NAO",
       "base_narrativa": {
@@ -192,13 +194,13 @@
       },
       "descricao_curta": "Jovem sobrevivente, encontra coragem no cuidado mútuo e aprende a seguir mesmo diante da perda.",
       "atributos": {
-        "FOR": 48,
-        "RES": 51,
-        "INT": 62,
-        "VEL": 73
+        "FOR": 40,
+        "RES": 67,
+        "INT": 61,
+        "VEL": 85
       },
-      "soma_atributos": 234,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 253,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-136",
       "uniao": "NAO",
       "base_narrativa": {
@@ -216,13 +218,13 @@
       },
       "descricao_curta": "Soberana Polar diplomática, prefere acordos à violência e luta para preservar seu povo.",
       "atributos": {
-        "FOR": 47,
+        "FOR": 70,
         "RES": 68,
-        "INT": 91,
-        "VEL": 48
+        "INT": 90,
+        "VEL": 61
       },
-      "soma_atributos": 254,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 289,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-030",
       "uniao": "NAO",
       "base_narrativa": {
@@ -240,12 +242,12 @@
       },
       "descricao_curta": "Soberana orgulhosa e determinada, responde à ameaça com força e exige obediência.",
       "atributos": {
-        "FOR": 80,
-        "RES": 70,
-        "INT": 63,
-        "VEL": 61
+        "FOR": 70,
+        "RES": 53,
+        "INT": 89,
+        "VEL": 48
       },
-      "soma_atributos": 274,
+      "soma_atributos": 260,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-040",
       "uniao": "NAO",
@@ -264,13 +266,13 @@
       },
       "descricao_curta": "Conselheiro hábil em fabricar versões dos fatos, usa o medo e a política para mover uma guerra.",
       "atributos": {
-        "FOR": 38,
-        "RES": 44,
-        "INT": 90,
-        "VEL": 47
+        "FOR": 66,
+        "RES": 62,
+        "INT": 95,
+        "VEL": 65
       },
-      "soma_atributos": 219,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 288,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-060",
       "uniao": "NAO",
       "base_narrativa": {
@@ -288,13 +290,13 @@
       },
       "descricao_curta": "Calandrir leal às soberanas, coloca o dever de protegê-las acima da própria segurança.",
       "atributos": {
-        "FOR": 87,
-        "RES": 88,
-        "INT": 57,
-        "VEL": 72
+        "FOR": 82,
+        "RES": 69,
+        "INT": 70,
+        "VEL": 62
       },
-      "soma_atributos": 304,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 283,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-014",
       "uniao": "NAO",
       "base_narrativa": {
@@ -312,12 +314,12 @@
       },
       "descricao_curta": "Caçador Fendelar experiente, transforma a destruição de seu povo em resistência determinada.",
       "atributos": {
-        "FOR": 86,
+        "FOR": 70,
         "RES": 64,
-        "INT": 72,
-        "VEL": 78
+        "INT": 92,
+        "VEL": 80
       },
-      "soma_atributos": 300,
+      "soma_atributos": 306,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-052",
       "uniao": "NAO",
@@ -336,12 +338,12 @@
       },
       "descricao_curta": "Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias.",
       "atributos": {
-        "FOR": 40,
-        "RES": 70,
-        "INT": 89,
-        "VEL": 61
+        "FOR": 70,
+        "RES": 40,
+        "INT": 76,
+        "VEL": 54
       },
-      "soma_atributos": 260,
+      "soma_atributos": 240,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-061",
       "uniao": "NAO",
@@ -360,12 +362,12 @@
       },
       "descricao_curta": "Jovem Calandrir disciplinado, mantém os ritos e o dever mesmo quando a política muda de rumo.",
       "atributos": {
-        "FOR": 79,
-        "RES": 83,
-        "INT": 55,
-        "VEL": 59
+        "FOR": 74,
+        "RES": 56,
+        "INT": 46,
+        "VEL": 68
       },
-      "soma_atributos": 276,
+      "soma_atributos": 244,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-002",
       "uniao": "NAO",
@@ -384,13 +386,13 @@
       },
       "descricao_curta": "Veterano de quatro dedos, retorna à arena para impedir que uma nova guerra destrua os civis.",
       "atributos": {
-        "FOR": 92,
-        "RES": 86,
-        "INT": 68,
-        "VEL": 45
+        "FOR": 89,
+        "RES": 64,
+        "INT": 56,
+        "VEL": 48
       },
-      "soma_atributos": 291,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 257,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-010",
       "uniao": "NAO",
       "base_narrativa": {
@@ -408,13 +410,13 @@
       },
       "descricao_curta": "Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran.",
       "atributos": {
-        "FOR": 36,
-        "RES": 41,
-        "INT": 90,
-        "VEL": 93
+        "FOR": 26,
+        "RES": 47,
+        "INT": 28,
+        "VEL": 79
       },
-      "soma_atributos": 260,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 180,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-089",
       "uniao": "NAO",
       "base_narrativa": {
@@ -432,12 +434,12 @@
       },
       "descricao_curta": "Conselheira sagaz, lê as engrenagens do poder e aprende a agir antes de ter todas as certezas.",
       "atributos": {
-        "FOR": 29,
-        "RES": 43,
-        "INT": 95,
+        "FOR": 37,
+        "RES": 36,
+        "INT": 86,
         "VEL": 52
       },
-      "soma_atributos": 219,
+      "soma_atributos": 211,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-117",
       "uniao": "NAO",
@@ -456,13 +458,13 @@
       },
       "descricao_curta": "Soberano carismático de Kaeliran, confia na continuidade de sua dinastia e adia decisões difíceis.",
       "atributos": {
-        "FOR": 57,
-        "RES": 76,
-        "INT": 84,
-        "VEL": 44
+        "FOR": 33,
+        "RES": 36,
+        "INT": 66,
+        "VEL": 32
       },
-      "soma_atributos": 261,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 167,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-072",
       "uniao": "NAO",
       "base_narrativa": {
@@ -480,13 +482,13 @@
       },
       "descricao_curta": "Calandrir firme e disciplinada, protege Kaeliran com coragem e um sentido inflexível do dever.",
       "atributos": {
-        "FOR": 84,
-        "RES": 91,
-        "INT": 74,
-        "VEL": 64
+        "FOR": 70,
+        "RES": 54,
+        "INT": 69,
+        "VEL": 70
       },
-      "soma_atributos": 313,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 263,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-062",
       "uniao": "NAO",
       "base_narrativa": {
@@ -504,13 +506,13 @@
       },
       "descricao_curta": "Anciã guardiã da memória familiar, preserva antigas histórias sem revelar todos os seus segredos.",
       "atributos": {
-        "FOR": 8,
-        "RES": 24,
-        "INT": 87,
-        "VEL": 12
+        "FOR": 7,
+        "RES": 41,
+        "INT": 95,
+        "VEL": 17
       },
-      "soma_atributos": 131,
-      "perfil_balanceamento": "Azar",
+      "soma_atributos": 160,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-106",
       "uniao": "NAO",
       "base_narrativa": {
@@ -528,13 +530,13 @@
       },
       "descricao_curta": "Jovem sem um braço, busca nas lembranças respostas para a origem e a perda de sua família.",
       "atributos": {
-        "FOR": 16,
-        "RES": 30,
-        "INT": 91,
-        "VEL": 37
+        "FOR": 48,
+        "RES": 66,
+        "INT": 68,
+        "VEL": 75
       },
-      "soma_atributos": 174,
-      "perfil_balanceamento": "Frágil",
+      "soma_atributos": 257,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-038",
       "uniao": "NAO",
       "base_narrativa": {
@@ -552,12 +554,12 @@
       },
       "descricao_curta": "Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama.",
       "atributos": {
-        "FOR": 50,
-        "RES": 53,
-        "INT": 72,
-        "VEL": 85
+        "FOR": 62,
+        "RES": 44,
+        "INT": 58,
+        "VEL": 73
       },
-      "soma_atributos": 260,
+      "soma_atributos": 237,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-071",
       "uniao": "NAO",
@@ -576,13 +578,13 @@
       },
       "descricao_curta": "Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado.",
       "atributos": {
-        "FOR": 82,
-        "RES": 79,
-        "INT": 57,
-        "VEL": 70
+        "FOR": 38,
+        "RES": 27,
+        "INT": 77,
+        "VEL": 59
       },
-      "soma_atributos": 288,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 201,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-125",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2418,6 +2420,106 @@
       },
       "status": "APROVADA_PELO_AUTOR",
       "observacao": "Carta criada em 13/10/2026 a pedido do autor; atributos e especial (AE-093) confirmados pelo autor em 13/10/2026. Sem sobrenome na carta (o parentesco com Filipo só deve ser deduzido perto do fim do Livro 2). Descrição sem os segredos da trama."
+    },
+    {
+      "id": "B02",
+      "nome": "Tack",
+      "origem": {
+        "codigo_serie": "B",
+        "cor_base": "verde"
+      },
+      "descricao_curta": "Amigo de infância de Édelin, capturado ainda criança por senantes; reaparece revelando magia e um amor antigo.",
+      "atributos": {
+        "FOR": 46,
+        "RES": 50,
+        "INT": 58,
+        "VEL": 62
+      },
+      "soma_atributos": 216,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-074",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "Autor (README e Premissas de Édelin Lys)",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+    },
+    {
+      "id": "B03",
+      "nome": "Jork",
+      "origem": {
+        "codigo_serie": "B",
+        "cor_base": "verde"
+      },
+      "descricao_curta": "Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar.",
+      "atributos": {
+        "FOR": 55,
+        "RES": 60,
+        "INT": 72,
+        "VEL": 78
+      },
+      "soma_atributos": 265,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-092",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "Autor (README e Premissas de Édelin Lys)",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+    },
+    {
+      "id": "B04",
+      "nome": "Peredun",
+      "origem": {
+        "codigo_serie": "B",
+        "cor_base": "verde"
+      },
+      "descricao_curta": "Irmão de Primus que quer depô-lo, usando o discurso de união forçada entre os povos.",
+      "atributos": {
+        "FOR": 40,
+        "RES": 46,
+        "INT": 82,
+        "VEL": 70
+      },
+      "soma_atributos": 238,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-116",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "Autor (README e Premissas de Édelin Lys)",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+    },
+    {
+      "id": "B05",
+      "nome": "Primus",
+      "origem": {
+        "codigo_serie": "B",
+        "cor_base": "verde"
+      },
+      "descricao_curta": "Líder dos senantes e irmão de Peredun; governa um povo marcado pela guerra com os velitas.",
+      "atributos": {
+        "FOR": 78,
+        "RES": 82,
+        "INT": 54,
+        "VEL": 48
+      },
+      "soma_atributos": 262,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-097",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "Autor (README e Premissas de Édelin Lys)",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
     }
   ]
 }

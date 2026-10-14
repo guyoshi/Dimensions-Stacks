@@ -253,7 +253,7 @@ Destaques para especificação futura:
 ## 18. Biblioteca estratégica desacoplada do elenco (12/10/2026)
 
 - O autor **não reutilizará os nomes, atributos e descrições** das cartas físicas antigas. Elas servem **somente como fonte de inspiração mecânica**. Os **87 personagens candidatos** das séries serão distribuídos posteriormente.
-- A [biblioteca de **138 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **98 IDs equipados em 98 cartas (um por carta)** e **40 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
+- A [biblioteca de **138 Habilidades Especiais**](BIBLIOTECA_ATAQUES_ESPECIAIS.md) foi ratificada: **102 IDs equipados em 102 cartas (um por carta)** e **40 reservados para expansão**. Esta frase atualiza a situação da biblioteca descrita nesta etapa histórica.
 - A auditoria de **62 posições do baralho físico** registra, para cada habilidade identificada, se recomendamos manter, ajustar, redesenhar, testar experimentalmente ou retirar. Não confundir recomendação com decisão aprovada.
 - Há **conversões espelhadas de todos os pares de atributos**: das 4 propriedades podem ocorrer 12 cópias direcionais e 6 permutas de valores. "Trocar" em textos legados é ambíguo; nas propostas digitais distingue-se **substituição de um número** de **troca bilateral de dois números**.
 - **Habilidade proposta pelo autor, texto parcial:** “roube a última carta do meio de reserva de cada adversário”; consta como **AE-048**, aguardando confirmação do trecho cortado ao final da mensagem.
@@ -389,7 +389,7 @@ Os especiais de **tipo** mantêm o nome: Ataque obrigatório, Defesa obrigatóri
 
 ## Sem especiais repetidos (13/10/2026, autorizada pelo autor)
 
-Cada carta tem um especial diferente (98 cartas, 98 especiais). As 20 cartas que repetiam especial receberam especiais antes sem carta; a lista está em `docs/CARTAS_E_ESPECIAIS.md` e no campo `revisao_13_10_2026_especiais_repetidos` de `dados/oficial/cartas_87.json`.
+Cada carta tem um especial diferente (102 cartas, 102 especiais). As 20 cartas que repetiam especial receberam especiais antes sem carta; a lista está em `docs/CARTAS_E_ESPECIAIS.md` e no campo `revisao_13_10_2026_especiais_repetidos` de `dados/oficial/cartas_87.json`.
 
 ## Par forte (13/10/2026, autorizada pelo autor)
 

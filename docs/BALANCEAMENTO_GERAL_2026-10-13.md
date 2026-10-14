@@ -168,7 +168,7 @@ Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_1
 
 - **AE-094 Inversão de fila** mantido.
 - **AE-089 Sacrifício duplo → Sacrifício por três (J16 Elis):** agora envia **1 carta escolhida** do baralho ativo ao Buraco Negro e recupera **até 3 aleatórias** de lá (antes: mandava 2 e recuperava até 3).
-- **Especiais retirados** (removidos do catálogo e dos docs de AE; voltam apenas se o autor quiser): **AE-112** Repetição onerosa (repetir um especial descartando 2 cartas), **AE-095** Atrasar a próxima (mover a próxima carta do rival ao fim do baralho) e **AE-086** Troca pelo descarte (1 carta ao Buraco Negro, recuperar até 2). Catálogo: 129 − 3 + 12 = **138 habilidades**; 98 equipadas, 40 na reserva.
+- **Especiais retirados** (removidos do catálogo e dos docs de AE; voltam apenas se o autor quiser): **AE-112** Repetição onerosa (repetir um especial descartando 2 cartas), **AE-095** Atrasar a próxima (mover a próxima carta do rival ao fim do baralho) e **AE-086** Troca pelo descarte (1 carta ao Buraco Negro, recuperar até 2). Catálogo: 129 − 3 + 12 = **138 habilidades**; 102 equipadas, 36 na reserva.
 - **Substitutos nas cartas que os tinham:** D06 Jennifer de Morais AE-109 · V11 Gary AE-003 · M12 James Harrow AE-102.
 - **Prévia de conversão:** em especiais que convertem ou somam atributos (Resistência passa a valer a Inteligência etc.), a folha de escolha mostra "Sua carta: atributo a → b" com os valores resultantes antes de o jogador confirmar.
 - **Reordenar ao comprar da reserva:** o jogador reordena as cartas que acabou de comprar (até 7; era 6 até 14/10/2026). O bot ordena sozinho. Início da partida: a ordem da reserva segue aleatória (a mão inicial já é ordenada pelo jogador).
@@ -191,3 +191,16 @@ Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_1
 | Troca | 13,0 | 4 / 21 / 75 | 56% | 62/37 |
 
 Resultado: 0 falhas, conservação de cartas e duplicatas OK, nenhuma partida chegou ao limite. Nada decide a partida sozinho; o nível do jogador continua mandando (difícil sempre ≥59%). Observações: Força/Névoa alongam a partida ~35% quando forçadas todas as rodadas (ataque ganha mais); Eclipse encurta; Avesso e Aberta reduzem a vantagem do iniciador (de 56% para 44% e 40%). Achado e corrigido: os bots ignoravam o Avesso (jogavam para o maior) — agora invertem a previsão; antes o fácil vencia 31% e o iniciador só 19%.
+
+## Ciclo de Jesed recalculado + Édelin Lys com 5 cartas (14/10/2026, autorizado pelo autor)
+
+**Atributos de Jesed (23 cartas)** recalculados a partir dos rankings do autor (app de classificação; dados em `dados/ranking_jesed_2026-10-14.json`, resultado em `dados/proposta_atributos_jesed_2026-10-14.json`, método em `prototipo/tools/calc_atributos.js`):
+- valor de cada atributo = quantil (na distribuição atual das 98 cartas) da posição da carta na lista daquele atributo; a lista Geral ajusta o total (peso 0,35); a ordem de cada lista é preservada (média nos blocos em conflito); teto de 95.
+- **Regra do par forte aplicada sempre** (decisão do autor, 14/10/2026): par fraco no máximo 70, valores acima de 60 comprimidos proporcionalmente; A União isenta. Atingiu 9 cartas: Rendar 90/73/92/80→70/64/92/80, Kaelina 74/71/90/61→70/68/90/61, Cal Edran 82/69/78/63→82/69/70/62, Gabasteri 72/80/71/83→66/70/71/83, Jokara 57/95/75/27→57/95/70/27, Nynestra 80/40/76/54→70/40/76/54, Cal Kerath 77/54/69/70→70/54/69/70, Nestira 22/85/59/57→22/70/59/57, Platisa 8/86/80/34→8/70/80/34.
+- **Especiais de Jesed ainda não revisados** (seguem os antigos; revisão em separado, com simulação).
+
+**Raridade por posição de poder dentro da série** (autor, 14/10/2026): 11% Lendária, 21% Épica, 33% Rara, resto Comum. Já vale para Jesed (3 Lendárias, 4 Épicas, 8 Raras, 8 Comuns); as demais séries mantêm os cortes fixos (≥1810 / ≥1710 / ≥1560) até serem ranqueadas. `SERIES_POR_POSICAO` em `data.js`.
+
+**Perfil (soma):** cortes usados nas cartas novas e recalculadas: Azar < 150 · Frágil < 192 · Modesta < 237 · Padrão < 285 · Forte < 318 · Elite ≥ 318.
+
+**Édelin Lys:** B02 Tack, B03 Jork, B04 Peredun, B05 Primus (status PROPOSTA, faixa PRÉVIA). Atributos provisórios 46/50/58/62, 55/60/72/78, 40/46/82/70, 78/82/54/48; especiais provisórios AE-074, AE-092, AE-116 e AE-097 (saíram da reserva; reserva = 36). Descrições sem os desfechos de Tack e Jork. **Sem foto ainda** (não há arquivo dessas personagens na pasta de Édelin Lys).

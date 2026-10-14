@@ -145,6 +145,10 @@
     ['M12', 'James Harrow', 'misterio', 'Personagem de relevância ideológica na trama'],
     // Belfex
     ['B01', 'Édelin Lys', 'belfex', 'Édelin Lys', 1],
+    ['B02', 'Tack', 'belfex', 'Senante, amigo de infância de Édelin'],
+    ['B03', 'Jork', 'belfex', 'Dono da casa à beira-mar e dos barcos; passado em aberto'],
+    ['B04', 'Peredun', 'belfex', 'Irmão de Primus; quer depô-lo'],
+    ['B05', 'Primus', 'belfex', 'Líder dos senantes'],
   ];
 
   // ---------- gerador de dados PROVISÓRIOS (determinístico por id) ----------
@@ -197,5 +201,17 @@
     });
   }
 
-  root.DS_DATA = { poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: montarCartas(), HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
+  // Raridade por posição de poder dentro da série (autor, 14/10/2026): 11% Lendária, 21% Épica, 33% Rara, resto Comum.
+  // Vale para as séries já ranqueadas pelo autor; as demais seguem os cortes fixos acima até serem ranqueadas.
+  const SERIES_POR_POSICAO = ['jesed'];
+  function raridadePorPosicao(cartas) {
+    SERIES_POR_POSICAO.forEach(function (sid) {
+      const L = cartas.filter(c => c.serie === sid).sort((a, b) => poder([b.stats.pod, b.stats.def, b.stats.int, b.stats.vel]) - poder([a.stats.pod, a.stats.def, a.stats.int, a.stats.vel]) || a.id.localeCompare(b.id));
+      const n = L.length, cut = [Math.round(n * 0.11), Math.round(n * 0.32), Math.round(n * 0.65)];
+      L.forEach((c, i) => { c.raridade = i < cut[0] ? 'lendaria' : i < cut[1] ? 'epica' : i < cut[2] ? 'rara' : 'comum'; });
+    });
+    return cartas;
+  }
+
+  root.DS_DATA = { poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: raridadePorPosicao(montarCartas()), HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
 })(typeof window !== 'undefined' ? window : globalThis);

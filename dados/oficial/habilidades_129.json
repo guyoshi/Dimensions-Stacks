@@ -1105,12 +1105,13 @@
       "texto_efeito": "Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais.",
       "origem_ideia": "#48",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "B02"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-075",
@@ -1352,12 +1353,13 @@
       "texto_efeito": "Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "B03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-093",
@@ -1411,12 +1413,13 @@
       "texto_efeito": "Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo.",
       "origem_ideia": "#36 (adaptação)",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "B05"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-098",
@@ -1678,12 +1681,13 @@
       "texto_efeito": "Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo.",
       "origem_ideia": "#06 (adaptação)",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "B04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
     },
     {
       "id": "AE-117",
