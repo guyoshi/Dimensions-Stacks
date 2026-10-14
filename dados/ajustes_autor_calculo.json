@@ -5,7 +5,11 @@
     "M07": "INT/VEL",
     "M02": "FOR/RES",
     "S09": "FOR/RES",
-    "S02": "INT/VEL"
+    "S02": "INT/VEL",
+    "D12": "FOR/RES",
+    "D10": "FOR/RES",
+    "D15": "INT/VEL",
+    "D09": "INT/VEL"
   },
   "raridade_fixa": {
     "V05": "lendaria",

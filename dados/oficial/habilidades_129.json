@@ -42,12 +42,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J14"
+        "S05"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J14 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a S05 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-003",
@@ -57,13 +58,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V11"
+        "D04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: apelão medido (80% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar. 2026-10-14: atribuída a V11 (substitui especial retirado a pedido do autor)."
+      "revisao": "2026-10-13: apelão medido (80% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar. 2026-10-14: atribuída a V11 (substitui especial retirado a pedido do autor). 2026-10-14: saiu de V11 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D04 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-004",
@@ -73,12 +74,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D18"
+        "J04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J04 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-005",
@@ -87,14 +89,12 @@
       "texto_efeito": "Sua carta de combate recebe +10 em um atributo à sua escolha nesta disputa.",
       "origem_ideia": "#15",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V20"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: bônus reduzido de +15 para +10 (apelão: 89% de vitórias do bot que a usa). Alteração de balanceamento."
+      "revisao": "2026-10-13: bônus reduzido de +15 para +10 (apelão: 89% de vitórias do bot que a usa). Alteração de balanceamento. 2026-10-14: saiu de V20 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-006",
@@ -119,13 +119,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V18"
+        "V04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: bônus reduzido de +10/+10 para +7/+7 (apelão: 83% de vitórias do bot que a usa). Alteração de balanceamento."
+      "revisao": "2026-10-13: bônus reduzido de +10/+10 para +7/+7 (apelão: 83% de vitórias do bot que a usa). Alteração de balanceamento. 2026-10-14: atribuída a V04 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de V18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-008",
@@ -134,13 +134,12 @@
       "texto_efeito": "Sua carta de combate recebe +10 Resistência e +10 Velocidade nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V05"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de V05 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-009",
@@ -149,12 +148,14 @@
       "texto_efeito": "Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: saiu da carta V23 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
+      "revisao": "2026-10-13: saiu da carta V23 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a J07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-010",
@@ -163,13 +164,12 @@
       "texto_efeito": "Jogue as duas primeiras cartas consecutivas de seu baralho ativo; some o mesmo atributo das duas para obter um único valor de combate.",
       "origem_ideia": "#09",
       "avaliacao_de_risco": "Regra-base",
-      "cartas_atribuidas": [
-        "J15"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J15 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-011",
@@ -208,11 +208,14 @@
       "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Força; Força permanece igual.",
       "origem_ideia": "#21 (adaptação)",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D14"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a D14 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-014",
@@ -237,12 +240,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "M04"
+        "M07"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de M04 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a M07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-016",
@@ -266,12 +270,14 @@
       "texto_efeito": "Substitua o valor de Resistência pelo valor que sua carta possui em Força; Força permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a S18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-018",
@@ -280,11 +286,14 @@
       "texto_efeito": "Substitua o valor de Força pelo valor que sua carta possui em Resistência; Resistência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J13"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J13 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-019",
@@ -293,11 +302,14 @@
       "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J14"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J14 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-020",
@@ -306,11 +318,14 @@
       "texto_efeito": "Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J16"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J16 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-021",
@@ -377,11 +392,14 @@
       "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J21"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J21 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-026",
@@ -406,12 +424,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D10"
+        "J15"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J15 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D10 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-028",
@@ -420,13 +439,12 @@
       "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "M08"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de M08 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-029",
@@ -436,12 +454,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D07"
+        "S12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a S12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-030",
@@ -465,13 +484,12 @@
       "texto_efeito": "Pegue a próxima carta do topo do baralho ativo do adversário à direita, exceto a já comprometida em combate.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "M02"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de M02 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-032",
@@ -568,12 +586,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J21"
+        "D01"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J21 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D01 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-039",
@@ -582,13 +601,12 @@
       "texto_efeito": "Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [
-        "M07"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de M07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-040",
@@ -643,13 +661,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V23"
+        "M02"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: atribuída a V23 (substitui AE-009, que o bot nunca usava)."
+      "revisao": "2026-10-13: atribuída a V23 (substitui AE-009, que o bot nunca usava). 2026-10-14: atribuída a M02 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de V23 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-044",
@@ -690,12 +708,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V13"
+        "S15"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de V13 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a S15 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-047",
@@ -704,13 +723,12 @@
       "texto_efeito": "Pegue 1 carta aleatória da reserva de cada adversário ativo que possua reserva.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [
-        "S10"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de S10 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-048",
@@ -735,13 +753,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "D17"
+        "V10"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: atribuída a D17 (substitui AE-058, que o bot nunca usava)."
+      "revisao": "2026-10-13: atribuída a D17 (substitui AE-058, que o bot nunca usava). 2026-10-14: atribuída a V10 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D17 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-050",
@@ -750,14 +768,12 @@
       "texto_efeito": "Se um adversário tiver até 3 cartas no baralho ativo, tome a última carta de sua reserva, caso exista.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V22"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: atribuída a V22 (substitui AE-057, que o bot nunca usava)."
+      "revisao": "2026-10-13: atribuída a V22 (substitui AE-057, que o bot nunca usava). 2026-10-14: saiu de V22 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-051",
@@ -782,12 +798,13 @@
       "origem_ideia": "#13",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J12"
+        "D09"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D09 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-053",
@@ -796,13 +813,12 @@
       "texto_efeito": "Troque sua carta de combate pela do adversário à direita antes da comparação.",
       "origem_ideia": "#10",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [
-        "S14"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de S14 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-054",
@@ -841,12 +857,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S17"
+        "M08"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a M08 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de S17 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-057",
@@ -855,12 +872,14 @@
       "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda.",
       "origem_ideia": "#11",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: saiu da carta V22 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
+      "revisao": "2026-10-13: saiu da carta V22 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a J18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-058",
@@ -869,12 +888,14 @@
       "texto_efeito": "Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V11"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: saiu da carta D17 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
+      "revisao": "2026-10-13: saiu da carta D17 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a V11 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-059",
@@ -899,12 +920,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J10"
+        "D18"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J10 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-061",
@@ -914,12 +936,13 @@
       "origem_ideia": "#35",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J13"
+        "D03"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J13 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-062",
@@ -929,12 +952,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "J19"
+        "M06"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J19 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a M06 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-063",
@@ -959,11 +983,14 @@
       "texto_efeito": "Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem.",
       "origem_ideia": "#43 (var.)",
       "avaliacao_de_risco": "Sem ganho em duelos",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "B03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a B03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-065",
@@ -972,11 +999,14 @@
       "texto_efeito": "Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido.",
       "origem_ideia": "#43",
       "avaliacao_de_risco": "Sem ganho em duelos",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J19"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J19 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-066",
@@ -1001,12 +1031,13 @@
       "origem_ideia": "#50 (var.)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "S15"
+        "V20"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a V20 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de S15 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-068",
@@ -1032,12 +1063,13 @@
       "origem_ideia": "#28",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J04"
+        "J10"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J04 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a J10 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-070",
@@ -1046,12 +1078,14 @@
       "texto_efeito": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido.",
       "origem_ideia": "#23",
       "avaliacao_de_risco": "Experimental",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V07"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: saiu da carta S16 (o bot nunca a usava: 0 usos/disputa); volta à reserva."
+      "revisao": "2026-10-13: saiu da carta S16 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a V07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-071",
@@ -1060,13 +1094,12 @@
       "texto_efeito": "Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota.",
       "origem_ideia": "#31",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "J22"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J22 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-072",
@@ -1076,12 +1109,13 @@
       "origem_ideia": "#32",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "J18"
+        "V09"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de J18 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a V09 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-073",
@@ -1135,12 +1169,14 @@
       "texto_efeito": "Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J22"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a J22 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-077",
@@ -1149,12 +1185,14 @@
       "texto_efeito": "Anule a próxima tentativa de roubar uma carta de sua reserva nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V18"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a V18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-078",
@@ -1163,12 +1201,14 @@
       "texto_efeito": "Se um rival tentar roubar exatamente 1 carta sua, cancele esse roubo e tome 1 carta aleatória do baralho ativo dele.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V22"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a V22 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-079",
@@ -1177,12 +1217,14 @@
       "texto_efeito": "Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "S17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a S17 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-080",
@@ -1206,12 +1248,13 @@
       "origem_ideia": "#19",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "D12"
+        "M12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de D12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a M12 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-082",
@@ -1221,12 +1264,13 @@
       "origem_ideia": "#56",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "S06"
+        "J12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a J12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de S06 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-083",
@@ -1250,12 +1294,14 @@
       "texto_efeito": "Recupere a carta normal mais antiga do Buraco Negro para o fim de seu baralho ativo.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V21"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a V21 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-085",
@@ -1265,12 +1311,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "D04"
+        "S06"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a S06 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D04 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-087",
@@ -1279,13 +1326,12 @@
       "texto_efeito": "Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral.",
       "origem_ideia": "#12 (texto corrigido pelo autor)",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V10"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de V10 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-088",
@@ -1294,12 +1340,14 @@
       "texto_efeito": "Recupere 1 carta normal aleatória do Buraco Negro para o fim de seu baralho ativo; se seu baralho estava vazio, ela será sua próxima carta.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "M03"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a M03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-089",
@@ -1308,14 +1356,12 @@
       "texto_efeito": "Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias de lá.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [
-        "J16"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: alterada a pedido do autor (antes: sacrificava 2 cartas e recuperava até 3; nome anterior Sacrifício duplo). Alteração de balanceamento."
+      "revisao": "2026-10-14: alterada a pedido do autor (antes: sacrificava 2 cartas e recuperava até 3; nome anterior Sacrifício duplo). Alteração de balanceamento. 2026-10-14: saiu de J16 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-090",
@@ -1354,12 +1400,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "B03"
+        "S14"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a S14 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de B03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-093",
@@ -1383,13 +1430,12 @@
       "texto_efeito": "Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "D09"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de D09 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-096",
@@ -1444,12 +1490,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "D01"
+        "V23"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de D01 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a V23 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-100",
@@ -1474,12 +1521,13 @@
       "origem_ideia": "#60 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "M06"
+        "D12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a D12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de M06 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-102",
@@ -1489,13 +1537,13 @@
       "origem_ideia": "#61 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "M12"
+        "S10"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: atribuída a M12 (substitui especial retirado a pedido do autor)."
+      "revisao": "2026-10-14: atribuída a M12 (substitui especial retirado a pedido do autor). 2026-10-14: atribuída a S10 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de M12 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-103",
@@ -1638,12 +1686,14 @@
       "texto_efeito": "Cancele 1 habilidade especial de um adversário antes de sua resolução; o especial cancelado é descartado normalmente.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D17"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a D17 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-114",
@@ -1652,13 +1702,12 @@
       "texto_efeito": "Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V12"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de V12 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-115",
@@ -1667,12 +1716,14 @@
       "texto_efeito": "Copie o efeito de 1 especial adversária já ativada nesta disputa, sem ganhar a carta física; não pode copiar outra cópia.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "M04"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a M04 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-116",
@@ -1682,12 +1733,13 @@
       "origem_ideia": "#06 (adaptação)",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
-        "B04"
+        "V19"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a V19 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de B04 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-117",
@@ -1725,11 +1777,14 @@
       "texto_efeito": "Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Experimental",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "V13"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a V13 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-120",
@@ -1752,11 +1807,14 @@
       "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Resistência; Resistência permanece igual.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "D10"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a D10 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-122",
@@ -1779,12 +1837,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S18"
+        "D07"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: atribuída a D07 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de S18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-124",
@@ -1836,13 +1895,12 @@
       "texto_efeito": "Troque entre si os números de Inteligência e Resistência da mesma carta; ambos mudam.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V04"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-14: saiu de V04 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-128",
@@ -1879,14 +1937,12 @@
       "categoria": "Redução de atributos do rival",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "D14"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026."
+      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026. 2026-10-14: saiu de D14 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-132",
@@ -1895,14 +1951,12 @@
       "categoria": "Redução de atributos do rival",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "D03"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026."
+      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026. 2026-10-14: saiu de D03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-133",
@@ -1927,14 +1981,12 @@
       "categoria": "Redução de atributos do rival",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "M03"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026."
+      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026. 2026-10-14: saiu de M03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-135",
@@ -1943,14 +1995,12 @@
       "categoria": "Bônus, penalidades e soma",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "S12"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: saiu de S12 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-136",
@@ -1959,14 +2009,12 @@
       "categoria": "Bônus, penalidades e soma",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "J07"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: saiu de J07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-137",
@@ -1976,13 +2024,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "S05"
+        "B04"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: saiu de S05 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a B04 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-138",
@@ -2008,13 +2056,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V09"
+        "V12"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: saiu de V09 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a V12 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-140",
@@ -2024,13 +2072,13 @@
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
       "cartas_atribuidas": [
-        "V07"
+        "V05"
       ],
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: atribuída a V05 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de V07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-141",
@@ -2039,14 +2087,12 @@
       "categoria": "Redução de atributos do rival",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V21"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: saiu de V21 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     },
     {
       "id": "AE-142",
@@ -2055,14 +2101,12 @@
       "categoria": "Bônus, penalidades e soma",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [
-        "V19"
-      ],
-      "situacao_uso": "EQUIPADA_BARALHO_V1",
+      "cartas_atribuidas": [],
+      "situacao_uso": "RESERVA_PARA_EXPANSAO",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026)."
+      "revisao": "2026-10-14: criada a pedido do autor para substituir especiais de baixo valor (autorizado em 14/10/2026). 2026-10-14: saiu de V19 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
     }
   ]
 }

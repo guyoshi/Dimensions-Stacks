@@ -222,3 +222,98 @@ Atributos das 12 cartas pelos rankings do autor (lista de Força revisada por el
 ## Spacetheft recalculado (14/10/2026, autorizado pelo autor)
 
 Atributos das 18 cartas pelos rankings do autor, regra do par forte. Decisões do autor: Capitã Nastácia FOR/RES (85/65/70/60), Amanda INT/VEL (45/70/86/70). Raridade por posição de poder (2 Lendárias: A Besta 95/95/41/25 e A Engenheira 27/48/95/50). Especiais ainda não revisados. Faltava só o Diário Sobrenatural, cuja proposta (dados/proposta_atributos_diario_2026-10-14.json) aguarda decisões do autor.
+
+## Diário Sobrenatural aplicado (14/10/2026, autorizado pelo autor)
+
+Atributos das 19 cartas pelos rankings do autor, regra do par forte. Decisões do autor: Agouro FOR/RES, Sra. Olívia (FOR/RES), O Pai (INT/VEL) e Diego Tavolieri (INT/VEL) confirmados. Raridade por posição de poder. Com isso as seis séries estão ranqueadas e aplicadas.
+
+## Calibração fina e reatribuição global de especiais (14/10/2026, autorizadas pelo autor)
+
+**Pedido:** verificar o balanceamento, fazer ajustes pequenos para as cartas ficarem compatíveis entre as séries, ajustar os especiais e comparar com o estado anterior.
+
+### 1. Medição antes de ajustar
+Simulação de 1.500 partidas por modo (bot difícil, 2 e 4 jogadores, especiais desligados e ligados). "Antes" = commit 954eb45 (98 cartas, atributos antigos). "Recálculo" = rankings do autor aplicados nas seis séries, sem calibração.
+
+### 2. Calibração dos atributos (`prototipo/tools/calibrar_cartas.js`)
+- Compara o rendimento de cada carta com a média da sua raridade e desloca os 4 atributos por um valor pequeno (iterativo, amortecido), no máximo 8 pontos por atributo.
+- Preserva a ordem de poder que o autor definiu dentro de cada série (regressão isotônica sobre o poder). Restam só empates técnicos: 41 pares trocados, todos com diferença de até 15 de poder (menos que o degrau de 1 ponto de atributo, que vale 20). Nenhuma carta mudou de raridade.
+- Respeita teto 95, piso 5 e a regra do par fraco (até 70; A União isenta).
+- **88 cartas ajustadas** (lista antes → depois em `dados/calibracao_2026-10-14.json`).
+
+### 3. Reatribuição de especiais
+- **Método:** valor de cada um dos 138 especiais medido por simulação (`tests/bot_per_special.js`, 400 partidas, duelo, bot difícil); força de cada carta medida com especiais desligados. Atribuição ótima (húngaro) para que o percentil da carta seja próximo ao do especial (regra do autor), com penalidade por trocar, para mexer só no que estava muito fora.
+- **Mantidos:** os 8 integrantes/futuros integrantes de A União, D19 Manu (AE-093), V06 Erla (AE-130), M05 Padre Tomas (AE-068).
+- **Excluídos do sorteio:** apelões (valor medido acima de 84%: AE-005, 010, 031, 032, 033, 034, 035, 039, 053, 054, 087, 103, 129, 131, 132, 134), AE-023 (valor negativo) e os retirados. Os apelões que estavam em cartas fora de A União saíram.
+- **Desvio de percentil carta × especial:** 0,41 antes, 0,09 depois. **53 cartas trocaram de especial**; nenhum especial repetido; 36 continuam na reserva.
+- **Limite conhecido:** o bot quase não usa especiais reativos/situacionais (cerca de 0 usos), então o valor medido deles é um piso; foram para as cartas mais fracas. Em jogo humano podem render mais.
+
+| Carta | Antes | Agora |
+|---|---|---|
+| J04 Gabasteri | AE-069 — Doação escolhida | AE-004 — Arrancada |
+| J07 Mariv | AE-136 — Lucidez veloz | AE-009 — Superação |
+| J10 Daryon Polar | AE-060 — Permuta das reservas à direita | AE-069 — Doação escolhida |
+| J12 Rendar | AE-052 — Troca de combatente | AE-082 — Resgate aleatório duplo |
+| J13 Nynestra | AE-061 — Reservas giratórias à direita | AE-018 — Resistência → Força |
+| J14 Cal Kadrir | AE-002 — Muralha de Resistência | AE-019 — Inteligência → Velocidade |
+| J15 Dareth Polar | AE-010 — Ataque em dupla | AE-027 — Forçar defesa rival |
+| J16 Elis Nular | AE-089 — Sacrifício por três | AE-020 — Velocidade → Inteligência |
+| J18 Vetarius Polar | AE-072 — Não perder a carta | AE-057 — Passe à esquerda |
+| J19 Cal Kerath | AE-062 — Reservas giratórias à esquerda | AE-065 — Tríplice transferência |
+| J21 Nefestra | AE-038 — Recompensa defensiva | AE-025 — Defesa obrigatória |
+| J22 Sefter | AE-071 — Ausência tática | AE-076 — Guardião do baralho |
+| V04 Beatriz Lins | AE-127 — Permutar Inteligência e Resistência | AE-007 — Ímpeto ofensivo |
+| V05 Velho-Sábio / Auream | AE-008 — Guarda equilibrada | AE-140 — Mente afiada |
+| V07 Lucas Veline | AE-140 — Mente afiada | AE-070 — Conquista compensada |
+| V09 Ricochet Bombergue | AE-139 — Disparada | AE-072 — Não perder a carta |
+| V10 Korvo | AE-087 — Reabastecimento da reserva | AE-049 — Escolha da reserva |
+| V11 Gary | AE-003 — Clarividência | AE-058 — Passe à direita |
+| V12 Anasin | AE-114 — Desvio de alvo | AE-139 — Disparada |
+| V13 Saliens | AE-046 — Reserva dupla à esquerda | AE-119 — Preparação urgente |
+| V18 Grande Pai Gaia | AE-007 — Ímpeto ofensivo | AE-077 — Guardião da reserva |
+| V19 Seti | AE-142 — Reflexos de aço | AE-116 — Apropriar especial usado |
+| S05 Kord | AE-137 — Golpe pesado | AE-002 — Muralha de Resistência |
+| S06 O'reilly | AE-082 — Resgate aleatório duplo | AE-085 — Resgate escolhido |
+| S10 Jelles | AE-047 — Tributo coletivo | AE-102 — Capturar defensor |
+| S12 Vek | AE-135 — Vigor | AE-029 — Proibir a defesa rival |
+| S14 Genrir | AE-053 — Combatente da direita | AE-092 — Próximas três |
+| D01 Junior Quissama | AE-099 — Reforçar o fim | AE-038 — Recompensa defensiva |
+| D03 Pedro Souza | AE-132 — Quebrar o melhor | AE-061 — Reservas giratórias à direita |
+| D04 Kelly Fontenelle | AE-085 — Resgate escolhido | AE-003 — Clarividência |
+| D07 Ingrid Marques | AE-029 — Proibir a defesa rival | AE-123 — Permutar Força e Inteligência |
+| D09 Diego Tavolieri | AE-094 — Inversão de fila | AE-052 — Troca de combatente |
+| D10 Sra. Olívia | AE-027 — Forçar defesa rival | AE-121 — Resistência → Velocidade |
+| D12 Agouro | AE-081 — Resgate extremo | AE-101 — Capturar atacante |
+| D14 Filipo Brandolini | AE-131 — Enfraquecer | AE-013 — Força → Velocidade |
+| D17 A Avó | AE-049 — Escolha da reserva | AE-113 — Interrupção precisa |
+| D18 O Cão | AE-004 — Arrancada | AE-060 — Permuta das reservas à direita |
+| M02 Agente Sete | AE-031 — Primeira à direita | AE-043 — Primeira da direita |
+| M03 Diana | AE-134 — Cortar o par | AE-088 — Retorno imediato |
+| M04 Matt Pontas | AE-015 — Resistência → Inteligência | AE-115 — Eco de habilidade |
+| M06 Benjamin Karnudo | AE-101 — Capturar atacante | AE-062 — Reservas giratórias à esquerda |
+| M07 Agente Seis | AE-039 — Saque revelado | AE-015 — Resistência → Inteligência |
+| M08 Dra. Helena Valença | AE-028 — Proibir o ataque rival | AE-056 — Troca de topos à esquerda |
+| M12 James Harrow | AE-102 — Capturar defensor | AE-081 — Resgate extremo |
+| V20 William McCroys | AE-005 — Reforço flexível | AE-067 — Descarte adversário |
+| V21 Shirley Ainsworth | AE-141 — Intimidar | AE-084 — Resgate antigo |
+| V22 Nicolas Corvane | AE-050 — Reserva em perigo | AE-078 — Reflexo de roubo |
+| V23 Erick Corvane | AE-043 — Primeira da direita | AE-099 — Reforçar o fim |
+| S15 Tersário | AE-067 — Descarte adversário | AE-046 — Reserva dupla à esquerda |
+| S17 Luna Stellar | AE-056 — Troca de topos à esquerda | AE-079 — Escudo antecipado |
+| S18 Alekta | AE-123 — Permutar Força e Inteligência | AE-017 — Força → Resistência |
+| B03 Jork Caravel | AE-092 — Próximas três | AE-064 — Transferência de reserva |
+| B04 Peredun | AE-116 — Apropriar especial usado | AE-137 — Golpe pesado |
+
+### 4. Resultado (taxa de vitória por carta nas disputas, 2 jogadores, especiais ligados)
+
+| Medida | Antes (98 cartas) | Recálculo | Calibração | Calibração + especiais |
+|---|---|---|---|---|
+| Correlação taxa × poder | 0.31 | 0.87 | 0.95 | 0.95 |
+| Média por série (mín–máx) | 39–65% (26 pts) | 42–55% (13 pts) | 48–50% (2 pts) | 49–51% (3 pts) |
+| Desvio relativo dentro da mesma raridade | 0.254 | 0.163 | 0.084 | 0.092 |
+| Amplitude relativa entre séries, 4 jogadores | 0.675 | 0.365 | 0.066 | 0.057 |
+| Carta mais forte | William McCroys 73% | Mark Polar 84% | Mark Polar 82% | Mark Polar 88% |
+| Carta mais fraca | Diego Tavolieri 13% | A Avó 15% | Matt Pontas 19% | A Avó 17% |
+
+Médias por raridade (final, 2 jogadores): Lendária 73%, Épica 65%, Rara 51%, Comum 31%. A escada de raridade é monotônica e igual nas seis séries.
+
+**Observações para o autor:** (a) **Mark Polar continua outlier** (cerca de 87–88% de vitórias; 91/77/91/47, três atributos altos que o poder soma+16×pico subestima, mais o AE-037 fixo de A União). Não mexi por estar no topo da ordem de Jesed e ser integrante de A União; sugestão: baixar FOR e INT para cerca de 85 (decisão sua). (b) A dispersão total subiu em relação ao "antes" porque agora a taxa acompanha o poder (correlação 0,30 → 0,95), que é o objetivo; o critério carta forte → especial forte aumenta um pouco essa dispersão com especiais ligados. (c) Testes: auditoria de especiais (156 cenários, 0 falhas), fuzz de especiais (300 jogos, 0 falhas), coleção, maestria.
