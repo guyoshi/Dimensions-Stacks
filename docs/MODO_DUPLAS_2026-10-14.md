@@ -34,3 +34,17 @@ A dupla que perde o primeiro jogador vence só ~14% das partidas (bots difíceis
 - Falta tela de mesa (dupla), bots online e salas.
 
 Scripts: `prototipo/tests/sim_duplas.js`, `sim_duplas_an.js`, `sim_duplas_bola_de_neve.js`.
+
+## Variantes testadas (1.000 partidas cada, bots difíceis, especiais ligados)
+Opções no motor (todas desligadas por padrão): `teamShare`, `teamGive`, `teamFall`. Script: `prototipo/tests/sim_duplas_variantes.js`.
+
+| Variante | Disputas | Rodadas | Dupla A | Dupla da 1ª queda vence | Terminam com 1 vivo |
+|---|---|---|---|---|---|
+| Base | 25 | 7,9 | 52,2% | 15,6% | 27% |
+| Reserva compartilhada (sem reserva, compra metade da do parceiro) | 23 | 7,0 | 50,5% | 11,8% | 19% |
+| Doação 2 (com ≤2 cartas, o parceiro com ≥8 entrega 2) | 23 | 7,2 | 50,2% | 11,0% | 17% |
+| Doação 3 | 24 | 7,4 | 50,3% | 11,0% | 19% |
+| Compartilhada + doação 2 | 23 | 6,8 | 49,7% | 9,0% | 14% |
+| A queda de um jogador derrota a dupla | 16 | 4,6 | 51,4% | 0% (por definição) | 0% |
+
+Leitura: ajudar o parceiro reduz os finais "1 contra 2" (27% → 14%), mas não faz a dupla que cai primeiro virar (continua ≤12%): quem cai primeiro já era a mais fraca. "Queda derrota a dupla" elimina o 1×2 e encurta a partida em 1/3, mas faz cada jogador depender do parceiro. "Ver a carta do parceiro" não foi simulado (os bots não sabem usar a informação); beneficiaria humanos.

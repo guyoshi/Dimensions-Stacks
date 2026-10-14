@@ -493,9 +493,14 @@
 
     // ---------------------------------------------------------------- combate
     async refill() {
+      if (this.cfg.teams && this.cfg.teamGive) this.teamGive();
       for (const pid of this.order()) {
         const p = this.p(pid);
         if (p.deck.length === 0) {
+          if (p.reserve.length === 0 && this.cfg.teams && this.cfg.teamShare) {   // [teste] compra da reserva do parceiro
+            const mate = this.alive().find(x => this.sameTeam(x, pid)); const m = mate != null ? this.p(mate) : null;
+            if (m && m.reserve.length > 0) { const n = Math.min(7, Math.ceil(m.reserve.length / 2)); p.reserve.push(...m.reserve.splice(0, n)); this.log(`${p.name} compra ${n} cartas da reserva do parceiro ${m.name}.`, 'efeito'); this.memInit(); }
+          }
           if (p.reserve.length > 0) {
             let take = p.reserve.splice(0, 7);
             // quem compra da reserva reordena as cartas que entram: sempre há estratégia, nunca sorte
@@ -506,8 +511,19 @@
         }
       }
     }
+    // [teste] doação (cfg.teamGive = n): quem está com ≤2 cartas recebe n do parceiro, se este tiver ≥ 6+n (reserva primeiro)
+    teamGive() {
+      const n = this.cfg.teamGive;
+      for (const pid of this.alive()) {
+        const p = this.p(pid), mate = this.alive().find(x => this.sameTeam(x, pid)); if (mate == null) continue; const m = this.p(mate);
+        if (this.totalCards(p) <= 2 && this.totalCards(m) >= 6 + n) {
+          const give = []; for (let i = 0; i < n; i++) give.push(m.reserve.length ? m.reserve.pop() : m.deck.pop());
+          p.reserve.push(...give); this.memInit(); this.s.gave = (this.s.gave || 0) + 1; this.log(`${m.name} entrega ${n} cartas ao parceiro ${p.name}.`, 'efeito');
+        }
+      }
+    }
     async eliminate(pid) {
-      const p = this.p(pid);
+      const p = this.p(pid); if (this.s.crisis == null) this.s.crisis = this.teamOf(pid);
       p.alive = false;
       p.prepared.forEach(c => this.s.bh.push({ id: c, kind: 'especial' })); p.prepared = [];
       this.log(`${p.name} foi eliminado!`, 'elim'); await this.emit('eliminated', { pid });
@@ -515,8 +531,9 @@
     checkEnd() {
       const al = this.alive();
       if (this.cfg.teams) {
-        const teams = [...new Set(al.map(x => this.teamOf(x)))];
-        if (teams.length <= 1) { this.s.over = true; this.s.winner = al.length ? al[0] : null; this.s.winnerTeam = teams[0] ?? null; return true; }
+        let teams = [...new Set(al.map(x => this.teamOf(x)))];
+        if (this.cfg.teamFall) { const dead = new Set(this.s.players.filter(q => !q.alive).map(q => this.teamOf(q.pid))); teams = teams.filter(t => !dead.has(t)); }
+        if (teams.length <= 1) { this.s.over = true; this.s.winner = teams.length ? al.find(x => this.teamOf(x) === teams[0]) : null; this.s.winnerTeam = teams[0] ?? null; return true; }
         if (this.s.combats >= this.cfg.maxCombats) {
           this.s.over = true; const tot = {}; al.forEach(pid => { const k = this.teamOf(pid); tot[k] = (tot[k] || 0) + this.totalCards(this.p(pid)); });
           const ks = Object.keys(tot).sort((a, b) => tot[b] - tot[a]); const tie = tot[ks[0]] === tot[ks[1]];
