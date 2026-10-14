@@ -970,3 +970,104 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .tbp.lose { opacity: .4; filter: grayscale(.6); transform: scale(.96); }
 .tbp.win { border-color: var(--gold2); box-shadow: 0 0 0 2px var(--gold2), 0 0 30px #f1ecdc88; transform: scale(1.05); }
 .tbp.win .tbt strong { color: var(--gold2); }
+
+/* ============ fenômenos dimensionais ============ */
+#rtrack { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 3px 10px 5px; font-size: 11.5px; color: var(--ink2); cursor: pointer; min-height: 24px; flex-wrap: nowrap; overflow: hidden; }
+#rtrack[hidden] { display: none; }
+#rtrack i { font-style: normal; opacity: .5; flex: none; }
+#rtrack .rt { --ec: var(--ink2); display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 99px; background: #ffffff0a; border: 1px solid var(--line); white-space: nowrap; min-width: 0; }
+#rtrack .rt b { font-weight: 800; letter-spacing: .03em; }
+#rtrack .rt.cur { color: var(--ink); background: #ffffff14; }
+#rtrack .rt em { font-style: normal; font-weight: 800; color: var(--ec); overflow: hidden; text-overflow: ellipsis; max-width: 26vw; }
+#rtrack .rt.cur em { max-width: 44vw; }
+#rtrack .rt.has { border-color: var(--ec); box-shadow: 0 0 .8em color-mix(in srgb, var(--ec) 35%, transparent); }
+#rtrack .rt.cur.has { animation: rtglow 2.4s ease-in-out infinite; }
+@keyframes rtglow { 50% { box-shadow: 0 0 1.3em color-mix(in srgb, var(--ec) 65%, transparent); } }
+.evbox { display: flex; flex-direction: column; gap: 8px; }
+.evrow { --ec: var(--line); padding: 10px 12px; border-radius: 12px; border: 1px solid var(--ec); background: #ffffff08; }
+.evrow.none { opacity: .6; }
+.evrow b { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.evrow .evn { display: block; font-weight: 900; font-size: 16px; color: var(--ec); margin-top: 2px; }
+.evrow p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.4; }
+.evnote { --ec: var(--gold); margin-top: 4px; padding: 5px 9px; border-radius: 10px; border: 1px solid var(--ec); background: color-mix(in srgb, var(--ec) 12%, transparent); font-size: 12.5px; line-height: 1.35; }
+.evnote b { color: var(--ec); }
+.evlist { margin: 6px 0; padding-left: 18px; font-size: 13.5px; line-height: 1.45; }
+
+/* marcas nas cartas: Eclipse (✕) e Troca (⇄) */
+.st.ecl { position: relative; }
+.st.ecl b { color: #ff5f5f; text-decoration: line-through; opacity: .85; }
+.st.ecl::after { content: '✕'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.9em; font-weight: 900; color: #ff3b3b; text-shadow: 0 0 .3em #000, 0 0 .6em #ff3b3b; pointer-events: none; animation: eclin .5s ease-out; }
+@keyframes eclin { from { transform: scale(2.4); opacity: 0; } }
+.st.swp { box-shadow: 0 0 0 1px #ff7ab0, 0 0 .7em #ff7ab088; animation: swpflip .9s ease-in-out; }
+.st.swp::after { content: '⇄'; position: absolute; right: -.15em; top: -.55em; font-size: .85em; color: #ff7ab0; text-shadow: 0 0 .3em #000; }
+.st { position: relative; }
+@keyframes swpflip { 0% { transform: rotateX(0); } 40% { transform: rotateX(90deg) scale(1.15); } 60% { transform: rotateX(-90deg) scale(1.15); } 100% { transform: rotateX(0); } }
+.attrbtn.ecl { border-color: #ff5f5f; opacity: .75; }
+.attrbtn.ecl .v { text-decoration: line-through; color: #ff6b6b; }
+.attrbtn.ecl::after { content: '✕'; position: absolute; right: 52px; top: 50%; transform: translateY(-50%); color: #ff3b3b; font-weight: 900; font-size: 22px; }
+.attrbtn.swp { border-color: #ff7ab0; animation: swpbtn .9s ease-in-out; }
+.attrbtn.swp::after { content: '⇄'; position: absolute; right: 52px; top: 50%; transform: translateY(-50%); color: #ff7ab0; font-weight: 900; font-size: 20px; }
+.attrbtn.evup .v { color: #7dffb0; }
+.attrbtn.evdn .v { color: #ff8a8a; }
+.attrbtn { position: relative; }
+@keyframes swpbtn { 0%, 100% { transform: none; } 50% { transform: scale(1.04) rotate(-1deg); } }
+
+/* animações de tela cheia dos fenômenos */
+.evfx { position: fixed; inset: 0; z-index: 70; pointer-events: none; overflow: hidden; animation: evlife 3.2s ease-out forwards; }
+@keyframes evlife { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+/* Maré de Força: ondas de calor sobem pela tela */
+.ev-forca .wv { position: absolute; left: -10%; right: -10%; bottom: -60%; height: 70%; background: radial-gradient(ellipse at 50% 100%, #ff6a3dcc, #ff8a5c55 45%, transparent 70%); animation: wvup 2.4s ease-in forwards; }
+.ev-forca .wv.w2 { animation-delay: .5s; background: radial-gradient(ellipse at 50% 100%, #ffd25fcc, #ff8a5c44 45%, transparent 70%); }
+@keyframes wvup { to { transform: translateY(-190%); } }
+.ev-forca .sh { position: absolute; left: 50%; top: 50%; width: 30vmin; height: 30vmin; margin: -15vmin; border-radius: 50%; border: 6px solid #ff8a5c; animation: shk 1.1s ease-out forwards; }
+@keyframes shk { from { transform: scale(.1); opacity: 1; } to { transform: scale(5); opacity: 0; } }
+/* Névoa Mental: névoa violeta à deriva */
+.ev-nevoa .fg { position: absolute; width: 120%; height: 60%; left: -10%; top: 10%; background: radial-gradient(ellipse at 50% 50%, #c58cffaa, #7a5cff44 50%, transparent 72%); filter: blur(20px); animation: fgd 3s ease-in-out forwards; opacity: 0; }
+.ev-nevoa .fg.f2 { top: 35%; animation-delay: .3s; animation-direction: reverse; }
+.ev-nevoa .fg.f3 { top: 55%; animation-delay: .6s; }
+@keyframes fgd { 0% { transform: translateX(-30%); opacity: 0; } 30% { opacity: .9; } 100% { transform: translateX(30%); opacity: .1; } }
+/* Eco: anéis concêntricos */
+.ev-eco .rg { position: absolute; left: 50%; top: 50%; width: 24vmin; height: 24vmin; margin: -12vmin; border-radius: 50%; border: 4px solid #7fdcff; box-shadow: 0 0 20px #7fdcff, inset 0 0 20px #7fdcff66; opacity: 0; animation: rgx 2.2s ease-out forwards; }
+.ev-eco .rg.r2 { animation-delay: .35s; } .ev-eco .rg.r3 { animation-delay: .7s; } .ev-eco .rg.r4 { animation-delay: 1.05s; }
+@keyframes rgx { 0% { transform: scale(.2); opacity: 1; } 100% { transform: scale(4.5); opacity: 0; } }
+/* Batalha Aberta: quatro feixes, um por atributo, que se chocam no centro */
+.ev-aberta .ln { position: absolute; background: linear-gradient(90deg, transparent, var(--lc), transparent); height: 6px; width: 60vmin; box-shadow: 0 0 16px var(--lc); }
+.ev-aberta .ln[data-a="pod"] { --lc: #ff8a5c; } .ev-aberta .ln[data-a="def"] { --lc: #6cc6ff; } .ev-aberta .ln[data-a="int"] { --lc: #c58cff; } .ev-aberta .ln[data-a="vel"] { --lc: #7dffb0; }
+.ev-aberta .l0 { left: -60vmin; top: 50%; animation: lnh 1.2s ease-in forwards; }
+.ev-aberta .l1 { right: -60vmin; top: 50%; animation: lnh2 1.2s ease-in .1s forwards; }
+.ev-aberta .l2 { top: -10vmin; left: 50%; margin-left: -30vmin; transform: rotate(90deg); animation: lnv 1.2s ease-in .2s forwards; }
+.ev-aberta .l3 { bottom: -10vmin; left: 50%; margin-left: -30vmin; transform: rotate(90deg); animation: lnv2 1.2s ease-in .3s forwards; }
+@keyframes lnh { to { transform: translateX(calc(50vw + 60vmin)); } } @keyframes lnh2 { to { transform: translateX(calc(-50vw - 60vmin)); } }
+@keyframes lnv { to { transform: rotate(90deg) translateX(calc(50vh + 30vmin)); } } @keyframes lnv2 { to { transform: rotate(90deg) translateX(calc(-50vh - 30vmin)); } }
+.ev-aberta .fl { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #fff, #ffd25f88 20%, transparent 50%); opacity: 0; animation: flsh 1s ease-out 1.1s forwards; }
+@keyframes flsh { 0% { opacity: 0; transform: scale(.3); } 20% { opacity: 1; } 100% { opacity: 0; transform: scale(2); } }
+/* Tempestade Lateral: rajadas de vento para a direita */
+.ev-tempestade { background: linear-gradient(90deg, #0a1020aa, #0a102000); }
+.ev-tempestade .wd { position: absolute; left: -45%; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, #cfe8ffcc); animation: wdr .9s linear infinite; }
+@keyframes wdr { to { transform: translateX(260vw); } }
+/* Maré do Buraco Negro: vórtice */
+.ev-buraco .vx { position: absolute; left: 50%; top: 50%; width: 46vmin; height: 46vmin; margin: -23vmin; border-radius: 50%; background: conic-gradient(from 0deg, #000, #7a3cff, #00e5ff, #ff3cac, #000); filter: blur(2px); -webkit-mask: radial-gradient(circle, transparent 18%, #000 20%, #000 60%, transparent 72%); mask: radial-gradient(circle, transparent 18%, #000 20%, #000 60%, transparent 72%); animation: vxs 2.6s ease-in-out forwards; }
+.ev-buraco .vx.v2 { animation-direction: reverse; animation-delay: .2s; opacity: .6; }
+@keyframes vxs { 0% { transform: scale(.1) rotate(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.6) rotate(540deg); opacity: 0; } }
+/* Eclipse: disco escuro cobre um anel de luz */
+.ev-eclipse .dk { position: absolute; left: 50%; top: 50%; width: 34vmin; height: 34vmin; margin: -17vmin; border-radius: 50%; background: #000; box-shadow: 0 0 0 3px #ffb02e, 0 0 40px 12px #ffd25faa, 0 0 120px 40px #ff7a4533; animation: ecd 2.6s ease-in-out forwards; }
+.ev-eclipse .co { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, transparent 0, #000000bb 70%); animation: ecc 2.6s ease-in-out forwards; }
+@keyframes ecd { 0% { transform: translateX(-80vw); } 45%, 70% { transform: translateX(0); } 100% { transform: translateX(80vw); } }
+@keyframes ecc { 0%, 100% { opacity: 0; } 45%, 70% { opacity: 1; } }
+/* Mundo ao Avesso: cores invertidas e seta de cabeça para baixo */
+.ev-avesso { animation: evlife 3.2s ease-out forwards, avinv 2.4s ease-in-out; backdrop-filter: invert(1) hue-rotate(180deg); -webkit-backdrop-filter: invert(1) hue-rotate(180deg); }
+@keyframes avinv { 0%, 100% { backdrop-filter: invert(0); } 20%, 80% { backdrop-filter: invert(1) hue-rotate(180deg); } }
+.ev-avesso .ar { position: absolute; left: 50%; top: 50%; font-style: normal; font-size: 34vmin; line-height: 1; color: #8be0a6; text-shadow: 0 0 30px #000; transform: translate(-50%, -50%); animation: arfl 2.4s ease-in-out forwards; }
+@keyframes arfl { 0% { transform: translate(-50%, -50%) rotate(0) scale(.3); opacity: 0; } 30% { opacity: 1; } 70% { transform: translate(-50%, -50%) rotate(180deg) scale(1); } 100% { transform: translate(-50%, -50%) rotate(180deg) scale(1.4); opacity: 0; } }
+/* Troca Dimensional: os dois atributos trocam de lugar */
+.ev-troca { display: grid; place-items: center; }
+.ev-troca .sw { display: flex; align-items: center; gap: 4vmin; font-size: 8vmin; }
+.ev-troca .sw span { display: grid; place-items: center; gap: 4px; padding: 3vmin; border-radius: 4vmin; background: #0b0c10e6; border: 3px solid var(--ac); box-shadow: 0 0 24px var(--ac); }
+.ev-troca .sw svg { width: 12vmin; height: 12vmin; }
+.ev-troca .sw small { font-size: 3.2vmin; font-weight: 800; color: var(--ink); }
+.ev-troca .sw b { color: #ff7ab0; font-size: 12vmin; animation: tsp 1.6s ease-in-out infinite; }
+.ev-troca .sa { animation: tsa 2.4s ease-in-out forwards; } .ev-troca .sb { animation: tsb 2.4s ease-in-out forwards; }
+@keyframes tsa { 0%, 25% { transform: translateX(0); } 65%, 100% { transform: translateX(calc(100% + 16vmin)); } }
+@keyframes tsb { 0%, 25% { transform: translateX(0); } 65%, 100% { transform: translateX(calc(-100% - 16vmin)); } }
+@keyframes tsp { 50% { transform: scale(1.3); } }
+@media (prefers-reduced-motion: reduce) { .evfx * { animation-duration: .01s !important; } }

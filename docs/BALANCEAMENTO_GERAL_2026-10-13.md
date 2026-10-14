@@ -173,3 +173,21 @@ Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_1
 - **Prévia de conversão:** em especiais que convertem ou somam atributos (Resistência passa a valer a Inteligência etc.), a folha de escolha mostra "Sua carta: atributo a → b" com os valores resultantes antes de o jogador confirmar.
 - **Reordenar ao comprar da reserva:** o jogador reordena as cartas que acabou de comprar (até 6). O bot ordena sozinho. Início da partida: a ordem da reserva segue aleatória (a mão inicial já é ordenada pelo jogador).
 
+
+## Fenômenos dimensionais — teste de estresse (14/10/2026)
+`tests/sim_eventos.js`: 4 bots (fácil/normal/difícil/difícil), 14 cartas, 150 jogos por linha, com o evento FORÇADO em todas as rodadas (muito mais severo que o real, ~15% das rodadas).
+
+| Evento | Rodadas méd. | Vence fácil/normal/difícil | Iniciador vence | Ataque/Defesa |
+|---|---|---|---|---|
+| base (sem evento) | 13,4 | 9% / 25% / 66% | 56% | 63/36 |
+| Maré de Força | 18,3 | 8 / 18 / 74 | 57% | 77/22 |
+| Névoa Mental | 17,9 | 7 / 19 / 73 | 56% | 78/21 |
+| Eco | 13,4 | 7 / 27 / 67 | 56% | 63/36 |
+| Batalha Aberta | 15,3 | 11 / 17 / 72 | 40% | 68/31 |
+| Tempestade | 14,0 | 11 / 19 / 69 | 54% | 64/35 |
+| Buraco Negro | 15,8 | 11 / 21 / 68 | 55% | 64/36 |
+| Eclipse | 10,8 | 14 / 27 / 59 | 45% | 49/51 |
+| Avesso | 13,8 | 15 / 23 / 63 | 44% | 54/46 |
+| Troca | 13,0 | 4 / 21 / 75 | 56% | 62/37 |
+
+Resultado: 0 falhas, conservação de cartas e duplicatas OK, nenhuma partida chegou ao limite. Nada decide a partida sozinho; o nível do jogador continua mandando (difícil sempre ≥59%). Observações: Força/Névoa alongam a partida ~35% quando forçadas todas as rodadas (ataque ganha mais); Eclipse encurta; Avesso e Aberta reduzem a vantagem do iniciador (de 56% para 44% e 40%). Achado e corrigido: os bots ignoravam o Avesso (jogavam para o maior) — agora invertem a previsão; antes o fácil vencia 31% e o iniciador só 19%.

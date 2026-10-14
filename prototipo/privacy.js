@@ -21,10 +21,10 @@
       if (type === 'combatStart') { f.combatOn = true; f.initAnn = false; f.revealed = false; } else if (type === 'initiatorAttr') f.initAnn = true; else if (type === 'reveal') f.revealed = true;
     };
     // disputa em formato de rede, completa (sem ocultar nada)
-    const serCombat = c => c ? ({ initiator: c.initiator, order: c.order, specialsAllowed: c.specialsAllowed, ctl: { universal: !!(c.ctl && c.ctl.universal) },
-      entries: c.entries.map(e => ({ pid: e.pid, card: e.card, stats: e.stats, bonus: e.bonus, extra: e.extra, attr: (f.revealed || (f.initAnn && e.pid === c.initiator)) ? e.attr : null, withdrawn: !!e.withdrawn, gone: !!e.gone })) }) : null;
+    const serCombat = c => c ? ({ initiator: c.initiator, order: c.order, ev: c.ev || null, specialsAllowed: c.specialsAllowed, ctl: { universal: !!(c.ctl && c.ctl.universal) },
+      entries: c.entries.map(e => ({ pid: e.pid, card: e.card, stats: e.stats, evm: e.evm || null, bonus: e.bonus, extra: e.extra, attr: (f.revealed || (f.initAnn && e.pid === c.initiator)) ? e.attr : null, withdrawn: !!e.withdrawn, gone: !!e.gone })) }) : null;
     // antes da revelação, a carta de cada rival na mesa é secreta
-    const maskCombat = (c, r) => (!c || f.revealed) ? c : Object.assign({}, c, { entries: c.entries.map(e => e.pid === r ? e : Object.assign({}, e, { card: HID, stats: ZERO, bonus: 0, extra: (e.extra || []).map(() => HID) })) });
+    const maskCombat = (c, r) => (!c || f.revealed) ? c : Object.assign({}, c, { entries: c.entries.map(e => e.pid === r ? e : Object.assign({}, e, { card: HID, stats: ZERO, evm: null, bonus: 0, extra: (e.extra || []).map(() => HID) })) });
     const cb = (c, r) => maskCombat(serCombat(c), r);
     const serEvent = (type, data) => {
       const o = {}; for (const k in data) { const v = data[k];
@@ -41,6 +41,7 @@
       if (o.combat) o.combat = maskCombat(o.combat, r);
       if (type === 'resolved' && o.calc && !f.revealed) o.calc = Object.assign({}, o.calc, { rows: o.calc.rows.map(w => w.pid === r ? w : Object.assign({}, w, { card: HID, attr: null, base: null, parts: [], extra: [], bonus: 0, total: null, statsAfter: null, sum4: 0 })) });
       if (type === 'steal' && o.from !== r && o.to !== r) o.card = HID;
+      else if (type === 'eventFx' && o.moves) o.moves = o.moves.map(m => (m.from === r || m.to === r) ? m : Object.assign({}, m, { card: HID }));
       else if (type === 'refill' && o.pid !== r && o.cards) o.cards = o.cards.map(() => HID);
       else if (type === 'extra' && !f.revealed && o.pid !== r) o.card = HID;
       else if (type === 'swapCard' && !f.revealed && o.pid !== r) { o.card = HID; o.old = HID; }
@@ -49,7 +50,7 @@
     // estado da mesa visto por r: dos outros só as quantidades
     const state = r => ({ players: G.s.players.map(p => { const own = p.pid === r, h = a => own ? a.slice() : a.map(() => HID);
         return { pid: p.pid, name: p.name, bot: p.bot, avatar: p.avatar, alive: p.alive, deck: h(p.deck), reserve: h(p.reserve), prepared: h(p.prepared) }; }),
-      bh: G.s.bh.map(x => x.kind === 'normal' ? x.id : x.id + ':' + x.kind), round: G.s.round, combats: G.s.combats, initiator: G.s.initiator, over: G.s.over, winner: G.s.winner, byLimit: G.s.byLimit });
+      bh: G.s.bh.map(x => x.kind === 'normal' ? x.id : x.id + ':' + x.kind), round: G.s.round, events: G.s.events || {}, combats: G.s.combats, initiator: G.s.initiator, over: G.s.over, winner: G.s.winner, byLimit: G.s.byLimit });
     // escolha de cartas às cegas: os ids viram posições ("?0", "?1"…) e a resposta volta ao id real
     const blind = spec => { const map = {}; const cards = spec.cards.map((c, i) => { map[HID + i] = c; return HID + i; }); return { spec: Object.assign({}, spec, { cards }), map }; };
     return { f, note, serCombat, cb, ev, state, blind };

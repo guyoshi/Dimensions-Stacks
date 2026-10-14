@@ -60,8 +60,8 @@
 
   // ---------------------------------------------------------------- conquistas
   // ---------------------------------------------------------------- maestria por carta
-  // Reconhecimento e personalização apenas: não altera nenhum atributo nem regra. XP = usos×1 + disputas vencidas×3 + especiais resolvidos×2.
-  const MAST_AT = [3, 8, 18, 35, 60], MAST_NOME = ['Sem emblema', 'Iniciado', 'Veterano', 'Mestre', 'Lenda', 'Dimensional'], MAST_XP = { u: 1, w: 3, s: 2 };
+  // Reconhecimento e personalização apenas: não altera nenhum atributo nem regra. XP = usos×1 + disputas vencidas×3 + especiais resolvidos×2 (média real ≈ 2,5 XP por uso). Limiares ≈ 5 / 15 / 35 / 85 / 185 usos acumulados.
+  const MAST_AT = [12, 38, 88, 210, 460], MAST_NOME = ['Sem emblema', 'Iniciado', 'Veterano', 'Mestre', 'Lenda', 'Dimensional'], MAST_XP = { u: 1, w: 3, s: 2 };
   function masteryOf(id, pr) {
     const p = pr || profile(), m = (p.mast && p.mast[id]) || { u: 0, w: 0, s: 0 }, xp = m.u * MAST_XP.u + m.w * MAST_XP.w + m.s * MAST_XP.s; let lv = 0;
     MAST_AT.forEach((t, i) => { if (xp >= t) lv = i + 1; });

@@ -11,11 +11,12 @@ const N = +process.argv[2] || 60; let leaks = 0, checked = 0, evs = 0;
       G.s.bh.forEach(x => set.delete(x.id)); return set; };
     let pub = new Set(), mine = {}; const scan = (txt, r, what, type) => { checked++; const set = priv(r); pub.forEach(c => set.delete(c)); (mine[r] || []).forEach(c => set.delete(c)); for (const c of set) {
         if (txt.includes('"' + c + '"') || txt.includes('"' + c + ':')) { leaks++; if (leaks < 8) console.log('VAZOU id', c, 'para', r, 'em', what, type); }
-        else if (txt.includes(CARDS[c].nome)) { leaks++; if (leaks < 400) console.log('VAZOU nome', CARDS[c].nome, 'para', r, 'em', what, type); } } };
+        else if (new RegExp(CARDS[c].nome.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\p{L}])', 'u').test(txt)) { leaks++; if (leaks < 400) console.log('VAZOU nome', CARDS[c].nome, 'para', r, 'em', what, type); } } };
     const io = { notify: async (type, data) => {
       pr.note(type); evs++; data = data || {}; pub = new Set(); if (pr.f.revealed) { const cb = data.combat || G.combat; if (cb) cb.entries.forEach(e => { pub.add(e.card); (e.extra || []).forEach(c => pub.add(c)); }); } (data.moves || []).forEach(m => (m.cards || []).forEach(c => pub.add(c))); (data.acts || []).forEach(a => pub.add(a.card)); if (data.act) pub.add(data.act.card);
+      if (type === 'eventFx' && data.cards) data.cards.forEach(c => pub.add(c));   // Maré do Buraco Negro: cartas que saíram do Buraco Negro (públicas)
       if (type === 'specialsDone') (data.claimed || []).forEach(x => pub.add(x.card));   // especial usado já foi revelado ao virar
-      mine = {}; for (let r = 0; r < n; r++) { mine[r] = []; if (type === 'peek' && data.pid === r) mine[r].push(...(data.cards || [])); if (type === 'steal' && (data.from === r || data.to === r)) mine[r].push(data.card); if (type === 'discard' || type === 'rescue') mine[r].push(data.card); }
+      mine = {}; for (let r = 0; r < n; r++) { mine[r] = []; if (type === 'eventFx' && data.moves) data.moves.forEach(m => { if (m.from === r || m.to === r) mine[r].push(m.card); }); if (type === 'peek' && data.pid === r) mine[r].push(...(data.cards || [])); if (type === 'steal' && (data.from === r || data.to === r)) mine[r].push(data.card); if (type === 'discard' || type === 'rescue') mine[r].push(data.card); }
       for (let r = 0; r < n; r++) {
         if (type === 'peek' && data.pid !== r) continue;
         const o = { t: type, d: pr.ev(type, data, r), st: pr.state(r) }; if (pr.f.combatOn && G.combat && type !== 'combatEnd') o.cb = pr.cb(G.combat, r);

@@ -39,6 +39,7 @@
 
   // ---------------------------------------------------------------- helpers visuais
   function banner(title, sub, color, ms) {
+    try { U.layer().querySelectorAll('.banner').forEach(x => x.remove()); } catch (e) { }
     const b = el(`<div class="banner" style="--d:${((ms || 1800) * S.k) / 1000}s;${color ? `--bc:${color}` : ''}"><b>${esc(title)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`);
     U.layer().appendChild(b); setTimeout(() => b.remove(), (ms || 1800) * S.k + 100);
   }
@@ -152,8 +153,8 @@
     $('#game').innerHTML = `<header class="hud"><button class="ibtn" id="bMenu" title="Menu">☰</button>
       <div class="mid"><b>DIMENSIONS STACKS</b><div id="hSub"></div></div>
       <button class="ibtn" id="bCalc" title="Ver cálculo da última disputa" disabled>🧮</button><button class="ibtn" id="bLog" title="Registro">📜</button><button class="ibtn" id="bSnd" title="Som">🔊</button><button class="ibtn" id="bSpd" title="Velocidade">⏩</button></header>
-      <main class="board" id="board"></main><div id="caption"></div><div id="dock" hidden></div>`;
-    $('#bMenu').onclick = gameMenu;
+      <div id="rtrack" hidden></div><main class="board" id="board"></main><div id="caption"></div><div id="dock" hidden></div>`;
+    $('#bMenu').onclick = gameMenu; $('#rtrack').onclick = showEvents;
     $('#bLog').onclick = toggleLog;
     $('#bCalc').onclick = () => showCalc();
     $('#bSnd').onclick = () => { V.muted = !V.muted; SND.setVol('master', V.muted ? 0 : S.master); $('#bSnd').textContent = V.muted ? '🔇' : '🔊'; };
@@ -187,10 +188,10 @@
     const iWon = w.pid === me, iLost = me >= 0 && !iWon && live.some(r => r.pid === me);
     const bonusOf = r => r.parts.filter(m => m.d !== 0);
     if (w.autoWin) out.push(`${Nc(w.pid)} venceu automaticamente por efeito de um especial, sem comparar valores.`);
-    else if (c.tb) out.push(`O maior valor (${c.tb.top}) empatou; o desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma de Força + Inteligência'} deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
+    else if (c.tb) out.push(`O ${c.inv ? 'menor' : 'maior'} valor (${c.tb.top}) empatou; o desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma de Força + Inteligência'} deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
     else if (L) {
       const lead = `${wa} ${w.total} de ${N(w.pid)} contra ${ATT[L.attr] ? ATT[L.attr].nome : '—'} ${L.total} de ${N(L.pid)}`;
-      out.push(iLost ? `Você perdeu porque ${lead}.` : iWon ? `Você venceu: ${lead}.` : `${Nc(w.pid)} venceu: ${lead}.`);
+      out.push((c.inv ? '(Mundo ao Avesso: vence o menor valor.) ' : '') + (iLost ? `Você perdeu porque ${lead}.` : iWon ? `Você venceu: ${lead}.` : `${Nc(w.pid)} venceu: ${lead}.`));
       if (w.margin !== true && L.margin) out.push(`${Nc(L.pid)} tinha uma regra de margem que o permitia disputar o desempate.`);
     }
     // causas por bônus
@@ -267,7 +268,7 @@
   }
   function refresh() {
     if (!G || !V.seats[0] && !Object.keys(V.seats).length) return;
-    const s = G.s;
+    const s = G.s; renderTrack();
     { const al = s.players.filter(p => p.alive), mc = al.length ? Math.min(...al.map(p => p.deck.length + p.reserve.length)) : 99;   // trilha: acelera perto do fim
       SND.matchLevel && SND.matchLevel(al.length <= 2 && mc <= 2 ? 2 : (al.length <= 2 && mc <= 5) || mc <= 2 ? 1 : 0); }
     s.players.forEach(p => {
@@ -311,7 +312,7 @@
   function updateSlot(e) {
     const slot = V.slots[e.pid], card = $('.card', slot); if (!card) return;
     if (!e.attr || !card.classList.contains('up')) { return; }
-    updateCard(card, e.stats, e.attr);
+    updateCard(card, e.stats, e.attr, e.evm);
     let b = $('.badge', slot); const val = e.stats[e.attr] + e.bonus;
     if (!b) { b = el('<div class="badge"></div>'); slot.append(b); }
     const prev = b.dataset.v; b.dataset.v = val; b.dataset.a = e.attr;
@@ -334,7 +335,7 @@
       const e = order[i], last = i === order.length - 1 && order.length > 1, slot = V.slots[e.pid];
       if (last) { slot.classList.remove('tremble'); slot.classList.add('charging'); await sleep(1300); }
       slot.classList.remove('tremble', 'charging');
-      let ci = cardIn(e.pid); if (ci && ci.dataset.hidden && e.card && e.card !== '?') { const real = cardEl(e.card, { stats: e.stats }); ci.replaceWith(real); ci = real; void ci.offsetWidth; }   // online: a carta do rival só chega agora
+      let ci = cardIn(e.pid); if (ci && ci.dataset.hidden && e.card && e.card !== '?') { const real = cardEl(e.card, { stats: e.stats, mark: e.evm }); ci.replaceWith(real); ci = real; void ci.offsetWidth; }   // online: a carta do rival só chega agora
       ci.classList.add('up');
       const cd = e.card && e.card !== '?' ? CARDS[e.card] : null, big = cd && (cd.uniao || cd.raridade === 'lendaria');
       SND.play(big ? 'legend' : (last ? 'reveal' : 'flip'));
@@ -348,11 +349,49 @@
     caption('');
   }
 
+  // ---------------------------------------------------------------- fenômenos dimensionais: faixa de rodadas, aviso e animações
+  const EVUI = {
+    forca: { cor: '#ff8a5c', sim: '⚔' }, nevoa: { cor: '#c58cff', sim: '☁' }, eco: { cor: '#7fdcff', sim: '◎' },
+    aberta: { cor: '#ffd25f', sim: '✶' }, tempestade: { cor: '#6cc6ff', sim: '↻' }, buraco: { cor: '#b78cff', sim: '●' },
+    eclipse: { cor: '#ff6b6b', sim: '◐' }, avesso: { cor: '#8be0a6', sim: '⇅' }, troca: { cor: '#ff7ab0', sim: '⇄' }
+  };
+  const evOf = r => { const e = G && G.s && G.s.events; return e ? e[r] || null : null; };
+  const evName = ev => E.EVENTOS[ev.id].nome + (ev.id === 'troca' && ev.pair ? ` (${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome})` : '');
+  function renderTrack() {
+    const t = $('#rtrack'); if (!t || !G) return; const r = G.s.round;
+    if (!G.s.events || !Object.keys(G.s.events).length) { t.hidden = true; return; }
+    t.hidden = false;
+    const chip = (n, cur) => { const ev = evOf(n), ui = ev && EVUI[ev.id];
+      return `<span class="rt${cur ? ' cur' : ''}${ev ? ' has' : ''}"${ev ? ` style="--ec:${ui.cor}"` : ''}><b>${cur ? 'Rodada ' + n : 'R' + n}</b>${ev ? `<em>${ui.sim} ${esc(cur ? evName(ev) : E.EVENTOS[ev.id].nome)}</em>` : ''}</span>`; };
+    t.innerHTML = chip(r, true) + '<i>›</i>' + chip(r + 1) + '<i>›</i>' + chip(r + 2);
+    t.title = 'Toque para ver os fenômenos dimensionais';
+  }
+  function showEvents() {
+    SND.play('click'); const r = G.s.round, rows = [];
+    for (let n = r; n <= r + 2; n++) { const ev = evOf(n); rows.push(`<div class="evrow${ev ? '' : ' none'}"${ev ? ` style="--ec:${EVUI[ev.id].cor}"` : ''}><b>${n === r ? 'Rodada ' + n + ' (agora)' : 'Rodada ' + n}</b>${ev ? `<span class="evn">${EVUI[ev.id].sim} ${esc(evName(ev))}</span><p>${esc(E.EVENTOS[ev.id].txt)}</p>` : '<span class="hint">Sem fenômeno.</span>'}</div>`); }
+    U.modal(el(`<div class="evbox"><h2 style="color:var(--gold2)">Fenômenos dimensionais</h2><p class="hint">Algumas rodadas têm uma regra especial, avisada aqui com duas rodadas de antecedência.</p>${rows.join('')}</div>`));
+  }
+  // animação de tela cheia de cada fenômeno (não bloqueia o jogo)
+  function evFx(ev) {
+    const ly = U.layer(), ui = EVUI[ev.id], n = el(`<div class="evfx ev-${ev.id}" style="--ec:${ui.cor}"></div>`);
+    if (ev.id === 'forca') n.innerHTML = '<i class="wv"></i><i class="wv w2"></i><i class="sh"></i>';
+    else if (ev.id === 'nevoa') n.innerHTML = '<i class="fg"></i><i class="fg f2"></i><i class="fg f3"></i>';
+    else if (ev.id === 'eco') n.innerHTML = '<i class="rg"></i><i class="rg r2"></i><i class="rg r3"></i><i class="rg r4"></i>';
+    else if (ev.id === 'aberta') n.innerHTML = AIDS.map((a, i) => `<i class="ln l${i}" data-a="${a}"></i>`).join('') + '<i class="fl"></i>';
+    else if (ev.id === 'tempestade') n.innerHTML = Array.from({ length: 16 }, (_, i) => `<i class="wd" style="top:${4 + i * 6}%;animation-delay:${(i * 83) % 700}ms;width:${28 + (i * 37) % 40}%"></i>`).join('');
+    else if (ev.id === 'buraco') n.innerHTML = '<i class="vx"></i><i class="vx v2"></i>';
+    else if (ev.id === 'eclipse') n.innerHTML = '<i class="co"></i><i class="dk"></i>';
+    else if (ev.id === 'avesso') n.innerHTML = '<i class="ar">⇅</i>';
+    else if (ev.id === 'troca') { const [a, b] = ev.pair || ['pod', 'def']; n.innerHTML = `<div class="sw"><span class="sa" data-a="${a}">${ICON[a]}<small>${ATT[a].nome}</small></span><b>⇄</b><span class="sb" data-a="${b}">${ICON[b]}<small>${ATT[b].nome}</small></span></div>`; }
+    ly.appendChild(n); setTimeout(() => n.remove(), 3200 * S.k);
+  }
+  const EVSND = { forca: 'slash', nevoa: 'suspense', eco: 'bonus', aberta: 'legend', tempestade: 'steal', buraco: 'blackhole', eclipse: 'suspense', avesso: 'round', troca: 'capture' };
+
   // ---------------------------------------------------------------- desempate animado: atributos de cada empatado somados na tela
   async function tieBreak(tb, winner) {
     if (!tb || !tb.rows || tb.rows.length < 2) return;
     const rows = tb.rows, N = rows.length, ly = U.layer(), dl = N > 2 ? 170 : 260;
-    const box = el(`<div class="tbk"><h3>Empate em ${tb.top}!</h3><p class="tbs">Desempate: soma dos 4 atributos</p><div class="tbc" style="--n:${N}">${rows.map(r => `<div class="tbp" data-pid="${r.pid}" style="--pc:${PCOL[r.pid]}"><b class="tbn">${esc(nameOf(r.pid))}</b><div class="tba">${AIDS.map(a => `<span class="tbv" data-a="${a}">${ICON[a]}<em>${r.stats[a]}</em></span>`).join('')}</div><div class="tbt"><small>TOTAL</small><strong>0</strong></div></div>`).join('')}</div></div>`);
+    const box = el(`<div class="tbk"><h3>Empate em ${tb.top}!</h3><p class="tbs">Desempate: ${tb.inv ? 'a MENOR soma vence (Mundo ao Avesso)' : 'soma dos 4 atributos'}</p><div class="tbc" style="--n:${N}">${rows.map(r => `<div class="tbp" data-pid="${r.pid}" style="--pc:${PCOL[r.pid]}"><b class="tbn">${esc(nameOf(r.pid))}</b><div class="tba">${AIDS.map(a => `<span class="tbv" data-a="${a}">${ICON[a]}<em>${r.stats[a]}</em></span>`).join('')}</div><div class="tbt"><small>TOTAL</small><strong>0</strong></div></div>`).join('')}</div></div>`);
     ly.appendChild(box);
     const pn = pid => $(`.tbp[data-pid="${pid}"]`, box), sub = $('.tbs', box);
     const pop = el2 => { el2.classList.remove('pop'); void el2.offsetWidth; el2.classList.add('pop'); };
@@ -364,11 +403,11 @@
         p.classList.add('done'); await sleep(dl);
       }
     }
-    const best = (list) => Math.max(...list.map(x => x.v));
+    const inv = !!tb.inv, best = (list) => (inv ? Math.min : Math.max)(...list.map(x => x.v));
     await sleep(500);
     await sum(AIDS, rows.map(r => r.pid));
     const l1 = tb.s1 || tb.list, b1 = best(l1);
-    l1.forEach(x => { if (x.v < b1) pn(x.pid).classList.add('lose'); });
+    l1.forEach(x => { if (inv ? x.v > b1 : x.v < b1) pn(x.pid).classList.add('lose'); });
     await sleep(700);
     if (tb.stage === 2) {
       sub.textContent = 'Empatou de novo! Agora só Força + Inteligência'; SND.play('suspense');
@@ -376,7 +415,7 @@
       rows.forEach(r => { const p = pn(r.pid); if (!keep.includes(r.pid)) return; p.classList.remove('done'); $$('.tbv[data-a="def"], .tbv[data-a="vel"]', p).forEach(c => c.classList.add('off')); });
       await sleep(900);
       await sum(['pod', 'int'], keep);
-      const b2 = best(tb.list); tb.list.forEach(x => { if (x.v < b2) pn(x.pid).classList.add('lose'); });
+      const b2 = best(tb.list); tb.list.forEach(x => { if (inv ? x.v > b2 : x.v < b2) pn(x.pid).classList.add('lose'); });
       await sleep(600);
     }
     if (winner != null) { const w = pn(winner); if (w) { w.classList.add('win'); SND.play('win'); } sub.textContent = nameOf(winner) + ' leva o desempate'; }
@@ -407,6 +446,25 @@
       if (s) s.classList.remove('winspot');
       banner(`${nameOf(initiator)} começa!`, 'Agora monte seu baralho', null, 1400); await sleep(1100);
     },
+    async eventStart({ round, ev }) {
+      const d = E.EVENTOS[ev.id], ui = EVUI[ev.id]; refresh();
+      evFx(ev); SND.play(EVSND[ev.id] || 'round');
+      if (ev.id === 'forca' || ev.id === 'nevoa' || ev.id === 'eco') { const r = innerHeight / 2; FX.burst(innerWidth / 2, r, { n: 50, speed: 7, life: 55, colors: [ui.cor, '#fff'] }); }
+      banner(d.nome, ev.id === 'troca' && ev.pair ? `${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome}` : d.curto, ui.cor, 2600); caption(`Fenômeno dimensional: ${evName(ev)}. ${d.txt}`, true);
+      await sleep(2400);
+      if (U.tip) { if (V.online) U.tip('evento', ev); else await U.tip('evento', ev); }
+    },
+    async eventFx({ id, moves, pid, cards }) {
+      if (id === 'tempestade') {
+        await Promise.all((moves || []).map((m, i) => sleep(i * 160).then(() => { SND.play('deal'); return fly(seatDeck(m.from), seatDeck(m.to), { ms: 900, cw: 62, r0: -10, r1: 12, arc: 40, }); })));
+        refresh(); const me = (moves || []).find(m => m.to === V.viewer && V.humans === 1 && m.card && m.card !== '?');
+        if (me) { const c = CARDS[me.card]; caption(`Você recebeu ${c.nome} e vai jogar com ela.`, true); await sleep(900); }
+      } else if (id === 'buraco') {
+        if (pid == null) { caption('A maré do Buraco Negro passa sem efeito: ninguém está atrás.', true); await sleep(1200); return; }
+        for (const c of cards || []) { SND.play('steal'); await fly($('#bh'), seatDeck(pid), { id: c, ms: 800, cw: 62, r0: 360, s0: .1, arc: 30 }); pulseBH(); await sleep(120); }
+        refresh(); banner(nameOf(pid), `recebe ${(cards || []).length} carta(s) do Buraco Negro`, EVUI.buraco.cor, 1800); await sleep(1300);
+      }
+    },
     async ready() {
       V.init = G.s.initiator; refresh();
       for (let i = 0; i < 4; i++) { SND.play('deal'); await sleep(110); }
@@ -433,7 +491,7 @@
     async commit({ combat }) {
       V.combat = combat;
       for (const e of combat.entries) {
-        const slot = V.slots[e.pid]; const c = cardEl(e.card, { stats: e.stats }); c.style.visibility = 'hidden'; slot.append(c); slot.classList.add('has');
+        const slot = V.slots[e.pid]; const c = cardEl(e.card, { stats: e.stats, mark: e.evm }); c.style.visibility = 'hidden'; slot.append(c); slot.classList.add('has');
         await fly(seatDeck(e.pid), slot, { ms: 420, ease: 'cubic-bezier(.2,.8,.3,1)' });
         c.style.visibility = ''; SND.play('place'); slot.classList.add('pending'); await sleep(90);
       }
@@ -443,7 +501,7 @@
       const slot = V.slots[pid]; slot.classList.remove('pending');
       slot.append(el(`<div class="tag" data-a="${attr}" style="color:var(--ac)">${ICON[attr]}<span style="color:var(--ink)">${ATT[attr].nome} · ${ATT[attr].tipo}</span></div>`));
       SND.play('bonus'); const par = AIDS.filter(a => ATT[a].par === ATT[attr].par).map(a => ATT[a].nome).join(' ou ');
-      caption(`${nameOf(pid)} iniciou em ${ATT[attr].nome}. Os demais escolhem ${par} em segredo.`, true); await sleep(700);
+      caption(`${nameOf(pid)} iniciou em ${ATT[attr].nome}. Os demais escolhem ${V.combat && V.combat.ev && V.combat.ev.id === 'aberta' ? 'qualquer atributo' : par} em segredo.`, true); await sleep(700);
     },
     async reveal({ combat }) { await revealCards(combat); },
     async specialWindow({ stage }) {
@@ -632,11 +690,13 @@
           : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`;
-        const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div></div>
-          <div class="attrs">${options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
+        const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}</div>` : '';
+        const em = entry.evm || {};
+        const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}</div>
+          <div class="attrs">${options.map(a => `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
           ${spLine(entry.card, combat, canPrep)}</div>`);
           const big = window.matchMedia && window.matchMedia('(min-width: 900px) and (min-height: 640px)').matches;
-          $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats }));
+          $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats, mark: entry.evm }));
           return node; };
         for (;;) {
           const v = await ask(mk(), '.attrbtn, .prepbtn');
@@ -799,7 +859,7 @@
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
     newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, shared: true });
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };
@@ -875,7 +935,7 @@
         chooseTarget: wrap('chooseTarget', (p, cands, label) => [cands, label]),
       };
       const players = seats.map((s, i) => ({ name: s.name, bot: s.bot, avatar: i, diff: s.bot ? s.diff : undefined }));
-      G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, seed: cfg.seed, io });
+      G = new E.Game({ players, perPlayer: cfg.per, difficulty: cfg.diff, specialsFrom: cfg.sf, events: cfg.ev !== false, seed: cfg.seed, io });
       U.game = G;
       // queda de conexão: carência de 25 s (reconexões rápidas são normais); depois um CPU assume, com aviso na tela. O jogador pode voltar ao lugar.
       const grace = new Map(), present = peer => !!peer && link.peers().some(p => p.peer === peer);
@@ -918,7 +978,7 @@
     G = { cfg: { specialsFrom: cfg.sf }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
       p(pid) { return this.s.players[pid]; }, alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); } };
     U.game = G;
-    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit'].forEach(k => { G.s[k] = st[k]; }); };
+    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit', 'events'].forEach(k => { G.s[k] = st[k]; }); };
     let last = 0, synced = !ctl.rejoin, queue = Promise.resolve(); const answered = new Map(), inflight = new Set();
     const enqueue = fn => { queue = queue.then(fn).catch(e => { if (e !== 'abort') console.error('online', e); }); };
     off.push(link.on('ev', (m, msg) => {

@@ -223,8 +223,10 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
       <div class="seg" data-k="n">${[2, 3, 4].map(n => `<button data-v="${n}" class="${N === n ? 'on' : ''}" ${hum.length > n ? 'disabled' : ''}>${n}</button>`).join('')}</div>
       <div class="hint">Vagas sem humano são preenchidas pela CPU; escolha a dificuldade de cada um na lista acima.</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${per}</b></div>
-      <input type="range" min="7" max="${maxPer}" value="${per}" id="per">`
-        : `<div class="onwait">${sess.rejoining ? 'Voltando para a partida em andamento…' : 'Aguardando o anfitrião iniciar a partida…'}</div><div class="hint">Mesa de ${N} · ${per} cartas por jogador</div>`}
+      <input type="range" min="7" max="${maxPer}" value="${per}" id="per">
+      <div class="lbl">Fenômenos dimensionais</div>
+      <div class="seg" data-k="ev">${[[1, 'Ligados'], [0, 'Desligados']].map(([v, t]) => `<button data-v="${v}" class="${(cfg.ev === 0 ? 0 : 1) === v ? 'on' : ''}">${t}</button>`).join('')}</div>`
+        : `<div class="onwait">${sess.rejoining ? 'Voltando para a partida em andamento…' : 'Aguardando o anfitrião iniciar a partida…'}</div><div class="hint">Mesa de ${N} · ${per} cartas por jogador · fenômenos ${cfg.ev === 0 ? 'desligados' : 'ligados'}</div>`}
       <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-a="leave">← Sair da sala</button>${isHost ? `<button class="btn primary" data-a="start" ${canStart ? '' : 'disabled'}>Começar ▶</button>` : ''}</div>
     </div></div>`;
     s.onclick = async e => {
@@ -254,7 +256,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
     const hum = humansOrdered(); const cfg = sess.cfg; const N = Math.max(cfg.n || 2, Math.min(4, hum.length));
     const maxPer = Math.min(24, Math.floor(U.D.CARTAS.length / N)); const per = Math.max(7, Math.min(cfg.per || 14, maxPer));
     const seats = again && sess.lastSeats ? again : seatsFor(hum, N);
-    const go = { seats, per, diff: cfg.diff || 'normal', sf: cfg.sf === 1 ? 1 : 2, seed: (Math.random() * 2 ** 32) >>> 0, ver: VER };
+    const go = { seats, per, diff: cfg.diff || 'normal', sf: cfg.sf === 1 ? 1 : 2, ev: cfg.ev !== 0, seed: (Math.random() * 2 ** 32) >>> 0, ver: VER };
     sess.lastSeats = seats; sess.started = true; sess.link.presence({ go: 1 });
     await sess.link.send('go', go); await sleep(250);
     begin(go);

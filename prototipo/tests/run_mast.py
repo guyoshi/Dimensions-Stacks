@@ -12,7 +12,7 @@ def chk(c, m):
 try:
   with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 420, 'height': 800})
-    pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.profile', JSON.stringify({v:1,uid:'DS-ACDEFG',name:'T',fav:[],since:1,t:{},cards:{},ach:{},daily:{},weekly:{},hist:[],mast:{J08:{u:30,w:20,s:10},D01:{u:5,w:3,s:0},D02:{u:3,w:0,s:0},J01:{u:12,w:6,s:3},J02:{u:20,w:10,s:5},J03:{u:1,w:0,s:0}}}));")
+    pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.profile', JSON.stringify({v:1,uid:'DS-ACDEFG',name:'T',fav:[],since:1,t:{},cards:{},ach:{},daily:{},weekly:{},hist:[],mast:{J08:{u:160,w:100,s:60},D01:{u:20,w:6,s:0},D02:{u:12,w:0,s:0},J01:{u:70,w:40,s:10},J02:{u:140,w:80,s:40},J03:{u:1,w:0,s:0}}}));")
     pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text else None)
     pg.goto('http://localhost:8769/_page.html'); pg.wait_for_timeout(900)
     pg.click('[data-tab=coll], [data-go=coll]'); pg.wait_for_selector('#cgrid .card')
@@ -24,9 +24,9 @@ try:
     chk('5 cartas com emblema' in pg.inner_text('#ccount'), 'contagem de emblemas: %s' % pg.inner_text('#ccount'))
     pg.screenshot(path=os.path.join(proj, 'tests', 'shots', 'mast_colecao.png'))
     pg.click('#cgrid .card[data-id=J08]'); pg.wait_for_selector('.mast'); txt = pg.inner_text('.mast'); print(txt.replace('\n', ' | '))
-    chk('Dimensional' in txt and '30 usos' in txt and '20 disputas vencidas' in txt and '10 especiais resolvidos' in txt, 'zoom mostra maestria e contadores')
+    chk('Dimensional' in txt and '160 usos' in txt and '100 disputas vencidas' in txt and '60 especiais resolvidos' in txt, 'zoom mostra maestria e contadores')
     pg.screenshot(path=os.path.join(proj, 'tests', 'shots', 'mast_zoom.png')); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
-    pg.click('#cgrid .card[data-id=J03]'); pg.wait_for_selector('.mast'); t3 = pg.inner_text('.mast'); chk('ainda sem emblema' in t3 and '1/3 XP' in t3, 'carta sem emblema mostra progresso: ' + t3.replace('\n', ' | ')); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
+    pg.click('#cgrid .card[data-id=J03]'); pg.wait_for_selector('.mast'); t3 = pg.inner_text('.mast'); chk('ainda sem emblema' in t3 and '1/12 XP' in t3, 'carta sem emblema mostra progresso: ' + t3.replace('\n', ' | ')); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
     pg.click('#nav [data-tab=prof]'); pg.wait_for_selector('#mastsec .mrow'); rows = pg.evaluate("document.querySelectorAll('#mastsec .mrow').length"); chk(rows == 6, 'perfil lista top de maestria: %d' % rows)
     chk(pg.evaluate("document.querySelectorAll('#mastsec .mlegend svg').length") == 5, 'legenda com 5 emblemas')
     pg.evaluate("document.querySelector('#mastsec').scrollIntoView()"); pg.wait_for_timeout(300); pg.screenshot(path=os.path.join(proj, 'tests', 'shots', 'mast_perfil.png'))

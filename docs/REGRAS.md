@@ -394,3 +394,20 @@ Cada carta tem um especial diferente (98 cartas, 98 especiais). As 20 cartas que
 ## Par forte (13/10/2026, autorizada pelo autor)
 
 Fora de A União, nenhuma carta é forte nos dois pares de atributos (FOR/RES e INT/VEL): o par fraco fica com no máximo 70. Detalhes e lista em `docs/BALANCEAMENTO_GERAL_2026-10-13.md`.
+
+## Fenômenos dimensionais (14/10/2026, aprovados pelo autor)
+Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo e online; padrão: ligados). A partir da Rodada 2, cada rodada tem 30% de chance de ter um fenômeno (nunca em rodadas seguidas, nunca o mesmo tipo duas vezes seguidas). Sorteio determinístico pela semente da partida. A faixa no topo mostra a rodada atual e as 2 próximas (com o nome do fenômeno, se houver); toque abre a explicação. Na 1ª vez que cada fenômeno aparece, uma caixa explica. Cada fenômeno tem animação de tela própria.
+
+| Fenômeno | Efeito |
+|---|---|
+| Maré de Força | Todas as cartas ganham +10 em Força na rodada. |
+| Névoa Mental | Todas ganham +10 em Inteligência e −10 em Velocidade. |
+| Eco dos Especiais | Bônus e reduções de especiais valem o dobro (exceto Conversão/Permuta). |
+| Batalha Aberta | Todos escolhem qualquer atributo (não só o par do iniciador); ataque vencedor captura, defesa vencedora manda as demais ao Buraco Negro. |
+| Tempestade Lateral | Na 1ª disputa da rodada, a carta do topo de cada jogador passa ao jogador da direita, que joga com ela. |
+| Maré do Buraco Negro | 2 cartas do Buraco Negro voltam a quem tem menos cartas. No máx. uma vez por partida, a partir da Rodada 3. |
+| Eclipse | O maior atributo de cada carta vale 0 (marcado com ✕ na carta). |
+| Mundo ao Avesso | Vence o MENOR valor (margem e desempates invertidos). Peso 2 (mais frequente). |
+| Troca Dimensional | Dois atributos de cada carta trocam de valor; o par é sorteado e mostrado na animação. |
+
+Os efeitos de atributo entram na base da carta (não são anulados por especiais que removem modificadores). "Iniciativa Livre" foi descartada pelo autor.

@@ -26,6 +26,7 @@
     reveal: { t: 'Revelação', b: `<p>Vence o <b>maior valor</b> do atributo escolhido, mesmo que os atributos sejam diferentes do par (Inteligência 82 contra Velocidade 82, por exemplo).</p><p>Se houver empate, o desempate é a <b>soma dos 4 atributos</b> da carta; depois, <b>Força + Inteligência</b>.</p>`, hint: true },
     capture: { t: 'Força ou Inteligência venceu', b: `<p>O vencedor <b>leva as cartas</b> dos perdedores para o fim do seu baralho.</p>`, hint: true },
     bh: { t: 'Buraco Negro', b: `<p>Quando <b>Resistência ou Velocidade</b> vencem, só o vencedor recupera a própria carta. As cartas dos perdedores vão para o <b>Buraco Negro</b> e saem do jogo.</p>`, hint: true },
+    evento: { t: 'Fenômeno dimensional', b: ev => { const d = ev && window.DSUI.E.EVENTOS[ev.id]; return `<p>De vez em quando uma rodada traz um <b>fenômeno dimensional</b>: uma regra especial que vale para todos naquela rodada.</p>${d ? `<p><b>${esc(d.nome)}${ev.id === 'troca' && ev.pair ? ' (' + window.DSUI.ATT[ev.pair[0]].nome + ' ⇄ ' + window.DSUI.ATT[ev.pair[1]].nome + ')' : ''}:</b> ${esc(d.txt)}</p>` : ''}<p>A <b>faixa no alto da mesa</b> mostra a rodada atual e as duas próximas, e avisa quando uma delas tem fenômeno. Toque nela para ler os detalhes. Dá para desligar os fenômenos na configuração da partida.</p>`; }, hint: false },
     refill: { t: 'Reserva', b: `<p>Seu baralho acabou: você comprou cartas da <b>reserva</b> (até 6). Sem baralho e sem reserva, você é eliminado.</p>`, hint: true },
     round2: { t: 'Rodada 2: especiais liberados', b: `<p>Agora, ao escolher o atributo, aparece o botão <b>✦ Usar como especial</b>. A carta sai da disputa e fica <b>fechada ao seu lado</b>; outra entra no lugar.</p><p>Depois da revelação, você decide <b>em segredo</b> se vira o especial (no máximo 1 por disputa).</p>`, hint: true },
     react: { t: 'Janela de reação', b: `<p>Se algum rival virou um especial, ou se você tem um reativo que não depende disso (como <b>Cortar o par</b>), decida agora, <b>sabendo o que foi virado</b>. Reativos: anular, copiar, apropriar, proteger e cortar atributo.</p><p>Os reagentes decidem em segredo e ao mesmo tempo. Se não quiser, <b>mantenha fechado</b>.</p>` },
@@ -34,7 +35,8 @@
   function canTip() { const V = (U.dbg && U.dbg().V) || null; return on() && V && V.humans > 0; }
 
   U.tip = function (id, extra) {
-    const d = TIPS[id]; if (!d || !on() || seen()[id]) return Promise.resolve();
+    const d0 = TIPS[id]; if (!d0 || !on() || seen()[id]) return Promise.resolve();
+    const d = typeof d0.b === 'function' ? Object.assign({}, d0, { b: d0.b(extra) }) : d0;
     const V = (U.dbg && U.dbg().V) || null; if (V && V.humans < 1) return Promise.resolve();
     mark(id);
     const layer = U.layer();
@@ -73,6 +75,9 @@
     { t: 'Habilidades especiais', ic: '✨', b: () => `<div class="demo"><button class="btn sm fake" tabindex="-1">✦ Usar como especial</button></div>
       <p>Liberados a partir da <b>Rodada 2</b>. Ao escolher o atributo, você pode tirar a carta da mesa e deixá-la <b>fechada ao seu lado</b>; a próxima do baralho entra no lugar.</p>
       <p>Depois da revelação, cada jogador decide <b>em segredo</b> se vira um especial (máximo 1 por disputa). Os efeitos são diferentes em cada carta.</p><p>Especiais <b>reativos</b> (anular, copiar, apropriar, proteger) são virados depois: se um rival virou um especial, você decide <b>sabendo qual foi</b>.</p>` },
+    { t: 'Fenômenos dimensionais', ic: '🌌', b: () => `<p>De vez em quando uma rodada traz um <b>fenômeno</b>, avisado na <b>faixa de rodadas</b> no alto da mesa (a atual e as duas seguintes). Duram uma rodada; nunca há dois seguidos.</p>
+      <ul class="evlist"><li><b>Maré de Força:</b> Força +10 para todos.</li><li><b>Névoa Mental:</b> Inteligência +10 e Velocidade −10.</li><li><b>Eco dos Especiais:</b> bônus e reduções dos especiais valem o dobro.</li><li><b>Batalha Aberta:</b> todos escolhem qualquer atributo e se enfrentam.</li><li><b>Tempestade Lateral:</b> cada um passa a carta do topo ao jogador da direita.</li><li><b>Maré do Buraco Negro:</b> 2 cartas voltam a quem está atrás (uma vez por partida).</li><li><b>Eclipse:</b> o maior atributo de cada carta vale 0 (aparece um ✕ na carta).</li><li><b>Mundo ao Avesso:</b> vence o menor valor.</li><li><b>Troca Dimensional:</b> dois atributos de cada carta trocam de valor.</li></ul>
+      <p class="mut">Dá para ligar ou desligar os fenômenos antes da partida.</p>` },
     { t: 'Rodadas e fim', ic: '🏁', b: () => `<p>Uma <b>rodada</b> termina quando todos os jogadores vivos já iniciaram uma disputa; depois disso o iniciador gira em sentido horário.</p><p>Se a partida passar do limite de disputas, vence quem tiver <b>mais cartas</b>.</p><p class="mut">Durante as primeiras partidas, o jogo vai avisando cada regra nova na hora em que ela aparece.</p>` },
   ];
   // etiquetas numeradas sobre a carta real do slide "A carta": cada número aponta para o elemento certo (mesmos números da legenda)

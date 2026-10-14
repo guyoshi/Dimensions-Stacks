@@ -3,8 +3,8 @@ const store = {}; globalThis.localStorage = { getItem: k => (k in store ? store[
 const E = require('../engine.js'); const S = require('../stats.js') && globalThis.DSSTATS; let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log('FALHA', m); } };
 (async () => {
   // níveis
-  const p = S.profile(); p.mast = { X1: { u: 2, w: 0, s: 0 }, X2: { u: 1, w: 1, s: 0 }, X3: { u: 3, w: 2, s: 2 }, X4: { u: 10, w: 8, s: 4 }, X5: { u: 20, w: 15, s: 10 }, X6: { u: 100, w: 100, s: 100 } };
-  const lv = id => S.mastery(id).lv; ok(lv('X1') === 0 && lv('X2') === 1 && lv('X3') === 2 && lv('X4') === 4 && lv('X5') === 5 && lv('X6') === 5, 'níveis ' + ['X1', 'X2', 'X3', 'X4', 'X5', 'X6'].map(lv));
+  const p = S.profile(); p.mast = { X1: { u: 11, w: 0, s: 0 }, X2: { u: 4, w: 3, s: 0 }, X3: { u: 10, w: 10, s: 0 }, X4: { u: 30, w: 20, s: 10 }, X5: { u: 50, w: 50, s: 10 }, X6: { u: 100, w: 100, s: 50 } };
+  const lv = id => S.mastery(id).lv; ok(lv('X1') === 0 && lv('X2') === 1 && lv('X3') === 2 && lv('X4') === 3 && lv('X5') === 4 && lv('X6') === 5, 'níveis ' + ['X1', 'X2', 'X3', 'X4', 'X5', 'X6'].map(lv));
   ok(S.mastery('Z').lv === 0 && S.mastery('Z').xp === 0, 'carta sem dados');
   S.reset();
   // partidas

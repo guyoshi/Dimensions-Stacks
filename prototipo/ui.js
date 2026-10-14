@@ -53,10 +53,10 @@
 
   // ---------------------------------------------------------------- cartas
   const SIL = '<svg viewBox="0 0 100 100"><circle cx="50" cy="34" r="18"/><path d="M12 100c0-26 16-40 38-40s38 14 38 40z"/></svg>';
-  function statsHTML(base, st, attr) {
+  function statsHTML(base, st, attr, mark) {
     return AIDS.map(a => {
-      const d = st[a] - base[a];
-      return `<div class="st${d > 0 ? ' mod' : d < 0 ? ' modn' : ''}" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}<b>${st[a]}</b></div>`;
+      const d = st[a] - base[a], ec = mark && mark.zero === a, sw = mark && mark.swap && mark.swap.includes(a);
+      return `<div class="st${d > 0 ? ' mod' : d < 0 ? ' modn' : ''}${ec ? ' ecl' : ''}${sw ? ' swp' : ''}" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}<b>${st[a]}</b></div>`;
     }).join('');
   }
   // brilhinhos dourados ao redor das cartas de A União (posições fixas por carta; o CSS os mostra só com a carta virada)
@@ -90,7 +90,7 @@
         <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(id.slice(1))}</span></div>
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
-        <div class="stats">${statsHTML(c.stats, st)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
+        <div class="stats">${statsHTML(c.stats, st, null, o.mark)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
       </div></div></div></div>`);
     node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1';
     if (c.uniao || c.raridade === 'lendaria') { node.dataset.aura = c.uniao ? 'rainbow' : 'gold'; node.append(uniSparks(id, c.uniao)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
@@ -99,9 +99,9 @@
     if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id), mastery: g.dataset.mast === '1' } : null); }); }
     return node;
   }
-  function updateCard(node, stats, attr) {
+  function updateCard(node, stats, attr, mark) {
     const c = CARDS[node.dataset.id];
-    const box = $('.stats', node); if (box) box.innerHTML = statsHTML(c.stats, stats);
+    const box = $('.stats', node); if (box) box.innerHTML = statsHTML(c.stats, stats, null, mark);
     if (attr) node.dataset.attr = attr; else delete node.dataset.attr;
   }
   Object.assign(U, { cardEl, updateCard });
@@ -159,7 +159,7 @@
         ${c.nota ? `<div class="hint">Nota do elenco: ${esc(c.nota)}</div>` : ''}</div>`));
       if (opts.mastery && window.DSSTATS) {
         const m = window.DSSTATS.mastery(cid), pct = m.to ? Math.min(100, Math.round((m.xp - m.from) / (m.to - m.from) * 100)) : 100;
-        wrap.querySelector('.meta').append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}. Só reconhecimento: não altera atributos.</small></div>`));
+        wrap.querySelector('.meta').append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}</small></div>`));
       }
       const meta = $('.meta', wrap), fb = el('<button class="btn sm favbtn" type="button"></button>');
       const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = (f ? U.ICO.star : U.ICO.starO) + (f ? 'Favorita' : 'Favoritar'); fb.classList.toggle('on', !!f); };
@@ -287,6 +287,9 @@
         ${p.bot ? `<div class="seatdiff"><span class="hint">Dificuldade</span><div class="seg sm" data-k="sd" data-i="${i}">${[['facil', 'Fácil'], ['normal', 'Normal'], ['dificil', 'Difícil']].map(([v, t]) => `<button data-v="${v}" class="${seatDiff(p) === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>` : ''}</div>`).join('')}</div>
       <div class="lbl">Cartas por jogador: <b id="perv">${CFG.per}</b></div>
       <input type="range" min="7" max="${maxPer}" value="${CFG.per}" id="per" aria-label="Cartas por jogador">
+      <div class="lbl">Fenômenos dimensionais</div>
+      <div class="seg" data-k="ev">${[[1, 'Ligados'], [0, 'Desligados']].map(([v, t]) => `<button data-v="${v}" class="${(CFG.ev === 0 ? 0 : 1) === v ? 'on' : ''}">${t}</button>`).join('')}</div>
+      <div class="hint">Às vezes uma rodada traz uma regra especial, avisada com antecedência na faixa de rodadas.</div>
       <div class="hint">7 formam o baralho ativo; o restante vai para a reserva. Mais cartas = partida mais longa.<br>Para jogar contra outras pessoas, cada uma no seu aparelho, use <b>Multiplayer</b> no Início.</div>
       <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" data-act="back">← Voltar</button><button class="btn primary" data-act="go">Começar ▶</button></div>
     </div></div>`;
@@ -305,14 +308,14 @@
       }
       if (seg) {
         const k = seg.dataset.k, v = b.dataset.v;
-        if (k === 'n') CFG.n = +v; else if (k === 'sd') CFG.seats[+seg.dataset.i].diff = v; else if (k === 'sf') CFG.sf = +v;
+        if (k === 'n') CFG.n = +v; else if (k === 'sd') CFG.seats[+seg.dataset.i].diff = v; else if (k === 'sf') CFG.sf = +v; else if (k === 'ev') CFG.ev = +v;
         else if (k === 'bot') { const i = +seg.dataset.i; CFG.seats[i].bot = v === '1'; if (CFG.seats[i].bot && !isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'CPU'; if (!CFG.seats[i].bot && isAutoName(CFG.seats[i].name)) CFG.seats[i].name = 'Jogador ' + (i + 1); }
         store.set('cfg', CFG); return setup();
       }
       if (b.dataset.act === 'back') U.show('menu');
       if (b.dataset.act === 'go') {
         const players = CFG.seats.slice(0, CFG.n).map((p, i) => ({ name: (p.name || '').trim() || (p.bot ? randBot([]) : 'Jogador ' + (i + 1)), bot: !!p.bot, avatar: i, diff: p.bot ? seatDiff(p) : undefined }));
-        store.set('cfg', CFG); U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2 });
+        store.set('cfg', CFG); U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2, events: CFG.ev !== 0 });
       }
     };
     s.oninput = e => {
@@ -325,7 +328,7 @@
   U.quick = function () {
     SND.init(); const me = U.profileName() || 'Você';
     const players = [{ name: me, bot: false, avatar: 0 }, { name: randBot([me]), bot: true, avatar: 1, diff: CFG.diff || 'normal' }];
-    U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2 });
+    U.startGame({ players, perPlayer: CFG.per, difficulty: CFG.diff, specialsFrom: CFG.sf === 1 ? 1 : 2, events: CFG.ev !== 0 });
   };
 
   // ---- regras

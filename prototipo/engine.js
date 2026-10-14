@@ -203,6 +203,21 @@
   // ordem de resolução dos efeitos: blindagem → cancelamentos → proteções → principais → cópias/repetições → ajustes finais
   const PHASES = ['shield', 'pre', 'guard', 'main', 'echo', 'late'];
 
+  // ---------------------------------------------------------------- fenômenos dimensionais (eventos de rodada)
+  const EVENTOS = {
+    forca: { nome: 'Maré de Força', txt: 'Todas as cartas ganham +10 em Força nesta rodada.', curto: 'Força +10 para todos' },
+    nevoa: { nome: 'Névoa Mental', txt: 'Todas as cartas ganham +10 em Inteligência e perdem 10 em Velocidade nesta rodada.', curto: 'Inteligência +10, Velocidade −10' },
+    eco: { nome: 'Eco dos Especiais', txt: 'Nesta rodada, bônus e reduções dos especiais valem o dobro.', curto: 'Especiais valem o dobro' },
+    aberta: { nome: 'Batalha Aberta', txt: 'Nesta rodada todos escolhem qualquer atributo e se enfrentam mesmo em atributos diferentes (Força contra Inteligência etc.). Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Todos escolhem qualquer atributo' },
+    tempestade: { nome: 'Tempestade Lateral', txt: 'Na primeira disputa da rodada, cada jogador passa a carta do topo do baralho ao jogador da direita e joga com a que recebe.', curto: 'Carta do topo passa à direita' },
+    buraco: { nome: 'Maré do Buraco Negro', txt: 'O Buraco Negro devolve 2 cartas ao jogador que tem menos cartas. Só acontece uma vez por partida.', curto: '2 cartas voltam a quem está atrás' },
+    eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta vale 0.', curto: 'O maior atributo vale 0' },
+    avesso: { nome: 'Mundo ao Avesso', txt: 'Nesta rodada vence o MENOR valor, em vez do maior. Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Vence o menor valor' },
+    troca: { nome: 'Troca Dimensional', txt: 'Nesta rodada dois atributos de cada carta trocam de valor entre si.', curto: 'Dois atributos trocam de valor' },
+  };
+  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['eclipse', 1], ['avesso', 2], ['troca', 1]];
+  const EV_PARES = [['pod', 'def'], ['pod', 'int'], ['pod', 'vel'], ['def', 'int'], ['def', 'vel'], ['int', 'vel']];
+
   // ---------------------------------------------------------------- jogo
   class Game {
     constructor(cfg) {
@@ -212,6 +227,54 @@
       this.logs = [];
       this.s = { players: [], bh: [], round: 1, combats: 0, initiator: 0, initiated: new Set(), over: false, winner: null };
       this.cards = CARDS; this.specials = SP;
+    }
+    // agenda determinística (pela semente): no máximo um fenômeno por rodada, nunca em rodadas seguidas, a partir da Rodada 2
+    genEvents() {
+      const rng = mkRng((this.cfg.seed ^ 0x5eed) >>> 0), out = {}; let prev = false, last = null, usedBH = false;
+      for (let r = 2; r <= 80; r++) {
+        if (prev) { prev = false; continue; }
+        if (rng() > 0.3) continue;
+        const ws = EV_PESOS.filter(([id]) => id !== last && !(id === 'buraco' && (usedBH || r < 3)));
+        let t = ws.reduce((s, x) => s + x[1], 0) * rng(), id = ws[ws.length - 1][0];
+        for (const [i, w] of ws) { t -= w; if (t < 0) { id = i; break; } }
+        const o = { id }; if (id === 'troca') o.pair = EV_PARES[Math.floor(rng() * EV_PARES.length)];
+        if (id === 'buraco') usedBH = true;
+        out[r] = o; last = id; prev = true;
+      }
+      return out;
+    }
+    curEv() { return (this.s.events && this.s.events[this.s.round]) || null; }
+    // atributos da carta já com o efeito do fenômeno da rodada; "mark" diz à interface o que mudou
+    evBase(card) {
+      const st = Object.assign({}, CARDS[card].stats), ev = this.curEv(); if (!ev) return { st, mark: null };
+      const m = {}, chg = (k, d) => { const v = Math.max(0, st[k] + d); m[k] = v - st[k]; st[k] = v; };
+      if (ev.id === 'forca') chg('pod', 10);
+      else if (ev.id === 'nevoa') { chg('int', 10); chg('vel', -10); }
+      else if (ev.id === 'eclipse') { const k = AID.reduce((b, a) => (st[a] > st[b] ? a : b), AID[0]); m.zero = k; st[k] = 0; }
+      else if (ev.id === 'troca' && ev.pair) { const [a, b] = ev.pair; const t = st[a]; st[a] = st[b]; st[b] = t; m.swap = [a, b]; }
+      return { st, mark: Object.keys(m).length ? m : null };
+    }
+    // efeitos físicos no início da rodada (primeira disputa)
+    async roundEventStart() {
+      const ev = this.curEv(); if (!ev) return;
+      this.log(`Fenômeno dimensional: ${EVENTOS[ev.id].nome}.`, 'rodada');
+      await this.emit('eventStart', { round: this.s.round, ev });
+      if (ev.id === 'tempestade') {
+        const al = this.alive().filter(pid => this.p(pid).deck.length > 0); if (al.length < 2) return;
+        const tops = {}; al.forEach(pid => { tops[pid] = this.p(pid).deck.shift(); });
+        const moves = al.map((pid, i) => { const to = al[(i + 1) % al.length]; this.p(to).deck.unshift(tops[pid]); return { from: pid, to, card: tops[pid] }; });
+        this.memInit(); this.log('A tempestade passa a carta do topo de cada jogador ao da direita.', 'rodada');
+        await this.emit('eventFx', { id: 'tempestade', moves });
+      } else if (ev.id === 'buraco') {
+        const al = this.alive(), tot = pid => this.totalCards(this.p(pid)), mn = Math.min(...al.map(tot)), mx = Math.max(...al.map(tot));
+        const cands = al.filter(pid => tot(pid) === mn); const pid = cands[Math.floor(this.rand() * cands.length)];
+        const pool = () => this.s.bh.filter(x => x.kind === 'normal').map(x => x.id);
+        if (mn === mx || !pool().length) { this.log('A maré do Buraco Negro passa sem efeito.', 'rodada'); await this.emit('eventFx', { id: 'buraco', pid: null, cards: [] }); return; }
+        const got = [];
+        for (let n = 0; n < 2; n++) { const l = pool(); if (!l.length) break; const pick = l[Math.floor(this.rand() * l.length)]; const i = this.s.bh.findIndex(x => x.id === pick); if (i >= 0) this.s.bh.splice(i, 1); this.p(pid).deck.push(pick); got.push(pick); }
+        this.memInit(); this.log(`${this.p(pid).name} recebe ${got.length} carta(s) do Buraco Negro.`, 'rodada');
+        await this.emit('eventFx', { id: 'buraco', pid, cards: got });
+      }
     }
     get players() { return this.s.players; }
     p(pid) { return this.s.players[pid]; }
@@ -233,6 +296,7 @@
       const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
       for (let i = 0; i < n; i++) this.p(i).reserve = rest.slice(i * rs, (i + 1) * rs);
       await this.emit('setup', {});
+      this.s.events = this.cfg.events === false ? {} : this.genEvents();
       this.s.initiator = Math.floor(this.rand() * n);   // sorteada antes da montagem: o jogador planeja a ordem sabendo quem inicia
       this.log(`${this.p(this.s.initiator).name} sorteia a iniciativa.`);
       await this.emit('initiative', { initiator: this.s.initiator });
@@ -366,8 +430,13 @@
       for (const m of e.mods) if (!m.off) m.fn(e);
       e.bonus = e.attr ? e.extra.reduce((t, c) => t + CARDS[c].stats[e.attr], 0) : 0;
     }
-    addMod(e, src, label, fn) { e.mods.push({ src, label, fn, off: false }); fn(e); }
-    swapEntryCard(e, card) { const old = e.card; e.card = card; e.base = Object.assign({}, CARDS[card].stats); this.recalc(e); return old; }
+    addMod(e, src, label, fn) {
+      if (this.combat && this.combat.eco && typeof src === 'number' && label !== 'Conversão' && label !== 'Permuta') {   // Eco dos Especiais: bônus e reduções valem o dobro
+        const f0 = fn; fn = x => { const b = Object.assign({}, x.stats); f0(x); for (const k in x.stats) x.stats[k] = Math.max(0, x.stats[k] + (x.stats[k] - b[k])); };
+      }
+      e.mods.push({ src, label, fn, off: false }); fn(e);
+    }
+    swapEntryCard(e, card) { const old = e.card; e.card = card; const eb = this.evBase(card); e.base = Object.assign({}, eb.st); e.evm = eb.mark; this.recalc(e); return old; }
     async askCards(pid, spec, bot) {
       const p = this.p(pid); const min = spec.min == null ? 1 : spec.min, max = spec.max == null ? 1 : spec.max;
       const fallback = () => { let r = bot && !this.blindNow(p) ? bot() : (p.bot && bot ? shuffle(spec.cards.slice(), () => this.rand()).slice(0, Math.max(min, Math.min(max, spec.cards.length))) : spec.cards.slice(0, max)); r = (r || []).filter((c, i, a) => spec.cards.includes(c) && a.indexOf(c) === i).slice(0, max); if (r.length < min) r = spec.cards.slice(0, min); return r; };
@@ -391,6 +460,7 @@
     }
     // chance (0..1) de um bônus +b mudar o resultado a favor
     flipChance(combat, pid, bonus) {
+      if (combat.ev && combat.ev.id === 'avesso') return 0.02;   // no avesso, somar ao próprio valor só atrapalha
       const me = combat.entries.find(e => e.pid === pid); const v = me.stats[me.attr] + me.bonus;
       let bestOpp = -1; combat.entries.forEach(e => { if (e.pid !== pid && !e.withdrawn) bestOpp = Math.max(bestOpp, e.stats[e.attr] + e.bonus); });
       if (bestOpp < 0) return 0.02;
@@ -403,14 +473,15 @@
       if (es.length < 2) return { winners: [], tie: false, none: true, top: 0 };
       const val = e => e.stats[e.attr] + e.bonus;
       const aw = es.find(e => e.autoWin); if (aw) return { winners: [aw], tie: false, none: false, top: val(aw) };
-      const top = Math.max(...es.map(val));
+      const inv = !!(combat.ev && combat.ev.id === 'avesso');   // Mundo ao Avesso: vence o menor
+      const top = inv ? Math.min(...es.map(val)) : Math.max(...es.map(val));
       let pool = es.filter(e => val(e) === top);
-      es.forEach(e => { if (e.margin && val(e) < top && top - val(e) <= 10 && !pool.includes(e)) pool.push(e); });
+      es.forEach(e => { if (e.margin && (inv ? val(e) > top && val(e) - top <= 10 : val(e) < top && top - val(e) <= 10) && !pool.includes(e)) pool.push(e); });
       let tie = false, tb = null;
       if (pool.length > 1) {
-        tb = { stage: 1, top, list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })), rows: pool.map(e => ({ pid: e.pid, card: e.card, stats: Object.assign({}, e.stats) })) };
-        let best = Math.max(...pool.map(e => sum4(e.stats))); pool = pool.filter(e => sum4(e.stats) === best);
-        if (pool.length > 1) { tb = { stage: 2, top, list: pool.map(e => ({ pid: e.pid, v: e.stats.pod + e.stats.int })), rows: tb.rows, s1: tb.list }; best = Math.max(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
+        tb = { stage: 1, inv, top, list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })), rows: pool.map(e => ({ pid: e.pid, card: e.card, stats: Object.assign({}, e.stats) })) };
+        const pk = inv ? Math.min : Math.max; let best = pk(...pool.map(e => sum4(e.stats))); pool = pool.filter(e => sum4(e.stats) === best);
+        if (pool.length > 1) { tb = { stage: 2, inv, top, list: pool.map(e => ({ pid: e.pid, v: e.stats.pod + e.stats.int })), rows: tb.rows, s1: tb.list }; best = pk(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
         if (pool.length > 1) tie = true;
       }
       return { winners: pool, tie, none: false, top, tb };
@@ -473,9 +544,11 @@
     }
 
     async playCombat(init) {
+      if (this.s.initiated.size === 0) await this.roundEventStart();
       const g = this, order = this.order(init);
       const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
         def: {}, ctl: { per: {} }, claims: [], onWin: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
+      { const ev0 = this.curEv(); combat.eco = !!ev0 && ev0.id === 'eco'; combat.ev = ev0; }
       this.combat = combat; this.memTick();
       await this.emit('combatStart', { initiator: init, round: this.s.round });
       // 1) preparação dos bots [PROPOSTA]
@@ -487,7 +560,8 @@
       // 2) cartas em campo
       for (const pid of order) {
         const p = this.p(pid); const c = p.deck.shift();
-        combat.entries.push({ pid, card: c, base: Object.assign({}, CARDS[c].stats), stats: Object.assign({}, CARDS[c].stats), bonus: 0, extra: [], mods: [], attr: null, withdrawn: false, gone: false, noCaptureBy: new Set() });
+        const eb = this.evBase(c);
+        combat.entries.push({ pid, card: c, base: Object.assign({}, eb.st), stats: Object.assign({}, eb.st), evm: eb.mark, bonus: 0, extra: [], mods: [], attr: null, withdrawn: false, gone: false, noCaptureBy: new Set() });
       }
       this.memCommit(combat);
       await this.emit('commit', { combat });
@@ -499,7 +573,7 @@
       if (!AID.includes(ie.attr)) ie.attr = AID[0];
       this.log(`${this.p(init).name} inicia em ${ATTR[ie.attr].nome}.`, 'attr');
       await this.emit('initiatorAttr', { combat, pid: init, attr: ie.attr });
-      const pair = AID.filter(a => ATTR[a].par === ATTR[ie.attr].par);
+      const pair = combat.ev && combat.ev.id === 'aberta' ? AID.slice() : AID.filter(a => ATTR[a].par === ATTR[ie.attr].par);
       for (const e of combat.entries) {
         if (e.pid === init) continue;
         const opts = this.attrOptions(combat, e, pair);
@@ -632,7 +706,7 @@
         const r = await this.decide(p, 'attr', e, options, combat, canPrep);
         if (r === '@prep' && canPrep) {
           const old = e.card; p.prepared.push(old);
-          const c2 = p.deck.shift(); e.card = c2; e.base = Object.assign({}, CARDS[c2].stats); e.mods = []; e.extra = []; e.attr = null; this.recalc(e);
+          const c2 = p.deck.shift(); e.card = c2; { const eb = this.evBase(c2); e.base = Object.assign({}, eb.st); e.evm = eb.mark; } e.mods = []; e.extra = []; e.attr = null; this.recalc(e);
           this.log(`${p.name} prepara um especial.`, 'prep');
           await this.emit('swapCard', { pid: e.pid, old, card: c2, combat });
           continue;
@@ -736,7 +810,7 @@
         rows.push(r);
       }
       const acts = (combat.activations || []).map(a => ({ pid: a.pid, card: a.card, nome: (SP[CARDS[a.card].especial] || {}).nome || '', cancelled: !!a.cancelled, forced: !!a.forced }));
-      return { rows, acts, fx: (combat.fx || []).slice(0, 14), top: ev && ev.top, tb: ev && ev.tb || null, none: !!(ev && ev.none), tie: !!(ev && ev.tie), type: result.type, winnerPid: result.winnerPid, attr: result.attr || null };
+      return { rows, acts, fx: (combat.fx || []).slice(0, 14), top: ev && ev.top, tb: ev && ev.tb || null, none: !!(ev && ev.none), tie: !!(ev && ev.tie), inv: !!(combat.ev && combat.ev.id === 'avesso'), evId: combat.ev ? combat.ev.id : null, type: result.type, winnerPid: result.winnerPid, attr: result.attr || null };
     }
     async chooseLoser(w, cand, label) {
       if (cand.length === 1) return cand[0];
@@ -795,12 +869,12 @@
     }
     // chance (0..1) de ganhar com o atributo a contra os rivais cujas cartas ele conhece; os desconhecidos entram pelo percentil
     pWin(p, entry, a, combat) {
-      const v = entry.stats[a]; let P = 1, known = 0;
+      const v = entry.stats[a], inv = !!(combat && combat.ev && combat.ev.id === 'avesso'), ab = !!(combat && combat.ev && combat.ev.id === 'aberta'); let P = 1, known = 0;
       (combat ? combat.entries : []).forEach(x => {
         if (x.pid === p.pid || x.withdrawn) return; const c = this.foeNow(p, x.pid);
-        if (!c) { P *= pct(a, v); return; } known++;
-        const st = CARDS[c].stats, cand = x.attr ? [x.attr] : AID.filter(k => ATTR[k].par === ATTR[a].par);
-        const ov = Math.max(...cand.map(k => st[k])); P *= 1 / (1 + Math.exp(-(v - ov) / 7));
+        if (!c) { P *= inv ? 1 - pct(a, v) : pct(a, v); return; } known++;
+        const st = CARDS[c].stats, cand = x.attr ? [x.attr] : ab ? AID : AID.filter(k => ATTR[k].par === ATTR[a].par);
+        const ov = inv ? Math.min(...cand.map(k => st[k])) : Math.max(...cand.map(k => st[k])); P *= 1 / (1 + Math.exp(-(inv ? ov - v : v - ov) / 7));
       });
       return { P, known };
     }
@@ -810,7 +884,7 @@
       if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
       options.forEach(a => {
         const v = entry.stats[a], w = this.pWin(p, entry, a, combat);
-        let s = w.known ? w.P * 1.1 + (this.rand() - 0.5) * (0.35 - 0.3 * sk) : pct(a, v) * (0.6 + 0.4 * sk) + (this.rand() - 0.5) * (0.5 - 0.4 * sk);   // com a carta do rival na memória, prevê o resultado
+        let s = w.known ? w.P * 1.1 + (this.rand() - 0.5) * (0.35 - 0.3 * sk) : (combat && combat.ev && combat.ev.id === 'avesso' ? 1 - pct(a, v) : pct(a, v)) * (0.6 + 0.4 * sk) + (this.rand() - 0.5) * (0.5 - 0.4 * sk);   // com a carta do rival na memória, prevê o resultado
         s += ATTR[a].tipo === 'ataque' ? 0.03 : 0; if (s > bs) { bs = s; best = a; }
       });
       return best;
@@ -846,7 +920,7 @@
       // carta como combatente vale ~ (2·P(vencer) − 1) cartas; como especial vale V. Carta fraca rende mais virando especial.
       const mine = sum4(CARDS[topCard].stats), pc0 = SUMS.filter(x => x <= mine).length / SUMS.length;
       let pcs = 0, nf = 0; this.alive().forEach(o => { if (o === p.pid) return; nf++; const k = this.foeNow(p, o); pcs += k ? 1 / (1 + Math.exp(-(mine - sum4(CARDS[k].stats)) / 35)) : pc0; });   // rival conhecido: compara de verdade
-      const pc = nf ? pcs / nf : pc0, lv = this.lvl(p), T = this.rand() < lv.mist ? this.rand() * 0.7 : 1.2 * pc;               // às vezes erra o custo: gasta carta forte, guarda fraca (mais no fácil)
+      const pc1 = nf ? pcs / nf : pc0, pc = this.combat && this.combat.ev && this.combat.ev.id === 'avesso' ? 1 - pc1 : pc1, lv = this.lvl(p), T = this.rand() < lv.mist ? this.rand() * 0.7 : 1.2 * pc;               // às vezes erra o custo: gasta carta forte, guarda fraca (mais no fácil)
       let ch = 1 / (1 + Math.exp(-(V - T) * 3));                     // vale a pena quando o especial rende mais que a carta lutando
       ch *= 0.85 + 0.15 * sk;                                        // dificuldade: o fácil prepara com menos critério
       if (p.prepared.length) ch *= 0.6;
@@ -859,6 +933,7 @@
       usable.forEach(c => {
         const sp = SP[CARDS[c].especial]; let u = 0; try { const f = stage === 'react' && sp.ai0 ? sp.ai0 : sp.ai; u = f ? f(ctx, p.pid, c) : 0.4; } catch (e) { u = 0.3; }
         if (p.pol && p.pol.mul != null) u *= p.pol.mul;
+        if (combat.ev && combat.ev.id === 'avesso' && sp.cat === 'Redução') u *= 0.1;   // no avesso, reduzir o rival o ajuda
         if (u < 0.12 - 0.08 * urg) return;                                                // sem utilidade nesta situação: nem o fácil gasta
         if (this.blindNow(p)) u = 0.5 * u + 0.5 * (0.15 + this.rand() * 0.55);            // leu mal a mesa: avalia com ruído, mas dentro do que faz sentido
         u += Math.min(0.2, 0.06 * p._held);                           // carta parada na mão: vale usar
@@ -906,7 +981,7 @@
     });
   }
 
-  const api = { Game, SPECIALS: SP, CARDS, ATTRS, AID, ATTR, PROPOSTAS, sum4, pause, shuffle, mkRng, pct, def, PHASES };
+  const api = { Game, EVENTOS, SPECIALS: SP, CARDS, ATTRS, AID, ATTR, PROPOSTAS, sum4, pause, shuffle, mkRng, pct, def, PHASES };
   // especiais adicionais (especiais.js) são instalados aqui; depois aplicam-se os nomes oficiais
   const install = root.DS_ESPECIAIS || (typeof require !== 'undefined' && typeof module !== 'undefined' ? require('./especiais.js') : null);
   if (install) install(api);
