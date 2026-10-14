@@ -149,16 +149,27 @@
     n.remove();
   }
 
+  // avatar do próprio jogador (foto do perfil) no assento; os demais usam a inicial colorida
+  function avInner(p) {
+    try {
+      if (p && !p.bot && p.pid === V.viewer && window.DSSTATS) { const a = window.DSSTATS.profile().avatar, IM = window.CARD_IMAGES || {}; if (a && a.t === 'card' && IM[a.id]) return { cls: ' img', html: `<img alt="" src="${IM[a.id]}">` }; }
+    } catch (e) { }
+    return { cls: '', html: esc(p.name[0].toUpperCase()) };
+  }
   // ---------------------------------------------------------------- estrutura da mesa
   function shell() {
     $('#game').innerHTML = `<header class="hud"><button class="ibtn" id="bMenu" title="Menu">☰</button>
       <div class="mid"><b>DIMENSIONS STACKS</b><div id="hSub"></div></div>
-      <button class="ibtn" id="bCalc" title="Ver cálculo da última disputa" disabled>🧮</button><button class="ibtn" id="bLog" title="Registro">📜</button><button class="ibtn" id="bSnd" title="Som">🔊</button><button class="ibtn" id="bSpd" title="Velocidade">⏩</button></header>
+      <button class="ibtn" id="bLog" title="Registro">📜</button><button class="ibtn" id="bSpd" title="Velocidade">⏩</button><button class="ibtn" id="bMore" title="Mais opções" aria-label="Mais opções" aria-expanded="false">⋯</button>
+      <div class="hudmore" id="hudmore" hidden><button class="btn sm" id="bCalc" disabled>🧮 Ver cálculo da última disputa</button><button class="btn sm" id="bSnd">🔊 Som: ligado</button></div></header>
       <div id="rtrack" hidden></div><main class="board" id="board"></main><div id="caption"></div><div id="dock" hidden></div>`;
     $('#bMenu').onclick = gameMenu; $('#rtrack').onclick = showEvents;
     $('#bLog').onclick = toggleLog;
-    $('#bCalc').onclick = () => showCalc();
-    $('#bSnd').onclick = () => { V.muted = !V.muted; SND.setVol('master', V.muted ? 0 : S.master); $('#bSnd').textContent = V.muted ? '🔇' : '🔊'; };
+    const hm = $('#hudmore'), mb = $('#bMore'), closeMore = () => { hm.hidden = true; mb.setAttribute('aria-expanded', 'false'); document.removeEventListener('pointerdown', outMore, true); };
+    const outMore = e => { if (!hm.contains(e.target) && e.target !== mb) closeMore(); };
+    mb.onclick = () => { SND.play('click'); if (!hm.hidden) return closeMore(); hm.hidden = false; mb.setAttribute('aria-expanded', 'true'); setTimeout(() => document.addEventListener('pointerdown', outMore, true), 0); };
+    $('#bCalc').onclick = () => { closeMore(); showCalc(); };
+    $('#bSnd').onclick = () => { V.muted = !V.muted; SND.setVol('master', V.muted ? 0 : S.master); $('#bSnd').textContent = V.muted ? '🔇 Som: desligado' : '🔊 Som: ligado'; };
     $('#bSpd').onclick = () => { const o = ['lento', 'normal', 'rapido']; S.speed = o[(o.indexOf(S.speed) + 1) % 3]; U.applyOpts(); speedLbl(); };
     speedLbl();
   }
@@ -244,11 +255,12 @@
     rel.forEach(p => {
       const ps = V.pos[p.pid];
       const seat = el(`<div class="seat pos-${ps}${ps === 'b' ? ' me' : ''}" data-pid="${p.pid}" style="--pc:${PCOL[p.pid]}">
-        <div class="avatar" style="--pc:${PCOL[p.pid]}">${esc(p.name[0].toUpperCase())}</div>
-        <div class="who"><div class="nm">${esc(p.name)}<span class="bt">${p.bot ? ' 🤖' : ''}</span> <span class="turnflag" hidden>INICIA</span></div>
+        ${(() => { const a = avInner(p); return `<div class="avatar${a.cls}" style="--pc:${PCOL[p.pid]}">${a.html}</div>`; })()}
+        <div class="who"><div class="nm"><span class="nt">${esc(p.name)}</span><span class="turnflag" hidden>INICIA</span></div>
         <div class="cnt"><span title="Baralho ativo"><i class="mini"></i><b class="cd">0</b></span><span title="Reserva"><i class="mini res"></i><b class="cr">0</b></span><span class="prepslots" title="Especiais preparados"><i class="prepslot"></i><i class="prepslot"></i></span></div></div></div>`);
+      seat.prepend(el(`<i class="stt on" title="Conectado"></i>`));
       V.seats[p.pid] = seat;
-      const host = ps === 'b' ? '.r-bot' : ps === 'l' ? '.sideL' : ps === 'r' ? '.sideR' : '.r-top';
+      const host = ps === 'b' ? '.r-bot' : '.r-top';   // todos os rivais ficam numa linha no topo
       $(host, b).append(seat);
       const slot = el(`<div class="slot pos-${ps}" data-pid="${p.pid}" data-name="${esc(p.name)}" style="--pc:${PCOL[p.pid]}"></div>`);
       V.slots[p.pid] = slot; arena.append(slot);
@@ -276,12 +288,13 @@
       const seat = V.seats[p.pid]; if (!seat) return;
       $('.cd', seat).textContent = p.deck.length; $('.cr', seat).textContent = p.reserve.length;
       $$('.prepslot', seat).forEach((x, i) => x.classList.toggle('on', i < p.prepared.length));
-      seat.classList.toggle('dead', !p.alive); { const bt = $('.bt', seat); if (bt) bt.textContent = p.bot ? ' 🤖' : ''; }
+      seat.classList.toggle('dead', !p.alive); { const st = $('.stt', seat), away = !p.bot && (s.away || []).includes(p.pid), k = p.bot ? 'cpu' : away ? 'warn' : 'on'; if (st && st.dataset.k !== k) { st.dataset.k = k; st.className = 'stt ' + k; st.title = p.bot ? 'CPU' : away ? 'Sem conexão' : 'Conectado'; st.textContent = p.bot ? '⚙' : ''; } }
       const turn = V.init === p.pid && p.alive && !s.over;
       seat.classList.toggle('turn', turn); $('.turnflag', seat).hidden = !turn;
     });
     const bh = $('#bhn'); if (bh) bh.textContent = s.bh.length;
-    const sub = $('#hSub'); if (sub) sub.textContent = `Rodada ${s.round} · Disputa ${Math.min(s.combats + 1, 9999)}${V.init != null ? ' · inicia ' + nameOf(V.init) : ''}${V.online && V.ctl && V.ctl.link ? ' · Sala ' + V.ctl.link.code : ''}`;
+    fitNames();
+    const sub = $('#hSub'); if (sub) sub.textContent = `${s.events && Object.keys(s.events).length ? '' : 'Rodada ' + s.round + ' · '}Disputa ${Math.min(s.combats + 1, 9999)}${V.online && V.ctl && V.ctl.link ? ' · Sala ' + V.ctl.link.code : ''}`;
   }
   function pulseBH() { const b = $('#bh'); if (!b) return; b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse'); refresh(); }
 
@@ -322,6 +335,10 @@
     slot.classList.toggle('withdrawn', !!e.withdrawn);
     let x = $('.xtra', slot);
     if (e.extra && e.extra.length) { if (!x) { x = el('<div class="xtra"></div>'); slot.append(x); } x.textContent = '+' + e.extra.length + (e.extra.length > 1 ? ' cartas' : ' carta'); }
+  }
+  // nome sempre inteiro e em uma linha nas caixas dos rivais: reduz a fonte até caber
+  function fitNames() {
+    try { $$('.r-top .seat .nt').forEach(nt => { nt.style.fontSize = ''; let f = parseFloat(getComputedStyle(nt).fontSize) || 12, g = 0; while (nt.scrollWidth > nt.clientWidth + 1 && f > 8.5 && g++ < 12) { f -= .5; nt.style.fontSize = f + 'px'; } }); } catch (e) { }
   }
   function updateAll() { if (V.combat) V.combat.entries.forEach(updateSlot); }
 
@@ -942,9 +959,10 @@
       const grace = new Map(), present = peer => !!peer && link.peers().some(p => p.peer === peer);
       const notice = (title, sub) => { banner(title, sub, '#ffd25f', 3200); send({ n: ++seq, t: 'notice', title, sub }); };
       const publishRj = () => { if (closed) return; const rj = seats.map((s, i) => ({ s, i })).filter(x => x.s.u && x.s.peer !== link.me && G.p(x.i) && (G.p(x.i).bot || !present(x.s.peer))).map(x => ({ i: x.i, u: x.s.u, n: x.s.name })); link.presence({ rj }).catch(() => { }); };
+      const away = (i, on) => { const a = G.s.away = (G.s.away || []).filter(x => x !== i); if (on) a.push(i); try { refresh(); } catch (e) { } };
       const toBot = i => {
         const p = G.p(i); if (!p || p.bot || closed) return; const old = seats[i].peer;
-        p.bot = true; G.log(`${p.name} saiu da partida. Um CPU assumiu o lugar.`, 'efeito');
+        p.bot = true; away(i, false); G.log(`${p.name} saiu da partida. Um CPU assumiu o lugar.`, 'efeito');
         notice(`${p.name} saiu`, 'Um CPU assumiu o lugar');
         pending.forEach(q => { if (q.peer === old) q.finish(undefined); }); publishRj();
       };
@@ -952,10 +970,10 @@
       off.push(link.onPeers(ch => {
         ch.left.forEach(pe => {
           const i = seats.findIndex(s => s.peer === pe.peer); if (i < 0 || !G.p(i) || G.p(i).bot || grace.has(pe.peer)) return;
-          notice(`${G.p(i).name} perdeu a conexão`, 'Aguardando 25 s antes de passar para o CPU');
+          away(i, true); notice(`${G.p(i).name} perdeu a conexão`, 'Aguardando 25 s antes de passar para o CPU');
           grace.set(pe.peer, setTimeout(() => { grace.delete(pe.peer); if (!closed && seats[i].peer === pe.peer && !present(pe.peer)) toBot(i); }, 25000));
         });
-        ch.joined.forEach(pe => { if (grace.has(pe.peer)) { clearTimeout(grace.get(pe.peer)); grace.delete(pe.peer); const i = seats.findIndex(s => s.peer === pe.peer); if (i >= 0) { notice(`${G.p(i).name} voltou`, 'Conexão restabelecida'); sync(i); } } });
+        ch.joined.forEach(pe => { if (grace.has(pe.peer)) { clearTimeout(grace.get(pe.peer)); grace.delete(pe.peer); const i = seats.findIndex(s => s.peer === pe.peer); if (i >= 0) { away(i, false); notice(`${G.p(i).name} voltou`, 'Conexão restabelecida'); sync(i); } } });
         publishRj();
       }));
       off.push(() => grace.forEach(t => clearTimeout(t)));
@@ -963,7 +981,7 @@
         if (!d || d.t !== 'rejoin') return;
         const i = seats.findIndex((s, k) => k === d.i && s.peer !== link.me && ((s.u && s.u === d.u) || s.name === d.n)); if (i < 0 || !G.p(i)) return;
         const old = seats[i].peer; if (old && old !== m.peer && present(old)) return;   // o dono original ainda está conectado
-        if (grace.has(old)) { clearTimeout(grace.get(old)); grace.delete(old); }
+        if (grace.has(old)) { clearTimeout(grace.get(old)); grace.delete(old); } away(i, false);
         pending.forEach(q => { if (q.peer === old) q.finish(undefined); });
         const was = G.p(i).bot || old !== m.peer; seats[i].peer = m.peer; G.p(i).bot = false;
         if (was) { G.log(`${G.p(i).name} voltou e reassumiu o lugar do CPU.`, 'efeito'); notice(`${G.p(i).name} voltou`, 'Reassumiu o lugar do CPU'); }
@@ -979,7 +997,7 @@
     G = { cfg: { specialsFrom: cfg.sf }, logs: [], s: { players: seats.map((s, i) => ({ pid: i, name: s.name, bot: s.bot, avatar: i, alive: true, deck: [], reserve: [], prepared: [] })), bh: [], round: 1, combats: 0, initiator: 0, over: false, winner: null },
       p(pid) { return this.s.players[pid]; }, alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); } };
     U.game = G;
-    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit', 'events'].forEach(k => { G.s[k] = st[k]; }); };
+    const applyState = st => { G.s.players = st.players; G.s.bh = st.bh.map(x => { const i = x.indexOf(':'); return i < 0 ? { id: x, kind: 'normal' } : { id: x.slice(0, i), kind: x.slice(i + 1) }; }); ['round', 'combats', 'initiator', 'over', 'winner', 'byLimit', 'events', 'away'].forEach(k => { G.s[k] = st[k]; }); };
     let last = 0, synced = !ctl.rejoin, queue = Promise.resolve(); const answered = new Map(), inflight = new Set();
     const enqueue = fn => { queue = queue.then(fn).catch(e => { if (e !== 'abort') console.error('online', e); }); };
     off.push(link.on('ev', (m, msg) => {
