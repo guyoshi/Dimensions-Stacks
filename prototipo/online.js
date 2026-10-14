@@ -255,6 +255,7 @@ const NOCONN = 'Sem conexão online: este acesso não foi admitido na sala (o Cl
         if (ui.swap && ui.sel != null && v !== ui.sel) { const r = c.arr.slice(); [r[ui.sel], r[v]] = [r[v], r[ui.sel]]; c.arr = r; ui.pop = [ui.sel, v]; ui.swap = false; ui.sel = v; return push(); }
         ui.sel = v; ui.swap = false; return renderLobby();
       }
+      if (a === 'move') { const [x, y] = v, r = c.arr.slice(); [r[x], r[y]] = [r[y], r[x]]; c.arr = r; ui.pop = [x, y]; ui.swap = false; ui.sel = y; return push(); }
       if (a === 'swap') { ui.swap = true; return renderLobby(); }
       if (a === 'cancel') { ui.swap = false; return renderLobby(); }
       if (a === 'shuffle') { const r = c.arr.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } c.arr = r; ui.pop = [0, 1, 2, 3]; ui.swap = false; return push(); }

@@ -35,7 +35,7 @@
       const col = duo ? tcol(i) : PCOL[i];
       const sel = interactive && m.sel === i, tgt = interactive && m.swap && m.sel != null && !sel && !p.fixed;
       const tag = p.cpu ? dfName(p.diff) : (p.tag || '');
-      return `<button type="button" class="lb-sit lb-${pos[i]}${sel ? ' sel' : ''}${tgt ? ' tgt' : ''}${m.pop && m.pop.includes(i) ? ' pop' : ''}" data-seat="${i}" style="--sc:${col}" ${interactive ? '' : 'disabled'}>${av(p, col)}<span class="lb-nm">${p.me ? 'Você' : esc(p.name)}</span>${tag ? `<span class="lb-tag">${esc(tag)}</span>` : ''}</button>`;
+      return `<button type="button" class="lb-sit lb-${pos[i]}${sel ? ' sel' : ''}${tgt ? ' tgt' : ''}${m.pop && m.pop.includes(i) ? ' lbpop' : ''}" data-seat="${i}" style="--sc:${col}" ${interactive ? '' : 'disabled'}>${av(p, col)}<span class="lb-nm">${p.me ? 'Você' : esc(p.name)}</span>${tag ? `<span class="lb-tag">${esc(tag)}</span>` : ''}</button>`;
     }).join('');
     return `<div class="lb-table">${links}${seats}</div>`;
   }
@@ -76,7 +76,39 @@
   function mount(root, m, act) {
     root.classList.add('lbs');
     root.innerHTML = html(m);
+    // arrastar um assento sobre outro troca os dois (CPU ou anfitrião; "Você" na partida local é fixo)
+    let drag = null, justDragged = false;
+    const seatAt = (x, y) => { const o = document.elementFromPoint(x, y); return o && o.closest ? o.closest('.lb-sit') : null; };
+    root.onpointerdown = e => {
+      const st = e.target.closest('.lb-sit'); if (!st || st.disabled || e.button > 0) return;
+      const i = +st.dataset.seat; if ((m.seats[i] || {}).fixed) return;
+      drag = { i, st, x: e.clientX, y: e.clientY, on: false, ghost: null, over: null, id: e.pointerId };
+    };
+    root.onpointermove = e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.on) {
+        if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 9) return;
+        drag.on = true; try { drag.st.setPointerCapture(e.pointerId); } catch (er) { }
+        const g = drag.st.cloneNode(true); g.className = 'lb-ghost'; g.removeAttribute('data-seat'); document.body.append(g); drag.ghost = g;
+        drag.st.classList.add('lifted'); root.classList.add('dragging');
+        root.querySelectorAll('.lb-sit').forEach(x => { if (x !== drag.st && !(m.seats[+x.dataset.seat] || {}).fixed) x.classList.add('tgt'); });
+      }
+      drag.ghost.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+      const o = seatAt(e.clientX, e.clientY); const ok = o && o !== drag.st && !(m.seats[+o.dataset.seat] || {}).fixed ? o : null;
+      if (ok !== drag.over) { if (drag.over) drag.over.classList.remove('hot'); if (ok) ok.classList.add('hot'); drag.over = ok; }
+    };
+    const endDrag = (e, cancel) => {
+      const d = drag; drag = null; if (!d || !d.on) return;
+      justDragged = true; setTimeout(() => { justDragged = false; }, 60);
+      if (d.ghost) d.ghost.remove(); d.st.classList.remove('lifted'); root.classList.remove('dragging');
+      root.querySelectorAll('.lb-sit.tgt,.lb-sit.hot').forEach(x => x.classList.remove('tgt', 'hot'));
+      const o = cancel ? null : seatAt(e.clientX, e.clientY);
+      if (o && o !== d.st && !(m.seats[+o.dataset.seat] || {}).fixed) { U.SND && U.SND.play && U.SND.play('click'); act('move', [d.i, +o.dataset.seat]); }
+    };
+    root.onpointerup = e => endDrag(e, false);
+    root.onpointercancel = e => endDrag(e, true);
     root.onclick = e => {
+      if (justDragged) return;
       const b = e.target.closest('button'); if (!b || b.disabled) return;
       const d = b.dataset; let a = null, v = null;
       if (d.mode) { a = 'mode'; v = d.mode; } else if (d.n) { a = 'n'; v = +d.n; } else if (d.per) { a = 'per'; v = +d.per; }

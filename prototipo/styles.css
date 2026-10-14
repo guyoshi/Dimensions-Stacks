@@ -1207,16 +1207,14 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 .lb-links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .lb-links line { stroke-width: 2px; stroke-dasharray: 2 7; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .lb-sit { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 96px; transform: translate(-50%, -50%); padding: 4px 2px; border-radius: 16px; transition: transform .15s; }
-.lb-sit:active:not(:disabled) { transform: translate(-50%, -50%) scale(.94); }
 .lb-sit:disabled { color: inherit; opacity: 1; cursor: default; }
 .lb-nm { font-size: 12px; font-weight: 800; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--sc, var(--ink)); }
 .lb-tag { font-size: 10.5px; color: var(--ink2); margin-top: -3px; font-weight: 600; }
-.lb-sit.sel .lb-av { transform: scale(1.12); }
 .lb-sit.sel::before, .lb-sit.tgt::before { content: ''; position: absolute; inset: -2px; border-radius: 18px; }
-.lb-sit.sel::before { border: 1.5px solid var(--sc); background: color-mix(in srgb, var(--sc) 10%, transparent); animation: lbPulse 1.3s ease-in-out infinite; }
+.lb-sit.sel::before { border: 1.5px solid var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); }
 .lb-sit.tgt::before { border: 1.5px dashed var(--line2); animation: lbPulse2 .9s ease-in-out infinite; }
 .lb-sit > * { position: relative; }
-.lb-sit.pop .lb-av { animation: lbPop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.lb-sit.lbpop .lb-av { animation: lbPop .45s cubic-bezier(.3, 1.6, .5, 1); }
 @keyframes lbPulse { 50% { opacity: .55; } }
 @keyframes lbPulse2 { 50% { border-color: var(--gold); } }
 @keyframes lbPop { 0% { transform: scale(.6); } 100% { transform: scale(1); } }
@@ -1260,7 +1258,6 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 @keyframes lbDot { 0%, 60%, 100% { opacity: .2; } 30% { opacity: 1; } }
 .lb-chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; flex: none; }
 .lb-chip { padding: 5px 10px; border-radius: 99px; background: var(--bg2); border: 1px solid var(--line); font-size: 12px; color: var(--ink2); } .lb-chip b { color: var(--gold2); }
-.lb-panel.fade { animation: lbFade .25s ease both; } @keyframes lbFade { from { opacity: 0; transform: translateY(5px); } }
 
 /* entrada do multiplayer (mesma tela, mesmo estilo) */
 .lb-entry { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-height: 0; }
@@ -1303,3 +1300,11 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 .catt button.on { background: #262a33; box-shadow: inset 0 0 0 1px #ffffff3d; color: var(--gold2); }
 .catt button[data-a] svg { width: 19px; height: 19px; fill: currentColor; stroke: none; }
 .catt button[data-a="pod"].on { color: #ff8a5c; } .catt button[data-a="def"].on { color: #6cc6ff; } .catt button[data-a="int"].on { color: #c58cff; } .catt button[data-a="vel"].on { color: #7dffb0; }
+
+/* arrastar para trocar */
+.lb-sit { touch-action: none; user-select: none; -webkit-user-select: none; }
+.lb-sit.lifted { opacity: .3; }
+.lb-sit.hot::before { border: 1.5px solid var(--gold2); background: #ffffff14; animation: none; }
+.lb-ghost { position: fixed; left: 0; top: 0; z-index: 90; width: 96px; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 4px; filter: drop-shadow(0 10px 18px #000a); }
+.lb-ghost .lb-av { transform: scale(1.1); }
+.lbs.dragging { cursor: grabbing; }

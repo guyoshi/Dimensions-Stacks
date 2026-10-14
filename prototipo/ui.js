@@ -276,7 +276,7 @@
     if (CFG.seats[0] && !CFG.seats[0].bot) CFG.seats[0].name = U.profileName() || 'Você';   // o nome só se edita no Perfil
     if (CFG.mode !== 'duo') CFG.mode = 'ffa';
     const duo = CFG.mode === 'duo', N = duo ? 4 : CFG.n;
-    rollBots(CFG.seats, N);
+    { const used = CFG.seats.slice(0, N).filter(p => !(p.bot && /^(Bot|CPU)( |$)/.test(p.name))).map(p => p.name); CFG.seats.slice(0, N).forEach(p => { if (p.bot && /^(Bot|CPU)( |$)/.test(p.name)) { p.name = randBot(used); used.push(p.name); } }); }   // só dá nome a quem ainda não tem (nunca re-sorteia a cada toque)
     const maxPer = Math.min(24, Math.floor(CARTAS.length / N));
     CFG.per = Math.max(7, Math.min(CFG.per, maxPer));
     if (LS.sel == null || LS.sel >= N) { const k = CFG.seats.slice(0, N).findIndex(p => p.bot); LS.swap = false; LS.sel = k < 0 ? 0 : k; }
@@ -297,6 +297,7 @@
         if (LS.swap && LS.sel != null && v !== LS.sel) { if (v === 0 || LS.sel === 0) return; const S = CFG.seats; [S[LS.sel], S[v]] = [S[v], S[LS.sel]]; LS.pop = [LS.sel, v]; LS.swap = false; LS.sel = v; return save(); }
         LS.sel = v; LS.swap = false; return save();
       }
+      if (a === 'move') { const [x, y] = v; if (x === 0 || y === 0) return; const S = CFG.seats; [S[x], S[y]] = [S[y], S[x]]; LS.pop = [x, y]; LS.swap = false; LS.sel = y; return save(); }
       if (a === 'swap') { LS.swap = true; return setup(); }
       if (a === 'cancel') { LS.swap = false; return setup(); }
       if (a === 'shuffle') { const r = CFG.seats.slice(1, 4); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } CFG.seats.splice(1, 3, ...r); LS.pop = [1, 2, 3]; LS.swap = false; return save(); }
