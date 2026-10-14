@@ -40,7 +40,8 @@
     "revisao_14_10_2026_jesed": "Atributos das 23 cartas de Ciclo de Jesed recalculados a partir dos rankings do autor (app de classificação), com a regra do par forte aplicada sempre (par fraco no máximo 70; A União isenta). Autorizado pelo autor em 14/10/2026. Método e dados: prototipo/tools/calc_atributos.js, dados/ranking_jesed_2026-10-14.json, dados/proposta_atributos_jesed_2026-10-14.json. Especiais de Jesed ainda não revisados.",
     "revisao_14_10_2026_belfex": "B02 Tack, B03 Jork, B04 Peredun e B05 Primus adicionadas a pedido do autor (status PROPOSTA_AGUARDANDO_APROVACAO).",
     "revisao_14_10_2026_viajantes": "Atributos das 25 cartas de Viajantes Dimensionais recalculados a partir dos rankings do autor, com a regra do par forte (Velho-Sábio com par forte INT/VEL por decisão do autor; Korvo mantido forte em FOR/RES). Korvo e Velho-Sábio fixados como Lendárias (4 losangos). Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados.",
-    "revisao_14_10_2026_belfex_atributos": "Atributos das 5 cartas de Édelin Lys recalculados a partir dos rankings do autor, com a regra do par forte (Édelin isenta, A União); aprovado pelo autor em 14/10/2026. Raridade por posição de poder. Especiais ainda não revisados."
+    "revisao_14_10_2026_belfex_atributos": "Atributos das 5 cartas de Édelin Lys recalculados a partir dos rankings do autor, com a regra do par forte (Édelin isenta, A União); aprovado pelo autor em 14/10/2026. Raridade por posição de poder. Especiais ainda não revisados.",
+    "revisao_14_10_2026_misterio": "Atributos das 12 cartas de Mistério Oculto recalculados a partir dos rankings do autor (lista de Força revisada por ele em 14/10), regra do par forte: Agente Seis INT/VEL, Agente Sete FOR/RES (decisão do autor); Releuz e Hyde (A União) isentos. Raridade por posição de poder. Autorizado pelo autor em 14/10/2026. Especiais ainda não revisados."
   },
   "cartas": [
     {
@@ -1844,13 +1845,13 @@
       },
       "descricao_curta": "Detetive observador e obstinado, conecta pistas improváveis enquanto enfrenta suas próprias sombras.",
       "atributos": {
-        "FOR": 53,
-        "RES": 58,
-        "INT": 95,
-        "VEL": 76
+        "FOR": 67,
+        "RES": 91,
+        "INT": 89,
+        "VEL": 68
       },
-      "soma_atributos": 282,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 315,
+      "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-032",
       "uniao": "INTEGRANTE",
       "base_narrativa": {
@@ -1869,11 +1870,11 @@
       "descricao_curta": "Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais.",
       "atributos": {
         "FOR": 83,
-        "RES": 95,
-        "INT": 70,
-        "VEL": 67
+        "RES": 73,
+        "INT": 66,
+        "VEL": 70
       },
-      "soma_atributos": 315,
+      "soma_atributos": 292,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-031",
       "uniao": "NAO",
@@ -1892,13 +1893,13 @@
       },
       "descricao_curta": "Figura decisiva no passado de Hyde, enfrenta a dor com humor, curiosidade e humanidade.",
       "atributos": {
-        "FOR": 18,
-        "RES": 31,
-        "INT": 72,
-        "VEL": 78
+        "FOR": 23,
+        "RES": 70,
+        "INT": 78,
+        "VEL": 77
       },
-      "soma_atributos": 199,
-      "perfil_balanceamento": "Modesta",
+      "soma_atributos": 248,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-134",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1916,9 +1917,9 @@
       },
       "descricao_curta": "Advogado habilidoso e sarcástico, abre caminhos por favores, influência e brechas jurídicas.",
       "atributos": {
-        "FOR": 24,
-        "RES": 38,
-        "INT": 91,
+        "FOR": 41,
+        "RES": 43,
+        "INT": 69,
         "VEL": 61
       },
       "soma_atributos": 214,
@@ -1940,13 +1941,13 @@
       },
       "descricao_curta": "Mentor moral de Hyde, ensina a fazer perguntas difíceis antes de condenar os outros.",
       "atributos": {
-        "FOR": 12,
-        "RES": 42,
-        "INT": 84,
-        "VEL": 20
+        "FOR": 35,
+        "RES": 79,
+        "INT": 61,
+        "VEL": 34
       },
-      "soma_atributos": 158,
-      "perfil_balanceamento": "Frágil",
+      "soma_atributos": 209,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-068",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1964,13 +1965,13 @@
       },
       "descricao_curta": "Nome de um inimigo cuja perseguição conduz Hyde por uma trama de segredos e identidades.",
       "atributos": {
-        "FOR": 68,
-        "RES": 53,
-        "INT": 86,
-        "VEL": 59
+        "FOR": 80,
+        "RES": 48,
+        "INT": 42,
+        "VEL": 65
       },
-      "soma_atributos": 266,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 235,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-101",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1988,13 +1989,13 @@
       },
       "descricao_curta": "Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização.",
       "atributos": {
-        "FOR": 77,
-        "RES": 94,
-        "INT": 70,
-        "VEL": 59
+        "FOR": 70,
+        "RES": 53,
+        "INT": 84,
+        "VEL": 52
       },
-      "soma_atributos": 300,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 259,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-039",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2012,12 +2013,12 @@
       },
       "descricao_curta": "Cientista da SPAGE, desenvolveu uma interface para acompanhar a saúde cerebral de astronautas.",
       "atributos": {
-        "FOR": 19,
-        "RES": 32,
-        "INT": 95,
-        "VEL": 39
+        "FOR": 10,
+        "RES": 29,
+        "INT": 79,
+        "VEL": 42
       },
-      "soma_atributos": 185,
+      "soma_atributos": 160,
       "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-028",
       "uniao": "NAO",
@@ -2036,13 +2037,13 @@
       },
       "descricao_curta": "Político de linha dura apelidado de Bulldog: agarra uma questão e não larga. Trata decisão rápida e certeza como virtude e não admite dúvida.",
       "atributos": {
-        "FOR": 81,
-        "RES": 86,
-        "INT": 66,
-        "VEL": 54
+        "FOR": 73,
+        "RES": 38,
+        "INT": 55,
+        "VEL": 20
       },
-      "soma_atributos": 287,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 186,
+      "perfil_balanceamento": "Frágil",
       "habilidade_especial_id": "AE-036",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2060,13 +2061,13 @@
       },
       "descricao_curta": "Luzitano deixado na Terra pela Luz após os eventos de Órbita Oráculo.",
       "atributos": {
-        "FOR": 65,
-        "RES": 70,
-        "INT": 87,
-        "VEL": 82
+        "FOR": 59,
+        "RES": 82,
+        "INT": 94,
+        "VEL": 88
       },
-      "soma_atributos": 304,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 323,
+      "perfil_balanceamento": "Elite",
       "habilidade_especial_id": "AE-111",
       "uniao": "INTEGRANTE",
       "base_narrativa": {
@@ -2084,13 +2085,13 @@
       },
       "descricao_curta": "Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar.",
       "atributos": {
-        "FOR": 8,
-        "RES": 19,
-        "INT": 95,
-        "VEL": 45
+        "FOR": 49,
+        "RES": 62,
+        "INT": 88,
+        "VEL": 66
       },
-      "soma_atributos": 167,
-      "perfil_balanceamento": "Frágil",
+      "soma_atributos": 265,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-042",
       "uniao": "NAO",
       "base_narrativa": {
@@ -2108,12 +2109,12 @@
       },
       "descricao_curta": "Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana.",
       "atributos": {
-        "FOR": 75,
-        "RES": 62,
-        "INT": 95,
-        "VEL": 51
+        "FOR": 81,
+        "RES": 68,
+        "INT": 65,
+        "VEL": 48
       },
-      "soma_atributos": 283,
+      "soma_atributos": 262,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-102",
       "uniao": "NAO",

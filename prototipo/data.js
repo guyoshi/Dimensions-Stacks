@@ -203,7 +203,7 @@
 
   // Raridade por posição de poder dentro da série (autor, 14/10/2026): 11% Lendária, 21% Épica, 33% Rara, resto Comum.
   // Vale para as séries já ranqueadas pelo autor; as demais seguem os cortes fixos acima até serem ranqueadas.
-  const SERIES_POR_POSICAO = ['jesed', 'viajantes', 'belfex'];
+  const SERIES_POR_POSICAO = ['jesed', 'viajantes', 'belfex', 'misterio'];
   // Raridade fixada pelo autor (14/10/2026): Korvo e Velho-Sábio são Lendárias; ocupam vagas da cota da série.
   const RARIDADE_FIXA = { V10: 'lendaria', V05: 'lendaria' };
   function raridadePorPosicao(cartas) {

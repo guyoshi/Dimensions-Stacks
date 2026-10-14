@@ -1,5 +1,12 @@
 {
   "_aviso": "Decisões do autor (14/10/2026) usadas por prototipo/tools/calc_atributos.js e data.js.",
-  "par_forte": { "V05": "INT/VEL" },
-  "raridade_fixa": { "V05": "lendaria", "V10": "lendaria" }
+  "par_forte": {
+    "V05": "INT/VEL",
+    "M07": "INT/VEL",
+    "M02": "FOR/RES"
+  },
+  "raridade_fixa": {
+    "V05": "lendaria",
+    "V10": "lendaria"
+  }
 }
