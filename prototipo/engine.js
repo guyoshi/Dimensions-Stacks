@@ -156,7 +156,7 @@
   });
   def('AE-090', 'Segunda chance', 'Se sua carta de combate fosse ao Buraco Negro nesta disputa, ela vai ao fim da sua reserva.', 'Defesa', {
     apply(ctx, act) { ctx.entry(act.pid).toReserve = true; ctx.say(`${ctx.name(act.pid)} se prepara para uma segunda chance.`); },
-    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'defesa' ? 0.7 : 0.04; },
+    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'defesa' ? 0.7 : 0.04; },
   });
   def('AE-093', 'Espionagem tripla', 'Veja as 3 próximas cartas do baralho ativo de um adversário, sem alterá-las.', 'Informação', {
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length > 0); },
@@ -178,7 +178,7 @@
   });
   def('AE-108', 'Negar captura inimiga', 'Se perder para um atributo de ataque, sua carta vai ao Buraco Negro, não ao baralho do vencedor.', 'Resolução', {
     apply(ctx, act) { ctx.entry(act.pid).negateCapture = true; ctx.say(`${ctx.name(act.pid)} nega a captura da própria carta.`); },
-    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'ataque' ? 0.5 : 0.04; },
+    ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'ataque' ? 0.5 : 0.04; },
   });
   def('AE-111', 'Ativação forçada', 'Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas (até 2) nesta disputa.', 'Interação', {
     can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0); },
@@ -190,7 +190,7 @@
   });
   def('AE-113', 'Interrupção precisa', 'Cancele 1 especial de um adversário antes da resolução; o especial cancelado é descartado normalmente. (Se ninguém ativar, é desperdiçada.)', 'Interação', {
     phase: 'pre',
-    can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) || ctx.activations.some(a => a.pid !== pid && !a.cancelled); },
+    can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0) || ctx.activations.some(a => a.pid !== pid && !ctx.sameTeam(a.pid, pid) && !a.cancelled); },
     async apply(ctx, act) {
       const list = ctx.activations.filter(a => a.pid !== act.pid && !a.cancelled && a.card !== act.card && !ctx.sameTeam(a.pid, act.pid));
       if (!list.length) return ctx.say('Interrupção sem alvo: nada a cancelar.');
@@ -344,6 +344,7 @@
         alive: () => g.alive(), order: () => g.order(combat.initiator),
         opps: pid => g.foesOf(pid),
         right: pid => { let r = g.nextAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.nextAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
+        ringR: pid => { const r = g.nextAlive(pid); return r === pid ? null : r; }, ringL: pid => { const r = g.prevAlive(pid); return r === pid ? null : r; },   // vizinho de assento (sem pular parceiro): rodízios precisam ser permutações
         left: pid => { let r = g.prevAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.prevAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
         rand: () => g.rand(), say: (t) => g.log(t, 'efeito'), emit: (t, d) => g.emit(t, d),
         sameTeam: (a, b) => g.sameTeam(a, b),
@@ -372,7 +373,7 @@
         sum: id => sum4(CARDS[id].stats),
         bestAttr: pid => { const e = combat.entries.find(x => x.pid === pid); let b = null, bp = -1; AID.forEach(a => { const v = pct(a, e.stats[a]); if (v > bp) { bp = v; b = a; } }); return { a: b, p: bp }; },
         force: (t, act) => g.forceActivate(combat, t, act),
-        isLosing: pid => { const w = g.evaluate(combat, true); return !w.winners.some(e => e.pid === pid); },
+        isLosing: pid => { const w = g.evaluate(combat, true); return !w.winners.some(e => e.pid === pid || g.sameTeam(e.pid, pid)); },   // nas duplas, se o parceiro vence a carta volta ao dono: não está perdendo
         flipChance: (pid, bonus) => g.flipChance(combat, pid, bonus),
       };
       return ctx;
@@ -466,7 +467,7 @@
     flipChance(combat, pid, bonus) {
       if (combat.ev && combat.ev.id === 'avesso') return 0.02;   // no avesso, somar ao próprio valor só atrapalha
       const me = combat.entries.find(e => e.pid === pid); const v = me.stats[me.attr] + me.bonus;
-      let bestOpp = -1; combat.entries.forEach(e => { if (e.pid !== pid && !e.withdrawn) bestOpp = Math.max(bestOpp, e.stats[e.attr] + e.bonus); });
+      let bestOpp = -1; combat.entries.forEach(e => { if (e.pid !== pid && !e.withdrawn && !this.sameTeam(e.pid, pid)) bestOpp = Math.max(bestOpp, e.stats[e.attr] + e.bonus); });
       if (bestOpp < 0) return 0.02;
       if (v > bestOpp) return 0.04; if (v + bonus >= bestOpp) return 0.93; return 0.02;
     }
@@ -694,7 +695,7 @@
     // (que responde a especiais dos rivais: anular, copiar, apropriar, proteger) decide sabendo o que apareceu.
     // Só abre para quem tem algum especial reativo utilizável e se ALGUM RIVAL virou um especial; as escolhas são secretas e
     // simultâneas entre os reagentes (um reativo não reage a outro reativo). Vale a regra de um especial por jogador (companheiras à parte).
-    foeActs(combat, pid) { return combat.ctrlActs.concat(combat.activations).filter(a => a.pid !== pid && !a.cancelled); }
+    foeActs(combat, pid) { return combat.ctrlActs.concat(combat.activations).filter(a => a.pid !== pid && !this.sameTeam(a.pid, pid) && !a.cancelled); }
     async reactWindow(combat) {
       if (!combat.specialsAllowed) return;
       const ctx = this.ctxFor(combat); const picks = []; const comp = x => !!SP[CARDS[x].especial].companion;

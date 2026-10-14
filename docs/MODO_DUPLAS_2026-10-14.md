@@ -60,3 +60,13 @@ Regra: o jogador que fica sem baralho e sem reserva recebe metade das cartas do 
 | Pool + doação 2 | 21 | 6,1 | 49,7% | 2% |
 
 Efeito: praticamente ninguém joga sozinho ou sai da mesa antes do fim; a partida encurta um pouco e o equilíbrio entre as duplas se mantém. A doação adicional não acrescenta nada ao pool.
+
+## Especiais nas duplas (auditoria)
+Teste `prototipo/tests/audit_duplas.js`: os 138 especiais, forçados, em 8.280 partidas 2×2 (60 por especial). Resultado: nenhuma falha de conservação de cartas, nenhuma partida travada e nenhum efeito hostil contra o parceiro.
+
+Adaptações no motor:
+- Alvos "adversário", "rival", "direita/esquerda", cancelamentos (Silêncio, Reação, Eco, Apropriação), troca de combatente, captura e desafios nunca escolhem o parceiro; cada "esquerda/direita" pula o parceiro.
+- Rodízios e passes (Passe à esquerda/direita, Reservas giratórias) seguem o assento vizinho, que nas duplas é sempre adversário; antes, pular o parceiro quebrava a conservação das cartas quando alguém caía.
+- Efeitos "todos, inclusive você" (Descarte coletivo, Atributo universal, pares/ataque/defesa obrigatórios) continuam valendo para o parceiro: decisão de design a confirmar.
+- Bots: parceiro vencendo não conta como "estou perdendo", nem como carta rival a bater; o especial do parceiro não é tratado como ameaça.
+- Fraqueza conhecida: Troca entre vizinhos, Transferência de reserva e Tríplice transferência movem cartas entre os dois adversários, que são parceiros entre si, então não geram ganho líquido nas duplas (mesmo caso do duelo).

@@ -240,7 +240,7 @@
     }
     swapTops('AE-055', 'R'); swapTops('AE-056', 'L');
     function pass(id, dir) {
-      const side = (ctx, pid) => dir === 'R' ? ctx.right(pid) : ctx.left(pid);
+      const side = (ctx, pid) => dir === 'R' ? ctx.ringR(pid) : ctx.ringL(pid);
       D(id, 'Troca', {
         can(ctx, pid) { return ctx.alive().length >= 2 && hasDeck(ctx, pid); },
         async apply(ctx, act) {
@@ -277,12 +277,12 @@
         can(ctx) { return ctx.alive().length >= 2; },
         async apply(ctx, act) {
           const al = ctx.order(); const old = {}; al.forEach(pid => { old[pid] = ctx.player(pid).reserve; });
-          const nw = {}; al.forEach(pid => { const to = dir === 'R' ? ctx.right(pid) : ctx.left(pid); nw[to == null ? pid : to] = old[pid]; });
+          const nw = {}; al.forEach(pid => { const to = dir === 'R' ? ctx.ringR(pid) : ctx.ringL(pid); nw[to == null ? pid : to] = old[pid]; });
           al.forEach(pid => { ctx.player(pid).reserve = nw[pid] || []; });
-          ctx.say(`As reservas giram para a ${dir === 'R' ? 'direita' : 'esquerda'}.`); await ctx.emit('rotate', { dir, list: al.map(pid => ({ from: pid, to: dir === 'R' ? ctx.right(pid) : ctx.left(pid) })) });
+          ctx.say(`As reservas giram para a ${dir === 'R' ? 'direita' : 'esquerda'}.`); await ctx.emit('rotate', { dir, list: al.map(pid => ({ from: pid, to: dir === 'R' ? ctx.ringR(pid) : ctx.ringL(pid) })) });
         },
         // a reserva que chego a receber (do vizinho que passa para mim) contra a que entrego
-        ai(ctx, pid) { const from = dir === 'R' ? ctx.left(pid) : ctx.right(pid); if (from == null) return 0; const g = ctx.player(from).reserve.length - ctx.player(pid).reserve.length; return g >= 3 ? 0.75 : g >= 2 ? 0.5 : g >= 1 ? 0.25 : 0.03; }, val: 0.5,
+        ai(ctx, pid) { const from = dir === 'R' ? ctx.ringL(pid) : ctx.ringR(pid); if (from == null) return 0; const g = ctx.player(from).reserve.length - ctx.player(pid).reserve.length; return g >= 3 ? 0.75 : g >= 2 ? 0.5 : g >= 1 ? 0.25 : 0.03; }, val: 0.5,
       });
     }
     rotateRes('AE-061', 'R'); rotateRes('AE-062', 'L');
@@ -382,7 +382,7 @@
     D('AE-073', 'Defesa', {
       phase: 'pre',
       async apply(ctx, act) {
-        let n = 0; for (const a of ctx.activations) if (a.pid !== act.pid && !a.done && !a.cancelled && a !== act) { if (await ctx.cancelAct(a, act.pid)) n++; }
+        let n = 0; for (const a of ctx.activations) if (a.pid !== act.pid && !ctx.sameTeam(a.pid, act.pid) && !a.done && !a.cancelled && a !== act) { if (await ctx.cancelAct(a, act.pid)) n++; }
         ctx.say(n ? `${nm(ctx, act.pid)} faz silêncio: ${n === 1 ? '1 especial anulado' : n + ' especiais anulados'}.` : 'Silêncio sem efeito: nenhum especial adversário pendente.');
       },
       ai(ctx, pid) { return 0.05 + 0.75 * oppFlip(ctx, pid); },
@@ -393,7 +393,7 @@
         const cand = ctx.entries().filter(e => e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid)).map(e => e.pid); if (!cand.length) return;
         const t = await ctx.pick(act.pid, cand, 'Quem não poderá capturar a sua carta?', c => { const w = winnerOf(ctx); return w && c.includes(w.pid) ? w.pid : richest(ctx, c); }); ctx.entry(act.pid).noCaptureBy.add(t); ctx.say(`${nm(ctx, t)} não poderá capturar a carta de ${nm(ctx, act.pid)}.`);
       },
-      ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'ataque' ? 0.7 : 0.04; },
+      ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'ataque' ? 0.7 : 0.04; },
     });
     D('AE-076', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).guardDeck++; ctx.say(`${nm(ctx, act.pid)} guarda o baralho.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição'], 0.7, 0.04), () => 0.05 + 0.4 * oppFlip(ctx, pid)); } });
     D('AE-077', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).guardRes++; ctx.say(`${nm(ctx, act.pid)} guarda a reserva.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição'], 0.65, 0.04), () => 0.05 + 0.4 * oppFlip(ctx, pid)); } });
@@ -584,7 +584,7 @@
     });
     D('AE-110', 'Captura', {
       apply(ctx, act) { ctx.entry(act.pid).margin = true; ctx.say(`${nm(ctx, act.pid)} abre uma margem estreita.`); },
-      ai(ctx, pid) { const w = winnerOf(ctx); if (!w || w.pid === pid) return 0.03; const me = ctx.entry(pid); const d = (w.stats[w.attr] + w.bonus) - (me.stats[me.attr] + me.bonus); return d > 0 && d <= 10 ? 0.85 : 0.03; },
+      ai(ctx, pid) { const w = winnerOf(ctx); if (!w || w.pid === pid || ctx.sameTeam(w.pid, pid)) return 0.03; const me = ctx.entry(pid); const d = (w.stats[w.attr] + w.bonus) - (me.stats[me.attr] + me.bonus); return d > 0 && d <= 10 ? 0.85 : 0.03; },
     });
     D('AE-129', 'Captura', {
       apply(ctx, act) { ctx.entry(act.pid).autoWin = true; ctx.say(`${nm(ctx, act.pid)} vence a comparação de atributos!`); },
@@ -641,7 +641,7 @@
     D('AE-130', 'Reação', {
       phase: 'pre',
       async apply(ctx, act) {
-        const list = ctx.activations.filter(a => !a.done && !a.cancelled && a !== act && a.pid !== act.pid);
+        const list = ctx.activations.filter(a => !a.done && !a.cancelled && a !== act && a.pid !== act.pid && !ctx.sameTeam(a.pid, act.pid));
         if (!list.length) return ctx.say('Nenhuma habilidade pendente para anular.');
         const a = list[list.length - 1]; if (await ctx.cancelAct(a, act.pid)) ctx.say(`${nm(ctx, act.pid)} anula a última habilidade pendente (de ${nm(ctx, a.pid)}).`);
       },
@@ -653,7 +653,7 @@
     D('AE-115', 'Interação', {
       phase: 'echo',
       async apply(ctx, act) {
-        const list = ctx.activations.filter(a => a.pid !== act.pid && a.done && !a.cancelled && ['main', 'guard'].includes(SP[CARDS[a.card].especial].phase || 'main') && !['AE-115'].includes(SP[CARDS[a.card].especial].id));
+        const list = ctx.activations.filter(a => a.pid !== act.pid && !ctx.sameTeam(a.pid, act.pid) && a.done && !a.cancelled && ['main', 'guard'].includes(SP[CARDS[a.card].especial].phase || 'main') && !['AE-115'].includes(SP[CARDS[a.card].especial].id));
         if (!list.length) return ctx.say('Eco sem efeito: nenhum especial adversário foi ativado.');
         const owners = [...new Set(list.map(a => a.pid))]; const o = owners.length === 1 ? owners[0] : await ctx.pick(act.pid, owners, 'Copiar o especial de quem?');
         const a2 = list.find(a => a.pid === o); const sp2 = SP[CARDS[a2.card].especial];
@@ -664,7 +664,7 @@
     D('AE-116', 'Interação', {
       phase: 'late',
       async apply(ctx, act) {
-        const pool = ctx.combat.ctrlActs.concat(ctx.activations).filter(a => a.pid !== act.pid && !a.cancelled && a.claimedBy == null);
+        const pool = ctx.combat.ctrlActs.concat(ctx.activations).filter(a => a.pid !== act.pid && !ctx.sameTeam(a.pid, act.pid) && !a.cancelled && a.claimedBy == null);
         if (!pool.length) return ctx.say('Nenhum especial adversário usado para apropriar.');
         const owners = [...new Set(pool.map(a => a.pid))]; const o = owners.length === 1 ? owners[0] : await ctx.pick(act.pid, owners, 'Apropriar o especial de quem?');
         const a2 = pool.find(a => a.pid === o); a2.claimedBy = act.pid; ctx.say(`${nm(ctx, act.pid)} se apropria do especial de ${nm(ctx, o)}.`);
