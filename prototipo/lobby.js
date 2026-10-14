@@ -33,7 +33,7 @@
     const links = duo ? `<svg class="lb-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="50" y1="30" x2="50" y2="70" stroke="var(--nexus)"/><line x1="30" y1="50" x2="70" y2="50" stroke="var(--nexus2)"/></svg>` : '';
     const seats = m.seats.slice(0, n).map((p, i) => {
       const col = duo ? tcol(i) : PCOL[i];
-      const sel = interactive && m.sel === i, tgt = interactive && m.swap && m.sel != null && !sel && !p.fixed;
+      const sel = interactive && m.sel === i, tgt = false;
       const tag = p.cpu ? dfName(p.diff) : (p.tag || '');
       return `<button type="button" class="lb-sit lb-${pos[i]}${sel ? ' sel' : ''}${tgt ? ' tgt' : ''}${m.pop && m.pop.includes(i) ? ' lbpop' : ''}" data-seat="${i}" style="--sc:${col}" ${interactive ? '' : 'disabled'}>${av(p, col)}<span class="lb-nm">${p.me ? 'Você' : esc(p.name)}</span>${tag ? `<span class="lb-tag">${esc(tag)}</span>` : ''}</button>`;
     }).join('');
@@ -41,13 +41,11 @@
   }
   function panel(m) {
     const duo = m.mode === 'duo';
-    if (m.swap && m.sel != null) return `<div class="lb-panel swapm"><span>Trocar com quem?</span><button type="button" class="lb-btn" data-a="cancel">Cancelar</button></div>`;
     const p = m.seats[m.sel];
     if (!p) return `<div class="lb-panel empty"></div>`;
     const col = duo ? tcol(m.sel) : PCOL[m.sel];
-    const canSwap = duo && !p.fixed;
     const head = `<div class="lb-pl">${av(p, col, 'xs')}<div class="lb-who"><b>${p.me ? 'Você' : esc(p.name)}${p.host ? '<span class="lb-pill host">anfitrião</span>' : ''}</b></div>
-      ${p.cpu ? `<button type="button" class="lb-ibtn" data-a="dice" aria-label="Sortear outro nome">${ic('dice')}</button>` : ''}${m.watchable && m.sel === 0 ? `<button type="button" class="lb-ibtn${p.cpu ? ' on' : ''}" data-watch="${p.cpu ? 0 : 1}" aria-label="${p.cpu ? 'Voltar a jogar' : 'Só assistir'}" aria-pressed="${!!p.cpu}">${ic('eye')}</button>` : ''}${canSwap ? `<button type="button" class="lb-btn" data-a="swap">${ic('swap')} Trocar</button>` : ''}</div>`;
+      ${p.cpu ? `<button type="button" class="lb-ibtn" data-a="dice" aria-label="Sortear outro nome">${ic('dice')}</button>` : ''}${m.watchable && m.sel === 0 ? `<button type="button" class="lb-ibtn${p.cpu ? ' on' : ''}" data-watch="${p.cpu ? 0 : 1}" aria-label="${p.cpu ? 'Voltar a jogar' : 'Só assistir'}" aria-pressed="${!!p.cpu}">${ic('eye')}</button>` : ''}</div>`;
     const diff = p.cpu ? `<div class="lb-seg sm">${DF.map(([v, t]) => `<button type="button" data-d="${v}" class="${p.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>`
       : '';
     return `<div class="lb-panel fade">${head}${diff}</div>`;
@@ -77,8 +75,10 @@
     root.classList.add('lbs');
     root.innerHTML = html(m);
     // arrastar um assento sobre outro troca os dois (CPU ou anfitrião; "Você" na partida local é fixo)
+    document.querySelectorAll('.lb-ghost').forEach(x => x.remove());
     let drag = null, justDragged = false;
     const seatAt = (x, y) => { const o = document.elementFromPoint(x, y); return o && o.closest ? o.closest('.lb-sit') : null; };
+    root.oncontextmenu = e => { if (e.target.closest('.lb-sit')) e.preventDefault(); };   // toque longo não abre menu nem cancela o arrasto
     root.onpointerdown = e => {
       const st = e.target.closest('.lb-sit'); if (!st || st.disabled || e.button > 0) return;
       const i = +st.dataset.seat; if ((m.seats[i] || {}).fixed) return;
@@ -86,9 +86,13 @@
     };
     root.onpointermove = e => {
       if (!drag || e.pointerId !== drag.id) return;
+      if (drag.on && e.pointerType === 'mouse' && e.buttons === 0) return endDrag(e, true);
       if (!drag.on) {
-        if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 9) return;
+        if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 18) return;   // toque com dedo tremendo não vira arrasto
         drag.on = true; try { drag.st.setPointerCapture(e.pointerId); } catch (er) { }
+        const fin = ev => endDrag(ev, ev.type === 'pointercancel' || ev.type === 'touchcancel' || ev.type === 'blur');   // garante que o fantasma nunca fica preso
+        const evs = ['pointerup', 'pointercancel', 'touchend', 'touchcancel', 'blur'];
+        evs.forEach(n => window.addEventListener(n, fin, true)); drag.off = () => evs.forEach(n => window.removeEventListener(n, fin, true));
         const g = drag.st.cloneNode(true); g.className = 'lb-ghost'; g.removeAttribute('data-seat'); document.body.append(g); drag.ghost = g;
         drag.st.classList.add('lifted'); root.classList.add('dragging');
         root.querySelectorAll('.lb-sit').forEach(x => { if (x !== drag.st && !(m.seats[+x.dataset.seat] || {}).fixed) x.classList.add('tgt'); });
@@ -98,12 +102,16 @@
       if (ok !== drag.over) { if (drag.over) drag.over.classList.remove('hot'); if (ok) ok.classList.add('hot'); drag.over = ok; }
     };
     const endDrag = (e, cancel) => {
-      const d = drag; drag = null; if (!d || !d.on) return;
+      const d = drag; drag = null; if (!d) return;
+      if (!d.on) { if (!cancel) { justDragged = true; setTimeout(() => { justDragged = false; }, 60); act('seat', d.i); } return; }   // toque (mesmo com dedo tremendo): seleciona direto, sem depender do click
+      if (d.off) d.off();
       justDragged = true; setTimeout(() => { justDragged = false; }, 60);
       if (d.ghost) d.ghost.remove(); d.st.classList.remove('lifted'); root.classList.remove('dragging');
       root.querySelectorAll('.lb-sit.tgt,.lb-sit.hot').forEach(x => x.classList.remove('tgt', 'hot'));
+      document.querySelectorAll('.lb-ghost').forEach(x => x.remove());
       const o = cancel ? null : seatAt(e.clientX, e.clientY);
       if (o && o !== d.st && !(m.seats[+o.dataset.seat] || {}).fixed) { U.SND && U.SND.play && U.SND.play('click'); act('move', [d.i, +o.dataset.seat]); }
+      else if (!cancel) act('seat', d.i);   // soltou no mesmo lugar ou fora: conta como toque (seleciona)
     };
     root.onpointerup = e => endDrag(e, false);
     root.onpointercancel = e => endDrag(e, true);

@@ -1302,7 +1302,7 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 .catt button[data-a="pod"].on { color: #ff8a5c; } .catt button[data-a="def"].on { color: #6cc6ff; } .catt button[data-a="int"].on { color: #c58cff; } .catt button[data-a="vel"].on { color: #7dffb0; }
 
 /* arrastar para trocar */
-.lb-sit { touch-action: none; user-select: none; -webkit-user-select: none; }
+.lb-sit { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .lb-sit.lifted { opacity: .3; }
 .lb-sit.hot::before { border: 1.5px solid var(--gold2); background: #ffffff14; animation: none; }
 .lb-ghost { position: fixed; left: 0; top: 0; z-index: 90; width: 96px; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 4px; filter: drop-shadow(0 10px 18px #000a); }

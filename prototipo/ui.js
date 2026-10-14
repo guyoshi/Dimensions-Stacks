@@ -293,13 +293,8 @@
       if (a === 'n') { CFG.n = v; LS.sel = null; return save(); }
       if (a === 'per') { CFG.per = Math.max(7, Math.min(maxPer, CFG.per + v)); return save(); }
       if (a === 'ev') { CFG.ev = CFG.ev === 0 ? 1 : 0; return save(); }
-      if (a === 'seat') {
-        if (LS.swap && LS.sel != null && v !== LS.sel) { if (v === 0 || LS.sel === 0) return; const S = CFG.seats; [S[LS.sel], S[v]] = [S[v], S[LS.sel]]; LS.pop = [LS.sel, v]; LS.swap = false; LS.sel = v; return save(); }
-        LS.sel = v; LS.swap = false; return save();
-      }
+      if (a === 'seat') { LS.sel = v; return save(); }
       if (a === 'move') { const [x, y] = v; if (x === 0 || y === 0) return; const S = CFG.seats; [S[x], S[y]] = [S[y], S[x]]; LS.pop = [x, y]; LS.swap = false; LS.sel = y; return save(); }
-      if (a === 'swap') { LS.swap = true; return setup(); }
-      if (a === 'cancel') { LS.swap = false; return setup(); }
       if (a === 'shuffle') { const r = CFG.seats.slice(1, 4); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } CFG.seats.splice(1, 3, ...r); LS.pop = [1, 2, 3]; LS.swap = false; return save(); }
       if (a === 'dice') { const used = CFG.seats.slice(0, N).map(p => p.name); CFG.seats[LS.sel].name = randBot(used); CFG.seats[LS.sel].bot = true; return save(); }
       if (a === 'diff') { CFG.seats[LS.sel].diff = v; return save(); }
