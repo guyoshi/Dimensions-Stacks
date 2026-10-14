@@ -22,7 +22,7 @@ try:
     names = lambda: pg.evaluate("[...document.querySelectorAll('#cgrid .card')].map(c => c.dataset.id)")
     chk(n() == 102, "todas as 102 cartas")
     pg.fill('#cq', 'kaelina'); pg.wait_for_timeout(300); chk(names() == ['J08'], 'busca por nome (Kaelina → J08): %s' % names())
-    pg.fill('#cq', 'DIARIO sobrenatural'); pg.wait_for_timeout(300); chk(n() == 18 and all(x.startswith('D') for x in names()), 'busca sem acento/caixa por série: %d' % n())
+    pg.fill('#cq', 'DIARIO sobrenatural'); pg.wait_for_timeout(300); chk(n() == 19 and all(x.startswith('D') for x in names()), 'busca sem acento/caixa por série: %d' % n())
     pg.fill('#cq', 'buraco negro'); pg.wait_for_timeout(300); chk(0 < n() < 20, 'busca por texto de especial (buraco negro): %d cartas' % n())
     pg.fill('#cq', 'zzzz'); pg.wait_for_timeout(300); chk(n() == 0 and 'Nenhuma carta encontrada' in pg.inner_text('#cgrid'), 'sem resultados mostra aviso')
     pg.fill('#cq', ''); pg.wait_for_timeout(300)

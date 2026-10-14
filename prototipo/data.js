@@ -145,10 +145,10 @@
     ['M12', 'James Harrow', 'misterio', 'Personagem de relevância ideológica na trama'],
     // Belfex
     ['B01', 'Édelin Lys', 'belfex', 'Édelin Lys', 1],
-    ['B02', 'Tack', 'belfex', 'Senante, amigo de infância de Édelin'],
-    ['B03', 'Jork', 'belfex', 'Dono da casa à beira-mar e dos barcos; passado em aberto'],
+    ['B02', 'Tack Ergson', 'belfex', 'Senante, amigo de infância de Édelin'],
+    ['B03', 'Jork Caravel', 'belfex', 'Dono da casa à beira-mar e dos barcos; passado em aberto'],
     ['B04', 'Peredun', 'belfex', 'Irmão de Primus; quer depô-lo'],
-    ['B05', 'Primus', 'belfex', 'Líder dos senantes'],
+    ['B05', 'Primus Senan', 'belfex', 'Líder dos senantes'],
   ];
 
   // ---------- gerador de dados PROVISÓRIOS (determinístico por id) ----------

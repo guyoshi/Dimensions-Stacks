@@ -2423,7 +2423,7 @@
     },
     {
       "id": "B02",
-      "nome": "Tack",
+      "nome": "Tack Ergson",
       "origem": {
         "codigo_serie": "B",
         "cor_base": "verde"
@@ -2444,11 +2444,11 @@
         "confianca": "Média"
       },
       "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Sobrenome tirado do nome do arquivo de referência visual."
     },
     {
       "id": "B03",
-      "nome": "Jork",
+      "nome": "Jork Caravel",
       "origem": {
         "codigo_serie": "B",
         "cor_base": "verde"
@@ -2469,7 +2469,7 @@
         "confianca": "Média"
       },
       "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Sobrenome tirado do nome do arquivo de referência visual."
     },
     {
       "id": "B04",
@@ -2494,11 +2494,11 @@
         "confianca": "Média"
       },
       "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Sobrenomes tirados dos nomes dos arquivos de referência visual (Tack Ergson, Jork Caravel, Primus Senan); Peredun sem sobrenome e sem foto ainda."
     },
     {
       "id": "B05",
-      "nome": "Primus",
+      "nome": "Primus Senan",
       "origem": {
         "codigo_serie": "B",
         "cor_base": "verde"
@@ -2519,7 +2519,7 @@
         "confianca": "Média"
       },
       "status": "PROPOSTA_AGUARDANDO_APROVACAO",
-      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Foto ainda não encontrada na pasta de Édelin Lys."
+      "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Sobrenome tirado do nome do arquivo de referência visual."
     }
   ]
 }

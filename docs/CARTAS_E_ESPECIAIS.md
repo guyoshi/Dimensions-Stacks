@@ -4,7 +4,7 @@
 
 **Reatribuição de 13/10/2026 (autorizada pelo autor):** o custo de usar um especial é a própria carta, então a força da carta passou a acompanhar o valor do especial. Especiais de informação e ordenação (espiar, reordenar, trocas sem ganho) ficam em cartas **fracas**; os mais poderosos ficam em cartas **fortes**. Os 8 integrantes da União mantiveram os especiais aprovados. A tabela de mudanças está no fim.
 
-**Sem especiais repetidos (13/10/2026, autorizado pelo autor):** cada uma das 102 cartas tem um especial diferente. As 20 cartas que repetiam especial receberam especiais antes sem carta, casando a força da carta com o valor do especial (medido por simulação).
+**Sem especiais repetidos (13/10/2026, autorizado pelo autor):** cada uma das 98 cartas tem um especial diferente. As 20 cartas que repetiam especial receberam especiais antes sem carta, casando a força da carta com o valor do especial (medido por simulação).
 
 **Atributos renomeados (13/10/2026, autorizado pelo autor):** Ataque e Defesa passaram a se chamar **Força (FOR)** e **Resistência (RES)**, para não confundir com o tipo de vitória (ataque/defesa). Regras e números não mudaram.
 
@@ -109,10 +109,10 @@
 | S17 | Luna Stellar | Spacetheft | Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo. | 38 | 52 | 85 | 80 | 255 | **AE-056** — Troca de topos à esquerda | Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à esquerda. |
 | S18 | Alekta | Spacetheft | Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto. | 70 | 64 | 68 | 88 | 290 | **AE-123** — Permutar Força e Inteligência | Troque entre si os números de Força e Inteligência da mesma carta; ambos mudam. |
 | D19 | Manu | Diário Sobrenatural | Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve. | 28 | 44 | 78 | 52 | 202 | **AE-093** — Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. |
-| B02 | Tack 🆕 | Édelin Lys | Amigo de infância de Édelin, capturado ainda criança por senantes; reaparece revelando magia e um amor antigo. | 46 | 50 | 58 | 62 | 216 | **AE-074** — Imunidade pessoal | Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais. |
-| B03 | Jork 🆕 | Édelin Lys | Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar. | 55 | 60 | 72 | 78 | 265 | **AE-092** — Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. |
+| B02 | Tack Ergson 🆕 | Édelin Lys | Amigo de infância de Édelin, capturado ainda criança por senantes; reaparece revelando magia e um amor antigo. | 46 | 50 | 58 | 62 | 216 | **AE-074** — Imunidade pessoal | Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais. |
+| B03 | Jork Caravel 🆕 | Édelin Lys | Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar. | 55 | 60 | 72 | 78 | 265 | **AE-092** — Próximas três | Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir. |
 | B04 | Peredun 🆕 | Édelin Lys | Irmão de Primus que quer depô-lo, usando o discurso de união forçada entre os povos. | 40 | 46 | 82 | 70 | 238 | **AE-116** — Apropriar especial usado | Ganhe a carta de habilidade especial usada por um adversário nesta disputa, em vez de ela permanecer no Buraco Negro; ponha-a ao fim do seu baralho ativo. |
-| B05 | Primus 🆕 | Édelin Lys | Líder dos senantes e irmão de Peredun; governa um povo marcado pela guerra com os velitas. | 78 | 82 | 54 | 48 | 262 | **AE-097** — Escolha de sete | Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo. |
+| B05 | Primus Senan 🆕 | Édelin Lys | Líder dos senantes e irmão de Peredun; governa um povo marcado pela guerra com os velitas. | 78 | 82 | 54 | 48 | 262 | **AE-097** — Escolha de sete | Veja sua reserva e escolha até 7 cartas para colocar na ordem escolhida no topo de seu baralho ativo. |
 
 ⭐ = integrante da União (especial original mantido). 🆕 = carta proposta, aguardando aprovação do autor (aparece com a faixa PRÉVIA no jogo).
 

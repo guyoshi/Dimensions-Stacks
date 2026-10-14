@@ -882,6 +882,33 @@
    "w": 720,
    "h": 1080,
    "webp": 143968
+  },
+  "B02": {
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Tack Ergson - Referencia Visual Oficial.png",
+   "mtimeMs": 1791986325201,
+   "bytes": 2793827,
+   "sha1": "21fce8a5bc",
+   "w": 720,
+   "h": 1080,
+   "webp": 163816
+  },
+  "B03": {
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Jork Caravel - Referencia Visual Oficial.png",
+   "mtimeMs": 1791986325037,
+   "bytes": 2882115,
+   "sha1": "68e4c8cf48",
+   "w": 720,
+   "h": 1080,
+   "webp": 172988
+  },
+  "B05": {
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Primus Senan - Referencia Visual Oficial.png",
+   "mtimeMs": 1791986324945,
+   "bytes": 3090442,
+   "sha1": "ff545bb3ea",
+   "w": 720,
+   "h": 1080,
+   "webp": 196020
   }
  }
 }
