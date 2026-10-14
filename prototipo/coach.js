@@ -16,23 +16,53 @@
   const OFF = ai('pod') + ' ' + ai('int'), DEF = ai('def') + ' ' + ai('vel');
   const back = (n, cw) => Array.from({ length: n }, () => U.cardEl('J08', { up: false, noanim: true, cw: cw || 44 }).outerHTML).join('');
 
-  // ---------------------------------------------------------------- dicas
+  // ---------------------------------------------------------------- dicas (ícones primeiro; no máximo uma frase curta por dica)
+  const tch = (ic, label) => `<span class="tch">${ic}${label ? `<b>${label}</b>` : ''}</span>`;
+  const arr = '<span class="arr">➜</span>';
+  const mini = (n, res) => `<i class="mini${res ? ' res' : ''}"><b>${n}</b></i>`;
+  const tv = (...x) => `<div class="tv">${x.join('')}</div>`;
+  const cap = t => `<p class="tl">${t}</p>`;
+  const bhv = '<span class="bhv sm"></span>';
+  const slot = on => `<i class="prepslot${on ? ' on' : ''}"></i>`;
+  const me = '<span class="me">você</span>';
+  const rch = (a, b) => `<span class="tch">${a}<b>${b}</b></span>`;
   const TIPS = {
-    order: { t: 'Monte o seu baralho', b: `<p><b>Arraste</b> as cartas para mudar a ordem. A carta <b>nº 1</b> é a primeira a ir para a mesa.</p><p>As <b>7 primeiras</b> formam o baralho ativo; o resto fica na <b>reserva</b> e entra quando o baralho esvazia.</p>` },
-    attr_init: { t: 'Você inicia a disputa', b: `<p>Escolha <b>qualquer</b> atributo da sua carta. Todos veem qual foi — mas só depois da revelação saberão os valores.</p>
-      <div class="two"><div><small>Ofensivos</small>${OFF}<em>quem vence leva as cartas</em></div><div><small>Defensivos</small>${DEF}<em>as cartas perdedoras vão ao Buraco Negro</em></div></div>` },
-    attr_follow: { t: 'Agora é a sua vez de responder', b: `<p>Você só pode escolher <b>dentro do mesmo par</b> do atributo iniciado — e em <b>segredo</b>:</p>
-      <div class="two"><div><small>Par 1</small>${ai('pod')} ${ai('def')}</div><div><small>Par 2</small>${ai('int')} ${ai('vel')}</div></div><p class="mut">Ex.: se iniciaram em Inteligência, você escolhe entre Inteligência e Velocidade.</p>` },
-    reveal: { t: 'Revelação', b: `<p>Vence o <b>maior valor</b> do atributo escolhido, mesmo que os atributos sejam diferentes do par (Inteligência 82 contra Velocidade 82, por exemplo).</p><p>Se houver empate, o desempate é a <b>soma dos 4 atributos</b> da carta; depois, <b>Força + Inteligência</b>.</p>`, hint: true },
-    capture: { t: 'Força ou Inteligência venceu', b: `<p>O vencedor <b>leva as cartas</b> dos perdedores para o fim do seu baralho.</p>`, hint: true },
-    bh: { t: 'Buraco Negro', b: `<p>Quando <b>Resistência ou Velocidade</b> vencem, só o vencedor recupera a própria carta. As cartas dos perdedores vão para o <b>Buraco Negro</b> e saem do jogo.</p>`, hint: true },
-    evento: { t: 'Fenômeno dimensional', b: ev => { const d = ev && window.DSUI.E.EVENTOS[ev.id]; return `<p>De vez em quando uma rodada traz um <b>fenômeno dimensional</b>: uma regra especial que vale para todos naquela rodada.</p>${d ? `<p><b>${esc(d.nome)}${ev.id === 'troca' && ev.pair ? ' (' + window.DSUI.ATT[ev.pair[0]].nome + ' ⇄ ' + window.DSUI.ATT[ev.pair[1]].nome + ')' : ''}:</b> ${esc(d.txt)}</p>` : ''}<p>A <b>faixa no alto da mesa</b> mostra a rodada atual e as duas próximas, e avisa quando uma delas tem fenômeno. Toque nela para ler os detalhes. Dá para desligar os fenômenos na configuração da partida.</p>`; }, hint: false },
-    refill: { t: 'Reserva', b: `<p>Seu baralho acabou: você comprou cartas da <b>reserva</b> (até 6). Sem baralho e sem reserva, você é eliminado.</p>`, hint: true },
-    round2: { t: 'Rodada 2: especiais liberados', b: `<p>Agora, ao escolher o atributo, aparece o botão <b>✦ Usar como especial</b>. A carta sai da disputa e fica <b>fechada ao seu lado</b>; outra entra no lugar.</p><p>Depois da revelação, você decide <b>em segredo</b> se vira o especial (no máximo 1 por disputa).</p>`, hint: true },
-    react: { t: 'Janela de reação', b: `<p>Se algum rival virou um especial, ou se você tem um reativo que não depende disso (como <b>Cortar o par</b>), decida agora, <b>sabendo o que foi virado</b>. Reativos: anular, copiar, apropriar, proteger e cortar atributo.</p><p>Os reagentes decidem em segredo e ao mesmo tempo. Se não quiser, <b>mantenha fechado</b>.</p>` },
-    special: { t: 'Virar um especial?', b: `<p>As cartas já foram reveladas. Se quiser, <b>vire um especial</b> que você deixou fechado: o efeito altera a disputa.</p><p>Todos decidem em segredo e os especiais normais são virados juntos; depois, quem tem um <b>reativo</b> reage já sabendo o que apareceu. Se não quiser, <b>mantenha fechado</b> — ele continua com você.</p>` },
+    order: { t: 'Seu objetivo', b: () => tv(back(3, 30), arr, '<span class="big">🏆</span>') + cap('Ficar com <b>todas</b> as cartas do jogo.')
+      + tv(mini(0), '<span class="plus">+</span>', mini(0, true), arr, '<b>eliminado</b>') + cap('Quem fica sem baralho e sem reserva sai da partida.')
+      + `<div class="tv deckrow">${[1, 2, 3, 4, 5, 6, 7].map(i => `<div class="dk">${U.cardEl('J08', { up: false, noanim: true, cw: 26 }).outerHTML}<i>${i}</i></div>`).join('')}<div class="dk res">${back(1, 26)}<i>reserva</i></div></div>`
+      + cap('<b>Arraste</b> as cartas para ordenar. A nº 1 sai primeiro.') },
+    mesa: { t: 'A mesa', spot: true, b: () => `<ol class="leg2">
+      <li><span class="n">1</span>${mini('7')}Baralho</li><li><span class="n">2</span>${mini('3', true)}Reserva</li>
+      <li><span class="n">3</span>${slot(false)}${slot(true)}Especiais guardados</li><li><span class="n">4</span><span class="turnflag">INICIA</span>Começa a disputa</li>
+      <li><span class="n">5</span>${bhv}Buraco Negro</li><li><span class="n">6</span><span class="tch"><b>R1 R2 R3</b></span>Rodadas</li></ol>` },
+    attr_init: { t: 'Você inicia', b: () => `<div class="two"><div>${OFF}${tv(back(2, 22), arr, me)}<em>leva as cartas dos outros</em></div><div>${DEF}${tv(back(1, 22), arr, me)}${tv(back(1, 22), arr, bhv)}<em>só a sua volta; as outras saem</em></div></div>`
+      + cap('Escolha <b>qualquer</b> atributo. Os outros respondem em segredo.') },
+    attr_follow: { t: 'Sua vez de responder', b: () => `<div class="two"><div><small>Par 1</small>${ai('pod')}<span class="plus">ou</span>${ai('def')}</div><div><small>Par 2</small>${ai('int')}<span class="plus">ou</span>${ai('vel')}</div></div>`
+      + cap('Escolha no <b>mesmo par</b> do iniciador, em segredo.') },
+    reveal: { t: 'Quem vence?', b: () => `<div class="duel"><div>${ai('int', '')}<b>82</b></div><span>›</span><div>${ai('vel', '')}<b>71</b></div></div>` + cap('Vence o <b>maior número</b>, mesmo com atributos diferentes.')
+      + tv('<span class="mut2">Empate</span>', tch('Σ', 'soma dos 4'), arr, tch(ai('pod', '') + '+' + ai('int', ''), 'soma'), arr, '<b>devolve</b>') },
+    capture: { t: 'Cartas capturadas', b: () => tv(OFF) + tv(back(3, 28), arr, me) + cap('O vencedor <b>leva</b> as cartas dos perdedores.'), hint: true },
+    bh: { t: 'Buraco Negro', b: () => tv(DEF) + tv(back(1, 28), arr, me) + tv(back(2, 28), arr, bhv) + cap('Só o vencedor recupera a sua. As <b>outras saem do jogo</b>.'), hint: true },
+    calc: { t: 'Entenda o resultado', soft: true, b: () => tv('<span class="tch"><b>Ver cálculo</b></span>') + cap('Toque no botão para ver <b>por que</b> alguém ganhou.') },
+    evento: { t: 'Fenômeno dimensional', b: ev => { const d = ev && window.DSUI.E.EVENTOS[ev.id]; return `${d ? `<div class="evone"><b>${esc(d.nome)}${ev.id === 'troca' && ev.pair ? ' (' + window.DSUI.ATT[ev.pair[0]].nome + ' ⇄ ' + window.DSUI.ATT[ev.pair[1]].nome + ')' : ''}</b><span>${esc(d.curto)}</span></div>` : ''}`
+      + cap('Vale <b>só nesta rodada</b>. A faixa no alto avisa os próximos.'); }, hint: false },
+    refill: { t: 'Reserva', b: () => tv(mini('3', true), arr, mini('3')) + cap('Baralho vazio: você compra até <b>6</b> cartas da reserva e reordena.'), hint: true },
+    elim: { t: 'Eliminado', soft: true, b: () => tv(mini(0), '<span class="plus">+</span>', mini(0, true), arr, '<b>fora</b>') + cap('Sem baralho e sem reserva, o jogador sai da partida.') },
+    round2: { t: 'Especiais liberados', b: () => tv('<button class="btn sm fake" tabindex="-1">✦ Usar como especial</button>', arr, slot(true)) + cap('A carta fica <b>fechada ao seu lado</b>; a próxima entra no lugar. Depois você decide se a vira.') },
+    react: { t: 'Reagir?', b: () => tv(rch('', 'anular'), rch('', 'copiar'), rch('', 'apropriar'), rch('', 'proteger'), rch('', 'cortar par')) + cap('Alguém virou um especial. Reaja em segredo ou <b>mantenha fechado</b>.') },
+    special: { t: 'Virar um especial?', b: () => tv(slot(true), arr, '<b>virar</b>') + cap('As cartas já foram reveladas. Vire em segredo, no máximo <b>1</b> por disputa.') },
   };
   function canTip() { const V = (U.dbg && U.dbg().V) || null; return on() && V && V.humans > 0; }
+
+  // "mesa": números sobre os elementos reais da tela
+  function pinsMesa(root) {
+    const R = root.getBoundingClientRect(); $$('.pin', root).forEach(x => x.remove());
+    [['.seat.me .mini:not(.res)', 1], ['.seat.me .mini.res', 2], ['.seat.me .prepslot', 3], ['.seat .turnflag:not([hidden])', 4], ['#bh', 5], ['#rtrack .rt', 6]].forEach(([sel, k]) => {
+      const t = document.querySelector(sel); if (!t) return; const r = t.getBoundingClientRect(); if (!r.width) return;
+      const x = k === 4 ? r.right + 10 : k === 6 ? r.left - 10 : r.left + r.width / 2, y = k === 4 || k === 6 ? r.top + r.height / 2 : k === 5 ? r.top : r.bottom + 10;
+      root.append(el(`<span class="pin" style="left:${x - R.left}px;top:${y - R.top}px">${k}</span>`));
+    });
+  }
 
   U.tip = function (id, extra) {
     const d0 = TIPS[id]; if (!d0 || !on() || seen()[id]) return Promise.resolve();
@@ -40,16 +70,18 @@
     const V = (U.dbg && U.dbg().V) || null; if (V && V.humans < 1) return Promise.resolve();
     mark(id);
     const layer = U.layer();
-    if (V && V.online) { // online não pode travar a mesa dos outros: cartão que some sozinho
+    if ((V && V.online) || d0.soft) { // online não pode travar a mesa dos outros (e dicas "soft" nunca travam): cartão que some sozinho
       const n = el(`<div class="coach hint"><div class="ch"><b>💡 ${esc(d.t)}</b><button class="x" aria-label="Fechar">✕</button></div><div class="cb">${d.b}</div></div>`);
       layer.appendChild(n); const close = () => { n.classList.add('out'); setTimeout(() => n.remove(), 300); };
-      n.querySelector('.x').onclick = close; setTimeout(close, 9000); return Promise.resolve();
+      n.querySelector('.x').onclick = close; setTimeout(close, d0.soft ? 7000 : 9000); return Promise.resolve();
     }
     return new Promise((res, rej) => { // offline: congela o jogo até "Entendi"
       const run = U.run; if (run) run.rej.add(rej);
-      const n = el(`<div class="coach modal"><div class="box"><div class="ch"><b>💡 ${esc(d.t)}</b></div><div class="cb">${d.b}</div><div class="row" style="justify-content:flex-end"><button class="btn primary sm" data-a="ok">Entendi</button></div></div></div>`);
-      n.querySelector('[data-a=ok]').onclick = () => { SND.play('click'); if (run) run.rej.delete(rej); n.remove(); res(); };
-      layer.appendChild(n);
+      const n = el(`<div class="coach modal${d0.spot ? ' spot' : ''}"><div class="box"><div class="ch"><b>💡 ${esc(d.t)}</b></div><div class="cb">${d.b}</div><div class="row tipbar"><button class="btn ghost sm" data-a="off">Pular dicas</button><button class="btn primary sm" data-a="ok">Entendi</button></div></div></div>`);
+      const done = () => { if (run) run.rej.delete(rej); n.remove(); res(); };
+      n.querySelector('[data-a=ok]').onclick = () => { SND.play('click'); done(); };
+      n.querySelector('[data-a=off]').onclick = () => { SND.play('click'); U.S.help = false; U.applyOpts && U.applyOpts(); done(); };
+      layer.appendChild(n); if (d0.spot) { layer.querySelectorAll('.banner').forEach(x => x.remove()); pinsMesa(n); setTimeout(() => pinsMesa(n), 350); }
     });
   };
 

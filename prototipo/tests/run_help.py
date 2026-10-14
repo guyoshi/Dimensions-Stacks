@@ -12,14 +12,14 @@ try:
     pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,speed:'rapido'}));")
     pg.goto('http://localhost:8773/_page.html'); pg.wait_for_timeout(900)
     pg.click('[data-top=rules]'); pg.wait_for_timeout(400)
-    for i in range(9):
+    for i in range(10):
         pg.screenshot(path=f'{out}/guide{i}.png')
-        if i < 8: pg.click('.guide [data-a=next]'); pg.wait_for_timeout(350)
+        if i < 9: pg.click('.guide [data-a=next]'); pg.wait_for_timeout(350)
     pg.click('.guide [data-a=next]'); pg.wait_for_timeout(300); print('guide fechou', pg.query_selector('.guide') is None)
     # dicas na partida
     pg.click('[data-go=setup]'); pg.click('[data-act=go]'); pg.wait_for_selector('.coach .box', timeout=15000); print('tip order:', pg.inner_text('.coach .ch')); pg.screenshot(path=f'{out}/tip_order.png')
     pg.click('.coach [data-a=ok]'); pg.wait_for_selector('.order .oc'); pg.click('[data-a=ok]')
-    pg.wait_for_selector('.coach .box', timeout=40000); print('tip 2:', pg.inner_text('.coach .ch')); pg.screenshot(path=f'{out}/tip_attr.png')
+    pg.wait_for_selector('.coach .box', timeout=40000); print('tip 2:', pg.inner_text('.coach .ch')); assert 'mesa' in pg.inner_text('.coach .ch'); pg.screenshot(path=f'{out}/tip_attr.png')
     print('seen', pg.evaluate("localStorage.getItem('dsstacks.seen')"))
     print('erros', errs)
 finally: srv.terminate()

@@ -175,7 +175,7 @@
       if (!p.daily.done && def && def.ok(mm)) { p.daily.done = true; out.daily = true; const y = dayKey(new Date(Date.now() - 864e5)); p.daily.streak = (p.daily.last === y ? p.daily.streak : 0) + 1; p.daily.last = dayKey(); }
       p.used = p.used || {}; Object.keys(me.used).forEach(id => { p.used[id] = 1; });
       p.mast = p.mast || {}; out.mast = [];
-      Object.keys(me.cards).forEach(id => { const b = masteryOf(id, p).lv, c = p.mast[id] = p.mast[id] || { u: 0, w: 0, s: 0 }; c.u += me.cards[id].u; c.w += me.cards[id].w; c.s += me.cards[id].s; const a = masteryOf(id, p); if (a.lv > b) out.mast.push({ id, from: b, to: a.lv, nome: a.nome }); });
+      Object.keys(me.cards).forEach(id => { const m0 = masteryOf(id, p), b = m0.lv, c = p.mast[id] = p.mast[id] || { u: 0, w: 0, s: 0 }; c.u += me.cards[id].u; c.w += me.cards[id].w; c.s += me.cards[id].s; const a = masteryOf(id, p); if (a.lv > b) out.mast.push({ id, from: b, to: a.lv, nome: a.nome }); if (a.xp > m0.xp) (out.xp = out.xp || []).push({ id, a: m0, b: a }); });
       p.hist.push({ at: m.t0, won, mode: m.mode, n: m.n, rounds: m.rounds }); while (p.hist.length > 30) p.hist.shift();
       out.mm = mm; checkAch(mm, out.ach); save(); out.won = won;
     }

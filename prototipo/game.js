@@ -491,7 +491,7 @@
     async ready() {
       V.init = G.s.initiator; refresh();
       for (let i = 0; i < 4; i++) { SND.play('deal'); await sleep(110); }
-      banner('Que comece!', `${nameOf(G.s.initiator)} inicia`, null, 1500); await sleep(900);
+      banner('Que comece!', `${nameOf(G.s.initiator)} inicia`, null, 1500); await sleep(900); refresh(); if (U.tip && !V.online) await U.tip('mesa');
     },
     async combatStart({ initiator, round }) {
       V.init = initiator; V.win = {}; { const cp = $('#calcpill'); if (cp) cp.remove(); } refresh();
@@ -644,6 +644,7 @@
       }));
       await Promise.all(jobs); refresh(); await sleep(250);
       if (tipId && V.online) U.tip(tipId); // online: só depois das animações, sem travar a mesa
+      if (U.tip && calc && !calc.none && !tipId) U.tip('calc');
     },
     async combatEnd() {
       Object.values(V.slots).forEach(s => { s.replaceChildren(); s.className = s.className.replace(/\b(has|pending|winner|loser|withdrawn|tremble|charging|cancelx)\b/g, '').replace(/\s+/g, ' ').trim(); });
@@ -656,7 +657,7 @@
       if (U.tip && pid === V.viewer) { if (V.online) U.tip('refill'); else await U.tip('refill'); }
     },
     async eliminated({ pid }) {
-      refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700);
+      refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700); if (U.tip) U.tip('elim');
     },
     async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
@@ -672,16 +673,32 @@
         ${unlockHTML()}
         <div class="row" style="justify-content:center">${V.online ? (V.ctl.again ? '<button class="btn primary" data-a="again">Nova partida (mesmos jogadores)</button>' : '<div class="hint" style="width:100%;text-align:center">Aguardando o anfitrião começar outra partida…</div>') : '<button class="btn primary" data-a="again">Jogar de novo</button>'}<button class="btn" data-a="menu">${V.online ? 'Sair da sala' : 'Menu'}</button></div></div></div></div>`);
       n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); if (V.online) { if (b.dataset.a === 'again') { n.remove(); V.ctl.again(); } else { n.remove(); U.killRun(); U.onlineOff && U.onlineOff(); V.ctl.leave(); } return; } n.remove(); if (b.dataset.a === 'again') { U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } else U.show('menu'); };
-      U.layer().appendChild(n);
+      U.layer().appendChild(n); animMast(n);
     },
   };
 
   function unlockHTML() {
-    const r = U.lastRec; U.lastRec = null; if (!r) return ''; const I = U.ICO || {}; const L = [];
+    const r = U.lastRec; U.lastRec = null; U.lastMastData = r && r.xp ? r.xp.slice().sort((x, y) => (y.b.xp - y.a.xp) - (x.b.xp - x.a.xp)).slice(0, 6) : []; if (!r) return ''; const I = U.ICO || {}; const L = [];
     if (r.daily) L.push(`<div class="u">${I.medal || ''}Desafio do dia concluído</div>`);
     (r.ach || []).forEach(a => L.push(`<div class="u">${I.medal || ''}Conquista: ${esc(a.nome)}</div>`));
     (r.mast || []).forEach(m => L.push(`<div class="u mu">${U.emblem(m.to, 20)}Maestria: ${esc(CARDS[m.id] ? CARDS[m.id].nome : m.id)} → ${esc(m.nome)}</div>`));
-    return L.length ? `<div class="unlocks">${L.join('')}</div>` : '';
+    const xp = (r.xp || []).slice().sort((x, y) => (y.b.xp - y.a.xp) - (x.b.xp - x.a.xp)).slice(0, 6);
+    const pct = (m, x) => m.to == null ? 100 : Math.max(0, Math.min(100, Math.round((x - m.from) / (m.to - m.from) * 100)));
+    const bars = xp.length ? `<div class="gmbars">${xp.map(({ id, a, b }) => { const up = b.lv > a.lv;
+      return `<div class="gmrow${up ? ' up' : ''}" data-p0="${pct(a, a.xp)}" data-p1="${pct(b, b.xp)}" data-up="${up ? 1 : 0}"><div class="gmth"></div><div class="gmmid"><div class="gmnm"><b>${esc(CARDS[id] ? CARDS[id].nome : id)}</b><span class="gmem">${U.emblem(a.lv, 16)}</span></div><div class="gmbar"><i style="width:${pct(a, a.xp)}%"></i></div></div><span class="gmxp">+${b.xp - a.xp} XP</span></div>`; }).join('')}</div>` : '';
+    return (bars ? `<div class="hint gmhead">Maestria das cartas</div>${bars}` : '') + (L.length ? `<div class="unlocks">${L.join('')}</div>` : '');
+  }
+  // anima as barras de maestria: do valor anterior ao novo; ao subir de nível, enche, troca o emblema e recomeça no novo nível
+  function animMast(root) {
+    const rec = U.lastMastData || []; $$('.gmrow', root).forEach((row, i) => {
+      const d = rec[i]; if (d && d.b) { const th = $('.gmth', row); th.append(cardEl(d.id, { up: true, noanim: true, cw: 30 })); }
+      const bar = $('.gmbar i', row), p1 = +row.dataset.p1, up = row.dataset.up === '1';
+      setTimeout(() => {
+        if (!up) { bar.style.width = p1 + '%'; return; }
+        bar.style.width = '100%';
+        setTimeout(() => { row.classList.add('pop'); SND.play('win'); const em = $('.gmem', row); if (d) em.innerHTML = U.emblem(d.b.lv, 16); bar.style.transition = 'none'; bar.style.width = '0%'; void bar.offsetWidth; bar.style.transition = ''; bar.style.width = p1 + '%'; }, 650);
+      }, 500 + i * 160);
+    });
   }
   function newRec(ctx) {
     U.lastRec = null; const S = window.DSSTATS; U.rec = S ? S.recorder(ctx) : null;

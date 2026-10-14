@@ -13,3 +13,13 @@
 
 ## Privacidade no online
 - O anfitrião envia a cada convidado só as próprias cartas privadas e, dos rivais, quantidades e o que já foi revelado (`privacy.js`). Limitação: o anfitrião roda o motor e pode inspecionar o próprio estado (confiança no anfitrião). Teste: `tests/privacy.js`.
+
+## Feedback de maestria no fim da partida
+- A tela final lista até 6 cartas da partida (as de maior ganho): miniatura, nome, barra de progresso do nível atual e "+N XP".
+- A barra anima do valor anterior ao novo. Se a carta sobe de nível, a barra enche, o emblema muda e a barra recomeça no novo nível.
+- Conquistas e desafio do dia continuam abaixo, como antes. Dados: `recorder().xp` (`{id, a, b}` = maestria antes/depois).
+
+## Dicas da primeira partida (coach.js)
+- Dicas curtas, com ícones e poucas palavras (texto simples, pensado também para crianças). Ordem: objetivo/baralho, mesa (números sobre a tela real), você inicia, responder, quem vence, captura/Buraco Negro, reserva, especiais (rodada 2), reação, fenômeno.
+- Dicas leves (não travam a partida): "Entenda o resultado" (botão Ver cálculo) e "Eliminado".
+- Cada janela tem "Pular dicas" (desliga as dicas); o botão "?" mantém o passo a passo completo.

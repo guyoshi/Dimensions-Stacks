@@ -1120,3 +1120,47 @@ select option:checked { background-color: #3a4256; color: #fff; }
 
 /* enquanto o painel de decisão está aberto, a legenda sob a mesa some (a mesma informação já está no painel) */
 #game:has(#dock:not([hidden])) #caption { visibility: hidden; }
+
+/* dicas: ícones primeiro */
+.coach .cb { display: flex; flex-direction: column; gap: 8px; }
+.coach .tv { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 8px; border-radius: 14px; background: #ffffff08; border: 1px solid #ffffff12; }
+.coach .tch { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 99px; background: #ffffff0f; border: 1px solid #ffffff22; font-weight: 800; font-size: 12.5px; white-space: nowrap; }
+.coach .tch .cico { padding: 0; background: none; border: 0; } .coach .tch .cico svg { width: 15px; height: 15px; }
+.coach .arr { color: var(--metal); font-size: 18px; font-weight: 900; } .coach .plus { color: var(--ink2); font-weight: 900; } .coach .mut2 { color: var(--ink2); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.coach .big { font-size: 30px; line-height: 1; } .coach .big.sm { font-size: 20px; }
+.coach .tl { margin: 0; text-align: center; font-size: 14.5px; line-height: 1.4; }
+.coach .tl .hand { font-size: 18px; }
+.coach .two .tv { background: none; border: 0; padding: 0; gap: 4px; flex-wrap: nowrap; justify-content: flex-start; }
+.coach .two .cico { padding: 3px 7px 3px 5px; }
+.coach .mini { font-style: normal; width: 22px; height: 30px; border-radius: 4px; display: inline-grid; place-items: center; flex: none; }
+.coach .mini b { font-size: 13px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000, 0 0 4px #000; line-height: 1; }
+.coach .prepslot { width: 15px; height: 22px; flex: none; }
+.bhv.sm { display: inline-block; width: 28px; height: 28px; border-radius: 50%; flex: none; background: conic-gradient(from 0deg, #000, #5b2bd6 18%, #000 32%, #2fd0ff 55%, #000 70%, #b394ff 85%, #000); box-shadow: 0 0 12px #7a4dff88; animation: spin 6s linear infinite; }
+.coach .deckrow { gap: 5px; align-items: flex-end; } .coach .dk { display: flex; flex-direction: column; align-items: center; gap: 3px; } .coach .dk i { font-style: normal; font-size: 10px; font-weight: 800; color: var(--ink2); }
+.coach .dk.res { margin-left: 6px; padding-left: 8px; border-left: 1px dashed #ffffff44; }
+.coach .duel { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px; border-radius: 14px; background: #ffffff08; border: 1px solid #ffffff12; }
+.coach .duel > div { display: flex; flex-direction: column; align-items: center; gap: 4px; } .coach .duel b { font-family: var(--f-disp); font-size: 2em; color: var(--metal2); } .coach .duel span { font-size: 1.6em; color: var(--ink2); }
+.coach .evone { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px; border-radius: 14px; background: #ffffff0a; border: 1px solid #ffffff18; } .coach .evone b { font-family: var(--f-disp); font-size: 1.15em; color: var(--gold2); } .coach .evone span { font-size: 15px; font-weight: 800; }
+.coach .tipbar { justify-content: space-between; margin-top: 10px; }
+.coach .fake { pointer-events: none; }
+/* mesa: legenda numerada sobre os elementos reais */
+.coach.spot { background: #050507aa; backdrop-filter: none; place-items: center; }
+.coach.spot .box { width: min(100%, 360px); padding: 14px; }
+.coach .leg2 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.coach .leg2 li { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 12px; background: #ffffff0a; border: 1px solid #ffffff14; font-size: 12.5px; font-weight: 800; min-width: 0; }
+.coach .leg2 .n, .coach.spot .pin { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; flex: none; font-weight: 900; font-size: 12px; background: var(--metal); color: #1a1810; }
+.coach.spot .pin { position: absolute; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px #0e0f13, 0 2px 8px #000; z-index: 5; pointer-events: none; }
+.coach .leg2 .turnflag { font-size: 9px; font-weight: 900; background: var(--p0); color: #14161b; padding: 1px 5px; border-radius: 99px; }
+
+/* fim de jogo: barras de maestria */
+.gmhead { text-align: center; margin-top: 10px; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; font-weight: 800; }
+.gmbars { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; max-height: 34vh; overflow: auto; }
+.gmrow { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 12px; background: #ffffff0a; border: 1px solid #ffffff14; text-align: left; }
+.gmrow .gmth { width: 30px; height: 42px; display: grid; place-items: center; overflow: hidden; border-radius: 3px; }
+.gmrow .gmnm { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 12.5px; min-width: 0; } .gmrow .gmnm b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .gmrow .gmem { display: inline-flex; flex: none; }
+.gmrow .gmbar { height: 8px; margin-top: 5px; border-radius: 99px; background: #ffffff1a; overflow: hidden; } .gmrow .gmbar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #d6cfba, #f6f1e2); transition: width .7s cubic-bezier(.2, .8, .2, 1); box-shadow: 0 0 8px #f1ecdc88; }
+.gmrow .gmxp { font-weight: 900; font-size: 13px; color: var(--gold2); font-variant-numeric: tabular-nums; }
+.gmrow.up .gmbar i { background: linear-gradient(90deg, #7fdcff, #b394ff); }
+.gmrow.pop { animation: mpop .6s ease; border-color: #b394ff; box-shadow: 0 0 16px #b394ff77; } @keyframes mpop { 40% { transform: scale(1.04); } }
+.coach .me { font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 99px; background: var(--p0); color: #14161b; }
+.coach .tch:not(:has(svg)) b { font-weight: 800; }
