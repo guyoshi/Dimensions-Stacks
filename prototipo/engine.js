@@ -276,6 +276,10 @@
       }
     }
     get players() { return this.s.players; }
+    // ---- modo em duplas (cfg.teams = [[0,2],[1,3]]); sem cfg.teams tudo funciona como antes (todos contra todos)
+    teamOf(pid) { const t = this.cfg.teams; if (!t) return pid; const i = t.findIndex(g => g.includes(pid)); return i < 0 ? pid : 't' + i; }
+    sameTeam(a, b) { return !!this.cfg.teams && a !== b && this.teamOf(a) === this.teamOf(b); }
+    foesOf(pid) { return this.alive().filter(x => x !== pid && !this.sameTeam(x, pid)); }
     p(pid) { return this.s.players[pid]; }
     alive() { return this.s.players.filter(p => p.alive).map(p => p.pid); }
     order(from) { const al = this.alive(); if (from == null) return al; const n = this.s.players.length; const out = []; for (let k = 0; k < n; k++) { const pid = (from + k) % n; if (this.p(pid).alive) out.push(pid); } return out; }
@@ -301,7 +305,7 @@
       await this.emit('initiative', { initiator: this.s.initiator });
       for (let i = 0; i < n; i++) {
         const p = this.p(i); let ord;
-        if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator, reserve: p.reserve.slice() });
+        if (this.cfg.semMontar) ord = hands[i]; else if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator, reserve: p.reserve.slice() });
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
       }
@@ -338,11 +342,11 @@
         player: pid => g.p(pid), entry: pid => combat.entries.find(e => e.pid === pid),
         entries: () => combat.entries.filter(e => !e.withdrawn), name: pid => g.p(pid).name,
         alive: () => g.alive(), order: () => g.order(combat.initiator),
-        opps: pid => g.alive().filter(x => x !== pid),
-        right: pid => { const r = g.nextAlive(pid); return r === pid ? null : r; },
-        left: pid => { const r = g.prevAlive(pid); return r === pid ? null : r; },
+        opps: pid => g.foesOf(pid),
+        right: pid => { let r = g.nextAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.nextAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
+        left: pid => { let r = g.prevAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.prevAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
         rand: () => g.rand(), say: (t) => g.log(t, 'efeito'), emit: (t, d) => g.emit(t, d),
-        sameTeam: () => false,
+        sameTeam: (a, b) => g.sameTeam(a, b),
         bhNormal: () => g.s.bh.filter(x => x.kind === 'normal').map(x => x.id),
         bhAll: () => g.s.bh.map(x => x.id),
         toBH: (id, kind) => g.s.bh.push({ id, kind }),
@@ -450,6 +454,7 @@
       const r = await this.io.pickAttr(p, spec); return opts.includes(r) ? r : opts[0];
     }
     async pickTarget(pid, cand, label, bot) {
+      if (this.cfg.teams) { const f = cand.filter(x => !this.sameTeam(x, pid)); if (f.length) cand = f; }
       if (cand.length === 1) return cand[0];
       const p = this.p(pid);
       if (p.bot && this.blindNow(p)) return cand[Math.floor(this.rand() * cand.length)];
@@ -494,7 +499,7 @@
           if (p.reserve.length > 0) {
             let take = p.reserve.splice(0, 7);
             // quem compra da reserva reordena as cartas que entram: sempre há estratégia, nunca sorte
-            if (take.length > 1) { let ord = p.bot ? this.botOrderHand(take, p) : (this.io.orderHand ? await this.io.orderHand(p, take.slice(), { refill: true }) : take); if (!ord || ord.length !== take.length || ord.slice().sort().join() !== take.slice().sort().join()) ord = take; take = ord.slice(); }
+            if (take.length > 1 && !this.cfg.semMontar) { let ord = p.bot ? this.botOrderHand(take, p) : (this.io.orderHand ? await this.io.orderHand(p, take.slice(), { refill: true }) : take); if (!ord || ord.length !== take.length || ord.slice().sort().join() !== take.slice().sort().join()) ord = take; take = ord.slice(); }
             p.deck.push(...take); this.log(`${p.name} compra ${take.length} cartas da reserva.`); await this.emit('refill', { pid, cards: take });
           }
           else { await this.eliminate(pid); }
@@ -502,12 +507,23 @@
       }
     }
     async eliminate(pid) {
-      const p = this.p(pid); p.alive = false;
+      const p = this.p(pid);
+      p.alive = false;
       p.prepared.forEach(c => this.s.bh.push({ id: c, kind: 'especial' })); p.prepared = [];
       this.log(`${p.name} foi eliminado!`, 'elim'); await this.emit('eliminated', { pid });
     }
     checkEnd() {
       const al = this.alive();
+      if (this.cfg.teams) {
+        const teams = [...new Set(al.map(x => this.teamOf(x)))];
+        if (teams.length <= 1) { this.s.over = true; this.s.winner = al.length ? al[0] : null; this.s.winnerTeam = teams[0] ?? null; return true; }
+        if (this.s.combats >= this.cfg.maxCombats) {
+          this.s.over = true; const tot = {}; al.forEach(pid => { const k = this.teamOf(pid); tot[k] = (tot[k] || 0) + this.totalCards(this.p(pid)); });
+          const ks = Object.keys(tot).sort((a, b) => tot[b] - tot[a]); const tie = tot[ks[0]] === tot[ks[1]];
+          this.s.winnerTeam = tie ? null : ks[0]; this.s.winner = tie ? null : al.find(x => this.teamOf(x) === ks[0]); this.s.byLimit = true; return true;
+        }
+        return false;
+      }
       if (al.length <= 1) { this.s.over = true; this.s.winner = al.length ? al[0] : null; return true; }
       if (this.s.combats >= this.cfg.maxCombats) {
         this.s.over = true; let best = -1, w = null, tie = false;
@@ -765,7 +781,9 @@
       else if (ev.tie) { live.filter(e => !claimed.has(e)).forEach(back); this.log('Empate absoluto: as cartas voltam aos donos.', 'res'); result = { type: 'tie', winners: ev.winners.map(e => e.pid), winnerPid: null, tb: ev.tb || null }; }
       else {
         const w = ev.winners[0]; const attack = ATTR[w.attr].tipo === 'ataque';
-        const losers = live.filter(e => e !== w && !claimed.has(e));
+        const mates = live.filter(e => e !== w && !claimed.has(e) && this.sameTeam(e.pid, w.pid));
+        const losers = live.filter(e => e !== w && !claimed.has(e) && !this.sameTeam(e.pid, w.pid));
+        mates.forEach(back); if (mates.length) this.log(`A carta de ${mates.map(m => this.p(m.pid).name).join(', ')} (parceiro) volta ao dono.`, 'res');
         const clock = (pid) => this.order(w.pid).indexOf(pid);
         losers.sort((a, b) => clock(a.pid) - clock(b.pid));
         if (!claimed.has(w)) back(w);
@@ -870,7 +888,7 @@
     pWin(p, entry, a, combat) {
       const v = entry.stats[a], inv = !!(combat && combat.ev && combat.ev.id === 'avesso'), ab = !!(combat && combat.ev && combat.ev.id === 'aberta'); let P = 1, known = 0;
       (combat ? combat.entries : []).forEach(x => {
-        if (x.pid === p.pid || x.withdrawn) return; const c = this.foeNow(p, x.pid);
+        if (x.pid === p.pid || x.withdrawn || this.sameTeam(x.pid, p.pid)) return; const c = this.foeNow(p, x.pid);
         if (!c) { P *= inv ? 1 - pct(a, v) : pct(a, v); return; } known++;
         const st = CARDS[c].stats, cand = x.attr ? [x.attr] : ab ? AID : AID.filter(k => ATTR[k].par === ATTR[a].par);
         const ov = inv ? Math.min(...cand.map(k => st[k])) : Math.max(...cand.map(k => st[k])); P *= 1 / (1 + Math.exp(-(inv ? ov - v : v - ov) / 7));
@@ -899,7 +917,7 @@
     // chance de o adversário o virar um especial nesta disputa (para especiais reativos)
     botOppFlip(pid) {
       if (this.combat && this.combat.react) return this.foeActs(this.combat, pid).length ? 1 : 0;   // na janela de reação o bot SABE o que foi virado
-      let none = 1; this.alive().forEach(o => { if (o === pid) return; const n = this.p(o).prepared.length; none *= 1 - (n >= 2 ? 0.5 : n === 1 ? 0.33 : 0); });
+      let none = 1; this.alive().forEach(o => { if (o === pid || this.sameTeam(o, pid)) return; const n = this.p(o).prepared.length; none *= 1 - (n >= 2 ? 0.5 : n === 1 ? 0.33 : 0); });
       return 1 - none;
     }
     // partidas longas (ciclos de capturas) pedem mais ousadia: sobe depois da rodada 12
@@ -918,7 +936,7 @@
       const sk = this.skill(p), urg = this.botUrgency(), V = this.botVal(sp, p) * (sp.prep == null ? 1 : 0.5 + 0.5 * Math.min(1, sp.prep * 2)) + 1.5 * urg;
       // carta como combatente vale ~ (2·P(vencer) − 1) cartas; como especial vale V. Carta fraca rende mais virando especial.
       const mine = sum4(CARDS[topCard].stats), pc0 = SUMS.filter(x => x <= mine).length / SUMS.length;
-      let pcs = 0, nf = 0; this.alive().forEach(o => { if (o === p.pid) return; nf++; const k = this.foeNow(p, o); pcs += k ? 1 / (1 + Math.exp(-(mine - sum4(CARDS[k].stats)) / 35)) : pc0; });   // rival conhecido: compara de verdade
+      let pcs = 0, nf = 0; this.alive().forEach(o => { if (o === p.pid || this.sameTeam(o, p.pid)) return; nf++; const k = this.foeNow(p, o); pcs += k ? 1 / (1 + Math.exp(-(mine - sum4(CARDS[k].stats)) / 35)) : pc0; });   // rival conhecido: compara de verdade
       const pc1 = nf ? pcs / nf : pc0, pc = this.combat && this.combat.ev && this.combat.ev.id === 'avesso' ? 1 - pc1 : pc1, lv = this.lvl(p), T = this.rand() < lv.mist ? this.rand() * 0.7 : 1.2 * pc;               // às vezes erra o custo: gasta carta forte, guarda fraca (mais no fácil)
       let ch = 1 / (1 + Math.exp(-(V - T) * 3));                     // vale a pena quando o especial rende mais que a carta lutando
       ch *= 0.85 + 0.15 * sk;                                        // dificuldade: o fácil prepara com menos critério

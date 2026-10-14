@@ -132,7 +132,7 @@
         apply(ctx, act) {
           ctx.say(`${nm(ctx, act.pid)} cobra uma recompensa se vencer ${tipoTxt}.`);
           ctx.combat.onWin.push({ pid: act.pid, when, async run(c2, res) {
-            const cand = c2.combat.entries.filter(e => !e.withdrawn && e.pid !== act.pid).map(e => e.pid).filter(o => hasDeck(c2, o)); if (!cand.length) return c2.say('Sem adversário derrotado com baralho: sem recompensa.');
+            const cand = c2.combat.entries.filter(e => !e.withdrawn && e.pid !== act.pid && !c2.sameTeam(e.pid, act.pid)).map(e => e.pid).filter(o => hasDeck(c2, o)); if (!cand.length) return c2.say('Sem adversário derrotado com baralho: sem recompensa.');
             const t = await c2.target(act.pid, cand, 'Tomar a próxima carta de qual derrotado?'); if (t == null) return;
             const got = await c2.take(act.pid, t, 'deck', top); if (got.length) c2.say(`${nm(c2, act.pid)} recebe a recompensa de ${nm(c2, t)}.`);
           } });
@@ -163,7 +163,7 @@
       D(id, 'Roubo', {
         can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o)[zone].length > 0); },
         async apply(ctx, act) {
-          const cand = ctx.order().filter(o => o !== act.pid && ctx.player(o)[zone].length > 0); if (!cand.length) return ctx.say('Ninguém tem cartas nessa zona.');
+          const cand = ctx.order().filter(o => o !== act.pid && !ctx.sameTeam(o, act.pid) && ctx.player(o)[zone].length > 0); if (!cand.length) return ctx.say('Ninguém tem cartas nessa zona.');
           for (const t of cand) await ctx.take(act.pid, t, zone, sel, { n: 1 });
           ctx.say(`${nm(ctx, act.pid)} ${label}.`);
         },
@@ -200,7 +200,7 @@
     D('AE-052', 'Troca', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 1 && ctx.entries().some(e => e.pid !== pid); },
       async apply(ctx, act) {
-        const cand = ctx.entries().filter(e => e.pid !== act.pid).map(e => e.pid); const t = await ctx.target(act.pid, cand, 'Tomar a carta de combate de quem?'); if (t == null) return;
+        const cand = ctx.entries().filter(e => e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid)).map(e => e.pid); const t = await ctx.target(act.pid, cand, 'Tomar a carta de combate de quem?'); if (t == null) return;
         const mine = ctx.player(act.pid).deck; const te = ctx.entry(t); if (!te || te.withdrawn || !mine.length) return ctx.say('Sem troca possível.');
         const c = mine.splice(Math.floor(ctx.rand() * mine.length), 1)[0]; const old = ctx.swapEntryCard(te, c); mine.push(old);
         ctx.say(`${nm(ctx, act.pid)} toma a carta de combate de ${nm(ctx, t)} e lhe entrega outra.`);
@@ -335,7 +335,7 @@
     D('AE-067', 'Redistribuição', {
       can(ctx, pid) { return ctx.opps(pid).some(o => hasDeck(ctx, o)); },
       async apply(ctx, act) {
-        for (const o of ctx.order()) { if (o === act.pid) continue; const p = ctx.player(o); if (!p.deck.length) continue; const [c] = p.deck.splice(Math.floor(ctx.rand() * p.deck.length), 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid: o, card: c }); }
+        for (const o of ctx.order()) { if (o === act.pid || ctx.sameTeam(o, act.pid)) continue; const p = ctx.player(o); if (!p.deck.length) continue; const [c] = p.deck.splice(Math.floor(ctx.rand() * p.deck.length), 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid: o, card: c }); }
         ctx.say('Cada adversário descarta uma carta ao Buraco Negro.');
       },
       ai: (ctx, pid) => Math.min(0.8, 0.35 + 0.15 * ctx.opps(pid).length),
@@ -347,7 +347,7 @@
         const p = ctx.player(act.pid), el = p.deck.filter(strong); if (!el.length) return ctx.say('Sem carta com atributo acima de 90 para sacrificar.');
         const [c] = await ctx.askCards(act.pid, { title: 'Sacrifique uma carta com algum atributo acima de 90', hint: 'Ela vai ao Buraco Negro; em troca você toma 1 carta aleatória de cada adversário.', cards: el, min: 1, max: 1 }, () => lowest(el, 1));
         p.deck.splice(p.deck.indexOf(c), 1); ctx.toBH(c, 'normal'); await ctx.emit('discard', { pid: act.pid, card: c });
-        for (const o of ctx.order()) { if (o !== act.pid && hasDeck(ctx, o)) await ctx.take(act.pid, o, 'deck', rnd(1)); }
+        for (const o of ctx.order()) { if (o !== act.pid && !ctx.sameTeam(o, act.pid) && hasDeck(ctx, o)) await ctx.take(act.pid, o, 'deck', rnd(1)); }
         ctx.say(`${nm(ctx, act.pid)} cobra tributo por sacrifício.`);
       },
       ai: (ctx, pid) => ctx.opps(pid).filter(o => hasDeck(ctx, o)).length >= 2 ? 0.5 : 0.1,
@@ -366,7 +366,7 @@
       apply(ctx, act) {
         const e = ctx.entry(act.pid); e.compCapture = true; ctx.say(`${nm(ctx, act.pid)} prepara uma conquista compensada.`);
         ctx.combat.onWin.push({ pid: act.pid, when: 'any', async run(c2) {
-          const inv = c2.combat.entries.filter(x => x.pid !== act.pid && !x.gone).map(x => x.pid);
+          const inv = c2.combat.entries.filter(x => x.pid !== act.pid && !x.gone && !c2.sameTeam(x.pid, act.pid)).map(x => x.pid);
           for (const o of inv) {
             const d = c2.player(act.pid).deck; if (!d.length) break;
             const [c] = await c2.askCards(act.pid, { title: `Conquista compensada: entregue 1 carta a ${nm(c2, o)}`, cards: d.slice(), min: 1, max: 1 }, () => lowest(d, 1));
@@ -390,7 +390,7 @@
     D('AE-074', 'Defesa', { phase: 'guard', apply(ctx, act) { ctx.def(act.pid).immune++; ctx.say(`${nm(ctx, act.pid)} fica imune ao próximo efeito direcionado.`); }, ai(ctx, pid) { return ORR(seenCat(ctx, pid, ['Roubo', 'Redistribuição', 'Troca', 'Buraco Negro', 'Captura', 'Controle'], 0.6, 0.05), () => 0.08 + 0.45 * oppFlip(ctx, pid)); } });
     D('AE-075', 'Defesa', {
       async apply(ctx, act) {
-        const cand = ctx.entries().filter(e => e.pid !== act.pid).map(e => e.pid); if (!cand.length) return;
+        const cand = ctx.entries().filter(e => e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid)).map(e => e.pid); if (!cand.length) return;
         const t = await ctx.pick(act.pid, cand, 'Quem não poderá capturar a sua carta?', c => { const w = winnerOf(ctx); return w && c.includes(w.pid) ? w.pid : richest(ctx, c); }); ctx.entry(act.pid).noCaptureBy.add(t); ctx.say(`${nm(ctx, t)} não poderá capturar a carta de ${nm(ctx, act.pid)}.`);
       },
       ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && ATTR[w.attr].tipo === 'ataque' ? 0.7 : 0.04; },
@@ -540,7 +540,7 @@
       D(id, 'Captura', {
         can(ctx, pid) { return ctx.entries().some(e => e.pid !== pid); },
         async apply(ctx, act) {
-          const cand = ctx.entries().filter(e => e.pid !== act.pid).map(e => e.pid);
+          const cand = ctx.entries().filter(e => e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid)).map(e => e.pid);
           const good = cand.filter(pid => cond(ctx.entry(pid)));
           const t = await ctx.target(act.pid, cand, label); if (t == null) return;
           ctx.combat.claims.push({ pid: act.pid, target: t, cond }); ctx.say(`${nm(ctx, act.pid)} mira a carta de ${nm(ctx, t)}.`);
@@ -555,7 +555,7 @@
       async apply(ctx, act) {
         const me = ctx.entry(act.pid); me.saveOnLoss = true;
         for (const o of ctx.entries()) {
-          if (o.pid === act.pid) continue;
+          if (o.pid === act.pid || ctx.sameTeam(o.pid, act.pid)) continue;
           if (o.noBHBySpecial) { ctx.say(`${nm(ctx, o.pid)} está protegido do Buraco Negro.`); continue; }
           const cs = [o.card, ...o.extra]; cs.forEach(c => ctx.toBH(c, 'normal')); o.withdrawn = true; o.gone = true;
           await ctx.emit('banish', { pid: o.pid, cards: cs });
@@ -568,7 +568,7 @@
       companion: true, prep: 0.2,
       can(ctx, pid) { return ctx.player(pid).prepared.length >= 2 || ctx.activations.some(a => a.pid === pid); },
       apply(ctx, act) {
-        const set = new Set(); ctx.entries().forEach(e => { if (e.pid !== act.pid && e.stats[e.attr] <= 30) set.add(e.pid); });
+        const set = new Set(); ctx.entries().forEach(e => { if (e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid) && e.stats[e.attr] <= 30) set.add(e.pid); });
         ctx.combat.pierce[act.pid] = set; ctx.say(set.size ? 'Rivais fracos não poderão se proteger do próximo roubo.' : 'Nenhum rival com 30 ou menos no atributo escolhido.');
       },
       ai: () => 0.2,
@@ -576,7 +576,7 @@
     D('AE-109', 'Captura', {
       can(ctx, pid) { return ctx.entries().some(e => e.pid !== pid); },
       async apply(ctx, act) {
-        const cand = ctx.entries().filter(e => e.pid !== act.pid).map(e => e.pid); const t = await ctx.target(act.pid, cand, 'Desafiar qual adversário?'); if (t == null) return;
+        const cand = ctx.entries().filter(e => e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid)).map(e => e.pid); const t = await ctx.target(act.pid, cand, 'Desafiar qual adversário?'); if (t == null) return;
         const te = ctx.entry(t); const a = await ctx.askAttr(act.pid, { title: `Duelo condicionado: em qual atributo? (${nm(ctx, t)} precisa ter 80 ou mais)`, hint: 'A carta dele já está revelada.', options: AID }, () => AID.slice().sort((x, y) => te.stats[y] - te.stats[x])[0]);
         ctx.combat.claims.push({ pid: act.pid, target: t, cond: e => e.stats[a] >= 80 }); ctx.say(`${nm(ctx, act.pid)} desafia ${nm(ctx, t)} em ${ATTR[a].nome}.`);
       },
@@ -591,7 +591,7 @@
       ai(ctx, pid) { return ctx.isLosing(pid) ? 0.95 : 0.06; },
     });
     // ================================================================ redução de atributos do rival (13/10/2026, autorizado pelo autor)
-    const foeEntries = (ctx, pid) => ctx.entries().filter(e => e.pid !== pid && !e.withdrawn);
+    const foeEntries = (ctx, pid) => ctx.entries().filter(e => e.pid !== pid && !e.withdrawn && !ctx.sameTeam(e.pid, pid));
     const aimWinner = (ctx, c) => { const w = winnerOf(ctx); return w && c.includes(w.pid) ? w.pid : c[0]; };   // o bot mira em quem está vencendo
     const cut = (e, k, n) => x => { x.stats[k] = Math.max(0, x.stats[k] - n); };
     D('AE-131', 'Redução', {
