@@ -230,16 +230,16 @@
     }
     // agenda determinística (pela semente): no máximo um fenômeno por rodada, nunca em rodadas seguidas, a partir da Rodada 2
     genEvents() {
-      const rng = mkRng((this.cfg.seed ^ 0x5eed) >>> 0), out = {}; let prev = false, last = null, usedBH = false;
+      const rng = mkRng((this.cfg.seed ^ 0x5eed) >>> 0), out = {}; let since = 0, last = null, usedBH = false;
       for (let r = 2; r <= 80; r++) {
-        if (prev) { prev = false; continue; }
-        if (rng() > 0.3) continue;
+        since++;
+        if (rng() > 1 / 3 && since < 7) continue;   // 1/3 de chance por rodada (rodadas seguidas possíveis); no máximo 5 rodadas sem fenômeno
         const ws = EV_PESOS.filter(([id]) => id !== last && !(id === 'buraco' && (usedBH || r < 3)));
         let t = ws.reduce((s, x) => s + x[1], 0) * rng(), id = ws[ws.length - 1][0];
         for (const [i, w] of ws) { t -= w; if (t < 0) { id = i; break; } }
         const o = { id }; if (id === 'troca') o.pair = EV_PARES[Math.floor(rng() * EV_PARES.length)];
         if (id === 'buraco') usedBH = true;
-        out[r] = o; last = id; prev = true;
+        out[r] = o; last = id; since = 0;
       }
       return out;
     }

@@ -396,7 +396,7 @@ Cada carta tem um especial diferente (98 cartas, 98 especiais). As 20 cartas que
 Fora de A União, nenhuma carta é forte nos dois pares de atributos (FOR/RES e INT/VEL): o par fraco fica com no máximo 70. Detalhes e lista em `docs/BALANCEAMENTO_GERAL_2026-10-13.md`.
 
 ## Fenômenos dimensionais (14/10/2026, aprovados pelo autor)
-Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo e online; padrão: ligados). A partir da Rodada 2, cada rodada tem 30% de chance de ter um fenômeno (nunca em rodadas seguidas, nunca o mesmo tipo duas vezes seguidas). Sorteio determinístico pela semente da partida. A faixa no topo mostra a rodada atual e as 2 próximas (com o nome do fenômeno, se houver); toque abre a explicação. Na 1ª vez que cada fenômeno aparece, uma caixa explica. Cada fenômeno tem animação de tela própria.
+Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo e online; padrão: ligados). A partir da Rodada 2, cada rodada tem 1/3 de chance de ter um fenômeno (rodadas seguidas são possíveis; ~1/3 dos fenômenos vêm na rodada seguinte ao anterior e ~2/3 após 2 ou mais rodadas; nunca mais de 6 rodadas seguidas sem fenômeno; nunca o mesmo tipo duas vezes seguidas). Ajustado em 14/10/2026 a pedido do autor (antes: 30%, nunca seguidas). Sorteio determinístico pela semente da partida. A faixa no topo mostra a rodada atual e as 2 próximas (com o nome do fenômeno, se houver); toque abre a explicação. Na 1ª vez que cada fenômeno aparece, uma caixa explica. Cada fenômeno tem animação de tela própria.
 
 | Fenômeno | Efeito |
 |---|---|

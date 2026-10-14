@@ -257,7 +257,7 @@
       const seat = el(`<div class="seat pos-${ps}${ps === 'b' ? ' me' : ''}" data-pid="${p.pid}" style="--pc:${PCOL[p.pid]}">
         ${(() => { const a = avInner(p); return `<div class="avatar${a.cls}" style="--pc:${PCOL[p.pid]}">${a.html}</div>`; })()}
         <div class="who"><div class="nm"><span class="nt">${esc(p.name)}</span><span class="turnflag" hidden>INICIA</span></div>
-        <div class="cnt"><span title="Baralho ativo"><i class="mini"></i><b class="cd">0</b></span><span title="Reserva"><i class="mini res"></i><b class="cr">0</b></span><span class="prepslots" title="Especiais preparados"><i class="prepslot"></i><i class="prepslot"></i></span></div></div></div>`);
+        <div class="cnt"><span title="Baralho ativo"><i class="mini"><b class="cd">0</b></i></span><span title="Reserva"><i class="mini res"><b class="cr">0</b></i></span><span class="prepslots" title="Especiais preparados"><i class="prepslot"></i><i class="prepslot"></i></span></div></div></div>`);
       seat.prepend(el(`<i class="stt on" title="Conectado"></i>`));
       V.seats[p.pid] = seat;
       const host = ps === 'b' ? '.r-bot' : '.r-top';   // todos os rivais ficam numa linha no topo
@@ -380,7 +380,7 @@
     if (!G.s.events || !Object.keys(G.s.events).length) { t.hidden = true; return; }
     t.hidden = false;
     const chip = (n, cur) => { const ev = evOf(n), ui = ev && EVUI[ev.id];
-      return `<span class="rt${cur ? ' cur' : ''}${ev ? ' has' : ''}"${ev ? ` style="--ec:${ui.cor}"` : ''}><b>${cur ? 'Rodada ' + n : 'R' + n}</b>${ev ? `<em>${ui.sim} ${esc(cur ? evName(ev) : E.EVENTOS[ev.id].nome)}</em>` : ''}</span>`; };
+      return `<span class="rt${cur ? ' cur' : ''}${ev ? ' has' : ''}"${ev ? ` style="--ec:${ui.cor};--ecv:${ui.cor}"` : ''}><b>${cur ? 'Rodada ' + n : 'R' + n}</b>${ev ? `<em>${ui.sim} ${esc(cur ? evName(ev) : E.EVENTOS[ev.id].nome)}</em>` : ''}</span>`; };
     t.innerHTML = chip(r, true) + '<i>›</i>' + chip(r + 1) + '<i>›</i>' + chip(r + 2);
     t.title = 'Toque para ver os fenômenos dimensionais';
   }

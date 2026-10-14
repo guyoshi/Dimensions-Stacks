@@ -980,9 +980,11 @@ select option:checked { background-color: #3a4256; color: #fff; }
 #rtrack .rt.cur { color: var(--ink); background: #ffffff14; }
 #rtrack .rt em { font-style: normal; font-weight: 800; color: var(--ec); overflow: hidden; text-overflow: ellipsis; max-width: 26vw; }
 #rtrack .rt.cur em { max-width: 44vw; }
-#rtrack .rt.has { border-color: var(--ec); box-shadow: 0 0 .8em color-mix(in srgb, var(--ec) 35%, transparent); }
-#rtrack .rt.cur.has { animation: rtglow 2.4s ease-in-out infinite; }
-@keyframes rtglow { 50% { box-shadow: 0 0 1.3em color-mix(in srgb, var(--ec) 65%, transparent); } }
+#rtrack .rt.has { border-color: var(--ec); }
+#rtrack .rt.cur { --ec: #f6f1e2; border-color: var(--ec); box-shadow: 0 0 .9em color-mix(in srgb, var(--ec) 55%, transparent); animation: rtglow 2.4s ease-in-out infinite; }
+#rtrack .rt.cur.has { --ec: var(--ecv); }
+@keyframes rtglow { 50% { box-shadow: 0 0 1.5em .1em color-mix(in srgb, var(--ec) 75%, transparent); } }
+.evbox h2 { padding-right: 52px; }
 .evbox { display: flex; flex-direction: column; gap: 8px; }
 .evrow { --ec: var(--line); padding: 10px 12px; border-radius: 12px; border: 1px solid var(--ec); background: #ffffff08; }
 .evrow.none { opacity: .6; }
@@ -1102,3 +1104,16 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .seat .stt.warn { background: #ffd25f; box-shadow: 0 0 8px #ffd25faa; animation: sttp 1s ease-in-out infinite; }
 .seat .stt.cpu { width: 15px; height: 15px; background: #2b2f38; color: #c9c5b6; font-size: 10px; line-height: 1; box-shadow: none; border-color: #ffffff30; }
 @keyframes sttp { 50% { opacity: .35; } }
+
+/* contagens dentro dos ícones de carta: sobra espaço para os 2 especiais preparados */
+.seat .mini { width: 22px; height: 30px; border-radius: 4px; display: inline-grid; place-items: center; }
+.seat .mini b { font-size: 13px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000, 0 0 4px #000; line-height: 1; font-variant-numeric: tabular-nums; }
+.seat .mini.res b { color: #f1ecdc; }
+.seat .cnt { gap: 4px; flex-wrap: nowrap; }
+.seat .cnt .prepslots { gap: 3px; margin-left: 1px; }
+.seat .prepslot { width: 15px; height: 22px; }
+.r-top .seat .mini { width: 20px; height: 28px; }
+.r-top .seat .mini b { font-size: 12px; }
+.r-top .seat .cnt { gap: 3px; }
+.r-top .seat .cnt .prepslots { gap: 2px; margin-left: 0; }
+.r-top .seat .prepslot { width: 13px; height: 20px; }
