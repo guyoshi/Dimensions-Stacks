@@ -390,9 +390,9 @@
       es.forEach(e => { if (e.margin && val(e) < top && top - val(e) <= 10 && !pool.includes(e)) pool.push(e); });
       let tie = false, tb = null;
       if (pool.length > 1) {
-        tb = { stage: 1, top, list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })) };
+        tb = { stage: 1, top, list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })), rows: pool.map(e => ({ pid: e.pid, card: e.card, stats: Object.assign({}, e.stats) })) };
         let best = Math.max(...pool.map(e => sum4(e.stats))); pool = pool.filter(e => sum4(e.stats) === best);
-        if (pool.length > 1) { tb = { stage: 2, top, list: pool.map(e => ({ pid: e.pid, v: e.stats.pod + e.stats.int })) }; best = Math.max(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
+        if (pool.length > 1) { tb = { stage: 2, top, list: pool.map(e => ({ pid: e.pid, v: e.stats.pod + e.stats.int })), rows: tb.rows, s1: tb.list }; best = Math.max(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
         if (pool.length > 1) tie = true;
       }
       return { winners: pool, tie, none: false, top, tb };
@@ -671,7 +671,7 @@
         claimed.add(t); capture(t, cl.pid); this.log(`${this.p(cl.pid).name} captura a carta de ${this.p(t.pid).name}.`, 'res');
       }
       if (ev.none) { live.filter(e => !claimed.has(e)).forEach(back); this.log('Sem disputa: as cartas voltam.', 'res'); }
-      else if (ev.tie) { live.filter(e => !claimed.has(e)).forEach(back); this.log('Empate absoluto: as cartas voltam aos donos.', 'res'); result = { type: 'tie', winners: ev.winners.map(e => e.pid), winnerPid: null }; }
+      else if (ev.tie) { live.filter(e => !claimed.has(e)).forEach(back); this.log('Empate absoluto: as cartas voltam aos donos.', 'res'); result = { type: 'tie', winners: ev.winners.map(e => e.pid), winnerPid: null, tb: ev.tb || null }; }
       else {
         const w = ev.winners[0]; const attack = ATTR[w.attr].tipo === 'ataque';
         const losers = live.filter(e => e !== w && !claimed.has(e));

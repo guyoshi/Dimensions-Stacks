@@ -339,6 +339,43 @@
     caption('');
   }
 
+  // ---------------------------------------------------------------- desempate animado: atributos de cada empatado somados na tela
+  async function tieBreak(tb, winner) {
+    if (!tb || !tb.rows || tb.rows.length < 2) return;
+    const rows = tb.rows, N = rows.length, ly = U.layer(), dl = N > 2 ? 170 : 260;
+    const box = el(`<div class="tbk"><h3>Empate em ${tb.top}!</h3><p class="tbs">Desempate: soma dos 4 atributos</p><div class="tbc" style="--n:${N}">${rows.map(r => `<div class="tbp" data-pid="${r.pid}" style="--pc:${PCOL[r.pid]}"><b class="tbn">${esc(nameOf(r.pid))}</b><div class="tba">${AIDS.map(a => `<span class="tbv" data-a="${a}">${ICON[a]}<em>${r.stats[a]}</em></span>`).join('')}</div><div class="tbt"><small>TOTAL</small><strong>0</strong></div></div>`).join('')}</div></div>`);
+    ly.appendChild(box);
+    const pn = pid => $(`.tbp[data-pid="${pid}"]`, box), sub = $('.tbs', box);
+    const pop = el2 => { el2.classList.remove('pop'); void el2.offsetWidth; el2.classList.add('pop'); };
+    async function sum(attrs, pids) {
+      for (const r of rows) {
+        if (!pids.includes(r.pid)) continue;
+        const p = pn(r.pid), tot = $('strong', p); let run = 0; tot.textContent = '0';
+        for (const a of attrs) { const c = $(`.tbv[data-a="${a}"]`, p); c.classList.add('on'); run += r.stats[a]; tot.textContent = run; pop(tot); SND.play('tick'); await sleep(dl); }
+        p.classList.add('done'); await sleep(dl);
+      }
+    }
+    const best = (list) => Math.max(...list.map(x => x.v));
+    await sleep(500);
+    await sum(AIDS, rows.map(r => r.pid));
+    const l1 = tb.s1 || tb.list, b1 = best(l1);
+    l1.forEach(x => { if (x.v < b1) pn(x.pid).classList.add('lose'); });
+    await sleep(700);
+    if (tb.stage === 2) {
+      sub.textContent = 'Empatou de novo! Agora só Força + Inteligência'; SND.play('suspense');
+      const keep = tb.list.map(x => x.pid);
+      rows.forEach(r => { const p = pn(r.pid); if (!keep.includes(r.pid)) return; p.classList.remove('done'); $$('.tbv[data-a="def"], .tbv[data-a="vel"]', p).forEach(c => c.classList.add('off')); });
+      await sleep(900);
+      await sum(['pod', 'int'], keep);
+      const b2 = best(tb.list); tb.list.forEach(x => { if (x.v < b2) pn(x.pid).classList.add('lose'); });
+      await sleep(600);
+    }
+    if (winner != null) { const w = pn(winner); if (w) { w.classList.add('win'); SND.play('win'); } sub.textContent = nameOf(winner) + ' leva o desempate'; }
+    else { sub.textContent = 'Empate absoluto: ninguém vence'; SND.play('tick'); }
+    await sleep(1300);
+    box.classList.add('out'); await sleep(350); box.remove();
+  }
+
   // ---------------------------------------------------------------- manipuladores de eventos do motor
   const H = {
     async setup() {
@@ -489,9 +526,11 @@
     async resolved({ combat, result, moves, calc }) {
       updateAll(); let tipId = null; setCalc(calc);
       if (result.type === 'tie' || result.type === 'none') {
+        if (result.tb) await tieBreak(result.tb, null);
         banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700);
       } else {
         const w = result.winnerPid, slot = V.slots[w], atk = result.type === 'attack';
+        if (result.tb) await tieBreak(result.tb, w);
         combat.entries.forEach(e => { if (e.pid === w) slot.classList.add('winner'); else if (!e.withdrawn) V.slots[e.pid].classList.add('loser'); });
         SND.play('win'); setTimeout(() => SND.play(atk ? 'slash' : 'shield'), 150);
         slot.append(el(atk ? '<div class="fx-slash"></div>' : '<div class="fx-shield"></div>'));
@@ -500,9 +539,9 @@
         setTimeout(() => FX.burst(cx, cy, { n: 40, speed: 5, life: 60, colors: atk ? ['#ff7a45', '#fff', '#e9dfc0'] : ['#8fd6ff', '#fff', '#4aa8ff'] }), 300);
         tipId = U.tip ? ['reveal', atk ? 'capture' : 'bh'].find(x => !U.tipSeen(x)) : null;
         const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Força + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
-        banner(`${nameOf(w)} vence!`, tb ? tbTxt : `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 3600 : 2100);
+        banner(`${nameOf(w)} vence!`, `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 2100 : 2100);
         caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
-        await sleep(tb ? 3400 : 2100);
+        await sleep(2100);
       }
       if (tipId && !V.online) await U.tip(tipId); // offline: congela a mesa e explica antes das cartas se moverem
       // movimentação das cartas
@@ -743,6 +782,7 @@
   }
 
   // ---------------------------------------------------------------- iniciar
+  U.__tb = tieBreak;   // gancho de teste
   U.startGame = async function (cfg) {
     lastCfg = cfg; SND.init(); U.killRun(); U.newRun(); $$('#layer > *').forEach(x => x.remove());
     if (!FX.cv) FX.init();

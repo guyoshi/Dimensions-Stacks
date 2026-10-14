@@ -70,6 +70,8 @@ O critério **Ataque + Inteligência** tem precedência sobre Defesa + Velocidad
 
 **PENDENTE:** empate absoluto depois do terceiro critério. **PENDENTE:** em confrontos com especiais que envolvem **duas cartas simultâneas**, como somar a totalidade dos atributos para desempate (#09, cuja soma principal já está aprovada). A documentação antiga mencionava um possível empate defensivo especial; a instrução nova de três etapas prevalece na regra geral.
 
+**Animação do desempate (14/10/2026):** quando há desempate, a tela mostra os quatro atributos de cada empatado entrando um a um e somados num total; se a soma empatar, os totais são refeitos só com Força + Inteligência; o vencedor é destacado antes do resultado da disputa. Nas simulações o desempate ocorre em cerca de 4% das disputas e quase sempre termina na soma dos quatro atributos.
+
 Para choque de **especiais de imposição de atributo** que empatem no valor usado para impor, **PROPOSTA**: aplicar a mesma sequência de desempate por soma dos quatro atributos e depois Ataque + Inteligência. A aplicação automática à disputa de imposição não foi confirmada expressamente pelo autor, então permanece como proposta.
 
 ### Confrontos com 3 ou 4 jogadores

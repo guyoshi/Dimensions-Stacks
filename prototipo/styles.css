@@ -692,7 +692,7 @@ button, .playbig, .daily, [data-act], [data-go], [data-tab], [data-top] { -webki
 .sheet.pick1 { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 12px; align-items: center; justify-content: stretch; }
 .sheet.pick1 .txt { flex: none; gap: 4px; }
 .sheet.pick1 .attrs { grid-column: 1 / -1; }
-.sheet.pick1 .spline { grid-column: 1 / -1; margin: 0; }
+.sheet.pick1 .spline, .sheet.pick1 .splact { grid-column: 1 / -1; margin: 0; min-width: 0; }
 @media (max-width: 520px) {
   .hud .mid b { white-space: nowrap; letter-spacing: .06em; font-size: 13px; }
   .seat { gap: 6px; padding: 4px 8px 4px 4px; }
@@ -786,7 +786,7 @@ select option:checked { background-color: #3a4256; color: #fff; }
   #dock .sheet.pick1 .cardbox { grid-column: 1; grid-row: 1 / span 3; align-self: center; }
   #dock .sheet.pick1 .txt { grid-column: 2; grid-row: 1; }
   #dock .sheet.pick1 .attrs { grid-column: 2; grid-row: 2; }
-  #dock .sheet.pick1 .spline { grid-column: 2; grid-row: 3; }
+  #dock .sheet.pick1 .spline, #dock .sheet.pick1 .splact { grid-column: 2; grid-row: 3; }
   #dock .sheet.pick1 .attrbtn { min-height: 58px; }
 }
 .specpick.off { opacity: .55; filter: grayscale(.6); }
@@ -946,3 +946,27 @@ select option:checked { background-color: #3a4256; color: #fff; }
 .seat.winspot { z-index: 6; animation: winspot .3s ease-in-out 5 alternate; box-shadow: 0 0 0 3px var(--gold2), 0 0 34px var(--gold2); transform: scale(1.14); }
 @keyframes winspot { from { filter: brightness(1); } to { filter: brightness(1.9); } }
 .order .no .ini, .order .hint .ini { color: var(--gold2); font-style: normal; font-weight: 900; }
+
+/* desempate animado: atributos de cada empatado entram um a um e são somados */
+.tbk { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 90; width: min(94vw, 560px); padding: 16px 14px 18px; border-radius: 20px; background: linear-gradient(180deg, #1f232bf2, #101217f2); border: 1px solid #d6cfba66; box-shadow: 0 18px 60px #000c; text-align: center; animation: tbin .3s ease-out; pointer-events: none; }
+.tbk.out { opacity: 0; transform: translate(-50%, -46%) scale(.96); transition: opacity .3s, transform .3s; }
+@keyframes tbin { from { opacity: 0; transform: translate(-50%, -44%) scale(.94); } }
+.tbk h3 { margin: 0; font-family: var(--f-disp); font-size: 1.5em; letter-spacing: .06em; color: var(--gold2); text-transform: uppercase; }
+.tbk .tbs { margin: 4px 0 12px; color: var(--ink2); font-size: 13.5px; min-height: 1.3em; }
+.tbc { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 8px; }
+.tbp { --pc: var(--p0); padding: 8px 6px 10px; border-radius: 14px; background: #ffffff0a; border: 1px solid var(--line); border-top: 3px solid var(--pc); transition: opacity .4s, filter .4s, transform .3s, box-shadow .3s; }
+.tbp .tbn { display: block; font-size: 13px; color: var(--pc); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+.tbp .tba { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.tbp .tbv { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 5px 2px; border-radius: 9px; background: #0b0c10; border: 1px solid var(--line); opacity: .22; transform: scale(.9); transition: opacity .2s, transform .2s, background .3s; }
+.tbp .tbv svg { width: 15px; height: 15px; flex: none; }
+.tbp .tbv em { font-style: normal; font-weight: 900; font-size: 15px; font-variant-numeric: tabular-nums; }
+.tbp .tbv.on { opacity: 1; transform: scale(1); background: #1b1e25; border-color: var(--ac, var(--gold)); }
+.tbp .tbv.off { opacity: .15; transform: scale(.85); filter: grayscale(1); }
+.tbp .tbt { margin-top: 8px; display: flex; flex-direction: column; align-items: center; }
+.tbp .tbt small { font-size: 10px; letter-spacing: .14em; color: var(--ink2); font-weight: 800; }
+.tbp .tbt strong { font-size: 30px; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--ink); }
+.tbp .tbt strong.pop { animation: tbpop .28s ease-out; }
+@keyframes tbpop { 0% { transform: scale(1.5); color: var(--gold2); } 100% { transform: scale(1); } }
+.tbp.lose { opacity: .4; filter: grayscale(.6); transform: scale(.96); }
+.tbp.win { border-color: var(--gold2); box-shadow: 0 0 0 2px var(--gold2), 0 0 30px #f1ecdc88; transform: scale(1.05); }
+.tbp.win .tbt strong { color: var(--gold2); }
