@@ -866,8 +866,8 @@
    "webp": 168974
   },
   "B01": {
-   "src": "Édelin Lys/1 - Promessas do Mar/02 - Assets/Personagens/Édelin Lys",
-   "mtimeMs": 1791904222350,
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Edelin Lys.png",
+   "mtimeMs": 1791904107044,
    "bytes": 2746536,
    "sha1": "43a075bcdb",
    "w": 720,
@@ -884,8 +884,8 @@
    "webp": 143968
   },
   "B02": {
-   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Tack Ergson - Referencia Visual Oficial.png",
-   "mtimeMs": 1791986325201,
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Tack Ergson.png",
+   "mtimeMs": 1791985512400,
    "bytes": 2793827,
    "sha1": "21fce8a5bc",
    "w": 720,
@@ -893,8 +893,8 @@
    "webp": 163816
   },
   "B03": {
-   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Jork Caravel - Referencia Visual Oficial.png",
-   "mtimeMs": 1791986325037,
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Jork Caravel.png",
+   "mtimeMs": 1791983299268,
    "bytes": 2882115,
    "sha1": "68e4c8cf48",
    "w": 720,
@@ -902,13 +902,22 @@
    "webp": 172988
   },
   "B05": {
-   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Primus Senan - Referencia Visual Oficial.png",
-   "mtimeMs": 1791986324945,
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Primus Senan.png",
+   "mtimeMs": 1791931773497,
    "bytes": 3090442,
    "sha1": "ff545bb3ea",
    "w": 720,
    "h": 1080,
    "webp": 196020
+  },
+  "B04": {
+   "src": "Édelin Lys/98 - Assets Gerais/Personagens/Peredun.png",
+   "mtimeMs": 1791986189210,
+   "bytes": 2361002,
+   "sha1": "88dfd01c51",
+   "w": 720,
+   "h": 1080,
+   "webp": 104844
   }
  }
 }
