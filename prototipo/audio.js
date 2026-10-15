@@ -56,10 +56,13 @@
       this.loadMusic();
     },
     // carrega as trilhas novas uma a uma (menu e partida normal primeiro); se algo falhar, continua a trilha sintetizada
+    getFile(u) {   // fetch; se falhar, tenta XMLHttpRequest
+      return fetch(u).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); }).catch(() => new Promise((ok, no) => { const x = new XMLHttpRequest(); x.open('GET', u); x.responseType = 'arraybuffer'; x.onload = () => (x.status < 400 && x.response) ? ok(x.response) : no(new Error('HTTP ' + x.status)); x.onerror = () => no(new Error('rede')); x.send(); }));
+    },
     async loadMusic() {
       for (const k of ['menu', 'p0', 'p1', 'p2']) {
         const d = this.MUS[k];
-        try { const ab = await (await fetch(d.f)).arrayBuffer(); this.mus[k] = Object.assign({ buf: await this.ctx.decodeAudioData(ab) }, d); } catch (e) { /* sem arquivo: fica a sintetizada */ }
+        try { const ab = await this.getFile(d.f); this.mus[k] = Object.assign({ buf: await this.ctx.decodeAudioData(ab) }, d); } catch (e) { try { console.warn('trilha não carregou:', d.f, e && e.message); } catch (e2) { } /* sem arquivo: fica a sintetizada */ }
         this.musPending[k] = false;
         if (this.musicOn && this.useNew() && !this.defeatNodes && ((k === 'menu' && this.mode !== 'game' && !this.musicNodes) || (k === 'p0' && this.mode === 'game' && !(this.matchNodes && !this.matchNodes.ending)))) this.startMusic();
       }
@@ -198,7 +201,7 @@
       if (this.useNew() && this.musPending.p0) return;   // arquivo ainda carregando
       if (this.useNew() && this.mus.p0) return this.startMatchFile();
       const c = this.ctx, M = this.MATCH, self = this;
-      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 0.6); bus.connect(this.musicGain);
+      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.3, c.currentTime + 0.6); bus.connect(this.musicGain);   // sintetizada: bem mais baixa (antes 0,9), igual à nova
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.connect(bus);
       const pad = c.createBiquadFilter(); pad.type = 'lowpass'; pad.frequency.value = 1500; pad.Q.value = 0.5; pad.connect(bus);
       const dl = c.createDelay(1); dl.delayTime.value = 0.29; const fb = c.createGain(); fb.gain.value = 0.28; const dg = c.createGain(); dg.gain.value = 0.35; dl.connect(fb); fb.connect(dl); dl.connect(dg); dg.connect(bus);
@@ -251,7 +254,7 @@
         }
       }, 40);
     },
-    MATCH_GAIN: 0.18,   // a trilha da partida fica bem abaixo dos efeitos (cartas, ataques) para dar para ouvi-los
+    MATCH_GAIN: 0.12,   // a trilha da partida fica bem abaixo dos efeitos (cartas, ataques) para dar para ouvi-los
     // trilha da partida em arquivo: 3 versões do mesmo trecho (normal, 1,10x, 1,20x), esticadas SEM mudar o tom. Ao mudar de nível, faz crossfade para a versão certa na mesma posição musical.
     startMatchFile() {
       const c = this.ctx, V = [this.mus.p0, this.mus.p1, this.mus.p2], self = this;
