@@ -232,6 +232,8 @@
     },
     stopDefeat() { if (this.defeatNodes) { this.defeatNodes.stop(); this.defeatNodes = null; } },
     matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); },
+    // corta o que está soando nos efeitos (toque para pular a animação): silencia por instantes e volta ao volume
+    cut() { if (!this.ctx || !this.sfx) return; const g = this.sfx.gain, t = this.ctx.currentTime; try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0.0001, t + 0.03); g.linearRampToValueAtTime(this.vol.sfx, t + 0.14); } catch (e) { } },
     stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; this.matchNodes = null; },
   };
   root.Sound = S;

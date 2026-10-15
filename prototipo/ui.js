@@ -25,7 +25,8 @@
   // ---------------------------------------------------------------- opções
   const S = Object.assign({ master: .8, sfx: 1, music: .35, musicOn: true, speed: 'normal', reduce: false }, store.get('opts', {}));
   U.S = S;
-  Object.defineProperty(S, 'k', { enumerable: false, get() { return { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; } });
+  U.turboUntil = 0;   // toque na tela durante animações: os próximos passos andam bem mais rápido por um instante
+  Object.defineProperty(S, 'k', { enumerable: false, get() { const b = { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; return performance.now() < U.turboUntil ? b * .12 : b; } });
   function applyOpts() {
     document.body.classList.toggle('reduce', !!S.reduce);
     SND.vol.master = S.master; SND.vol.sfx = S.sfx; SND.vol.music = S.music; SND.musicOn = S.musicOn;
@@ -38,7 +39,15 @@
   U.run = { dead: false, rej: new Set() };
   U.newRun = () => { U.run = { dead: false, rej: new Set() }; return U.run; };
   U.killRun = () => { const r = U.run; r.dead = true; r.rej.forEach(f => f('abort')); r.rej.clear(); };
-  U.sleep = ms => { const r = U.run; return new Promise((res, rej) => { setTimeout(() => (r.dead ? rej('abort') : res()), ms * S.k); }); };
+  U.pend = new Set();
+  U.sleep = ms => { const r = U.run; return new Promise((res, rej) => { let t; const fin = () => { clearTimeout(t); U.pend.delete(fin); r.dead ? rej('abort') : res(); }; t = setTimeout(fin, ms * S.k); U.pend.add(fin); }); };
+  // pula o passo atual: encerra as esperas e animações em curso, corta o som atrasado e acelera os próximos passos por ~0,7 s
+  U.skip = () => {
+    U.turboUntil = performance.now() + 700;
+    [...U.pend].forEach(f => f());
+    try { document.getAnimations().forEach(a => { try { const t = a.effect && a.effect.getComputedTiming(); if (t && t.iterations !== Infinity && t.endTime !== Infinity) a.finish(); } catch (e) { } }); } catch (e) { }
+    try { SND.cut && SND.cut(); } catch (e) { }
+  };
 
   // ---------------------------------------------------------------- ícones
   const ICON = {
@@ -379,6 +388,17 @@
     const PRESS = 'button,[data-act],[data-go],[data-tab],[data-top],.playbig,.daily';
     const prs = e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled || b.matches('input')) return; b.classList.add('pressing'); const rel = () => { b.classList.remove('pressing'); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.removeEventListener(t, rel)); }; ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.addEventListener(t, rel)); };
     window.addEventListener('pointerdown', prs, true);
+    // toque na mesa durante as animações da partida (sem decisão ou janela aberta): pula o passo, para o jogador com pressa
+    window.addEventListener('pointerdown', e => {
+      const g = document.getElementById('game'); if (!g || g.hidden || !U.run || U.run.dead) return;
+      if (e.target.closest && e.target.closest('button,a,input,#dock,.modal,.order,.cover,.coach,.evbox,.sheet')) return;
+      const dock = document.getElementById('dock'); if (dock && !dock.hidden) return;
+      if (document.querySelector('.modal, .order, .cover, .coach')) return;
+      U.skip();
+      // o toque que pula não deve também abrir o que estiver embaixo (Buraco Negro, baralhos...): engole o click desse mesmo toque
+      const eat = ev => { ev.stopPropagation(); ev.preventDefault(); window.removeEventListener('click', eat, true); };
+      window.addEventListener('click', eat, true); setTimeout(() => window.removeEventListener('click', eat, true), 450);
+    }, true);
     window.addEventListener('click', e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled) return; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); setTimeout(() => b.classList.remove('pop'), 340); try { if (!S.reduce && navigator.vibrate) navigator.vibrate(8); } catch (er) { } }, true);
     // o navegador só libera o áudio após um gesto válido: no toque, é o pointerup/touchend/click (pointerdown não vale); tenta em todos até o áudio estar rodando
     const EVS = ['pointerup', 'touchend', 'click', 'keydown'];
