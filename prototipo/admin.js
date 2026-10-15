@@ -72,7 +72,7 @@
 
   // ---------------------------------------------------------------- painel
   const S = { real: [], sims: [], src: 'todas', mode: 'todos', sort: 'z', dir: -1, minK: 20, busy: false, err: '', loaded: false };
-  let root = null, stopSim = { on: false };
+  let root = null, stopSim = { on: false }, SV = {}, SVok = false;
 
   function filtered() {
     const seen = new Set(); let L = []; if (S.src !== 'sim') L = L.concat(S.real.filter(m => !m.sim)); if (S.src !== 'real') L = L.concat(S.sims, S.real.filter(m => m.sim));
@@ -126,7 +126,10 @@
         <div class="tblw tall"><table class="adm-t" id="cardT"><thead><tr>${th('nome', 'Carta')}${th('p', 'Em jogo')}${th('k', 'Disputas')}${th('wr', 'Vitória')}${th('z', 'z')}${th('sr', 'Especial')}</tr></thead><tbody>${rows.map(r => `<tr class="${r.z > 2 ? 'hot' : r.z < -2 ? 'cold' : ''}"><td><i class="sdot" style="background:${SERIES[r.serie] ? SERIES[r.serie].cor : '#888'}"></i>${esc(r.nome)}</td><td>${r.p}</td><td>${r.k}</td><td>${Math.round(r.wr * 100)}%</td><td>${r.z.toFixed(1)}</td><td>${r.s ? Math.round(r.sr * 100) + '%' : '—'}</td></tr>`).join('') || '<tr><td colspan="6">Sem dados</td></tr>'}</tbody></table></div></section>
 
       <section class="adm-box"><h3>Sons do jogo</h3>
-        <div class="slots">${Object.entries(U.SND.SLOTS).filter(([k]) => k !== 'menu').map(([k, t]) => `<div><button class="btn sm" data-a="snd" data-k="${k}" style="min-height:28px;padding:.2em .6em" aria-label="Ouvir ${esc(t)}">▶</button><span>${esc(t)}</span></div>`).join('')}</div>
+        ${(() => { const SND = U.SND; if (!SND.escolha) SND.carregaEscolha(); if (!SVok) { SV = Object.assign({}, SND.escolha); SVok = true; } const nomes = SND.NOMES_VARIANTES || [];
+          return `<p class="hint">Toque em 1–5 para ouvir e escolher a versão de cada efeito (${nomes.map((n, i) => `<b>${i + 1}</b> ${esc(n)}`).join(' · ')}). Depois toque em <b>Gravar escolhas</b>: a escolha vira o som oficial neste aparelho.</p>
+          <div class="sfxl">${Object.entries(SND.SLOTS).filter(([k]) => k !== 'menu' && SND.variants && SND.variants[k]).map(([k, t]) => `<div class="sfxrow" data-k="${k}"><span class="sfxn">${esc(t)}</span><span class="sfxb">${[0, 1, 2, 3, 4].map(i => `<button class="btn sm sfxv${(SV[k] | 0) === i ? ' on' : ''}" data-a="sv" data-k="${k}" data-i="${i}" title="${esc(nomes[i] || '')}" aria-label="${esc(t)}, versão ${i + 1}">${i + 1}</button>`).join('')}</span></div>`).join('')}</div>
+          <div class="adm-f" style="margin-top:8px"><button class="btn primary sm" data-a="svsave">Gravar escolhas</button><button class="btn ghost sm" data-a="svreset">Tudo no original</button><button class="btn ghost sm" data-a="svcopy">Copiar escolhas</button><span class="hint" id="svmsg" style="align-self:center"></span></div>`; })()}
         <div class="adm-f" style="margin-top:10px"><span class="hint" style="align-self:center">Trilhas:</span>
           <button class="btn sm" data-a="mus" data-v="menu">Ambiente do menu</button><button class="btn sm" data-a="mus" data-v="0">Partida · normal</button><button class="btn sm" data-a="mus" data-v="1">Partida · tensão</button><button class="btn sm" data-a="mus" data-v="2">Partida · clímax</button><button class="btn ghost sm" data-a="mus" data-v="stop">Parar</button></div>
         <p class="hint">A trilha da partida só toca com a música ligada nas opções. Na partida real, a tensão e o clímax duram um trecho e voltam ao normal.</p></section>
@@ -149,8 +152,12 @@
       const b = e.target.closest('[data-a],th[data-s]'); if (!b) return;
       if (b.dataset.s) { if (S.sort === b.dataset.s) S.dir *= -1; else { S.sort = b.dataset.s; S.dir = b.dataset.s === 'nome' ? 1 : -1; } return paint(); }
       const a = b.dataset.a;
-      if (a === 'close') { root.remove(); root = null; stopSim.on = true; U.SND.setMode('menu'); }
+      if (a === 'close') { root.remove(); root = null; SVok = false; stopSim.on = true; U.SND.setMode('menu'); }
       else if (a === 'snd') { U.SND.init(); U.SND.play(b.dataset.k); }
+      else if (a === 'sv') { const k = b.dataset.k, i = +b.dataset.i; U.SND.init(); U.SND.preview(k, i); SV[k] = i; $$('.sfxv', b.parentNode).forEach(x => x.classList.toggle('on', x === b)); const m = $('#svmsg', root); if (m) m.textContent = 'Há escolhas não gravadas'; }
+      else if (a === 'svsave') { const o = {}; Object.keys(SV).forEach(k => { if (SV[k]) o[k] = SV[k]; }); U.store.set('sfx', o); U.SND.escolha = o; const m = $('#svmsg', root); if (m) m.textContent = 'Gravado ✓ (' + Object.keys(o).length + ' diferentes do original)'; }
+      else if (a === 'svreset') { SV = {}; $$('.sfxrow', root).forEach(r => $$('.sfxv', r).forEach((x, i) => x.classList.toggle('on', i === 0))); const m = $('#svmsg', root); if (m) m.textContent = 'Tudo no original — toque em Gravar para confirmar'; }
+      else if (a === 'svcopy') { const txt = Object.entries(U.SND.SLOTS).filter(([k]) => k !== 'menu' && U.SND.variants && U.SND.variants[k]).map(([k]) => k + '=' + ((SV[k] | 0) + 1)).join(', '); const m = $('#svmsg', root); const done = () => { if (m) m.textContent = 'Copiado'; }; try { navigator.clipboard.writeText(txt).then(done, () => { if (m) m.textContent = txt; }); } catch (e) { if (m) m.textContent = txt; } }
       else if (a === 'mus') {
         const SND = U.SND, v = b.dataset.v; SND.init(); if (!SND.ctx) return;
         if (v === 'stop') { SND.stopMusic(); return; }

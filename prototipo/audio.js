@@ -133,6 +133,11 @@
       menu() { },
     },
 
+    // versão escolhida de cada efeito (0 = original; 1-4 = alternativas de sfx_variantes.js). Gravada no Painel do Administrador em localStorage 'dsstacks.sfx'.
+    escolha: null,
+    carregaEscolha() { try { this.escolha = JSON.parse(localStorage.getItem('dsstacks.sfx') || '{}') || {}; } catch (e) { this.escolha = {}; } },
+    pickFn(name) { if (!this.escolha) this.carregaEscolha(); const v = this.variants && this.variants[name]; const i = this.escolha[name] | 0; return (v && v[i]) || this.synth[name]; },
+    preview(name, i) { if (!this.enabled) return; this.init(); if (!this.ctx) return; try { const v = this.variants && this.variants[name]; const f = (v && v[i]) || this.synth[name]; if (f) f(); } catch (e) { } },
     // sons de cerimônia: a música abaixa para [nível, segura (s)] e volta devagar
     DUCK: { victory: [0.12, 3.4], defeat: [0.12, 3.0], legend: [0.3, 1.4], phenom: [0.35, 1.6], elim: [0.45, 1.0], round: [0.6, 0.6],
       // efeitos da partida: abaixada leve e rápida, para o som das cartas aparecer sem a música "pulsar"
@@ -147,7 +152,7 @@
       try {
         const b = this.buffers[name];
         if (b && name !== 'menu') { const s = this.ctx.createBufferSource(); s.buffer = b; s.connect(this.sfx); s.start(); return; }
-        const f = this.synth[name]; if (f) f();
+        const f = this.pickFn(name); if (f) f();
       } catch (e) { }
     },
 
