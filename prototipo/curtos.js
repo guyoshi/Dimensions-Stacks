@@ -114,7 +114,7 @@
 "AE-116": "Ganha a carta de especial usada por um rival, no fim do seu baralho.",
 "AE-117": "Um rival revela até 2 especiais preparados, sem ativá-los.",
 "AE-118": "Um especial seu preparado resiste a 1 cancelamento.",
-"AE-119": "Prepara já a próxima carta do baralho como especial (sem ativar agora).",
+"AE-119": "Ao virar: a próxima carta do seu baralho vai para o seu lado, fechada, como um novo especial (só pode ser virada nas próximas disputas). Ela deixa de jogar como carta de combate.",
 "AE-120": "Anula alterações numéricas temporárias de uma carta em combate.",
 "AE-121": "Velocidade passa a valer o seu Resistência.",
 "AE-122": "Resistência passa a valer o seu Velocidade.",

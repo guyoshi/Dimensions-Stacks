@@ -16,13 +16,13 @@
       const cols = o.colors || ['#e9dfc0', '#fff', '#ffb02e', '#ff7a45'];
       for (let i = 0; i < (o.n || 50); i++) {
         const a = Math.random() * Math.PI * 2, sp = (o.speed || 6) * (.3 + Math.random());
-        this.ps.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - (o.up || 0), life: 0, max: (o.life || 55) * (.6 + Math.random() * .8), s: (o.size || 3.2) * (.5 + Math.random()), c: cols[i % cols.length], g: o.g == null ? .12 : o.g, sq: o.sq });
+        this.ps.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - (o.up || 0), life: 0, max: (o.life || 55) * (.6 + Math.random() * .8), s: (o.size || 3.2) * .5 * (.5 + Math.random()), c: cols[i % cols.length], g: o.g == null ? .12 : o.g, sq: o.sq });
       }
       if (!this.on) { this.on = true; requestAnimationFrame(() => this.loop()); }
     },
     confetti() {
       if (U.S.reduce) return;
-      for (let k = 0; k < 8; k++) setTimeout(() => this.burst(Math.random() * window.innerWidth, -10, { n: 75, speed: 4.2, up: -3, g: .075, life: 170, size: 1.5, colors: ['#e9dfc0', '#6cb6ff', '#ff7ab0', '#86f5a4', '#c58cff', '#ffd25f'] }), k * 220);
+      for (let k = 0; k < 8; k++) setTimeout(() => this.burst(Math.random() * window.innerWidth, -10, { n: 75, speed: 4.2, up: -3, g: .075, life: 170, size: 2, colors: ['#e9dfc0', '#6cb6ff', '#ff7ab0', '#86f5a4', '#c58cff', '#ffd25f'] }), k * 220);
     },
     loop() {
       const x = this.x; x.clearRect(0, 0, this.cv.width, this.cv.height);
