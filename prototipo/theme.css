@@ -151,3 +151,15 @@ h1, h2, h3 { letter-spacing: .03em; }
 .cch.all.on { background: var(--prism); color: #fff; border-color: transparent; }
 .lb-hd h1 { color: #fff; }
 .order h1, .order h2, .cover h2 { color: #fff; }
+
+/* troca de aba em carrossel */
+#app.sliding { overflow: hidden; }
+.screen.tin-r, .screen.tin-l, .screen.tout-l, .screen.tout-r { will-change: transform; pointer-events: none; }
+.screen.tin-r { animation: tabInR .3s cubic-bezier(.22, .9, .3, 1) both; }
+.screen.tin-l { animation: tabInL .3s cubic-bezier(.22, .9, .3, 1) both; }
+.screen.tout-l { animation: tabOutL .3s cubic-bezier(.22, .9, .3, 1) both; }
+.screen.tout-r { animation: tabOutR .3s cubic-bezier(.22, .9, .3, 1) both; }
+@keyframes tabInR { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes tabInL { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes tabOutL { from { transform: none; } to { transform: translateX(-100%); } }
+@keyframes tabOutR { from { transform: none; } to { transform: translateX(100%); } }

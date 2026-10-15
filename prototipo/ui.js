@@ -215,9 +215,20 @@
   };
 
   // ---------------------------------------------------------------- telas
+  // troca de aba (Início, Coleção, Desafios, Perfil): a nova tela entra deslizando de lado, como um carrossel, e a antiga sai pelo lado oposto
+  const TABIDS = ['menu', 'coll', 'chal', 'prof']; let slideT = null;
+  const slideEnd = () => { clearTimeout(slideT); slideT = null; $$('.screen').forEach(s => { s.classList.remove('tin-r', 'tin-l', 'tout-l', 'tout-r'); if (s.id !== U.cur) s.hidden = true; }); const a = $('#app'); if (a) a.classList.remove('sliding'); };
   U.show = function (name) {
+    if (slideT) slideEnd();
+    const prev = $$('.screen').find(s => !s.hidden), pi = prev ? TABIDS.indexOf(prev.id) : -1, ni = TABIDS.indexOf(name);
+    U.cur = name;
     $$('.screen').forEach(s => { s.hidden = s.id !== name; });
     if (U.afterShow) U.afterShow(name);
+    if (pi >= 0 && ni >= 0 && pi !== ni && !S.reduce && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      const fwd = ni > pi, nx = $('#' + name); prev.hidden = false;
+      $('#app').classList.add('sliding'); prev.classList.add(fwd ? 'tout-l' : 'tout-r'); nx.classList.add(fwd ? 'tin-r' : 'tin-l');
+      slideT = setTimeout(slideEnd, 320);
+    }
     SND.setMode && SND.setMode(name === 'game' ? 'game' : 'menu');
   };
   function screens() {
