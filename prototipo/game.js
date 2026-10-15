@@ -603,8 +603,8 @@
       const x = $('.xtra', slot); if (x) x.remove(); const b = $('.badge', slot); if (b) b.remove(); pulseBH(); await sleep(150);
     },
     async reorder({ pid }) { SND.play('deal'); const s = V.seats[pid]; if (s) { s.classList.add('pulse'); setTimeout(() => s.classList.remove('pulse'), 600); } await sleep(450); },
-    async reserveSwap({ a, b }) {
-      SND.play('steal'); await Promise.all([fly(seatRes(a), seatRes(b), { ms: 700, cw: 50, arc: 40 }), fly(seatRes(b), seatRes(a), { ms: 700, cw: 50, arc: -40 })]); refresh(); await sleep(120);
+    async reserveSwap({ a, b, na, nb }) {
+      SND.play('steal'); await Promise.all([na !== 0 && fly(seatRes(a), seatRes(b), { ms: 700, cw: 50, arc: 40 }), nb !== 0 && fly(seatRes(b), seatRes(a), { ms: 700, cw: 50, arc: -40 })]); refresh(); await sleep(120);
     },
     async rotate({ list }) {
       SND.play('steal'); await Promise.all(list.filter(x => x.to != null && x.to !== x.from).map(x => fly(seatRes(x.from), seatRes(x.to), { ms: 750, cw: 50, arc: 30 }))); refresh(); await sleep(120);

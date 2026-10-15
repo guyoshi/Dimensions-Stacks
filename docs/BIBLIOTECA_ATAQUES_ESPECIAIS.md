@@ -106,8 +106,8 @@
 | AE-056 | Troca de topos à esquerda | Troque a próxima carta do topo de seu baralho ativo com a próxima do adversário à esquerda. | novo | Teste | M08 |
 | AE-057 | Passe à esquerda | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda. | #11 | Teste | J18 |
 | AE-058 | Passe à direita | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita. | novo | Teste | V11 |
-| AE-059 | Permuta das reservas à esquerda | Troque todo o seu meio de reserva pelo do adversário à esquerda. | #46 | Atenção | S13 |
-| AE-060 | Permuta das reservas à direita | Troque todo o seu meio de reserva pelo do adversário à direita. | novo | Atenção | D18 |
+| AE-059 | Permuta das reservas à esquerda | Troque até 3 cartas do seu meio de reserva (as 3 primeiras) por até 3 cartas do meio de reserva (as 3 primeiras) do adversário à esquerda. Quem tiver menos de 3 cartas, ou nenhuma, entrega só as que tem; a troca é executada mesmo assim. | #46 | Atenção | S13 |
+| AE-060 | Permuta das reservas à direita | Troque até 3 cartas do seu meio de reserva (as 3 primeiras) por até 3 cartas do meio de reserva (as 3 primeiras) do adversário à direita. Quem tiver menos de 3 cartas, ou nenhuma, entrega só as que tem; a troca é executada mesmo assim. | novo | Atenção | D18 |
 
 ## G. Redistribuição coletiva e sacrifício (10)
 

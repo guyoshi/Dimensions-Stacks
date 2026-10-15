@@ -261,14 +261,14 @@
     function permReserve(id, dir) {
       const side = (ctx, pid) => dir === 'R' ? ctx.right(pid) : ctx.left(pid);
       D(id, 'Troca', {
-        can(ctx, pid) { const t = side(ctx, pid); return t != null && (ctx.player(t).reserve.length > 0 || ctx.player(pid).reserve.length > 0); },
+        can(ctx, pid) { const t = side(ctx, pid); return t != null && (ctx.player(t).reserve.length > 0 || ctx.player(pid).reserve.length > 0); },   // 15/10/2026: troca até 3 cartas de cada reserva (as 3 primeiras); quem tem menos entrega só o que tem, e a troca vale mesmo assim
         async apply(ctx, act) {
           let t = side(ctx, act.pid); if (t == null) return; t = await ctx.hit(act.pid, t); if (t == null) return;
           if (await ctx.blocked(act.pid, t, 'reserve', 2, 'swap')) return;
-          const a = ctx.player(act.pid), b = ctx.player(t); const r = a.reserve; a.reserve = b.reserve; b.reserve = r;
-          ctx.say(`${nm(ctx, act.pid)} permuta as reservas com ${nm(ctx, t)}.`); await ctx.emit('reserveSwap', { a: act.pid, b: t });
+          const a = ctx.player(act.pid), b = ctx.player(t); const ga = a.reserve.splice(0, 3), gb = b.reserve.splice(0, 3); a.reserve.unshift(...gb); b.reserve.unshift(...ga);
+          ctx.say(`${nm(ctx, act.pid)} troca até 3 cartas da reserva com ${nm(ctx, t)} (entrega ${ga.length}, recebe ${gb.length}).`); await ctx.emit('reserveSwap', { a: act.pid, b: t, na: ga.length, nb: gb.length });
         },
-        ai(ctx, pid) { const t = dir === 'R' ? ctx.right(pid) : ctx.left(pid); if (t == null) return 0; return ctx.player(t).reserve.length > ctx.player(pid).reserve.length ? 0.55 : 0.05; },
+        ai(ctx, pid) { const t = dir === 'R' ? ctx.right(pid) : ctx.left(pid); if (t == null) return 0; const g = Math.min(3, ctx.player(t).reserve.length) - Math.min(3, ctx.player(pid).reserve.length); return g >= 2 ? 0.55 : g === 1 ? 0.3 : 0.05; },
       });
     }
     permReserve('AE-059', 'L'); permReserve('AE-060', 'R');

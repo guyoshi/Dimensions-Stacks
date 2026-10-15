@@ -895,7 +895,7 @@
       "id": "AE-059",
       "nome": "Permuta das reservas à esquerda",
       "categoria": "Trocas diretas e circulação de cartas",
-      "texto_efeito": "Troque todo o seu meio de reserva pelo do adversário à esquerda.",
+      "texto_efeito": "Troque até 3 cartas do seu meio de reserva (as 3 primeiras) por até 3 cartas do meio de reserva (as 3 primeiras) do adversário à esquerda. Quem tiver menos de 3 cartas, ou nenhuma, entrega só as que tem; a troca é executada mesmo assim.",
       "origem_ideia": "#46",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
@@ -904,13 +904,14 @@
       "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-15: limitada a 3 cartas por reserva (decisão do autor: trocar a reserva inteira desequilibrava)."
     },
     {
       "id": "AE-060",
       "nome": "Permuta das reservas à direita",
       "categoria": "Trocas diretas e circulação de cartas",
-      "texto_efeito": "Troque todo o seu meio de reserva pelo do adversário à direita.",
+      "texto_efeito": "Troque até 3 cartas do seu meio de reserva (as 3 primeiras) por até 3 cartas do meio de reserva (as 3 primeiras) do adversário à direita. Quem tiver menos de 3 cartas, ou nenhuma, entrega só as que tem; a troca é executada mesmo assim.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
       "cartas_atribuidas": [
@@ -920,7 +921,7 @@
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu de J10 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D18 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: saiu de J10 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a D18 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-15: limitada a 3 cartas por reserva (decisão do autor: trocar a reserva inteira desequilibrava)."
     },
     {
       "id": "AE-061",
