@@ -28,8 +28,8 @@
   Object.defineProperty(S, 'k', { enumerable: false, get() { return { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; } });
   function applyOpts() {
     document.body.classList.toggle('reduce', !!S.reduce);
-    SND.vol.master = S.master; SND.vol.sfx = S.sfx; SND.vol.music = S.music; SND.musicOn = S.musicOn;
-    if (SND.ctx) { SND.setVol('master', S.master); SND.setVol('sfx', S.sfx); SND.setVol('music', S.music); SND.setMusic(S.musicOn); }
+    SND.vol.master = S.master; SND.vol.sfx = S.sfx; SND.vol.music = S.music; SND.musicOn = S.musicOn; const tr = S.trilha === 'classica' ? 'classica' : 'nova', trChanged = SND.trilha !== tr; SND.trilha = tr;
+    if (SND.ctx) { SND.setVol('master', S.master); SND.setVol('sfx', S.sfx); SND.setVol('music', S.music); SND.setMusic(S.musicOn); if (trChanged) SND.refreshMusic(); }
     store.set('opts', S);
   }
   U.applyOpts = applyOpts;
@@ -382,6 +382,7 @@
       <div class="optrow"><span>Efeitos</span><input type="range" min="0" max="1" step=".05" value="${S.sfx}" data-o="sfx"></div>
       <div class="optrow"><span>Música</span><input type="range" min="0" max="1" step=".05" value="${S.music}" data-o="music"></div>
       <div class="optrow"><span>Música ambiente</span><div class="seg" data-o="musicOn"><button data-v="1" class="${S.musicOn ? 'on' : ''}">Ligada</button><button data-v="0" class="${!S.musicOn ? 'on' : ''}">Desligada</button></div></div>
+      <div class="optrow"><span>Trilha sonora</span><div class="seg" data-o="trilha"><button data-v="nova" class="${S.trilha !== 'classica' ? 'on' : ''}">Nova</button><button data-v="classica" class="${S.trilha === 'classica' ? 'on' : ''}">Clássica</button></div></div>
       <div class="optrow"><span>Dicas durante a partida</span><div class="seg" data-o="help"><button data-v="1" class="${S.help !== false ? 'on' : ''}">Ligadas</button><button data-v="0" class="${S.help === false ? 'on' : ''}">Desligadas</button></div></div>
       <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
       <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
@@ -392,7 +393,7 @@
       if (b.dataset.snd) return SND.play(b.dataset.snd);
       if (b.hasAttribute('data-tipsreset')) { U.tipsReset && U.tipsReset(); b.textContent = 'Pronto ✓'; return; }
       const seg = b.closest('.seg'); if (!seg) return; const o = seg.dataset.o, v = b.dataset.v;
-      S[o] = (o === 'speed') ? v : v === '1'; applyOpts(); $$('button', seg).forEach(x => x.classList.toggle('on', x === b)); SND.play('click');
+      S[o] = (o === 'speed' || o === 'trilha') ? v : v === '1'; applyOpts(); $$('button', seg).forEach(x => x.classList.toggle('on', x === b)); SND.play('click');
     });
     SND.play('click'); U.modal(n);
   }

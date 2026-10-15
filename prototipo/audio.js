@@ -15,6 +15,10 @@
   const S = {
     ctx: null, master: null, sfx: null, musicGain: null, buffers: {}, enabled: true, musicOn: true,
     vol: { master: 0.8, sfx: 1, music: 0.35 }, musicNodes: null, matchNodes: null, mode: 'menu', SLOTS: SLOTS,
+    // trilhas em arquivo (loop com crossfade já embutido: a, b = início e fim do trecho que repete, em segundos). 'classica' volta às trilhas sintetizadas originais.
+    trilha: 'nova', mus: {}, musPending: { menu: true, p0: true, p1: true, p2: true },
+    MUS: { menu: { f: 'musica/menu.mp3', a: 3.0, b: 42.78 }, p0: { f: 'musica/partida.mp3', r: 1.0, a: 22.26, b: 118.26 }, p1: { f: 'musica/partida_110.mp3', r: 1.1, a: 20.2424, b: 107.5151 }, p2: { f: 'musica/partida_120.mp3', r: 1.2, a: 18.554, b: 98.554 } },
+    useNew() { return this.trilha !== 'classica'; },
 
     init() {
       if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
@@ -48,6 +52,23 @@
         } catch (e) { /* mantém o som sintetizado */ }
       }
       if (this.musicOn && this.buffers.menu) this.startMusic();
+      this.loadMusic();
+    },
+    // carrega as trilhas novas uma a uma (menu e partida normal primeiro); se algo falhar, continua a trilha sintetizada
+    async loadMusic() {
+      for (const k of ['menu', 'p0', 'p1', 'p2']) {
+        const d = this.MUS[k];
+        try { const ab = await (await fetch(d.f)).arrayBuffer(); this.mus[k] = Object.assign({ buf: await this.ctx.decodeAudioData(ab) }, d); } catch (e) { /* sem arquivo: fica a sintetizada */ }
+        this.musPending[k] = false;
+        if (this.musicOn && this.useNew() && !this.defeatNodes && ((k === 'menu' && this.mode !== 'game' && !this.musicNodes) || (k === 'p0' && this.mode === 'game' && !(this.matchNodes && !this.matchNodes.ending)))) this.startMusic();
+      }
+    },
+    // recomeça a trilha do modo atual (troca de trilha nas Opções)
+    refreshMusic() {
+      if (!this.ctx || !this.musicOn || this.defeatNodes) return;
+      if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
+      this.stopMatch();
+      this.startMusic();
     },
     setVol(k, v) { this.vol[k] = v; if (!this.ctx) return; if (k === 'master') this.master.gain.value = v; if (k === 'sfx') this.sfx.gain.value = v; if (k === 'music') this.musicGain.gain.value = v; },
     setMusic(on) { this.musicOn = on; if (!this.ctx) return; if (on) this.startMusic(); else this.stopMusic(); },
@@ -125,6 +146,11 @@
     startMenuMusic() {
       if (!this.ctx || this.musicNodes) return;
       const c = this.ctx;
+      if (!this.buffers.menu && this.useNew() && this.musPending.menu) return;   // arquivo ainda carregando: a trilha entra quando ficar pronto
+      if (!this.buffers.menu && this.useNew() && this.mus.menu) {
+        const m = this.mus.menu, s = c.createBufferSource(), g = c.createGain(); s.buffer = m.buf; s.loop = true; s.loopStart = m.a; s.loopEnd = m.b; s.connect(g); g.connect(this.musicGain); s.start();
+        this.musicNodes = { stop: () => { const t = c.currentTime; try { g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0.0001, t + 0.5); s.stop(t + 0.55); } catch (e) { } } }; return;
+      }
       if (this.buffers.menu) { const s = c.createBufferSource(); s.buffer = this.buffers.menu; s.loop = true; s.connect(this.musicGain); s.start(); this.musicNodes = { stop: () => { try { s.stop(); } catch (e) { } } }; return; }
       const nodes = [], g = c.createGain(); g.gain.value = 0.0001; g.gain.exponentialRampToValueAtTime(0.5, c.currentTime + 0.7); g.connect(this.musicGain);
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700; lp.Q.value = 0.7; lp.connect(g);
@@ -154,6 +180,8 @@
     startMatch() {
       if (!this.ctx || !this.musicOn) return;
       if (this.matchNodes && !this.matchNodes.ending) return;
+      if (this.useNew() && this.musPending.p0) return;   // arquivo ainda carregando
+      if (this.useNew() && this.mus.p0) return this.startMatchFile();
       const c = this.ctx, M = this.MATCH, self = this;
       const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 0.6); bus.connect(this.musicGain);
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.connect(bus);
@@ -208,6 +236,34 @@
         }
       }, 40);
     },
+    // trilha da partida em arquivo: 3 versões do mesmo trecho (normal, 1,10x, 1,20x), esticadas SEM mudar o tom. Ao mudar de nível, faz crossfade para a versão certa na mesma posição musical.
+    startMatchFile() {
+      const c = this.ctx, V = [this.mus.p0, this.mus.p1, this.mus.p2], self = this;
+      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.linearRampToValueAtTime(1, c.currentTime + 0.8); bus.connect(this.musicGain);
+      const st = { file: true, level: 0, req: 0, hold: 0, cool: 0, ending: false, bus, timer: null, loop: 0, cur: null, srcs: [] };
+      const baseNow = cur => { const v = V[cur.k]; let ft = cur.off + (c.currentTime - cur.t0); if (ft >= v.b) ft = v.a + ((ft - v.a) % (v.b - v.a)); return ft * v.r; };   // posição musical (em segundos da versão normal)
+      const play = (k, base, fade) => {
+        const v = V[k], s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
+        s.buffer = v.buf; s.loop = true; s.loopStart = v.a; s.loopEnd = v.b; s.connect(g); g.connect(bus); st.srcs.push(s);
+        const prev = st.cur;
+        if (prev && fade > 0) {
+          const n = 32, up = new Float32Array(n), dn = new Float32Array(n); for (let i = 0; i < n; i++) { up[i] = Math.sin(Math.PI / 2 * i / (n - 1)); dn[i] = Math.cos(Math.PI / 2 * i / (n - 1)); }
+          g.gain.setValueAtTime(0.0001, now); g.gain.setValueCurveAtTime(up, now, fade);
+          prev.g.gain.cancelScheduledValues(now); prev.g.gain.setValueCurveAtTime(dn, now, fade); try { prev.s.stop(now + fade + 0.05); } catch (e) { }
+        }
+        s.start(now, base / v.r); st.cur = { s, g, k, t0: now, off: base / v.r };
+      };
+      play(0, 0, 0);
+      st.kill = ms => setTimeout(() => st.srcs.forEach(x => { try { x.stop(); } catch (e) { } }), ms || 1700);
+      this.matchNodes = st;
+      st.timer = setInterval(() => {
+        if (!self.musicOn || st.ending || !st.cur) return;
+        const now = c.currentTime;
+        if (st.level > 0 && now > st.hold) { st.level = 0; st.cool = now + 30; }   // volta ao que era
+        const want = V[st.level] ? st.level : 0;
+        if (want !== st.cur.k) play(want, baseNow(st.cur), want > st.cur.k ? 1.2 : 1.8);
+      }, 100);
+    },
     matchLevel(l) {   // a versão "intensa" dura só um trecho e volta ao groove normal; só reaparece se a tensão subir de novo ou após uma pausa
       const m = this.matchNodes; if (!m || m.ending) return; l = Math.max(0, Math.min(2, l | 0)); const now = this.ctx.currentTime;
       if (l > m.level && (l > m.req || now > m.cool)) { m.level = l; m.hold = now + (l >= 2 ? 24 : 16); }
@@ -231,10 +287,10 @@
       this.defeatNodes = { stop: () => { clearInterval(timer); clearTimeout(first); try { bus.gain.cancelScheduledValues(c.currentTime); bus.gain.setValueAtTime(Math.max(0.0001, bus.gain.value), c.currentTime); bus.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.9); } catch (e) { } } };
     },
     stopDefeat() { if (this.defeatNodes) { this.defeatNodes.stop(); this.defeatNodes = null; } },
-    matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); },
+    matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); if (m.kill) m.kill(1700); },
     // corta o que está soando nos efeitos (toque para pular a animação): silencia por instantes e volta ao volume
     cut() { if (!this.ctx || !this.sfx) return; const g = this.sfx.gain, t = this.ctx.currentTime; try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0.0001, t + 0.03); g.linearRampToValueAtTime(this.vol.sfx, t + 0.14); } catch (e) { } },
-    stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; this.matchNodes = null; },
+    stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; if (m.kill) m.kill(700); this.matchNodes = null; },
   };
   root.Sound = S;
 })(typeof window !== 'undefined' ? window : globalThis);
