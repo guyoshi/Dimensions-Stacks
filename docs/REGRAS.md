@@ -406,7 +406,7 @@ Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo 
 | Batalha Aberta | Todos escolhem qualquer atributo (não só o par do iniciador); ataque vencedor captura, defesa vencedora manda as demais ao Buraco Negro. |
 | Tempestade Lateral | Na 1ª disputa da rodada, a carta do topo de cada jogador passa ao jogador da direita, que joga com ela. |
 | Maré do Buraco Negro | A cada disputa da rodada, quem está por último em cartas (recalculado a cada disputa; em duplas conta a dupla) recebe 1 carta normal do Buraco Negro; com 2 jogadores, 2 cartas por disputa. Total na rodada: 4 (4 jogadores), 3 (3 jogadores), 4 (2 jogadores). Empate geral ou Buraco vazio: ninguém recebe. No máx. uma vez por partida, a partir da Rodada 3. (Alterado em 15/10/2026, pedido do autor; antes eram 2 cartas de uma vez no início da rodada.) |
-| Eclipse | O maior atributo de cada carta vale 0 (marcado com ✕ na carta). |
+| Eclipse | O maior atributo de cada carta perde 30 pontos (marcado na carta). (Alterado em 15/10/2026: antes valia 0.) |
 | Mundo ao Avesso | Vence o MENOR valor (margem e desempates invertidos). Peso 2 (mais frequente). |
 | Troca Dimensional | Dois atributos de cada carta trocam de valor; o par é sorteado e mostrado na animação. |
 

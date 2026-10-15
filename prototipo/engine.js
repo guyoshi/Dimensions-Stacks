@@ -211,7 +211,7 @@
     aberta: { nome: 'Batalha Aberta', txt: 'Nesta rodada todos escolhem qualquer atributo e se enfrentam mesmo em atributos diferentes (Força contra Inteligência etc.). Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Todos escolhem qualquer atributo' },
     tempestade: { nome: 'Tempestade Lateral', txt: 'Na primeira disputa da rodada, cada jogador passa a carta do topo do baralho ao jogador da direita e joga com a que recebe.', curto: 'Carta do topo passa à direita' },
     buraco: { nome: 'Maré do Buraco Negro', txt: 'Em cada disputa desta rodada, o jogador que está com menos cartas recebe 1 carta do Buraco Negro (2 por disputa numa partida de 2 jogadores). Quem estiver por último muda a cada disputa. Só acontece uma vez por partida.', curto: 'Quem está por último ganha carta a cada disputa' },
-    eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta vale 0.', curto: 'O maior atributo vale 0' },
+    eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta perde 30 pontos.', curto: 'O maior atributo perde 30' },
     avesso: { nome: 'Mundo ao Avesso', txt: 'Nesta rodada vence o MENOR valor, em vez do maior. Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Vence o menor valor' },
     troca: { nome: 'Troca Dimensional', txt: 'Nesta rodada dois atributos de cada carta trocam de valor entre si.', curto: 'Dois atributos trocam de valor' },
   };
@@ -249,7 +249,7 @@
       const m = {}, chg = (k, d) => { const v = Math.max(0, st[k] + d); m[k] = v - st[k]; st[k] = v; };
       if (ev.id === 'forca') chg('pod', 10);
       else if (ev.id === 'nevoa') { chg('int', 10); chg('vel', -10); }
-      else if (ev.id === 'eclipse') { const k = AID.reduce((b, a) => (st[a] > st[b] ? a : b), AID[0]); m.zero = k; st[k] = 0; }
+      else if (ev.id === 'eclipse') { const k = AID.reduce((b, a) => (st[a] > st[b] ? a : b), AID[0]); chg(k, -30); m.zero = k; }
       else if (ev.id === 'troca' && ev.pair) { const [a, b] = ev.pair; const t = st[a]; st[a] = st[b]; st[b] = t; m.swap = [a, b]; }
       return { st, mark: Object.keys(m).length ? m : null };
     }
