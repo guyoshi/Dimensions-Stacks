@@ -404,7 +404,7 @@ Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo 
 | Névoa Mental | Todas ganham +10 em Inteligência e −10 em Velocidade. |
 | Eco dos Especiais | Bônus e reduções de especiais valem o dobro (exceto Conversão/Permuta). |
 | Batalha Aberta | Todos escolhem qualquer atributo (não só o par do iniciador); ataque vencedor captura, defesa vencedora manda as demais ao Buraco Negro. |
-| Tempestade Lateral | Na 1ª disputa da rodada, a carta do topo de cada jogador passa ao jogador da direita, que joga com ela. |
+| Tempestade Lateral | Antes de cada disputa da rodada (antes de qualquer escolha), a carta do topo de cada jogador passa para a direita ou para a esquerda (sorteado a cada disputa), e ele joga com a que recebe. (Alterado em 15/10/2026: antes só na 1ª disputa e sempre à direita.) |
 | Maré do Buraco Negro | A cada disputa da rodada, quem está por último em cartas (recalculado a cada disputa; em duplas conta a dupla) recebe 1 carta normal do Buraco Negro; com 2 jogadores, 2 cartas por disputa. Total na rodada: 4 (4 jogadores), 3 (3 jogadores), 4 (2 jogadores). Empate geral ou Buraco vazio: ninguém recebe. No máx. uma vez por partida, a partir da Rodada 3. (Alterado em 15/10/2026, pedido do autor; antes eram 2 cartas de uma vez no início da rodada.) |
 | Correnteza | Todas as cartas ganham +10 em Velocidade e perdem 5 em Força, Defesa e Inteligência. (Novo, 15/10/2026.) |
 | Muralha Dimensional | A Defesa de cada carta passa a valer a média entre a sua Defesa e o seu maior atributo (arredondada para cima); quem já tem a Defesa como maior atributo não muda. (Novo, 15/10/2026.) |

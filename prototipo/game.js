@@ -491,6 +491,7 @@
     },
     async eventFx({ id, moves, pid, cards }) {
       if (id === 'tempestade') {
+        { const d = (moves && moves[0] && moves[0].dir) || 1; caption(`Tempestade: as cartas do topo passam para a ${d > 0 ? 'direita' : 'esquerda'}.`, true); }
         await Promise.all((moves || []).map((m, i) => sleep(i * 160).then(() => { SND.play('deal'); return fly(seatDeck(m.from), seatDeck(m.to), { ms: 900, cw: 62, r0: -10, r1: 12, arc: 40, }); })));
         refresh(); const me = (moves || []).find(m => m.to === V.viewer && V.humans === 1 && m.card && m.card !== '?');
         if (me) { const c = CARDS[me.card]; caption(`Você recebeu ${c.nome} e vai jogar com ela.`, true); await sleep(900); }

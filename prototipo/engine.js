@@ -209,7 +209,7 @@
     nevoa: { nome: 'Névoa Mental', txt: 'Todas as cartas ganham +10 em Inteligência e perdem 10 em Velocidade nesta rodada.', curto: 'Inteligência +10, Velocidade −10' },
     eco: { nome: 'Eco dos Especiais', txt: 'Nesta rodada, bônus e reduções dos especiais valem o dobro.', curto: 'Especiais valem o dobro' },
     aberta: { nome: 'Batalha Aberta', txt: 'Nesta rodada todos escolhem qualquer atributo e se enfrentam mesmo em atributos diferentes (Força contra Inteligência etc.). Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Todos escolhem qualquer atributo' },
-    tempestade: { nome: 'Tempestade Lateral', txt: 'Na primeira disputa da rodada, cada jogador passa a carta do topo do baralho ao jogador da direita e joga com a que recebe.', curto: 'Carta do topo passa à direita' },
+    tempestade: { nome: 'Tempestade Lateral', txt: 'Antes de cada disputa desta rodada, cada jogador passa a carta do topo do baralho para o jogador da direita ou da esquerda (sorteado a cada disputa) e joga com a que recebe. A tempestade vem antes de qualquer escolha.', curto: 'Carta do topo passa para a direita ou esquerda a cada disputa' },
     buraco: { nome: 'Maré do Buraco Negro', txt: 'Em cada disputa desta rodada, o jogador que está com menos cartas recebe 1 carta do Buraco Negro (2 por disputa numa partida de 2 jogadores). Quem estiver por último muda a cada disputa. Só acontece uma vez por partida.', curto: 'Quem está por último ganha carta a cada disputa' },
     correnteza: { nome: 'Correnteza', txt: 'Todas as cartas ganham +10 em Velocidade e perdem 5 em Força, Defesa e Inteligência nesta rodada.', curto: 'Velocidade +10, os demais −5' },
     muralha: { nome: 'Muralha Dimensional', txt: 'Nesta rodada, a Defesa de cada carta passa a valer a média entre a sua Defesa e o seu maior atributo (arredondada para cima). Cartas fortes em outro atributo ganham uma muralha; quem já é forte em Defesa não muda.', curto: 'Defesa = média com o maior atributo' },
@@ -262,13 +262,15 @@
       const ev = this.curEv(); if (!ev) return;
       this.log(`Fenômeno dimensional: ${EVENTOS[ev.id].nome}.`, 'rodada');
       await this.emit('eventStart', { round: this.s.round, ev });
-      if (ev.id === 'tempestade') {
-        const al = this.alive().filter(pid => this.p(pid).deck.length > 0); if (al.length < 2) return;
-        const tops = {}; al.forEach(pid => { tops[pid] = this.p(pid).deck.shift(); });
-        const moves = al.map((pid, i) => { const to = al[(i + 1) % al.length]; this.p(to).deck.unshift(tops[pid]); return { from: pid, to, card: tops[pid] }; });
-        this.memInit(); this.log('A tempestade passa a carta do topo de cada jogador ao da direita.', 'rodada');
-        await this.emit('eventFx', { id: 'tempestade', moves });
-      }
+    }
+    // Tempestade Lateral: antes de CADA disputa da rodada (antes de qualquer escolha), a carta do topo de todos passa para a direita ou para a esquerda (sorteado)
+    async stormPass() {
+      const al = this.alive().filter(pid => this.p(pid).deck.length > 0); if (al.length < 2) return;
+      const dir = this.rand() < 0.5 ? 1 : -1, n = al.length;
+      const tops = {}; al.forEach(pid => { tops[pid] = this.p(pid).deck.shift(); });
+      const moves = al.map((pid, i) => { const to = al[(i + dir + n) % n]; this.p(to).deck.unshift(tops[pid]); return { from: pid, to, card: tops[pid], dir }; });
+      this.memInit(); this.log(`A tempestade passa a carta do topo de cada jogador para a ${dir > 0 ? 'direita' : 'esquerda'}.`, 'rodada');
+      await this.emit('eventFx', { id: 'tempestade', moves });
     }
     // Maré do Buraco Negro: a CADA disputa da rodada, quem está por último em cartas (recalculado na hora) recebe cartas do Buraco Negro.
     // 3 ou 4 jogadores: 1 carta por disputa (3 ou 4 na rodada); 2 jogadores: 2 cartas por disputa (4 na rodada). Em duplas conta a dupla.
@@ -597,7 +599,7 @@
 
     async playCombat(init) {
       if (this.s.initiated.size === 0) await this.roundEventStart();
-      { const e0 = this.curEv(); if (e0 && e0.id === 'buraco') await this.blackholeTide(); }
+      { const e0 = this.curEv(); if (e0 && e0.id === 'buraco') await this.blackholeTide(); if (e0 && e0.id === 'tempestade') await this.stormPass(); }
       const g = this, order = this.order(init);
       const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
         def: {}, ctl: { per: {} }, claims: [], onWin: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
