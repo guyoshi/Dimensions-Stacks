@@ -371,3 +371,8 @@ As cotas de raridade por série (11% / 21% / 33%) são aproximadas. Regra extra:
 | S15 | Tersário | 90/69/51/53 | 69/90/51/53 |
 | S17 | Luna Stellar | 51/55/69/66 | 66/69/55/51 |
 | D19 | Manu | 9/67/70/61 | 35/67/57/48 |
+
+
+## Esquerda/direita alinhadas à tela (15/10/2026)
+
+**Motivo:** o motor chamava de "esquerda" o rival que aparece à direita na tela (a fileira de rivais é desenhada da esquerda para a direita como "próximo" → "anterior"). Um jogador não conseguiu virar "Permuta das reservas à esquerda" porque o alvo real (Silas, reserva 0) não era o rival que ele via à esquerda (Maya, reserva 7). **Mudança (autorizada pelo autor):** `left` = próximo na ordem de turno (aparece à esquerda na tela), `right` = anterior. Afeta todos os especiais "à esquerda/direita" e a Tempestade Lateral (só o nome do lado; a mecânica é a mesma). A tela agora mostra "Alvo (esquerda): nome" no especial e explica quando a reserva dos dois está vazia.

@@ -491,7 +491,7 @@
     },
     async eventFx({ id, moves, pid, cards }) {
       if (id === 'tempestade') {
-        { const d = (moves && moves[0] && moves[0].dir) || 1; caption(`Tempestade: as cartas do topo passam para a ${d > 0 ? 'direita' : 'esquerda'}.`, true); }
+        { const d = (moves && moves[0] && moves[0].dir) || 1; caption(`Tempestade: as cartas do topo passam para a ${d > 0 ? 'esquerda' : 'direita'}.`, true); }
         await Promise.all((moves || []).map((m, i) => sleep(i * 160).then(() => { SND.play('deal'); return fly(seatDeck(m.from), seatDeck(m.to), { ms: 900, cw: 62, r0: -10, r1: 12, arc: 40, }); })));
         refresh(); const me = (moves || []).find(m => m.to === V.viewer && V.humans === 1 && m.card && m.card !== '?');
         if (me) { const c = CARDS[me.card]; caption(`Você recebeu ${c.nome} e vai jogar com ela.`, true); await sleep(900); }
@@ -769,6 +769,10 @@
         }
       },
       async special(p, usable, combat, ctx, stage) {
+        // alvo lateral do especial ("à esquerda"/"à direita"): esquerda = o rival que aparece à esquerda na tela de quem joga (mesma lógica do motor)
+        const sideOf = sp => { const t = (sp.texto || ''), d = /esquerda/.test(t) ? 'L' : /direita/.test(t) ? 'R' : null; if (!d || !G || !G.s) return null;
+          const pl = G.s.players, n = pl.length; for (let k = 1; k < n; k++) { const x = (p.pid + (d === 'L' ? k : -k) + n * 2) % n; if (!pl[x].alive || (G.sameTeam && G.sameTeam(x, p.pid))) continue; return { d, pl: pl[x] }; } return null; };
+        const sideTag = sp => { const s = sideOf(sp); return s ? `<div class="spt prev">Alvo (${s.d === 'L' ? 'esquerda' : 'direita'}): <b>${esc(s.pl.name)}</b></div>` : ''; };
         await cover(p); if (U.tip) await U.tip(stage === 'react' ? 'react' : 'special');
         const T = stage === 'ctrl' ? ['virar um especial de controle?', '']
           : stage === 'second' ? ['virar também um segundo especial?', '']
@@ -792,7 +796,7 @@
         };
         usable.forEach(id => {
           const sp = E.SPECIALS[CARDS[id].especial];
-          const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div>${preview(sp)}<button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
+          const pk = el(`<div class="specpick"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div>${sideTag(sp)}${preview(sp)}<button class="btn primary sm" data-v="${id}">Virar</button></div></div>`);
           $('.cb', pk).append(cardEl(id, { up: true, noanim: true, cw: 72 })); node.append(pk);
         });
         // outros especiais preparados que não aparecem como opção: explica por que
@@ -805,7 +809,8 @@
             : !sp.react && stage === 'react' ? 'Especial normal: só podia ser virado na janela anterior, antes da reação.'
             : sp.phase !== 'ctrl' && stage === 'ctrl' ? 'Você poderá virar esta depois da revelação (só 1 especial por disputa).'
             : stage === 'second' ? 'Não combina como segundo especial.'
-            : 'Não pode ser virado agora: a condição do efeito não é atendida nesta disputa.';
+            : (() => { const s = sideOf(sp); if (s && /reservas?/i.test(sp.nome) && Array.isArray(p.reserve) && Array.isArray(s.pl.reserve) && !p.reserve.length && !s.pl.reserve.length) return `Sua reserva e a de ${esc(s.pl.name)} (${s.d === 'L' ? 'esquerda' : 'direita'}) estão vazias: nada a trocar.`;
+              return (s ? `Alvo (${s.d === 'L' ? 'esquerda' : 'direita'}): ${esc(s.pl.name)}. ` : '') + 'Não pode ser virado agora: a condição do efeito não é atendida nesta disputa.'; })();
           const pk = el(`<div class="specpick off"><div class="cb"></div><div class="spx"><div class="spn">✦ ${esc(sp.nome)}</div><div class="spt">${esc(sp.texto)}</div><div class="spt why">${why}</div></div></div>`);
           $('.cb', pk).append(cardEl(id, { up: true, noanim: true, cw: 72 })); node.append(pk);
         });

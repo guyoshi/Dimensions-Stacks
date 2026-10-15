@@ -269,7 +269,7 @@
       const dir = this.rand() < 0.5 ? 1 : -1, n = al.length;
       const tops = {}; al.forEach(pid => { tops[pid] = this.p(pid).deck.shift(); });
       const moves = al.map((pid, i) => { const to = al[(i + dir + n) % n]; this.p(to).deck.unshift(tops[pid]); return { from: pid, to, card: tops[pid], dir }; });
-      this.memInit(); this.log(`A tempestade passa a carta do topo de cada jogador para a ${dir > 0 ? 'direita' : 'esquerda'}.`, 'rodada');
+      this.memInit(); this.log(`A tempestade passa a carta do topo de cada jogador para a ${dir > 0 ? 'esquerda' : 'direita'}.`, 'rodada');
       await this.emit('eventFx', { id: 'tempestade', moves });
     }
     // Maré do Buraco Negro: a CADA disputa da rodada, quem está por último em cartas (recalculado na hora) recebe cartas do Buraco Negro.
@@ -355,9 +355,9 @@
         entries: () => combat.entries.filter(e => !e.withdrawn), name: pid => g.p(pid).name,
         alive: () => g.alive(), order: () => g.order(combat.initiator),
         opps: pid => g.foesOf(pid),
-        right: pid => { let r = g.nextAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.nextAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
-        ringR: pid => { const r = g.nextAlive(pid); return r === pid ? null : r; }, ringL: pid => { const r = g.prevAlive(pid); return r === pid ? null : r; },   // vizinho de assento (sem pular parceiro): rodízios precisam ser permutações
-        left: pid => { let r = g.prevAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.prevAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
+        right: pid => { let r = g.prevAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.prevAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
+        ringR: pid => { const r = g.prevAlive(pid); return r === pid ? null : r; }, ringL: pid => { const r = g.nextAlive(pid); return r === pid ? null : r; },   // vizinho de assento (sem pular parceiro): rodízios precisam ser permutações
+        left: pid => { let r = g.nextAlive(pid), k = 0; while (r !== pid && g.sameTeam(r, pid) && k++ < 8) r = g.nextAlive(r); return r === pid || g.sameTeam(r, pid) ? null : r; },
         rand: () => g.rand(), say: (t) => g.log(t, 'efeito'), emit: (t, d) => g.emit(t, d),
         sameTeam: (a, b) => g.sameTeam(a, b),
         bhNormal: () => g.s.bh.filter(x => x.kind === 'normal').map(x => x.id),
