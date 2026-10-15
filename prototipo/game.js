@@ -746,7 +746,8 @@
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : novice() ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`
           : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b> · escolha: ${lst}`;
-        const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}</div>` : '';
+        const evsum = (() => { if (!combat.ev || !entry.evm) return ''; const b = CARDS[entry.card].stats; const ch = AIDS.filter(a => entry.stats[a] !== b[a]); return ch.length ? `<div class="evsum">Sua carta nesta rodada: ${ch.map(a => `${ATT[a].nome} ${b[a]} → <b>${entry.stats[a]}</b>`).join(' · ')}</div>` : ''; })();
+        const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}${evsum}</div>` : '';
         const em = entry.evm || {};
         const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}</div>
           <div class="attrs">${options.map(a => `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
@@ -782,9 +783,11 @@
         const preview = sp => {
           if (!me || !sp.fx || !me.stats) return '';
           let nx; try { nx = sp.fx(me.stats, me.attr); } catch (e) { return ''; }
+          const eco = !!(combat && combat.ev && combat.ev.id === 'eco') && sp.cat !== 'Conversão';   // Eco dos Especiais: bônus e reduções valem o dobro (a prévia já mostra o valor dobrado)
+          if (eco) nx = AIDS.reduce((o, a) => { o[a] = Math.max(0, me.stats[a] + 2 * (nx[a] - me.stats[a])); return o; }, Object.assign({}, nx));
           const ch = AIDS.filter(a => nx[a] !== me.stats[a]); if (!ch.length) return '<div class="spt prev">Sem efeito na sua carta agora.</div>';
           const parts = ch.map(a => a === me.attr ? `<b>${ATT[a].nome} (usado): ${me.stats[a]} → ${nx[a]}</b>` : `${ATT[a].nome} ${me.stats[a]} → ${nx[a]}`);
-          return `<div class="spt prev">Sua carta: ${parts.join(' · ')}</div>`;
+          return `<div class="spt prev">Sua carta: ${parts.join(' · ')}${eco ? ' <i>(dobrado pelo Eco)</i>' : ''}</div>`;
         };
         usable.forEach(id => {
           const sp = E.SPECIALS[CARDS[id].especial];
