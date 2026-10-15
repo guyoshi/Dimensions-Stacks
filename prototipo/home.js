@@ -13,15 +13,15 @@
       <defs>
         <linearGradient id="lr${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fdcff"/><stop offset=".5" stop-color="#b394ff"/><stop offset="1" stop-color="#7fdcff"/></linearGradient>
         <radialGradient id="lg${i}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7fdcff" stop-opacity=".32"/><stop offset=".6" stop-color="#b394ff" stop-opacity=".12"/><stop offset="1" stop-color="#b394ff" stop-opacity="0"/></radialGradient>
-        <linearGradient id="lm${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f1e2"/><stop offset="1" stop-color="#8b8576"/></linearGradient>
+        <linearGradient id="lm${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf9ff"/><stop offset="1" stop-color="#6f66b5"/></linearGradient>
       </defs>
       <circle cx="60" cy="60" r="56" fill="url(#lg${i})"/>
       <g class="ring"><circle cx="60" cy="60" r="54" fill="none" stroke="url(#lr${i})" stroke-width="3" stroke-linecap="round" stroke-dasharray="250 90"/></g>
-      <g class="ring2"><circle cx="60" cy="60" r="47" fill="none" stroke="#f6f1e2" stroke-opacity=".5" stroke-width="1" stroke-dasharray="1.5 7" stroke-linecap="round"/></g>
+      <g class="ring2"><circle cx="60" cy="60" r="47" fill="none" stroke="#fbf9ff" stroke-opacity=".5" stroke-width="1" stroke-dasharray="1.5 7" stroke-linecap="round"/></g>
       <g transform="translate(60 63)">
-        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#14161b" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(-20) translate(-8 0)" opacity=".85"/>
-        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#191c22" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(20) translate(8 0)" opacity=".92"/>
-        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#1d2027" stroke="url(#lm${i})" stroke-width="1.8"/>
+        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#100c2c" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(-20) translate(-8 0)" opacity=".85"/>
+        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#16113a" stroke="url(#lm${i})" stroke-width="1.5" transform="rotate(20) translate(8 0)" opacity=".92"/>
+        <rect x="-15" y="-22" width="30" height="42" rx="4" fill="#1a1540" stroke="url(#lm${i})" stroke-width="1.8"/>
         <image href="selo.png" x="-11" y="-15" width="22" height="28.2" preserveAspectRatio="xMidYMid meet"/>
       </g></svg>`;
   };
@@ -68,9 +68,9 @@
     if (tab) { render[name](); const s = $('#' + name); if (s) s.scrollTop = 0; }
   };
 
-  function topbar(title, sub) {
+  function topbar(title, sub, extra) {
     return `<header class="topbar"><div class="tb-l">${U.logoMark(30, true)}<div class="tb-t"><b>${esc(title || 'Dimensions Stacks')}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</div></div>
-      <div class="tb-r"><button class="ibtn" data-top="rules" aria-label="Como jogar">${ICO.help}</button><button class="ibtn" data-top="opts" aria-label="Opções e sons">${ICO.gear}</button></div></header>`;
+      <div class="tb-r">${extra || ''}<button class="ibtn" data-top="rules" aria-label="Como jogar">${ICO.help}</button><button class="ibtn" data-top="opts" aria-label="Opções e sons">${ICO.gear}</button></div></header>`;
   }
   function bindTop(s) { $$('[data-top]', s).forEach(b => { b.onclick = () => { SND.init(); SND.play('click'); if (b.dataset.top === 'rules') U.rules(); else U.options(); }; }); }
 
@@ -80,8 +80,9 @@
   function home() {
     const s = $('#menu'); const d = ST.dailyToday(); const p = ST.profile();
     s.innerHTML = `<div class="tabwrap home">
-      ${topbar()}
-      <section class="brand"><div class="brandmark">${U.logoMark(112)}</div>${`<div class="wmbox"><small>Dimensões Infinitas</small>${wordmark()}</div>`}</section>
+      ${topbar(null, null, d.streak > 0 ? `<span class="streakpill" title="Dias seguidos">${ICO.flame}${d.streak} ${d.streak === 1 ? 'dia' : 'dias'}</span>` : '')}
+      <div class="attrstrip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <section class="brand"><div class="fan" id="homeFan"></div>${`<div class="wmbox"><small>Dimensões Infinitas</small>${wordmark()}</div>`}</section>
       ${p.t.g ? `<div class="tagrow" style="justify-content:center"><span class="tag soft">${p.t.w} vitória${p.t.w === 1 ? '' : 's'} · ${p.t.g} partida${p.t.g === 1 ? '' : 's'}</span></div>` : ''}
       <button class="playbig" data-go="quick"><span class="pi">${ICO.swords}</span><span class="pt"><b>Jogar</b><small>Partida Rápida (~${quickMin()} minutos)</small></span><span class="pa">${ICO.arrow}</span></button>
       <div class="tiles">
@@ -90,12 +91,23 @@
       </div>
       <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia${d.streak > 1 ? ` · ${d.streak} dias seguidos` : ''}</small>${d.done ? '<b>Concluído</b>' : ''}<span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
     </div>`;
-    bindTop(s); fxInto(s);
+    bindTop(s); fxInto(s); homeFan($('#homeFan', s));
     s.onclick = e => {
       const b = e.target.closest('[data-go],[data-tab]'); if (!b) return; SND.init(); SND.play('click');
       if (b.dataset.tab) return U.show(b.dataset.tab);
       const g = b.dataset.go; if (g === 'quick') U.quick(); else if (g === 'setup') U.openSetup(); else if (g === 'online') U.online.open();
     };
+  }
+  // leque de três cartas na tela inicial: a do meio em destaque (cores dos atributos nas bordas)
+  function homeFan(box) {
+    if (!box) return;
+    const byName = n => CARTAS.find(c => c.nome === n && IMG[c.id]);
+    const withImg = CARTAS.filter(c => IMG[c.id]);
+    const pick = [byName('Breno Lins'), byName('Beatriz Lins'), byName('Banjo Lins')];
+    const used = new Set(pick.filter(Boolean).map(c => c.id));
+    const ids = pick.map(c => c ? c.id : (withImg.find(x => !used.has(x.id) && used.add(x.id)) || CARTAS[0]).id);
+    const cls = ['l', 'm', 'r'], cw = [92, 128, 92];
+    ids.forEach((id, i) => { const w = el(`<div class="fanc ${cls[i]}"></div>`); w.append(cardEl(id, { up: true, noanim: true, cw: cw[i], click: true })); box.append(w); });
   }
   function fxInto(s) { const bg = U.menuFx(); if (bg.parentNode !== s || s.firstChild !== bg) s.prepend(bg); }
 

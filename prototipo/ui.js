@@ -242,7 +242,7 @@
       const w = el(`<div class="fc" style="--x:${((i + rnd(.1, .9)) / N * 100).toFixed(1)}%;--cw:${cw}px;--dur:${dur.toFixed(1)}s;--delay:${(-rnd(0, dur)).toFixed(1)}s;--rot:${rnd(-24, 24).toFixed(1)}deg;--rot2:${rnd(-24, 24).toFixed(1)}deg;--sway:${rnd(-70, 70).toFixed(0)}px;--op:${(.28 + depth * .3).toFixed(2)};--bl:${((1 - depth) * 2.2).toFixed(1)}px"></div>`);
       w.append(cardEl(order[i % order.length], { up: true, noanim: true, cw })); fc.append(w);
     }
-    const sp = $('.sparks', bg), cols = ['#ffffff', '#f1ecdc', '#cfe6ff', '#ffffff', '#e8d9ff'];
+    const sp = $('.sparks', bg), cols = ['#ffffff', '#f4f1ff', '#cfe6ff', '#ffffff', '#e8d9ff'];
     for (let i = 0; i < (lite ? 20 : 64); i++) {
       const sz = rnd(3, 10), big = sz > 7.5;
       sp.append(el(`<span class="sp${big ? ' big' : ''}" style="left:${rnd(1, 99).toFixed(1)}%;top:${rnd(2, 98).toFixed(1)}%;--s:${sz.toFixed(0)}px;--d:${rnd(2.6, 7).toFixed(1)}s;--dl:${(-rnd(0, 7)).toFixed(1)}s;--c:${cols[i % cols.length]};--rt:${rnd(-35, 35).toFixed(0)}deg"><i></i></span>`));

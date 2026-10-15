@@ -331,7 +331,7 @@
   function showMyDeck(pid) {
     const mate = typeof pid === 'number' && pid !== V.viewer, p = G.p(mate ? pid : V.viewer); SND.play('click');
     const w = el(`<div><h2 style="color:var(--gold2)">${mate ? 'Baralho de ' + esc(p.name) : 'Seu baralho'}</h2><p class="hint">Ordem de jogo (1ª = próxima a entrar). Reserva: ${p.reserve.length} carta(s).</p><div class="cgrid"></div>${p.prepared.length ? '<h3 style="margin:10px 0;color:var(--gold2)">Especiais preparados</h3><div class="cgrid" id="pp"></div>' : ''}</div>`);
-    $('.cgrid', w).append(...p.deck.map((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 96, click: true }); const t = el(`<div class="tag" style="position:absolute;top:-8px;left:4px;z-index:3;background:#0b0c10;border:1px solid var(--line);border-radius:99px;padding:0 7px;font-size:11px;font-weight:900">${i + 1}</div>`); c.append(t); return c; }));
+    $('.cgrid', w).append(...p.deck.map((id, i) => { const c = cardEl(id, { up: true, noanim: true, cw: 96, click: true }); const t = el(`<div class="tag" style="position:absolute;top:-8px;left:4px;z-index:3;background:#08061a;border:1px solid var(--line);border-radius:99px;padding:0 7px;font-size:11px;font-weight:900">${i + 1}</div>`); c.append(t); return c; }));
     const pp = $('#pp', w); if (pp) { pp.className = 'pplist'; p.prepared.forEach(id => { const c = CARDS[id], sp = c && E.SPECIALS[c.especial], row = el(`<div class="prow"><div class="pcard"></div><div class="ptx"><b>✦ ${esc(sp ? sp.nome : '')}</b><p>${esc(sp ? sp.texto : '')}</p></div></div>`); $('.pcard', row).append(cardEl(id, { up: true, noanim: true, cw: 96, click: true })); pp.append(row); }); }
     if (p.reserve.length) { const rb = el(`<div class="row" style="justify-content:center;margin-top:12px"><button class="btn sm" type="button">Ver ${mate ? 'a reserva' : 'minha reserva'} (${p.reserve.length})</button></div>`); $('button', rb).onclick = () => showReserve(p.reserve.slice(), mate ? p.name : null); w.append(rb); }
     U.modal(w);
@@ -630,7 +630,7 @@
       updateAll(); let tipId = null; setCalc(calc);
       if (result.type === 'tie' || result.type === 'none') {
         if (result.tb) await tieBreak(result.tb, null);
-        banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700, 900);
+        banner('Empate', 'As cartas voltam aos donos', '#b9b2ea', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700, 900);
       } else {
         const w = result.winnerPid, slot = V.slots[w], atk = result.type === 'attack';
         if (result.tb) await tieBreak(result.tb, w);
