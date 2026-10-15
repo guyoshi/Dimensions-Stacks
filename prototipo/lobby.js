@@ -44,8 +44,9 @@
     const p = m.seats[m.sel];
     if (!p) return `<div class="lb-panel empty"></div>`;
     const col = duo ? tcol(m.sel) : PCOL[m.sel];
-    const head = `<div class="lb-pl">${av(p, col, 'xs')}<div class="lb-who"><b>${p.me ? 'Você' : esc(p.name)}${p.host ? '<span class="lb-pill host">anfitrião</span>' : ''}</b></div>
-      ${p.cpu ? `<button type="button" class="lb-ibtn" data-a="dice" aria-label="Sortear outro nome">${ic('dice')}</button>` : ''}${m.watchable && m.sel === 0 ? `<button type="button" class="lb-ibtn${p.cpu ? ' on' : ''}" data-watch="${p.cpu ? 0 : 1}" aria-label="${p.cpu ? 'Voltar a jogar' : 'Só assistir'}" aria-pressed="${!!p.cpu}">${ic('eye')}</button>` : ''}</div>`;
+    const wat = m.watchable && m.sel === 0 ? `<div class="lb-seg sm" role="group" aria-label="Seu lugar"><button type="button" data-watch="0" class="${p.cpu ? '' : 'on'}">Jogar</button><button type="button" data-watch="1" class="${p.cpu ? 'on' : ''}">Só assistir</button></div>` : '';
+    const head = `<div class="lb-pl">${av(p, col, 'xs')}<div class="lb-who"><b>${p.me ? 'Você' : esc(p.name)}${p.host ? '<span class="lb-pill host">anfitrião</span>' : ''}</b></div>${wat}
+      ${p.cpu ? `<button type="button" class="lb-ibtn" data-a="dice" aria-label="Sortear outro nome">${ic('dice')}</button>` : ''}</div>`;
     const diff = p.cpu ? `<div class="lb-seg sm">${DF.map(([v, t]) => `<button type="button" data-d="${v}" class="${p.diff === v ? 'on' : ''}">${t}</button>`).join('')}</div>`
       : '';
     return `<div class="lb-panel fade">${head}${diff}</div>`;

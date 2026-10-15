@@ -1323,3 +1323,5 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 
 .evnote .evsum { margin-top: 3px; font-size: 12px; color: var(--ink); } .evnote .evsum b { color: var(--ink); }
 .spt.prev i { font-style: normal; color: var(--nexus); font-weight: 800; }
+
+.lb-pl .lb-seg { flex: 0 0 auto; width: auto; margin-left: auto; } .lb-pl .lb-seg button { padding: 7px 11px; font-size: 12.5px; }
