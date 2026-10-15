@@ -23,17 +23,17 @@
 | J10 | Daryon Polar | Ciclo de Jesed | Conselheiro hábil em fabricar versões dos fatos, usa o medo e a política para mover uma guerra. | 68 | 64 | 93 | 67 | 292 | **AE-069** — Doação escolhida | Escolha um adversário: ele deve escolher uma carta de seu próprio baralho ativo para entregar ao fim do seu. |
 | J11 | Cal Edran | Ciclo de Jesed | Calandrir leal às soberanas, coloca o dever de protegê-las acima da própria segurança. | 81 | 68 | 69 | 60 | 278 | **AE-014** — Velocidade → Força | Substitua o valor de Força pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. |
 | J12 | Rendar | Ciclo de Jesed | Caçador Fendelar experiente, transforma a destruição de seu povo em resistência determinada. | 92 | 80 | 67 | 64 | 303 | **AE-082** — Resgate aleatório duplo | Recupere até 2 cartas aleatórias do Buraco Negro e coloque-as no fim de seu baralho ativo. |
-| J13 | Nynestra | Ciclo de Jesed | Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias. | 71 | 49 | 65 | 36 | 221 | **AE-018** — Resistência → Força | Substitua o valor de Força pelo valor que sua carta possui em Resistência; Resistência permanece igual. |
-| J14 | Cal Kadrir | Ciclo de Jesed | Jovem Calandrir disciplinado, mantém os ritos e o dever mesmo quando a política muda de rumo. | 69 | 51 | 41 | 63 | 224 | **AE-019** — Inteligência → Velocidade | Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual. |
+| J13 | Nynestra | Ciclo de Jesed | Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias. | 71 | 49 | 65 | 36 | 221 | **AE-047** — Tributo coletivo | Pegue 1 carta aleatória da reserva de cada adversário ativo que possua reserva. |
+| J14 | Cal Kadrir | Ciclo de Jesed | Jovem Calandrir disciplinado, mantém os ritos e o dever mesmo quando a política muda de rumo. | 69 | 51 | 41 | 63 | 224 | **AE-135** — Vigor | Sua carta de combate recebe +12 em Força e +12 em Resistência nesta disputa. |
 | J15 | Dareth Polar | Ciclo de Jesed | Veterano de quatro dedos, retorna à arena para impedir que uma nova guerra destrua os civis. | 90 | 65 | 57 | 49 | 261 | **AE-027** — Forçar defesa rival | Escolha um adversário: ele deve usar o atributo de defesa do par vigente. |
-| J16 | Elis Nular | Ciclo de Jesed | Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran. | 21 | 42 | 23 | 74 | 160 | **AE-020** — Velocidade → Inteligência | Substitua o valor de Inteligência pelo valor que sua carta possui em Velocidade; Velocidade permanece igual. |
+| J16 | Elis Nular | Ciclo de Jesed | Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran. | 21 | 42 | 23 | 74 | 160 | **AE-132** — Quebrar o melhor | Escolha um adversário: o maior atributo da carta de combate dele cai 25 nesta disputa. |
 | J17 | Selina Polar | Ciclo de Jesed | Conselheira sagaz, lê as engrenagens do poder e aprende a agir antes de ter todas as certezas. | 36 | 35 | 85 | 51 | 207 | **AE-117** — Preparação exposta | Um adversário revela até 2 especiais que já preparou; elas permanecem preparadas e não são ativadas. |
 | J18 | Vetarius Polar | Ciclo de Jesed | Soberano carismático de Kaeliran, confia na continuidade de sua dinastia e adia decisões difíceis. | 38 | 41 | 71 | 37 | 187 | **AE-057** — Passe à esquerda | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à esquerda. |
 | J19 | Cal Kerath | Ciclo de Jesed | Calandrir firme e disciplinada, protege Kaeliran com coragem e um sentido inflexível do dever. | 67 | 51 | 66 | 67 | 251 | **AE-065** — Tríplice transferência | Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido. |
 | J20 | Jelatira | Ciclo de Jesed | Anciã guardiã da memória familiar, preserva antigas histórias sem revelar todos os seus segredos. | 7 | 35 | 89 | 11 | 142 | **AE-106** — Ataque que bane | Se vencer usando Força ou Inteligência, capture normalmente e escolha 1 adversário derrotado: as 2 cartas do topo do baralho ativo dele vão ao Buraco Negro. |
 | J21 | Nefestra | Ciclo de Jesed | Jovem sem um braço, busca nas lembranças respostas para a origem e a perda de sua família. | 48 | 67 | 69 | 76 | 260 | **AE-025** — Defesa obrigatória | Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você. |
 | J22 | Sefter | Ciclo de Jesed | Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama. | 58 | 41 | 54 | 69 | 222 | **AE-076** — Guardião do baralho | Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa. |
-| J23 | Kedran | Ciclo de Jesed | Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado. | 33 | 22 | 54 | 72 | 181 | **AE-125** — Permutar Força e Resistência | Troque entre si os números de Força e Resistência da mesma carta; ambos mudam. |
+| J23 | Kedran | Ciclo de Jesed | Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado. | 33 | 22 | 54 | 72 | 181 | **AE-131** — Enfraquecer | Escolha um adversário: a carta de combate dele perde 15 em todos os atributos nesta disputa. |
 | V01 | Breno Lins | Viajantes Dimensionais | Irmão mais velho dos Lins, controla a própria densidade e assume riscos para proteger os irmãos. | 77 | 90 | 70 | 65 | 302 | **AE-001** — Impulso de Força | Sua carta de combate recebe +15 em Força nesta disputa. |
 | V02 | Bruno Lins Lee ⭐ | Viajantes Dimensionais | Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha. | 67 | 69 | 64 | 95 | 295 | **AE-021** — Atributo universal | Escolha um atributo: todos, inclusive você, devem disputar nele. Conflitos de imposição seguem o GDD. |
 | V03 | Banjo Lins | Viajantes Dimensionais | Imaginativo e inseguro, Banjo descobre na telecinese uma coragem que julgava não possuir. | 69 | 68 | 89 | 89 | 315 | **AE-011** — Força → Inteligência | Substitua o valor de Inteligência de sua carta de combate pelo valor que ela possui em Força; Força permanece igual. |
@@ -46,7 +46,7 @@
 | V10 | Korvo | Viajantes Dimensionais | Dimensal e mago negro, recruta seguidores para impor sua visão de poder sem limites. | 95 | 85 | 70 | 68 | 318 | **AE-049** — Escolha da reserva | Escolha um adversário e pegue até 2 cartas aleatórias de sua reserva. |
 | V11 | Gary | Viajantes Dimensionais | Ligado à Vigilância, serve secretamente aos interesses do mago Korvo. | 64 | 70 | 63 | 65 | 262 | **AE-058** — Passe à direita | Cada jogador ativo escolhe 1 carta de seu baralho ativo e a passa simultaneamente ao jogador ativo à direita. |
 | V12 | Anasin | Viajantes Dimensionais | Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos. | 70 | 51 | 73 | 76 | 270 | **AE-139** — Disparada | Sua carta de combate recebe +20 em Velocidade nesta disputa. |
-| V13 | Saliens | Viajantes Dimensionais | Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo. | 80 | 77 | 57 | 66 | 280 | **AE-119** — Preparação urgente | Se a regra de preparação permitir, prepare imediatamente a próxima carta de seu baralho ativo como especial, sem poder ativá-la nesta disputa. |
+| V13 | Saliens | Viajantes Dimensionais | Predador de presença intimidadora, atrai os irmãos para os planos da Patrulha de Korvo. | 80 | 77 | 57 | 66 | 280 | **AE-141** — Intimidar | Escolha um adversário: a carta de combate dele perde 12 em Força e 12 em Inteligência nesta disputa. |
 | V14 | Tio Frank | Viajantes Dimensionais | Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás. | 12 | 35 | 35 | 84 | 166 | **AE-063** — Troca entre vizinhos | Escolha, às cegas (pela posição no baralho ativo), 1 carta do jogador à esquerda e 1 do jogador à direita: elas trocam de dono. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto. |
 | V15 | Brenda ⭐ | Viajantes Dimensionais | Aprendiz em Tayo, destaca-se pela confiança e pela atitude provocadora diante dos colegas. | 74 | 68 | 80 | 64 | 286 | **AE-073** — Silêncio de especiais | Anule as habilidades especiais ainda não resolvidos dos adversários nesta disputa; as cartas especiais ativadas são descartadas. |
 | V16 | Facka | Viajantes Dimensionais | Jovem Aracna curiosa e falante, guia os irmãos Lins pelos túneis subterrâneos de Belfex. | 22 | 36 | 35 | 72 | 165 | **AE-100** — Confundir próximo turno | Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais. |
@@ -107,7 +107,7 @@
 | S15 | Tersário | Spacetheft | Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan. | 69 | 90 | 52 | 53 | 264 | **AE-046** — Reserva dupla à esquerda | Pegue 2 cartas aleatórias do meio de reserva do adversário à esquerda, se disponíveis. |
 | S16 | A Engenheira | Spacetheft | Cientista mística de biotecnologia que revive Jasmey e lhe dá um braço novo; diz não interferir, mas interfere. | 37 | 58 | 93 | 60 | 248 | **AE-045** — Reserva dupla à direita | Pegue 2 cartas aleatórias do meio de reserva do adversário à direita, se disponíveis. |
 | S17 | Luna Stellar | Spacetheft | Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo. | 66 | 69 | 55 | 53 | 243 | **AE-079** — Escudo antecipado | Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa. |
-| S18 | Alekta | Spacetheft | Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto. | 65 | 37 | 54 | 70 | 226 | **AE-017** — Força → Resistência | Substitua o valor de Resistência pelo valor que sua carta possui em Força; Força permanece igual. |
+| S18 | Alekta | Spacetheft | Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto. | 65 | 37 | 54 | 70 | 226 | **AE-136** — Lucidez veloz | Sua carta de combate recebe +12 em Inteligência e +12 em Velocidade nesta disputa. |
 | D19 | Manu | Diário Sobrenatural | Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve. | 34 | 67 | 57 | 48 | 206 | **AE-093** — Espionagem tripla | Veja as 3 próximas cartas do baralho ativo de um adversário sem alterá-las. |
 | B02 | Tack Ergson 🆕 | Édelin Lys | Amigo de infância de Édelin, capturado ainda criança por senantes; reaparece revelando magia e um amor antigo. | 19 | 36 | 54 | 71 | 180 | **AE-074** — Imunidade pessoal | Cancele um ataque ou especial direcionado especificamente a você nesta disputa; não anule ações que afetem os demais. |
 | B03 | Jork Caravel 🆕 | Édelin Lys | Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar. | 30 | 62 | 54 | 72 | 218 | **AE-064** — Transferência de reserva | Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem. |
@@ -129,17 +129,17 @@
 | J10 Daryon Polar | 292 | AE-096 — Quebrar o plano | AE-069 — Doação escolhida |
 | J11 Cal Edran | 278 | AE-074 — Imunidade pessoal | AE-014 — Velocidade → Força |
 | J12 Rendar | 303 | AE-105 — Defesa que captura | AE-082 — Resgate aleatório duplo |
-| J13 Nynestra | 221 | AE-061 — Reservas giratórias à direita | AE-018 — Resistência → Força |
-| J14 Cal Kadrir | 224 | AE-002 — Muralha de Resistência | AE-019 — Inteligência → Velocidade |
+| J13 Nynestra | 221 | AE-061 — Reservas giratórias à direita | AE-047 — Tributo coletivo |
+| J14 Cal Kadrir | 224 | AE-002 — Muralha de Resistência | AE-135 — Vigor |
 | J15 Dareth Polar | 261 | AE-010 — Ataque em dupla | AE-027 — Forçar defesa rival |
-| J16 Elis Nular | 160 | AE-100 — Confundir próximo turno | AE-020 — Velocidade → Inteligência |
+| J16 Elis Nular | 160 | AE-100 — Confundir próximo turno | AE-132 — Quebrar o melhor |
 | J17 Selina Polar | 207 | AE-113 — Interrupção precisa | AE-117 — Preparação exposta |
 | J18 Vetarius Polar | 187 | AE-022 — Par ofensivo | AE-057 — Passe à esquerda |
 | J19 Cal Kerath | 251 | AE-072 — Não perder a carta | AE-065 — Tríplice transferência |
 | J20 Jelatira | 142 | AE-091 — Revelar a mão | AE-106 — Ataque que bane |
 | J21 Nefestra | 260 | AE-093 — Espionagem tripla | AE-025 — Defesa obrigatória |
 | J22 Sefter | 222 | AE-089 — Sacrifício por três | AE-076 — Guardião do baralho |
-| J23 Kedran | 181 | AE-017 — Força → Resistência | AE-125 — Permutar Força e Resistência |
+| J23 Kedran | 181 | AE-017 — Força → Resistência | AE-131 — Enfraquecer |
 | V01 Breno Lins | 302 | AE-078 — Reflexo de roubo | AE-001 — Impulso de Força |
 | V03 Banjo Lins | 315 | AE-039 — Saque revelado | AE-011 — Força → Inteligência |
 | V04 Beatriz Lins | 314 | AE-067 — Descarte adversário | AE-007 — Ímpeto ofensivo |
@@ -151,7 +151,7 @@
 | V10 Korvo | 318 | AE-068 — Tributo por sacrifício | AE-049 — Escolha da reserva |
 | V11 Gary | 262 | AE-055 — Troca de topos à direita | AE-058 — Passe à direita |
 | V12 Anasin | 270 | AE-114 — Desvio de alvo | AE-139 — Disparada |
-| V13 Saliens | 280 | AE-046 — Reserva dupla à esquerda | AE-119 — Preparação urgente |
+| V13 Saliens | 280 | AE-046 — Reserva dupla à esquerda | AE-141 — Intimidar |
 | V14 Tio Frank | 166 | AE-051 — Troca escolhida | AE-063 — Troca entre vizinhos |
 | V17 Lanigiah | 239 | AE-096 — Quebrar o plano | AE-108 — Negar captura inimiga |
 | V18 Grande Pai Gaia | 191 | AE-103 — Ruína de campo | AE-077 — Guardião da reserva |
