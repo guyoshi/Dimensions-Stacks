@@ -333,3 +333,41 @@ Releuz passa a ter a **maior Inteligência de todas as cartas** (95) e Bruno Lin
 
 ## Ajuste de raridade (14/10/2026)
 As cotas de raridade por série (11% / 21% / 33%) são aproximadas. Regra extra: carta com poder pelo menos 10 acima da Lendária mais fraca da própria série também é Lendária. Efeito atual: Beatriz Lins (V04, poder 1787) passa de Épica a Lendária (Viajantes ficam com 4 Lendárias: Korvo, Bruno Lins, Beatriz Lins, Velho-Sábio). Total: 13 Lendárias, 20 Épicas, 33 Raras, 36 Comuns. A raridade é só visual (não altera regras nem atributos).
+
+
+## Rebalanceamento de atributos (15/10/2026, autorizado pelo autor)
+**Motivo:** a Inteligência decidia ~34% das disputas (Força 28%, Resistência 19%, Velocidade 18%) porque era o melhor atributo de 48 das 102 cartas e a de maior média (70,8). **Método:** 29 cartas tiveram os valores permutados entre atributos (a soma e o maior valor de cada carta não mudam; raridade e perfil ficam iguais), seguindo as indicações do autor para cada personagem. Exceção: Manu 9/67/70/61 → 35/67/57/48 (Força não tão baixa; soma mantida). Proposta e alternativas: `PROPOSTA_REBALANCEAMENTO_ATRIBUTOS_2026-10-15.md`; estado anterior em `dados/historico/cartas_87_antes_2026-10-15.json`.
+
+**Resultado:** melhor atributo da carta FOR 24,5 · RES 25,5 · INT 26 · VEL 26 (antes 24,5 / 14,5 / 48 / 15); cartas com valor ≥ 75: 23 / 22 / 24 / 20 (antes 23 / 17 / 34 / 15). Simulação com 300 partidas de bots, atributo vencedor das disputas: antes FOR 28,4% · RES 19,3% · INT 34,4% · VEL 17,9%; depois FOR 27,0% · RES 22,3% · INT 27,3% · VEL 23,4%.
+
+| Id | Carta | Antes (FOR/RES/INT/VEL) | Depois |
+|---|---|---|---|
+| J06 | Platisa | 8/70/80/34 | 8/70/34/80 |
+| J09 | Alyra Polar | 70/53/89/48 | 89/48/70/53 |
+| J12 | Rendar | 67/64/92/80 | 92/80/67/64 |
+| J13 | Nynestra | 65/35/71/49 | 71/49/65/35 |
+| J23 | Kedran | 33/22/72/54 | 33/22/54/72 |
+| V06 | Erla | 70/70/89/73 | 89/73/70/70 |
+| V07 | Lucas Veline | 31/38/72/71 | 31/38/71/72 |
+| V09 | Ricochet Bombergue | 67/57/90/76 | 67/57/76/90 |
+| V12 | Anasin | 70/52/76/73 | 70/52/73/76 |
+| V14 | Tio Frank | 12/35/84/35 | 12/35/35/84 |
+| V18 | Grande Pai Gaia | 31/66/70/24 | 70/24/31/66 |
+| S02 | Amanda | 48/70/89/73 | 48/70/73/89 |
+| S05 | Kord | 82/77/54/52 | 77/82/54/52 |
+| S09 | Capitã Nastácia | 89/69/70/64 | 69/89/70/64 |
+| S10 | Jelles | 66/46/70/49 | 70/49/66/46 |
+| S12 | Vek | 23/65/71/58 | 58/71/65/23 |
+| S13 | Capitão Tzough | 78/66/69/38 | 66/78/69/38 |
+| D02 | Priscila Fontenelle | 33/68/69/65 | 65/69/68/33 |
+| D08 | Glenda Mendes | 59/64/86/76 | 59/64/76/86 |
+| D09 | Diego Tavolieri | 67/45/81/46 | 67/45/46/81 |
+| M02 | Agente Sete | 88/78/68/68 | 78/88/68/68 |
+| M07 | Agente Seis | 67/50/81/49 | 81/49/67/50 |
+| M08 | Dra. Helena Valença | 7/23/73/36 | 7/23/36/73 |
+| M12 | James Harrow | 81/68/65/48 | 68/81/65/48 |
+| V20 | William McCroys | 77/75/70/54 | 75/77/70/54 |
+| V24 | Maria Santoro | 24/53/81/61 | 24/53/61/81 |
+| S15 | Tersário | 90/69/51/53 | 69/90/51/53 |
+| S17 | Luna Stellar | 51/55/69/66 | 66/69/55/51 |
+| D19 | Manu | 9/67/70/61 | 35/67/57/48 |

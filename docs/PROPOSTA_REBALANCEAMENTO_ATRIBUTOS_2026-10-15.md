@@ -1,6 +1,6 @@
 # Proposta de rebalanceamento de atributos — v2 (15/10/2026)
 
-**Status: PROPOSTA. Nenhuma carta foi alterada.** Baseada nas indicações do autor para cada carta. Valores: **FOR/RES/INT/VEL**. A soma de cada carta não muda (raridade e perfil ficam iguais).
+**Status: APLICADA em 15/10/2026 (autorizada pelo autor, incluindo as 7 trocas FOR↔RES).** Baseada nas indicações do autor para cada carta. Valores: **FOR/RES/INT/VEL**. A soma de cada carta não muda (raridade e perfil ficam iguais).
 
 ## Resultado esperado
 | | FOR | RES | INT | VEL |

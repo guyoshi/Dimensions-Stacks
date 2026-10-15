@@ -181,8 +181,8 @@
       "atributos": {
         "FOR": 8,
         "RES": 70,
-        "INT": 80,
-        "VEL": 34
+        "INT": 34,
+        "VEL": 80
       },
       "soma_atributos": 192,
       "perfil_balanceamento": "Modesta",
@@ -251,10 +251,10 @@
       },
       "descricao_curta": "Soberana orgulhosa e determinada, responde à ameaça com força e exige obediência.",
       "atributos": {
-        "FOR": 70,
-        "RES": 53,
-        "INT": 89,
-        "VEL": 48
+        "FOR": 89,
+        "RES": 48,
+        "INT": 70,
+        "VEL": 53
       },
       "soma_atributos": 260,
       "perfil_balanceamento": "Padrão",
@@ -323,10 +323,10 @@
       },
       "descricao_curta": "Caçador Fendelar experiente, transforma a destruição de seu povo em resistência determinada.",
       "atributos": {
-        "FOR": 67,
-        "RES": 64,
-        "INT": 92,
-        "VEL": 80
+        "FOR": 92,
+        "RES": 80,
+        "INT": 67,
+        "VEL": 64
       },
       "soma_atributos": 303,
       "perfil_balanceamento": "Forte",
@@ -347,10 +347,10 @@
       },
       "descricao_curta": "Liderança Buldar, organiza alianças com os olhos voltados à água, à colheita e às famílias.",
       "atributos": {
-        "FOR": 65,
-        "RES": 35,
-        "INT": 71,
-        "VEL": 49
+        "FOR": 71,
+        "RES": 49,
+        "INT": 65,
+        "VEL": 35
       },
       "soma_atributos": 220,
       "perfil_balanceamento": "Modesta",
@@ -589,8 +589,8 @@
       "atributos": {
         "FOR": 33,
         "RES": 22,
-        "INT": 72,
-        "VEL": 54
+        "INT": 54,
+        "VEL": 72
       },
       "soma_atributos": 181,
       "perfil_balanceamento": "Frágil",
@@ -731,10 +731,10 @@
       },
       "descricao_curta": "Édion da Vigilância, enfrenta Korvo com disciplina e desconfiança mesmo contra a própria instituição.",
       "atributos": {
-        "FOR": 70,
-        "RES": 70,
-        "INT": 89,
-        "VEL": 73
+        "FOR": 89,
+        "RES": 73,
+        "INT": 70,
+        "VEL": 70
       },
       "soma_atributos": 302,
       "perfil_balanceamento": "Forte",
@@ -757,8 +757,8 @@
       "atributos": {
         "FOR": 31,
         "RES": 38,
-        "INT": 72,
-        "VEL": 71
+        "INT": 71,
+        "VEL": 72
       },
       "soma_atributos": 212,
       "perfil_balanceamento": "Modesta",
@@ -805,8 +805,8 @@
       "atributos": {
         "FOR": 67,
         "RES": 57,
-        "INT": 90,
-        "VEL": 76
+        "INT": 76,
+        "VEL": 90
       },
       "soma_atributos": 290,
       "perfil_balanceamento": "Forte",
@@ -877,8 +877,8 @@
       "atributos": {
         "FOR": 70,
         "RES": 52,
-        "INT": 76,
-        "VEL": 73
+        "INT": 73,
+        "VEL": 76
       },
       "soma_atributos": 271,
       "perfil_balanceamento": "Padrão",
@@ -925,8 +925,8 @@
       "atributos": {
         "FOR": 12,
         "RES": 35,
-        "INT": 84,
-        "VEL": 35
+        "INT": 35,
+        "VEL": 84
       },
       "soma_atributos": 166,
       "perfil_balanceamento": "Frágil",
@@ -1019,10 +1019,10 @@
       },
       "descricao_curta": "Líder dos Obbs de Pinesoto, ergue raízes e troncos vivos para proteger seu povo dos invasores.",
       "atributos": {
-        "FOR": 31,
-        "RES": 66,
-        "INT": 70,
-        "VEL": 24
+        "FOR": 70,
+        "RES": 24,
+        "INT": 31,
+        "VEL": 66
       },
       "soma_atributos": 191,
       "perfil_balanceamento": "Frágil",
@@ -1093,8 +1093,8 @@
       "atributos": {
         "FOR": 48,
         "RES": 70,
-        "INT": 89,
-        "VEL": 73
+        "INT": 73,
+        "VEL": 89
       },
       "soma_atributos": 280,
       "perfil_balanceamento": "Padrão",
@@ -1163,8 +1163,8 @@
       },
       "descricao_curta": "Companheiro vigoroso da tripulação de Jasmey, oferece proteção quando a força é necessária.",
       "atributos": {
-        "FOR": 82,
-        "RES": 77,
+        "FOR": 77,
+        "RES": 82,
         "INT": 54,
         "VEL": 52
       },
@@ -1259,8 +1259,8 @@
       },
       "descricao_curta": "Capitã lendária da Lebargan, comanda com discrição uma das naves mais temidas do espaço.",
       "atributos": {
-        "FOR": 89,
-        "RES": 69,
+        "FOR": 69,
+        "RES": 89,
         "INT": 70,
         "VEL": 64
       },
@@ -1283,10 +1283,10 @@
       },
       "descricao_curta": "Comandante brutal da Lebargan, governa pelo medo e busca o poder escondido na Aurora.",
       "atributos": {
-        "FOR": 66,
-        "RES": 46,
-        "INT": 70,
-        "VEL": 49
+        "FOR": 70,
+        "RES": 49,
+        "INT": 66,
+        "VEL": 46
       },
       "soma_atributos": 231,
       "perfil_balanceamento": "Modesta",
@@ -1331,10 +1331,10 @@
       },
       "descricao_curta": "Dale leal ao antigo código, deixa o ressentimento transformar sua relação com Jasmey.",
       "atributos": {
-        "FOR": 23,
-        "RES": 65,
-        "INT": 71,
-        "VEL": 58
+        "FOR": 58,
+        "RES": 71,
+        "INT": 65,
+        "VEL": 23
       },
       "soma_atributos": 217,
       "perfil_balanceamento": "Modesta",
@@ -1355,8 +1355,8 @@
       },
       "descricao_curta": "Capitão pirata rival, negocia sob pressão e disputa vantagens nos perigos do espaço.",
       "atributos": {
-        "FOR": 78,
-        "RES": 66,
+        "FOR": 66,
+        "RES": 78,
         "INT": 69,
         "VEL": 38
       },
@@ -1428,10 +1428,10 @@
       },
       "descricao_curta": "Irmã mais velha de Kelly, enfrenta perdas e conflitos ao seguir os rastros do sobrenatural.",
       "atributos": {
-        "FOR": 33,
-        "RES": 68,
-        "INT": 69,
-        "VEL": 65
+        "FOR": 65,
+        "RES": 69,
+        "INT": 68,
+        "VEL": 33
       },
       "soma_atributos": 235,
       "perfil_balanceamento": "Modesta",
@@ -1580,8 +1580,8 @@
       "atributos": {
         "FOR": 59,
         "RES": 64,
-        "INT": 86,
-        "VEL": 76
+        "INT": 76,
+        "VEL": 86
       },
       "soma_atributos": 285,
       "perfil_balanceamento": "Forte",
@@ -1605,8 +1605,8 @@
       "atributos": {
         "FOR": 67,
         "RES": 45,
-        "INT": 81,
-        "VEL": 46
+        "INT": 46,
+        "VEL": 81
       },
       "soma_atributos": 239,
       "perfil_balanceamento": "Padrão",
@@ -1875,8 +1875,8 @@
       },
       "descricao_curta": "Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais.",
       "atributos": {
-        "FOR": 88,
-        "RES": 78,
+        "FOR": 78,
+        "RES": 88,
         "INT": 68,
         "VEL": 68
       },
@@ -1995,10 +1995,10 @@
       },
       "descricao_curta": "Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização.",
       "atributos": {
-        "FOR": 67,
-        "RES": 50,
-        "INT": 81,
-        "VEL": 49
+        "FOR": 81,
+        "RES": 49,
+        "INT": 67,
+        "VEL": 50
       },
       "soma_atributos": 247,
       "perfil_balanceamento": "Padrão",
@@ -2021,8 +2021,8 @@
       "atributos": {
         "FOR": 7,
         "RES": 23,
-        "INT": 73,
-        "VEL": 36
+        "INT": 36,
+        "VEL": 73
       },
       "soma_atributos": 139,
       "perfil_balanceamento": "Azar",
@@ -2115,8 +2115,8 @@
       },
       "descricao_curta": "Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana.",
       "atributos": {
-        "FOR": 81,
-        "RES": 68,
+        "FOR": 68,
+        "RES": 81,
         "INT": 65,
         "VEL": 48
       },
@@ -2164,8 +2164,8 @@
       },
       "descricao_curta": "Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Gary e depois inocentado.",
       "atributos": {
-        "FOR": 77,
-        "RES": 75,
+        "FOR": 75,
+        "RES": 77,
         "INT": 70,
         "VEL": 54
       },
@@ -2266,8 +2266,8 @@
       "atributos": {
         "FOR": 24,
         "RES": 53,
-        "INT": 81,
-        "VEL": 61
+        "INT": 61,
+        "VEL": 81
       },
       "soma_atributos": 219,
       "perfil_balanceamento": "Modesta",
@@ -2314,8 +2314,8 @@
       },
       "descricao_curta": "Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan.",
       "atributos": {
-        "FOR": 90,
-        "RES": 69,
+        "FOR": 69,
+        "RES": 90,
         "INT": 51,
         "VEL": 53
       },
@@ -2364,10 +2364,10 @@
       },
       "descricao_curta": "Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo.",
       "atributos": {
-        "FOR": 51,
-        "RES": 55,
-        "INT": 69,
-        "VEL": 66
+        "FOR": 66,
+        "RES": 69,
+        "INT": 55,
+        "VEL": 51
       },
       "soma_atributos": 241,
       "perfil_balanceamento": "Padrão",
@@ -2414,10 +2414,10 @@
       },
       "descricao_curta": "Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve.",
       "atributos": {
-        "FOR": 9,
+        "FOR": 35,
         "RES": 67,
-        "INT": 70,
-        "VEL": 61
+        "INT": 57,
+        "VEL": 48
       },
       "soma_atributos": 207,
       "perfil_balanceamento": "Modesta",
