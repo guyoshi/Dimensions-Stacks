@@ -31,7 +31,8 @@
       // reverb curto
       this.verb = this.ctx.createConvolver(); this.verb.buffer = this.impulse(1.6, 2.6);
       const vg = this.ctx.createGain(); vg.gain.value = 0.22; this.verb.connect(vg); vg.connect(this.master);
-      this.sfx.connect(this.master); this.sfx.connect(this.verb); this.musicGain.connect(this.master); this.musicGain.connect(this.verb);
+      this.duck = this.ctx.createGain(); this.duck.gain.value = 1;   // abaixa a música quando toca um som de cerimônia (vitória, derrota...)
+      this.sfx.connect(this.master); this.sfx.connect(this.verb); this.musicGain.connect(this.duck); this.duck.connect(this.master); this.duck.connect(this.verb);
       this.master.connect(comp); comp.connect(this.ctx.destination);
       this.loadFiles();
       if (this.musicOn) this.startMusic();
@@ -132,8 +133,15 @@
       menu() { },
     },
 
+    // sons de cerimônia: a música abaixa para [nível, segura (s)] e volta devagar
+    DUCK: { victory: [0.12, 3.4], defeat: [0.12, 3.0], legend: [0.3, 1.4], phenom: [0.35, 1.6], elim: [0.45, 1.0], round: [0.6, 0.6] },
+    duckMusic(level, hold) {
+      if (!this.ctx || !this.duck) return; const g = this.duck.gain, t = this.ctx.currentTime;
+      try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(level, t + 0.12); g.setValueAtTime(level, t + 0.12 + hold); g.linearRampToValueAtTime(1, t + 0.12 + hold + 1.1); } catch (e) { }
+    },
     play(name, o) {
       if (!this.enabled) return; this.init(); if (!this.ctx) return;
+      if (this.DUCK[name]) this.duckMusic(this.DUCK[name][0], this.DUCK[name][1]);
       try {
         const b = this.buffers[name];
         if (b && name !== 'menu') { const s = this.ctx.createBufferSource(); s.buffer = b; s.connect(this.sfx); s.start(); return; }
@@ -149,7 +157,7 @@
       if (!this.buffers.menu && this.useNew() && this.musPending.menu) return;   // arquivo ainda carregando: a trilha entra quando ficar pronto
       if (!this.buffers.menu && this.useNew() && this.mus.menu) {
         const m = this.mus.menu, s = c.createBufferSource(), g = c.createGain(); s.buffer = m.buf; s.loop = true; s.loopStart = m.a; s.loopEnd = m.b; s.connect(g); g.connect(this.musicGain); s.start();
-        this.musicNodes = { stop: () => { const t = c.currentTime; try { g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0.0001, t + 0.5); s.stop(t + 0.55); } catch (e) { } } }; return;
+        this.musicNodes = { stop: () => { const t = c.currentTime; try { g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0.0001, t + 0.9); s.stop(t + 0.95); } catch (e) { } } }; return;
       }
       if (this.buffers.menu) { const s = c.createBufferSource(); s.buffer = this.buffers.menu; s.loop = true; s.connect(this.musicGain); s.start(); this.musicNodes = { stop: () => { try { s.stop(); } catch (e) { } } }; return; }
       const nodes = [], g = c.createGain(); g.gain.value = 0.0001; g.gain.exponentialRampToValueAtTime(0.5, c.currentTime + 0.7); g.connect(this.musicGain);
@@ -290,7 +298,7 @@
     matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); if (m.kill) m.kill(1700); },
     // corta o que está soando nos efeitos (toque para pular a animação): silencia por instantes e volta ao volume
     cut() { if (!this.ctx || !this.sfx) return; const g = this.sfx.gain, t = this.ctx.currentTime; try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0.0001, t + 0.03); g.linearRampToValueAtTime(this.vol.sfx, t + 0.14); } catch (e) { } },
-    stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; if (m.kill) m.kill(700); this.matchNodes = null; },
+    stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.9); } catch (e) { } m.ending = true; if (m.kill) m.kill(1100); this.matchNodes = null; },
   };
   root.Sound = S;
 })(typeof window !== 'undefined' ? window : globalThis);
