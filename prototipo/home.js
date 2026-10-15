@@ -98,16 +98,17 @@
       const g = b.dataset.go; if (g === 'quick') U.quick(); else if (g === 'setup') U.openSetup(); else if (g === 'online') U.online.open();
     };
   }
-  // leque de três cartas na tela inicial: a do meio em destaque (cores dos atributos nas bordas)
+  // leque de três cartas na tela inicial: sorteia a cada visita; a do meio é sempre forte (lendária ou épica), as laterais são livres
   function homeFan(box) {
     if (!box) return;
-    const byName = n => CARTAS.find(c => c.nome === n && IMG[c.id]);
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
     const withImg = CARTAS.filter(c => IMG[c.id]);
-    const pick = [byName('Breno Lins'), byName('Beatriz Lins'), byName('Banjo Lins')];
-    const used = new Set(pick.filter(Boolean).map(c => c.id));
-    const ids = pick.map(c => c ? c.id : (withImg.find(x => !used.has(x.id) && used.add(x.id)) || CARTAS[0]).id);
-    const cls = ['l', 'm', 'r'], cw = [92, 128, 92];
-    ids.forEach((id, i) => { const w = el(`<div class="fanc ${cls[i]}"></div>`); w.append(cardEl(id, { up: true, noanim: true, cw: cw[i], click: true })); box.append(w); });
+    const strong = withImg.filter(c => c.raridade === 'lendaria' || c.raridade === 'epica');
+    const mid = pick(strong.length ? strong : withImg);
+    const rest = withImg.filter(c => c.id !== mid.id);
+    const l = pick(rest), r = pick(rest.filter(c => c.id !== l.id));
+    const trio = [l, mid, r].filter(Boolean), cls = ['l', 'm', 'r'], cw = [92, 128, 92];
+    trio.forEach((c, i) => { const w = el(`<div class="fanc ${cls[i]}"></div>`); w.append(cardEl(c.id, { up: true, noanim: true, cw: cw[i], click: true })); box.append(w); });
   }
   function fxInto(s) { const bg = U.menuFx(); if (bg.parentNode !== s || s.firstChild !== bg) s.prepend(bg); }
 
