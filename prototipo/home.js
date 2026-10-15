@@ -83,7 +83,6 @@
       ${topbar(null, null, d.streak > 0 ? `<span class="streakpill" title="Dias seguidos">${ICO.flame}${d.streak} ${d.streak === 1 ? 'dia' : 'dias'}</span>` : '')}
       <div class="attrstrip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <section class="brand"><div class="fan" id="homeFan"></div>${`<div class="wmbox"><small>Dimensões Infinitas</small>${wordmark()}</div>`}</section>
-      ${p.t.g ? `<div class="tagrow" style="justify-content:center"><span class="tag soft">${p.t.w} vitória${p.t.w === 1 ? '' : 's'} · ${p.t.g} partida${p.t.g === 1 ? '' : 's'}</span></div>` : ''}
       <button class="playbig" data-go="quick"><span class="pi">${ICO.swords}</span><span class="pt"><b>Jogar</b><small>Partida Rápida (~${quickMin()} minutos)</small></span><span class="pa">${ICO.arrow}</span></button>
       <div class="tiles">
         <button class="tile" data-go="online"><span class="ti">${ICO.users}</span><b>Multiplayer</b></button>

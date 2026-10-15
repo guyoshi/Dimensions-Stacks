@@ -408,6 +408,8 @@
     const EVS = ['pointerup', 'touchend', 'click', 'keydown'];
     const unlock = () => { SND.init(); if (SND.ctx && SND.ctx.state === 'running') EVS.forEach(ev => window.removeEventListener(ev, unlock, true)); else if (SND.ctx) SND.ctx.resume().then(() => { if (SND.ctx.state === 'running') EVS.forEach(ev => window.removeEventListener(ev, unlock, true)); }).catch(() => { }); };
     EVS.forEach(ev => window.addEventListener(ev, unlock, true));
+    // tenta tocar a música da tela inicial já na abertura: se o navegador permitir (ele decide), começa sozinha; senão fica pronta e toca no primeiro toque, sem atraso de carregamento
+    try { SND.init(); if (SND.ctx && SND.ctx.state === 'suspended') SND.ctx.resume().catch(() => { }); document.addEventListener('visibilitychange', () => { if (!document.hidden && SND.ctx && SND.ctx.state === 'suspended') SND.ctx.resume().catch(() => { }); }); } catch (e) { }
   };
   U.setupScreen = setup;
 })();
