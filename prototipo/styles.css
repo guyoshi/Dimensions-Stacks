@@ -1311,3 +1311,12 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 /* o efeito global de aperto (.pressing) usa transform e deslocava os assentos, que se posicionam com translate(-50%, -50%) */
 .lb-sit.pressing { transform: translate(-50%, -50%) !important; filter: none; transition: none; }
 .lb-sit.pressing .lb-av { transform: none; }
+
+/* Correnteza: rajadas rápidas verdes da esquerda para a direita */
+.ev-correnteza { background: linear-gradient(90deg, #04180e99, #04180e00); }
+.ev-correnteza .cr { position: absolute; left: -45%; height: 4px; border-radius: 4px; background: linear-gradient(90deg, transparent, #7dffb0dd, #fff); box-shadow: 0 0 14px #7dffb0aa; animation: wdr .55s linear infinite; }
+/* Muralha Dimensional: anéis azuis crescem e um escudo surge no centro */
+.ev-muralha .mu { position: absolute; left: 50%; top: 50%; width: 30vmin; height: 30vmin; margin: -15vmin; border-radius: 12%; border: 6px solid #6cc6ff; box-shadow: 0 0 30px #6cc6ff99, inset 0 0 30px #6cc6ff55; animation: shk 1.4s ease-out forwards; }
+.ev-muralha .mu.m2 { animation-delay: .35s; border-color: #b7e4ff; }
+.ev-muralha .mg { position: absolute; left: 50%; top: 50%; font-style: normal; font-size: 28vmin; line-height: 1; transform: translate(-50%, -50%); filter: drop-shadow(0 0 24px #6cc6ff); animation: mgs 2.4s ease-in-out forwards; }
+@keyframes mgs { 0% { transform: translate(-50%, -50%) scale(.3); opacity: 0; } 30% { opacity: 1; } 70% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; } }

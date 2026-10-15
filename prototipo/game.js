@@ -386,7 +386,7 @@
   const EVUI = {
     forca: { cor: '#ff8a5c', sim: '⚔' }, nevoa: { cor: '#c58cff', sim: '☁' }, eco: { cor: '#7fdcff', sim: '◎' },
     aberta: { cor: '#ffd25f', sim: '✶' }, tempestade: { cor: '#6cc6ff', sim: '↻' }, buraco: { cor: '#b78cff', sim: '●' },
-    eclipse: { cor: '#ff6b6b', sim: '◐' }, avesso: { cor: '#8be0a6', sim: '⇅' }, troca: { cor: '#ff7ab0', sim: '⇄' }
+    correnteza: { cor: '#7dffb0', sim: '≋' }, muralha: { cor: '#6cc6ff', sim: '▦' }, eclipse: { cor: '#ff6b6b', sim: '◐' }, avesso: { cor: '#8be0a6', sim: '⇅' }, troca: { cor: '#ff7ab0', sim: '⇄' }
   };
   const evOf = r => { const e = G && G.s && G.s.events; return e ? e[r] || null : null; };
   const evName = ev => E.EVENTOS[ev.id].nome + (ev.id === 'troca' && ev.pair ? ` (${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome})` : '');
@@ -413,12 +413,14 @@
     else if (ev.id === 'aberta') n.innerHTML = AIDS.map((a, i) => `<i class="ln l${i}" data-a="${a}"></i>`).join('') + '<i class="fl"></i>';
     else if (ev.id === 'tempestade') n.innerHTML = Array.from({ length: 16 }, (_, i) => `<i class="wd" style="top:${4 + i * 6}%;animation-delay:${(i * 83) % 700}ms;width:${28 + (i * 37) % 40}%"></i>`).join('');
     else if (ev.id === 'buraco') n.innerHTML = '<i class="vx"></i><i class="vx v2"></i>';
+    else if (ev.id === 'correnteza') n.innerHTML = Array.from({ length: 12 }, (_, i) => `<i class="cr" style="top:${6 + i * 8}%;animation-delay:${(i * 97) % 600}ms;width:${35 + (i * 29) % 40}%"></i>`).join('');
+    else if (ev.id === 'muralha') n.innerHTML = '<i class="mu"></i><i class="mu m2"></i><i class="mg">🛡</i>';
     else if (ev.id === 'eclipse') n.innerHTML = '<i class="co"></i><i class="dk"></i>';
     else if (ev.id === 'avesso') n.innerHTML = '<i class="ar">⇅</i>';
     else if (ev.id === 'troca') { const [a, b] = ev.pair || ['pod', 'def']; n.innerHTML = `<div class="sw"><span class="sa" data-a="${a}">${ICON[a]}<small>${ATT[a].nome}</small></span><b>⇄</b><span class="sb" data-a="${b}">${ICON[b]}<small>${ATT[b].nome}</small></span></div>`; }
     ly.appendChild(n); setTimeout(() => n.remove(), 3200 * S.k);
   }
-  const EVSND = { forca: 'slash', nevoa: 'suspense', eco: 'bonus', aberta: 'legend', tempestade: 'steal', buraco: 'blackhole', eclipse: 'suspense', avesso: 'round', troca: 'capture' };
+  const EVSND = { forca: 'slash', nevoa: 'suspense', eco: 'bonus', aberta: 'legend', tempestade: 'steal', buraco: 'blackhole', eclipse: 'suspense', correnteza: 'slash', muralha: 'shield', avesso: 'round', troca: 'capture' };
 
   // ---------------------------------------------------------------- desempate animado: atributos de cada empatado somados na tela
   async function tieBreak(tb, winner) {
@@ -482,7 +484,7 @@
     async eventStart({ round, ev }) {
       const d = E.EVENTOS[ev.id], ui = EVUI[ev.id]; refresh();
       evFx(ev); SND.play('phenom'); setTimeout(() => SND.play(EVSND[ev.id] || 'round'), 380);
-      if (ev.id === 'forca' || ev.id === 'nevoa' || ev.id === 'eco') { const r = innerHeight / 2; FX.burst(innerWidth / 2, r, { n: 50, speed: 7, life: 55, colors: [ui.cor, '#fff'] }); }
+      if (ev.id === 'forca' || ev.id === 'nevoa' || ev.id === 'eco' || ev.id === 'correnteza' || ev.id === 'muralha') { const r = innerHeight / 2; FX.burst(innerWidth / 2, r, { n: 50, speed: 7, life: 55, colors: [ui.cor, '#fff'] }); }
       banner(d.nome, ev.id === 'troca' && ev.pair ? `${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome}` : d.curto, ui.cor, 2600); caption(`Fenômeno dimensional: ${evName(ev)}. ${d.txt}`, true);
       await sleep(2400);
       if (U.tip) { if (V.online) U.tip('evento', ev); else await U.tip('evento', ev); }

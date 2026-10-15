@@ -211,11 +211,13 @@
     aberta: { nome: 'Batalha Aberta', txt: 'Nesta rodada todos escolhem qualquer atributo e se enfrentam mesmo em atributos diferentes (Força contra Inteligência etc.). Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Todos escolhem qualquer atributo' },
     tempestade: { nome: 'Tempestade Lateral', txt: 'Na primeira disputa da rodada, cada jogador passa a carta do topo do baralho ao jogador da direita e joga com a que recebe.', curto: 'Carta do topo passa à direita' },
     buraco: { nome: 'Maré do Buraco Negro', txt: 'Em cada disputa desta rodada, o jogador que está com menos cartas recebe 1 carta do Buraco Negro (2 por disputa numa partida de 2 jogadores). Quem estiver por último muda a cada disputa. Só acontece uma vez por partida.', curto: 'Quem está por último ganha carta a cada disputa' },
-    eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta perde 30 pontos.', curto: 'O maior atributo perde 30' },
+    correnteza: { nome: 'Correnteza', txt: 'Todas as cartas ganham +15 em Velocidade e perdem 5 em Força, Defesa e Inteligência nesta rodada.', curto: 'Velocidade +15, os demais −5' },
+    muralha: { nome: 'Muralha Dimensional', txt: 'Nesta rodada, a Defesa de cada carta passa a valer a média entre a sua Defesa e o seu maior atributo (arredondada para cima). Cartas fortes em outro atributo ganham uma muralha; quem já é forte em Defesa não muda.', curto: 'Defesa = média com o maior atributo' },
+    eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta vale 0.', curto: 'O maior atributo vale 0' },
     avesso: { nome: 'Mundo ao Avesso', txt: 'Nesta rodada vence o MENOR valor, em vez do maior. Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Vence o menor valor' },
     troca: { nome: 'Troca Dimensional', txt: 'Nesta rodada dois atributos de cada carta trocam de valor entre si.', curto: 'Dois atributos trocam de valor' },
   };
-  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['eclipse', 1], ['avesso', 2], ['troca', 1]];
+  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['correnteza', 1], ['muralha', 1], ['eclipse', 1], ['avesso', 2], ['troca', 1]];
   const EV_PARES = [['pod', 'def'], ['pod', 'int'], ['pod', 'vel'], ['def', 'int'], ['def', 'vel'], ['int', 'vel']];
 
   // ---------------------------------------------------------------- jogo
@@ -249,7 +251,9 @@
       const m = {}, chg = (k, d) => { const v = Math.max(0, st[k] + d); m[k] = v - st[k]; st[k] = v; };
       if (ev.id === 'forca') chg('pod', 10);
       else if (ev.id === 'nevoa') { chg('int', 10); chg('vel', -10); }
-      else if (ev.id === 'eclipse') { const k = AID.reduce((b, a) => (st[a] > st[b] ? a : b), AID[0]); chg(k, -30); m.zero = k; }
+      else if (ev.id === 'correnteza') { chg('vel', 15); chg('pod', -5); chg('def', -5); chg('int', -5); }
+      else if (ev.id === 'muralha') { const mx = Math.max(...AID.map(a => st[a])); chg('def', Math.ceil((st.def + mx) / 2) - st.def); }
+      else if (ev.id === 'eclipse') { const k = AID.reduce((b, a) => (st[a] > st[b] ? a : b), AID[0]); m.zero = k; st[k] = 0; }
       else if (ev.id === 'troca' && ev.pair) { const [a, b] = ev.pair; const t = st[a]; st[a] = st[b]; st[b] = t; m.swap = [a, b]; }
       return { st, mark: Object.keys(m).length ? m : null };
     }
