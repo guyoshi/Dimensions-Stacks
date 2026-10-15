@@ -136,13 +136,13 @@
       const timer = setInterval(() => { if (!this.musicOn) return; this.tone(this.note(seq[i++ % seq.length] + 12), 2.8, 'sine', 0.06, 0, null, this.musicGain); }, 4200);
       this.musicNodes = { stop: () => { clearInterval(timer); clearTimeout(first); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 1); setTimeout(() => nodes.forEach(n => { try { n.stop(); } catch (e) { } }), 1100); } };
     },
-    stopMusic() { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); },
+    stopMusic() { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); this.stopDefeat(); },
     // 'menu' = ambiente do início; 'game' = trilha da partida (a do menu é pausada enquanto a partida roda)
     setMode(m) {
       this.mode = m;
       if (!this.ctx || !this.musicOn) return;
       if (m === 'game') { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.startMatch(); }
-      else { this.stopMatch(); this.startMenuMusic(); }
+      else { this.stopMatch(); this.stopDefeat(); this.startMenuMusic(); }
     },
 
     // ---------- trilha da partida: groove procedural em Lá menor, sempre igual no esqueleto e levemente variado a cada volta (não enjoa).
@@ -214,6 +214,23 @@
       if (l === 0) { m.level = 0; m.hold = 0; }
       m.req = l;
     },
+    // ---------- trilha da derrota: pad lento e melancólico (Lá menor → Fá → Ré menor → Mi) com melodia descendente esparsa; toca na tela final até sair dela
+    defeatMusic() {
+      if (!this.ctx || !this.musicOn || this.defeatNodes) return;
+      const c = this.ctx, bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.exponentialRampToValueAtTime(1, c.currentTime + 2.5); bus.connect(this.musicGain);
+      const chords = [[45, 57, 60, 64], [41, 53, 57, 60], [38, 50, 53, 57], [40, 52, 56, 59]], mel = [76, 72, 69, 67, 69, 64, 65, 64];
+      let i = 0;
+      const step = () => {
+        if (!this.musicOn || !this.defeatNodes) return;
+        const ch = chords[i % chords.length];
+        ch.forEach((n, k) => this.tone(this.note(n), 6.2, k === 0 ? 'sine' : 'triangle', k === 0 ? 0.2 : 0.05, k * 0.04, null, bus));
+        [0, 2.6].forEach((w, j) => this.tone(this.note(mel[(i * 2 + j) % mel.length]), 3.4, 'sine', 0.09, w + 0.6, null, bus));
+        i++;
+      };
+      const first = setTimeout(step, 1800), timer = setInterval(step, 5600);   // começa depois do toque curto de derrota
+      this.defeatNodes = { stop: () => { clearInterval(timer); clearTimeout(first); try { bus.gain.cancelScheduledValues(c.currentTime); bus.gain.setValueAtTime(Math.max(0.0001, bus.gain.value), c.currentTime); bus.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.9); } catch (e) { } } };
+    },
+    stopDefeat() { if (this.defeatNodes) { this.defeatNodes.stop(); this.defeatNodes = null; } },
     matchEnd() { const m = this.matchNodes; if (!m || m.ending) return; m.ending = true; try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4); } catch (e) { } clearInterval(m.timer); },
     stopMatch() { const m = this.matchNodes; if (!m) return; clearInterval(m.timer); try { m.bus.gain.cancelScheduledValues(this.ctx.currentTime); m.bus.gain.setValueAtTime(Math.max(0.0001, m.bus.gain.value), this.ctx.currentTime); m.bus.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5); } catch (e) { } m.ending = true; this.matchNodes = null; },
   };

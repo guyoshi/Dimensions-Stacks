@@ -672,7 +672,8 @@
     async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
       SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const sameT = (a, b) => a === b || !!(G.cfg && G.cfg.teams && G.cfg.teams.some(t => t.includes(a) && t.includes(b))); const human = winner != null && (V.online ? sameT(winner, V.viewer) : (G.cfg && G.cfg.teams ? G.cfg.teams.some(t => t.includes(winner) && t.some(x => !G.p(x).bot)) : !G.p(winner).bot)); const anyHuman = V.humans > 0;
-      SND.play(winner == null ? 'defeat' : (human || !anyHuman) ? 'victory' : 'defeat');
+      const lost = winner == null || !(human || !anyHuman);
+      SND.play(lost ? 'defeat' : 'victory'); if (lost && SND.defeatMusic) SND.defeatMusic();
       if (winner != null && (human || !anyHuman)) FX.confetti();
       const w = winner != null ? G.p(winner) : null;
       const teams = G.cfg && G.cfg.teams, mates = teams && w ? teams.find(t => t.includes(w.pid)) : null;   // duplas: vence a dupla inteira
