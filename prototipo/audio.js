@@ -251,7 +251,7 @@
         }
       }, 40);
     },
-    MATCH_GAIN: 0.36,   // a trilha da partida fica bem abaixo dos efeitos (cartas, ataques) para dar para ouvi-los
+    MATCH_GAIN: 0.18,   // a trilha da partida fica bem abaixo dos efeitos (cartas, ataques) para dar para ouvi-los
     // trilha da partida em arquivo: 3 versões do mesmo trecho (normal, 1,10x, 1,20x), esticadas SEM mudar o tom. Ao mudar de nível, faz crossfade para a versão certa na mesma posição musical.
     startMatchFile() {
       const c = this.ctx, V = [this.mus.p0, this.mus.p1, this.mus.p2], self = this;
