@@ -3,7 +3,7 @@
   'use strict';
   const U = window.DSUI;
   const { $, $$, el, esc, CARDS, ATT, AIDS, E, SND, S, cardEl, updateCard, ICON, PCOL } = U;
-  const sleep = ms => U.sleep(ms);
+  const sleep = (ms, min) => U.sleep(ms, min);   // min = tempo mínimo em que o passo fica na tela mesmo com toque para pular
   const LAYOUT = { 2: ['b', 't'], 3: ['b', 'tl', 'tr'], 4: ['b', 'l', 't', 'r'] };
   let G = null, V = null, lastCfg = null;
 
@@ -373,10 +373,10 @@
       const cd = e.card && e.card !== '?' ? CARDS[e.card] : null, big = cd && (cd.uniao || cd.raridade === 'lendaria');
       SND.play(big ? 'legend' : (last ? 'reveal' : 'flip'));
       if (big || (cd && cd.raridade === 'epica')) { ci.classList.add('flash'); if (!big) ci.classList.add('soft'); setTimeout(() => ci.classList.remove('flash', 'soft'), 1000); }
-      await sleep(430);
+      await sleep(430, 430);
       updateSlot(e);
       const r = slot.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, Object.assign({ n: last ? 36 : 14, speed: last ? 7 : 4, life: 40, size: 2.4 }, big ? { n: 48, speed: 8, colors: cd.uniao ? ['#ff7ab0', '#ffd25f', '#7dffb0', '#6cc6ff', '#b394ff'] : ['#fff3c8', '#ffd25f', '#ffb02e'] } : {}));
-      await sleep(last ? 900 : 520);
+      await sleep(last ? 900 : 520, last ? 700 : 420);
     }
     arena.classList.remove('suspense');
     caption('');
@@ -455,7 +455,7 @@
     }
     if (winner != null) { const w = pn(winner); if (w) { w.classList.add('win'); SND.play('win'); } sub.textContent = nameOf(winner) + ' leva o desempate'; }
     else { sub.textContent = 'Empate absoluto: ninguém vence'; SND.play('tick'); }
-    await sleep(1300);
+    await sleep(1300, 900);
     box.classList.add('out'); await sleep(350); box.remove();
   }
 
@@ -486,7 +486,7 @@
       evFx(ev); SND.play('phenom'); setTimeout(() => SND.play(EVSND[ev.id] || 'round'), 380);
       if (ev.id === 'forca' || ev.id === 'nevoa' || ev.id === 'eco' || ev.id === 'correnteza' || ev.id === 'muralha') { const r = innerHeight / 2; FX.burst(innerWidth / 2, r, { n: 50, speed: 7, life: 55, colors: [ui.cor, '#fff'] }); }
       banner(d.nome, ev.id === 'troca' && ev.pair ? `${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome}` : d.curto, ui.cor, 2600); caption(`Fenômeno dimensional: ${evName(ev)}. ${d.txt}`, true);
-      await sleep(2400);
+      await sleep(2400, 1200);
       if (U.tip) { if (V.online) U.tip('evento', ev); else await U.tip('evento', ev); }
     },
     async eventFx({ id, moves, pid, cards }) {
@@ -559,7 +559,7 @@
       U.layer().appendChild(st); SND.play('special');
       await sleep(500); $$('.card', st).forEach(c => c.classList.add('up')); SND.play('specialFlip');
       const r = st.getBoundingClientRect(); FX.burst(r.width / 2, r.height / 2, { n: 70, speed: 8, colors: ['#e9dfc0', '#c58cff', '#fff'], life: 60 });
-      await sleep(2300); st.remove();
+      await sleep(2300, 1300); st.remove();
       let strip = $('.strip'); if (!strip) { strip = el('<div class="strip"></div>'); $('.arenaWrap').append(strip); }
       acts.forEach(a => { const sp = E.SPECIALS[CARDS[a.card].especial]; strip.append(el(`<div class="chip" data-card="${a.card}" style="--pc:${PCOL[a.pid]}"><i></i>${esc(nameOf(a.pid))}: ${esc(sp.nome)}</div>`)); });
     },
@@ -569,7 +569,7 @@
     },
     async effectEnd({ act }) {
       const chip = $(`.chip[data-card="${act.card}"]`); if (chip) chip.classList.remove('run');
-      updateAll(); refresh(); fxResult(); await sleep(V.fxHold || 1300); fxHide();
+      updateAll(); refresh(); fxResult(); await sleep(V.fxHold || 1300, 800); fxHide();
     },
     async cancel({ card, target }) {
       const chip = $(`.chip[data-card="${card}"]`); if (chip) chip.classList.add('dead');
@@ -630,7 +630,7 @@
       updateAll(); let tipId = null; setCalc(calc);
       if (result.type === 'tie' || result.type === 'none') {
         if (result.tb) await tieBreak(result.tb, null);
-        banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700);
+        banner('Empate', 'As cartas voltam aos donos', '#a9a595', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700, 900);
       } else {
         const w = result.winnerPid, slot = V.slots[w], atk = result.type === 'attack';
         if (result.tb) await tieBreak(result.tb, w);
@@ -644,7 +644,7 @@
         const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Força + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
         banner(`${nameOf(w)} vence!`, `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 2100 : 2100);
         caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
-        await sleep(2100);
+        await sleep(2100, 1000);
       }
       if (tipId && !V.online) await U.tip(tipId); // offline: congela a mesa e explica antes das cartas se moverem
       // movimentação das cartas

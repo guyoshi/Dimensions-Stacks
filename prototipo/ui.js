@@ -25,8 +25,7 @@
   // ---------------------------------------------------------------- opções
   const S = Object.assign({ master: .8, sfx: 1, music: .35, musicOn: true, speed: 'normal', reduce: false }, store.get('opts', {}));
   U.S = S;
-  U.turboUntil = 0;   // toque na tela durante animações: os próximos passos andam bem mais rápido por um instante
-  Object.defineProperty(S, 'k', { enumerable: false, get() { const b = { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; return performance.now() < U.turboUntil ? b * .12 : b; } });
+  Object.defineProperty(S, 'k', { enumerable: false, get() { return { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; } });
   function applyOpts() {
     document.body.classList.toggle('reduce', !!S.reduce);
     SND.vol.master = S.master; SND.vol.sfx = S.sfx; SND.vol.music = S.music; SND.musicOn = S.musicOn;
@@ -39,14 +38,19 @@
   U.run = { dead: false, rej: new Set() };
   U.newRun = () => { U.run = { dead: false, rej: new Set() }; return U.run; };
   U.killRun = () => { const r = U.run; r.dead = true; r.rej.forEach(f => f('abort')); r.rej.clear(); };
-  U.pend = new Set();
-  U.sleep = ms => { const r = U.run; return new Promise((res, rej) => { let t; const fin = () => { clearTimeout(t); U.pend.delete(fin); r.dead ? rej('abort') : res(); }; t = setTimeout(fin, ms * S.k); U.pend.add(fin); }); };
-  // pula o passo atual: encerra as esperas e animações em curso, corta o som atrasado e acelera os próximos passos por ~0,7 s
+  U.pend = new Set(); U.graceUntil = 0;
+  U.sleep = (ms, min) => { const r = U.run; return new Promise((res, rej) => {
+    if (!min && ms * S.k < 450 && performance.now() < U.graceUntil) { r.dead ? rej('abort') : res(); return; }   // micro-pausas logo após um toque: não contam como um passo
+    let t; const e = { minAt: performance.now() + (min || 0) * S.k, fin: () => { clearTimeout(t); U.pend.delete(e); r.dead ? rej('abort') : res(); } };
+    t = setTimeout(e.fin, ms * S.k); U.pend.add(e); }); };
+  // um toque pula UMA ação: encerra a espera e as animações em curso (e corta o som atrasado); o passo seguinte toca normalmente.
+  // Passos com tempo mínimo (carta virada, resultado) só podem ser pulados depois desse tempo na tela.
   U.skip = () => {
-    U.turboUntil = performance.now() + 700;
-    [...U.pend].forEach(f => f());
-    try { document.getAnimations().forEach(a => { try { const t = a.effect && a.effect.getComputedTiming(); if (t && t.iterations !== Infinity && t.endTime !== Infinity) a.finish(); } catch (e) { } }); } catch (e) { }
-    try { SND.cut && SND.cut(); } catch (e) { }
+    const now = performance.now(), due = [...U.pend].filter(e => now >= e.minAt);
+    if (U.pend.size && !due.length) return;   // só há passos protegidos: o toque não faz nada
+    U.graceUntil = now + 250; due.forEach(e => e.fin());
+    try { document.getAnimations().forEach(a => { try { const t = a.effect && a.effect.getComputedTiming(); if (t && t.iterations !== Infinity && t.endTime !== Infinity) a.finish(); } catch (er) { } }); } catch (er) { }
+    try { SND.cut && SND.cut(); } catch (er) { }
   };
 
   // ---------------------------------------------------------------- ícones
