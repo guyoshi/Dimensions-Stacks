@@ -134,14 +134,16 @@
     },
 
     // sons de cerimônia: a música abaixa para [nível, segura (s)] e volta devagar
-    DUCK: { victory: [0.12, 3.4], defeat: [0.12, 3.0], legend: [0.3, 1.4], phenom: [0.35, 1.6], elim: [0.45, 1.0], round: [0.6, 0.6] },
-    duckMusic(level, hold) {
+    DUCK: { victory: [0.12, 3.4], defeat: [0.12, 3.0], legend: [0.3, 1.4], phenom: [0.35, 1.6], elim: [0.45, 1.0], round: [0.6, 0.6],
+      // efeitos da partida: abaixada leve e rápida, para o som das cartas aparecer sem a música "pulsar"
+      reveal: [0.62, 0.35, 0.5], flip: [0.7, 0.2, 0.4], win: [0.62, 0.4, 0.5], lose: [0.7, 0.3, 0.5], capture: [0.62, 0.4, 0.5], blackhole: [0.6, 0.5, 0.6], slash: [0.65, 0.3, 0.5], shield: [0.65, 0.3, 0.5], specialFlip: [0.6, 0.5, 0.6], steal: [0.65, 0.3, 0.5] },
+    duckMusic(level, hold, rel) {
       if (!this.ctx || !this.duck) return; const g = this.duck.gain, t = this.ctx.currentTime;
-      try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(level, t + 0.12); g.setValueAtTime(level, t + 0.12 + hold); g.linearRampToValueAtTime(1, t + 0.12 + hold + 1.1); } catch (e) { }
+      try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(level, t + 0.12); g.setValueAtTime(level, t + 0.12 + hold); g.linearRampToValueAtTime(1, t + 0.12 + hold + (rel || 1.1)); } catch (e) { }
     },
     play(name, o) {
       if (!this.enabled) return; this.init(); if (!this.ctx) return;
-      if (this.DUCK[name]) this.duckMusic(this.DUCK[name][0], this.DUCK[name][1]);
+      if (this.DUCK[name]) this.duckMusic(this.DUCK[name][0], this.DUCK[name][1], this.DUCK[name][2]);
       try {
         const b = this.buffers[name];
         if (b && name !== 'menu') { const s = this.ctx.createBufferSource(); s.buffer = b; s.connect(this.sfx); s.start(); return; }
@@ -244,10 +246,11 @@
         }
       }, 40);
     },
+    MATCH_GAIN: 0.36,   // a trilha da partida fica bem abaixo dos efeitos (cartas, ataques) para dar para ouvi-los
     // trilha da partida em arquivo: 3 versões do mesmo trecho (normal, 1,10x, 1,20x), esticadas SEM mudar o tom. Ao mudar de nível, faz crossfade para a versão certa na mesma posição musical.
     startMatchFile() {
       const c = this.ctx, V = [this.mus.p0, this.mus.p1, this.mus.p2], self = this;
-      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.linearRampToValueAtTime(1, c.currentTime + 0.8); bus.connect(this.musicGain);
+      const bus = c.createGain(); bus.gain.value = 0.0001; bus.gain.linearRampToValueAtTime(this.MATCH_GAIN, c.currentTime + 0.8); bus.connect(this.musicGain);
       const st = { file: true, level: 0, req: 0, hold: 0, cool: 0, ending: false, bus, timer: null, loop: 0, cur: null, srcs: [] };
       const baseNow = cur => { const v = V[cur.k]; let ft = cur.off + (c.currentTime - cur.t0); if (ft >= v.b) ft = v.a + ((ft - v.a) % (v.b - v.a)); return ft * v.r; };   // posição musical (em segundos da versão normal)
       const play = (k, base, fade) => {
