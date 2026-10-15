@@ -171,3 +171,7 @@ h1, h2, h3 { letter-spacing: .03em; }
 .sfxb { display: flex; gap: 4px; flex: none; }
 .sfxv { min-height: 30px; min-width: 32px; padding: .2em .5em; }
 .sfxv.on { background: var(--prism); color: #fff; border-color: transparent; }
+
+/* coleção: cartas aparecem aos poucos (primeiro o verso, depois a carta) */
+.cgrid .card.cph { pointer-events: none; opacity: .9; }
+.cgrid .card.flipin .flip { transition: transform .5s cubic-bezier(.3, 1.2, .5, 1); }

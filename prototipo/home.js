@@ -143,13 +143,30 @@
       <div class="crail" id="cchips"></div><div class="catt" id="cattr" aria-label="Atributo mais forte"></div><div class="cgrid" id="cgrid" data-mast="1"></div></div>`;
     bindTop(s);
     const chips = $('#cchips', s), grid = $('#cgrid', s), attr = $('#cattr', s), cnt = $('#ccount', s);
+    let drawTok = 0, drawObs = null;
     function draw() {
       chips.innerHTML = keys.map(k => `<button data-k="${k}" class="cch${k === 'todas' ? ' all' : ''}${filtState.k === k ? ' on' : ''}"${SERIES[k] ? ` style="--c:${SERIES[k].cor}"` : ''}>${SERIES[k] ? '<i></i>' : ''}${esc(label(k))}</button>`).join('');
       attr.innerHTML = [['', 'Qualquer'], ...U.AIDS.map(a => [a, U.ATT[a].nome])].map(([a, t]) => `<button data-a="${a}" class="${filtState.att === a ? 'on' : ''}"${a ? ` aria-label="${esc(t)}" title="${esc(t)}"` : ''}>${a ? U.ICON[a] : 'Qualquer'}</button>`).join('');
       { const on = chips.querySelector('.on'); if (on && chips.scrollWidth > chips.clientWidth && !chips.__moved) { chips.__moved = 1; chips.scrollLeft = Math.max(0, on.offsetLeft - 16); } }
       const list = U.collFilter(CARTAS, filtState, fav);
       { const mc = ST.masteryCount(1); cnt.textContent = list.length === CARTAS.length ? `${CARTAS.length} cartas` : `${list.length} de ${CARTAS.length}`; cnt.title = mc ? `${mc} ${mc === 1 ? 'carta com emblema' : 'cartas com emblema'} de maestria` : ''; }
-      grid.replaceChildren(...(list.length ? list.map(c => { const n = cardEl(c.id, { up: true, noanim: true, cw: 104, click: true }); if (fav.has(c.id)) n.classList.add('isfav'); const m = U.mastery(c.id); if (m && m.lv) { n.append(el(`<span class="memb" title="Maestria: ${esc(m.nome)} (${m.xp} XP)">${U.emblem(m.lv, 26)}</span>`)); } return n; }) : [el(`<p class="hint" style="grid-column:1/-1">${filtState.k === 'fav' && !filtState.q && !filtState.att ? 'Nenhuma carta favorita ainda. Abra uma carta e toque em ☆ para favoritar.' : 'Nenhuma carta encontrada com esses filtros.'}</p>`)]));
+      // a tela abre na hora com todas as cartas de costas; cada uma vira a carta de verdade quando chega perto da tela (e as demais vão sendo montadas aos poucos)
+      const tok = ++drawTok; if (drawObs) { drawObs.disconnect(); drawObs = null; }
+      const build = c => { const n = cardEl(c.id, { up: false, noanim: true, cw: 104, click: true }); n.classList.add('flipin'); if (fav.has(c.id)) n.classList.add('isfav'); const m = U.mastery(c.id); if (m && m.lv) { n.append(el(`<span class="memb" title="Maestria: ${esc(m.nome)} (${m.xp} XP)">${U.emblem(m.lv, 26)}</span>`)); } const img = n.querySelector('img'); let done = false;   // a carta entra de costas (igual ao espaço reservado) e vira quando a foto chega
+        const reveal = () => { if (done) return; done = true; requestAnimationFrame(() => { n.classList.add('up'); setTimeout(() => n.classList.remove('flipin'), 600); }); };
+        if (!img || img.complete) reveal(); else { img.addEventListener('load', reveal, { once: true }); img.addEventListener('error', reveal, { once: true }); setTimeout(reveal, 1500); }
+        return n; };
+      if (!list.length) { grid.replaceChildren(el(`<p class="hint" style="grid-column:1/-1">${filtState.k === 'fav' && !filtState.q && !filtState.att ? 'Nenhuma carta favorita ainda. Abra uma carta e toque em ☆ para favoritar.' : 'Nenhuma carta encontrada com esses filtros.'}</p>`)); return; }
+      const phs = list.map(c => { const p = el(`<div class="card cph" data-id="${c.id}"><div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div><div class="face front"></div></div></div></div>`); p.style.setProperty('--cw', '104px'); p.__c = c; return p; });
+      grid.replaceChildren(...phs);
+      const fill = p => { if (tok !== drawTok || !p.isConnected || !p.__c) return; const c = p.__c; p.__c = null; p.replaceWith(build(c)); };
+      const pend = phs.slice();
+      const step = () => { if (tok !== drawTok) return; let n = 0; while (pend.length && n < 6) { const p = pend.shift(); if (p.__c) { fill(p); n++; } } if (pend.length) { if (window.requestIdleCallback) requestIdleCallback(step, { timeout: 250 }); else setTimeout(step, 30); } };
+      if ('IntersectionObserver' in window) {
+        drawObs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { drawObs && drawObs.unobserve(e.target); fill(e.target); } }); }, { root: s, rootMargin: '500px 0px' });
+        phs.forEach(p => drawObs.observe(p));
+      }
+      setTimeout(() => { if (tok === drawTok) step(); }, 700);   // o restante é montado em segundo plano depois que os visíveis já apareceram
     }
     chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; filtState.k = b.dataset.k; SND.play('tick'); draw(); };
     attr.onclick = e => { const b = e.target.closest('button'); if (!b) return; filtState.att = b.dataset.a; SND.play('tick'); draw(); };
