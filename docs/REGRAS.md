@@ -412,6 +412,8 @@ Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo 
 | Mundo ao Avesso | Vence o MENOR valor (margem e desempates invertidos). Peso 2 (mais frequente). |
 | Troca Dimensional | Dois atributos de cada carta trocam de valor; o par é sorteado e mostrado na animação. |
 
+Pesos de sorteio (15/10/2026): todos 1, exceto Mundo ao Avesso 2 (mais frequente), Eclipse 0,5 e Correnteza 0,5 (mais raros: encurtam a partida e aumentam a sorte). Cerca de 1 evento a cada 3 rodadas; nunca o mesmo duas vezes seguidas.
+
 Os efeitos de atributo entram na base da carta (não são anulados por especiais que removem modificadores). "Iniciativa Livre" foi descartada pelo autor.
 
 ## Reconexão e entrada em partida em andamento (14/10/2026)

@@ -217,7 +217,7 @@
     avesso: { nome: 'Mundo ao Avesso', txt: 'Nesta rodada vence o MENOR valor, em vez do maior. Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Vence o menor valor' },
     troca: { nome: 'Troca Dimensional', txt: 'Nesta rodada dois atributos de cada carta trocam de valor entre si.', curto: 'Dois atributos trocam de valor' },
   };
-  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['correnteza', 1], ['muralha', 1], ['eclipse', 1], ['avesso', 2], ['troca', 1]];
+  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['correnteza', 0.5], ['muralha', 1], ['eclipse', 0.5], ['avesso', 2], ['troca', 1]];
   const EV_PARES = [['pod', 'def'], ['pod', 'int'], ['pod', 'vel'], ['def', 'int'], ['def', 'vel'], ['int', 'vel']];
 
   // ---------------------------------------------------------------- jogo
