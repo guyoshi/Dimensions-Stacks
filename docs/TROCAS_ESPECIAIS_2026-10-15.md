@@ -8,7 +8,7 @@
 | J14 Cal Kadrir | AE-019 Inteligência → Velocidade | **AE-135 Vigor** (+12 Força e +12 Resistência) | Força 69 e Resistência 51 aproveitam o bônus; o autor pediu o Vigor para outra carta |
 | J16 Elis Nular | AE-020 Velocidade → Inteligência | **AE-132 Quebrar o melhor** (maior atributo do rival cai 25) | carta mais fraca do baralho (soma 160): recebe um efeito forte |
 | S18 Alekta | AE-017 Força → Resistência | **AE-136 Lucidez veloz** (+12 Inteligência e +12 Velocidade) | Velocidade 70 e Inteligência 54 aproveitam |
-| J13 Nynestra | AE-018 Força → Resistência | **AE-047 Tributo coletivo** (1 carta aleatória da reserva de cada rival) | efeito que muda o jogo, sem repetir nenhum outro |
+| J13 Nynestra | AE-018 Resistência → Força | **AE-047 Tributo coletivo** (1 carta aleatória da reserva de cada rival) | efeito que muda o jogo, sem repetir nenhum outro |
 | J23 Kedran | AE-125 Permutar Força e Resistência | **AE-131 Enfraquecer** (rival perde 15 em todos os atributos) | segunda carta mais fraca (soma 181): recebe um efeito forte |
 
 Os seis efeitos novos estavam sem dono (reserva); nenhum se repete em outra carta. Os antigos (AE-017, 018, 019, 020, 125, 119) voltaram à reserva.
