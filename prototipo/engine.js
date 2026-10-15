@@ -210,7 +210,7 @@
     eco: { nome: 'Eco dos Especiais', txt: 'Nesta rodada, bônus e reduções dos especiais valem o dobro.', curto: 'Especiais valem o dobro' },
     aberta: { nome: 'Batalha Aberta', txt: 'Nesta rodada todos escolhem qualquer atributo e se enfrentam mesmo em atributos diferentes (Força contra Inteligência etc.). Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Todos escolhem qualquer atributo' },
     tempestade: { nome: 'Tempestade Lateral', txt: 'Na primeira disputa da rodada, cada jogador passa a carta do topo do baralho ao jogador da direita e joga com a que recebe.', curto: 'Carta do topo passa à direita' },
-    buraco: { nome: 'Maré do Buraco Negro', txt: 'O Buraco Negro devolve 2 cartas ao jogador que tem menos cartas. Só acontece uma vez por partida.', curto: '2 cartas voltam a quem está atrás' },
+    buraco: { nome: 'Maré do Buraco Negro', txt: 'Em cada disputa desta rodada, o jogador que está com menos cartas recebe 1 carta do Buraco Negro (2 por disputa numa partida de 2 jogadores). Quem estiver por último muda a cada disputa. Só acontece uma vez por partida.', curto: 'Quem está por último ganha carta a cada disputa' },
     eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta vale 0.', curto: 'O maior atributo vale 0' },
     avesso: { nome: 'Mundo ao Avesso', txt: 'Nesta rodada vence o MENOR valor, em vez do maior. Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Vence o menor valor' },
     troca: { nome: 'Troca Dimensional', txt: 'Nesta rodada dois atributos de cada carta trocam de valor entre si.', curto: 'Dois atributos trocam de valor' },
@@ -264,16 +264,22 @@
         const moves = al.map((pid, i) => { const to = al[(i + 1) % al.length]; this.p(to).deck.unshift(tops[pid]); return { from: pid, to, card: tops[pid] }; });
         this.memInit(); this.log('A tempestade passa a carta do topo de cada jogador ao da direita.', 'rodada');
         await this.emit('eventFx', { id: 'tempestade', moves });
-      } else if (ev.id === 'buraco') {
-        const al = this.alive(), tot = pid => this.totalCards(this.p(pid)), mn = Math.min(...al.map(tot)), mx = Math.max(...al.map(tot));
-        const cands = al.filter(pid => tot(pid) === mn); const pid = cands[Math.floor(this.rand() * cands.length)];
-        const pool = () => this.s.bh.filter(x => x.kind === 'normal').map(x => x.id);
-        if (mn === mx || !pool().length) { this.log('A maré do Buraco Negro passa sem efeito.', 'rodada'); await this.emit('eventFx', { id: 'buraco', pid: null, cards: [] }); return; }
-        const got = [];
-        for (let n = 0; n < 2; n++) { const l = pool(); if (!l.length) break; const pick = l[Math.floor(this.rand() * l.length)]; const i = this.s.bh.findIndex(x => x.id === pick); if (i >= 0) this.s.bh.splice(i, 1); this.p(pid).deck.push(pick); got.push(pick); }
-        this.memInit(); this.log(`${this.p(pid).name} recebe ${got.length} carta(s) do Buraco Negro.`, 'rodada');
-        await this.emit('eventFx', { id: 'buraco', pid, cards: got });
       }
+    }
+    // Maré do Buraco Negro: a CADA disputa da rodada, quem está por último em cartas (recalculado na hora) recebe cartas do Buraco Negro.
+    // 3 ou 4 jogadores: 1 carta por disputa (3 ou 4 na rodada); 2 jogadores: 2 cartas por disputa (4 na rodada). Em duplas conta a dupla.
+    async blackholeTide() {
+      const al = this.alive(), per = al.length === 2 ? 2 : 1;
+      const score = pid => { const t = this.cfg.teams; const grp = t ? (t.find(g => g.includes(pid)) || [pid]).filter(x => this.p(x).alive) : [pid]; return grp.reduce((s, x) => s + this.totalCards(this.p(x)), 0); };
+      const sc = al.map(score), mn = Math.min(...sc), mx = Math.max(...sc);
+      const pool = () => this.s.bh.filter(x => x.kind === 'normal').map(x => x.id);
+      if (mn === mx || !pool().length) { this.log('A maré do Buraco Negro não beneficia ninguém nesta disputa.', 'rodada'); return; }
+      const low = al.filter(pid => score(pid) === mn), mm = Math.min(...low.map(pid => this.totalCards(this.p(pid))));
+      const cands = low.filter(pid => this.totalCards(this.p(pid)) === mm), pid = cands[Math.floor(this.rand() * cands.length)];
+      const got = [];
+      for (let n = 0; n < per; n++) { const l = pool(); if (!l.length) break; const pick = l[Math.floor(this.rand() * l.length)]; const i = this.s.bh.findIndex(x => x.id === pick); if (i >= 0) this.s.bh.splice(i, 1); this.p(pid).deck.push(pick); got.push(pick); }
+      this.memInit(); this.log(`${this.p(pid).name} está por último e recebe ${got.length} carta(s) do Buraco Negro.`, 'rodada');
+      await this.emit('eventFx', { id: 'buraco', pid, cards: got });
     }
     get players() { return this.s.players; }
     // ---- modo em duplas (cfg.teams = [[0,2],[1,3]]); sem cfg.teams tudo funciona como antes (todos contra todos)
@@ -587,6 +593,7 @@
 
     async playCombat(init) {
       if (this.s.initiated.size === 0) await this.roundEventStart();
+      { const e0 = this.curEv(); if (e0 && e0.id === 'buraco') await this.blackholeTide(); }
       const g = this, order = this.order(init);
       const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
         def: {}, ctl: { per: {} }, claims: [], onWin: [], pierce: {}, shield: {}, used: {}, locked: new Set() };

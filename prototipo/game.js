@@ -493,9 +493,9 @@
         refresh(); const me = (moves || []).find(m => m.to === V.viewer && V.humans === 1 && m.card && m.card !== '?');
         if (me) { const c = CARDS[me.card]; caption(`Você recebeu ${c.nome} e vai jogar com ela.`, true); await sleep(900); }
       } else if (id === 'buraco') {
-        if (pid == null) { caption('A maré do Buraco Negro passa sem efeito: ninguém está atrás.', true); await sleep(1200); return; }
+        if (pid == null) return;
         for (const c of cards || []) { SND.play('steal'); await fly($('#bh'), seatDeck(pid), { id: c, ms: 800, cw: 62, r0: 360, s0: .1, arc: 30 }); pulseBH(); await sleep(120); }
-        refresh(); banner(nameOf(pid), `recebe ${(cards || []).length} carta(s) do Buraco Negro`, EVUI.buraco.cor, 1800); await sleep(1300);
+        refresh(); banner(nameOf(pid), `por último: recebe ${(cards || []).length} carta(s) do Buraco Negro`, EVUI.buraco.cor, 1500); await sleep(1000);
       }
     },
     async ready() {
