@@ -23,7 +23,7 @@
 ## 2. Regras aprovadas que precisam de testes de execução
 
 1. Partidas para **2–4 jogadores**, configuração inicial de **18 cartas por jogador**, 7 ativas e 11 na reserva.
-2. Pares de atributos **ATQ/DEF** e **INT/VEL**. Desempate: atributo usado → soma dos quatro → ATQ+INT. Empate ainda persistente **PENDENTE**.
+2. Pares de atributos **ATQ/DEF** e **INT/VEL**. Desempate: atributo usado → soma dos quatro (sem terceiro critério desde 15/10/2026; as somas das cartas são todas diferentes). Empate persistente: as cartas voltam aos donos.
 3. Ataque vencedor captura; Defesa/Velocidade vencedoras protegem a própria e enviam derrotadas ao Buraco Negro.
 4. Até duas especiais preparadas; **uma ativação voluntária por combate**, salvo autorização textual expressa para duas. AE-111 força todas as preparadas, até duas.
 5. **Reações defensivas aprovadas:** podem interromper efeitos ainda pendentes; resolução inversa de respostas; custo mesmo da especial anulada. Não alterar efeitos já concluídos.
@@ -37,7 +37,7 @@
 - [ ] Origem de uma carta especial antes de prepará-la e a janela de preparação.
 - [ ] Como selecionar e distribuir sem viés as 18 cartas a cada jogador, retiradas da coleção de 87.
 - [ ] Destino individual das duas cartas de AE-010 após vitória, derrota e empate.
-- [ ] Resolução de empate absoluto mesmo depois da soma ATQ+INT.
+- [ ] Resolução de empate absoluto depois da soma dos quatro (só possível com atributos alterados em jogo).
 - [ ] Habilidades que precisam agir antes de revelar cartas: janela pré-revelação.
 - [ ] Ordem/alvos das duas especiais forçadas pelo AE-111 quando há duas preparadas, e oportunidade de resposta entre elas.
 - [ ] Efeitos cujo alvo some ou cuja zona tem menos cartas que o necessário.

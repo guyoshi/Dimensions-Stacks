@@ -114,7 +114,7 @@
       const run = U.run; run.rej.add(rej);
       const dock = $('#dock'); dock.hidden = false; dock.replaceChildren(node);
       node.addEventListener('click', e => {
-        const b = e.target.closest(sel || '[data-v]'); if (!b) return;
+        const b = e.target.closest(sel || '[data-v]'); if (!b || b.disabled) return;
         SND.play('click'); run.rej.delete(rej); dock.hidden = true; dock.replaceChildren(); res(b.dataset.v);
       });
     });
@@ -201,14 +201,14 @@
     const me = V.humans === 1 ? V.viewer : -1, N = pid => pid === me ? 'você' : nameOf(pid), Nc = pid => pid === me ? 'Você' : nameOf(pid);
     if (c.none) return 'Sem disputa: menos de duas cartas ficaram na mesa.';
     const live = c.rows.filter(r => !r.withdrawn);
-    if (c.tie) return `Empate absoluto: mesmo valor, mesma soma dos 4 atributos e mesma soma de Força + Inteligência. As cartas voltam aos donos.`;
+    if (c.tie) return `Empate absoluto: mesmo valor e mesma soma dos 4 atributos. As cartas voltam aos donos.`;
     const w = live.find(r => r.pid === c.winnerPid); if (!w) return '';
     const others = live.filter(r => r !== w).sort((a, b) => (b.total || 0) - (a.total || 0)), L = others[0];
     const wa = ATT[w.attr].nome, out = [];
     const iWon = w.pid === me, iLost = me >= 0 && !iWon && live.some(r => r.pid === me);
     const bonusOf = r => r.parts.filter(m => m.d !== 0);
     if (w.autoWin) out.push(`${Nc(w.pid)} venceu automaticamente por efeito de um especial, sem comparar valores.`);
-    else if (c.tb) out.push(`O ${c.inv ? 'menor' : 'maior'} valor (${c.tb.top}) empatou; o desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma de Força + Inteligência'} deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
+    else if (c.tb) out.push(`O ${c.inv ? 'menor' : 'maior'} valor (${c.tb.top}) empatou; o desempate pela soma dos 4 atributos deu a vitória a ${N(w.pid)} (${c.tb.list.map(x => N(x.pid) + ' ' + x.v).join(' × ')}).`);
     else if (L) {
       const lead = `${wa} ${w.total} de ${N(w.pid)} contra ${ATT[L.attr] ? ATT[L.attr].nome : '—'} ${L.total} de ${N(L.pid)}`;
       out.push((c.inv ? '(Mundo ao Avesso: vence o menor valor.) ' : '') + (iLost ? `Você perdeu porque ${lead}.` : iWon ? `Você venceu: ${lead}.` : `${Nc(w.pid)} venceu: ${lead}.`));
@@ -235,7 +235,7 @@
       if (r.extra.length) lines.push(`<div class="cl up"><span>Cartas extras (${r.extra.map(x => esc(cname(x))).join(', ')})</span><b>${sgn(r.bonus)}</b></div>`);
       return `<div class="crow${win ? ' win' : ''}${r.gone ? ' gone' : ''}"><h4><span style="color:${PCOL[r.pid]}">${esc(nameOf(r.pid))}</span><em>${a ? esc(a.nome) : 'sem atributo'}${win ? ' · vencedor' : ''}${r.gone ? ' · carta removida' : ''}</em></h4>${lines.join('')}<div class="cl tot"><span>Total</span><b>${r.total == null ? '—' : r.total}</b></div></div>`;
     }).join('');
-    const tb = c.tb ? `<p class="ctb">Empate em ${c.tb.top} → desempate ${c.tb.stage === 1 ? 'pela soma dos 4 atributos' : 'pela soma Força + Inteligência'}: ${c.tb.list.map(x => esc(nameOf(x.pid)) + ' ' + x.v).join(' × ')}.</p>` : '';
+    const tb = c.tb ? `<p class="ctb">Empate em ${c.tb.top} → desempate pela soma dos 4 atributos: ${c.tb.list.map(x => esc(nameOf(x.pid)) + ' ' + x.v).join(' × ')}.</p>` : '';
     const acts = c.acts.length ? `<p class="cacts">Especiais: ${c.acts.map(a => `<span class="${a.cancelled ? 'x' : ''}">${esc(nameOf(a.pid))} · ${esc(a.nome)}${a.cancelled ? ' (anulado)' : ''}${a.forced ? ' (forçado)' : ''}</span>`).join(' ')}</p>` : '';
     const fx = (c.fx && c.fx.length) ? `<details class="cfx"><summary>Efeitos aplicados (${c.fx.length})</summary>${c.fx.map(t => `<p>${esc(t)}</p>`).join('')}</details>` : '';
     const wd = rest.length ? `<p class="cacts">Desistiram: ${rest.map(r => esc(nameOf(r.pid))).join(', ')}.</p>` : '';
@@ -386,7 +386,7 @@
   const EVUI = {
     forca: { cor: '#ff8a5c', sim: '⚔' }, nevoa: { cor: '#c58cff', sim: '☁' }, eco: { cor: '#7fdcff', sim: '◎' },
     aberta: { cor: '#ffd25f', sim: '✶' }, tempestade: { cor: '#6cc6ff', sim: '↻' }, buraco: { cor: '#b78cff', sim: '●' },
-    correnteza: { cor: '#7dffb0', sim: '≋' }, muralha: { cor: '#6cc6ff', sim: '▦' }, eclipse: { cor: '#ff6b6b', sim: '◐' }, avesso: { cor: '#8be0a6', sim: '⇅' }, troca: { cor: '#ff7ab0', sim: '⇄' }
+    correnteza: { cor: '#7dffb0', sim: '≋' }, muralha: { cor: '#6cc6ff', sim: '▦' }, eclipse: { cor: '#ff6b6b', sim: '◐' }, avesso: { cor: '#8be0a6', sim: '⇅' }, troca: { cor: '#ff7ab0', sim: '⇄' }, bloqueio: { cor: '#ff5a5a', sim: '✕' }
   };
   const evOf = r => { const e = G && G.s && G.s.events; return e ? e[r] || null : null; };
   const evName = ev => E.EVENTOS[ev.id].nome + (ev.id === 'troca' && ev.pair ? ` (${ATT[ev.pair[0]].nome} ⇄ ${ATT[ev.pair[1]].nome})` : '');
@@ -417,10 +417,11 @@
     else if (ev.id === 'muralha') n.innerHTML = '<i class="mu"></i><i class="mu m2"></i><i class="mg">🛡</i>';
     else if (ev.id === 'eclipse') n.innerHTML = '<i class="co"></i><i class="dk"></i>';
     else if (ev.id === 'avesso') n.innerHTML = '<i class="ar">⇅</i>';
+    else if (ev.id === 'bloqueio') n.innerHTML = '<i class="bx">✕</i>';
     else if (ev.id === 'troca') { const [a, b] = ev.pair || ['pod', 'def']; n.innerHTML = `<div class="sw"><span class="sa" data-a="${a}">${ICON[a]}<small>${ATT[a].nome}</small></span><b>⇄</b><span class="sb" data-a="${b}">${ICON[b]}<small>${ATT[b].nome}</small></span></div>`; }
     ly.appendChild(n); setTimeout(() => n.remove(), 3200 * S.k);
   }
-  const EVSND = { forca: 'slash', nevoa: 'suspense', eco: 'bonus', aberta: 'legend', tempestade: 'steal', buraco: 'blackhole', eclipse: 'suspense', correnteza: 'slash', muralha: 'shield', avesso: 'round', troca: 'capture' };
+  const EVSND = { forca: 'slash', nevoa: 'suspense', eco: 'bonus', aberta: 'legend', tempestade: 'steal', buraco: 'blackhole', eclipse: 'suspense', correnteza: 'slash', muralha: 'shield', avesso: 'round', troca: 'capture', bloqueio: 'shield' };
 
   // ---------------------------------------------------------------- desempate animado: atributos de cada empatado somados na tela
   async function tieBreak(tb, winner) {
@@ -441,18 +442,9 @@
     const inv = !!tb.inv, best = (list) => (inv ? Math.min : Math.max)(...list.map(x => x.v));
     await sleep(500);
     await sum(AIDS, rows.map(r => r.pid));
-    const l1 = tb.s1 || tb.list, b1 = best(l1);
-    l1.forEach(x => { if (inv ? x.v > b1 : x.v < b1) pn(x.pid).classList.add('lose'); });
+    const b1 = best(tb.list);
+    tb.list.forEach(x => { if (inv ? x.v > b1 : x.v < b1) pn(x.pid).classList.add('lose'); });
     await sleep(700);
-    if (tb.stage === 2) {
-      sub.textContent = 'Empatou de novo! Agora só Força + Inteligência'; SND.play('suspense');
-      const keep = tb.list.map(x => x.pid);
-      rows.forEach(r => { const p = pn(r.pid); if (!keep.includes(r.pid)) return; p.classList.remove('done'); $$('.tbv[data-a="def"], .tbv[data-a="vel"]', p).forEach(c => c.classList.add('off')); });
-      await sleep(900);
-      await sum(['pod', 'int'], keep);
-      const b2 = best(tb.list); tb.list.forEach(x => { if (inv ? x.v > b2 : x.v < b2) pn(x.pid).classList.add('lose'); });
-      await sleep(600);
-    }
     if (winner != null) { const w = pn(winner); if (w) { w.classList.add('win'); SND.play('win'); } sub.textContent = nameOf(winner) + ' leva o desempate'; }
     else { sub.textContent = 'Empate absoluto: ninguém vence'; SND.play('tick'); }
     await sleep(1300, 900);
@@ -489,8 +481,12 @@
       await sleep(2400, 1200);
       if (U.tip) { if (V.online) U.tip('evento', ev); else await U.tip('evento', ev); }
     },
-    async eventFx({ id, moves, pid, cards }) {
-      if (id === 'tempestade') {
+    async eventFx({ id, moves, pid, cards, attr }) {
+      if (id === 'bloqueio') {
+        if (!attr) return; const ly = U.layer(), n = el(`<div class="evfx ev-bloqueio one" style="--ec:${EVUI.bloqueio.cor}"><div class="bk"><span class="bi" data-a="${attr}">${ICON[attr]}<i>✕</i></span><b>${ATT[attr].nome} bloqueada</b></div></div>`);
+        ly.appendChild(n); setTimeout(() => n.remove(), 1500 * S.k); SND.play('shield');
+        caption(`Bloqueio Dimensional: ${ATT[attr].nome} está bloqueado nesta disputa.`, true); await sleep(1300, 700);
+      } else if (id === 'tempestade') {
         { const d = (moves && moves[0] && moves[0].dir) || 1; caption(`Tempestade: as cartas do topo passam para a ${d > 0 ? 'esquerda' : 'direita'}.`, true); }
         await Promise.all((moves || []).map((m, i) => sleep(i * 160).then(() => { SND.play('deal'); return fly(seatDeck(m.from), seatDeck(m.to), { ms: 900, cw: 62, r0: -10, r1: 12, arc: 40, }); })));
         refresh(); const me = (moves || []).find(m => m.to === V.viewer && V.humans === 1 && m.card && m.card !== '?');
@@ -641,7 +637,7 @@
         FX.burst(cx, cy, { n: 80, speed: 9, life: 70, up: 2 });
         setTimeout(() => FX.burst(cx, cy, { n: 40, speed: 5, life: 60, colors: atk ? ['#ff7a45', '#fff', '#e9dfc0'] : ['#8fd6ff', '#fff', '#4aa8ff'] }), 300);
         tipId = U.tip ? ['reveal', atk ? 'capture' : 'bh'].find(x => !U.tipSeen(x)) : null;
-        const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela ${tb.stage === 1 ? 'soma dos 4 atributos' : 'soma Força + Inteligência'}: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
+        const tb = result.tb, tbTxt = tb ? `Empate em ${tb.top} → desempate pela soma dos 4 atributos: ${tb.list.map(x => nameOf(x.pid) + ' ' + x.v).join(' × ')}` : '';
         banner(`${nameOf(w)} vence!`, `${atk ? 'Ataque' : 'Defesa'} · ${ATT[result.attr].nome} ${result.value}`, atk ? '#ffd25f' : '#8fd6ff', tb ? 2100 : 2100);
         caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
         await sleep(2100, 1000);
@@ -742,7 +738,10 @@
         const init = combat.initiator === p.pid; const ia = combat.entries.find(e => e.pid === combat.initiator).attr;
         if (U.tip) await U.tip(init ? 'attr_init' : 'attr_follow');
         const lst = options.map(a => '<b>' + ATT[a].nome + '</b>').join(options.length === 2 ? ' e ' : ', ');
+        const blk = combat.blocked && !(combat.ctl && combat.ctl.universal) ? combat.blocked : null;   // atributo bloqueado pelo evento (só aparece se estaria disponível)
+        const blkShow = blk && !options.includes(blk) && (init || ATT[blk].par === ATT[ia].par) ? blk : null;
         const txt = combat.ctl && combat.ctl.universal ? `Atributo universal: todos disputam em ${lst}.`
+          : blkShow && options.length === (init ? 3 : 1) ? (init ? `Você inicia: <b>${ATT[blk].nome}</b> está bloqueado nesta disputa. Escolha entre ${lst}.` : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. <b>${ATT[blk].nome}</b> está bloqueado: você usa ${lst}.`)
           : init ? (options.length < 4 ? `Você inicia, mas um especial limitou suas opções: ${lst}.` : 'Você inicia: escolha <b>qualquer</b> atributo.')
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : novice() ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`
@@ -751,7 +750,7 @@
         const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}${evsum}</div>` : '';
         const em = entry.evm || {};
         const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}</div>
-          <div class="attrs">${options.map(a => `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
+          <div class="attrs">${AIDS.filter(a => options.includes(a) || a === blkShow).map(a => a === blkShow ? `<button class="attrbtn blocked" data-a="${a}" disabled>${ICON[a]}<span><b>${ATT[a].nome}</b><small>bloqueado</small></span><span class="v">✕</span></button>` : `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
           ${spLine(entry.card, combat, canPrep)}</div>`);
           const big = window.matchMedia && window.matchMedia('(min-width: 900px) and (min-height: 640px)').matches;
           $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats, mark: entry.evm }));

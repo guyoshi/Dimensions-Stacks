@@ -58,21 +58,21 @@ A escolha simultânea ou secreta do atributo pelos demais é **PROPOSTA de inter
 5. Se o maior valor vencedor for um **atributo de defesa**, os adversários perdem suas cartas de combate para o **Buraco Negro**; o defensor vencedor preserva sua própria carta no final do seu baralho ativo, mas não captura as outras.
 6. Avança o iniciador no sentido horário e repete.
 
-### Empates — sequência confirmada pelo autor (12/10/2026)
+### Empates — sequência confirmada pelo autor (12/10/2026; terceiro critério removido em 15/10/2026)
 
 Quando **dois ou mais valores de atributos individuais empatarem**, aplicar os desempates nesta ordem **aos participantes empatados**:
 
 1. **Maior valor do atributo escolhido no confronto.** Se empatar, prosseguir.
 2. **Maior soma dos quatro atributos da carta**: Ataque + Defesa + Inteligência + Velocidade.
-3. **Se a soma total também empatar:** vence a maior soma de **Ataque + Inteligência** (os dois atributos de ataque).
+3. **Se a soma total também empatar:** empate absoluto — ninguém vence e as cartas voltam aos donos.
 
-O critério **Ataque + Inteligência** tem precedência sobre Defesa + Velocidade em igualdade das somas totais, conforme decisão do autor.
+**Decisão do autor (15/10/2026):** o antigo terceiro critério (Ataque + Inteligência) deixa de existir. Para que a soma sempre decida, **nenhuma carta do baralho tem o mesmo total de pontos que outra** (diferença mínima de 1 ponto). Só um evento ou especial que altere os atributos pode, em casos raros, igualar duas somas durante a disputa; aí vale o empate absoluto (item 3).
 
-**PENDENTE:** empate absoluto depois do terceiro critério. **PENDENTE:** em confrontos com especiais que envolvem **duas cartas simultâneas**, como somar a totalidade dos atributos para desempate (#09, cuja soma principal já está aprovada). A documentação antiga mencionava um possível empate defensivo especial; a instrução nova de três etapas prevalece na regra geral.
+**PENDENTE (agora só para somas alteradas em jogo):** empate absoluto. **PENDENTE:** em confrontos com especiais que envolvem **duas cartas simultâneas**, como somar a totalidade dos atributos para desempate (#09, cuja soma principal já está aprovada). A documentação antiga mencionava um possível empate defensivo especial; a instrução nova de três etapas prevalece na regra geral.
 
-**Animação do desempate (14/10/2026):** quando há desempate, a tela mostra os quatro atributos de cada empatado entrando um a um e somados num total; se a soma empatar, os totais são refeitos só com Força + Inteligência; o vencedor é destacado antes do resultado da disputa. Nas simulações o desempate ocorre em cerca de 4% das disputas e quase sempre termina na soma dos quatro atributos.
+**Animação do desempate (14/10/2026):** quando há desempate, a tela mostra os quatro atributos de cada empatado entrando um a um e somados num total; a soma decide (o segundo desempate foi removido em 15/10/2026); o vencedor é destacado antes do resultado da disputa. Nas simulações o desempate ocorre em cerca de 4% das disputas e quase sempre termina na soma dos quatro atributos.
 
-Para choque de **especiais de imposição de atributo** que empatem no valor usado para impor, **PROPOSTA**: aplicar a mesma sequência de desempate por soma dos quatro atributos e depois Ataque + Inteligência. A aplicação automática à disputa de imposição não foi confirmada expressamente pelo autor, então permanece como proposta.
+Para choque de **especiais de imposição de atributo** que empatem no valor usado para impor, **PROPOSTA**: aplicar o mesmo desempate pela soma dos quatro atributos. A aplicação automática à disputa de imposição não foi confirmada expressamente pelo autor, então permanece como proposta.
 
 ### Confrontos com 3 ou 4 jogadores
 
@@ -221,7 +221,7 @@ Destaques para especificação futura:
 - **Especial #24 (Primus Tenesy): RETIRADO** do conjunto de habilidades especiais previstos para PC. A carta física continua documentada, mas a mecânica não deve ser replicada.
 - **Especial #19 (Sagrado Senhor da Morte):** o autor confirmou que **'Baralho Negro' significa Buraco Negro**. Usar apenas **Buraco Negro** na documentação funcional; preservar nota de divergência com a transcrição anterior. A regra de sacrificar uma carta com atributo superior a 90 em troca das três primeiras do Buraco Negro continua disponível para análise.
 - **Especial #59 (William McCroys):** obriga o jogador escolhido a **usar todas as cartas de habilidade especial que já tiver preparado à esquerda na mesa**, no máximo duas. A formulação nova 'todas em mãos' **não autoriza puxar cartas não preparadas de outras zonas**.
-- **Desempate geral:** valor individual → soma dos quatro atributos → soma **Poder + Inteligência**. Empate persistente depois desses três critérios continua pendente.
+- **Desempate geral:** valor individual → soma dos quatro atributos (o terceiro critério, Poder + Inteligência, foi removido em 15/10/2026). Empate persistente depois da soma: as cartas voltam aos donos.
 - **Leituras por IA de outras cartas:** registrar como **provisórias**, nunca como texto confirmado. Consultar LEITURAS_IA_PENDENTES_2026-10-12.md.
 
 
@@ -411,6 +411,7 @@ Eventos de rodada, opcionais (ligar/desligar na configuração da partida, solo 
 | Eclipse | O maior atributo de cada carta vale 0 (marcado com ✕ na carta). Mantido em 0 por ter mais impacto (testado −30 em 15/10/2026: mesmo equilíbrio, menos dramático). |
 | Mundo ao Avesso | Vence o MENOR valor (margem e desempates invertidos). Peso 2 (mais frequente). |
 | Troca Dimensional | Dois atributos de cada carta trocam de valor; o par é sorteado e mostrado na animação. |
+| Bloqueio Dimensional | (Novo, 15/10/2026, pedido do autor.) A cada **disputa** da rodada um atributo é sorteado e fica bloqueado: aparece com ✕ na tela de escolha e ninguém (nem os bots) pode escolhê-lo; o iniciador escolhe entre os 3 restantes e os demais ficam no par dele (se o parceiro do par estiver bloqueado, só resta o atributo do iniciador). O bloqueado muda a cada disputa (nunca o mesmo da disputa anterior). Se um especial impuser um atributo universal, o especial prevalece sobre o bloqueio. Peso 1. |
 
 Pesos de sorteio (15/10/2026): todos 1, exceto Mundo ao Avesso 2 (mais frequente), Eclipse 0,5 e Correnteza 0,5 (mais raros: encurtam a partida e aumentam a sorte). Cerca de 1 evento a cada 3 rodadas; nunca o mesmo duas vezes seguidas.
 

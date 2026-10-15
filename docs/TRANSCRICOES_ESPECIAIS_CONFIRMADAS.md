@@ -38,7 +38,7 @@
 - **#18 — Ricochett Bombargue:** **retirado** do conjunto ativo a pedido do autor. Permanece somente como registro da carta física.
 - **#24 — Primus Tenesy:** **retirado** do conjunto ativo a pedido do autor. Permanece somente como registro da carta física.
 - **#59 — William McCroys:** obriga usar **todas as cartas de ataques especiais já preparadas na mesa**, até duas. Não atinge cartas da reserva ou do baralho ativo.
-- **Empates de atributo:** valor do atributo disputado → soma dos quatro atributos → soma de Poder + Inteligência; empate persistente ainda não definido.
+- **Empates de atributo:** valor do atributo disputado → soma dos quatro atributos (o terceiro critério, Poder + Inteligência, foi removido em 15/10/2026); empate persistente: as cartas voltam aos donos.
 - **Novas leituras feitas por IA** não têm o mesmo nível de confiança que transcrições feitas pelo autor: ver LEITURAS_IA_PENDENTES_2026-10-12.md.
 
 ## 2. Auditoria inicial de design, separada da fonte primária

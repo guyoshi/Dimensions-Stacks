@@ -21,7 +21,7 @@
       if (type === 'combatStart') { f.combatOn = true; f.initAnn = false; f.revealed = false; } else if (type === 'initiatorAttr') f.initAnn = true; else if (type === 'reveal') f.revealed = true;
     };
     // disputa em formato de rede, completa (sem ocultar nada)
-    const serCombat = c => c ? ({ initiator: c.initiator, order: c.order, ev: c.ev || null, specialsAllowed: c.specialsAllowed, ctl: { universal: !!(c.ctl && c.ctl.universal) },
+    const serCombat = c => c ? ({ initiator: c.initiator, order: c.order, ev: c.ev || null, specialsAllowed: c.specialsAllowed, blocked: c.blocked || null, ctl: { universal: !!(c.ctl && c.ctl.universal) },
       entries: c.entries.map(e => ({ pid: e.pid, card: e.card, stats: e.stats, evm: e.evm || null, bonus: e.bonus, extra: e.extra, attr: (f.revealed || (f.initAnn && e.pid === c.initiator)) ? e.attr : null, withdrawn: !!e.withdrawn, gone: !!e.gone })) }) : null;
     // antes da revelação, a carta de cada rival na mesa é secreta
     const maskCombat = (c, r) => (!c || f.revealed) ? c : Object.assign({}, c, { entries: c.entries.map(e => e.pid === r ? e : Object.assign({}, e, { card: HID, stats: ZERO, evm: null, bonus: 0, extra: (e.extra || []).map(() => HID) })) });

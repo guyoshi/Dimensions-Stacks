@@ -46,6 +46,7 @@ try:
       pg.wait_for_timeout(200)
       if os.environ.get('SF'): pg.evaluate("window.DSUI.CFG.sf = 1")
       if os.environ.get('ABIL'): pg.evaluate("a => DS_DATA.CARTAS.forEach(c => { c.especial = a; })", os.environ['ABIL'])
+      if os.environ.get('EVFORCE'): pg.evaluate("id => { const P = window.DSUI.E.Game.prototype; P.genEvents = function () { const o = {}; for (let r = 1; r < 200; r++) o[r] = { id }; return o; }; }", os.environ['EVFORCE'])
       pg.click('[data-a=start]')
       t0 = time.time(); shots = {}; n = 0; maxs = float(os.environ.get('MAXS', '240'))
       done = False

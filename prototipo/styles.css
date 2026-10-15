@@ -1325,3 +1325,16 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 .spt.prev i { font-style: normal; color: var(--nexus); font-weight: 800; }
 
 .lb-pl .lb-seg { flex: 0 0 auto; width: auto; margin-left: auto; } .lb-pl .lb-seg button { padding: 7px 11px; font-size: 12.5px; }
+
+/* Bloqueio Dimensional: ✕ vermelho no início da rodada; a cada disputa, o atributo bloqueado aparece riscado */
+.ev-bloqueio:not(.one) { background: radial-gradient(circle at center, #3a0a0a88, #3a0a0a00 70%); }
+.ev-bloqueio .bx { position: absolute; left: 50%; top: 50%; font-style: normal; font-weight: 900; font-size: 40vmin; line-height: 1; color: #ff5a5a; text-shadow: 0 0 40px #ff5a5acc; transform: translate(-50%, -50%); animation: mgs 2.4s ease-in-out forwards; }
+.ev-bloqueio.one { display: grid; place-items: center; animation: evlife 1.5s ease-out forwards; }
+.ev-bloqueio .bk { display: flex; flex-direction: column; align-items: center; gap: 1.2vmin; padding: 3vmin 6vmin; border-radius: 3vmin; background: #1a0808cc; border: 3px solid #ff5a5a; box-shadow: 0 0 40px #ff5a5a88; }
+.ev-bloqueio .bk b { font-family: var(--f-disp); font-size: 4.2vmin; text-transform: uppercase; letter-spacing: .08em; color: #ffd9d9; }
+.ev-bloqueio .bi { position: relative; display: grid; place-items: center; width: 16vmin; height: 16vmin; }
+.ev-bloqueio .bi svg { width: 12vmin; height: 12vmin; fill: currentColor; color: var(--ac, #fff); opacity: .55; }
+.ev-bloqueio .bi i { position: absolute; inset: 0; display: grid; place-items: center; font-style: normal; font-weight: 900; font-size: 17vmin; line-height: 1; color: #ff5a5a; text-shadow: 0 0 18px #000; animation: bkpop .5s cubic-bezier(.3,1.6,.5,1) both; }
+@keyframes bkpop { 0% { transform: scale(2.4); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.attrbtn.blocked { opacity: .55; cursor: not-allowed; filter: grayscale(.6); border-color: #ff5a5a88; text-decoration: line-through; text-decoration-color: #ff5a5a; pointer-events: none; }
+.attrbtn.blocked .v { color: #ff5a5a; text-decoration: none; }

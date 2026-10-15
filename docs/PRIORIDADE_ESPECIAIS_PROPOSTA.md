@@ -11,7 +11,7 @@
 5. *(Retirado em 14/10/2026: o especial de repetição AE-112 deixou de existir.)*
 6. **AE-103 (original #54):** “cartas em jogo” são somente **as cartas normais apresentadas em combate**, não especiais preparadas.
 7. O autor aprovou renomear **Poder** para **Ataque (ATQ)**. Os pares ficam **ATQ/DEF** e **INT/VEL**.
-8. Conflito entre duas imposições de atributos diferentes: comparar nas cartas de quem impôs o valor do atributo que cada uma impõe; vence o maior. Desempate geral: valor usado → soma de quatro atributos → ATQ+INT; empate absoluto ainda aberto.
+8. Conflito entre duas imposições de atributos diferentes: comparar nas cartas de quem impôs o valor do atributo que cada uma impõe; vence o maior. Desempate geral: valor usado → soma de quatro atributos; empate absoluto ainda aberto.
 
 ## 2. Nome das habilidades: APROVADO
 

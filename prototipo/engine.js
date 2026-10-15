@@ -17,7 +17,7 @@
     'Ordem de resolução dos especiais: sentido horário a partir de quem iniciou a disputa.',
     'Especiais usados vão ao Buraco Negro depois que todos os efeitos resolvem (não podem ser recuperados na mesma disputa).',
     'Captura: carta do vencedor primeiro, depois as dos adversários em sentido horário a partir dele.',
-    'Empate absoluto (soma e Força+Inteligência iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
+    'Empate absoluto (valor e soma dos 4 atributos iguais): sem vencedor; cada carta volta ao fim do baralho do dono.',
     'Baralho vazio: compra até 7 da reserva e o jogador reordena as cartas recebidas; sem reserva nem baralho, o jogador é eliminado e seus especiais preparados vão ao Buraco Negro.',
     'À direita = próximo jogador ativo no sentido horário; à esquerda = o anterior. Em duelo, ambos são o único adversário.',
     'Especial só é oferecido quando há alvo válido (exceto Interrupção, que depende dos especiais dos outros).',
@@ -215,9 +215,10 @@
     muralha: { nome: 'Muralha Dimensional', txt: 'Nesta rodada, a Defesa de cada carta passa a valer a média entre a sua Defesa e o seu maior atributo (arredondada para cima). Cartas fortes em outro atributo ganham uma muralha; quem já é forte em Defesa não muda.', curto: 'Defesa = média com o maior atributo' },
     eclipse: { nome: 'Eclipse', txt: 'Nesta rodada, o maior atributo de cada carta vale 0.', curto: 'O maior atributo vale 0' },
     avesso: { nome: 'Mundo ao Avesso', txt: 'Nesta rodada vence o MENOR valor, em vez do maior. Ataque vencedor captura; defesa vencedora manda as outras ao Buraco Negro.', curto: 'Vence o menor valor' },
+    bloqueio: { nome: 'Bloqueio Dimensional', txt: 'Em cada disputa desta rodada um atributo fica bloqueado (marcado com ✕) e ninguém pode escolhê-lo. O atributo bloqueado muda a cada disputa.', curto: 'Um atributo bloqueado por disputa' },
     troca: { nome: 'Troca Dimensional', txt: 'Nesta rodada dois atributos de cada carta trocam de valor entre si.', curto: 'Dois atributos trocam de valor' },
   };
-  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['correnteza', 0.5], ['muralha', 1], ['eclipse', 0.5], ['avesso', 2], ['troca', 1]];
+  const EV_PESOS = [['forca', 1], ['nevoa', 1], ['eco', 1], ['aberta', 1], ['tempestade', 1], ['buraco', 1], ['correnteza', 0.5], ['muralha', 1], ['eclipse', 0.5], ['avesso', 2], ['troca', 1], ['bloqueio', 1]];
   const EV_PARES = [['pod', 'def'], ['pod', 'int'], ['pod', 'vel'], ['def', 'int'], ['def', 'vel'], ['int', 'vel']];
 
   // ---------------------------------------------------------------- jogo
@@ -484,7 +485,7 @@
       if (v > bestOpp) return 0.04; if (v + bonus >= bestOpp) return 0.93; return 0.02;
     }
 
-    // ---- avaliação do vencedor (empates: valor → soma 4 → Força+Inteligência) ----
+    // ---- avaliação do vencedor (empates: valor → soma dos 4 atributos) ----
     evaluate(combat, quiet) {
       const es = combat.entries.filter(e => !e.withdrawn);
       if (es.length < 2) return { winners: [], tie: false, none: true, top: 0 };
@@ -498,7 +499,6 @@
       if (pool.length > 1) {
         tb = { stage: 1, inv, top, list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })), rows: pool.map(e => ({ pid: e.pid, card: e.card, stats: Object.assign({}, e.stats) })) };
         const pk = inv ? Math.min : Math.max; let best = pk(...pool.map(e => sum4(e.stats))); pool = pool.filter(e => sum4(e.stats) === best);
-        if (pool.length > 1) { tb = { stage: 2, inv, top, list: pool.map(e => ({ pid: e.pid, v: e.stats.pod + e.stats.int })), rows: tb.rows, s1: tb.list }; best = pk(...pool.map(e => e.stats.pod + e.stats.int)); pool = pool.filter(e => e.stats.pod + e.stats.int === best); }
         if (pool.length > 1) tie = true;
       }
       return { winners: pool, tie, none: false, top, tb };
@@ -600,12 +600,15 @@
     async playCombat(init) {
       if (this.s.initiated.size === 0) await this.roundEventStart();
       { const e0 = this.curEv(); if (e0 && e0.id === 'buraco') await this.blackholeTide(); if (e0 && e0.id === 'tempestade') await this.stormPass(); }
+      // Bloqueio Dimensional: um atributo sorteado por disputa, diferente do bloqueado na disputa anterior
+      let blocked = null; { const e1 = this.curEv(); if (e1 && e1.id === 'bloqueio') { const op = AID.filter(a => a !== this.s.lastBlock); blocked = op[Math.floor(this.rand() * op.length)]; this.s.lastBlock = blocked; } }
       const g = this, order = this.order(init);
       const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
         def: {}, ctl: { per: {} }, claims: [], onWin: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
       { const ev0 = this.curEv(); combat.eco = !!ev0 && ev0.id === 'eco'; combat.ev = ev0; }
-      this.combat = combat; this.memTick();
+      combat.blocked = blocked; this.combat = combat; this.memTick();
       await this.emit('combatStart', { initiator: init, round: this.s.round });
+      if (blocked) { this.log(`Bloqueio Dimensional: ${ATTR[blocked].nome} está bloqueado nesta disputa.`, 'rodada'); await this.emit('eventFx', { id: 'bloqueio', attr: blocked }); }
       // 1) preparação dos bots [PROPOSTA]
       if (combat.specialsAllowed) {
         const prep = [];
@@ -649,7 +652,10 @@
     // opções de atributo conforme os especiais de controle
     attrOptions(combat, e, base) {
       const ctl = combat.ctl; if (ctl.universal) return [ctl.universal];
-      let opts = base.slice(); const tryF = f => { const r = opts.filter(f); if (r.length) opts = r; };
+      let opts = base.slice();
+      if (combat.blocked) { const nb = opts.filter(a => a !== combat.blocked); if (nb.length) opts = nb; }
+     // (atributo bloqueado pelo evento removido acima)
+     const tryF = f => { const r = opts.filter(f); if (r.length) opts = r; };
       if (ctl.pair != null) tryF(a => ATTR[a].par === ctl.pair);
       if (ctl.typeAll) tryF(a => ATTR[a].tipo === ctl.typeAll);
       const per = ctl.per[e.pid];
@@ -846,7 +852,7 @@
           if (cand.length) { const l = await this.chooseLoser(w, cand, 'De quem a carta do topo vai ao Buraco Negro?'); const nb = (this.cfg && this.cfg.ban106) || 2; for (let n = 0; n < nb && this.p(l.pid).deck.length; n++) { const c = this.p(l.pid).deck.shift(); this.s.bh.push({ id: c, kind: 'normal' }); } this.memTouch({ target: l.pid }, 'discard'); this.log(`${this.p(w.pid).name} bane ${nb > 1 ? 'as ' + nb + ' cartas do topo' : 'a carta do topo'} do baralho de ${this.p(l.pid).name}.`, 'efeito'); }
         }
         result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: w.stats[w.attr] + w.bonus, tb: ev.tb || null };
-        if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela ${ev.tb.stage === 1 ? 'soma dos 4 atributos' : 'soma de Força + Inteligência'}: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
+        if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela soma dos 4 atributos: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
         this.log(`${this.p(w.pid).name} vence ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit');
       }
       combat.result = result; combat.moves = moves; this.memResolved(moves);

@@ -83,12 +83,12 @@
       },
       "descricao_curta": "Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície.",
       "atributos": {
-        "FOR": 24,
+        "FOR": 23,
         "RES": 70,
         "INT": 61,
         "VEL": 59
       },
-      "soma_atributos": 214,
+      "soma_atributos": 213,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-096",
       "uniao": "NAO",
@@ -131,12 +131,12 @@
       },
       "descricao_curta": "Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle.",
       "atributos": {
-        "FOR": 64,
+        "FOR": 65,
         "RES": 68,
         "INT": 69,
         "VEL": 81
       },
-      "soma_atributos": 282,
+      "soma_atributos": 283,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-004",
       "uniao": "NAO",
@@ -252,11 +252,11 @@
       "descricao_curta": "Soberana orgulhosa e determinada, responde à ameaça com força e exige obediência.",
       "atributos": {
         "FOR": 89,
-        "RES": 48,
+        "RES": 47,
         "INT": 70,
         "VEL": 53
       },
-      "soma_atributos": 260,
+      "soma_atributos": 259,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-040",
       "uniao": "NAO",
@@ -302,9 +302,9 @@
         "FOR": 81,
         "RES": 68,
         "INT": 69,
-        "VEL": 61
+        "VEL": 60
       },
-      "soma_atributos": 279,
+      "soma_atributos": 278,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-014",
       "uniao": "NAO",
@@ -350,9 +350,9 @@
         "FOR": 71,
         "RES": 49,
         "INT": 65,
-        "VEL": 35
+        "VEL": 36
       },
-      "soma_atributos": 220,
+      "soma_atributos": 221,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-018",
       "uniao": "NAO",
@@ -539,12 +539,12 @@
       },
       "descricao_curta": "Jovem sem um braço, busca nas lembranças respostas para a origem e a perda de sua família.",
       "atributos": {
-        "FOR": 49,
+        "FOR": 48,
         "RES": 67,
         "INT": 69,
         "VEL": 76
       },
-      "soma_atributos": 261,
+      "soma_atributos": 260,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-025",
       "uniao": "NAO",
@@ -564,11 +564,11 @@
       "descricao_curta": "Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama.",
       "atributos": {
         "FOR": 58,
-        "RES": 40,
+        "RES": 41,
         "INT": 54,
         "VEL": 69
       },
-      "soma_atributos": 221,
+      "soma_atributos": 222,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-076",
       "uniao": "NAO",
@@ -685,10 +685,10 @@
       "atributos": {
         "FOR": 92,
         "RES": 87,
-        "INT": 68,
+        "INT": 67,
         "VEL": 68
       },
-      "soma_atributos": 315,
+      "soma_atributos": 314,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-007",
       "uniao": "NAO",
@@ -710,9 +710,9 @@
         "FOR": 69,
         "RES": 69,
         "INT": 93,
-        "VEL": 44
+        "VEL": 45
       },
-      "soma_atributos": 275,
+      "soma_atributos": 276,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-140",
       "uniao": "NAO",
@@ -733,10 +733,10 @@
       "atributos": {
         "FOR": 89,
         "RES": 73,
-        "INT": 70,
+        "INT": 69,
         "VEL": 70
       },
-      "soma_atributos": 302,
+      "soma_atributos": 301,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-130",
       "uniao": "NAO",
@@ -755,12 +755,12 @@
       },
       "descricao_curta": "Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada.",
       "atributos": {
-        "FOR": 31,
+        "FOR": 29,
         "RES": 38,
         "INT": 71,
         "VEL": 72
       },
-      "soma_atributos": 212,
+      "soma_atributos": 210,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-070",
       "uniao": "NAO",
@@ -876,11 +876,11 @@
       "descricao_curta": "Integrante da Patrulha de Korvo, usa ameaças e ilusões para desconcertar seus alvos.",
       "atributos": {
         "FOR": 70,
-        "RES": 52,
+        "RES": 51,
         "INT": 73,
         "VEL": 76
       },
-      "soma_atributos": 271,
+      "soma_atributos": 270,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-139",
       "uniao": "NAO",
@@ -901,10 +901,10 @@
       "atributos": {
         "FOR": 80,
         "RES": 77,
-        "INT": 56,
+        "INT": 57,
         "VEL": 66
       },
-      "soma_atributos": 279,
+      "soma_atributos": 280,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-119",
       "uniao": "NAO",
@@ -1046,9 +1046,9 @@
         "FOR": 61,
         "RES": 51,
         "INT": 65,
-        "VEL": 35
+        "VEL": 32
       },
-      "soma_atributos": 212,
+      "soma_atributos": 209,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-116",
       "uniao": "NAO",
@@ -1091,12 +1091,12 @@
       },
       "descricao_curta": "Aliada de Jasmey, questiona as ordens de Jelles e ajuda a desafiar o domínio da Lebargan.",
       "atributos": {
-        "FOR": 48,
+        "FOR": 50,
         "RES": 70,
         "INT": 73,
         "VEL": 89
       },
-      "soma_atributos": 280,
+      "soma_atributos": 282,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-075",
       "uniao": "NAO",
@@ -1116,11 +1116,11 @@
       "descricao_curta": "Irmão de Amanda, sarcástico e curioso, arrisca tudo ao disputar o Olho de Domongo.",
       "atributos": {
         "FOR": 27,
-        "RES": 24,
+        "RES": 22,
         "INT": 74,
         "VEL": 88
       },
-      "soma_atributos": 213,
+      "soma_atributos": 211,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-016",
       "uniao": "NAO",
@@ -1188,11 +1188,11 @@
       "descricao_curta": "Mecânico leal e aliado de Hardman, enfrenta os perigos do espaço ao lado dos companheiros.",
       "atributos": {
         "FOR": 69,
-        "RES": 67,
+        "RES": 66,
         "INT": 83,
         "VEL": 71
       },
-      "soma_atributos": 290,
+      "soma_atributos": 289,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-085",
       "uniao": "NAO",
@@ -1235,12 +1235,12 @@
       },
       "descricao_curta": "Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo.",
       "atributos": {
-        "FOR": 9,
+        "FOR": 8,
         "RES": 35,
         "INT": 83,
         "VEL": 86
       },
-      "soma_atributos": 213,
+      "soma_atributos": 212,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-006",
       "uniao": "NAO",
@@ -1262,9 +1262,9 @@
         "FOR": 69,
         "RES": 89,
         "INT": 70,
-        "VEL": 64
+        "VEL": 63
       },
-      "soma_atributos": 292,
+      "soma_atributos": 291,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-048",
       "uniao": "NAO",
@@ -1286,9 +1286,9 @@
         "FOR": 70,
         "RES": 49,
         "INT": 66,
-        "VEL": 46
+        "VEL": 45
       },
-      "soma_atributos": 231,
+      "soma_atributos": 230,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-102",
       "uniao": "NAO",
@@ -1334,9 +1334,9 @@
         "FOR": 58,
         "RES": 71,
         "INT": 65,
-        "VEL": 23
+        "VEL": 25
       },
-      "soma_atributos": 217,
+      "soma_atributos": 219,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-029",
       "uniao": "NAO",
@@ -1358,9 +1358,9 @@
         "FOR": 66,
         "RES": 78,
         "INT": 69,
-        "VEL": 38
+        "VEL": 37
       },
-      "soma_atributos": 251,
+      "soma_atributos": 250,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-059",
       "uniao": "NAO",
@@ -1379,12 +1379,12 @@
       },
       "descricao_curta": "Rival provocador de Jasmey, surpreende ao participar da ruptura contra Jelles.",
       "atributos": {
-        "FOR": 43,
+        "FOR": 41,
         "RES": 59,
         "INT": 69,
         "VEL": 62
       },
-      "soma_atributos": 233,
+      "soma_atributos": 231,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-092",
       "uniao": "NAO",
@@ -1403,12 +1403,12 @@
       },
       "descricao_curta": "Escritor e amigo de Pedro, tenta organizar relatos marcados por culpa e eventos sobrenaturais.",
       "atributos": {
-        "FOR": 18,
+        "FOR": 19,
         "RES": 45,
         "INT": 92,
         "VEL": 85
       },
-      "soma_atributos": 240,
+      "soma_atributos": 241,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-038",
       "uniao": "NAO",
@@ -1431,9 +1431,9 @@
         "FOR": 65,
         "RES": 69,
         "INT": 68,
-        "VEL": 33
+        "VEL": 31
       },
-      "soma_atributos": 235,
+      "soma_atributos": 233,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-026",
       "uniao": "NAO",
@@ -1456,10 +1456,10 @@
         "FOR": 53,
         "RES": 79,
         "INT": 70,
-        "VEL": 35
+        "VEL": 34
       },
-      "soma_atributos": 237,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 236,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-061",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1504,11 +1504,11 @@
       "descricao_curta": "Jovem manco e marcado pela violência, tenta escapar do peso do passado e da reputação familiar.",
       "atributos": {
         "FOR": 68,
-        "RES": 53,
+        "RES": 52,
         "INT": 63,
         "VEL": 90
       },
-      "soma_atributos": 274,
+      "soma_atributos": 273,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-022",
       "uniao": "NAO",
@@ -1556,9 +1556,9 @@
         "FOR": 73,
         "RES": 92,
         "INT": 67,
-        "VEL": 42
+        "VEL": 43
       },
-      "soma_atributos": 274,
+      "soma_atributos": 275,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-123",
       "uniao": "NAO",
@@ -1578,13 +1578,13 @@
       },
       "descricao_curta": "Jovem que deseja ser jornalista, investiga acontecimentos estranhos para encontrar respostas.",
       "atributos": {
-        "FOR": 59,
+        "FOR": 58,
         "RES": 64,
         "INT": 76,
         "VEL": 86
       },
-      "soma_atributos": 285,
-      "perfil_balanceamento": "Forte",
+      "soma_atributos": 284,
+      "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-091",
       "uniao": "NAO",
       "base_narrativa": {
@@ -1604,11 +1604,11 @@
       "descricao_curta": "Empresário rico e pai de Jason, recebe Glenda em sua mansão. Educado e sorridente, sempre no papel certo, faz a casa inteira girar à sua volta.",
       "atributos": {
         "FOR": 67,
-        "RES": 45,
+        "RES": 44,
         "INT": 46,
         "VEL": 81
       },
-      "soma_atributos": 239,
+      "soma_atributos": 238,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-052",
       "uniao": "NAO",
@@ -1631,9 +1631,9 @@
         "FOR": 60,
         "RES": 80,
         "INT": 67,
-        "VEL": 27
+        "VEL": 25
       },
-      "soma_atributos": 234,
+      "soma_atributos": 232,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-121",
       "uniao": "NAO",
@@ -1655,10 +1655,10 @@
       "atributos": {
         "FOR": 86,
         "RES": 72,
-        "INT": 57,
+        "INT": 56,
         "VEL": 58
       },
-      "soma_atributos": 273,
+      "soma_atributos": 272,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-012",
       "uniao": "NAO",
@@ -1701,12 +1701,12 @@
       },
       "descricao_curta": "Espírito da família Carnam, um dos elos de uma tragédia que atravessa gerações.",
       "atributos": {
-        "FOR": 35,
+        "FOR": 36,
         "RES": 65,
         "INT": 70,
         "VEL": 46
       },
-      "soma_atributos": 216,
+      "soma_atributos": 217,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-066",
       "uniao": "NAO",
@@ -1726,12 +1726,12 @@
       },
       "descricao_curta": "Jovem ligado à história de Manu, procura enfrentar os perigos que a cercam.",
       "atributos": {
-        "FOR": 29,
+        "FOR": 28,
         "RES": 61,
         "INT": 71,
         "VEL": 63
       },
-      "soma_atributos": 224,
+      "soma_atributos": 223,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-013",
       "uniao": "NAO",
@@ -1828,10 +1828,10 @@
       "atributos": {
         "FOR": 81,
         "RES": 38,
-        "INT": 31,
+        "INT": 30,
         "VEL": 66
       },
-      "soma_atributos": 216,
+      "soma_atributos": 215,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-060",
       "uniao": "NAO",
@@ -1851,12 +1851,12 @@
       },
       "descricao_curta": "Detetive observador e obstinado, conecta pistas improváveis enquanto enfrenta suas próprias sombras.",
       "atributos": {
-        "FOR": 64,
+        "FOR": 65,
         "RES": 88,
         "INT": 86,
         "VEL": 65
       },
-      "soma_atributos": 303,
+      "soma_atributos": 304,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-032",
       "uniao": "INTEGRANTE",
@@ -1877,10 +1877,10 @@
       "atributos": {
         "FOR": 78,
         "RES": 88,
-        "INT": 68,
+        "INT": 66,
         "VEL": 68
       },
-      "soma_atributos": 302,
+      "soma_atributos": 300,
       "perfil_balanceamento": "Forte",
       "habilidade_especial_id": "AE-043",
       "uniao": "NAO",
@@ -1923,12 +1923,12 @@
       },
       "descricao_curta": "Advogado habilidoso e sarcástico, abre caminhos por favores, influência e brechas jurídicas.",
       "atributos": {
-        "FOR": 40,
+        "FOR": 38,
         "RES": 42,
         "INT": 68,
         "VEL": 60
       },
-      "soma_atributos": 210,
+      "soma_atributos": 208,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-115",
       "uniao": "NAO",
@@ -1973,10 +1973,10 @@
       "atributos": {
         "FOR": 81,
         "RES": 49,
-        "INT": 43,
+        "INT": 44,
         "VEL": 66
       },
-      "soma_atributos": 239,
+      "soma_atributos": 240,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-062",
       "uniao": "NAO",
@@ -1996,11 +1996,11 @@
       "descricao_curta": "Antigo mentor de Sete na SPAGE, conhece as operações e os segredos da organização.",
       "atributos": {
         "FOR": 81,
-        "RES": 49,
+        "RES": 48,
         "INT": 67,
         "VEL": 50
       },
-      "soma_atributos": 247,
+      "soma_atributos": 246,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-015",
       "uniao": "NAO",
@@ -2091,12 +2091,12 @@
       },
       "descricao_curta": "Hacker anônimo e aliado de Sete, rastreia informações e sistemas que outros não conseguem acessar.",
       "atributos": {
-        "FOR": 51,
+        "FOR": 49,
         "RES": 64,
         "INT": 90,
         "VEL": 68
       },
-      "soma_atributos": 273,
+      "soma_atributos": 271,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-042",
       "uniao": "NAO",
@@ -2118,9 +2118,9 @@
         "FOR": 68,
         "RES": 81,
         "INT": 65,
-        "VEL": 48
+        "VEL": 49
       },
-      "soma_atributos": 262,
+      "soma_atributos": 263,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-081",
       "uniao": "NAO",
@@ -2143,9 +2143,9 @@
         "FOR": 82,
         "RES": 61,
         "INT": 80,
-        "VEL": 56
+        "VEL": 58
       },
-      "soma_atributos": 279,
+      "soma_atributos": 281,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-103",
       "uniao": "INTEGRANTE",
@@ -2167,9 +2167,9 @@
         "FOR": 75,
         "RES": 77,
         "INT": 70,
-        "VEL": 54
+        "VEL": 55
       },
-      "soma_atributos": 276,
+      "soma_atributos": 277,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-067",
       "uniao": "NAO",
@@ -2190,11 +2190,11 @@
       "descricao_curta": "Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo.",
       "atributos": {
         "FOR": 58,
-        "RES": 45,
+        "RES": 47,
         "INT": 68,
         "VEL": 71
       },
-      "soma_atributos": 242,
+      "soma_atributos": 244,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-084",
       "uniao": "NAO",
@@ -2214,12 +2214,12 @@
       },
       "descricao_curta": "Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo.",
       "atributos": {
-        "FOR": 46,
+        "FOR": 48,
         "RES": 69,
         "INT": 65,
         "VEL": 60
       },
-      "soma_atributos": 240,
+      "soma_atributos": 242,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-078",
       "uniao": "NAO",
@@ -2239,12 +2239,12 @@
       },
       "descricao_curta": "Gêmeo de Nicolas e aprendiz de McCroys; competitivo e provocador, lança chamas, mas recusa Korvo.",
       "atributos": {
-        "FOR": 39,
+        "FOR": 38,
         "RES": 43,
         "INT": 71,
         "VEL": 44
       },
-      "soma_atributos": 197,
+      "soma_atributos": 196,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-099",
       "uniao": "NAO",
@@ -2264,12 +2264,12 @@
       },
       "descricao_curta": "Aprendiz tímida e gentil vinda da 3ª dimensão; ergue barreiras de vento. Melhor amiga de Eshley, deixa o treino cedo.",
       "atributos": {
-        "FOR": 24,
+        "FOR": 25,
         "RES": 53,
         "INT": 61,
         "VEL": 81
       },
-      "soma_atributos": 219,
+      "soma_atributos": 220,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-138",
       "uniao": "NAO",
@@ -2289,12 +2289,12 @@
       },
       "descricao_curta": "Dimensal órfã criada pela avó, sonhava treinar com Tayo; veloz e curiosa, faz passes certeiros no Fulgor Dourado.",
       "atributos": {
-        "FOR": 45,
+        "FOR": 43,
         "RES": 69,
         "INT": 68,
         "VEL": 54
       },
-      "soma_atributos": 236,
+      "soma_atributos": 234,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-051",
       "uniao": "NAO",
@@ -2316,10 +2316,10 @@
       "atributos": {
         "FOR": 69,
         "RES": 90,
-        "INT": 51,
+        "INT": 52,
         "VEL": 53
       },
-      "soma_atributos": 263,
+      "soma_atributos": 264,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-046",
       "uniao": "NAO",
@@ -2367,9 +2367,9 @@
         "FOR": 66,
         "RES": 69,
         "INT": 55,
-        "VEL": 51
+        "VEL": 53
       },
-      "soma_atributos": 241,
+      "soma_atributos": 243,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-079",
       "uniao": "NAO",
@@ -2414,12 +2414,12 @@
       },
       "descricao_curta": "Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve.",
       "atributos": {
-        "FOR": 35,
+        "FOR": 34,
         "RES": 67,
         "INT": 57,
         "VEL": 48
       },
-      "soma_atributos": 207,
+      "soma_atributos": 206,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-093",
       "uniao": "NAO",
@@ -2464,12 +2464,12 @@
       },
       "descricao_curta": "Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar.",
       "atributos": {
-        "FOR": 29,
+        "FOR": 30,
         "RES": 62,
         "INT": 54,
         "VEL": 72
       },
-      "soma_atributos": 217,
+      "soma_atributos": 218,
       "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-064",
       "uniao": "NAO",
@@ -2490,11 +2490,11 @@
       "descricao_curta": "Irmão de Primus que quer depô-lo, usando o discurso de união forçada entre os povos.",
       "atributos": {
         "FOR": 67,
-        "RES": 45,
+        "RES": 44,
         "INT": 92,
         "VEL": 46
       },
-      "soma_atributos": 250,
+      "soma_atributos": 249,
       "perfil_balanceamento": "Padrão",
       "habilidade_especial_id": "AE-137",
       "uniao": "NAO",
@@ -2517,10 +2517,10 @@
         "FOR": 62,
         "RES": 82,
         "INT": 66,
-        "VEL": 27
+        "VEL": 25
       },
-      "soma_atributos": 237,
-      "perfil_balanceamento": "Padrão",
+      "soma_atributos": 235,
+      "perfil_balanceamento": "Modesta",
       "habilidade_especial_id": "AE-097",
       "uniao": "NAO",
       "base_narrativa": {

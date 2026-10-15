@@ -21,7 +21,7 @@
 | --- | --- |
 | Elenco | **87 cartas oficiais**, distribuídas em **J 23, V 19, S 14, D 18, M 12, B 1**. Cada carta tem ID, nome, descrição curta, atributos naturais, soma e habilidade especial equipados e aprovados. |
 | Valores naturais | **0–100**, valores inteiros para **Ataque (ATQ), Defesa (DEF), Inteligência (INT), Velocidade (VEL)**. Especiais podem elevar valores temporários acima de 100. |
-| Desempate | Primeiro valor no atributo selecionado; depois **soma dos quatro atributos**; em seguida **ATQ + INT**. Empate remanescente continua **PENDENTE**, não criar moeda ou sorteio. |
+| Desempate | Primeiro valor no atributo selecionado; depois **soma dos quatro atributos** (o terceiro critério ATQ + INT foi removido em 15/10/2026; cada carta tem soma diferente das demais). Empate remanescente continua **PENDENTE**, não criar moeda ou sorteio. |
 | Pares | **ATQ/DEF** e **INT/VEL**. ATQ/INT são ofensivos; DEF/VEL são defensivos. |
 | Vitória normal | Melhor resultado ofensivo captura as cartas normais derrotadas; melhor resultado defensivo protege sua carta e envia cartas normais derrotadas ao **Buraco Negro**. Preservar exceções expressas. |
 | Formação inicial | Partidas com 2–4 jogadores, todos contra todos. **Configuração inicial aprovada para testes: 18 cartas por participante** (7 ativas, 11 na reserva): 36/54/72 cartas em partidas com 2/3/4. A seleção exata do subconjunto a partir das 87 ainda requer procedimento. |
@@ -55,7 +55,7 @@
 
 1. **Origem e momento de preparar especiais:** a regra de duas preparadas existe, mas ainda não há um procedimento completo e inequívoco de escolha/retirada da pilha.
 2. **Dupla do especial AE-010:** destino de cada uma das duas cartas normais após vitória, derrota ou empate.
-3. **Empate absoluto:** o que fazer se valor eleito, soma de quatro e ATQ+INT ainda empatarem.
+3. **Empate absoluto:** o que fazer se valor eleito e soma de quatro ainda empatarem (hoje: as cartas voltam aos donos).
 4. **Janelas anteriores à revelação:** habilidades cuja própria descrição exige agir “antes do combate” precisam de posicionamento explícito; não inverter arbitrariamente seu sentido.
 5. **AE-111 com duas especiais obrigatórias:** ordem de ativação, alvos e possíveis respostas entre os dois efeitos. A proposta é o titular escolher ordem/alvos; a regra-base de forçar todas já está aprovada.
 6. **Alvo ausente/zonas insuficientes:** comportamento quando a reserva, o Buraco Negro ou a área de alvo contiverem menos cartas que as solicitadas; não inventar roubo de outra zona.
