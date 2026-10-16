@@ -155,19 +155,13 @@
   U.zoom = function (id, opts) {
     opts = opts || {};
     const list = opts.list && opts.list.length > 1 ? opts.list : null;
-    let idx = list ? Math.max(0, list.indexOf(id)) : 0;
-    const w = Math.min(280, window.innerWidth - 60, Math.max(150, (window.innerHeight - 430) / 1.4));
+    let idx = list ? Math.max(0, list.indexOf(id)) : 0, cur = id;
+    const cw = () => Math.max(150, Math.min(520, window.innerWidth - 36, (window.innerHeight - 90) / 1.4));
     const stage = el('<div class="zoomstage"></div>');
-    function build(cid) {
-      const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial], cs = (opts.stats && opts.stats[cid]) || c.stats;
-      const wrap = el(`<div class="zoomwrap"></div>`);
-      const zc = el('<div class="zcard"></div>'); zc.append(cardEl(cid, { up: true, cw: w, stats: cs }));
-      const fb = el('<button class="favstar" type="button"></button>');
-      const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = f ? U.ICO.star : U.ICO.starO; fb.classList.toggle('on', !!f); fb.setAttribute('aria-label', f ? 'Desfavoritar' : 'Favoritar'); };
-      fb.onclick = () => { SND.play('click'); const r = window.DSSTATS.toggleFav(cid); paint(); document.querySelectorAll('.card[data-id="' + cid + '"]').forEach(x => { if (!x.closest('.zoomwrap')) x.classList.toggle('isfav', r.fav); }); if (r.unlocked && r.unlocked.length) U.toast('Conquista: ' + r.unlocked.map(a => a.nome).join(', ')); };
-      paint();
-      wrap.append(zc);
-      const max = 100;
+    // painel de detalhes (abre ao tocar na carta ou no botão ⓘ)
+    const sheet = el('<div class="zsheet" hidden></div>');
+    function detalhes(cid) {
+      const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial], cs = (opts.stats && opts.stats[cid]) || c.stats, max = 100;
       const meta = el(`<div class="meta">
         <div class="nrow"><h2>${esc(c.nome)}</h2></div>
         <div class="row"><span class="pill" style="background:${s.cor};color:${s.texto}">${esc(s.nome)}</span><span class="pill">${c.perfil ? 'Perfil: ' + esc(c.perfil) : RARIDADES[c.raridade].nome}</span>${c.uniao ? '<span class="pill">A União</span>' : ''}${c.provisorio ? '<span class="pill" style="background:#ff5a7a">proposta · não aprovada</span>' : ''}${IMG[cid] ? '' : '<span class="pill">sem foto</span>'}</div>
@@ -178,24 +172,41 @@
           <div class="stbars">${AIDS.map(a => `<div class="stbar" data-a="${a}">${ICON[a]}<i><s style="width:${Math.min(100, cs[a] / max * 100)}%"></s></i><b>${cs[a]}${cs[a] !== c.stats[a] ? ` <small class="hint">(base ${c.stats[a]})</small>` : ''}</b></div>`).join('')}</div>
         </div>
         </div>`);
-      if (window.DSSTATS) $('.nrow', meta).append(fb);
-      wrap.append(meta);
+      const fb = el('<button class="favstar" type="button"></button>');
+      const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = f ? U.ICO.star : U.ICO.starO; fb.classList.toggle('on', !!f); fb.setAttribute('aria-label', f ? 'Desfavoritar' : 'Favoritar'); };
+      fb.onclick = () => { SND.play('click'); const r = window.DSSTATS.toggleFav(cid); paint(); document.querySelectorAll('.card[data-id="' + cid + '"]').forEach(x => { if (!x.closest('.zoomstage')) x.classList.toggle('isfav', r.fav); }); if (r.unlocked && r.unlocked.length) U.toast('Conquista: ' + r.unlocked.map(a => a.nome).join(', ')); };
+      paint(); if (window.DSSTATS) $('.nrow', meta).append(fb);
       if (opts.mastery && window.DSSTATS) {
         const m = window.DSSTATS.mastery(cid), pct = m.to ? Math.min(100, Math.round((m.xp - m.from) / (m.to - m.from) * 100)) : 100;
         $('.more', meta).append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}</small></div>`));
       }
       const mb = $('.morebtn', meta), more = $('.more', meta), desc = $('.cdesc', meta);
-      mb.onclick = () => { SND.play('click'); const o = more.hidden; more.hidden = !o; if (desc) desc.classList.toggle('open', o); mb.textContent = o ? 'Ver menos' : 'Ver mais'; mb.setAttribute('aria-expanded', o); if (o) setTimeout(() => { const st = mb.closest('.zoomstage'); if (st) st.scrollTo({ top: st.scrollHeight, behavior: 'smooth' }); }, 30); };
-      return wrap;
+      mb.onclick = () => { SND.play('click'); const o = more.hidden; more.hidden = !o; if (desc) desc.classList.toggle('open', o); mb.textContent = o ? 'Ver menos' : 'Ver mais'; mb.setAttribute('aria-expanded', o); if (o) setTimeout(() => { sheet.scrollTo({ top: sheet.scrollHeight, behavior: 'smooth' }); }, 30); };
+      return meta;
     }
-    stage.append(build(id));
+    function toggleSheet(on) {
+      const open = on == null ? sheet.hidden : on;
+      if (open) { sheet.replaceChildren(detalhes(cur)); sheet.scrollTop = 0; }
+      sheet.hidden = !open; info.classList.toggle('on', open);
+    }
+    function build(cid) {
+      const wrap = el('<div class="zoomwrap"></div>');
+      const card = cardEl(cid, { up: true, cw: cw(), stats: (opts.stats && opts.stats[cid]) || CARDS[cid].stats });
+      card.classList.add('zfcard'); card.addEventListener('click', () => { SND.play('click'); toggleSheet(); });
+      wrap.append(card); return wrap;
+    }
+    const first = build(id); first.classList.add('zin-zoom'); stage.append(first);
     const root = el('<div class="zoomroot"></div>');
-    root.append(stage);
+    const info = el('<button class="zfbtn zinfo" type="button" aria-label="Detalhes da carta">i</button>');
+    info.onclick = () => { SND.play('click'); toggleSheet(); };
+    stage.addEventListener('click', e => { if (e.target === stage || e.target.classList.contains('zoomwrap')) toggleSheet(false); });
+    root.append(stage, sheet, info);
     let counter = null, busy = false;
     function go(dir) {
       if (!list || busy) return; busy = true;
-      idx = (idx + dir + list.length) % list.length;
-      const old = stage.firstElementChild, nw = build(list[idx]);
+      idx = (idx + dir + list.length) % list.length; cur = list[idx];
+      toggleSheet(false);
+      const old = stage.firstElementChild, nw = build(cur);
       const red = document.body.classList.contains('reduce');
       nw.classList.add(red ? 'zin-fade' : dir > 0 ? 'zin-r' : 'zin-l');
       if (old) { old.classList.add(red ? 'zout-fade' : dir > 0 ? 'zout-l' : 'zout-r'); setTimeout(() => old.remove(), 260); }
@@ -206,18 +217,18 @@
     }
     let m;
     if (list) {
-      const prev = el('<button class="btn zoomnav prev" aria-label="Carta anterior">◀</button>');
-      const next = el('<button class="btn zoomnav next" aria-label="Próxima carta">▶</button>');
+      const prev = el('<button class="zfbtn zoomnav prev" aria-label="Carta anterior">◀</button>');
+      const next = el('<button class="zfbtn zoomnav next" aria-label="Próxima carta">▶</button>');
       counter = el(`<div class="zoomcount">${idx + 1} / ${list.length}</div>`);
       prev.onclick = () => go(-1); next.onclick = () => go(1);
-      const foot = el('<div class="zoomfoot"></div>'); foot.append(prev, counter, next); root.append(foot);
+      root.append(prev, next, counter);
       const key = e => { if (e.key === 'ArrowLeft') go(-1); else if (e.key === 'ArrowRight') go(1); };
       document.addEventListener('keydown', key);
       let x0 = null;
       root.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
       root.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); });
-      m = U.modal(root, { cls: 'zoombox', onclose: () => document.removeEventListener('keydown', key) });
-    } else m = U.modal(root, { cls: 'zoombox' });
+      m = U.modal(root, { cls: 'zoombox zoomfs', onclose: () => document.removeEventListener('keydown', key) });
+    } else m = U.modal(root, { cls: 'zoombox zoomfs' });
     SND.play('click');
     return m;
   };
