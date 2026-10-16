@@ -315,13 +315,22 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .spline b { color: var(--gold2); }
 
 /* navegação na ampliação da carta */
-.zoomroot { position: relative; padding: 0 44px; }
-.zoomstage { position: relative; display: grid; }
+.zoomroot { position: relative; padding: 0; display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.zoomstage { position: relative; display: grid; overflow-x: hidden; overflow-y: auto; min-height: 0; flex: 1; align-content: start; }
 .zoomstage > .zoomwrap { grid-area: 1 / 1; }
-.zoomnav { position: absolute; top: 50%; transform: translateY(-50%); width: 38px; height: 54px; padding: 0; display: grid; place-items: center; font-size: 18px; z-index: 3; }
-.zoomnav.prev { left: -6px; } .zoomnav.next { right: -6px; }
-.zoomnav:hover { transform: translateY(-50%) scale(1.08); }
-.zoomcount { text-align: center; margin-top: 10px; font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--ink2); }
+.zoomnav { width: 56px; height: 44px; padding: 0; display: grid; place-items: center; font-size: 18px; }
+.zoomcount { text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--ink2); }
+.zoomfoot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 10px; margin-top: 8px; border-top: 1px solid var(--line); }
+.modal .box.zoombox { display: flex; flex-direction: column; overflow: hidden; padding-top: 52px; max-height: 100%; }
+.zcard { position: relative; flex: none; }
+.nrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.more[hidden] { display: none; }
+.favstar { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1px solid #ffffff33; background: #ffffff10; color: var(--ink); cursor: pointer; padding: 0; }
+.favstar svg { width: 20px; height: 20px; } .favstar.on { color: #ffd25f; border-color: #ffd25f99; }
+.cdesc { margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--ink2); }
+.cdesc.open { -webkit-line-clamp: unset; display: block; }
+.morebtn { align-self: flex-start; }
+.more { display: flex; flex-direction: column; gap: 10px; }
 @keyframes zinR { from { opacity: 0; transform: translateX(60px) rotate(3deg) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes zinL { from { opacity: 0; transform: translateX(-60px) rotate(-3deg) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes zoutL { to { opacity: 0; transform: translateX(-60px) rotate(-3deg) scale(.96); } }
@@ -330,7 +339,6 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .zin-r { animation: zinR .28s cubic-bezier(.2,.8,.3,1) both; } .zin-l { animation: zinL .28s cubic-bezier(.2,.8,.3,1) both; }
 .zout-l { animation: zoutL .26s ease-in both; pointer-events: none; } .zout-r { animation: zoutR .26s ease-in both; pointer-events: none; }
 .zin-fade { animation: zfade .2s both; } .zout-fade { opacity: 0; transition: opacity .2s; pointer-events: none; }
-@media (max-width: 560px) { .zoomroot { padding: 0 6px 52px; } .zoomnav { top: auto; bottom: -4px; transform: none; height: 40px; width: 52px; } .zoomnav:hover { transform: scale(1.06); } .zoomnav.prev { left: 8px; } .zoomnav.next { right: 8px; } }
 
 /* telas baixas (notebook com barra do navegador, celular deitado) */
 @media (max-height: 700px) {

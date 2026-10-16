@@ -156,28 +156,36 @@
     opts = opts || {};
     const list = opts.list && opts.list.length > 1 ? opts.list : null;
     let idx = list ? Math.max(0, list.indexOf(id)) : 0;
-    const w = Math.min(280, window.innerWidth - 60);
+    const w = Math.min(280, window.innerWidth - 60, Math.max(150, (window.innerHeight - 430) / 1.4));
     const stage = el('<div class="zoomstage"></div>');
     function build(cid) {
       const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial], cs = (opts.stats && opts.stats[cid]) || c.stats;
       const wrap = el(`<div class="zoomwrap"></div>`);
-      wrap.append(cardEl(cid, { up: true, cw: w, stats: cs }));
+      const zc = el('<div class="zcard"></div>'); zc.append(cardEl(cid, { up: true, cw: w, stats: cs }));
+      const fb = el('<button class="favstar" type="button"></button>');
+      const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = f ? U.ICO.star : U.ICO.starO; fb.classList.toggle('on', !!f); fb.setAttribute('aria-label', f ? 'Desfavoritar' : 'Favoritar'); };
+      fb.onclick = () => { SND.play('click'); const r = window.DSSTATS.toggleFav(cid); paint(); document.querySelectorAll('.card[data-id="' + cid + '"]').forEach(x => { if (!x.closest('.zoomwrap')) x.classList.toggle('isfav', r.fav); }); if (r.unlocked && r.unlocked.length) U.toast('Conquista: ' + r.unlocked.map(a => a.nome).join(', ')); };
+      paint();
+      wrap.append(zc);
       const max = 100;
-      wrap.append(el(`<div class="meta">
-        <h2>${esc(c.nome)}</h2>
+      const meta = el(`<div class="meta">
+        <div class="nrow"><h2>${esc(c.nome)}</h2></div>
         <div class="row"><span class="pill" style="background:${s.cor};color:${s.texto}">${esc(s.nome)}</span><span class="pill">${c.perfil ? 'Perfil: ' + esc(c.perfil) : RARIDADES[c.raridade].nome}</span>${c.uniao ? '<span class="pill">A União</span>' : ''}${c.provisorio ? '<span class="pill" style="background:#ff5a7a">proposta · não aprovada</span>' : ''}${IMG[cid] ? '' : '<span class="pill">sem foto</span>'}</div>
         <div class="spbox"><b>✦ ${esc(sp ? sp.nome : '—')}</b><br><span>${esc(sp ? sp.texto : '')}</span>${sp && sp.stub ? '<br><span class="hint">⚠ Efeito ainda não implementado neste protótipo.</span>' : ''}</div>
-        <div class="stbars">${AIDS.map(a => `<div class="stbar" data-a="${a}">${ICON[a]}<i><s style="width:${Math.min(100, cs[a] / max * 100)}%"></s></i><b>${cs[a]}${cs[a] !== c.stats[a] ? ` <small class="hint">(base ${c.stats[a]})</small>` : ''}</b></div>`).join('')}</div>
-        ${c.descricao ? `<p>${esc(c.descricao)}</p>` : ''}
-        </div>`));
+        ${c.descricao ? `<p class="cdesc">${esc(c.descricao)}</p>` : ''}
+        <button class="btn sm morebtn" type="button" aria-expanded="false">Ver mais</button>
+        <div class="more" hidden>
+          <div class="stbars">${AIDS.map(a => `<div class="stbar" data-a="${a}">${ICON[a]}<i><s style="width:${Math.min(100, cs[a] / max * 100)}%"></s></i><b>${cs[a]}${cs[a] !== c.stats[a] ? ` <small class="hint">(base ${c.stats[a]})</small>` : ''}</b></div>`).join('')}</div>
+        </div>
+        </div>`);
+      if (window.DSSTATS) $('.nrow', meta).append(fb);
+      wrap.append(meta);
       if (opts.mastery && window.DSSTATS) {
         const m = window.DSSTATS.mastery(cid), pct = m.to ? Math.min(100, Math.round((m.xp - m.from) / (m.to - m.from) * 100)) : 100;
-        wrap.querySelector('.meta').append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}</small></div>`));
+        $('.more', meta).append(el(`<div class="mast"><div class="mh">${m.lv ? U.emblem(m.lv, 44) : '<span class="memp"></span>'}<div><b>${m.lv ? 'Maestria: ' + esc(m.nome) : 'Maestria: ainda sem emblema'}</b><small class="hint">${m.to ? `${m.xp}/${m.to} XP para ${esc(window.DSSTATS.MAST_NOME[m.lv + 1])}` : `${m.xp} XP · nível máximo`}</small></div></div><div class="bar"><i style="width:${pct}%"></i></div><small class="hint">${m.u} ${m.u === 1 ? 'uso' : 'usos'} · ${m.w} ${m.w === 1 ? 'disputa vencida' : 'disputas vencidas'} · ${m.s} ${m.s === 1 ? 'especial resolvido' : 'especiais resolvidos'}</small></div>`));
       }
-      const meta = $('.meta', wrap), fb = el('<button class="btn sm favbtn" type="button"></button>');
-      const paint = () => { const f = window.DSSTATS && window.DSSTATS.isFav(cid); fb.innerHTML = (f ? U.ICO.star : U.ICO.starO) + (f ? 'Favorita' : 'Favoritar'); fb.classList.toggle('on', !!f); };
-      fb.onclick = () => { SND.play('click'); const r = window.DSSTATS.toggleFav(cid); paint(); document.querySelectorAll('.card[data-id="' + cid + '"]').forEach(x => { if (!x.closest('.zoomwrap')) x.classList.toggle('isfav', r.fav); }); if (r.unlocked && r.unlocked.length) U.toast('Conquista: ' + r.unlocked.map(a => a.nome).join(', ')); };
-      paint(); meta.insertBefore(fb, meta.children[1]);
+      const mb = $('.morebtn', meta), more = $('.more', meta), desc = $('.cdesc', meta);
+      mb.onclick = () => { SND.play('click'); const o = more.hidden; more.hidden = !o; if (desc) desc.classList.toggle('open', o); mb.textContent = o ? 'Ver menos' : 'Ver mais'; mb.setAttribute('aria-expanded', o); if (o) setTimeout(() => { const st = mb.closest('.zoomstage'); if (st) st.scrollTo({ top: st.scrollHeight, behavior: 'smooth' }); }, 30); };
       return wrap;
     }
     stage.append(build(id));
@@ -202,7 +210,7 @@
       const next = el('<button class="btn zoomnav next" aria-label="Próxima carta">▶</button>');
       counter = el(`<div class="zoomcount">${idx + 1} / ${list.length}</div>`);
       prev.onclick = () => go(-1); next.onclick = () => go(1);
-      root.append(prev, next, counter);
+      const foot = el('<div class="zoomfoot"></div>'); foot.append(prev, counter, next); root.append(foot);
       const key = e => { if (e.key === 'ArrowLeft') go(-1); else if (e.key === 'ArrowRight') go(1); };
       document.addEventListener('keydown', key);
       let x0 = null;
