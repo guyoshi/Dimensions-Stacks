@@ -56,15 +56,15 @@ Fonte: `Viajantes Dimensionais/1 - A Patrulha de Korvo/01 - Canon/02 - Personage
 | V04 | Beatriz Lins | Fogo/caos, difícil de controlar |
 | V05 | Velho-Sábio / Auream | Mentor e conhecedor de Korvo |
 | V06 | Erla | Liderança da Vigilância de Tayo |
-| V07 | Lucas Veline | Governante de Tayo |
-| V08 | Garmand | Aliado/Sociedade de Tayo |
+| V07 | Lucan Veline | Governante de Tayo |
+| V08 | Garmande Koraveli | Aliado/Sociedade de Tayo |
 | V09 | Ricochet Bombergue | Aliado/Sociedade de Tayo |
 | V10 | Korvo | Dimensal e mago negro |
 | V11 | Gary | Ligado à Vigilância e a Korvo |
 | V12 | Anasin | Integrante da Patrulha de Korvo |
 | V13 | Saliens | Integrante da Patrulha de Korvo |
 | V14 | Tio Frank | Responsável pelos irmãos Lins após a morte dos pais |
-| V15 | Brenda | Aprendiz de Tayo; futura integrante de A União |
+| V15 | Brenda Koraveli | Aprendiz de Tayo; futura integrante de A União |
 | V16 | Facka (grafada **Faka** no manuscrito) | Jovem Aracna curiosa, guia os irmãos pelos túneis até o território Obb; **Facka** é a grafia solicitada pelo autor para a carta, pendente padronização no livro |
 | V17 | Lanigiah | **Rainha das Aracnas**, personagem imponente que submete Banjo a uma experiência ligada a memórias e coragem; não confundir com realeza Obb |
 | V18 | Grande Pai Gaia | Líder dos Obbs de Pinesoto, usa raízes e troncos para defender seu povo; referido como “Grande Pai” no manuscrito |
@@ -152,7 +152,7 @@ O autor confirmou sete integrantes na formação informada e Jennifer como futur
 | Selo da União | Personagem | Série/base da carta | Estado |
 | --- | --- | --- | --- |
 | U01 | Bruno Lins Lee | Viajantes Dimensionais (V02) | Integrante |
-| U02 | Brenda | Viajantes Dimensionais (V15) | Integrante |
+| U02 | Brenda Koraveli | Viajantes Dimensionais (V15) | Integrante |
 | U03 | Hyde | Mistério Oculto (M01) | Integrante; cabeça/líder; fundador ainda não decidido |
 | U04 | Releuz (provisório) | Mistério Oculto (M10) | Integrante |
 | U05 | Jasmey Badrock | Spacetheft (S01) | Integrante |

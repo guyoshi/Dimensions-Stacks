@@ -44,7 +44,7 @@
 - **Fonte oficial do conteúdo:** os 87 registros do JSON oficial, validados contra a tabela Markdown. Os nomes de chaves do JSON oficial (ex.: `atributos.ATQ`, `habilidade_especial_id`) prevalecem sobre chaves de arquivos antigos marcadas `_propostos`.
 - **78/129 IDs de habilidade estão equipados**; 51 efeitos não possuem carta nesta versão do baralho. **Nunca distribua os 51 automaticamente**.
 - **AE-104 foi aposentada; os efeitos históricos #18, #24 e #52 continuam excluídos.** A habilidade **AE-129**, uma vitória automática rara *diferente*, está aprovada para **S01 Jasmey**. Não ressuscitar o #52 antigo.
-- **A União:** Bruno (V02), Brenda (V15), Hyde (M01), Releuz (M10), Jasmey (S01), Mark Polar (J03), Édelin (B01); Jennifer (D06) entra depois, porém sua carta base já existe. Selo próprio sem cor exclusiva.
+- **A União:** Bruno (V02), Brenda Koraveli (V15), Hyde (M01), Releuz (M10), Jasmey (S01), Mark Polar (J03), Édelin (B01); Jennifer (D06) entra depois, porém sua carta base já existe. Selo próprio sem cor exclusiva.
 - **Família Carnam:** D07 Ingrid, D13 Suéten, D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso (cão). D17 **não é** D10 Avó de Kelly. A arma associada ao Elo de Carnam não significa que Carnam seja o pai de Vini.
 - **Viajantes Dimensionais adicionados:** V16 Facka (Faka no manuscrito), V17 Lanigiah (rainha Aracnas), V18 Grande Pai Gaia (líder Obbs) e V19 Seti (guerreiro Obb).
 - **Cartas históricas físicas:** são fonte de ideias, mas nomes, valores e representações não são herdados automaticamente pelas cartas digitais.

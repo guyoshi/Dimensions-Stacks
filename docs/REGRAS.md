@@ -161,7 +161,7 @@ Documentos complementares: [Habilidades especiais](BIBLIOTECA_ATAQUES_ESPECIAIS.
 
 **Decisão editorial visual confirmada:** o autor aprovou **cores por série**, deixando de associar verde a heróis e vermelho a vilões. Selos identificam A União e raridade sem duplicar obrigatoriamente personagens.
 
-**Filiação oficial de A União:** Bruno Lins Lee, Brenda, Hyde, Releuz (provisório), Jasmey Badrock, Mark Polar (também grafado Pollar em registros antigos), Édelin Lys; Jennifer ingressa futuramente. Hyde é a cabeça/liderança indicada para o grupo; **identidade do fundador ainda não fechada**. Ver [elenco candidato](ELENCO_CANDIDATO.md#7-a-união--filiação-oficial-sem-duplicar-cartas).
+**Filiação oficial de A União:** Bruno Lins Lee, Brenda Koraveli, Hyde, Releuz (provisório), Jasmey Badrock, Mark Polar (também grafado Pollar em registros antigos), Édelin Lys; Jennifer ingressa futuramente. Hyde é a cabeça/liderança indicada para o grupo; **identidade do fundador ainda não fechada**. Ver [elenco candidato](ELENCO_CANDIDATO.md#7-a-união--filiação-oficial-sem-duplicar-cartas).
 
 ## 14. Decisões confirmadas: especiais 09 e 59 e choque de atributos (12/10/2026)
 
@@ -227,7 +227,7 @@ Destaques para especificação futura:
 
 ## 17. Inventário ampliado e novas questões mecânicas (12/10/2026)
 
-**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com habilidades especiais **não recuperados**. Ver [inventário principal](BIBLIOTECA_ATAQUES_ESPECIAIS.md) e tabela de leituras ainda provisórias.
+**Atualização de numeração:** 59 dos possíveis 62 números de cartas físicas identificados; faltam **16, 26 e 55**. Identificações oficiais adicionais fornecidas pelo autor: **03 Édelin, 05 Brenda Koraveli, 08 Breno, 39 Capitã Nastácia**. Essas quatro cartas continuam com habilidades especiais **não recuperados**. Ver [inventário principal](BIBLIOTECA_ATAQUES_ESPECIAIS.md) e tabela de leituras ainda provisórias.
 
 ### Efeitos recentemente ampliados (origem: texto reconstruído por IA e fornecido pelo autor)
 

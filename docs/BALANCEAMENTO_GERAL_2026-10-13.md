@@ -14,7 +14,7 @@ Escopo: 97 cartas (Manu/D19 entrou depois e não foi simulada) × 78 habilidades
 2. **A causa é o pico de atributo, não a soma.** Quem inicia escolhe qualquer um dos 4 atributos, então um INT 95+ vence quase toda disputa nesse atributo. Cartas acima do que a soma indica: Velho-Sábio (Padrão, INT 96, pc 96), James Harrow (Padrão, INT 96, pc 94), X (Frágil, soma 171, INT 99, pc 90), Lias Hardman (Frágil, INT 96, pc 85), Hyde (INT 100).
 3. **Mais fortes (pc):** Korvo 100, Agouro 99, William McCroys 98, Grande Pai Gaia 97, Velho-Sábio 96, Agente Sete 95, Harrow 94, Agente Seis 93, Lanigiah 92, Hyde 91, X 90, Édelin Lys 89.
 4. **Mais fracas (pc):** Diego Tavolieri 1, Tio Frank 2, A Mãe 3, Filipo Brandolini 4, Gary 5, Diana 6, O Pai 7, Suéten 8, Mariv 9, Nicolas Corvane 10.
-5. **Inversões graves (carta forte, habilidade fraca):** Hyde (−73), X (−72), Agente Sete (−71), Mark Polar (−68), Lias Hardman (−67), Vivian (−63), Alekta (−58), Ricochet (−55), Brenda (−48).
+5. **Inversões graves (carta forte, habilidade fraca):** Hyde (−73), X (−72), Agente Sete (−71), Mark Polar (−68), Lias Hardman (−67), Vivian (−63), Alekta (−58), Ricochet (−55), Brenda Koraveli (−48).
 6. **Inversões graves (carta fraca, habilidade forte = bateria barata):** Vek (+77), Luna Stellar (+68), Diana (+68), Alyra (+60), O'reilly (+59), Nicolas Corvane (+59), Erick Corvane (+59), Kord (+55), O Pai (+53), Erla (+51).
 7. **Habilidades reativas subestimadas:** o bot quase não usa habilidades reativas (uso ≈ 0), então o valor medido delas é um piso. Vários "ps baixos" acima (AE-115, 116, 120, 130, 113, 073) podem ser artefato do bot, não fraqueza real. Validar com bot que use reativas antes de concluir.
 8. **Dados fora de sincronia:** `habilidades_129.json` → `cartas_atribuidas` está desatualizado em relação a `cartas_87.json` (41 de 78 habilidades divergem). Não corrigido.
@@ -76,7 +76,7 @@ Risco: a habilidade pode ter relação narrativa com o personagem; decisão do a
 | S17 Luna Stellar | AE-093 — Espionagem tripla | AE-056 — Troca de topos à esquerda |
 | V03 Banjo Lins | AE-080 — Anular modificador | AE-011 — Força → Inteligência |
 | V04 Beatriz Lins | AE-067 — Descarte adversário | AE-127 — Permutar Inteligência e Resistência |
-| V08 Garmand | AE-004 — Arrancada | AE-088 — Retorno imediato |
+| V08 Garmande Koraveli | AE-004 — Arrancada | AE-088 — Retorno imediato |
 | M04 Matt Pontas | AE-100 — Confundir próximo turno | AE-015 — Resistência → Inteligência |
 | V18 Grande Pai Gaia | AE-103 — Ruína de campo | AE-007 — Ímpeto ofensivo |
 | S16 A Engenheira | AE-085 — Resgate escolhido | AE-070 — Conquista compensada |
@@ -139,7 +139,7 @@ O bônus pequeno ainda rende muito para o bot porque ele usa a habilidade só qu
 
 ## Especiais de baixo valor trocados e especiais novos (14/10/2026, autorizado pelo autor)
 
-**Critério:** valor medido abaixo de 47% de vitórias para o bot que usa o especial (quem nunca usa vence 48%). O AE-068 Tributo por sacrifício saiu de S11 A Besta e foi para M05 Padre Tomas, o personagem mais fraco, a pedido do autor. Ficaram de fora o AE-073 de V15 Brenda (integrante de A União), o AE-093 de D19 Manu (aprovado pelo autor) e o AE-130 de V06 Erla (pedido do autor).
+**Critério:** valor medido abaixo de 47% de vitórias para o bot que usa o especial (quem nunca usa vence 48%). O AE-068 Tributo por sacrifício saiu de S11 A Besta e foi para M05 Padre Tomas, o personagem mais fraco, a pedido do autor. Ficaram de fora o AE-073 de V15 Brenda Koraveli (integrante de A União), o AE-093 de D19 Manu (aprovado pelo autor) e o AE-130 de V06 Erla (pedido do autor).
 
 **Especiais novos criados (12; texto completo na seção O da biblioteca):**
 
@@ -160,7 +160,7 @@ O bônus pequeno ainda rende muito para o bot porque ele usa a habilidade só qu
 
 AE-131, AE-132 e AE-134 têm valor alto no bot porque ele só os usa quando sabe que viram o resultado; por isso foram para as cartas mais fracas, e nenhuma carta com eles passou de 35% de vitórias. O AE-134 é o primeiro especial de reação que não depende de um especial rival: a janela de reação abre para quem o tem preparado.
 
-**Trocas de especial (antes → depois):** M03 Diana AE-120 → AE-134 · D14 Filipo AE-077 → AE-131 · D03 Pedro AE-084 → AE-132 · V07 Lucas AE-097 → AE-140 · J07 Mariv AE-090 → AE-136 · S11 A Besta AE-068 → AE-133 · V21 Shirley AE-076 → AE-141 · V24 Maria Santoro AE-080 → AE-138 · S05 Kord AE-113 → AE-137 · S12 Vek AE-115 → AE-135 · J09 Alyra AE-116 → AE-040 · V09 Ricochet AE-017 → AE-139 · V08 Garmand AE-088 → AE-044 · V01 Breno AE-078 → AE-001 · M09 Richard AE-118 → AE-036 · J23 Kedran AE-079 → AE-125 · J11 Cal Edran AE-074 → AE-014 · V19 Seti AE-105 → AE-142 · M05 Padre Tomas AE-092 → AE-068.
+**Trocas de especial (antes → depois):** M03 Diana AE-120 → AE-134 · D14 Filipo AE-077 → AE-131 · D03 Pedro AE-084 → AE-132 · V07 Lucas AE-097 → AE-140 · J07 Mariv AE-090 → AE-136 · S11 A Besta AE-068 → AE-133 · V21 Shirley AE-076 → AE-141 · V24 Maria Santoro AE-080 → AE-138 · S05 Kord AE-113 → AE-137 · S12 Vek AE-115 → AE-135 · J09 Alyra AE-116 → AE-040 · V09 Ricochet AE-017 → AE-139 · V08 Garmande Koraveli AE-088 → AE-044 · V01 Breno AE-078 → AE-001 · M09 Richard AE-118 → AE-036 · J23 Kedran AE-079 → AE-125 · J11 Cal Edran AE-074 → AE-014 · V19 Seti AE-105 → AE-142 · M05 Padre Tomas AE-092 → AE-068.
 
 Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_129.json`).
 
@@ -263,7 +263,7 @@ Simulação de 1.500 partidas por modo (bot difícil, 2 e 4 jogadores, especiais
 | J22 Sefter | AE-071 — Ausência tática | AE-076 — Guardião do baralho |
 | V04 Beatriz Lins | AE-127 — Permutar Inteligência e Resistência | AE-007 — Ímpeto ofensivo |
 | V05 Velho-Sábio / Auream | AE-008 — Guarda equilibrada | AE-140 — Mente afiada |
-| V07 Lucas Veline | AE-140 — Mente afiada | AE-070 — Conquista compensada |
+| V07 Lucan Veline | AE-140 — Mente afiada | AE-070 — Conquista compensada |
 | V09 Ricochet Bombergue | AE-139 — Disparada | AE-072 — Não perder a carta |
 | V10 Korvo | AE-087 — Reabastecimento da reserva | AE-049 — Escolha da reserva |
 | V11 Gary | AE-003 — Clarividência | AE-058 — Passe à direita |
@@ -348,7 +348,7 @@ As cotas de raridade por série (11% / 21% / 33%) são aproximadas. Regra extra:
 | J13 | Nynestra | 65/35/71/49 | 71/49/65/35 |
 | J23 | Kedran | 33/22/72/54 | 33/22/54/72 |
 | V06 | Erla | 70/70/89/73 | 89/73/70/70 |
-| V07 | Lucas Veline | 31/38/72/71 | 31/38/71/72 |
+| V07 | Lucan Veline | 31/38/72/71 | 31/38/71/72 |
 | V09 | Ricochet Bombergue | 67/57/90/76 | 67/57/76/90 |
 | V12 | Anasin | 70/52/76/73 | 70/52/73/76 |
 | V14 | Tio Frank | 12/35/84/35 | 12/35/35/84 |

@@ -55,7 +55,7 @@ Estado anterior guardado em `dados/historico/cartas_87_antes_unicidade_2026-10-1
 | V04 | Beatriz Lins | Inteligência | 68 | 67 | 314 |
 | V05 | Velho-Sábio / Auream | Velocidade | 44 | 45 | 276 |
 | V06 | Erla | Inteligência | 70 | 69 | 301 |
-| V07 | Lucas Veline | Força | 31 | 29 | 210 |
+| V07 | Lucan Veline | Força | 31 | 29 | 210 |
 | V12 | Anasin | Resistência | 52 | 51 | 270 |
 | V13 | Saliens | Inteligência | 56 | 57 | 280 |
 | V19 | Seti | Velocidade | 35 | 32 | 209 |
@@ -64,6 +64,6 @@ Estado anterior guardado em `dados/historico/cartas_87_antes_unicidade_2026-10-1
 | V22 | Nicolas Corvane | Força | 46 | 48 | 242 |
 | V23 | Erick Corvane | Força | 39 | 38 | 196 |
 | V24 | Maria Santoro | Força | 24 | 25 | 220 |
-| V25 | Eshley Damaris | Força | 45 | 43 | 234 |
+| V25 | Eshley | Força | 45 | 43 | 234 |
 
 Regra para cartas novas: antes de entrar no baralho, conferir que a soma dos 4 atributos não repete nenhuma outra (teste `tests/somas_unicas.js`).

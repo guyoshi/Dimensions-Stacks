@@ -32,7 +32,7 @@
     "regras": "docs/REGRAS.md",
     "contrato": "docs/CONTRATO_PARA_IA_IMPLEMENTADORA.md",
     "ressalva": "Aprovado como conteudo das cartas. Nao certifica equilibrio testado nem corrige lacunas de procedimentos de combate; conferir pendencias no contrato. Confianca narrativa nao altera status de aprovacao da carta.",
-    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação). V24 Maria Santoro e V25 Eshley Damaris (Viajantes Dimensionais) também adicionadas a pedido do autor, com o mesmo status.",
+    "revisao_13_10_2026_novas_cartas": "V20–V23 e S15–S18 adicionadas a pedido do autor, com status PROPOSTA_AGUARDANDO_APROVACAO (aparecem com a faixa PRÉVIA no jogo até aprovação). V24 Maria Santoro e V25 Eshley (Viajantes Dimensionais) também adicionadas a pedido do autor, com o mesmo status.",
     "revisao_13_10_2026_balanceamento": "Autorizado pelo autor em 13/10/2026 (ver docs/BALANCEAMENTO_GERAL_2026-10-13.md): (A) troca de habilidades entre 6 pares de cartas (Hyde/Vek, Agente Sete/Erla, Mark Polar/Alyra, Vivian/Kord, X/Luna Stellar, Lias Hardman/Diana); (B) teto de 95 por atributo; (C) raridade visual (losangos) pelo poder = soma + 16 x maior atributo. Atributos e perfis recalculados onde o teto alterou a soma.",
     "revisao_13_10_2026_especiais_repetidos": "Autorizado pelo autor em 13/10/2026: nenhum especial se repete entre cartas. 20 cartas que repetiam especial receberam especiais antes sem carta, casando a força da carta com o valor do especial (simulação). J10 AE-096→AE-060; S03 AE-069→AE-016; J05 AE-076→AE-124; S18 AE-116→AE-123; J12 AE-105→AE-052; V23 AE-106→AE-009; J21 AE-093→AE-038; D17 AE-093→AE-058; S17 AE-093→AE-056; V03 AE-080→AE-011; V04 AE-067→AE-127; V08 AE-004→AE-088; M04 AE-100→AE-015; V18 AE-103→AE-007; S16 AE-085→AE-070; D07 AE-051→AE-029; D10 AE-092→AE-027; M11 AE-039→AE-042; V22 AE-028→AE-057; V20 AE-111→AE-005",
     "revisao_13_10_2026_atributos_renomeados": "Autorizado pelo autor em 13/10/2026: atributos Ataque e Defesa passam a se chamar Força (FOR) e Resistência (RES), para não confundir com o tipo de vitória (ataque/defesa). As regras e os números não mudam; as chaves ATQ/DEF dos dados viraram FOR/RES. Os especiais de tipo (Ataque obrigatório, Defesa obrigatória, Forçar/Proibir ataque ou defesa, Ataque que bane, Defesa que captura, Ataque em dupla) mantêm o nome.",
@@ -748,7 +748,7 @@
     },
     {
       "id": "V07",
-      "nome": "Lucas Veline",
+      "nome": "Lucan Veline",
       "origem": {
         "codigo_serie": "V",
         "cor_base": "azul"
@@ -772,7 +772,7 @@
     },
     {
       "id": "V08",
-      "nome": "Garmand",
+      "nome": "Garmande Koraveli",
       "origem": {
         "codigo_serie": "V",
         "cor_base": "azul"
@@ -940,7 +940,7 @@
     },
     {
       "id": "V15",
-      "nome": "Brenda",
+      "nome": "Brenda Koraveli",
       "origem": {
         "codigo_serie": "V",
         "cor_base": "azul"
@@ -2282,7 +2282,7 @@
     },
     {
       "id": "V25",
-      "nome": "Eshley Damaris",
+      "nome": "Eshley",
       "origem": {
         "codigo_serie": "V",
         "cor_base": "azul"
