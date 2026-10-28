@@ -18,6 +18,10 @@ Complementa `MODO_HISTORIA_A_UNIAO_PROPOSTA_2026-10-28.md`. Onde há diferença,
 - **Dados dos personagens:** buscar no GitHub "dimensões infinitas".
 - Ao criar cartas novas, o sistema precisa saber **quantas vezes cada carta aparece no mapa** e **quais batalhas são substituíveis** para encaixá-las.
 
+- **Batalhas de defesa** (sem ataque, não dá para capturar): servem para dar **pêndulos** e **avançar o caminho**; nunca guardam cartas exclusivas.
+- **Becos sem saída:** vários, nem todo nó precisa ter continuação. Alguns becos têm **baús**: uns com **cartas** (quantidade aleatória, 1, 2 ou 3, a definir), outros com **pêndulos**.
+- **Cartas iniciais (substitui "7 fracas aleatórias"):** **6 comuns e 1 épica**.
+
 ## Etapas
 
 1. **Mapa navegável todo aberto, interface do mapa e tela inicial (Novo jogo / Continuar).** *Feita nesta versão.*
