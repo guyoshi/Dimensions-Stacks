@@ -926,7 +926,7 @@
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
-    newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, shared: true });
+    newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, duo: !!cfg.teams, ev: cfg.events !== false, shared: true });
     G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
@@ -950,7 +950,7 @@
     const seats = ctl.seats, host = ctl.role === 'host', link = ctl.link, cfg = ctl.cfg;
     V = { n: seats.length, humans: 1, online: true, ctl, viewer: ctl.viewer, noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     U.show('game'); shell();
-    newRec({ viewer: ctl.viewer, online: true, humans: seats.filter(s => !s.bot).length, n: seats.length, diff: recDiff(seats, cfg.diff), per: cfg.per, sf: cfg.sf, shared: host });
+    newRec({ viewer: ctl.viewer, online: true, humans: seats.filter(s => !s.bot).length, n: seats.length, diff: recDiff(seats, cfg.diff), per: cfg.per, sf: cfg.sf, duo: !!cfg.teams, ev: cfg.ev !== false, shared: host });
     const local = makeIO(), off = [], pending = new Map(); let seq = 0, closed = false;
     U.onlineOff = () => { closed = true; off.forEach(f => { try { f(); } catch (e) { } }); pending.forEach(q => q.finish(undefined)); pending.clear(); };
     const send = (o, to) => { if (!closed) link.send('ev', o, to).catch(() => { }); };

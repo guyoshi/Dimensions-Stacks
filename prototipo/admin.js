@@ -60,9 +60,9 @@
       if (stop.on) break;
       const diff = o.diff === 'misto' ? ['facil', 'normal', 'dificil'][Math.floor(Math.random() * 3)] : o.diff;
       const players = [...Array(o.players)].map((_, k) => ({ name: 'CPU ' + (k + 1), bot: true, avatar: k }));
-      const rec = st.recorder({ viewer: -1, online: false, humans: 0, n: o.players, diff, per: o.per, sf: o.sf, sim: true });
+      const rec = st.recorder({ viewer: -1, online: false, humans: 0, n: o.players, diff, per: o.per, sf: o.sf, sim: true, duo: o.duo, ev: o.ev });
       let G, res = null;
-      G = new E.Game({ players, perPlayer: o.per, difficulty: diff, specialsFrom: o.sf, io: { notify: async (t, d) => { const r = rec.ev(t, d, G); if (r) res = r; } } });
+      G = new E.Game({ players, perPlayer: o.per, difficulty: diff, specialsFrom: o.sf, events: o.ev, teams: o.duo ? [[0, 2], [1, 3]] : null, io: { notify: async (t, d) => { const r = rec.ev(t, d, G); if (r) res = r; } } });
       try { await G.run(); } catch (e) { console.warn('sim', e); }
       if (res && res.summary) { res.summary.dur = Math.round(res.summary.combats * 15); res.summary.durEst = true; out.push(res.summary); }
       if (i % 3 === 2) { prog(i + 1); await new Promise(r => setTimeout(r, 0)); }
@@ -71,13 +71,15 @@
   }
 
   // ---------------------------------------------------------------- painel
-  const S = { real: [], sims: [], src: 'todas', mode: 'todos', sort: 'z', dir: -1, minK: 20, busy: false, err: '', loaded: false };
+  const S = { real: [], sims: [], src: 'todas', mode: 'todos', rules: 'todas', sort: 'z', dir: -1, minK: 20, busy: false, err: '', loaded: false };
   let root = null, stopSim = { on: false }, SV = {}, SVok = false, sov = null;
 
   function filtered() {
     const seen = new Set(); let L = []; if (S.src !== 'sim') L = L.concat(S.real.filter(m => !m.sim)); if (S.src !== 'real') L = L.concat(S.sims, S.real.filter(m => m.sim));
     L = L.filter(m => !seen.has(m.id) && seen.add(m.id));
-    if (S.mode !== 'todos') L = L.filter(m => m.mode === S.mode); return L;
+    if (S.mode !== 'todos') L = L.filter(m => m.mode === S.mode);
+    if (S.rules === 'ind') L = L.filter(m => !m.duo); else if (S.rules === 'duo') L = L.filter(m => m.duo); else if (S.rules === 'sev') L = L.filter(m => m.ev === false); else if (S.rules === 'ssp') L = L.filter(m => m.sf >= 99);
+    return L;
   }
   async function loadReal() {
     const c = await caps(); S.err = '';
@@ -101,6 +103,7 @@
       <section class="adm-box"><div class="adm-f">
         <label>Origem <select data-f="src"><option value="todas"${S.src === 'todas' ? ' selected' : ''}>Real + simulada</option><option value="real"${S.src === 'real' ? ' selected' : ''}>Partidas reais</option><option value="sim"${S.src === 'sim' ? ' selected' : ''}>Simuladas</option></select></label>
         <label>Modo <select data-f="mode"><option value="todos">Todos</option>${Object.keys(MODE).map(k => `<option value="${k}"${S.mode === k ? ' selected' : ''}>${MODE[k]}</option>`).join('')}</select></label>
+        <label>Regras <select data-f="rules">${[['todas', 'Todas'], ['ind', 'Todos contra todos'], ['duo', 'Duplas'], ['sev', 'Sem fenômenos'], ['ssp', 'Sem especiais']].map(([k, t]) => `<option value="${k}"${S.rules === k ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
         <label>Mín. disputas/carta <select data-f="minK">${[1, 10, 20, 40, 80].map(v => `<option${S.minK === v ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
         <button class="btn sm" data-a="reload">Atualizar</button><button class="btn sm" data-a="invite">Como convidar alguém</button></div>
         <div class="hint">${S.real.filter(m => !m.sim).length} partidas reais no registro · ${S.sims.length} simuladas nesta sessão · ${L.length} na análise</div></section>
@@ -108,9 +111,11 @@
       <section class="adm-box"><h3>Simulador (CPU × CPU)</h3><div class="adm-f">
         <label>Partidas <select id="sN">${[20, 50, 100, 200, 500].map(v => `<option${v === 100 ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
         <label>Jogadores <select id="sP"><option>2</option><option>3</option><option selected>4</option></select></label>
+        <label>Modo <select id="sM"><option value="0">Todos contra todos</option><option value="1">Duplas (4 jogadores)</option></select></label>
         <label>Dificuldade <select id="sD"><option value="misto">Mista</option><option value="facil">Fácil</option><option value="normal" selected>Normal</option><option value="dificil">Difícil</option></select></label>
-        <label>Cartas/jogador <select id="sC">${[7, 12, 16, 21].map(v => `<option${v === 12 ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
-        <label>Especiais <select id="sS"><option value="2">Rodada 2 (regra)</option><option value="1">Rodada 1</option></select></label></div>
+        <label>Cartas/jogador <select id="sC">${[7, 10, 14, 18, 21].map(v => `<option${v === 14 ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
+        <label>Especiais <select id="sS"><option value="2">Ligados (a partir da Rodada 2)</option><option value="99">Desligados</option></select></label>
+        <label>Fenômenos <select id="sE"><option value="1">Ligados</option><option value="0">Desligados</option></select></label></div>
         <div class="adm-f"><button class="btn primary sm" data-a="sim">${S.busy ? 'Parar' : 'Rodar simulação'}</button><button class="btn ghost sm" data-a="clrsim">Limpar simuladas</button><button class="btn ghost sm" data-a="savesim">Salvar simuladas no registro</button><span class="hint" id="sProg"></span></div></section>
 
       <section class="adm-box"><h3>Visão geral</h3><div class="adm-k">
@@ -201,7 +206,7 @@
       }
       else if (a === 'sim') {
         if (S.busy) { stopSim.on = true; return; }
-        const g = id => $(id, root).value; const o = { n: +g('#sN'), players: +g('#sP'), diff: g('#sD'), per: +g('#sC'), sf: +g('#sS') };
+        const g = id => $(id, root).value; const o = { n: +g('#sN'), players: +g('#sP'), diff: g('#sD'), per: +g('#sC'), sf: +g('#sS'), ev: g('#sE') !== '0', duo: g('#sM') === '1' }; if (o.duo) o.players = 4;
         if (o.per * o.players > D.CARTAS.length) o.per = Math.floor(D.CARTAS.length / o.players);
         S.busy = true; stopSim = { on: false }; b.textContent = 'Parar'; const prog = $('#sProg', root);
         const out = await simulate(o, n => { const p = $('#sProg', root); if (p) p.textContent = n + ' / ' + o.n; }, stopSim);

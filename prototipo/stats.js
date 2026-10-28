@@ -116,7 +116,7 @@
   // ctx: { viewer (índice do jogador local ou -1), online, role, humans, n, diff, per, sf, getG }
   function recorder(ctx) {
     const m = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), t0: Date.now(), n: ctx.n, humans: ctx.humans, mode: ctx.humans >= 2 ? 'pvp' : ctx.humans === 1 ? 'pvb' : 'bvb', online: !!ctx.online,
-      diff: ctx.diff, per: ctx.per, sf: ctx.sf, v: 1, cards: {}, att: {}, spec: 0, combats: 0, ties: 0, rounds: 1, winner: null, dur: 0, bh: 0, players: [], left: [], first: null };
+      diff: ctx.diff, per: ctx.per, sf: ctx.sf, duo: !!ctx.duo, ev: ctx.ev !== false, v: 1, cards: {}, att: {}, spec: 0, combats: 0, ties: 0, rounds: 1, winner: null, dur: 0, bh: 0, players: [], left: [], first: null };
     const me = { att: att0(), esp: 0, disp: 0, min: 99, used: {}, cards: {} };
     const mc = id => (me.cards[id] = me.cards[id] || { u: 0, w: 0, s: 0 });
     const cd = id => (m.cards[id] = m.cards[id] || { p: 0, w: 0, l: 0, s: 0 });
@@ -154,7 +154,7 @@
 
   function finish(m, me, ctx) {
     const out = { ach: [], daily: false, m };
-    const summary = { id: m.id, at: m.t0, mode: m.mode, online: m.online, n: m.n, diff: m.diff, per: m.per, rounds: m.rounds, combats: m.combats, dur: m.dur, winner: m.winner, bh: m.bh, spec: m.spec, ties: m.ties, limit: !!m.limit, sf: m.sf, left: m.left, players: m.players, att: m.att, cards: m.cards, first: m.first, v: m.v };
+    const summary = { id: m.id, at: m.t0, mode: m.mode, online: m.online, n: m.n, diff: m.diff, per: m.per, rounds: m.rounds, combats: m.combats, dur: m.dur, winner: m.winner, bh: m.bh, spec: m.spec, ties: m.ties, limit: !!m.limit, sf: m.sf, duo: m.duo, ev: m.ev, left: m.left, players: m.players, att: m.att, cards: m.cards, first: m.first, v: m.v };
     // histórico local (resumo enxuto)
     if (ctx.sim) summary.sim = true; out.summary = summary;
     if (!ctx.sim) { const h = matches(); h.push(summary); while (h.length > 60) h.shift(); wr(MKEY, h); }
