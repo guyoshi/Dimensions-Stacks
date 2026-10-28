@@ -13,7 +13,7 @@ Escopo: 97 cartas (Manu/D19 entrou depois e não foi simulada) × 78 habilidades
 1. **O perfil por soma não prevê força real.** Taxa média de vitória por perfil: Elite 70,9 · Forte 54,4 · Padrão 38,8 · Frágil 39,3 · Modesta 33,6 · Azar 28,0. Frágil empata com Padrão e supera Modesta.
 2. **A causa é o pico de atributo, não a soma.** Quem inicia escolhe qualquer um dos 4 atributos, então um INT 95+ vence quase toda disputa nesse atributo. Cartas acima do que a soma indica: Velho-Sábio (Padrão, INT 96, pc 96), James Harrow (Padrão, INT 96, pc 94), X (Frágil, soma 171, INT 99, pc 90), Lias Hardman (Frágil, INT 96, pc 85), Hyde (INT 100).
 3. **Mais fortes (pc):** Korvo 100, Agouro 99, William McCroys 98, Grande Pai Gaia 97, Velho-Sábio 96, Agente Sete 95, Harrow 94, Agente Seis 93, Lanigiah 92, Hyde 91, X 90, Édelin Lys 89.
-4. **Mais fracas (pc):** Diego Tavolieri 1, Tio Frank 2, A Mãe 3, Filipo Brandolini 4, Gary 5, Diana 6, O Pai 7, Suéten 8, Mariv 9, Nicolas Corvane 10.
+4. **Mais fracas (pc):** Diego Tavolieri 1, Tio Frank 2, A Mãe 3, Filipo Brandolini 4, Garien 5, Diana 6, O Pai 7, Suéten 8, Mariv 9, Nicolas Corvane 10.
 5. **Inversões graves (carta forte, habilidade fraca):** Hyde (−73), X (−72), Agente Sete (−71), Mark Polar (−68), Lias Hardman (−67), Vivian (−63), Alekta (−58), Ricochet (−55), Brenda Koraveli (−48).
 6. **Inversões graves (carta fraca, habilidade forte = bateria barata):** Vek (+77), Luna Stellar (+68), Diana (+68), Alyra (+60), O'reilly (+59), Nicolas Corvane (+59), Erick Corvane (+59), Kord (+55), O Pai (+53), Erla (+51).
 7. **Habilidades reativas subestimadas:** o bot quase não usa habilidades reativas (uso ≈ 0), então o valor medido delas é um piso. Vários "ps baixos" acima (AE-115, 116, 120, 130, 113, 073) podem ser artefato do bot, não fraqueza real. Validar com bot que use reativas antes de concluir.
@@ -169,7 +169,7 @@ Os 18 especiais que saíram voltam à reserva (campo `revisao` em `habilidades_1
 - **AE-094 Inversão de fila** mantido.
 - **AE-089 Sacrifício duplo → Sacrifício por três (J16 Elis):** agora envia **1 carta escolhida** do baralho ativo ao Buraco Negro e recupera **até 3 aleatórias** de lá (antes: mandava 2 e recuperava até 3).
 - **Especiais retirados** (removidos do catálogo e dos docs de AE; voltam apenas se o autor quiser): **AE-112** Repetição onerosa (repetir um especial descartando 2 cartas), **AE-095** Atrasar a próxima (mover a próxima carta do rival ao fim do baralho) e **AE-086** Troca pelo descarte (1 carta ao Buraco Negro, recuperar até 2). Catálogo: 129 − 3 + 12 = **138 habilidades**; 102 equipadas, 36 na reserva.
-- **Substitutos nas cartas que os tinham:** D06 Jennifer de Morais AE-109 · V11 Gary AE-003 · M12 James Harrow AE-102.
+- **Substitutos nas cartas que os tinham:** D06 Jennifer de Morais AE-109 · V11 Garien AE-003 · M12 James Harrow AE-102.
 - **Prévia de conversão:** em especiais que convertem ou somam atributos (Resistência passa a valer a Inteligência etc.), a folha de escolha mostra "Sua carta: atributo a → b" com os valores resultantes antes de o jogador confirmar.
 - **Reordenar ao comprar da reserva:** o jogador reordena as cartas que acabou de comprar (até 7; era 6 até 14/10/2026). O bot ordena sozinho. Início da partida: a ordem da reserva segue aleatória (a mão inicial já é ordenada pelo jogador).
 
@@ -266,7 +266,7 @@ Simulação de 1.500 partidas por modo (bot difícil, 2 e 4 jogadores, especiais
 | V07 Lucan Veline | AE-140 — Mente afiada | AE-070 — Conquista compensada |
 | V09 Ricochet Bombergue | AE-139 — Disparada | AE-072 — Não perder a carta |
 | V10 Korvo | AE-087 — Reabastecimento da reserva | AE-049 — Escolha da reserva |
-| V11 Gary | AE-003 — Clarividência | AE-058 — Passe à direita |
+| V11 Garien | AE-003 — Clarividência | AE-058 — Passe à direita |
 | V12 Anasin | AE-114 — Desvio de alvo | AE-139 — Disparada |
 | V13 Saliens | AE-046 — Reserva dupla à esquerda | AE-119 — Preparação urgente |
 | V18 Grande Pai Gaia | AE-007 — Ímpeto ofensivo | AE-077 — Guardião da reserva |

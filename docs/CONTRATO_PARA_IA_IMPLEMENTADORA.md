@@ -46,7 +46,7 @@
 - **AE-104 foi aposentada; os efeitos históricos #18, #24 e #52 continuam excluídos.** A habilidade **AE-129**, uma vitória automática rara *diferente*, está aprovada para **S01 Jasmey**. Não ressuscitar o #52 antigo.
 - **A União:** Bruno (V02), Brenda Koraveli (V15), Hyde (M01), Releuz (M10), Jasmey (S01), Mark Polar (J03), Édelin (B01); Jennifer (D06) entra depois, porém sua carta base já existe. Selo próprio sem cor exclusiva.
 - **Família Carnam:** D07 Ingrid, D13 Suéten, D15 Carnam (pai), D16 Isabela, D17 Avó Carnam e D18 Ibliso (cão). D17 **não é** D10 Avó de Kelly. A arma associada ao Elo de Carnam não significa que Carnam seja o pai de Vini.
-- **Viajantes Dimensionais adicionados:** V16 Facka (Faka no manuscrito), V17 Lanigiah (rainha Aracnas), V18 Grande Pai Gaia (líder Obbs) e V19 Seti (guerreiro Obb).
+- **Viajantes Dimensionais adicionados:** V16 Faka (Faka no manuscrito), V17 Lanigiah (rainha Aracnas), V18 Grande Pai Gaia (líder Obbs) e V19 Seti (guerreiro Obb).
 - **Cartas históricas físicas:** são fonte de ideias, mas nomes, valores e representações não são herdados automaticamente pelas cartas digitais.
 - **Reatribuição de especiais (13/10/2026, autorizada pelo autor):** 42 das 79 cartas fora da União trocaram de habilidade especial para que o custo (a força da carta sacrificada) acompanhe o valor do especial; informação e ordenação ficam em cartas fracas. Antes/depois em [CARTAS_E_ESPECIAIS.md](CARTAS_E_ESPECIAIS.md); versão anterior preservada em `dados/historico/cartas_87_antes_2026-10-13.json`.
 - **Balanceamento:** aprovação autoral não equivale a simulação, raridade final, acessibilidade de interface ou QA concluídos. Não reequilibrar silenciosamente uma ficha aprovada.

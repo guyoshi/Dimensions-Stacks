@@ -82,13 +82,6 @@
     return `M${a.x} ${a.y} Q${mx.toFixed(1)} ${my.toFixed(1)} ${b.x} ${b.y}`;
   }
   const EDGES = []; NOS.forEach(a => a.viz.forEach(v => { if (a.id < v) EDGES.push([a, BY[v]]); }));
-  function webSvg() {   // teia de fundo: anéis poligonais com as linhas "caindo" para dentro e raios
-    let s = '';
-    [260, 520, 780, 1040, 1300].forEach(r => { const n = 28, pts = []; for (let i = 0; i <= n; i++) { const a = i / n * Math.PI * 2, rr = r * (1 + .018 * Math.sin(i * 2.3 + r)); pts.push([rr * Math.cos(a), rr * Math.sin(a)]); }
-      let d = 'M' + pts[0].join(' '); for (let i = 1; i < pts.length; i++) { const p = pts[i - 1], q = pts[i], mx = (p[0] + q[0]) / 2 * .965, my = (p[1] + q[1]) / 2 * .965; d += ` Q${mx.toFixed(1)} ${my.toFixed(1)} ${q[0].toFixed(1)} ${q[1].toFixed(1)}`; } s += `<path d="${d}"/>`; });
-    for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2 + .13; s += `<path d="M0 0 L${(1300 * Math.cos(a)).toFixed(1)} ${(1300 * Math.sin(a)).toFixed(1)}"/>`; }
-    return `<g class="hs-web">${s}</g>`;
-  }
   function nodeSvg(n) {
     const T = TIPOS[n.tipo], r = T.r, num = n.id[0] === 'B' ? String(+n.id.slice(1)) : n.id.slice(1);
     let inner = '';
@@ -122,8 +115,7 @@
     view = 'hub'; load();
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
     const c = S;
-    h.innerHTML = `<svg class="hs-hubweb" viewBox="-700 -700 1400 1400" aria-hidden="true">${webSvg()}</svg>
-      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
+    h.innerHTML = `      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
       <div class="hs-hubin"><div class="hs-seal"></div><h1>A União</h1><p class="hs-sub">Modo história</p>
         <div class="hs-btns"><button class="btn primary big" data-a="novo">Novo jogo</button>
         <button class="btn big" data-a="cont" ${c ? '' : 'disabled'}>Continuar${c ? `<small>${nBat()} / ${BATALHAS.length} batalhas · partida pela ${LADOS[c.start].toLowerCase()}</small>` : ''}</button></div></div>`;

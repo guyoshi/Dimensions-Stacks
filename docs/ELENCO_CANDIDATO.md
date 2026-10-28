@@ -60,12 +60,12 @@ Fonte: `Viajantes Dimensionais/1 - A Patrulha de Korvo/01 - Canon/02 - Personage
 | V08 | Garmande Koraveli | Aliado/Sociedade de Tayo |
 | V09 | Ricochet Bombergue | Aliado/Sociedade de Tayo |
 | V10 | Korvo | Dimensal e mago negro |
-| V11 | Gary | Ligado à Vigilância e a Korvo |
+| V11 | Garien | Ligado à Vigilância e a Korvo |
 | V12 | Anasin | Integrante da Patrulha de Korvo |
 | V13 | Saliens | Integrante da Patrulha de Korvo |
 | V14 | Tio Frank | Responsável pelos irmãos Lins após a morte dos pais |
 | V15 | Brenda Koraveli | Aprendiz de Tayo; futura integrante de A União |
-| V16 | Facka (grafada **Faka** no manuscrito) | Jovem Aracna curiosa, guia os irmãos pelos túneis até o território Obb; **Facka** é a grafia solicitada pelo autor para a carta, pendente padronização no livro |
+| V16 | Faka (grafada **Faka** no manuscrito) | Jovem Aracna curiosa, guia os irmãos pelos túneis até o território Obb; **Faka** é a grafia solicitada pelo autor para a carta, pendente padronização no livro |
 | V17 | Lanigiah | **Rainha das Aracnas**, personagem imponente que submete Banjo a uma experiência ligada a memórias e coragem; não confundir com realeza Obb |
 | V18 | Grande Pai Gaia | Líder dos Obbs de Pinesoto, usa raízes e troncos para defender seu povo; referido como “Grande Pai” no manuscrito |
 | V19 | Seti | Líder de guerra dos Obbs de Pinesoto; inicialmente desconfia dos irmãos, depois os alimenta e os ajuda durante o ataque |
@@ -206,7 +206,7 @@ Referência principal: [guyoshi/dimensoesinfinitas](https://github.com/guyoshi/d
 
 ## 12. Quatro personagens adicionais de Viajantes Dimensionais
 
-Em 12/10/2026, o autor pediu inclusão de **Facka, Lanigiah, rei dos Obbs e o Obb que ajuda os irmãos**. Conferência do manuscrito confirmou **Faka**, **Lanigiah**, **Gaia** e **Seti**, respectivamente. O nome oficial do líder Obb nos diálogos é **Grande Pai Gaia**; Lanigiah é a **rainha das Aracnas**, não dos Obbs. O manuscrito registra o nome **Faka**, mas o autor escreveu **Facka**; manter Facka na ficha candidata com alerta de uniformização editorial. As habilidades e os números dos novos V16–V19 estão **aprovados para o jogo**, sem representar provas sobre seus poderes literários.
+Em 12/10/2026, o autor pediu inclusão de **Faka, Lanigiah, rei dos Obbs e o Obb que ajuda os irmãos**. Conferência do manuscrito confirmou **Faka**, **Lanigiah**, **Gaia** e **Seti**, respectivamente. O nome oficial do líder Obb nos diálogos é **Grande Pai Gaia**; Lanigiah é a **rainha das Aracnas**, não dos Obbs. O manuscrito registra o nome **Faka**, mas o autor escreveu **Faka**; manter Faka na ficha candidata com alerta de uniformização editorial. As habilidades e os números dos novos V16–V19 estão **aprovados para o jogo**, sem representar provas sobre seus poderes literários.
 
 
 ## 13. Família Carnam — Diário Sobrenatural, Livro 1

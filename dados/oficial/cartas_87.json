@@ -844,7 +844,7 @@
     },
     {
       "id": "V11",
-      "nome": "Gary",
+      "nome": "Garien",
       "origem": {
         "codigo_serie": "V",
         "cor_base": "azul"
@@ -964,7 +964,7 @@
     },
     {
       "id": "V16",
-      "nome": "Facka",
+      "nome": "Faka",
       "origem": {
         "codigo_serie": "V",
         "cor_base": "azul"
@@ -2162,7 +2162,7 @@
         "codigo_serie": "V",
         "cor_base": "azul"
       },
-      "descricao_curta": "Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Gary e depois inocentado.",
+      "descricao_curta": "Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Garien e depois inocentado.",
       "atributos": {
         "FOR": 75,
         "RES": 77,

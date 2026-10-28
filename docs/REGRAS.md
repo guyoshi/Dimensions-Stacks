@@ -341,7 +341,7 @@ Foram elaboradas **87 sugestões de fichas**, com descrições de **até 120 car
 
 ## 22. Ampliação histórica 79 → 83 cartas (a coleção atual aprovada contém 87)
 
-O autor incluiu 4 personagens da primeira aventura: **V16 Facka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. As fichas [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md) **foram aprovadas posteriormente**, e a biblioteca contém **129 habilidades** com 78 equipadas. Esta seção registra o momento anterior à inclusão Carnam. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
+O autor incluiu 4 personagens da primeira aventura: **V16 Faka** (o manuscrito escreve **Faka**), **V17 Lanigiah** (**rainha das Aracnas**), **V18 Grande Pai Gaia** (líder dos Obbs de Pinesoto) e **V19 Seti** (líder de guerra Obb que, após desconfiança inicial, ajuda os irmãos). Total do conjunto candidato passou de 79 para **83 personagens**, sendo **19 de Viajantes Dimensionais**. As fichas [CARTAS_87_PROPOSTAS.md](CARTAS_E_ESPECIAIS.md) **foram aprovadas posteriormente**, e a biblioteca contém **129 habilidades** com 78 equipadas. Esta seção registra o momento anterior à inclusão Carnam. A União continua com os mesmos 8 integrantes/futura integrante anteriormente informados.
 
 ## 23. Inclusão de quatro integrantes da Família Carnam — total atual 87
 

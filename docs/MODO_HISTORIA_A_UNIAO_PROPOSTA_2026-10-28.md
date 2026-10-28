@@ -86,11 +86,11 @@ Cada inimigo tem **nome, avatar (a carta líder dele), tema, 7 cartas fixas, ní
 
 | Tema | Cartas candidatas |
 |---|---|
-| Patrulha de Korvo | Korvo, Anasin, Saliens, Gary, Velho-Sábio |
+| Patrulha de Korvo | Korvo, Anasin, Saliens, Garien, Velho-Sábio |
 | Os Irmãos Lins | Breno, Bruno, Banjo, Beatriz, Tio Frank |
 | A Sociedade de Tayo | Erla, Lucan Veline, Garmande Koraveli, Ricochet, Brenda Koraveli |
 | Aprendizes de Belfex | Maria Santoro, Eshley, Nicolas, Erick, Shirley, McCroys |
-| Aracnas e Obbs | Facka, Lanigiah, Grande Pai Gaia, Seti |
+| Aracnas e Obbs | Faka, Lanigiah, Grande Pai Gaia, Seti |
 | Casa Polar | Kaelina, Alyra, Selina, Dareth, Daryon, Vetarius |
 | Os Três Eixos *(miniboss de 3)* | Nefestra (passado), Kedran (presente), Sefter (futuro) |
 | Calandrir | Cal Edran, Cal Kadrir, Cal Kerath, Rendar |
