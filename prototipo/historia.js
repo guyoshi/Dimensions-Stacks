@@ -40,7 +40,7 @@
   const R = M.raio;
 
   let S = null;                                   // jornada salva (ou null)
-  let P = Object.assign({ aberto: true }, rd(PKEY, {}));   // preferências (ETAPA 1: mapa aberto para testes)
+  let P = Object.assign({ aberto: true, escuro: true }, rd(PKEY, {}));   // preferências (ETAPA 1: mapa aberto para testes)
   const save = () => { if (S) wr(KEY, S); wr(PKEY, P); };
   const load = () => { const s = rd(KEY, null); S = s && s.v === 1 && BY[s.startId] ? s : null; return S; };
 
@@ -134,32 +134,52 @@
   // ---- ponto de partida: uma das 4 extremidades, sorteada em silêncio (sem tela de sorteio)
   function sortear() {
     const ladoSel = ['esq', 'cima', 'dir', 'baixo'][Math.floor(Math.random() * 4)];
-    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save(); openMap(true);
+    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save();
+    if (window.DSCinema) window.DSCinema.play(() => openMap(true, true)); else openMap(true);
   }
 
   // ---- mapa
-  function openMap(novo) {
+  function openMap(novo, intro) {
     if (!S) return; view = 'map';
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
     mp.innerHTML = `<svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
+        <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}</g></svg>
+        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}</g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill" title="Cartas no bestiário"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></div></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button></div>
-      <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div>`;
+      <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
     paintAll(); bindMap(mp); heroPlace(posId(), false);
+    try { SND.histPlay('mapa'); } catch (e) { }
+    mp.classList.toggle('intro', !!intro);
+    if (intro) {   // o mundo começa preto e vai clareando; o boneco aparece depois
+      const dk = $('#hsDark', root), hr = $('#hsHero', root), red = document.body.classList.contains('reduce');
+      if (!red) { dk.style.transition = 'none'; dk.classList.add('on'); hr.style.opacity = 0; void dk.offsetWidth; dk.style.transition = ''; setTimeout(() => { dk.classList.remove('on'); }, 700); setTimeout(() => { hr.style.transition = 'opacity 2s ease'; hr.style.opacity = 1; SND.play('banner'); }, 3600); setTimeout(() => { mp.classList.remove('intro'); }, 4200); }
+      else mp.classList.remove('intro');
+    }
     requestAnimationFrame(() => { const st = BY[S.startId]; const ps = BY[posId()]; if (novo) { fit(false); setTimeout(() => centerOn(ps.x, ps.y, .8, true), 450); } else centerOn(ps.x, ps.y, .7, false); });
   }
   function paintAll() {
     $$('.hs-edges .e', root).forEach(p => { p.setAttribute('class', 'e ' + edgeState(p.dataset.a, p.dataset.b)); });
     $$('.n', root).forEach(g => paintNode(g));
-    svg.classList.toggle('aberto', !!P.aberto);
+    svg.classList.toggle('aberto', !!P.aberto); paintLuz();
     const mk = $('#hsMarks', root), st = BY[S.startId];
     const flag = (n, txt, cls) => `<g class="flag ${cls}" transform="translate(${n.x} ${n.y - TIPOS[n.tipo].r - 30})"><path d="M0 22 V-6 L18 0 L0 6" fill="currentColor"/><text x="24" y="3">${txt}</text></g>`;
     mk.innerHTML = flag(st, 'Início', 'on') + (P.aberto ? Object.values(M.starts).filter(i => i !== S.startId).map(i => flag(BY[i], 'Partida', 'off')).join('') : '');
     const pe = $('#hsPend', root), pc = $('#hsCards', root); if (pe) pe.textContent = S.pend; if (pc) pc.textContent = S.owned.length;
+  }
+  // ---- escuridão: só o boneco, os pontos vencidos e os vizinhos deles aparecem; mais um anel apagado de silhuetas
+  function paintLuz() {
+    const esc_ = P.escuro !== false; svg.classList.toggle('escuro', esc_);
+    const lg = $('#hsLights', root); if (lg) lg.innerHTML = '';
+    const luz = new Set([posId()]); NOS.forEach(n => { if (cleared(n.id)) luz.add(n.id); });
+    const perto = new Set(luz); luz.forEach(i => BY[i].viz.forEach(v => perto.add(v)));
+    const longe = new Set(perto); perto.forEach(i => BY[i].viz.forEach(v => longe.add(v)));
+    $$('.n', root).forEach(g => { const i = g.dataset.id; g.classList.toggle('fog', esc_ && !longe.has(i)); g.classList.toggle('far1', esc_ && longe.has(i) && !perto.has(i)); });
+    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', esc_ && !(luz.has(a) || luz.has(b) || (perto.has(a) && perto.has(b)))); p.classList.toggle('far1', esc_ && !(luz.has(a) || luz.has(b)) && (perto.has(a) && perto.has(b))); });
+    if (esc_ && lg) { const here = posId(); lg.innerHTML = [...luz].map(i => { const n = BY[i], hero = i === here, r = hero ? 330 : (cleared(i) ? 210 : 160); return `<circle class="hs-light" cx="${n.x}" cy="${n.y}" r="${r}" ${hero ? 'style="fill:url(#hsLightH)"' : ''}/>`; }).join(''); }
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
@@ -240,7 +260,7 @@
     if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
     andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
     for (let i = 1; i < p.length; i++) {
-      const n = BY[p[i]]; S.pos = n.id; heroPlace(n.id, !red); SND.play('tick');
+      const n = BY[p[i]]; S.pos = n.id; heroPlace(n.id, !red); SND.play('tick'); paintLuz();
       centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red);
       await new Promise(r => setTimeout(r, red ? 60 : 360));
     }
@@ -289,15 +309,17 @@
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
     const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b><span>No centro, protegido pelos 4 guardiões.</span></li></ul>
       <p class="hint">${BATALHAS.length} batalhas (${['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'boss'].map(k => contagem[k] + ' ' + TIPOS[k].nome.toLowerCase()).join(', ')}) e ${contagem.loja} lojas.</p>
-      <h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>
+      <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Mapa no escuro: só o que está perto do boneco aparece</label>
+      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button></div><h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>
       <div class="row"><button class="btn sm" data-a="reset">Zerar vitórias</button><button class="btn sm primary" data-a="ok">Fechar</button></div></div>`);
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {
       const b = e.target.closest('[data-a]'); if (!b) return;
       if (b.dataset.a === 'ok') { SND.play('click'); m.close(); }
+      else if (b.dataset.a === 'intro') { SND.play('click'); m.close(); if (window.DSCinema) window.DSCinema.play(() => { if (view === 'map') { try { SND.histPlay('mapa'); } catch (e) { } } }); }
       else if (b.dataset.a === 'reset') { SND.play('click'); S.cleared = {}; save(); paintAll(); closeSheet(); toast('Vitórias zeradas.'); }
     };
-    box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } });
+    box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } });
   }
 
   window.DSHistoria = { mount, show: hub, data: M, state: () => S };
