@@ -11,33 +11,33 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Tersário",
-     "avatar": "S15",
+     "nome": "Beatriz Lins",
+     "avatar": "V04",
      "cartas": [
-      "V19",
-      "B05",
-      "S14",
-      "S06",
+      "S08",
+      "S04",
       "S09",
-      "S10",
-      "S15"
+      "B04",
+      "V06",
+      "S16",
+      "V04"
      ]
     },
     {
-     "nome": "Tersário",
-     "avatar": "S15",
+     "nome": "Korvo",
+     "avatar": "V10",
      "cartas": [
-      "V24",
       "S05",
-      "D18",
-      "D09",
-      "S12",
-      "S10",
-      "S15"
+      "J09",
+      "S15",
+      "S16",
+      "V03",
+      "J12",
+      "V10"
      ]
     }
    ],
-   "poder_medio": 1699,
+   "poder_medio": 1716,
    "substituivel": false
   },
   {
@@ -48,21 +48,21 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Tersário",
-     "avatar": "S15",
+     "nome": "Velho-Sábio",
+     "avatar": "V05",
      "cartas": [
-      "V12",
-      "V20",
-      "S18",
-      "M12",
-      "S12",
-      "S04",
-      "S15"
+      "S13",
+      "S02",
+      "J08",
+      "J01",
+      "S16",
+      "D07",
+      "V05"
      ]
     }
    ],
-   "poder_medio": 1699,
-   "substituivel": false
+   "poder_medio": 1696,
+   "substituivel": true
   },
   {
    "id": "B096",
@@ -72,33 +72,33 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Releuz",
-     "avatar": "M10",
+     "nome": "Orionus Polar",
+     "avatar": "J31",
      "cartas": [
-      "V04",
-      "D16",
+      "D11",
+      "D01",
+      "D04",
       "D12",
-      "D18",
-      "D03",
-      "B03",
-      "M10"
+      "D07",
+      "J10",
+      "J31"
      ]
     },
     {
-     "nome": "Sra. Olívia",
-     "avatar": "D10",
+     "nome": "Sumo Vigia",
+     "avatar": "J26",
      "cartas": [
-      "J34",
-      "V07",
-      "M08",
-      "D09",
-      "D03",
-      "D10",
-      "D05"
+      "M07",
+      "D05",
+      "D01",
+      "D12",
+      "J31",
+      "J32",
+      "J26"
      ]
     }
    ],
-   "poder_medio": 1667,
+   "poder_medio": 1737,
    "substituivel": false
   },
   {
@@ -109,33 +109,33 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Korvo",
+     "avatar": "V10",
      "cartas": [
-      "V02",
-      "J17",
-      "D12",
-      "J24",
-      "V10",
-      "S09",
-      "M01"
+      "J20",
+      "J37",
+      "J15",
+      "M02",
+      "B04",
+      "J25",
+      "V10"
      ]
     },
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Beatriz Lins",
+     "avatar": "V04",
      "cartas": [
-      "V03",
-      "D08",
-      "B05",
-      "V14",
+      "J17",
+      "M11",
+      "V09",
+      "V01",
+      "V05",
       "J10",
-      "M12",
-      "M01"
+      "V04"
      ]
     }
    ],
-   "poder_medio": 1626,
+   "poder_medio": 1718,
    "substituivel": false
   },
   {
@@ -146,33 +146,33 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Lias Hardman",
-     "avatar": "S04",
+     "nome": "Korvo",
+     "avatar": "V10",
      "cartas": [
-      "V18",
-      "V13",
-      "S08",
-      "V16",
-      "M08",
-      "S06",
-      "S04"
+      "V12",
+      "J15",
+      "S15",
+      "V01",
+      "V05",
+      "V04",
+      "V10"
      ]
     },
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Korvo",
+     "avatar": "V10",
      "cartas": [
+      "V20",
+      "V06",
+      "V09",
+      "V03",
       "V05",
-      "M02",
-      "V23",
-      "M12",
-      "S12",
-      "V15",
-      "M01"
+      "J31",
+      "V10"
      ]
     }
    ],
-   "poder_medio": 1645,
+   "poder_medio": 1724,
    "substituivel": false
   },
   {
@@ -183,21 +183,21 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Professor Taliver",
-     "avatar": "J36",
+     "nome": "Alveris Polar",
+     "avatar": "J25",
      "cartas": [
-      "D11",
-      "B05",
-      "M05",
-      "J11",
-      "D03",
-      "S04",
-      "J36"
+      "D18",
+      "D08",
+      "J09",
+      "J01",
+      "J08",
+      "B04",
+      "J25"
      ]
     }
    ],
-   "poder_medio": 1684,
-   "substituivel": false
+   "poder_medio": 1676,
+   "substituivel": true
   },
   {
    "id": "B075",
@@ -207,20 +207,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Sra. Olívia",
-     "avatar": "D10",
+     "nome": "Raukhar",
+     "avatar": "J32",
      "cartas": [
-      "J23",
-      "B02",
-      "S17",
-      "D04",
-      "M08",
+      "D19",
+      "V07",
+      "J21",
+      "M12",
+      "D05",
       "S09",
-      "D10"
+      "J32"
      ]
     }
    ],
-   "poder_medio": 1592,
+   "poder_medio": 1562,
    "substituivel": true
   },
   {
@@ -231,46 +231,46 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Diego Tavolieri",
-     "avatar": "D09",
+     "nome": "Sumo Vigia",
+     "avatar": "J26",
      "cartas": [
-      "V21",
-      "D19",
-      "M11",
-      "S03",
-      "D18",
-      "S06",
-      "D09"
+      "V16",
+      "D09",
+      "J33",
+      "M02",
+      "V09",
+      "V03",
+      "J26"
      ]
     },
     {
-     "nome": "James Harrow",
-     "avatar": "M12",
+     "nome": "Beatriz Lins",
+     "avatar": "V04",
      "cartas": [
-      "M04",
-      "V17",
-      "B01",
-      "D02",
-      "D12",
-      "M08",
-      "M12"
+      "V22",
+      "V24",
+      "V08",
+      "V06",
+      "V03",
+      "V01",
+      "V04"
      ]
     },
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "Rendar",
+     "avatar": "J12",
      "cartas": [
-      "S16",
-      "V25",
-      "D01",
-      "M09",
-      "S06",
-      "S12",
-      "D03"
+      "V23",
+      "M03",
+      "J36",
+      "D04",
+      "V09",
+      "V01",
+      "J12"
      ]
     }
    ],
-   "poder_medio": 1565,
+   "poder_medio": 1634,
    "substituivel": false
   },
   {
@@ -281,20 +281,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Capitã Nastácia",
-     "avatar": "S09",
+     "nome": "Amanda",
+     "avatar": "S02",
      "cartas": [
-      "S13",
-      "J13",
-      "S05",
-      "S18",
       "S14",
-      "D09",
-      "S09"
+      "S10",
+      "J04",
+      "S06",
+      "S03",
+      "J37",
+      "S02"
      ]
     }
    ],
-   "poder_medio": 1597,
+   "poder_medio": 1558,
    "substituivel": true
   },
   {
@@ -305,20 +305,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Vivian",
-     "avatar": "S08",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "S01",
+      "V18",
+      "J13",
+      "M06",
       "J07",
-      "B01",
-      "B05",
-      "M09",
-      "D18",
-      "S08"
+      "J30",
+      "S04",
+      "M11"
      ]
     }
    ],
-   "poder_medio": 1515,
+   "poder_medio": 1548,
    "substituivel": true
   },
   {
@@ -329,33 +329,33 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Jelles",
-     "avatar": "S10",
+     "nome": "A Engenheira",
+     "avatar": "S16",
      "cartas": [
-      "D15",
-      "J34",
-      "S03",
       "S12",
-      "S04",
-      "M01",
-      "S10"
+      "V13",
+      "S03",
+      "S15",
+      "S02",
+      "S09",
+      "S16"
      ]
     },
     {
-     "nome": "Jelles",
-     "avatar": "S10",
+     "nome": "A Engenheira",
+     "avatar": "S16",
      "cartas": [
-      "S07",
-      "S17",
-      "D04",
-      "D12",
-      "S09",
+      "S18",
+      "J06",
+      "S05",
       "S04",
-      "S10"
+      "J01",
+      "D12",
+      "S16"
      ]
     }
    ],
-   "poder_medio": 1630,
+   "poder_medio": 1619,
    "substituivel": false
   },
   {
@@ -366,20 +366,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Vinícius Silva",
-     "avatar": "D05",
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
      "cartas": [
-      "D13",
-      "D14",
-      "D08",
-      "D11",
-      "S06",
-      "M01",
-      "D05"
+      "D17",
+      "D02",
+      "J05",
+      "J11",
+      "J09",
+      "D05",
+      "D07"
      ]
     }
    ],
-   "poder_medio": 1570,
+   "poder_medio": 1545,
    "substituivel": true
   },
   {
@@ -390,20 +390,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "James Harrow",
-     "avatar": "M12",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "J22",
+      "J14",
+      "V11",
+      "D03",
+      "V14",
+      "V17",
       "J15",
-      "J34",
-      "J17",
-      "M11",
-      "M08",
-      "M12"
+      "M11"
      ]
     }
    ],
-   "poder_medio": 1494,
+   "poder_medio": 1526,
    "substituivel": true
   },
   {
@@ -414,20 +414,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Tersário",
-     "avatar": "S15",
+     "nome": "A Engenheira",
+     "avatar": "S16",
      "cartas": [
-      "D06",
-      "M02",
-      "D12",
+      "S07",
       "S08",
-      "S12",
+      "S06",
       "S04",
-      "S15"
+      "S02",
+      "S09",
+      "S16"
      ]
     }
    ],
-   "poder_medio": 1637,
+   "poder_medio": 1633,
    "substituivel": true
   },
   {
@@ -438,21 +438,21 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
      "cartas": [
-      "D07",
-      "V06",
-      "D01",
+      "D13",
+      "J34",
       "B05",
-      "D02",
-      "D09",
-      "D03"
+      "J37",
+      "M02",
+      "J08",
+      "D07"
      ]
     }
    ],
-   "poder_medio": 1565,
-   "substituivel": false
+   "poder_medio": 1606,
+   "substituivel": true
   },
   {
    "id": "B086",
@@ -462,46 +462,46 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "Alveris Polar",
+     "avatar": "J25",
      "cartas": [
-      "J01",
-      "J17",
       "D16",
-      "J02",
-      "D18",
-      "M08",
-      "D03"
+      "D10",
+      "J36",
+      "J37",
+      "J08",
+      "D01",
+      "J25"
      ]
     },
     {
-     "nome": "Capitã Nastácia",
-     "avatar": "S09",
+     "nome": "Raukhar",
+     "avatar": "J32",
      "cartas": [
-      "J05",
-      "J34",
-      "J17",
+      "J27",
+      "V08",
+      "J07",
+      "J09",
+      "J01",
+      "D04",
+      "J32"
+     ]
+    },
+    {
+     "nome": "Daryon Polar",
+     "avatar": "J10",
+     "cartas": [
+      "J24",
+      "V14",
       "J30",
-      "B05",
-      "S06",
-      "S09"
-     ]
-    },
-    {
-     "nome": "Hyde",
-     "avatar": "M01",
-     "cartas": [
-      "M06",
-      "J34",
-      "J17",
-      "V09",
-      "M12",
-      "D09",
-      "M01"
+      "J15",
+      "S15",
+      "D04",
+      "J10"
      ]
     }
    ],
-   "poder_medio": 1551,
+   "poder_medio": 1631,
    "substituivel": false
   },
   {
@@ -512,20 +512,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Capitã Nastácia",
-     "avatar": "S09",
+     "nome": "Junior Quissama",
+     "avatar": "D01",
      "cartas": [
-      "S02",
-      "J20",
-      "D11",
-      "D04",
-      "M05",
-      "D18",
-      "S09"
+      "J22",
+      "B03",
+      "S13",
+      "V20",
+      "J33",
+      "D01",
+      "D05"
      ]
     }
    ],
-   "poder_medio": 1544,
+   "poder_medio": 1533,
    "substituivel": true
   },
   {
@@ -536,46 +536,46 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "O'reilly",
-     "avatar": "S06",
+     "nome": "Sumo Vigia",
+     "avatar": "J26",
      "cartas": [
-      "J29",
-      "B05",
-      "D02",
-      "M12",
-      "J37",
-      "S14",
-      "S06"
-     ]
-    },
-    {
-     "nome": "Vinícius Silva",
-     "avatar": "D05",
-     "cartas": [
-      "D17",
-      "D01",
+      "D14",
+      "V13",
       "D08",
+      "D05",
+      "D04",
       "D12",
-      "D09",
-      "M01",
-      "D05"
+      "J26"
      ]
     },
     {
-     "nome": "Sra. Olívia",
-     "avatar": "D10",
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
      "cartas": [
       "D15",
-      "S03",
-      "M09",
-      "S12",
-      "D03",
-      "S04",
-      "D10"
+      "V12",
+      "D18",
+      "D01",
+      "D04",
+      "D12",
+      "D07"
+     ]
+    },
+    {
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
+     "cartas": [
+      "D02",
+      "D09",
+      "J04",
+      "D05",
+      "D12",
+      "V06",
+      "D07"
      ]
     }
    ],
-   "poder_medio": 1629,
+   "poder_medio": 1628,
    "substituivel": false
   },
   {
@@ -586,20 +586,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Dra. Helena Valença",
-     "avatar": "M08",
+     "nome": "Agente Sete",
+     "avatar": "M02",
      "cartas": [
-      "J19",
-      "J33",
+      "J29",
+      "V21",
+      "V24",
+      "M07",
       "J17",
-      "B01",
-      "S05",
-      "D18",
-      "M08"
+      "J09",
+      "M02"
      ]
     }
    ],
-   "poder_medio": 1507,
+   "poder_medio": 1483,
    "substituivel": true
   },
   {
@@ -610,20 +610,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Alekta",
-     "avatar": "S18",
+     "nome": "Breno Lins",
+     "avatar": "V01",
      "cartas": [
-      "J16",
-      "M07",
-      "D16",
       "M05",
-      "D12",
-      "M08",
-      "S18"
+      "V25",
+      "V12",
+      "M03",
+      "V17",
+      "M11",
+      "V01"
      ]
     }
    ],
-   "poder_medio": 1562,
+   "poder_medio": 1519,
    "substituivel": true
   },
   {
@@ -634,21 +634,21 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Velho-Sábio",
+     "avatar": "V05",
      "cartas": [
-      "M03",
-      "B04",
-      "V01",
-      "M11",
-      "S17",
-      "S04",
-      "M01"
+      "V19",
+      "J19",
+      "V24",
+      "D11",
+      "V09",
+      "V03",
+      "V05"
      ]
     }
    ],
-   "poder_medio": 1563,
-   "substituivel": false
+   "poder_medio": 1567,
+   "substituivel": true
   },
   {
    "id": "B092",
@@ -658,20 +658,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "J14",
-      "D19",
-      "D01",
-      "D16",
-      "M02",
-      "B05",
-      "D03"
+      "B02",
+      "V23",
+      "J06",
+      "V17",
+      "V13",
+      "S15",
+      "M11"
      ]
     }
    ],
-   "poder_medio": 1497,
+   "poder_medio": 1521,
    "substituivel": true
   },
   {
@@ -682,20 +682,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Jelles",
-     "avatar": "S10",
+     "nome": "Rendar",
+     "avatar": "J12",
      "cartas": [
-      "S16",
-      "D18",
-      "S08",
-      "M12",
-      "S14",
+      "S17",
       "S06",
-      "S10"
+      "S03",
+      "J37",
+      "M02",
+      "V06",
+      "J12"
      ]
     }
    ],
-   "poder_medio": 1646,
+   "poder_medio": 1642,
    "substituivel": true
   },
   {
@@ -706,20 +706,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "Jelatira",
+     "avatar": "J20",
      "cartas": [
-      "M06",
-      "J01",
-      "J15",
-      "J07",
-      "J34",
-      "B01",
-      "M09"
+      "M09",
+      "M04",
+      "M08",
+      "J16",
+      "B05",
+      "M12",
+      "J20"
      ]
     }
    ],
-   "poder_medio": 1419,
+   "poder_medio": 1416,
    "substituivel": true
   },
   {
@@ -730,20 +730,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "X",
-     "avatar": "M11",
+     "nome": "Cal Edran",
+     "avatar": "J11",
      "cartas": [
+      "J18",
+      "J02",
       "J23",
-      "J13",
-      "J20",
+      "J28",
+      "J21",
       "J34",
-      "J17",
-      "B02",
-      "M11"
+      "J11"
      ]
     }
    ],
-   "poder_medio": 1421,
+   "poder_medio": 1411,
    "substituivel": true
   },
   {
@@ -754,20 +754,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Garmande Koraveli",
+     "avatar": "V08",
      "cartas": [
-      "M04",
-      "M03",
-      "M07",
-      "B04",
-      "M02",
-      "B01",
-      "M05"
+      "V18",
+      "M05",
+      "V22",
+      "V07",
+      "V20",
+      "V14",
+      "V08"
      ]
     }
    ],
-   "poder_medio": 1448,
+   "poder_medio": 1414,
    "substituivel": true
   },
   {
@@ -778,20 +778,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Alekta",
-     "avatar": "S18",
+     "nome": "Kord",
+     "avatar": "S05",
      "cartas": [
-      "S01",
-      "S02",
-      "S07",
-      "B02",
-      "S03",
-      "S05",
-      "S18"
+      "S18",
+      "S10",
+      "S12",
+      "B03",
+      "S13",
+      "M06",
+      "S05"
      ]
     }
    ],
-   "poder_medio": 1484,
+   "poder_medio": 1433,
    "substituivel": true
   },
   {
@@ -802,20 +802,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "J22",
-      "M07",
+      "J35",
+      "J28",
       "J34",
-      "J17",
-      "M11",
-      "M08",
-      "M01"
+      "J05",
+      "J07",
+      "M02",
+      "M11"
      ]
     }
    ],
-   "poder_medio": 1512,
+   "poder_medio": 1502,
    "substituivel": true
   },
   {
@@ -826,20 +826,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "James Harrow",
-     "avatar": "M12",
+     "nome": "Dareth Polar",
+     "avatar": "J15",
      "cartas": [
-      "M04",
-      "J29",
-      "J34",
-      "B04",
-      "J17",
-      "M05",
-      "M12"
+      "J35",
+      "J02",
+      "J23",
+      "M03",
+      "M12",
+      "J04",
+      "J15"
      ]
     }
    ],
-   "poder_medio": 1464,
+   "poder_medio": 1447,
    "substituivel": true
   },
   {
@@ -850,20 +850,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "Lanigiah",
+     "avatar": "V17",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "B02",
-      "M02",
-      "M11",
-      "M09"
+      "V19",
+      "V25",
+      "V21",
+      "V11",
+      "V14",
+      "B05",
+      "V17"
      ]
     }
    ],
-   "poder_medio": 1435,
+   "poder_medio": 1422,
    "substituivel": true
   },
   {
@@ -874,20 +874,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Vivian",
-     "avatar": "S08",
+     "nome": "Eric",
+     "avatar": "S03",
      "cartas": [
-      "S13",
-      "S02",
-      "M03",
-      "M07",
+      "M08",
+      "S14",
       "S17",
-      "B01",
-      "S08"
+      "S07",
+      "S05",
+      "S08",
+      "S03"
      ]
     }
    ],
-   "poder_medio": 1434,
+   "poder_medio": 1448,
    "substituivel": true
   },
   {
@@ -898,20 +898,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Alekta",
-     "avatar": "S18",
+     "nome": "Agente Seis",
+     "avatar": "M07",
      "cartas": [
+      "M04",
+      "S17",
+      "S10",
+      "S12",
       "S13",
-      "S16",
-      "S01",
-      "S07",
-      "M02",
-      "S03",
-      "S18"
+      "M06",
+      "M07"
      ]
     }
    ],
-   "poder_medio": 1400,
+   "poder_medio": 1418,
    "substituivel": true
   },
   {
@@ -922,20 +922,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Breno Lins",
+     "avatar": "V01",
      "cartas": [
-      "M06",
-      "B04",
-      "B02",
-      "M11",
-      "B05",
-      "M09",
-      "M05"
+      "V18",
+      "V16",
+      "V21",
+      "V12",
+      "V20",
+      "V13",
+      "V01"
      ]
     }
    ],
-   "poder_medio": 1502,
+   "poder_medio": 1472,
    "substituivel": true
   },
   {
@@ -946,20 +946,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Dra. Helena Valença",
-     "avatar": "M08",
+     "nome": "Banjo Lins",
+     "avatar": "V03",
      "cartas": [
+      "V19",
+      "V16",
+      "V23",
       "M06",
-      "M03",
       "M07",
-      "B01",
-      "M09",
-      "M05",
-      "M08"
+      "M12",
+      "V03"
      ]
     }
    ],
-   "poder_medio": 1504,
+   "poder_medio": 1468,
    "substituivel": true
   },
   {
@@ -970,20 +970,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Genrir",
-     "avatar": "S14",
+     "nome": "O'reilly",
+     "avatar": "S06",
      "cartas": [
-      "S13",
-      "M04",
-      "S02",
-      "B04",
-      "S17",
+      "M09",
+      "S14",
+      "S18",
+      "S07",
       "S05",
-      "S14"
+      "S08",
+      "S06"
      ]
     }
    ],
-   "poder_medio": 1448,
+   "poder_medio": 1446,
    "substituivel": true
   },
   {
@@ -994,33 +994,33 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Diego Tavolieri",
-     "avatar": "D09",
+     "nome": "Kelly Fontenelle",
+     "avatar": "D04",
      "cartas": [
-      "D14",
-      "D08",
       "B02",
-      "D04",
-      "D02",
-      "D12",
-      "D09"
+      "D15",
+      "D03",
+      "D10",
+      "D11",
+      "D01",
+      "D04"
      ]
     },
     {
-     "nome": "O Cão",
-     "avatar": "D18",
+     "nome": "Agouro",
+     "avatar": "D12",
      "cartas": [
       "D17",
-      "D07",
       "D16",
-      "D11",
-      "D04",
-      "D12",
-      "D18"
+      "D18",
+      "D09",
+      "D08",
+      "D05",
+      "D12"
      ]
     }
    ],
-   "poder_medio": 1536,
+   "poder_medio": 1530,
    "substituivel": false
   },
   {
@@ -1031,20 +1031,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Junior Quissama",
+     "avatar": "D01",
      "cartas": [
       "D13",
-      "D06",
-      "D01",
-      "D08",
-      "B05",
-      "D02",
-      "M01"
+      "D14",
+      "M03",
+      "D03",
+      "D10",
+      "M11",
+      "D01"
      ]
     }
    ],
-   "poder_medio": 1500,
+   "poder_medio": 1518,
    "substituivel": true
   },
   {
@@ -1055,20 +1055,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Diego Tavolieri",
-     "avatar": "D09",
+     "nome": "Agouro",
+     "avatar": "D12",
      "cartas": [
-      "D15",
-      "D07",
+      "D17",
       "D19",
-      "D01",
+      "D15",
+      "D03",
+      "B05",
       "D11",
-      "D04",
-      "D09"
+      "D12"
      ]
     }
    ],
-   "poder_medio": 1477,
+   "poder_medio": 1462,
    "substituivel": true
   },
   {
@@ -1079,46 +1079,46 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "James Harrow",
-     "avatar": "M12",
+     "nome": "Kaelina Polar",
+     "avatar": "J08",
+     "cartas": [
+      "J14",
+      "J16",
+      "M06",
+      "J17",
+      "J11",
+      "J08",
+      "J01"
+     ]
+    },
+    {
+     "nome": "Agente Sete",
+     "avatar": "M02",
+     "cartas": [
+      "J18",
+      "J22",
+      "J06",
+      "B05",
+      "J20",
+      "J37",
+      "M02"
+     ]
+    },
+    {
+     "nome": "Jokara Amarëa",
+     "avatar": "J01",
      "cartas": [
       "J19",
-      "J14",
-      "J34",
-      "J17",
-      "M02",
-      "M08",
-      "M12"
-     ]
-    },
-    {
-     "nome": "James Harrow",
-     "avatar": "M12",
-     "cartas": [
-      "J05",
+      "J27",
+      "J21",
       "J33",
-      "J34",
-      "J17",
-      "B05",
-      "M05",
-      "M12"
-     ]
-    },
-    {
-     "nome": "Hyde",
-     "avatar": "M01",
-     "cartas": [
-      "J16",
-      "M07",
-      "J34",
-      "J17",
-      "B01",
-      "M08",
-      "M01"
+      "J30",
+      "J09",
+      "J01"
      ]
     }
    ],
-   "poder_medio": 1495,
+   "poder_medio": 1536,
    "substituivel": false
   },
   {
@@ -1129,20 +1129,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "James Harrow",
+     "avatar": "M12",
      "cartas": [
-      "M04",
-      "M06",
+      "V25",
+      "V22",
+      "V07",
+      "V11",
       "M03",
-      "B04",
-      "M02",
-      "M11",
-      "M09"
+      "V24",
+      "M12"
      ]
     }
    ],
-   "poder_medio": 1429,
+   "poder_medio": 1428,
    "substituivel": true
   },
   {
@@ -1156,43 +1156,43 @@
      "nome": "Capitã Nastácia",
      "avatar": "S09",
      "cartas": [
-      "S01",
-      "S07",
-      "S17",
-      "S18",
-      "S14",
       "S12",
-      "S09"
-     ]
-    },
-    {
-     "nome": "Capitã Nastácia",
-     "avatar": "S09",
-     "cartas": [
-      "S16",
       "S07",
-      "S03",
-      "B05",
-      "S05",
-      "S08",
-      "S09"
-     ]
-    },
-    {
-     "nome": "Lias Hardman",
-     "avatar": "S04",
-     "cartas": [
       "S13",
-      "S01",
-      "M11",
-      "S05",
       "S08",
       "S06",
-      "S04"
+      "S04",
+      "S09"
+     ]
+    },
+    {
+     "nome": "X",
+     "avatar": "M11",
+     "cartas": [
+      "S14",
+      "S17",
+      "S13",
+      "S08",
+      "S03",
+      "S02",
+      "M11"
+     ]
+    },
+    {
+     "nome": "Amanda",
+     "avatar": "S02",
+     "cartas": [
+      "S18",
+      "S10",
+      "M07",
+      "S05",
+      "S03",
+      "S15",
+      "S02"
      ]
     }
    ],
-   "poder_medio": 1555,
+   "poder_medio": 1547,
    "substituivel": false
   },
   {
@@ -1203,20 +1203,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Vek",
-     "avatar": "S12",
+     "nome": "Lias Hardman",
+     "avatar": "S04",
      "cartas": [
-      "S16",
-      "M03",
+      "M04",
       "B02",
-      "S03",
-      "S18",
-      "S14",
-      "S12"
+      "S12",
+      "S05",
+      "S08",
+      "S06",
+      "S04"
      ]
     }
    ],
-   "poder_medio": 1553,
+   "poder_medio": 1493,
    "substituivel": true
   },
   {
@@ -1227,20 +1227,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Kaelina Polar",
+     "avatar": "J08",
      "cartas": [
       "J29",
-      "J16",
-      "J07",
-      "J34",
-      "J17",
-      "M02",
-      "M01"
+      "J13",
+      "J24",
+      "M06",
+      "J05",
+      "J36",
+      "J08"
      ]
     }
    ],
-   "poder_medio": 1473,
+   "poder_medio": 1449,
    "substituivel": true
   },
   {
@@ -1251,20 +1251,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "Kharvok",
+     "avatar": "J30",
      "cartas": [
-      "M04",
-      "J33",
-      "M07",
-      "J34",
-      "B04",
-      "J17",
-      "M09"
+      "M09",
+      "M05",
+      "B03",
+      "J27",
+      "J20",
+      "J07",
+      "J30"
      ]
     }
    ],
-   "poder_medio": 1421,
+   "poder_medio": 1452,
    "substituivel": true
   },
   {
@@ -1275,20 +1275,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Saliens",
+     "avatar": "V13",
      "cartas": [
-      "M06",
-      "M03",
-      "M07",
-      "B02",
-      "M02",
-      "B01",
-      "M05"
+      "M08",
+      "V18",
+      "V23",
+      "V07",
+      "V12",
+      "V08",
+      "V13"
      ]
     }
    ],
-   "poder_medio": 1465,
+   "poder_medio": 1415,
    "substituivel": true
   },
   {
@@ -1299,20 +1299,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Priscila Fontenelle",
-     "avatar": "D02",
+     "nome": "Glenda Mendes",
+     "avatar": "D08",
      "cartas": [
-      "D13",
-      "M06",
+      "D19",
+      "M08",
       "D14",
-      "B04",
-      "D08",
-      "D11",
-      "D02"
+      "B03",
+      "D10",
+      "D09",
+      "D08"
      ]
     }
    ],
-   "poder_medio": 1441,
+   "poder_medio": 1431,
    "substituivel": true
   },
   {
@@ -1323,20 +1323,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "James Harrow",
-     "avatar": "M12",
+     "nome": "Dareth Polar",
+     "avatar": "J15",
      "cartas": [
+      "J35",
       "J19",
-      "J14",
-      "J01",
-      "J34",
-      "M11",
-      "M05",
-      "M12"
+      "J02",
+      "M03",
+      "M12",
+      "J17",
+      "J15"
      ]
     }
    ],
-   "poder_medio": 1433,
+   "poder_medio": 1444,
    "substituivel": true
   },
   {
@@ -1347,20 +1347,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "James Harrow",
-     "avatar": "M12",
+     "nome": "Ricochet Bombergue",
+     "avatar": "V09",
      "cartas": [
-      "M04",
-      "M06",
-      "B01",
-      "M09",
-      "M05",
-      "M08",
-      "M12"
+      "V19",
+      "V21",
+      "V20",
+      "V14",
+      "B05",
+      "V06",
+      "V09"
      ]
     }
    ],
-   "poder_medio": 1528,
+   "poder_medio": 1521,
    "substituivel": true
   },
   {
@@ -1374,43 +1374,43 @@
      "nome": "Capitã Nastácia",
      "avatar": "S09",
      "cartas": [
+      "M09",
+      "M05",
+      "S13",
       "M07",
-      "B04",
-      "M11",
-      "S17",
-      "S03",
-      "S06",
+      "M12",
+      "S04",
       "S09"
-     ]
-    },
-    {
-     "nome": "Lias Hardman",
-     "avatar": "S04",
-     "cartas": [
-      "S01",
-      "S02",
-      "S05",
-      "S08",
-      "S18",
-      "S12",
-      "S04"
      ]
     },
     {
      "nome": "Capitã Nastácia",
      "avatar": "S09",
      "cartas": [
-      "S02",
-      "M03",
-      "S17",
-      "S08",
       "S14",
+      "S18",
+      "M06",
       "S06",
+      "S03",
+      "S15",
       "S09"
+     ]
+    },
+    {
+     "nome": "Amanda",
+     "avatar": "S02",
+     "cartas": [
+      "M04",
+      "S17",
+      "M03",
+      "S05",
+      "S03",
+      "S04",
+      "S02"
      ]
     }
    ],
-   "poder_medio": 1585,
+   "poder_medio": 1535,
    "substituivel": false
   },
   {
@@ -1421,20 +1421,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Alekta",
-     "avatar": "S18",
+     "nome": "O'reilly",
+     "avatar": "S06",
      "cartas": [
-      "S13",
-      "S16",
-      "M04",
+      "S14",
+      "S18",
+      "S10",
       "S07",
-      "S03",
-      "S05",
-      "S18"
+      "S13",
+      "M07",
+      "S06"
      ]
     }
    ],
-   "poder_medio": 1420,
+   "poder_medio": 1436,
    "substituivel": true
   },
   {
@@ -1448,17 +1448,17 @@
      "nome": "Cara-de-Larva",
      "avatar": "D11",
      "cartas": [
-      "D06",
-      "D17",
-      "D07",
       "D16",
-      "D08",
-      "B02",
+      "D02",
+      "D13",
+      "D14",
+      "D18",
+      "B05",
       "D11"
      ]
     }
    ],
-   "poder_medio": 1426,
+   "poder_medio": 1439,
    "substituivel": true
   },
   {
@@ -1469,20 +1469,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "Agente Sete",
+     "avatar": "M02",
      "cartas": [
-      "D13",
-      "D17",
-      "D14",
-      "D01",
+      "D19",
       "D16",
-      "M09",
-      "D03"
+      "D13",
+      "D03",
+      "D18",
+      "D08",
+      "M02"
      ]
     }
    ],
-   "poder_medio": 1470,
+   "poder_medio": 1475,
    "substituivel": true
   },
   {
@@ -1493,20 +1493,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Hyde",
-     "avatar": "M01",
+     "nome": "Banjo Lins",
+     "avatar": "V03",
      "cartas": [
-      "M04",
-      "M07",
       "B02",
-      "M02",
-      "M11",
-      "B01",
-      "M01"
+      "V16",
+      "V22",
+      "M07",
+      "V08",
+      "V17",
+      "V03"
      ]
     }
    ],
-   "poder_medio": 1499,
+   "poder_medio": 1480,
    "substituivel": true
   },
   {
@@ -1517,20 +1517,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Maria Santoro",
+     "avatar": "V24",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "M09",
-      "M05"
+      "V16",
+      "V25",
+      "V22",
+      "V21",
+      "V11",
+      "V12",
+      "V24"
      ]
     }
    ],
-   "poder_medio": 1427,
+   "poder_medio": 1395,
    "substituivel": true
   },
   {
@@ -1541,20 +1541,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Agente Sete",
-     "avatar": "M02",
+     "nome": "Tio Frank",
+     "avatar": "V14",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M02"
+      "V19",
+      "V18",
+      "V23",
+      "V25",
+      "V07",
+      "V11",
+      "V14"
      ]
     }
    ],
-   "poder_medio": 1405,
+   "poder_medio": 1355,
    "substituivel": true
   },
   {
@@ -1565,20 +1565,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Primus Senan",
-     "avatar": "B05",
+     "nome": "Dareth Polar",
+     "avatar": "J15",
      "cartas": [
-      "J05",
+      "J18",
       "J23",
-      "J15",
-      "J34",
-      "J17",
-      "B01",
-      "B05"
+      "J24",
+      "J05",
+      "J11",
+      "J33",
+      "J15"
      ]
     }
    ],
-   "poder_medio": 1415,
+   "poder_medio": 1493,
    "substituivel": true
   },
   {
@@ -1589,20 +1589,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Selina Polar",
-     "avatar": "J17",
+     "nome": "Gabasteri",
+     "avatar": "J04",
      "cartas": [
-      "J05",
+      "J29",
       "J22",
+      "J14",
+      "J16",
+      "J28",
       "J13",
-      "J20",
-      "J33",
-      "J07",
-      "J17"
+      "J04"
      ]
     }
    ],
-   "poder_medio": 1368,
+   "poder_medio": 1323,
    "substituivel": true
   },
   {
@@ -1613,20 +1613,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Selina Polar",
-     "avatar": "J17",
+     "nome": "Professor Taliver",
+     "avatar": "J36",
      "cartas": [
-      "J19",
-      "J22",
       "J29",
+      "J23",
       "J13",
-      "J20",
-      "J34",
-      "J17"
+      "J24",
+      "J27",
+      "J21",
+      "J36"
      ]
     }
    ],
-   "poder_medio": 1348,
+   "poder_medio": 1365,
    "substituivel": true
   },
   {
@@ -1637,20 +1637,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "Erla",
+     "avatar": "V06",
      "cartas": [
-      "M03",
-      "B04",
-      "B02",
-      "M02",
-      "M11",
-      "B05",
-      "M09"
+      "V23",
+      "V22",
+      "V11",
+      "V20",
+      "V17",
+      "V13",
+      "V06"
      ]
     }
    ],
-   "poder_medio": 1498,
+   "poder_medio": 1486,
    "substituivel": true
   },
   {
@@ -1661,20 +1661,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Maria Santoro",
+     "avatar": "V24",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M05"
+      "V19",
+      "V18",
+      "V16",
+      "V25",
+      "V07",
+      "V21",
+      "V24"
      ]
     }
    ],
-   "poder_medio": 1418,
+   "poder_medio": 1353,
    "substituivel": true
   },
   {
@@ -1685,20 +1685,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Édelin Lys",
-     "avatar": "B01",
+     "nome": "Garmande Koraveli",
+     "avatar": "V08",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "B01"
+      "V19",
+      "V23",
+      "V25",
+      "V22",
+      "V21",
+      "V11",
+      "V08"
      ]
     }
    ],
-   "poder_medio": 1408,
+   "poder_medio": 1368,
    "substituivel": true
   },
   {
@@ -1709,20 +1709,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Agente Sete",
-     "avatar": "M02",
+     "nome": "William McCroys",
+     "avatar": "V20",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M02"
+      "V18",
+      "V16",
+      "V25",
+      "V22",
+      "V07",
+      "V21",
+      "V20"
      ]
     }
    ],
-   "poder_medio": 1405,
+   "poder_medio": 1366,
    "substituivel": true
   },
   {
@@ -1733,20 +1733,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Saliens",
+     "avatar": "V13",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "M11",
-      "M05"
+      "V19",
+      "V18",
+      "V16",
+      "V23",
+      "V07",
+      "V12",
+      "V13"
      ]
     }
    ],
-   "poder_medio": 1419,
+   "poder_medio": 1374,
    "substituivel": true
   },
   {
@@ -1757,20 +1757,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Genrir",
-     "avatar": "S14",
+     "nome": "Vivian",
+     "avatar": "S08",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "B02",
-      "S14"
+      "S08"
      ]
     }
    ],
-   "poder_medio": 1376,
+   "poder_medio": 1384,
    "substituivel": true
   },
   {
@@ -1781,20 +1781,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Kord",
-     "avatar": "S05",
+     "nome": "Eric",
+     "avatar": "S03",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
-      "S07",
+      "S14",
       "S17",
-      "S05"
+      "S10",
+      "S12",
+      "S07",
+      "S08",
+      "S03"
      ]
     }
    ],
-   "poder_medio": 1365,
+   "poder_medio": 1423,
    "substituivel": true
   },
   {
@@ -1805,20 +1805,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Genrir",
-     "avatar": "S14",
+     "nome": "Capitão Tzough",
+     "avatar": "S13",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "M06",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "S14"
+      "S13"
      ]
     }
    ],
-   "poder_medio": 1350,
+   "poder_medio": 1371,
    "substituivel": true
   },
   {
@@ -1829,20 +1829,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Vivian",
-     "avatar": "S08",
+     "nome": "O'reilly",
+     "avatar": "S06",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "M04",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "S08"
+      "S06"
      ]
     }
    ],
-   "poder_medio": 1328,
+   "poder_medio": 1388,
    "substituivel": true
   },
   {
@@ -1853,20 +1853,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Priscila Fontenelle",
-     "avatar": "D02",
+     "nome": "Sra. Olívia",
+     "avatar": "D10",
      "cartas": [
-      "D13",
-      "D15",
-      "D06",
       "D17",
       "D19",
+      "D15",
+      "D02",
+      "D13",
       "D14",
-      "D02"
+      "D10"
      ]
     }
    ],
-   "poder_medio": 1375,
+   "poder_medio": 1337,
    "substituivel": true
   },
   {
@@ -1877,20 +1877,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Kelly Fontenelle",
-     "avatar": "D04",
+     "nome": "Diego Tavolieri",
+     "avatar": "D09",
      "cartas": [
-      "D13",
-      "D15",
-      "D06",
       "D17",
-      "D07",
-      "D19",
-      "D04"
+      "D16",
+      "D15",
+      "D02",
+      "D13",
+      "D14",
+      "D09"
      ]
     }
    ],
-   "poder_medio": 1353,
+   "poder_medio": 1348,
    "substituivel": true
   },
   {
@@ -1901,20 +1901,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Efepar",
-     "avatar": "J34",
+     "nome": "Platisa",
+     "avatar": "J06",
      "cartas": [
+      "J35",
+      "J18",
       "J19",
+      "J22",
       "J14",
-      "J23",
-      "J01",
-      "J15",
       "J16",
-      "J34"
+      "J06"
      ]
     }
    ],
-   "poder_medio": 1322,
+   "poder_medio": 1321,
    "substituivel": true
   },
   {
@@ -1925,20 +1925,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Selina Polar",
-     "avatar": "J17",
+     "nome": "Efepar",
+     "avatar": "J34",
      "cartas": [
-      "J05",
-      "J23",
-      "J01",
+      "J18",
+      "J14",
+      "J02",
+      "J28",
       "J13",
-      "J20",
-      "J16",
-      "J17"
+      "J27",
+      "J34"
      ]
     }
    ],
-   "poder_medio": 1360,
+   "poder_medio": 1369,
    "substituivel": true
   },
   {
@@ -1949,20 +1949,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Selina Polar",
-     "avatar": "J17",
+     "nome": "Jelatira",
+     "avatar": "J20",
      "cartas": [
-      "J14",
+      "J35",
       "J22",
-      "J15",
-      "J29",
-      "J33",
-      "J07",
-      "J17"
+      "J02",
+      "J28",
+      "J16",
+      "J24",
+      "J20"
      ]
     }
    ],
-   "poder_medio": 1360,
+   "poder_medio": 1344,
    "substituivel": true
   },
   {
@@ -1973,20 +1973,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Efepar",
-     "avatar": "J34",
+     "nome": "Nefestra",
+     "avatar": "J21",
      "cartas": [
-      "J05",
-      "J01",
       "J29",
+      "J35",
+      "J19",
+      "J23",
+      "J28",
       "J13",
-      "J33",
-      "J16",
-      "J34"
+      "J21"
      ]
     }
    ],
-   "poder_medio": 1361,
+   "poder_medio": 1279,
    "substituivel": true
   },
   {
@@ -1997,20 +1997,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Selina Polar",
-     "avatar": "J17",
+     "nome": "Mariv",
+     "avatar": "J07",
      "cartas": [
-      "J19",
-      "J14",
+      "J29",
       "J22",
-      "J15",
-      "J20",
-      "J07",
-      "J17"
+      "J14",
+      "J16",
+      "J24",
+      "J27",
+      "J07"
      ]
     }
    ],
-   "poder_medio": 1333,
+   "poder_medio": 1332,
    "substituivel": true
   },
   {
@@ -2021,20 +2021,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Alekta",
-     "avatar": "S18",
+     "nome": "Kord",
+     "avatar": "S05",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "M06",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "S18"
+      "S05"
      ]
     }
    ],
-   "poder_medio": 1347,
+   "poder_medio": 1382,
    "substituivel": true
   },
   {
@@ -2045,20 +2045,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Luna Stellar",
-     "avatar": "S17",
+     "nome": "Eric",
+     "avatar": "S03",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "M03",
-      "S17"
+      "S03"
      ]
     }
    ],
-   "poder_medio": 1328,
+   "poder_medio": 1388,
    "substituivel": true
   },
   {
@@ -2069,20 +2069,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Junior Quissama",
-     "avatar": "D01",
+     "nome": "Sra. Olívia",
+     "avatar": "D10",
      "cartas": [
-      "D15",
-      "D06",
       "D17",
-      "D07",
       "D19",
-      "D14",
-      "D01"
+      "D16",
+      "D15",
+      "D02",
+      "D13",
+      "D10"
      ]
     }
    ],
-   "poder_medio": 1371,
+   "poder_medio": 1333,
    "substituivel": true
   },
   {
@@ -2093,20 +2093,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Kelly Fontenelle",
-     "avatar": "D04",
+     "nome": "Glenda Mendes",
+     "avatar": "D08",
      "cartas": [
-      "D13",
-      "D15",
-      "D06",
-      "D07",
+      "D17",
       "D19",
+      "D16",
+      "D15",
+      "D02",
       "D14",
-      "D04"
+      "D08"
      ]
     }
    ],
-   "poder_medio": 1369,
+   "poder_medio": 1358,
    "substituivel": true
   },
   {
@@ -2117,20 +2117,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Efepar",
-     "avatar": "J34",
+     "nome": "Tavra Vendrar",
+     "avatar": "J33",
      "cartas": [
-      "J14",
-      "J22",
+      "J18",
+      "J19",
+      "J02",
       "J23",
-      "J01",
-      "J29",
-      "J13",
-      "J34"
+      "J24",
+      "J27",
+      "J33"
      ]
     }
    ],
-   "poder_medio": 1336,
+   "poder_medio": 1383,
    "substituivel": true
   },
   {
@@ -2141,20 +2141,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "Tio Frank",
+     "avatar": "V14",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M09"
+      "V18",
+      "V25",
+      "V22",
+      "V07",
+      "V21",
+      "V11",
+      "V14"
      ]
     }
    ],
-   "poder_medio": 1413,
+   "poder_medio": 1376,
    "substituivel": true
   },
   {
@@ -2165,20 +2165,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Eric",
-     "avatar": "S03",
+     "nome": "Capitão Tzough",
+     "avatar": "S13",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "B04",
-      "S03"
+      "S13"
      ]
     }
    ],
-   "poder_medio": 1343,
+   "poder_medio": 1371,
    "substituivel": true
   },
   {
@@ -2189,20 +2189,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Cara-de-Larva",
-     "avatar": "D11",
+     "nome": "O Cão",
+     "avatar": "D18",
      "cartas": [
-      "D13",
-      "D15",
       "D17",
-      "D07",
-      "D19",
+      "D16",
+      "D15",
+      "D13",
+      "D02",
       "D14",
-      "D11"
+      "D18"
      ]
     }
    ],
-   "poder_medio": 1364,
+   "poder_medio": 1345,
    "substituivel": true
   },
   {
@@ -2213,20 +2213,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Priscila Fontenelle",
-     "avatar": "D02",
+     "nome": "Cara-de-Larva",
+     "avatar": "D11",
      "cartas": [
-      "D15",
-      "D06",
-      "D07",
+      "D17",
       "D19",
-      "D14",
-      "D08",
-      "D02"
+      "D16",
+      "D15",
+      "D13",
+      "D09",
+      "D11"
      ]
     }
    ],
-   "poder_medio": 1418,
+   "poder_medio": 1381,
    "substituivel": true
   },
   {
@@ -2237,20 +2237,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Édelin Lys",
-     "avatar": "B01",
+     "nome": "Garmande Koraveli",
+     "avatar": "V08",
      "cartas": [
-      "M04",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M02",
-      "B01"
+      "V19",
+      "V16",
+      "V23",
+      "V21",
+      "V11",
+      "V24",
+      "V08"
      ]
     }
    ],
-   "poder_medio": 1435,
+   "poder_medio": 1389,
    "substituivel": true
   },
   {
@@ -2261,20 +2261,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Richard Falkner",
-     "avatar": "M09",
+     "nome": "Lanigiah",
+     "avatar": "V17",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M09"
+      "V19",
+      "V18",
+      "V16",
+      "V23",
+      "V22",
+      "V07",
+      "V17"
      ]
     }
    ],
-   "poder_medio": 1413,
+   "poder_medio": 1353,
    "substituivel": true
   },
   {
@@ -2285,20 +2285,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Édelin Lys",
-     "avatar": "B01",
+     "nome": "William McCroys",
+     "avatar": "V20",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "B01"
+      "V19",
+      "V25",
+      "V22",
+      "V07",
+      "V21",
+      "V11",
+      "V20"
      ]
     }
    ],
-   "poder_medio": 1408,
+   "poder_medio": 1367,
    "substituivel": true
   },
   {
@@ -2309,20 +2309,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Garmande Koraveli",
+     "avatar": "V08",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M05"
+      "V19",
+      "V18",
+      "V16",
+      "V23",
+      "V25",
+      "V11",
+      "V08"
      ]
     }
    ],
-   "poder_medio": 1418,
+   "poder_medio": 1354,
    "substituivel": true
   },
   {
@@ -2333,20 +2333,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "A Mãe",
-     "avatar": "D16",
+     "nome": "Pedro Souza",
+     "avatar": "D03",
      "cartas": [
-      "D13",
-      "D15",
-      "D06",
       "D17",
-      "D07",
+      "D19",
+      "D15",
+      "D02",
+      "D13",
       "D14",
-      "D16"
+      "D03"
      ]
     }
    ],
-   "poder_medio": 1347,
+   "poder_medio": 1335,
    "substituivel": true
   },
   {
@@ -2357,20 +2357,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Priscila Fontenelle",
-     "avatar": "D02",
+     "nome": "Pedro Souza",
+     "avatar": "D03",
      "cartas": [
-      "D13",
-      "D15",
-      "D06",
       "D17",
       "D19",
+      "D16",
+      "D02",
+      "D13",
       "D14",
-      "D02"
+      "D03"
      ]
     }
    ],
-   "poder_medio": 1375,
+   "poder_medio": 1335,
    "substituivel": true
   },
   {
@@ -2381,20 +2381,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Selina Polar",
-     "avatar": "J17",
+     "nome": "Kharvok",
+     "avatar": "J30",
      "cartas": [
+      "J29",
       "J19",
-      "J05",
-      "J23",
-      "J15",
-      "J20",
-      "J34",
-      "J17"
+      "J18",
+      "J14",
+      "J02",
+      "J17",
+      "J30"
      ]
     }
    ],
-   "poder_medio": 1338,
+   "poder_medio": 1358,
    "substituivel": true
   },
   {
@@ -2405,20 +2405,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "X",
-     "avatar": "M11",
+     "nome": "Tio Frank",
+     "avatar": "V14",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B04",
-      "B02",
-      "M11"
+      "V16",
+      "V23",
+      "V25",
+      "V22",
+      "V07",
+      "V21",
+      "V14"
      ]
     }
    ],
-   "poder_medio": 1405,
+   "poder_medio": 1369,
    "substituivel": true
   },
   {
@@ -2429,20 +2429,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Kord",
-     "avatar": "S05",
+     "nome": "Vivian",
+     "avatar": "S08",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
+      "S12",
       "S07",
-      "M07",
-      "S05"
+      "S08"
      ]
     }
    ],
-   "poder_medio": 1349,
+   "poder_medio": 1384,
    "substituivel": true
   },
   {
@@ -2453,20 +2453,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "Junior Quissama",
+     "avatar": "D01",
      "cartas": [
-      "D13",
-      "D06",
-      "D17",
-      "D08",
+      "D19",
+      "D16",
+      "D02",
+      "D18",
+      "D10",
       "D11",
-      "D04",
-      "D03"
+      "D01"
      ]
     }
    ],
-   "poder_medio": 1457,
+   "poder_medio": 1476,
    "substituivel": true
   },
   {
@@ -2477,20 +2477,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "A Mãe",
-     "avatar": "D16",
+     "nome": "Glenda Mendes",
+     "avatar": "D08",
      "cartas": [
-      "D13",
-      "D06",
-      "D17",
-      "D07",
       "D19",
+      "D16",
+      "D15",
+      "D13",
+      "D02",
       "D14",
-      "D16"
+      "D08"
      ]
     }
    ],
-   "poder_medio": 1366,
+   "poder_medio": 1377,
    "substituivel": true
   },
   {
@@ -2501,20 +2501,20 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Efepar",
-     "avatar": "J34",
+     "nome": "Platisa",
+     "avatar": "J06",
      "cartas": [
-      "J14",
-      "J05",
+      "J35",
+      "J22",
       "J23",
-      "J33",
       "J16",
-      "J07",
-      "J34"
+      "J28",
+      "J13",
+      "J06"
      ]
     }
    ],
-   "poder_medio": 1354,
+   "poder_medio": 1330,
    "substituivel": true
   },
   {
@@ -2525,20 +2525,20 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Padre Tomas",
-     "avatar": "M05",
+     "nome": "Maria Santoro",
+     "avatar": "V24",
      "cartas": [
-      "M04",
-      "M06",
-      "M03",
-      "M07",
-      "B02",
-      "M02",
-      "M05"
+      "V19",
+      "V18",
+      "V07",
+      "V21",
+      "V11",
+      "V12",
+      "V24"
      ]
     }
    ],
-   "poder_medio": 1425,
+   "poder_medio": 1384,
    "substituivel": true
   },
   {
@@ -2549,20 +2549,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Genrir",
-     "avatar": "S14",
+     "nome": "O'reilly",
+     "avatar": "S06",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
-      "S07",
+      "S18",
       "S17",
-      "S14"
+      "S10",
+      "S12",
+      "S07",
+      "S05",
+      "S06"
      ]
     }
    ],
-   "poder_medio": 1378,
+   "poder_medio": 1422,
    "substituivel": true
   },
   {
@@ -2573,20 +2573,20 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Vivian",
-     "avatar": "S08",
+     "nome": "O'reilly",
+     "avatar": "S06",
      "cartas": [
-      "S13",
-      "S16",
-      "S01",
-      "S02",
+      "S14",
+      "S18",
+      "S17",
+      "S10",
       "S07",
-      "S03",
-      "S08"
+      "S05",
+      "S06"
      ]
     }
    ],
-   "poder_medio": 1371,
+   "poder_medio": 1420,
    "substituivel": true
   },
   {
@@ -2597,20 +2597,20 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Cara-de-Larva",
-     "avatar": "D11",
+     "nome": "Diego Tavolieri",
+     "avatar": "D09",
      "cartas": [
-      "D13",
-      "D15",
-      "D06",
-      "D07",
+      "D17",
       "D19",
-      "D01",
-      "D11"
+      "D15",
+      "D02",
+      "D14",
+      "D03",
+      "D09"
      ]
     }
    ],
-   "poder_medio": 1369,
+   "poder_medio": 1364,
    "substituivel": true
   },
   {
@@ -2624,136 +2624,136 @@
      "nome": "A Besta",
      "avatar": "S11",
      "cartas": [
-      "V02",
-      "J03",
-      "S11",
       "B01",
-      "V15",
+      "J03",
       "M01",
-      "M10"
+      "D06",
+      "M10",
+      "V02",
+      "S11"
      ]
     }
    ],
-   "poder_medio": 1598,
+   "poder_medio": 1747,
    "substituivel": false
   }
  ],
  "repeticoes": {
-  "J01": 7,
-  "J02": 1,
+  "J01": 6,
+  "J02": 7,
   "J03": 1,
-  "J04": 0,
-  "J05": 8,
-  "J06": 0,
-  "J07": 7,
-  "J08": 0,
-  "J09": 0,
-  "J10": 1,
-  "J11": 1,
-  "J12": 0,
+  "J04": 4,
+  "J05": 4,
+  "J06": 5,
+  "J07": 5,
+  "J08": 6,
+  "J09": 6,
+  "J10": 3,
+  "J11": 4,
+  "J12": 3,
   "J13": 7,
-  "J14": 8,
+  "J14": 7,
   "J15": 7,
   "J16": 7,
-  "J17": 21,
-  "J18": 0,
+  "J17": 5,
+  "J18": 7,
   "J19": 7,
-  "J20": 7,
-  "J21": 0,
+  "J20": 5,
+  "J21": 5,
   "J22": 7,
-  "J23": 8,
-  "J24": 1,
-  "J25": 0,
-  "J26": 0,
-  "J27": 0,
-  "J28": 0,
+  "J23": 7,
+  "J24": 7,
+  "J25": 3,
+  "J26": 3,
+  "J27": 7,
+  "J28": 7,
   "J29": 7,
-  "J30": 1,
-  "J31": 0,
-  "J32": 0,
-  "J33": 7,
-  "J34": 22,
-  "J35": 0,
-  "J36": 1,
-  "J37": 1,
-  "V01": 1,
-  "V02": 2,
-  "V03": 1,
-  "V04": 1,
-  "V05": 1,
-  "V06": 1,
-  "V07": 1,
-  "V08": 0,
-  "V09": 1,
-  "V10": 1,
-  "V11": 0,
-  "V12": 1,
-  "V13": 1,
-  "V14": 1,
-  "V15": 2,
-  "V16": 1,
-  "V17": 1,
-  "V18": 1,
-  "V19": 1,
-  "V20": 1,
-  "V21": 1,
-  "V22": 0,
-  "V23": 1,
-  "V24": 1,
-  "V25": 1,
-  "S01": 16,
-  "S02": 16,
-  "S03": 11,
-  "S04": 10,
+  "J30": 5,
+  "J31": 3,
+  "J32": 3,
+  "J33": 5,
+  "J34": 4,
+  "J35": 7,
+  "J36": 4,
+  "J37": 6,
+  "V01": 6,
+  "V02": 1,
+  "V03": 7,
+  "V04": 4,
+  "V05": 5,
+  "V06": 7,
+  "V07": 13,
+  "V08": 8,
+  "V09": 6,
+  "V10": 4,
+  "V11": 12,
+  "V12": 8,
+  "V13": 7,
+  "V14": 8,
+  "V15": 0,
+  "V16": 12,
+  "V17": 7,
+  "V18": 12,
+  "V19": 13,
+  "V20": 8,
+  "V21": 13,
+  "V22": 12,
+  "V23": 12,
+  "V24": 8,
+  "V25": 12,
+  "S01": 0,
+  "S02": 7,
+  "S03": 10,
+  "S04": 8,
   "S05": 11,
   "S06": 11,
-  "S07": 16,
-  "S08": 11,
-  "S09": 11,
-  "S10": 5,
+  "S07": 15,
+  "S08": 10,
+  "S09": 7,
+  "S10": 15,
   "S11": 1,
-  "S12": 10,
-  "S13": 16,
-  "S14": 11,
-  "S15": 4,
-  "S16": 16,
-  "S17": 11,
-  "S18": 10,
-  "D01": 9,
-  "D02": 9,
-  "D03": 10,
-  "D04": 9,
-  "D05": 3,
-  "D06": 13,
-  "D07": 12,
-  "D08": 9,
-  "D09": 9,
-  "D10": 3,
-  "D11": 10,
-  "D12": 9,
-  "D13": 13,
+  "S12": 14,
+  "S13": 10,
+  "S14": 15,
+  "S15": 7,
+  "S16": 6,
+  "S17": 15,
+  "S18": 15,
+  "D01": 8,
+  "D02": 13,
+  "D03": 8,
+  "D04": 7,
+  "D05": 7,
+  "D06": 1,
+  "D07": 6,
+  "D08": 7,
+  "D09": 7,
+  "D10": 7,
+  "D11": 7,
+  "D12": 8,
+  "D13": 12,
   "D14": 12,
   "D15": 12,
-  "D16": 9,
+  "D16": 12,
   "D17": 12,
-  "D18": 9,
-  "D19": 12,
-  "M01": 14,
-  "M02": 16,
-  "M03": 24,
-  "M04": 24,
-  "M05": 16,
-  "M06": 23,
-  "M07": 24,
-  "M08": 13,
-  "M09": 15,
-  "M10": 2,
-  "M11": 15,
-  "M12": 13,
-  "B01": 16,
-  "B02": 23,
-  "B03": 1,
-  "B04": 23,
-  "B05": 14
+  "D18": 7,
+  "D19": 13,
+  "M01": 1,
+  "M02": 8,
+  "M03": 7,
+  "M04": 4,
+  "M05": 4,
+  "M06": 7,
+  "M07": 8,
+  "M08": 4,
+  "M09": 4,
+  "M10": 1,
+  "M11": 8,
+  "M12": 7,
+  "B01": 1,
+  "B02": 4,
+  "B03": 4,
+  "B04": 3,
+  "B05": 7
  }
 }

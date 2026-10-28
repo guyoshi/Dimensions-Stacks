@@ -4,7 +4,7 @@ Determinístico (semente fixa). Lê o mapa (historia_mapa.js) e as cartas (data.
 Uso: python3 prototipo/tools/gerar_batalhas_historia.py   → dados/historia_batalhas.json e docs/MODO_HISTORIA_BATALHAS_PROPOSTA_2026-10-28.md"""
 import json, os, random, subprocess, collections
 aqui = os.path.dirname(os.path.abspath(__file__)); proj = os.path.dirname(aqui); raiz = os.path.dirname(proj)
-js = """global.window=global;const E=require('%s/engine.js');require('%s/historia_mapa.js');const D=globalThis.DS_DATA;
+js = """global.window=global;['propostas','curtos','data','especiais','engine'].forEach(f=>require('%s/'+f+'.js'));require('%s/historia_mapa.js');const D=globalThis.DS_DATA;
 console.log(JSON.stringify({cartas:D.CARTAS.map(c=>({id:c.id,nome:c.nome,serie:c.serie,rar:c.raridade,st:[c.stats.pod,c.stats.def,c.stats.int,c.stats.vel],uniao:!!c.uniao})),nos:window.DS_MAPA.nos.map(n=>({id:n.id,tipo:n.tipo,tier:n.tier,lado:n.lado})),boss:window.DS_MAPA.boss,guard:window.DS_MAPA.guardioes}))""" % (proj, proj)
 d = json.loads(subprocess.check_output(['node', '-e', js]))
 C = {c['id']: c for c in d['cartas']}
@@ -22,7 +22,7 @@ rnd = random.Random(2820)
 uso = collections.Counter()
 def pool(lado, tier, rar):
     ser = TEMA[lado][0]
-    p = [c for c in d['cartas'] if c['rar'] == rar and c['id'] != BESTA]
+    p = [c for c in d['cartas'] if c['rar'] == rar and c['id'] != BESTA and not c['uniao']]
     tema = [c for c in p if c['serie'] == ser]
     cross = [c for c in p if c['serie'] != ser and (c['serie'] in OUTRAS or tier >= 3)]
     return tema, cross
@@ -54,6 +54,30 @@ for n in sorted(nos, key=lambda n: (-n['tier'], n['id'])):
 uni6 = sorted(UNIAO, key=lambda i: -poder(C[i]))[:6]
 batalhas[d['boss']] = {'id': d['boss'], 'tipo': 'boss', 'regiao': 4, 'lado': 'centro', 'tema': 'A União', 'inimigos': [{'nome': 'A Besta', 'avatar': BESTA, 'cartas': ordem([BESTA] + uni6)}]}
 for i in [BESTA] + uni6: uso[i] += 1
+# reparo: toda carta que não é da União (nem a Besta) aparece em pelo menos MIN batalhas; troca por uma carta da mesma raridade que apareça demais
+MIN = 3
+def conta():
+    t = collections.Counter()
+    for b in batalhas.values():
+        for e in b['inimigos']:
+            for c in e['cartas']: t[c] += 1
+    return t
+regulares = [c for c in d['cartas'] if not c['uniao'] and c['id'] != BESTA]
+semdoador = set()
+for _ in range(2000):
+    t = conta(); falta = sorted([c for c in regulares if t[c['id']] < MIN], key=lambda c: t[c['id']])
+    falta = [x for x in falta if t[x['id']] < 99] if False else falta
+    if not falta: break
+    c = next((x for x in falta if x['id'] not in semdoador), None)
+    if c is None: break
+    doadores = sorted([x for x in regulares if x['rar'] == c['rar'] and t[x['id']] > MIN and x['id'] != c['id']], key=lambda x: -t[x['id']])
+    feito = False
+    for dn in doadores:
+        alvos = [(b, e) for b in batalhas.values() if b['tipo'] != 'boss' for e in b['inimigos'] if dn['id'] in e['cartas'] and c['id'] not in e['cartas']]
+        if alvos:
+            b, e = rnd.choice(alvos); e['cartas'][e['cartas'].index(dn['id'])] = c['id']; e['cartas'] = ordem(e['cartas'])
+            e['avatar'] = max(e['cartas'], key=lambda i: poder(C[i])); e['nome'] = C[e['avatar']]['nome']; feito = True; break
+    if not feito: semdoador.add(c['id'])   # sem doador: segue para a próxima carta
 # repetições
 tot = collections.Counter(); onde = collections.defaultdict(list)
 for b in batalhas.values():
@@ -72,7 +96,8 @@ L = ['# Modo história: proposta das 100 batalhas (Etapa 2, 28/10/2026)', '',
      '- **Receita de raridades por inimigo (7 cartas)** cresce da região 1 (quase só comuns) à 4 (épicas e lendárias): ver tabela abaixo. O jogador começa com 6 comuns e 1 épica.',
      '- **Inimigo = um personagem das cartas**, o de maior poder do baralho dele; o avatar é a foto dessa carta. Miniboss: 2 ou 3 oponentes (duelo de 3 ou 4). Guardiões: 2 oponentes (duelo de 3). Boss: **A Besta + 6 cartas da União** (a Besta é exclusiva do Boss).',
      '- **Ordem de jogo do inimigo:** da mais fraca para a mais forte (a mais forte no fim). Proposta, ajustável.',
-     '- **Distribuição equilibrada:** cada escolha pega a carta menos usada da raridade pedida, para que todas apareçam.',
+     '- **Cartas da União (8) e a Besta** só aparecem no Boss (as 6 de maior poder). Sobram **V15 e S01**, sem lugar no Boss: ficam para recompensa de baú/loja (a decidir).',
+     '- **Distribuição equilibrada:** cada escolha pega a carta menos usada da raridade pedida, e um passo de reparo garante que **toda carta fora da União apareça em pelo menos 3 batalhas** (sem isso, o jogador nunca veria a carta).',
      '- **Substituível:** batalha comum, evento ou elite em que **todas as cartas do inimigo aparecem em pelo menos 3 batalhas**; dá para trocar o baralho dela sem sumir nenhuma carta do mapa.', '']
 L += ['| Tipo | Região | Comum | Rara | Épica | Lendária |', '|---|---|---|---|---|---|']
 for (t, r), v in sorted(REC.items(), key=lambda kv: (kv[0][1], kv[0][0])): L.append(f'| {t} | {r} | {v[0]} | {v[1]} | {v[2]} | {v[3]} |')
