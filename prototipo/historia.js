@@ -18,7 +18,7 @@
     miniboss: { nome: 'Miniboss',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores, com mais cartas. Pode trancar uma região.' },
     guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões do centro. Vencer os 4 abre o Boss.' },
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
-    boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'O centro da teia.' },
+    boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
   const LADOS = { esq: 'Esquerda', cima: 'Cima', dir: 'Direita', baixo: 'Baixo' };
   const REGIAO = { 1: 'Região externa', 2: 'Região média', 3: 'Região interna', 4: 'Núcleo' };
@@ -95,7 +95,7 @@
     return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>`;
   }
   function nome(n) {
-    if (n.tipo === 'boss') return 'Boss final: A União';
+    if (n.tipo === 'boss') return 'Boss final: A Besta';
     if (n.tipo === 'guardiao') return 'Guardião da ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
     return 'Batalha ' + String(+n.id.slice(1)).padStart(3, '0');
@@ -135,7 +135,7 @@
   function sortear() {
     const ladoSel = ['esq', 'cima', 'dir', 'baixo'][Math.floor(Math.random() * 4)];
     S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save();
-    if (window.DSCinema) window.DSCinema.play(() => openMap(true, true)); else openMap(true);
+    if (window.DSCinema) window.DSCinema.play((pulou, v) => { if (v && v.nome) { S.nome = v.nome; save(); } openMap(true, true); }); else openMap(true);
   }
 
   // ---- mapa
@@ -299,7 +299,7 @@
   function bossAbre() {
     closeSheet(); const b = BY[M.boss]; const red = document.body.classList.contains('reduce');
     centerOn(b.x, b.y, .75, !red);
-    setTimeout(() => { SND.play('banner'); const bg = $('.n.t-boss', root); if (bg) { bg.classList.add('burst'); setTimeout(() => bg.classList.remove('burst'), 2600); } toast('Os 4 guardiões caíram. O centro da teia se abriu.'); }, red ? 50 : 800);
+    setTimeout(() => { SND.play('banner'); const bg = $('.n.t-boss', root); if (bg) { bg.classList.add('burst'); setTimeout(() => bg.classList.remove('burst'), 2600); } toast('Os 4 guardiões caíram. O núcleo da galáxia se abriu.'); }, red ? 50 : 800);
   }
   function toast(t) { const x = $('#hsToast', root); if (!x) return; x.textContent = t; x.hidden = false; clearTimeout(x._t); x._t = setTimeout(() => { x.hidden = true; }, 3200); }
 
@@ -342,7 +342,7 @@
   function legenda() {
     const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><span class="hs-dot" style="background:${TIPOS[k].cor}"></span><b>${TIPOS[k].nome}</b><span>${esc(TIPOS[k].desc)}</span></li>`).join('');
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
-    const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b><span>No centro, protegido pelos 4 guardiões.</span></li></ul>
+    const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b><span>A Besta, no núcleo da galáxia, protegida pelos 4 guardiões.</span></li></ul>
       <p class="hint">${BATALHAS.length} batalhas (${['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'boss'].map(k => contagem[k] + ' ' + TIPOS[k].nome.toLowerCase()).join(', ')}) e ${contagem.loja} lojas.</p>
       <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Mapa no escuro: só o que está perto do boneco aparece</label>
       <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>

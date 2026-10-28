@@ -1518,3 +1518,6 @@ body.reduce .cin-img, body.reduce .cin-img.in { animation: none !important; tran
 .bau-card { opacity: 0; animation: baucard .8s cubic-bezier(.2, 1.2, .3, 1) var(--d) forwards; }
 @keyframes baucard { from { opacity: 0; transform: translateY(150px) scale(.4) rotate(-12deg); } to { opacity: 1; transform: none; } }
 body.reduce .bau-coin, body.reduce .bau-card, body.reduce .bau-amt { animation-duration: .01s; animation-delay: 0s; }
+.cin-q { display: flex; gap: 10px; margin-top: 14px; position: relative; z-index: 4; }
+.cin-q input { flex: 1; min-width: 0; padding: 12px 14px; border-radius: 12px; border: 1px solid #ffffff55; background: #0009; color: #fff; font: 700 18px var(--f-body); outline: none; }
+.cin-q input:focus { border-color: #ffd25f; box-shadow: 0 0 0 3px #ffd25f33; }

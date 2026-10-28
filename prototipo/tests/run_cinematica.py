@@ -23,11 +23,17 @@ try:
     full = pg.inner_text('.cin-txt p'); chk(len(full) > len(t1) and pg.evaluate("document.querySelector('.cin-next').classList.contains('on')"), 'toque completa a fala')
     pg.screenshot(path=shots + '/cin1.png')
     pg.click('.cin'); pg.wait_for_timeout(300); chk(pg.inner_text('.cin-txt p') != full, 'toque seguinte avança a fala')
-    for _ in range(12):
+    nomeok = False
+    for _ in range(60):
         if not pg.query_selector('.cin'): break
-        pg.click('.cin', force=True); pg.wait_for_timeout(120)
+        if pg.query_selector('.cin-q input'):
+            nomeok = True; pg.click('.cin-q button'); pg.wait_for_timeout(200); chk(pg.query_selector('.cin-q input') is not None, 'nome vazio não avança')
+            pg.fill('.cin-q input', 'Zeno'); pg.click('.cin-q button'); pg.wait_for_timeout(200); continue
+        pg.mouse.click(200, 300); pg.wait_for_timeout(150)
+        pg.mouse.click(200, 300); pg.wait_for_timeout(100)
     pg.wait_for_selector('.hs-svg', timeout=5000)
-    chk(pg.query_selector('.cin') is None, 'cinemática termina e some')
+    chk(nomeok and pg.query_selector('.cin') is None, 'cinemática termina e some')
+    chk(pg.evaluate('window.DSHistoria.state().nome') == 'Zeno', 'nome do jogador salvo')
     pg.screenshot(path=shots + '/mapa_preto.png'); pg.wait_for_timeout(5500); pg.screenshot(path=shots + '/mapa_escuro.png')
     ns = pg.evaluate("[...document.querySelectorAll('.n')].map(g=>g.classList.contains('fog')).filter(x=>x).length")
     vis = pg.evaluate("[...document.querySelectorAll('.n')].filter(g=>!g.classList.contains('fog')&&!g.classList.contains('far1')).length")
