@@ -570,7 +570,7 @@
       },
       "soma_atributos": 222,
       "perfil_balanceamento": "Modesta",
-      "habilidade_especial_id": "AE-076",
+      "habilidade_especial_id": "AE-143",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "J4",
@@ -2221,7 +2221,7 @@
       },
       "soma_atributos": 242,
       "perfil_balanceamento": "Padrão",
-      "habilidade_especial_id": "AE-078",
+      "habilidade_especial_id": "AE-144",
       "uniao": "NAO",
       "base_narrativa": {
         "fonte": "V-manuscrito",

@@ -137,5 +137,7 @@
 "AE-139": "+20 Velocidade.",
 "AE-140": "+20 Inteligência.",
 "AE-141": "Um rival perde 12 em Força e em Inteligência.",
-"AE-142": "+15 Resistência e +15 Velocidade."
+"AE-142": "+15 Resistência e +15 Velocidade.",
+"AE-143": "Os rivais escolhem o atributo sem ver os números da própria carta.",
+"AE-144": "Se não vencer, copia a carta vencedora para o fim do seu baralho (CLONE)."
 }; })(typeof window !== "undefined" ? window : globalThis);

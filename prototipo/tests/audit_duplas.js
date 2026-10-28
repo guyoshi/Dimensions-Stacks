@@ -4,7 +4,7 @@ const E = require('../engine.js');
 const N = +process.argv[2] || 40, only = process.argv[3];
 const ids = Object.keys(E.SPECIALS).filter(i => !E.SPECIALS[i].stub && (!only || i === only));
 const orig = {}; Object.values(E.CARDS).forEach(c => orig[c.id] = c.especial);
-const total = g => { let n = g.s.bh.length; g.s.players.forEach(p => { n += p.deck.length + p.reserve.length + p.prepared.length; }); return n; };
+const total = g => { let n = g.s.bh.filter(x => !String(x.id).includes('*')).length; g.s.players.forEach(p => { n += [...p.deck, ...p.reserve, ...p.prepared].filter(x => !String(x).includes('*')).length; }); return n; };
 // efeitos que, por texto, atingem "todos, inclusive você" (podem tocar no parceiro) ou movem cartas entre os dois rivais (que são parceiros entre si)
 const GLOBAL = new Set(['AE-063', 'AE-064', 'AE-065', 'AE-066', 'AE-021', 'AE-022', 'AE-023', 'AE-024', 'AE-025', 'AE-057', 'AE-058', 'AE-061', 'AE-062']);
 (async () => {

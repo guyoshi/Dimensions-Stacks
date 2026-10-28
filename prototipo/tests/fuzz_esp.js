@@ -2,7 +2,7 @@
 const E = require('../engine.js');
 const ids = Object.keys(E.SPECIALS);
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
-function total(g){ const s=g.s; let n=s.bh.length; s.players.forEach(p=>{n+=p.deck.length+p.reserve.length+p.prepared.length;}); return n; }
+function total(g){ const s=g.s; let n=s.bh.filter(x=>!String(x.id).includes('*')).length; s.players.forEach(p=>{n+=[...p.deck,...p.reserve,...p.prepared].filter(x=>!String(x).includes('*')).length;}); return n; }
 const orig={}; Object.values(E.CARDS).forEach(c=>orig[c.id]=c.especial);
 const N=+process.argv[2]||300; let fails=0, acts=0, combats=0; const seen={};
 (async()=>{

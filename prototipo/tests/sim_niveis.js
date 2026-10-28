@@ -1,6 +1,6 @@
 // Conservação e duplicação de cartas com bots de níveis misturados (os erros do fácil exploram caminhos raros).
 const E = require('../engine.js'); const N = +process.argv[2] || 600;
-const total = g => { const s = g.s; let n = s.bh.length; s.players.forEach(p => { n += p.deck.length + p.reserve.length + p.prepared.length; }); return n; };
+const total = g => { const s = g.s; let n = s.bh.filter(x => !String(x.id).includes('*')).length; s.players.forEach(p => { n += [...p.deck, ...p.reserve, ...p.prepared].filter(x => !String(x).includes('*')).length; }); return n; };
 (async () => {
   let fails = 0; const ds = ['facil', 'normal', 'dificil'];
   for (let k = 0; k < N && fails < 6; k++) {

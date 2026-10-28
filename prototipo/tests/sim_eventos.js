@@ -1,7 +1,7 @@
 // Balanceamento dos fenômenos: força cada evento em TODAS as rodadas (estresse) e compara com a base sem eventos.
 // Mede: falhas/conservação, duração, vitória por nível de bot, vantagem de quem inicia, empates, captura x defesa.
 const E = require('../engine.js'); const N = +process.argv[2] || 150;
-const total = g => { const s = g.s; let n = s.bh.length; s.players.forEach(p => { n += p.deck.length + p.reserve.length + p.prepared.length; }); return n; };
+const total = g => { const s = g.s; let n = s.bh.filter(x => !String(x.id).includes('*')).length; s.players.forEach(p => { n += [...p.deck, ...p.reserve, ...p.prepared].filter(x => !String(x).includes('*')).length; }); return n; };
 const IDS = ['base', 'forca', 'nevoa', 'eco', 'aberta', 'tempestade', 'buraco', 'correnteza', 'muralha', 'eclipse', 'avesso', 'troca', 'bloqueio'];
 const LV = ['facil', 'normal', 'dificil', 'dificil'];
 async function game(id, k, force) {

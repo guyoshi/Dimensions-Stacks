@@ -3,7 +3,9 @@
   'use strict';
   const D = window.DS_DATA, E = window.DS_ENGINE;
   const { SERIES, ATRIBUTOS, RARIDADES, CARTAS } = D;
-  const CARDS = Object.fromEntries(CARTAS.map(c => [c.id, c]));
+  const CARDS_BASE = Object.fromEntries(CARTAS.map(c => [c.id, c]));
+  // Cartas CLONE (id "J08*1"): cópia da carta original, criada na hora; não entram em listas (Object.keys não as vê)
+  const CARDS = new Proxy(CARDS_BASE, { get(t, k) { if (typeof k === 'string' && k.indexOf('*') > 0 && !(k in t)) { const b = t[k.slice(0, k.indexOf('*'))]; if (b) Object.defineProperty(t, k, { value: Object.assign({}, b, { id: k, clone: true, orig: b.id }), enumerable: false, configurable: true }); } return t[k]; } });
   const ATT = Object.fromEntries(ATRIBUTOS.map(a => [a.id, a]));
   const AIDS = ATRIBUTOS.map(a => a.id);
   const IMG = window.CARD_IMAGES || {};
@@ -66,7 +68,8 @@
 
   // ---------------------------------------------------------------- cartas
   const SIL = '<svg viewBox="0 0 100 100"><circle cx="50" cy="34" r="18"/><path d="M12 100c0-26 16-40 38-40s38 14 38 40z"/></svg>';
-  function statsHTML(base, st, attr, mark) {
+  function statsHTML(base, st, attr, mark, hide) {
+    if (hide) return AIDS.map(a => `<div class="st fog" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}<b>?</b></div>`).join('');
     return AIDS.map(a => {
       const d = st[a] - base[a], ec = mark && mark.zero === a, sw = mark && mark.swap && mark.swap.includes(a);
       return `<div class="st${d > 0 ? ' mod' : d < 0 ? ' modn' : ''}${ec ? ' ecl' : ''}${sw ? ' swp' : ''}" data-a="${a}" title="${ATT[a].nome}">${ICON[a]}<b>${st[a]}</b></div>`;
@@ -95,15 +98,16 @@
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
-    const art = IMG[id] ? `<div class="art" style="--im:url('${IMG[id]}')"><img alt="${esc(c.nome)}" src="${IMG[id]}" loading="lazy" decoding="async" draggable="false"${FOCO[id] != null ? ' style="object-position:50% ' + FOCO[id] + '%' + (SOBE[id] ? ';transform:translateY(-' + SOBE[id] + 'em)' : '') + '"' : ''}></div>`
+    const bid = c.orig || id;
+    const art = IMG[bid] ? `<div class="art" style="--im:url('${IMG[bid]}')"><img alt="${esc(c.nome)}" src="${IMG[bid]}" loading="lazy" decoding="async" draggable="false"${FOCO[bid] != null ? ' style="object-position:50% ' + FOCO[bid] + '%' + (SOBE[bid] ? ';transform:translateY(-' + SOBE[bid] + 'em)' : '') + '"' : ''}></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
-    const node = el(`<div class="card rar-${c.raridade}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
+    const node = el(`<div class="card rar-${c.raridade}${c.clone ? ' isclone' : ''}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
       <div class="face front"><div class="in">${art}<div class="shade"></div>
-        <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(id.slice(1))}</span></div>
+        <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(bid.slice(1))}</span></div>${c.clone ? '<div class="clonetag">CLONE</div>' : ''}
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
-        <div class="stats">${statsHTML(c.stats, st, null, o.mark)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
+        <div class="stats">${statsHTML(c.stats, st, null, o.mark, o.hide)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
       </div></div></div></div>`);
     node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1';
     if (c.uniao || c.raridade === 'lendaria') { node.dataset.aura = c.uniao ? 'rainbow' : 'gold'; node.append(uniSparks(id, c.uniao)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);

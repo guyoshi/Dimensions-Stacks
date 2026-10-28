@@ -1,6 +1,6 @@
 const E = require('../engine.js');
 const D = globalThis.DS_DATA;
-function total(g){ const s=g.s; let n=s.bh.length; s.players.forEach(p=>{n+=p.deck.length+p.reserve.length+p.prepared.length;}); return n; }
+function total(g){ const s=g.s; let n=s.bh.filter(x=>!String(x.id).includes('*')).length; s.players.forEach(p=>{n+=[...p.deck,...p.reserve,...p.prepared].filter(x=>!String(x).includes('*')).length;}); return n; }
 async function one(n, per, diff, seed){
   const players=[...Array(n)].map((_,i)=>({name:'B'+i,bot:true,avatar:i}));
   let expected=null, err=null, events={};

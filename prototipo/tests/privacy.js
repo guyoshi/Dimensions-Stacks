@@ -6,8 +6,8 @@ const N = +process.argv[2] || 60; let leaks = 0, checked = 0, evs = 0;
   for (let k = 0; k < N; k++) {
     const n = 2 + (k % 3), players = [...Array(n)].map((_, i) => ({ name: 'J' + i, bot: true, avatar: i, diff: ['facil', 'normal', 'dificil'][(k + i) % 3] }));
     let G; const pr = P0.create({ get s() { return G.s; } }); const logs = [];
-    const priv = r => { const set = new Set(); G.s.players.forEach(p => { if (p.pid === r) return; [...p.deck, ...p.reserve, ...p.prepared].forEach(c => set.add(c)); });
-      if (G.combat && !pr.f.revealed) G.combat.entries.forEach(e => { if (e.pid !== r) { set.add(e.card); (e.extra || []).forEach(c => set.add(c)); } });
+    const priv = r => { const set = new Set(); G.s.players.forEach(p => { if (p.pid === r) return; [...p.deck, ...p.reserve, ...p.prepared].forEach(c => { if (!String(c).includes('*')) set.add(c); }); });   // clone: o nome da carta copiada já é público (venceu a disputa)
+      if (G.combat && !pr.f.revealed) G.combat.entries.forEach(e => { if (e.pid !== r) { [e.card, ...(e.extra || [])].forEach(c => { if (!String(c).includes('*')) set.add(c); }); } });
       G.s.bh.forEach(x => set.delete(x.id)); return set; };
     let pub = new Set(), mine = {}; const scan = (txt, r, what, type) => { checked++; const set = priv(r); pub.forEach(c => set.delete(c)); (mine[r] || []).forEach(c => set.delete(c)); for (const c of set) {
         if (txt.includes('"' + c + '"') || txt.includes('"' + c + ':')) { leaks++; if (leaks < 8) console.log('VAZOU id', c, 'para', r, 'em', what, type); }

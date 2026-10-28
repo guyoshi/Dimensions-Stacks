@@ -8,6 +8,11 @@
   const AID = ATTRS.map(a => a.id);
   const ATTR = Object.fromEntries(ATTRS.map(a => [a.id, a]));
   const CARDS = Object.fromEntries(D.CARTAS.map(c => [c.id, c]));
+  // Cartas CLONE (especial "Clone"): cópia da carta vencedora, com id próprio "J08*1" (a mesma carta nunca existe duas vezes sob o mesmo id).
+  // Ficam não enumeráveis em CARDS para não aparecerem em listas de coleção.
+  const isClone = id => typeof id === 'string' && id.indexOf('*') > 0;
+  const cloneBase = id => isClone(id) ? id.slice(0, id.indexOf('*')) : id;
+  function regClone(id) { if (!CARDS[id]) { const b = CARDS[cloneBase(id)]; Object.defineProperty(CARDS, id, { value: Object.assign({}, b, { id, clone: true, orig: b.id }), enumerable: false, configurable: true }); } return CARDS[id]; }
 
   const PROPOSTAS = [
     'Sorteio decide quem inicia a primeira disputa.',
@@ -228,7 +233,7 @@
       this.io = cfg.io || {};
       this.rand = mkRng(this.cfg.seed);
       this.logs = [];
-      this.s = { players: [], bh: [], round: 1, combats: 0, initiator: 0, initiated: new Set(), over: false, winner: null };
+      this.s = { players: [], bh: [], clones: {}, round: 1, combats: 0, initiator: 0, initiated: new Set(), over: false, winner: null };
       this.cards = CARDS; this.specials = SP;
     }
     // agenda determinística (pela semente): no máximo um fenômeno por rodada, nunca em rodadas seguidas, a partir da Rodada 2
@@ -551,6 +556,7 @@
       this.log(`${p.name} foi eliminado!`, 'elim'); await this.emit('eliminated', { pid });
     }
     checkEnd() {
+      this.purgeClones();
       const al = this.alive();
       if (this.cfg.teams) {
         let teams = [...new Set(al.map(x => this.teamOf(x)))];
@@ -604,7 +610,7 @@
       let blocked = null; { const e1 = this.curEv(); if (e1 && e1.id === 'bloqueio') { const op = AID.filter(a => a !== this.s.lastBlock); blocked = op[Math.floor(this.rand() * op.length)]; this.s.lastBlock = blocked; } }
       const g = this, order = this.order(init);
       const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
-        def: {}, ctl: { per: {} }, claims: [], onWin: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
+        def: {}, ctl: { per: {} }, claims: [], onWin: [], after: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
       { const ev0 = this.curEv(); combat.eco = !!ev0 && ev0.id === 'eco'; combat.ev = ev0; }
       combat.blocked = blocked; this.combat = combat; this.memTick();
       await this.emit('combatStart', { initiator: init, round: this.s.round });
@@ -646,6 +652,7 @@
       // 6) resolução
       await this.resolve(combat);
       await this.runHooks(combat);
+      this.purgeClones();
       await this.emit('combatEnd', { combat });
       this.combat = null;
     }
@@ -748,6 +755,7 @@
         if (h.when === 'attack' && res.type !== 'attack') continue; if (h.when === 'defense' && res.type !== 'defense') continue;
         await h.run(ctx, res);
       }
+      for (const h of combat.after || []) await h.run(ctx, res);
       const all = combat.ctrlActs.concat(combat.activations);
       const claimed = all.filter(a => a.claimedBy != null);
       all.forEach(a => { if (a.claimedBy != null) this.p(a.claimedBy).deck.push(a.card); else this.s.bh.push({ id: a.card, kind: 'especial' }); });
@@ -755,6 +763,21 @@
     }
     // Escolha de atributo. O humano também pode "preparar" a carta da mesa como especial: ela sai do combate
     // e a próxima do baralho entra no lugar (nova escolha). Proposta de fluxo pedida pelo autor.
+    // Névoa de Dados: quem não é o conjurador (nem seu parceiro) escolhe o atributo sem ver os números da própria carta
+    fogged(combat, pid) { const f = combat && combat.ctl && combat.ctl.fog; return !!f && f.pid !== pid && !this.sameTeam(f.pid, pid); }
+    makeClone(orig, owner) {
+      const b = cloneBase(orig); let n = 1; while (this.s.clones[b + '*' + n]) n++;
+      const id = b + '*' + n; regClone(id); this.s.clones[id] = { owner }; return id;
+    }
+    // clone fora das mãos do dono deixa de existir (não vai ao Buraco Negro, não é capturado)
+    purgeClones() {
+      const cl = this.s.clones; if (!Object.keys(cl).length) return;
+      const ok = (id, pid) => !isClone(id) || (cl[id] && cl[id].owner === pid);
+      this.s.players.forEach(q => ['deck', 'reserve', 'prepared'].forEach(z => { const a = q[z]; for (let i = a.length - 1; i >= 0; i--) if (!ok(a[i], q.pid)) { delete cl[a[i]]; a.splice(i, 1); } }));
+      for (let i = this.s.bh.length - 1; i >= 0; i--) if (isClone(this.s.bh[i].id)) { delete cl[this.s.bh[i].id]; this.s.bh.splice(i, 1); }
+      const live = new Set(); this.s.players.forEach(q => [...q.deck, ...q.reserve, ...q.prepared].forEach(c => live.add(c)));
+      Object.keys(cl).forEach(id => { if (!live.has(id)) delete cl[id]; });
+    }
     async chooseAttr(combat, e, options) {
       const p = this.p(e.pid); const per = combat.ctl.per[e.pid];
       if (per && per.chooser != null && options.length > 1) {
@@ -799,12 +822,13 @@
       const give = (pid, cards) => { this.p(pid).deck.push(...cards); };
       const cardsOf = e => [e.card, ...e.extra];
       const moves = []; // para animação
+      const gone = (e, cards) => { const g2 = cards.filter(isClone); if (g2.length) { g2.forEach(c => delete this.s.clones[c]); this.log('A carta clone desaparece.', 'res'); } return cards.filter(c => !isClone(c)); };
       const toBH = (e) => {
         if (e.toReserve) { this.p(e.pid).reserve.push(...cardsOf(e)); moves.push({ cards: cardsOf(e), from: e.pid, to: e.pid, zone: 'reserve' }); }
-        else { cardsOf(e).forEach(c => this.s.bh.push({ id: c, kind: 'normal' })); moves.push({ cards: cardsOf(e), from: e.pid, to: 'bh' }); }
+        else { const kc = gone(e, cardsOf(e)); kc.forEach(c => this.s.bh.push({ id: c, kind: 'normal' })); moves.push({ cards: kc.length ? kc : cardsOf(e), from: e.pid, to: 'bh' }); }
       };
       const back = (e) => { give(e.pid, cardsOf(e)); moves.push({ cards: cardsOf(e), from: e.pid, to: e.pid }); };
-      const capture = (e, pid) => { give(pid, cardsOf(e)); moves.push({ cards: cardsOf(e), from: e.pid, to: pid }); };
+      const capture = (e, pid) => { const cs = cardsOf(e).filter(c => !isClone(c) || (this.s.clones[c] || {}).owner === pid); const lost = cardsOf(e).filter(c => !cs.includes(c)); if (lost.length) { lost.forEach(c => delete this.s.clones[c]); this.log('Uma carta clone não pode ser capturada: desaparece.', 'res'); } if (cs.length) give(pid, cs); moves.push({ cards: cs.length ? cs : cardsOf(e), from: e.pid, to: cs.length ? pid : 'bh' }); };
       let result = { type: 'none', winners: [], winnerPid: null };
       const live = es.filter(e => !e.withdrawn);
       es.filter(e => e.withdrawn && !e.gone).forEach(back);
@@ -943,6 +967,7 @@
     }
     blindNow(p) { return !!(p && p.bot) && this.rand() < this.lvl(p).blind; }
     async bot_attr(p, entry, options, combat) {
+      if (this.fogged(combat, p.pid)) return options[Math.floor(this.rand() * options.length)];   // Névoa de Dados: sem ver a carta, escolhe ao acaso
       const sk = this.skill(p); let best = null, bs = -1;
       if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
       options.forEach(a => {

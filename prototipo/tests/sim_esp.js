@@ -1,7 +1,7 @@
 // Testa cada especial isoladamente: todas as cartas ganham a habilidade; bots preparam e viram sempre; 1 "humano" simulado responde aleatoriamente.
 const E = require('../engine.js'); const D = globalThis.DS_DATA;
 const only = process.argv[2];
-function total(g){ const s=g.s; let n=s.bh.length; s.players.forEach(p=>{n+=p.deck.length+p.reserve.length+p.prepared.length;}); return n; }
+function total(g){ const s=g.s; let n=s.bh.filter(x=>!String(x.id).includes('*')).length; s.players.forEach(p=>{n+=[...p.deck,...p.reserve,...p.prepared].filter(x=>!String(x).includes('*')).length;}); return n; }
 const rnd=(a)=>a[Math.floor(Math.random()*a.length)];
 const orig = {}; Object.values(E.CARDS).forEach(c=>orig[c.id]=c.especial);
 E.Game.prototype.bot_prepare = async function(p){ return p.prepared.length<2 && p.deck.length>=3; };

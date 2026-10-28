@@ -746,14 +746,16 @@
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : novice() ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`
           : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b> · escolha: ${lst}`;
-        const evsum = (() => { if (!combat.ev || !entry.evm) return ''; const b = CARDS[entry.card].stats; const ch = AIDS.filter(a => entry.stats[a] !== b[a]); return ch.length ? `<div class="evsum">Sua carta nesta rodada: ${ch.map(a => `${ATT[a].nome} ${b[a]} → <b>${entry.stats[a]}</b>`).join(' · ')}</div>` : ''; })();
+        const fog = (() => { const f = combat.ctl && combat.ctl.fog; return !!f && f.pid !== p.pid && !(G && G.sameTeam && G.sameTeam(f.pid, p.pid)); })();   // Névoa de Dados: rivais escolhem sem ver os números
+        const evsum = (() => { if (!combat.ev || !entry.evm || fog) return ''; const b = CARDS[entry.card].stats; const ch = AIDS.filter(a => entry.stats[a] !== b[a]); return ch.length ? `<div class="evsum">Sua carta nesta rodada: ${ch.map(a => `${ATT[a].nome} ${b[a]} → <b>${entry.stats[a]}</b>`).join(' · ')}</div>` : ''; })();
         const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}${evsum}</div>` : '';
         const em = entry.evm || {};
-        const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}</div>
-          <div class="attrs">${AIDS.filter(a => options.includes(a) || a === blkShow).map(a => a === blkShow ? `<button class="attrbtn blocked" data-a="${a}" disabled>${ICON[a]}<span><b>${ATT[a].nome}</b><small>bloqueado</small></span><span class="v">✕</span></button>` : `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${entry.stats[a]}</span></button>`).join('')}</div>
+        const fogTxt = fog ? `<div class="evnote" style="--ec:#c58cff">☁ <b>Névoa de Dados</b>: ${esc(nameOf(combat.ctl.fog.pid))} é o único que vê os números. Escolha às cegas.</div>` : '';
+        const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}${fogTxt}</div>
+          <div class="attrs">${AIDS.filter(a => options.includes(a) || a === blkShow).map(a => a === blkShow ? `<button class="attrbtn blocked" data-a="${a}" disabled>${ICON[a]}<span><b>${ATT[a].nome}</b><small>bloqueado</small></span><span class="v">✕</span></button>` : `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${fog ? '?' : entry.stats[a]}</span></button>`).join('')}</div>
           ${spLine(entry.card, combat, canPrep)}</div>`);
           const big = window.matchMedia && window.matchMedia('(min-width: 900px) and (min-height: 640px)').matches;
-          $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats, mark: entry.evm }));
+          $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats, mark: entry.evm, hide: fog }));
           return node; };
         for (;;) {
           const v = await ask(mk(), '.attrbtn, .prepbtn');

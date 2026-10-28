@@ -97,6 +97,34 @@
       ai(ctx, pid) { const k = ctx.opps(pid).some(o => ctx.foe(pid, o)); return k ? 0.8 : 0.3; }, val: 0.8,
     });
 
+    // ---- [NOVO 28/10/2026, pedido do autor] Névoa de Dados: os rivais escolhem o atributo sem ver os números da própria carta
+    D('AE-143', 'Controle', {
+      phase: 'ctrl',
+      apply(ctx, act) {
+        const ctl = ctx.combat.ctl; if (ctl.fog) return ctx.say('Já há uma névoa de dados: este efeito é ignorado (vale o primeiro).');
+        ctl.fog = { pid: act.pid }; ctx.say(`Névoa de Dados: só ${nm(ctx, act.pid)}${ctx.g.cfg.teams ? ' e o parceiro' : ''} vê${ctx.g.cfg.teams ? 'em' : ''} os números das cartas desta disputa; os rivais escolhem o atributo às cegas.`);
+        ctx.emit('fogFx', { pid: act.pid });
+      },
+      ai(ctx, pid) { return ctx.opps(pid).length ? 0.45 : 0.03; }, val: 0.6,
+    });
+    // ---- [NOVO 28/10/2026] Clone: copia a carta vencedora do rival para o fim do seu baralho (legenda CLONE)
+    const cloneable = (ctx, pid) => { const w = winnerOf(ctx); return !!w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && !String(w.card).includes('*'); };
+    D('AE-144', 'Captura', {
+      can: (ctx, pid) => cloneable(ctx, pid),
+      apply(ctx, act) {
+        ctx.combat.after.push({ pid: act.pid, async run(c2, res) {
+          const g = ctx.g, wp = res.winnerPid, me = act.pid;
+          if (wp == null || wp === me || g.sameTeam(wp, me)) return ctx.say(`${nm(ctx, me)} venceu (ou não houve vencedor): o Clone não pode ser usado.`);
+          const we = ctx.combat.entries.find(e => e.pid === wp); if (!we || String(we.card).includes('*')) return ctx.say('Não é possível clonar uma carta clone.');
+          const id = g.makeClone(we.card, me); g.p(me).deck.push(id);
+          ctx.say(`${nm(ctx, me)} clona ${CARDS[we.card].nome} (vai ao fim do baralho).`);
+          await ctx.emit('cloneMade', { pid: me, from: wp, card: we.card, clone: id });
+        } });
+        ctx.say(`${nm(ctx, act.pid)} prepara um clone da carta vencedora.`);
+      },
+      ai(ctx, pid) { return cloneable(ctx, pid) ? 0.6 : 0.02; }, val: 0.8, noWant: true,
+    });
+
     // ================================================================ roubo do baralho ativo / reserva (vizinhos)
     function nb(id, dir, zone, sel, n) {
       const side = (ctx, pid) => dir === 'R' ? ctx.right(pid) : ctx.left(pid);
