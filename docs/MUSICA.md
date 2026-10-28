@@ -21,7 +21,7 @@ Continuam no código (`audio.js`: ambiente do menu, groove procedural da partida
 | Uso | Arquivo esperado em `prototipo/musica/` |
 |---|---|
 | Mapa | `historia_mapa.mp3` (Toucan Music) |
-| Batalha normal | `historia_batalha.mp3` |
+| Batalha normal | `historia_batalha.mp3` (Serge Pavkin) |
 | Miniboss | `historia_miniboss.mp3` |
 | Boss final | `historia_boss.mp3` |
 | Abertura da história (cinemática) | `historia_intro.mp3` (Alex Morgan) |
