@@ -5,8 +5,8 @@
     "status": "CATALOGO_APROVADO_COM_TESTES_PENDENTES",
     "data_aprovacao": "2026-10-12",
     "total_habilidades": 140,
-    "habilidades_distintas_equipadas": 98,
-    "habilidades_em_reserva": 42,
+    "habilidades_distintas_equipadas": 112,
+    "habilidades_em_reserva": 28,
     "id_aposentado": "AE-104",
     "nome_do_tipo": "Habilidade Especial",
     "aviso": "A aprovacao autoral ratifica ideias/textos existentes e sua atribuicao as 87 fichas, nao certifica equilíbrio nem resolve procedimentos incompletos. Habilidades da reserva nao estao equipadas em carta alguma. Cartas fisicas originais sao historicas.",
@@ -356,11 +356,14 @@
       "texto_efeito": "Antes de declarar atributos, determine que todos usem o par Inteligência/Velocidade nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J26"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
-      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+      "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+      "revisao": "2026-10-28: atribuída a J26 Sumo Vigia (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-024",
@@ -431,12 +434,14 @@
       "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de ataque do par vigente nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J33"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu de M08 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: saiu de M08 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J33 Tavra Vendrar (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-029",
@@ -533,12 +538,14 @@
       "texto_efeito": "Escolha um adversário e tome 1 carta aleatória de seu baralho ativo, sem afetar cartas preparadas.",
       "origem_ideia": "#02",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J25"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: apelão medido (89% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar."
+      "revisao": "2026-10-13: apelão medido (89% de vitórias do bot que a usa). Não atribuir a carta sem reequilibrar. 2026-10-28: atribuída a J25 Alveris Polar (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-036",
@@ -593,12 +600,14 @@
       "texto_efeito": "Revele até 2 cartas seguintes do baralho ativo de um adversário e escolha 1 para capturar; devolva a outra sem alterar a ordem.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J31"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu de M07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: saiu de M07 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J31 Orionus Polar (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-040",
@@ -762,12 +771,14 @@
       "texto_efeito": "Se um adversário tiver até 3 cartas no baralho ativo, tome a última carta de sua reserva, caso exista.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J32"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: atribuída a V22 (substitui AE-057, que o bot nunca usava). 2026-10-14: saiu de V22 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-13: atribuída a V22 (substitui AE-057, que o bot nunca usava). 2026-10-14: saiu de V22 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J32 Raukhar (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-051",
@@ -1089,12 +1100,14 @@
       "texto_efeito": "Retire apenas sua carta de combate desta disputa; devolva-a ao fim do baralho ativo sem vitória ou derrota.",
       "origem_ideia": "#31",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J29"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu de J22 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: saiu de J22 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J29 Orel Nular (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-072",
@@ -1164,12 +1177,14 @@
       "texto_efeito": "Anule a próxima tentativa de roubar uma carta de seu baralho ativo nesta disputa.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J35"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a J22 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: saiu de J22 para dar lugar a AE-143 (novo especial do jogo base, a pedido do autor; simulação: especial de menor uso/vitória)."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a J22 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: saiu de J22 para dar lugar a AE-143 (novo especial do jogo base, a pedido do autor; simulação: especial de menor uso/vitória). 2026-10-28: atribuída a J35 Liri (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-077",
@@ -1317,12 +1332,14 @@
       "texto_efeito": "Pegue até 2 cartas aleatórias do Buraco Negro e deposite-as no fim do seu meio de reserva. Não há restrição a cartas normais na redação original; tratar ciclos pelo regulamento geral.",
       "origem_ideia": "#12 (texto corrigido pelo autor)",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J24"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu de V10 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: saiu de V10 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J24 Litara (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-088",
@@ -1347,12 +1364,14 @@
       "texto_efeito": "Envie 1 carta normal escolhida do seu baralho ativo ao Buraco Negro e recupere até 3 cartas normais aleatórias de lá.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J37"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: alterada a pedido do autor (antes: sacrificava 2 cartas e recuperava até 3; nome anterior Sacrifício duplo). Alteração de balanceamento. 2026-10-14: saiu de J16 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: alterada a pedido do autor (antes: sacrificava 2 cartas e recuperava até 3; nome anterior Sacrifício duplo). Alteração de balanceamento. 2026-10-14: saiu de J16 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J37 Yndra (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-090",
@@ -1361,12 +1380,14 @@
       "texto_efeito": "Se sua carta de combate fosse para o Buraco Negro nesta disputa, coloque-a em vez disso no fim de sua reserva; não preserve vitória nem capture.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J28"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-28: atribuída a J28 Kalan Nular (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-091",
@@ -1693,12 +1714,14 @@
       "texto_efeito": "Redirecione para outro adversário elegível 1 especial de alvo único que estava dirigido a você.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J34"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu de V12 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-14: saiu de V12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J34 Efepar (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-115",
@@ -1754,12 +1777,14 @@
       "texto_efeito": "Um especial seu preparado fica imune a 1 tentativa de cancelamento nesta disputa; não impede custos nem ativações forçadas.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Atenção",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J27"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-28: atribuída a J27 Tair Nular (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-119",
@@ -1782,12 +1807,14 @@
       "texto_efeito": "Anule todas as alterações numéricas temporárias aplicadas a uma carta de combate à sua escolha antes da comparação.",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J36"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva."
+      "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-28: atribuída a J36 Professor Taliver (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-121",
@@ -1973,12 +2000,14 @@
       "categoria": "Redução de atributos do rival",
       "origem_ideia": "novo",
       "avaliacao_de_risco": "Teste",
-      "cartas_atribuidas": [],
-      "situacao_uso": "RESERVA_PARA_EXPANSAO",
+      "cartas_atribuidas": [
+        "J30"
+      ],
+      "situacao_uso": "EQUIPADA_BARALHO_V1",
       "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
       "validacao_balanceamento": "PENDENTE_DE_TESTES",
       "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026. 2026-10-14: saiu de M03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+      "revisao": "2026-10-13: criada a pedido do autor (primeiras habilidades que reduzem atributos do rival); aprovada pelo autor em 14/10/2026. 2026-10-14: saiu de M03 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-28: atribuída a J30 Kharvok (nova carta proposta, a pedido do autor)."
     },
     {
       "id": "AE-135",

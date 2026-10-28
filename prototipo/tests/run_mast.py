@@ -17,7 +17,7 @@ try:
     pg.goto('http://localhost:8769/_page.html'); pg.wait_for_timeout(900)
     pg.click('[data-tab=coll], [data-go=coll]'); pg.wait_for_selector('#cgrid .card')
     emb = lambda: pg.evaluate("[...document.querySelectorAll('#cgrid .card')].filter(c => c.querySelector('.memb svg')).map(c => c.dataset.id + ':' + c.querySelector('.memb svg').getAttribute('class'))")
-    e = emb(); print(e)
+    pg.wait_for_timeout(900); e = emb(); print(e)
     chk(len(e) == 5 and 'J08:emb e5' in e and 'D01:emb e2' in e and 'J01:emb e4' in e and 'J02:emb e5' in e and 'D02:emb e1' in e, 'emblemas por nível na coleção (J03 com 1 XP sem emblema)')
     pg.select_option('#csort', 'mast'); pg.wait_for_timeout(250)
     top = pg.evaluate("[...document.querySelectorAll('#cgrid .card')].slice(0, 6).map(c => c.dataset.id)"); chk(top[:5] == ['J08', 'J02', 'J01', 'D01', 'D02'] and top[5] == 'J03', 'ordenar por maestria: %s' % top)

@@ -5,9 +5,9 @@
     "status": "APROVADO_PELO_AUTOR",
     "data_aprovacao": "2026-10-12",
     "idioma": "pt-BR",
-    "total_cartas": 102,
+    "total_cartas": 116,
     "origens": {
-      "J": 23,
+      "J": 37,
       "V": 25,
       "S": 18,
       "D": 19,
@@ -47,7 +47,8 @@
     "revisao_14_10_2026_calibracao_especiais": "Calibração fina dos atributos (88 cartas, dados/calibracao_2026-10-14.json, ordem de poder por série preservada) e reatribuição global de especiais (53 cartas) por equivalência de percentil carta × especial; autorizadas pelo autor em 14/10/2026.",
     "revisao_14_10_2026_mark_polar": "Mark Polar 91/77/91/47 -> 88/76/88/46 (aprovado pelo autor em 14/10/2026: era o outlier, cerca de 88% de vitórias em duelo).",
     "revisao_14_10_2026_besta_korvo": "A Besta 95/95/49/33 -> 95/95/68/70 e Korvo 90/79/67/66 -> 95/85/70/68 (autor, 14/10/2026: cartas de destaque; dentro da regra do par fraco, par fraco no maximo 70).",
-    "revisao_14_10_2026_releuz_bruno": "Releuz passa a ter a maior Inteligência (95) e Bruno Lins a maior Velocidade (95) de todas as cartas (autor, 14/10/2026); demais atributos deles reduzidos para manter o rendimento; A Engenheira, Daryon Polar, Velho-Sabio e Lias Hardman com Inteligência limitada a 93 (maximo de qualquer outra carta) e demais atributos ajustados +0 a +3."
+    "revisao_14_10_2026_releuz_bruno": "Releuz passa a ter a maior Inteligência (95) e Bruno Lins a maior Velocidade (95) de todas as cartas (autor, 14/10/2026); demais atributos deles reduzidos para manter o rendimento; A Engenheira, Daryon Polar, Velho-Sabio e Lias Hardman com Inteligência limitada a 93 (maximo de qualquer outra carta) e demais atributos ajustados +0 a +3.",
+    "revisao_28_10_2026_novas_cartas": "J24–J37 adicionadas a pedido do autor (Litara mais velha, Alveris Polar, Sumo Vigia, Tair/Kalan/Orel Nular, Kharvok, Orionus Polar, Raukhar, Tavra Vendrar, Efepar, Liri, Professor Taliver, Yndra), com status PROPOSTA_AGUARDANDO_APROVACAO: atributos, perfil e especial são propostas do Claude, a aprovar pelo autor. Cada uma recebeu um especial que estava sem carta (todos distintos)."
   },
   "cartas": [
     {
@@ -601,6 +602,342 @@
         "confianca": "Alta"
       },
       "status": "APROVADA_PELO_AUTOR"
+    },
+    {
+      "id": "J24",
+      "nome": "Litara",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Jovem de mecha branca criada entre os Sem-Nome; une a geração de Sefter e Nefestra à seguinte.",
+      "atributos": {
+        "FOR": 34,
+        "RES": 58,
+        "INT": 62,
+        "VEL": 71
+      },
+      "soma_atributos": 225,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-087",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J4",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J25",
+      "nome": "Alveris Polar",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Financiador da Companhia da Balança Azul; nasceu Buldar, viveu como Nular e hoje existe como Polar.",
+      "atributos": {
+        "FOR": 45,
+        "RES": 63,
+        "INT": 93,
+        "VEL": 53
+      },
+      "soma_atributos": 254,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-035",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J3",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J26",
+      "nome": "Sumo Vigia",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Autoridade máxima da Raiz, muito velho e lúcido; o rosto coberto pela tinta ritual da Permanência.",
+      "atributos": {
+        "FOR": 40,
+        "RES": 87,
+        "INT": 99,
+        "VEL": 29
+      },
+      "soma_atributos": 255,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-023",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J3",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J27",
+      "nome": "Tair Nular",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Jovem cauteloso da casa de Kalan e Elis; confia em registros e contas, mas sua verdade piora a investigação.",
+      "atributos": {
+        "FOR": 22,
+        "RES": 48,
+        "INT": 76,
+        "VEL": 44
+      },
+      "soma_atributos": 190,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-118",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J3",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J28",
+      "nome": "Kalan Nular",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Irmão mais velho de Elis; trabalha na Balança Azul, protege os seus e decide sozinho o que devem saber.",
+      "atributos": {
+        "FOR": 65,
+        "RES": 68,
+        "INT": 60,
+        "VEL": 63
+      },
+      "soma_atributos": 256,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-090",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J3",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J29",
+      "nome": "Orel Nular",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Morador da casa com grande dificuldade de fala; a agressão que sofre inicia o conflito de Kalan.",
+      "atributos": {
+        "FOR": 30,
+        "RES": 44,
+        "INT": 28,
+        "VEL": 52
+      },
+      "soma_atributos": 154,
+      "perfil_balanceamento": "Frágil",
+      "habilidade_especial_id": "AE-071",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J3",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J30",
+      "nome": "Kharvok",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Voz Tondrar, sucessor de Harvok; mutilado no círculo de escolha, carrega a honra e a autonomia do povo.",
+      "atributos": {
+        "FOR": 86,
+        "RES": 72,
+        "INT": 52,
+        "VEL": 58
+      },
+      "soma_atributos": 268,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-134",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J2",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J31",
+      "nome": "Orionus Polar",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Pai das soberanas; reformou o Conselho e manteve quarenta ciclos sem guerra aberta até ser assassinado.",
+      "atributos": {
+        "FOR": 67,
+        "RES": 73,
+        "INT": 95,
+        "VEL": 53
+      },
+      "soma_atributos": 288,
+      "perfil_balanceamento": "Forte",
+      "habilidade_especial_id": "AE-039",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J2",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J32",
+      "nome": "Raukhar",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Fera das florestas de Jesed, pesada, paciente e rancorosa: ataca porque lembra. Os Fendelar a temem.",
+      "atributos": {
+        "FOR": 98,
+        "RES": 85,
+        "INT": 23,
+        "VEL": 60
+      },
+      "soma_atributos": 266,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-050",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J2",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J33",
+      "nome": "Tavra Vendrar",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Jovem Vendrar provocadora que transforma jogos de dor em perigo real e acha prudência uma forma de medo.",
+      "atributos": {
+        "FOR": 78,
+        "RES": 46,
+        "INT": 50,
+        "VEL": 84
+      },
+      "soma_atributos": 258,
+      "perfil_balanceamento": "Padrão",
+      "habilidade_especial_id": "AE-028",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J2",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J34",
+      "nome": "Efepar",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Amigo irônico de Jokara e Nestira; salva Jokara no Primeiro Voo e morre na queda de Etérea.",
+      "atributos": {
+        "FOR": 40,
+        "RES": 48,
+        "INT": 60,
+        "VEL": 79
+      },
+      "soma_atributos": 227,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-114",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J1",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J35",
+      "nome": "Liri",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Criança de seis ciclos ligada a Nestira no cataclisma; imagina Telura, a guardiã dos sonhos de quatro asas.",
+      "atributos": {
+        "FOR": 12,
+        "RES": 30,
+        "INT": 52,
+        "VEL": 61
+      },
+      "soma_atributos": 155,
+      "perfil_balanceamento": "Frágil",
+      "habilidade_especial_id": "AE-076",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J1",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J36",
+      "nome": "Professor Taliver",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Estudioso amigo dos Amarëa; mede ventos, peso e queda das ilhas e teme a cegueira dos Oradores.",
+      "atributos": {
+        "FOR": 20,
+        "RES": 52,
+        "INT": 90,
+        "VEL": 36
+      },
+      "soma_atributos": 198,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-120",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J1",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
+    },
+    {
+      "id": "J37",
+      "nome": "Yndra",
+      "origem": {
+        "codigo_serie": "J",
+        "cor_base": "amarela"
+      },
+      "descricao_curta": "Mulher de um olho julgada por heresia e invasão de áreas sagradas; voz profética ligada ao exílio de Etérea.",
+      "atributos": {
+        "FOR": 34,
+        "RES": 64,
+        "INT": 92,
+        "VEL": 39
+      },
+      "soma_atributos": 229,
+      "perfil_balanceamento": "Modesta",
+      "habilidade_especial_id": "AE-089",
+      "uniao": "NAO",
+      "base_narrativa": {
+        "fonte": "J1",
+        "confianca": "Média"
+      },
+      "status": "PROPOSTA_AGUARDANDO_APROVACAO"
     },
     {
       "id": "V01",
