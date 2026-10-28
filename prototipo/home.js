@@ -31,6 +31,7 @@
   const NAVI = {
     menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 11.2 12 4l8.5 7.2V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/></svg>',
     coll: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 3 7.5 12 12l9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></svg>',
+    uniao: '<svg viewBox="0 0 100 100" fill="currentColor" fill-rule="evenodd"><path d="M50 3a47 47 0 1 0 .01 0ZM44 20C28 20 20 34 20 50s8 30 24 30ZM56 20c16 0 24 14 24 30S72 80 56 80ZM50 3Q52.4 14 50 25Q47.6 14 50 3ZM50 97Q52.4 86 50 75Q47.6 86 50 97Z"/></svg>',
     chal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H4.5v1.5A3.5 3.5 0 0 0 8 11M16 6h3.5v1.5A3.5 3.5 0 0 1 16 11"/><path d="M12 13v4M8.5 20h7M10 17h4"/></svg>',
     prof: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.5 20.5c.6-4 3.6-6 7.5-6s6.9 2 7.5 6"/></svg>',
   };
@@ -51,15 +52,15 @@
   U.ICO = ICO;
 
   // ---------------------------------------------------------------- estrutura: seções e barra inferior
-  const TABS = [['menu', 'Início'], ['coll', 'Coleção'], ['chal', 'Desafios'], ['prof', 'Perfil']];
+  const TABS = [['menu', 'Início'], ['coll', 'Coleção'], ['uniao', 'A União'], ['chal', 'Desafios'], ['prof', 'Perfil']];
   U.tabsInit = function () {
     const app = $('#app');
-    ['coll', 'chal', 'prof'].forEach(id => { if (!$('#' + id)) { const s = el(`<section id="${id}" class="screen tab" hidden></section>`); app.insertBefore(s, $('#layer')); } });
+    ['coll', 'uniao', 'chal', 'prof'].forEach(id => { if (!$('#' + id)) { const s = el(`<section id="${id}" class="screen tab" hidden></section>`); app.insertBefore(s, $('#layer')); } });
     $('#menu').classList.add('tab');
     if (!$('#nav')) app.appendChild(el(`<nav id="nav" hidden aria-label="Navegação principal">${TABS.map(([k, t]) => `<button data-tab="${k}" aria-label="${t}">${NAVI[k]}<span>${t}</span></button>`).join('')}</nav>`));
     $('#nav').onclick = e => { const b = e.target.closest('[data-tab]'); if (!b) return; SND.init(); SND.play('click'); U.show(b.dataset.tab); };
   };
-  const render = { menu: () => home(), coll: () => collTab(), chal: () => chalTab(), prof: () => profTab() };
+  const render = { menu: () => home(), coll: () => collTab(), uniao: () => uniaoTab(), chal: () => chalTab(), prof: () => profTab() };
   U.afterShow = function (name) {
     const nav = $('#nav'); if (!nav) return;
     const tab = name in render; nav.hidden = !tab;
@@ -176,6 +177,12 @@
   }
 
   // ---------------------------------------------------------------- desafios (aba)
+  function uniaoTab() {
+    const s = $('#uniao');
+    s.innerHTML = `<div class="tabwrap">${topbar('A União', 'Modo história')}
+      <section class="wip"><div class="wipseal"></div><h2>Em construção</h2><p>O modo história de A União está sendo preparado. Em breve você poderá viver a trama das Dimensões Infinitas por aqui.</p></section></div>`;
+    bindTop(s);
+  }
   function chalTab() {
     const s = $('#chal'); const d = ST.dailyToday(); const wk = ST.weekly(); ST.save();
     s.innerHTML = `<div class="tabwrap">${topbar('Desafios', 'Renovam todo dia e toda semana')}

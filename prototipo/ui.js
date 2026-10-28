@@ -235,7 +235,7 @@
 
   // ---------------------------------------------------------------- telas
   // troca de aba (Início, Coleção, Desafios, Perfil): a nova tela entra deslizando de lado, como um carrossel, e a antiga sai pelo lado oposto
-  const TABIDS = ['menu', 'coll', 'chal', 'prof']; let slideT = null;
+  const TABIDS = ['menu', 'coll', 'uniao', 'chal', 'prof']; let slideT = null;
   const slideEnd = () => { clearTimeout(slideT); slideT = null; $$('.screen').forEach(s => { s.classList.remove('tin-r', 'tin-l', 'tout-l', 'tout-r'); if (s.id !== U.cur) s.hidden = true; }); const a = $('#app'); if (a) a.classList.remove('sliding'); };
   U.show = function (name) {
     if (slideT) slideEnd();

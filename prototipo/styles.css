@@ -1361,3 +1361,11 @@ input, textarea, [contenteditable], .roomcode, .selectable { -webkit-user-select
 @keyframes zzoom { from { opacity: 0; transform: scale(.45); } to { opacity: 1; transform: none; } }
 .zin-zoom { animation: zzoom .34s cubic-bezier(.2,.9,.3,1.1) both; }
 body.reduce .zin-zoom { animation: zfade .2s both; }
+
+/* A União: tela em construção */
+.wip { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-top: 8vh; padding: 28px 20px; border: 1px dashed var(--line); border-radius: 20px; background: #ffffff08; }
+.wipseal { width: 96px; height: 96px; background: url(selo.png) center / contain no-repeat; filter: drop-shadow(0 0 18px #b394ff88); animation: wipfloat 3.2s ease-in-out infinite; }
+.wip h2 { margin: 0; font-size: 1.5em; color: var(--gold2); }
+.wip p { margin: 0; max-width: 34ch; color: var(--ink2); line-height: 1.5; }
+@keyframes wipfloat { 50% { transform: translateY(-6px); } }
+body.reduce .wipseal { animation: none; }
