@@ -36,3 +36,11 @@ Complementa `MODO_HISTORIA_A_UNIAO_PROPOSTA_2026-10-28.md`. Onde há diferença,
 - `prototipo/historia.js`: tela inicial, sorteio da partida, mapa com arrastar, pinça e zoom, painel por ponto, vitórias de teste, abertura do Boss, caminhos acesos e escuros, progresso salvo no aparelho.
 - **Modo teste (só nesta etapa):** "Mapa aberto" (todos os pontos liberados), "Marcar vencida" e "Zerar vitórias" na legenda (botão `?`).
 - Teste automático: `prototipo/tests/run_historia.py`.
+
+## Acréscimos de 28/10/2026 (noite)
+
+- **O mapa não precisa parecer literalmente uma teia** (era só o exemplo). Pode mudar de aparência sem mexer nos ids dos pontos.
+- **Música própria do modo:** mapa, batalha normal, miniboss e boss final. Ganchos prontos em `audio.js` (`HIST`, `histPlay`, `histStop`); basta colocar `historia_mapa.mp3`, `historia_batalha.mp3`, `historia_miniboss.mp3`, `historia_boss.mp3` em `prototipo/musica/`. Sem arquivo, nada muda. O mapa já chama a trilha do mapa; as demais entram na Etapa 4 (batalhas).
+- **Tela de organizar cartas no início de TODA batalha:** o jogador escolhe a ordem das cartas toda vez; a interface precisa ser simples e rápida (a fazer na Etapa 4, com arrastar e atalhos "manter a ordem anterior" e "melhor ordem sugerida").
+- **Evento "inimigo com as mesmas cartas que você":** é preciso organizar na ordem certa para vencer. Nesse evento a tela de organizar **não usa as cartas com "?"**: as cartas do inimigo aparecem abertas.
+- **Novos especiais do jogo base (também usados no modo):** AE-143 Névoa de Dados (J22 Sefter, no lugar de AE-076) e AE-144 Clone (V22 Nicolas Corvane, no lugar de AE-078). Os especiais AE-076 e AE-078 ficaram em reserva.

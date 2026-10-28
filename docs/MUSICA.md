@@ -16,3 +16,13 @@ Regerar: `prototipo/tools/musica_bake.py` (usa ffmpeg com rubberband e numpy) e 
 
 ## Trilha clássica (as sintetizadas originais)
 Continuam no código (`audio.js`: ambiente do menu, groove procedural da partida com níveis 98/112/126 bpm e modulação no clímax, e a trilha de derrota). Opções → **Trilha sonora → Clássica** volta a elas. Também são o reserva automático se os arquivos não carregarem. A trilha de derrota segue sintetizada nas duas opções.
+
+## Trilhas do Modo História (a fornecer)
+| Uso | Arquivo esperado em `prototipo/musica/` |
+|---|---|
+| Mapa | `historia_mapa.mp3` |
+| Batalha normal | `historia_batalha.mp3` |
+| Miniboss | `historia_miniboss.mp3` |
+| Boss final | `historia_boss.mp3` |
+
+Loop do arquivo inteiro (ou entre `a` e `b` em `audio.js` › `HIST`). Sem o arquivo, a trilha não toca e o resto segue igual.

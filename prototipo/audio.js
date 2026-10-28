@@ -180,7 +180,34 @@
       const timer = setInterval(() => { if (!this.musicOn) return; this.tone(this.note(seq[i++ % seq.length] + 12), 2.8, 'sine', 0.06, 0, null, this.musicGain); }, 4200);
       this.musicNodes = { stop: () => { clearInterval(timer); clearTimeout(first); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 1); setTimeout(() => nodes.forEach(n => { try { n.stop(); } catch (e) { } }), 1100); } };
     },
-    stopMusic() { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); this.stopDefeat(); },
+    // ---------- trilhas do Modo História (A União): mapa, batalha normal, miniboss e boss final.
+    // Coloque os arquivos em prototipo/musica/ com estes nomes; enquanto o arquivo não existir, tudo segue como antes (sem trilha própria).
+    // Loop simples do arquivo inteiro (a/b opcionais, em segundos, como nas outras trilhas).
+    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, boss: { f: 'musica/historia_boss.mp3' } },
+    histBuf: {}, histNow: null, histNodes: null,
+    async histLoad(k) {
+      const d = this.HIST[k]; if (!d || this.histBuf[k] !== undefined || !this.ctx) return this.histBuf[k] || null;
+      this.histBuf[k] = null;
+      try { const ab = await this.getFile(d.f); this.histBuf[k] = Object.assign({ buf: await this.ctx.decodeAudioData(ab) }, d); } catch (e) { /* sem arquivo: sem trilha */ }
+      return this.histBuf[k];
+    },
+    // toca a trilha do modo história (troca com crossfade); sem arquivo, não faz nada e a música do menu segue normalmente
+    async histPlay(k) {
+      if (!this.ctx || !this.musicOn || this.histNow === k) return;
+      this.histNow = k; const m = await this.histLoad(k);
+      if (this.histNow !== k || !m) { if (this.histNow === k && !m) this.histNow = null; return; }
+      const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
+      s.buffer = m.buf; s.loop = true; s.loopStart = m.a || 0; s.loopEnd = m.b || m.buf.duration; s.connect(g); g.connect(this.musicGain);
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(1, now + 1.2); s.start(now, 0);
+      if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
+      this.histStop(true); this.histNodes = { s, g };
+    },
+    histStop(quick) {
+      const n = this.histNodes; if (!quick) this.histNow = null; if (!n) return; this.histNodes = null;
+      const t = this.ctx.currentTime; try { n.g.gain.cancelScheduledValues(t); n.g.gain.setValueAtTime(Math.max(0.0001, n.g.gain.value), t); n.g.gain.linearRampToValueAtTime(0.0001, t + 0.9); n.s.stop(t + 0.95); } catch (e) { }
+      if (!quick && this.musicOn && this.mode !== 'game') this.startMenuMusic();
+    },
+    stopMusic() { if (this.histNodes) this.histStop(true); this.histNow = null; if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); this.stopDefeat(); },
     // 'menu' = ambiente do início; 'game' = trilha da partida (a do menu é pausada enquanto a partida roda)
     setMode(m) {
       this.mode = m;
