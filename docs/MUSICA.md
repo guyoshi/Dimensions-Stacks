@@ -24,5 +24,10 @@ Continuam no código (`audio.js`: ambiente do menu, groove procedural da partida
 | Batalha normal | `historia_batalha.mp3` |
 | Miniboss | `historia_miniboss.mp3` |
 | Boss final | `historia_boss.mp3` |
+| Abertura da história (cinemática) | `historia_intro.mp3` (Alex Morgan) |
+| Miniboss | `historia_miniboss.mp3` (Nastelborn) |
+| Loja | `historia_loja.mp3` (Toucan Music) |
+
+Trocas sempre com fade (cruzado ~1 s). A trilha do mapa guarda onde parou e continua dali ao voltar da loja ou de uma batalha.
 
 Loop do arquivo inteiro (ou entre `a` e `b` em `audio.js` › `HIST`). Sem o arquivo, a trilha não toca e o resto segue igual.

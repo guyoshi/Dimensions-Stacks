@@ -9,7 +9,7 @@
     capture: 'captura de carta', blackhole: 'carta engolida pelo Buraco Negro', special: 'especial preparado',
     specialFlip: 'especial virado', slash: 'ataque vencedor', shield: 'defesa vencedora', round: 'nova rodada',
     refill: 'compra da reserva', elim: 'jogador eliminado', victory: 'vitória na partida', defeat: 'derrota na partida',
-    banner: 'aviso na tela (banner)', phenom: 'fenômeno dimensional (início)', steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', legend: 'carta lendária / da União revelada', menu: 'ambiente do menu / mesa (loop)',
+    banner: 'aviso na tela (banner)', phenom: 'fenômeno dimensional (início)', steal: 'carta roubada', tick: 'contagem / hover', bonus: 'bônus aplicado', legend: 'carta lendária / da União revelada', bauShake: 'baú tremendo', bauOpen: 'baú abrindo', bauCoin: 'pêndulos do baú', bauCard: 'carta do baú', menu: 'ambiente do menu / mesa (loop)',
   };
 
   const S = {
@@ -122,6 +122,10 @@
       capture() { S.noise(0.28, 'bandpass', 500, 2600, 0.18, 0, 2); S.tone(S.note(79), 0.3, 'triangle', 0.14, 0.18); S.tone(S.note(84), 0.45, 'triangle', 0.12, 0.27); },
       blackhole() { S.tone(520, 1.0, 'sine', 0.2, 0, 35); S.tone(260, 1.0, 'sawtooth', 0.07, 0, 30); S.noise(0.95, 'lowpass', 1400, 80, 0.22); S.tone(46, 0.9, 'sine', 0.35, 0.1); },
       special() { [0, 1, 2, 3].forEach(i => S.tone(S.note(76 + i * 3), 0.5, 'sine', 0.08, i * 0.07)); S.noise(0.5, 'highpass', 4000, 8000, 0.05, 0, 1); },
+      bauShake() { [0, .12, .24, .36].forEach((t, i) => { S.noise(0.07, 'bandpass', 300 + i * 80, 900, 0.14, t, 2); S.tone(S.note(40 + i), 0.08, 'square', 0.05, t); }); },
+      bauOpen() { S.noise(0.5, 'bandpass', 200, 5200, 0.14, 0, 1.4); S.tone(S.note(36), 0.5, 'sawtooth', 0.1, 0, 30); [72, 79, 84, 91].forEach((n, i) => S.tone(S.note(n), 0.7, 'triangle', 0.1, 0.18 + i * 0.07)); S.noise(0.8, 'bandpass', 5000, 9000, 0.06, 0.25, 3); },
+      bauCoin() { for (let i = 0; i < 6; i++) { S.tone(S.note(96 + (i % 3) * 2), 0.25, 'triangle', 0.09, i * 0.07); S.noise(0.04, 'bandpass', 6000, 9000, 0.05, i * 0.07, 3); } },
+      bauCard() { [76, 83, 88].forEach((n, i) => { S.tone(S.note(n), 0.6, 'triangle', 0.12, i * 0.09); S.tone(S.note(n + 12), 0.5, 'sine', 0.05, i * 0.09); }); S.noise(0.35, 'bandpass', 3000, 8000, 0.07, 0, 2); },
       legend() { [79, 84, 88, 91, 96].forEach((n, i) => { S.tone(S.note(n), 0.9, 'triangle', 0.13, i * 0.07); S.tone(S.note(n + 12), 0.7, 'sine', 0.05, i * 0.07 + 0.02); }); S.tone(S.note(55), 1.0, 'sine', 0.22, 0, 49); S.noise(0.9, 'bandpass', 4000, 9000, 0.08, 0.05, 3); },
       specialFlip() { S.tone(200, 0.9, 'sine', 0.2, 0, 1600); S.tone(S.note(84), 0.9, 'triangle', 0.1, 0.3); S.tone(S.note(91), 0.9, 'triangle', 0.08, 0.34); S.noise(0.8, 'bandpass', 800, 7000, 0.12, 0, 4); S.tone(70, 0.6, 'sine', 0.35, 0.65, 40); },
       slash() { S.noise(0.2, 'highpass', 2200, 7000, 0.3, 0, 1); S.tone(900, 0.12, 'sawtooth', 0.1, 0, 200); },
@@ -183,7 +187,8 @@
     // ---------- trilhas do Modo História (A União): mapa, batalha normal, miniboss e boss final.
     // Coloque os arquivos em prototipo/musica/ com estes nomes; enquanto o arquivo não existir, tudo segue como antes (sem trilha própria).
     // Loop simples do arquivo inteiro (a/b opcionais, em segundos, como nas outras trilhas).
-    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, boss: { f: 'musica/historia_boss.mp3' }, intro: { f: 'musica/historia_intro.mp3' } },
+    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, boss: { f: 'musica/historia_boss.mp3' }, intro: { f: 'musica/historia_intro.mp3' }, loja: { f: 'musica/historia_loja.mp3' } },
+    histPos: {}, HIST_RESUME: { mapa: 1 },   // o mapa sempre continua de onde parou depois de outra trilha (loja, batalha...)
     histBuf: {}, histNow: null, histNodes: null,
     async histLoad(k) {
       const d = this.HIST[k]; if (!d || this.histBuf[k] !== undefined || !this.ctx) return this.histBuf[k] || null;
@@ -198,12 +203,14 @@
       if (this.histNow !== k || !m) { if (this.histNow === k && !m) this.histNow = null; return; }
       const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
       s.buffer = m.buf; s.loop = true; s.loopStart = m.a || 0; s.loopEnd = m.b || m.buf.duration; s.connect(g); g.connect(this.musicGain);
-      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(1, now + 1.2); s.start(now, 0);
+      const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0;
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(1, now + 1.2); s.start(now, off);
       if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
-      this.histStop(true); this.histNodes = { s, g };
+      this.histStop(true); this.histNodes = { s, g, k, t0: now, off, dur: m.buf.duration };
     },
     histStop(quick) {
       const n = this.histNodes; if (!quick) this.histNow = null; if (!n) return; this.histNodes = null;
+      if (n.k && this.HIST_RESUME[n.k]) this.histPos[n.k] = (n.off + (this.ctx.currentTime - n.t0)) % n.dur;   // guarda onde parou
       const t = this.ctx.currentTime; try { n.g.gain.cancelScheduledValues(t); n.g.gain.setValueAtTime(Math.max(0.0001, n.g.gain.value), t); n.g.gain.linearRampToValueAtTime(0.0001, t + 0.9); n.s.stop(t + 0.95); } catch (e) { }
       if (!quick && this.musicOn && this.mode !== 'game') this.startMenuMusic();
     },
