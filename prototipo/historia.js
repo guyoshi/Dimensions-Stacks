@@ -127,19 +127,10 @@
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); if (b.dataset.a === 's') sortear(); };
   }
-  // ---- sorteio do ponto de partida (4 extremidades)
+  // ---- ponto de partida: uma das 4 extremidades, sorteada em silêncio (sem tela de sorteio)
   function sortear() {
     const ladoSel = ['esq', 'cima', 'dir', 'baixo'][Math.floor(Math.random() * 4)];
-    const red = document.body.classList.contains('reduce');
-    const ov = el(`<div class="hs-draw"><p>Sorteando o ponto de partida</p><div class="hs-dr"><i data-l="cima">Cima</i><i data-l="esq">Esquerda</i><i data-l="dir">Direita</i><i data-l="baixo">Baixo</i></div></div>`);
-    const m = U.modal(ov, { cls: 'hs-modal hs-modal-draw' });
-    const items = ['cima', 'dir', 'baixo', 'esq'], total = red ? 1 : 14 + items.indexOf(ladoSel);
-    let k = 0; const step = () => {
-      const l = items[k % 4]; $$('i', ov).forEach(i => i.classList.toggle('on', i.dataset.l === l)); SND.play('tick');
-      if (++k > total) return setTimeout(() => { S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save(); m.close(); openMap(true); }, red ? 150 : 700);
-      setTimeout(step, 90 + k * 12);
-    };
-    step();
+    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save(); openMap(true);
   }
 
   // ---- mapa
@@ -155,7 +146,7 @@
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
     paintAll(); bindMap(mp);
-    requestAnimationFrame(() => { const st = BY[S.startId]; if (novo) { fit(false); setTimeout(() => centerOn(st.x, st.y, .8, true), 450); toast('Você começa pela ' + LADOS[S.start].toLowerCase() + '.'); } else centerOn(st.x, st.y, .7, false); });
+    requestAnimationFrame(() => { const st = BY[S.startId]; if (novo) { fit(false); setTimeout(() => centerOn(st.x, st.y, .8, true), 450); } else centerOn(st.x, st.y, .7, false); });
   }
   function paintAll() {
     $$('.hs-edges .e', root).forEach(p => { p.setAttribute('class', 'e ' + edgeState(p.dataset.a, p.dataset.b)); });
