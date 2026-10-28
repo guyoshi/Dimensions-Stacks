@@ -130,7 +130,7 @@
   // ---- ponto de partida: uma das 4 extremidades, sorteada em silêncio (sem tela de sorteio)
   function sortear() {
     const ladoSel = ['esq', 'cima', 'dir', 'baixo'][Math.floor(Math.random() * 4)];
-    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save(); openMap(true);
+    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save(); openMap(true);
   }
 
   // ---- mapa
@@ -139,14 +139,14 @@
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
     mp.innerHTML = `<svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-        <g id="hsCam">${webSvg()}<g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g></g></svg>
+        <g id="hsCam">${webSvg()}<g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}</g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill" title="Cartas no bestiário"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></div></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
-    paintAll(); bindMap(mp);
-    requestAnimationFrame(() => { const st = BY[S.startId]; if (novo) { fit(false); setTimeout(() => centerOn(st.x, st.y, .8, true), 450); } else centerOn(st.x, st.y, .7, false); });
+    paintAll(); bindMap(mp); heroPlace(posId(), false);
+    requestAnimationFrame(() => { const st = BY[S.startId]; const ps = BY[posId()]; if (novo) { fit(false); setTimeout(() => centerOn(ps.x, ps.y, .8, true), 450); } else centerOn(ps.x, ps.y, .7, false); });
   }
   function paintAll() {
     $$('.hs-edges .e', root).forEach(p => { p.setAttribute('class', 'e ' + edgeState(p.dataset.a, p.dataset.b)); });
@@ -196,29 +196,69 @@
       if (a === 'back') hub();
       else if (a === 'zin') zoomAt(w / 2, h / 2, 1.35, true);
       else if (a === 'zout') zoomAt(w / 2, h / 2, 1 / 1.35, true);
-      else if (a === 'start') { const st = BY[S.startId]; centerOn(st.x, st.y, .8, true); }
+      else if (a === 'start') { const st = BY[posId()]; centerOn(st.x, st.y, .8, true); }
       else if (a === 'fit') fit(true);
       else if (a === 'leg') legenda();
     });
     window.addEventListener('resize', () => { if (view === 'map' && svg && svg.isConnected) applyCam(false); });
   }
 
+
+  // ---- o boneco anda casa por casa (como no mapa do modo história do Smash): nada de pular para um ponto distante
+  const posId = () => (S && S.pos && BY[S.pos]) ? S.pos : S.startId;
+  const passa = id => P.aberto || cleared(id) || BY[id].tipo === 'loja';   // pontos por onde se pode atravessar
+  // caminhos possíveis a partir da posição: atravessa só pontos já vencidos (ou lojas); o último passo pode ser um ponto novo (aí o boneco para e é preciso duelar)
+  function alcance() {
+    const from = posId(), prev = { [from]: null }, q = [from];
+    while (q.length) {
+      const u = q.shift();
+      if (u !== from && !passa(u)) continue;                        // ponto ainda não vencido: o boneco para ali
+      if (u === from && !passa(u) && !P.aberto) { /* parado num duelo pendente: só pode recuar para pontos já vencidos */ }
+      for (const v of BY[u].viz) {
+        if (v in prev) continue;
+        if (v === M.boss && !bossOpen() && !P.aberto) continue;
+        if (u === from && !passa(u) && !P.aberto && !passa(v)) continue;
+        prev[v] = u; q.push(v);
+      }
+    }
+    return prev;
+  }
+  function caminho(to) { const prev = alcance(); if (!(to in prev)) return null; const p = []; for (let x = to; x != null; x = prev[x]) p.unshift(x); return p; }
+  let andando = false;
+  function heroSvg() {
+    return `<g id="hsHero" class="hs-hero"><circle class="hr-sh" r="15" cy="13"/><circle class="hr-body" r="14" cy="-4"/><circle class="hr-core" r="5" cy="-4"/><path class="hr-pin" d="M0 12 L-6 0 H6 Z"/></g>`;
+  }
+  function heroPlace(id, anim) {
+    const h = $('#hsHero', root); if (!h) return; const n = BY[id], r = TIPOS[n.tipo].r;
+    h.style.transition = anim ? 'transform .34s linear' : 'none'; h.style.transform = `translate(${n.x}px,${n.y - r - 10}px)`;
+  }
+  async function andar(to) {
+    if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
+    andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
+    for (let i = 1; i < p.length; i++) {
+      const n = BY[p[i]]; S.pos = n.id; heroPlace(n.id, !red); SND.play('tick');
+      centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red);
+      await new Promise(r => setTimeout(r, red ? 60 : 360));
+    }
+    save(); andando = false; paintAll(); openNode(p[p.length - 1]);
+  }
+
   // ---- painel de cada ponto
   let curId = null;
   function closeSheet() { if (sheet) { sheet.hidden = true; curId = null; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); } }
   function openNode(id) {
-    const n = BY[id], T = TIPOS[n.tipo]; curId = id; SND.play('click');
+    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; curId = id; SND.play('click');
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
-    const ok = cleared(id), av = available(id);
+    const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id);
     const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div><p class="hint">As cartas do inimigo aparecem depois do primeiro duelo.</p>`;
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo de 3 jogadores' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · lado ${esc(LADOS[n.lado].toLowerCase())}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
       <p>${esc(T.desc)}</p><p class="hint">${esc(jog)}${n.id === M.boss && !bossOpen() ? ` · faltam ${GUARD.filter(x => !cleared(x)).length} guardiões` : ''}</p>${cartas}
-      <div class="row"><button class="btn primary" disabled>${n.tipo === 'loja' ? 'Entrar (em breve)' : 'Duelar (em breve)'}</button>${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <div class="row">${aqui ? `<button class="btn primary" disabled>${n.tipo === 'loja' ? 'Entrar (em breve)' : ok ? 'Você está aqui' : 'Duelar (em breve)'}</button>` : cam_ ? `<button class="btn primary" data-a="go">Caminhar até aqui · ${cam_.length - 1} ${cam_.length === 2 ? 'passo' : 'passos'}</button>` : `<button class="btn" disabled>Fora de alcance</button>`}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'go') andar(id); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;

@@ -1456,3 +1456,13 @@ body.reduce .hs-seal, body.reduce .hs-ring, body.reduce .hs-edges .e.lit { anima
 .card.isclone .front, .card.isclone .face.front { box-shadow: inset 0 0 0 2px #7fdcff99; }
 .stats .st.fog b { color: var(--ink2); opacity: .8; }
 .attrbtn .v { min-width: 1.4em; text-align: right; }
+
+/* Modo história: o boneco que anda no mapa */
+.hs-hero { pointer-events: none; }
+.hs-hero .hr-sh { fill: #0008; filter: blur(2px); }
+.hs-hero .hr-body { fill: #fff1d4; stroke: #ffc46b; stroke-width: 3; filter: drop-shadow(0 0 8px #ffc46b); }
+.hs-hero .hr-core { fill: #d8332f; }
+.hs-hero .hr-pin { fill: #ffc46b; }
+.hs-hero { animation: hs-bob 1.6s ease-in-out infinite; }
+@keyframes hs-bob { 50% { translate: 0 -4px; } }
+.reduce .hs-hero { animation: none; }
