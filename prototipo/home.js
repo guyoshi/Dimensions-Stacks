@@ -63,9 +63,9 @@
   const render = { menu: () => home(), coll: () => collTab(), uniao: () => uniaoTab(), chal: () => chalTab(), prof: () => profTab() };
   U.afterShow = function (name) {
     const nav = $('#nav'); if (!nav) return;
-    const tab = name in render; nav.hidden = !tab;
+    const tab = name in render, full = name === 'uniao'; nav.hidden = !tab || full;   // o modo história ocupa a tela toda (jogo dentro do jogo)
     $$('button', nav).forEach(b => b.classList.toggle('on', b.dataset.tab === name));
-    $('#app').classList.toggle('hasnav', tab);
+    $('#app').classList.toggle('hasnav', tab && !full);
     if (tab) { render[name](); const s = $('#' + name); if (s) s.scrollTop = 0; }
   };
 
@@ -177,11 +177,9 @@
   }
 
   // ---------------------------------------------------------------- desafios (aba)
-  function uniaoTab() {
-    const s = $('#uniao');
-    s.innerHTML = `<div class="tabwrap">${topbar('A União', 'Modo história')}
-      <section class="wip"><div class="wipseal"></div><h2>Em construção</h2><p>O modo história de A União está sendo preparado. Em breve você poderá viver a trama das Dimensões Infinitas por aqui.</p></section></div>`;
-    bindTop(s);
+  function uniaoTab() {   // modo história (historia.js): tela cheia, sem barra inferior
+    const s = $('#uniao'); if (!window.DSHistoria) { s.innerHTML = '<div class="tabwrap"><p class="hint">Modo história indisponível.</p></div>'; return; }
+    if (!s.dataset.m) { s.dataset.m = '1'; window.DSHistoria.mount(s); } else window.DSHistoria.show();
   }
   function chalTab() {
     const s = $('#chal'); const d = ST.dailyToday(); const wk = ST.weekly(); ST.save();
