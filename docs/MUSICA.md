@@ -20,13 +20,13 @@ Continuam no código (`audio.js`: ambiente do menu, groove procedural da partida
 ## Trilhas do Modo História (a fornecer)
 | Uso | Arquivo esperado em `prototipo/musica/` |
 |---|---|
-| Mapa | `historia_mapa.mp3` |
+| Mapa | `historia_mapa.mp3` (Toucan Music) |
 | Batalha normal | `historia_batalha.mp3` |
 | Miniboss | `historia_miniboss.mp3` |
 | Boss final | `historia_boss.mp3` |
 | Abertura da história (cinemática) | `historia_intro.mp3` (Alex Morgan) |
 | Miniboss | `historia_miniboss.mp3` (Nastelborn) |
-| Loja | `historia_loja.mp3` (Toucan Music) |
+| Loja | `historia_loja.mp3` (Echobrainz) |
 
 Trocas sempre com fade (cruzado ~1 s). A trilha do mapa guarda onde parou e continua dali ao voltar da loja ou de uma batalha.
 
