@@ -23,7 +23,7 @@ Continuam no código (`audio.js`: ambiente do menu, groove procedural da partida
 | Mapa | `historia_mapa.mp3` (Toucan Music) |
 | Batalha normal | `historia_batalha.mp3` (Serge Pavkin) |
 | Miniboss | `historia_miniboss.mp3` |
-| Boss final | `historia_boss.mp3` |
+| Boss final | `historia_boss.mp3` (OpenMind Audio) |
 | Abertura da história (cinemática) | `historia_intro.mp3` (Alex Morgan) |
 | Miniboss | `historia_miniboss.mp3` (Nastelborn) |
 | Loja | `historia_loja.mp3` (Echobrainz) |
