@@ -19,24 +19,24 @@
 
   const DEF = { dif: 1, cortes: [.34, .67, .95], premios: [0, 5, 10, 20] };
   const LISTA = [
-    { id: 'maiormenor', nome: 'Portas da sorte', desc: 'Escolha uma porta entre 3. Pêndulos, passagem livre ou nada; na última, talvez uma carta.', cortes: [.37, .63, .88] },
-    { id: 'memoria', nome: 'Memória estelar', desc: 'Encontre os 6 pares de cartas com o menor número de jogadas.', cortes: [.3, .6, .9] },
-    { id: 'quemequem', nome: 'Quem é quem', desc: 'Descubra o personagem pela silhueta.', cortes: [.37, .63, .88] },
-    { id: 'ordem', nome: 'Agilidade', desc: 'Responda rápido: qual carta tem o maior ou o menor atributo.', cortes: [.4, .7, .95] },
-    { id: 'mineracao', nome: 'Contágio', desc: 'Arraste as bombinhas vermelhas para longe das azuis.', cortes: [.37, .63, .88] },
-    { id: 'asteroides', nome: 'Campo de asteroides', desc: 'Arraste a nave, desvie das rochas e pegue os pêndulos.', cortes: [.33, .6, .87] },
-    { id: 'cofre', nome: 'Cofre de Jasmey', desc: 'Descubra o código de 4 símbolos em 6 tentativas.', cortes: [.34, .5, .83] },
-    { id: 'caracoroa', nome: 'Sequência de sons', desc: 'Ouça a sequência, que ganha um som a cada rodada, e repita.', cortes: [.3, .6, .95] },
-    { id: 'raspadinha', nome: 'Raspadinha estelar', desc: 'Raspe 3 quadrados e torça por símbolos iguais.', cortes: [.3, .6, .95] },
-    { id: 'cacapendulo', nome: 'Caça ao pêndulo', desc: 'No escuro, toque nos pêndulos que passam sob a luz.', cortes: [.33, .6, .87] },
+    { id: 'maiormenor', nome: 'Três Portais', desc: 'Escolha uma porta entre 3. Pêndulos, passagem livre ou nada; na última, talvez uma carta.', cortes: [.37, .63, .88] },
+    { id: 'memoria', nome: 'Ecos Estelares', desc: 'Encontre os 6 pares de cartas antes que o tempo acabe, com poucas jogadas.', cortes: [.3, .6, .9] },
+    { id: 'quemequem', nome: 'Fragmentos de Rosto', desc: 'Só alguns trechos escuros da carta aparecem. Descubra quem é.', cortes: [.37, .63, .88] },
+    { id: 'ordem', nome: 'Dança das Cartas', desc: 'Uma carta é marcada, todas viram e trocam de lugar. Acerte onde ela foi parar.', cortes: [.4, .7, .95] },
+    { id: 'mineracao', nome: 'Maré Rubra', desc: 'As bolinhas vermelhas contagiam as azuis, que vagam pela tela. Afaste as vermelhas.', cortes: [.37, .63, .88] },
+    { id: 'asteroides', nome: 'Rota dos Meteoros', desc: 'Arraste a nave, desvie das rochas e pegue os pêndulos.', cortes: [.33, .6, .87] },
+    { id: 'cofre', nome: 'Fechadura de Jasmey', desc: 'Descubra o código de 4 símbolos em 6 tentativas, contra o relógio.', cortes: [.34, .5, .83] },
+    { id: 'caracoroa', nome: 'Eco das Notas', desc: 'Ouça a sequência, que ganha um som a cada rodada, e repita.', cortes: [.3, .6, .95] },
+    { id: 'raspadinha', nome: 'Relâmpago Dimensional', desc: 'Três cartas viram num piscar: uma dá +1, uma tira 1. Toque no +1 o máximo que puder.', cortes: [.3, .6, .95] },
+    { id: 'cacapendulo', nome: 'Pêndulos Fugitivos', desc: 'No escuro, toque nos pêndulos que cruzam sob a luz em todas as direções.', cortes: [.33, .6, .87] },
     // um por série de livros
-    { id: 'elos', nome: 'Elos das Sombras', serie: 'Diário Sobrenatural', desc: 'Os seis Elos acendem em sequência: repita a ordem.', cortes: [.4, .7, 1] },
-    { id: 'luas', nome: 'Duas luas', serie: 'Ciclo de Jesed', desc: 'Toque quando as duas luas de Jesed estiverem alinhadas.', cortes: [.35, .65, .9] },
-    { id: 'poderes', nome: 'Poderes dos Lins', serie: 'Viajantes Dimensionais', desc: 'Cada obstáculo pede o poder certo de um dos irmãos.', cortes: [.4, .7, .9] },
-    { id: 'gancho', nome: 'Símbolos estelares', serie: 'Spacetheft', desc: 'Toque nos símbolos espaciais que aparecem. Cuidado com a caveira.', cortes: [.34, .67, .84] },
-    { id: 'culpado', nome: 'Olhos na escuridão', serie: 'Mistério Oculto', desc: 'Feche os olhos que se abrem antes que ataquem. 3 corações.', cortes: [.5, .75, .96] },
-    { id: 'ritmo', nome: 'Mar, fogo e gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
-    { id: 'formacao', nome: 'Formação da União', serie: 'A União', desc: 'Escolha 3 heróis cujos atributos somados cubram o desafio.', cortes: [.34, .67, .99] },
+    { id: 'elos', nome: 'Sussurro dos Elos', serie: 'Diário Sobrenatural', desc: 'No escuro, segure o dedo e siga o som: quanto mais perto do Elo, mais alto. Toque 2 vezes para confirmar.', cortes: [.4, .7, 1] },
+    { id: 'luas', nome: 'Eclipse de Jesed', serie: 'Ciclo de Jesed', desc: 'Toque quando as duas luas de Jesed estiverem alinhadas.', cortes: [.35, .65, .9] },
+    { id: 'poderes', nome: 'Provas dos Lins', serie: 'Viajantes Dimensionais', desc: 'Cada obstáculo pede o poder certo de um dos irmãos.', cortes: [.4, .7, .9] },
+    { id: 'gancho', nome: 'Constelação Pirata', serie: 'Spacetheft', desc: 'Toque nos símbolos espaciais que aparecem. Cuidado com a caveira.', cortes: [.34, .67, .84] },
+    { id: 'culpado', nome: 'Vigília Escura', serie: 'Mistério Oculto', desc: 'Feche os olhos que se abrem antes que ataquem. 3 corações.', cortes: [.5, .75, .96] },
+    { id: 'ritmo', nome: 'Maré, Chama e Gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
+    { id: 'formacao', nome: 'Chamado da União', serie: 'A União', desc: 'Escolha 3 heróis cujos atributos somados cubram o desafio.', cortes: [.34, .67, .99] },
   ];
   const BYID = {}; LISTA.forEach(m => { BYID[m.id] = m; });
   const cfgAll = () => rd(CFG_KEY, {});
@@ -44,6 +44,21 @@
   function setCfg(id, patch) { const a = cfgAll(); a[id] = Object.assign({}, a[id] || {}, patch); wr(CFG_KEY, a); }
   const log = () => rd(LOG_KEY, []);
   const tierOf = (id, pct) => { const c = cfg(id).cortes; return pct >= c[2] ? 3 : pct >= c[1] ? 2 : pct >= c[0] ? 1 : 0; };
+
+
+  // ---- música dos minigames: tema curto e animado, gerado pelo próprio navegador (sem arquivo)
+  const MUS = (() => {
+    const MEL = [72, 76, 79, 76, 74, 77, 81, 77, 72, 76, 79, 84, 83, 79, 76, null, 69, 72, 76, 72, 71, 74, 77, 74, 67, 71, 74, 79, 76, 74, 72, null], BAS = [48, 45, 41, 43], SP = 60 / 132 / 2;
+    let ctx = null, out = null, timer = 0, step = 0, next = 0, on = false;
+    const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+    const nota = (m, t, dur, tipo, vol) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = tipo; o.frequency.value = hz(m); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g); g.connect(out); o.start(t); o.stop(t + dur + .05); };
+    const agenda = () => { if (!on) return; while (next < ctx.currentTime + .35) { const i = step % 32, m = MEL[i]; if (m != null) nota(m, next, SP * 1.6, 'triangle', .05); if (i % 4 === 0) nota(BAS[Math.floor(i / 8)] , next, SP * 3.4, 'sine', .08); if (i % 2 === 1) nota(96, next, .03, 'square', .012); next += SP; step++; } };
+    return {
+      start() { try { SND.init(); ctx = SND.ctx || new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === 'suspended') ctx.resume(); out = ctx.createGain(); out.gain.value = .0001; out.connect(SND.master || ctx.destination); out.gain.linearRampToValueAtTime(1, ctx.currentTime + .6); on = true; step = 0; next = ctx.currentTime + .1; timer = setInterval(agenda, 90); try { SND.duckMusic && SND.duckMusic(.12, 7200, .8); } catch (e) { } } catch (e) { on = false; } },
+      stop() { if (!on) return; on = false; clearInterval(timer); try { const o = out, t = ctx.currentTime; o.gain.setTargetAtTime(0, t, .15); setTimeout(() => { try { o.disconnect(); } catch (e) { } }, 900); SND.duckMusic && SND.duckMusic(1, 0, .6); } catch (e) { } },
+    };
+  })();
+  const SEM_MUSICA = ['caracoroa', 'elos', 'ritmo'];
 
   // ---- casca comum: tela cheia, título, sair, resultado
   function shell(m) {
@@ -54,14 +69,14 @@
     opts = opts || {}; const m = BYID[id], c = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
     const ov = shell(m), body = $('.mg-body', ov); let ended = false, stop = () => { }, res; const t0 = Date.now();
     const out = await new Promise(resolve => {
-      const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); pct = Math.max(0, Math.min(1, pct)); const tier = tierOf(id, pct), reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
+      const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = tierOf(id, pct), reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
         body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + ' + U.CARDS[res.carta].nome : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
         try { SND.play(tier ? (tier === 3 ? 'bauOpen' : 'bauCoin') : 'lose'); } catch (e) { }
         const L = log(); L.push({ id, pct: res.pct, tier, reward, ms: res.ms, t: Date.now(), teste: !!opts.teste }); wr(LOG_KEY, L.slice(-500));
         $('.mg-ok', ov).onclick = () => { try { SND.play('click'); } catch (e) { } resolve(res); };
       };
       $('.mg-x', ov).onclick = () => { if (ended) { resolve(res); return; } fim(0, 'Abandonado'); };
-      try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); }
+      if (!SEM_MUSICA.includes(id)) MUS.start(); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); }
     });
     ov.remove(); opts.onEnd && opts.onEnd(out); return out;
   }
@@ -84,45 +99,62 @@
           rod++; if (rod >= R) return fim(Math.min(1, acum), 'Terminou as portas'); tela(); }; };
       tela();
     },
-    // 2. memória: 6 pares
+    // 2. Ecos Estelares (memória): 6 pares, com tempo limite; a nota máxima é possível com ~10 jogadas
     memoria(body, c, fim) {
-      const P = 6, ids = randCards(P), deck = shuffle(ids.concat(ids)); let open = [], moves = 0, found = 0, lock = false;
-      body.innerHTML = `<p class="mg-q" id="mq">Jogadas: 0</p><div class="mg-grid g4"></div>`; const g = $('.mg-grid', body);
+      const P = 6, ids = randCards(P), deck = shuffle(ids.concat(ids)); let open = [], moves = 0, found = 0, lock = false, acabou = false, left = Math.round(75 / c.dif);
+      body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g4"></div>`; const g = $('.mg-grid', body), mq = $('#mq', body);
+      const txt = () => { mq.innerHTML = 'Jogadas: ' + moves + ' · <b>' + left + ' s</b>'; }; txt();
+      const tm = setInterval(() => { if (acabou) return; left--; txt(); if (left <= 0) { acabou = true; clearInterval(tm); fim(found / P * .45, found + ' de ' + P + ' pares (tempo esgotado)'); } }, 1000);
       deck.forEach((id, i) => { const b = mk('<button class="mg-cell" aria-label="carta"></button>'); b.dataset.i = i; b.append(hidden(66)); g.append(b); });
-      g.onclick = async e => { const b = e.target.closest('.mg-cell'); if (!b || lock || b.classList.contains('on') || b.classList.contains('ok')) return; const i = +b.dataset.i;
+      g.onclick = async e => { const b = e.target.closest('.mg-cell'); if (!b || lock || acabou || b.classList.contains('on') || b.classList.contains('ok')) return; const i = +b.dataset.i;
         b.classList.add('on'); b.replaceChildren(card(deck[i], 66)); SND.play('flip'); open.push(i);
-        if (open.length === 2) { lock = true; moves++; $('#mq', body).textContent = 'Jogadas: ' + moves; const [x, y] = open; const cx = g.children[x], cy = g.children[y];
-          await wait(750); if (deck[x] === deck[y]) { cx.classList.add('ok'); cy.classList.add('ok'); found++; SND.play('capture'); } else { [cx, cy].forEach(z => { z.classList.remove('on'); z.replaceChildren(hidden(66)); }); }
-          open = []; lock = false; if (found === P) fim(1 - (moves - P) / (14 / c.dif), moves + ' jogadas (mínimo ' + P + ')'); } };
+        if (open.length === 2) { lock = true; moves++; txt(); const [x, y] = open; const cx = g.children[x], cy = g.children[y];
+          await wait(750); if (acabou) return; if (deck[x] === deck[y]) { cx.classList.add('ok'); cy.classList.add('ok'); found++; SND.play('capture'); } else { [cx, cy].forEach(z => { z.classList.remove('on'); z.replaceChildren(hidden(66)); }); }
+          open = []; lock = false; if (found === P) { acabou = true; clearInterval(tm); fim(1 - (moves - P - 4) / (18 / c.dif), moves + ' jogadas em ' + (Math.round(75 / c.dif) - left) + ' s'); } } };
+      return () => { acabou = true; clearInterval(tm); };
     },
-    // 3. quem é quem: 8 perguntas, 10 s cada
+    // 3. Silhuetas (quem é quem): só alguns trechos escuros da imagem da carta aparecem; 8 perguntas, 10 s cada
     quemequem(body, c, fim) {
       const N = 8; let n = 0, ok = 0, tm = null, left = 0, done = false;
+      const trechos = id => { const src = (window.CARD_IMAGES || {})[id]; if (!src) return null; const W = 150, H = 200, k = 3 + (Math.random() < .5 ? 1 : 0), cs = [];
+        for (let i = 0; i < k; i++) cs.push(`radial-gradient(circle ${34 + rnd(12)}px at ${22 + rnd(W - 44)}px ${22 + rnd(H - 44)}px, #000 55%, transparent 100%)`);
+        const d = mk(`<div class="mg-frag" style="width:${W}px;height:${H}px;background-image:url(${src});-webkit-mask-image:${cs.join(',')};mask-image:${cs.join(',')}"></div>`); return d; };
       const q = () => { const cs = randCards(4), alvo = cs[0], opts = shuffle(cs); left = Math.round(10 / c.dif);
         body.innerHTML = `<p class="mg-q" id="mq">Pergunta ${n + 1}/${N} · <span id="tl">${left}</span>s</p><div class="mg-c" id="mA"></div><div class="mg-btns col">${opts.map(o => `<button class="btn" data-id="${o}">${U.CARDS[o].nome}</button>`).join('')}</div>`;
-        const ce = card(alvo, 150); ce.style.filter = 'brightness(0)'; ce.style.transition = 'filter .5s'; $('#mA', body).append(ce); done = false;
-        const resp = async id => { if (done) return; done = true; clearInterval(tm); ce.style.filter = ''; const certo = id === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose'); await wait(1100); n++; if (n >= N) fim(ok / N, ok + ' de ' + N + ' acertos'); else q(); };
+        const A = $('#mA', body), fr = trechos(alvo); A.classList.add('mg-fragbox'); if (fr) A.append(fr); else { const ce0 = card(alvo, 150); ce0.style.filter = 'brightness(0)'; A.append(ce0); } done = false;
+        const resp = async id => { if (done) return; done = true; clearInterval(tm); A.classList.remove('mg-fragbox'); A.replaceChildren(card(alvo, 150)); const certo = id === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose'); await wait(1100); n++; if (n >= N) fim(ok / N, ok + ' de ' + N + ' acertos'); else q(); };
         body.onclick = e => { const b = e.target.closest('[data-id]'); if (b) resp(b.dataset.id); };
         clearInterval(tm); tm = setInterval(() => { left--; const t = $('#tl', body); if (t) t.textContent = left; if (left <= 0) resp(null); }, 1000); };
       q(); return () => clearInterval(tm);
     },
-    // 4. agilidade: perguntas rápidas sobre as cartas (8 perguntas, 4 s cada)
+    // 4. Dança das Cartas: uma carta é marcada, todas viram e trocam de lugar à vista; acerte onde ela foi parar (6 rodadas)
     ordem(body, c, fim) {
-      const N = 8; let n = 0, ok = 0, tm = null, left = 0, done = false;
-      const q = () => { let cs, a, maior, certo; do { cs = randCards(4); a = pick(['pod', 'def', 'int', 'vel']); maior = Math.random() < .5; const v = cs.map(i => U.CARDS[i].stats[a]); const alvo = maior ? Math.max(...v) : Math.min(...v); if (v.filter(x => x === alvo).length === 1) certo = cs[v.indexOf(alvo)]; } while (!certo);
-        left = +(4 / c.dif).toFixed(1); done = false;
-        body.innerHTML = `<p class="mg-q">Pergunta ${n + 1}/${N} · <span id="tl">${left.toFixed(1)}</span>s<br>Qual a carta de <b>${maior ? 'maior' : 'menor'}</b> <b>${NA(a)}</b>?</p><div class="mg-grid g4"></div>`; const g = $('.mg-grid', body);
-        cs.forEach(id => { const b = mk('<button class="mg-cell"></button>'); b.dataset.id = id; b.append(card(id, 72)); g.append(b); });
-        const resp = async id => { if (done) return; done = true; clearInterval(tm); const acertou = id === certo; if (acertou) ok++; SND.play(acertou ? 'win' : 'lose'); [...g.children].forEach(b => { if (b.dataset.id === certo) b.classList.add('ok'); }); await wait(650); n++; if (n >= N) fim(ok / N, ok + ' de ' + N + ' respostas'); else q(); };
-        g.onclick = e => { const b = e.target.closest('.mg-cell'); if (b) resp(b.dataset.id); }; clearInterval(tm);
-        tm = setInterval(() => { left = +(left - .1).toFixed(1); const t = $('#tl', body); if (t) t.textContent = Math.max(0, left).toFixed(1); if (left <= 0) resp(null); }, 100); };
-      q(); return () => clearInterval(tm);
+      const R = 6, CW = 78, GAP = 12, H = 118; let rodada = 0, ok = 0, acabou = false;
+      const rod = async () => {
+        const n = rodada < 2 ? 3 : 4, trocas = 4 + rodada * 2, vel = Math.max(170, 520 - rodada * 60) / c.dif, ids = randCards(n), alvo = rnd(n);
+        body.innerHTML = `<p class="mg-q" id="mq">Rodada ${rodada + 1}/${R}<br>Memorize a carta marcada</p><div class="mg-dance" style="width:${n * (CW + GAP) - GAP}px;height:${H + 14}px"></div>`;
+        const area = $('.mg-dance', body), pos = Array.from({ length: n }, (_, i) => i), it = [], mq = $('#mq', body); let pronto = false;
+        const x = p => p * (CW + GAP);
+        ids.forEach((id, i) => { const d = mk('<button class="mg-dc"></button>'); d.style.cssText = `width:${CW}px;height:${H}px;transform:translate(${x(i)}px,7px);transition:transform ${vel}ms ease-in-out`; d.append(card(id, CW)); if (i === alvo) d.classList.add('mark'); d.dataset.i = i; area.append(d); it.push(d); });
+        await wait(1700); if (acabou) return; it.forEach(d => { d.classList.remove('mark'); d.replaceChildren(hidden(CW)); }); SND.play('flip'); await wait(450);
+        mq.innerHTML = 'Acompanhe com os olhos…';
+        for (let k = 0; k < trocas; k++) { if (acabou) return; let a = rnd(n), b; do { b = rnd(n); } while (b === a);
+          const ia = pos.indexOf(a), ib = pos.indexOf(b); pos[ia] = b; pos[ib] = a;
+          it.forEach((d, i) => { d.style.transform = `translate(${x(pos[i])}px,${(i === ia || i === ib) ? (k % 2 ? 24 : -8) : 7}px)`; }); SND.play('tick'); await wait(vel + 30);
+          it.forEach((d, i) => { d.style.transform = `translate(${x(pos[i])}px,7px)`; }); await wait(vel * .45); }
+        if (acabou) return; mq.innerHTML = 'Onde está a carta marcada?'; pronto = true;
+        area.onclick = async e => { const d = e.target.closest('.mg-dc'); if (!d || !pronto) return; pronto = false; const i = +d.dataset.i, certo = i === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose');
+          it.forEach((z, j) => { z.replaceChildren(card(ids[j], CW)); if (j === alvo) z.classList.add('mark'); }); await wait(1100); if (acabou) return; rodada++; if (rodada >= R) { acabou = true; fim(ok / R, ok + ' de ' + R + ' rodadas'); } else rod(); };
+      };
+      rod(); return () => { acabou = true; };
     },
-    // 5. contágio: bombinhas vermelhas perseguem as azuis; arraste-as para longe (30 s)
+    // 5. Maré Rubra (contágio): as vermelhas começam longe das azuis, espalhadas pelos cantos; as azuis vagueiam
     mineracao(body, c, fim) {
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 440, g = cv.getContext('2d');
-      const NB = 12, R = 11, T = 30, V = 26 * c.dif; const bs = [];
-      for (let i = 0; i < NB + 4; i++) bs.push({ x: 30 + Math.random() * (W - 60), y: 40 + Math.random() * (H - 80), r: i >= NB });
+      const NB = 12, R = 11, T = Math.round(24 / c.dif), V = 26 * c.dif, VB = 24; const bs = [];
+      const cantos = shuffle([[0, 0], [1, 0], [0, 1], [1, 1]]);
+      cantos.forEach(([cx, cy]) => bs.push({ x: 28 + cx * (W - 56) + (cx ? -1 : 1) * rnd(26), y: 36 + cy * (H - 72) + (cy ? -1 : 1) * rnd(26), r: true }));
+      for (let i = 0; i < NB; i++) { let x, y, k = 0; do { x = 36 + Math.random() * (W - 72); y = 50 + Math.random() * (H - 100); k++; } while (k < 300 && bs.some(b => b.r && Math.hypot(b.x - x, b.y - y) < 150)); const a = Math.random() * 6.283; bs.push({ x, y, r: false, a }); }
       let drag = null, last = 0, raf = 0, t0 = 0, acabou = false;
       const pos = e => { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; };
       cv.onpointerdown = e => { const p = pos(e); let m = null, d = 1e9; bs.forEach(b => { const dd = Math.hypot(b.x - p.x, b.y - p.y); if (b.r && dd < 34 && dd < d) { d = dd; m = b; } }); if (m) { drag = m; cv.setPointerCapture(e.pointerId); } };
@@ -131,6 +163,7 @@
       const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); const az = bs.filter(b => !b.r).length; fim(az / NB, az + ' de ' + NB + ' azuis salvas'); };
       const loop = ts => { if (acabou) return; if (!t0) t0 = ts; const dt = Math.min(.05, (ts - (last || ts)) / 1000); last = ts;
         const azuis = bs.filter(b => !b.r);
+        azuis.forEach(b => { b.a += (Math.random() - .5) * 5 * dt; b.x += Math.cos(b.a) * VB * dt; b.y += Math.sin(b.a) * VB * dt; if (b.x < R || b.x > W - R) { b.a = Math.PI - b.a; b.x = Math.max(R, Math.min(W - R, b.x)); } if (b.y < R + 22 || b.y > H - R) { b.a = -b.a; b.y = Math.max(R + 22, Math.min(H - R, b.y)); } });
         bs.forEach(b => { if (!b.r || b === drag || !azuis.length) return; let t = null, d = 1e9; azuis.forEach(z => { const dd = Math.hypot(z.x - b.x, z.y - b.y); if (dd < d) { d = dd; t = z; } }); b.x += (t.x - b.x) / d * V * dt; b.y += (t.y - b.y) / d * V * dt; });
         bs.forEach(b => { if (!b.r) return; azuis.forEach(z => { if (!z.r && Math.hypot(z.x - b.x, z.y - b.y) < R * 1.8) { z.r = true; SND.play('lose'); } }); });
         g.clearRect(0, 0, W, H); bs.forEach(b => { g.beginPath(); g.arc(b.x, b.y, R, 0, 7); g.fillStyle = b.r ? '#ff3b4f' : '#4cc3ff'; g.shadowColor = g.fillStyle; g.shadowBlur = b === drag ? 18 : 8; g.fill(); }); g.shadowBlur = 0;
@@ -158,23 +191,23 @@
     },
     // 8. cofre: mastermind 4 de 6, 6 tentativas
     cofre(body, c, fim) {
-      const SYM = ['●', '▲', '■', '◆', '★', '✚'], COR = ['#ff8a5c', '#6cc6ff', '#c58cff', '#7dffb0', '#ffd25f', '#ff7ab0'], codigo = Array.from({ length: 4 }, () => rnd(6)); let tent = [], atual = [null, null, null, null], fixo = [false, false, false, false];
-      const pinta = () => { body.innerHTML = `<p class="mg-q">Tentativa ${tent.length + 1}/6</p><div class="mg-hist">${tent.map(t => `<div class="mg-linha">${t.g.map(s => `<i style="color:${COR[s]}">${SYM[s]}</i>`).join('')}<span>${'●'.repeat(t.p)}<em>${'○'.repeat(t.q)}</em></span></div>`).join('')}</div>
+      const SYM = ['●', '▲', '■', '◆', '★', '✚'], COR = ['#ff8a5c', '#6cc6ff', '#c58cff', '#7dffb0', '#ffd25f', '#ff7ab0'], codigo = Array.from({ length: 4 }, () => rnd(6)); let tent = [], atual = [null, null, null, null], fixo = [false, false, false, false], left = Math.round(110 / c.dif), acabou = false; const tmC = setInterval(() => { if (acabou) return; left--; const t = $('#cft', body); if (t) t.textContent = left; if (left <= 0) { acabou = true; clearInterval(tmC); fim(0, 'Tempo esgotado: o código era ' + codigo.map(s => SYM[s]).join(' ')); } }, 1000);
+      const pinta = () => { body.innerHTML = `<p class="mg-q">Tentativa ${tent.length + 1}/6 · <span id="cft">${left}</span> s</p><div class="mg-hist">${tent.map(t => `<div class="mg-linha">${t.g.map(s => `<i style="color:${COR[s]}">${SYM[s]}</i>`).join('')}<span>${'●'.repeat(t.p)}<em>${'○'.repeat(t.q)}</em></span></div>`).join('')}</div>
         <div class="mg-linha cur">${[0, 1, 2, 3].map(i => `<i data-i="${i}" style="color:${atual[i] != null ? COR[atual[i]] : '#888'}${fixo[i] ? ';text-shadow:0 0 10px currentColor' : ''}">${atual[i] != null ? SYM[atual[i]] : '_'}</i>`).join('')}</div>
         <div class="mg-btns">${SYM.map((s, i) => `<button class="btn" data-s="${i}" style="color:${COR[i]}">${s}</button>`).join('')}</div><div class="mg-btns"><button class="btn" data-a="del">Apagar</button><button class="btn primary" data-a="ok" ${atual.every(x => x != null) ? '' : 'disabled'}>Testar</button></div><p class="hint">● lugar certo · ○ símbolo certo no lugar errado</p>`; };
-      body.onclick = e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.s != null) { const k = atual.findIndex((x, i) => x == null && !fixo[i]); if (k >= 0) atual[k] = +b.dataset.s; } else if (b.dataset.a === 'del') { for (let i = 3; i >= 0; i--) if (atual[i] != null && !fixo[i]) { atual[i] = null; break; } } else if (b.dataset.a === 'ok' && atual.every(x => x != null)) {
+      body.onclick = e => { const b = e.target.closest('button'); if (!b || acabou) return; if (b.dataset.s != null) { const k = atual.findIndex((x, i) => x == null && !fixo[i]); if (k >= 0) atual[k] = +b.dataset.s; } else if (b.dataset.a === 'del') { for (let i = 3; i >= 0; i--) if (atual[i] != null && !fixo[i]) { atual[i] = null; break; } } else if (b.dataset.a === 'ok' && atual.every(x => x != null)) {
           const p = atual.filter((s, i) => s === codigo[i]).length; const rest = codigo.filter((s, i) => s !== atual[i]), usadas = atual.filter((s, i) => s !== codigo[i]); let q = 0; usadas.forEach(s => { const k = rest.indexOf(s); if (k >= 0) { q++; rest.splice(k, 1); } });
-          tent.push({ g: atual.slice(), p, q }); SND.play(p === 4 ? 'win' : 'tick'); if (p === 4) return fim((7 - tent.length) / 6, 'Aberto na tentativa ' + tent.length); if (tent.length >= 6) return fim(0, 'O código era ' + codigo.map(s => SYM[s]).join(' '));
+          tent.push({ g: atual.slice(), p, q }); SND.play(p === 4 ? 'win' : 'tick'); if (p === 4) { acabou = true; clearInterval(tmC); return fim((7 - tent.length) / 6, 'Aberto na tentativa ' + tent.length); } if (tent.length >= 6) { acabou = true; clearInterval(tmC); return fim(0, 'O código era ' + codigo.map(s => SYM[s]).join(' ')); }
           fixo = atual.map((x, i) => x === codigo[i]); atual = atual.map((x, i) => fixo[i] ? x : null); } SND.play('tick'); pinta(); };
-      pinta();
+      pinta(); return () => { acabou = true; clearInterval(tmC); };
     },
     // 9. sequência de sons: 4 instrumentos, cada rodada soma um som
     caracoroa(body, c, fim) {
-      const COR = ['#ff8a5c', '#6cc6ff', '#7dffb0', '#ffd25f'], NOTA = [261.6, 329.6, 392, 523.3], NOME = ['Flauta', 'Harpa', 'Sino', 'Tambor']; const MAX = 8;
+      const COR = ['#ff8a5c', '#6cc6ff', '#7dffb0', '#ffd25f'], NOTA = [261.6, 329.6, 392, 523.3], NOME = ['', '', '', '']; const MAX = 8;
       let ctx = null; const tom = (i, ms) => { try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(), gn = ctx.createGain(); o.type = ['triangle', 'sine', 'square', 'sawtooth'][i]; o.frequency.value = NOTA[i]; gn.gain.setValueAtTime(.0001, ctx.currentTime); gn.gain.exponentialRampToValueAtTime(.18, ctx.currentTime + .02); gn.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + ms / 1000); o.connect(gn); gn.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + ms / 1000 + .05); } catch (e) { } };
       let seq = [], pos = 0, vez = false, feitas = 0;
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3 sq" id="el"></div>`; const q = $('#mq', body), g = $('#el', body); g.style.gridTemplateColumns = 'repeat(2, 120px)';
-      NOME.forEach((n, i) => { g.append(mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]};height:110px">${n}</button>`)); });
+      NOME.forEach((n, i) => { g.append(mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]};height:110px;background:${COR[i]}26">${n}</button>`)); });
       const acende = async i => { const b = g.children[i]; b.classList.add('on'); tom(i, 380 / c.dif); await wait(400 / c.dif); b.classList.remove('on'); await wait(160 / c.dif); };
       const nova = async () => { vez = false; seq.push(rnd(4)); pos = 0; q.textContent = 'Rodada ' + seq.length + '/' + MAX + ': ouça'; await wait(700); for (const i of seq) await acende(i); q.textContent = 'Sua vez'; vez = true; };
       g.onclick = async e => { const b = e.target.closest('.elo'); if (!b || !vez) return; const i = +b.dataset.i; acende(i);
@@ -182,15 +215,21 @@
         pos++; if (pos === seq.length) { vez = false; feitas++; SND.play('capture'); await wait(700); if (feitas >= MAX) return fim(1, 'Todas as rodadas'); nova(); } };
       nova();
     },
-    // 10. raspadinha: resultado sorteado (sorte calibrável por dif: >1 = mais difícil)
+    // 11. Relâmpago dimensional (antiga raspadinha): três cartas viram e desviram rápido; uma dá +1, uma tira 1, uma nada. Toque o +1 o máximo de vezes
     raspadinha(body, c, fim) {
-      const SY = ['◆', '●', '▲', '★']; const pesos = [.4 * c.dif, .38, .17 / c.dif, .05 / c.dif], tot = pesos.reduce((a, b) => a + b, 0); let r = Math.random() * tot, tier = 0; for (let i = 0; i < 4; i++) { if (r < pesos[i]) { tier = i; break; } r -= pesos[i]; }
-      const seq = tier === 3 ? ['★', '★', '★'] : tier === 2 ? ['●', '●', '●'] : tier === 1 ? shuffle(['▲', '▲', '◆']) : shuffle(['◆', '●', '▲']); const cells = shuffle([0, 1, 2, 3, 4, 5]); let k = 0, abertas = 0;
-      body.innerHTML = `<p class="mg-q" id="mq">Raspe 3 quadrados</p><div class="mg-grid g3"></div>`; const g = $('.mg-grid', body); const fill = Array.from({ length: 6 }, () => pick(SY));
-      cells.forEach((cellIdx, ord) => { }); for (let i = 0; i < 6; i++) { const b = mk('<button class="mg-cell scr">?</button>'); b.dataset.i = i; g.append(b); }
-      g.onclick = async e => { const b = e.target.closest('.mg-cell'); if (!b || b.classList.contains('open') || abertas >= 3) return; b.classList.add('open'); b.textContent = seq[abertas]; abertas++; SND.play('tick');
-        if (abertas === 3) { await wait(500); $$all(g).forEach(x => { if (!x.classList.contains('open')) { x.classList.add('open', 'dim'); x.textContent = pick(SY); } }); await wait(1000); fim([0, .4, .7, 1][tier], seq.join(' ')); } };
-      const $$all = g => Array.from(g.children);
+      const T = Math.round(22 / c.dif), META = 16; let pts = 0, left = T, acabou = false, aberta = false, tocou = false, rodada = 0, tipos = [];
+      body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3"></div>`; const g = $('.mg-grid', body), mq = $('#mq', body);
+      const txt = () => { mq.innerHTML = 'Pontos: <b>' + pts + '</b> · ' + left + ' s'; }; txt();
+      for (let i = 0; i < 3; i++) { const b = mk('<button class="mg-cell scr">?</button>'); b.dataset.i = i; b.style.height = '110px'; g.append(b); }
+      const tm = setInterval(() => { if (acabou) return; left--; txt(); if (left <= 0) { acabou = true; clearInterval(tm); fim(pts / META, pts + ' pontos'); } }, 1000);
+      g.onclick = e => { const b = e.target.closest('.mg-cell'); if (!b || acabou || !aberta || tocou) return; tocou = true; const t = tipos[+b.dataset.i];
+        if (t === 'mais') { pts++; SND.play('capture'); b.classList.add('rl-mais'); } else if (t === 'menos') { pts = Math.max(0, pts - 1); SND.play('lose'); b.classList.add('rl-menos'); } else SND.play('tick'); txt(); };
+      (async () => { await wait(700); while (!acabou) {
+        rodada++; tipos = shuffle(['mais', 'nada', 'menos']); tocou = false; const dur = Math.max(300, 700 - rodada * 12) / c.dif;
+        [...g.children].forEach((b, i) => { b.classList.remove('rl-mais', 'rl-menos'); b.classList.add('open'); b.textContent = tipos[i] === 'mais' ? '+1' : tipos[i] === 'menos' ? '−1' : '·'; b.dataset.t = tipos[i]; });
+        aberta = true; SND.play('flip'); await wait(dur); aberta = false;
+        [...g.children].forEach(b => { b.classList.remove('open', 'rl-mais', 'rl-menos'); b.textContent = '?'; }); await wait(Math.max(160, 320 - rodada * 5) / c.dif); } })();
+      return () => { acabou = true; clearInterval(tm); };
     },
     // 12. caça ao pêndulo: escuro, luz segue o dedo, 25 s
     cacapendulo(body, c, fim) {
@@ -199,8 +238,8 @@
       const mover = e => { const r = cv.getBoundingClientRect(); mx = (e.clientX - r.left) * W / r.width; my = (e.clientY - r.top) * H / r.height; }; cv.style.touchAction = 'none'; cv.addEventListener('pointermove', mover);
       cv.addEventListener('pointerdown', e => { mover(e); for (let i = moedas.length - 1; i >= 0; i--) { const o = moedas[i]; if (Math.hypot(o.x - mx, o.y - my) < R && Math.hypot(o.x - mx, o.y - my) < 26 + o.r) { moedas.splice(i, 1); pegos++; SND.play('bauCoin'); break; } } });
       const fin = () => { if (acabou) return; acabou = true; fim(pegos / META, pegos + ' pêndulos'); };
-      const loop = ts => { const dt = Math.min(.05, (ts - last) / 1000 || 0); last = ts; t += dt; if (Math.random() < dt * 1.5 * c.dif) { const y = 20 + Math.random() * (H - 40), d = Math.random() < .5 ? 1 : -1; moedas.push({ x: d > 0 ? -12 : W + 12, y, vx: d * (90 + Math.random() * 90) * c.dif, r: 12 }); }
-        g.fillStyle = '#000'; g.fillRect(0, 0, W, H); moedas.forEach(o => { o.x += o.vx * dt; }); for (let i = moedas.length - 1; i >= 0; i--) if (moedas[i].x < -30 || moedas[i].x > W + 30) moedas.splice(i, 1);
+      const loop = ts => { const dt = Math.min(.05, (ts - last) / 1000 || 0); last = ts; t += dt; if (Math.random() < dt * 1.5 * c.dif) { const e = Math.floor(Math.random() * 4), x0 = e === 0 ? -12 : e === 1 ? W + 12 : Math.random() * W, y0 = e === 2 ? -12 : e === 3 ? H + 12 : Math.random() * H, ang = Math.atan2(H * (.2 + Math.random() * .6) - y0, W * (.2 + Math.random() * .6) - x0), v = (80 + Math.random() * 100) * c.dif; moedas.push({ x: x0, y: y0, vx: Math.cos(ang) * v, vy: Math.sin(ang) * v, r: 12 }); }
+        g.fillStyle = '#000'; g.fillRect(0, 0, W, H); moedas.forEach(o => { o.x += o.vx * dt; o.y += o.vy * dt; }); for (let i = moedas.length - 1; i >= 0; i--) if (moedas[i].x < -40 || moedas[i].x > W + 40 || moedas[i].y < -40 || moedas[i].y > H + 40) moedas.splice(i, 1);
         g.save(); g.beginPath(); g.arc(mx, my, R, 0, 7); g.clip(); const gr = g.createRadialGradient(mx, my, 10, mx, my, R); gr.addColorStop(0, '#2b2260'); gr.addColorStop(1, '#0a0820'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
         moedas.forEach(o => { g.beginPath(); g.fillStyle = '#ff5a4f'; g.arc(o.x, o.y, o.r, 0, 7); g.fill(); g.fillStyle = '#0a0820'; g.beginPath(); g.arc(o.x, o.y, 4, 0, 7); g.fill(); }); g.restore();
         g.strokeStyle = '#ffffff44'; g.beginPath(); g.arc(mx, my, R, 0, 7); g.stroke(); g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Pêndulos ' + pegos + '   ' + Math.max(0, Math.ceil(T - t)) + 's', 10, 20); if (t >= T) return fin(); raf = requestAnimationFrame(loop); };
@@ -210,18 +249,25 @@
 
   // ---------------- minigames por série
   Object.assign(GAMES, {
-    // Diário Sobrenatural: Simon com os seis sentidos (5 rodadas, 3 a 7 elos)
+    // Diário Sobrenatural: Sussurro dos Elos — tela escura, segure o dedo e ouça: quanto mais perto do Elo, mais alto (mas sutil) o som. Toque duas vezes para confirmar
     elos(body, c, fim) {
-      const NOMES = ['Visão', 'Audição', 'Olfato', 'Paladar', 'Tato', 'Intuição'], COR = ['#6cc6ff', '#ffd25f', '#7dffb0', '#ff8a5c', '#c58cff', '#ff7ab0'], SOM = ['click', 'tick', 'flip', 'deal', 'place', 'reveal'];
-      let rodada = 0, seq = [], pos = 0, vez = false, ok = 0; const R = 5;
-      body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3" id="el"></div>`; const q = $('#mq', body), g = $('#el', body);
-      NOMES.forEach((n, i) => { const b = mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]}">${n}</button>`); g.append(b); });
-      const acende = async i => { const b = g.children[i]; b.classList.add('on'); SND.play(SOM[i]); await wait(380 / c.dif); b.classList.remove('on'); await wait(150 / c.dif); };
-      const nova = async () => { vez = false; seq = Array.from({ length: 3 + rodada }, () => rnd(6)); pos = 0; q.textContent = 'Rodada ' + (rodada + 1) + '/' + R + ': observe'; await wait(700); for (const i of seq) await acende(i); q.textContent = 'Sua vez'; vez = true; };
-      g.onclick = async e => { const b = e.target.closest('.elo'); if (!b || !vez) return; const i = +b.dataset.i; acende(i);
-        if (i !== seq[pos]) { vez = false; SND.play('lose'); q.textContent = 'Errou!'; await wait(900); return fim(ok / R, ok + ' de ' + R + ' sequências'); }
-        pos++; if (pos === seq.length) { vez = false; ok++; rodada++; SND.play('capture'); await wait(700); if (rodada >= R) return fim(1, 'Todas as sequências'); nova(); } };
-      nova();
+      const R = 5, LIM = Math.round(30 / c.dif), HIT = 46 / Math.max(.7, c.dif); let rodada = 0, pts = 0, acabou = false, travado = false, left = LIM, tm = 0, alvo = null, seg = false, ult = null, tap = null, last = null, rev = null;
+      const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 440, g = cv.getContext('2d'), MAXD = Math.hypot(W, H) * .8;
+      let ctx = null, osc = null, gn = null;
+      const som = on => { try { if (on && !osc) { ctx = ctx || SND.ctx || new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === 'suspended') ctx.resume(); osc = ctx.createOscillator(); gn = ctx.createGain(); osc.type = 'sine'; osc.frequency.value = 170; gn.gain.value = 0; osc.connect(gn); gn.connect(ctx.destination); osc.start(); } else if (!on && osc) { gn.gain.setTargetAtTime(0, ctx.currentTime, .03); const o = osc; osc = null; setTimeout(() => { try { o.stop(); } catch (e) { } }, 160); } } catch (e) { } };
+      const ajusta = p => { if (!osc) return; const cl = Math.max(0, 1 - Math.hypot(p.x - alvo.x, p.y - alvo.y) / MAXD); try { osc.frequency.setTargetAtTime(150 + cl * 70, ctx.currentTime, .05); gn.gain.setTargetAtTime(.004 + .05 * cl * cl, ctx.currentTime, .05); } catch (e) { } };
+      const nova = () => { alvo = { x: 40 + Math.random() * (W - 80), y: 50 + Math.random() * (H - 100) }; left = LIM; travado = false; rev = null; tap = null; desenha(); };
+      const desenha = () => { g.fillStyle = '#020108'; g.fillRect(0, 0, W, H); g.fillStyle = '#ffffff55'; g.font = '700 13px system-ui'; g.fillText('Elo ' + (rodada + 1) + '/' + R + ' · ' + left + ' s', 10, 20); g.fillStyle = '#ffffff30'; g.font = '12px system-ui'; g.fillText('segure o dedo e ouça · toque 2 vezes para confirmar', 10, H - 12);
+        if (ult && seg) { g.beginPath(); g.arc(ult.x, ult.y, 10, 0, 7); g.fillStyle = '#ffffff14'; g.fill(); }
+        if (rev) { g.beginPath(); g.arc(alvo.x, alvo.y, 14, 0, 7); g.strokeStyle = rev.ok ? '#7dffb0' : '#ff5a4f'; g.lineWidth = 3; g.stroke(); g.beginPath(); g.arc(alvo.x, alvo.y, HIT, 0, 7); g.lineWidth = 1; g.strokeStyle = '#ffffff44'; g.stroke(); if (rev.p) { g.beginPath(); g.arc(rev.p.x, rev.p.y, 5, 0, 7); g.fillStyle = '#fff'; g.fill(); } } };
+      const confirma = async p => { if (travado || acabou) return; travado = true; som(false); const d = Math.hypot(p.x - alvo.x, p.y - alvo.y), ok = d <= HIT, v = ok ? 1 - .5 * (d / HIT) : 0; pts += v; rev = { ok, p }; SND.play(ok ? 'capture' : 'lose'); desenha(); await wait(1300); if (acabou) return; rodada++; if (rodada >= R) { acabou = true; clearInterval(tm); return fim(pts / R, Math.round(pts * 10) / 10 + ' de ' + R + ' pontos'); } nova(); };
+      const pos = e => { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; };
+      cv.style.touchAction = 'none';
+      cv.onpointerdown = e => { if (travado || acabou) return; cv.setPointerCapture(e.pointerId); const p = pos(e); seg = true; ult = p; last = { t: Date.now(), p, moved: false }; som(true); ajusta(p); desenha(); };
+      cv.onpointermove = e => { if (!seg || travado) return; const p = pos(e); ult = p; if (last && Math.hypot(p.x - last.p.x, p.y - last.p.y) > 12) last.moved = true; ajusta(p); desenha(); };
+      cv.onpointerup = cv.onpointercancel = e => { if (!seg) return; seg = false; som(false); const now = Date.now(); if (last && !last.moved && now - last.t < 260) { if (tap && now - tap.t < 550 && Math.hypot(tap.p.x - last.p.x, tap.p.y - last.p.y) < 32) { const p = last.p; tap = null; confirma(p); } else tap = { t: now, p: last.p }; } desenha(); };
+      tm = setInterval(() => { if (acabou || travado) return; left--; desenha(); if (left <= 0) { travado = true; som(false); rev = { ok: false, p: null }; desenha(); SND.play('lose'); setTimeout(async () => { if (acabou) return; rodada++; if (rodada >= R) { acabou = true; clearInterval(tm); return fim(pts / R, Math.round(pts * 10) / 10 + ' de ' + R + ' pontos'); } nova(); }, 1300); } }, 1000);
+      nova(); return () => { acabou = true; clearInterval(tm); som(false); };
     },
     // Ciclo de Jesed: duas luas, alinhar (5 toques)
     luas(body, c, fim) {

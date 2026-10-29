@@ -1711,3 +1711,11 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .loja-x .loja-pr svg.cr{width:14px;height:17px}
 .col-frag{grid-template-columns:48px;justify-content:center}
 .loja-x .lx-txt{display:block;font-size:11px;opacity:.75;text-align:center;margin-top:2px;max-width:110px}
+/* minigames: Fragmentos de Rosto, Dança das Cartas, Relâmpago */
+.mg-fragbox { width: 150px; height: 200px; margin: 0 auto; background: #05030f; border: 2px solid #ffffff33; border-radius: 12px; overflow: hidden; display: block; position: relative; }
+.mg-frag { background-size: cover; background-position: center top; filter: brightness(.38) contrast(1.15); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; position: absolute; inset: 0; margin: auto; }
+.mg-dance { position: relative; margin: 14px auto; }
+.mg-dc { position: absolute; left: 0; top: 0; padding: 0; border: 2px solid transparent; border-radius: 10px; background: none; cursor: pointer; }
+.mg-dc.mark { border-color: #ffd25f; box-shadow: 0 0 18px #ffd25f; }
+.mg-cell.scr.rl-mais { background: #1f7a45; border-color: #7dffb0; color: #eafff2; } .mg-cell.scr.rl-menos { background: #7a1f2b; border-color: #ff5a4f; color: #fff; }
+.mg-cell.scr.open { font-size: 30px; }
