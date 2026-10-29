@@ -6,9 +6,9 @@ Criadas a pedido do autor. **Todas são PROPOSTAS aguardando aprovação**: atri
 |---|---|---|---|---|---|---|---|---|---|
 | J24 | Litara | 34 | 58 | 62 | 71 | 225 | Modesta | AE-087 Reabastecimento da reserva | comum |
 | J25 | Alveris Polar | 45 | 63 | 93 | 53 | 254 | Padrão | AE-035 Saque livre | lendária |
-| J26 | Sumo Vigia | 40 | 87 | 99 | 29 | 255 | Padrão | AE-023 Par mental | lendária |
+| J26 | Sumo Vigia | 40 | 99 | 87 | 29 | 255 | Padrão | AE-023 Par mental | lendária |
 | J27 | Tair Nular | 22 | 48 | 76 | 44 | 190 | Modesta | AE-118 Blindagem de especial | comum |
-| J28 | Kalan Nular | 65 | 68 | 60 | 63 | 256 | Padrão | AE-090 Segunda chance | comum |
+| J28 | Kalan Nular | 52 | 86 | 56 | 62 | 256 | Padrão | AE-090 Segunda chance | comum |
 | J29 | Orel Nular | 30 | 44 | 28 | 52 | 154 | Frágil | AE-071 Ausência tática | comum |
 | J30 | Kharvok | 86 | 72 | 52 | 58 | 268 | Padrão | AE-134 Cortar o par | rara |
 | J31 | Orionus Polar | 67 | 73 | 95 | 53 | 288 | Forte | AE-039 Saque revelado | lendária |
@@ -17,7 +17,7 @@ Criadas a pedido do autor. **Todas são PROPOSTAS aguardando aprovação**: atri
 | J34 | Efepar | 40 | 48 | 60 | 79 | 227 | Modesta | AE-114 Desvio de alvo | rara |
 | J35 | Liri | 12 | 30 | 52 | 61 | 155 | Frágil | AE-076 Guardião do baralho | comum |
 | J36 | Professor Taliver | 20 | 52 | 90 | 36 | 198 | Modesta | AE-120 Remover alteração | rara |
-| J37 | Yndra | 34 | 64 | 92 | 39 | 229 | Modesta | AE-089 Sacrifício por três | épica |
+| J37 | Yndra | 34 | 92 | 64 | 39 | 229 | Modesta | AE-089 Sacrifício por três | épica |
 
 **Atenção:** a raridade é calculada por posição de poder dentro da série. Jesed passou de 23 para 37 cartas e ficou com 7 lendárias (antes 3), 5 épicas, 12 raras e 13 comuns; nenhuma carta antiga mudou de raridade. Se quiser menos lendárias, ajuste os atributos de pico (INT acima de 90, Raukhar com FOR 98).
 

@@ -661,8 +661,8 @@
       "descricao_curta": "Autoridade máxima da Raiz, muito velho e lúcido; o rosto coberto pela tinta ritual da Permanência.",
       "atributos": {
         "FOR": 40,
-        "RES": 87,
-        "INT": 99,
+        "RES": 99,
+        "INT": 87,
         "VEL": 29
       },
       "soma_atributos": 255,
@@ -708,10 +708,10 @@
       },
       "descricao_curta": "Irmão mais velho de Elis; trabalha na Balança Azul, protege os seus e decide sozinho o que devem saber.",
       "atributos": {
-        "FOR": 65,
-        "RES": 68,
-        "INT": 60,
-        "VEL": 63
+        "FOR": 52,
+        "RES": 86,
+        "INT": 56,
+        "VEL": 62
       },
       "soma_atributos": 256,
       "perfil_balanceamento": "Padrão",
@@ -925,8 +925,8 @@
       "descricao_curta": "Mulher de um olho julgada por heresia e invasão de áreas sagradas; voz profética ligada ao exílio de Etérea.",
       "atributos": {
         "FOR": 34,
-        "RES": 64,
-        "INT": 92,
+        "RES": 92,
+        "INT": 64,
         "VEL": 39
       },
       "soma_atributos": 229,
