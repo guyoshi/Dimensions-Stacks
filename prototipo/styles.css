@@ -1681,3 +1681,4 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .sy-s svg { filter: invert(1) brightness(1.4); }
 .sy-s.neg::after { content: '−'; position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: #ff3b52; color: #fff; font: 800 15px/20px var(--f-disp); text-align: center; }
 .loja-off { font-style: normal; font-size: 11px; font-weight: 800; color: #7dffb0; margin-left: 2px; }
+.hs-rec { display: flex; align-items: center; gap: 6px; margin: 4px 0; color: var(--gold2, #fff1d4); } .hs-rec b { font-family: var(--f-disp); color: var(--gold, #ffc46b); }
