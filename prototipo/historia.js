@@ -361,7 +361,8 @@
     sheet.innerHTML = c.html; sheet.hidden = false; ensureVisible(c.pt);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'conv') NPC.falar(id); };
   }
-  const refrescaCasa = () => { if (casa && sheet && !sheet.hidden && curId === 'casa') abrirCasa(casa); };
+  let refr = false;
+  const refrescaCasa = () => { if (refr || !casa || !sheet || sheet.hidden || curId !== 'casa') return; refr = true; try { const c = NPC.casaSheet(casa); if (c) sheet.innerHTML = c.html; } finally { refr = false; } };   // só troca o conteúdo do painel (sem reabrir: evita laço com paint)
   async function andar(to) {
     if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
     andando = true; closeSheet(); const red = document.body.classList.contains('reduce');

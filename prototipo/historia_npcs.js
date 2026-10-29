@@ -135,7 +135,7 @@
     const cx = (a.x + b.x) / 2 - dy / len * off, cy = (a.y + b.y) / 2 + dx / len * off;
     return { x: .25 * a.x + .5 * cx + .25 * b.x, y: .25 * a.y + .5 * cy + .25 * b.y };
   }
-  const curto = n => { const m = n.nome.match(/^(Sra\.|Dra\.|Dr\.|Capitão|Capitã|Professor|Tio|Agente)\s+(\S+)/); return m ? m[1] + ' ' + m[2] : curto(n); };
+  const curto = n => { const m = n.nome.match(/^(Sra\.|Dra\.|Dr\.|Capitão|Capitã|Professor|Tio|Agente)\s+(\S+)/); return m ? m[1] + ' ' + m[2] : n.nome.split(' ')[0]; };
   const ini1 = n => n.nome.replace(/^(Sra\.|Dra\.|Capitão|Capitã|Professor|Tio|Agente)\s+/, '')[0].toUpperCase();
   // O marcador fica sobre uma ligação, mas o NPC mora no segundo ponto dela.
   // Assim, uma missão não pode ser iniciada pelo lado anterior do caminho.
