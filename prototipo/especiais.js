@@ -25,7 +25,7 @@
     const pctOf = (e, list) => Math.max(...list.map(a => api.pct(a, e.stats[a])));
     const ctrlU = p => Math.max(0.03, Math.min(0.85, (p - 0.5) * 2));
     const needMem = (g, p) => g.alive().some(o => o !== p.pid && g.p(o).deck.length > 0 && g.memKnown(p, o).length < 2);
-    const MEANSUM = (() => { const l = Object.keys(CARDS); return l.reduce((t, id) => t + sum(id), 0) / l.length; })();
+    const MEANSUM = (() => { const l = Object.keys(CARDS).filter(id => CARDS[id].raridade !== 'quasar'); return l.reduce((t, id) => t + sum(id), 0) / l.length; })();
     const bhAvg = ctx => avgSum(ctx.bhNormal());
     const clamp01 = x => Math.max(0.03, Math.min(0.85, x));
     // ganho em "cartas médias" de um resgate: o que volta menos o que se gasta (a carta do especial, mais o que for sacrificado)
