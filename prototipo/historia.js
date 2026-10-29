@@ -446,7 +446,10 @@
   // DIFICULDADE DA CPU (autor, 29/10): sobe de forma contínua com as batalhas vencidas, em todos os tipos de ponto; as cartas de cada inimigo são fixas, só a atenção/erros da CPU mudam.
   // 0 = Fácil (erra bastante), 0,5 = Normal, 1 = Difícil. A rota mínima até os quatro Guardiões pede 30–32 vitórias (31 = marco): ali a CPU já está em ~0,85; depois sobe até 1 por volta de 46.
   const MARCO_GUARDIOES = 31, OFF_NIVEL = { normal: 0, evento: .04, elite: .1, miniboss: .18 };
-  const nivelBot = n => { if (n.tipo === 'boss') return 1; const v = nBat(), b = v <= MARCO_GUARDIOES ? .85 * Math.pow(v / MARCO_GUARDIOES, 1.2) : .85 + .15 * Math.min(1, (v - MARCO_GUARDIOES) / 15); return n.tipo === 'guardiao' ? Math.max(.9, b) : Math.min(1, b + (OFF_NIVEL[n.tipo] || 0)); };
+  // AJUSTE PELA SUA FASE (autor, 29/10): quem perde muito recebe uma CPU mais branda. Guarda o resultado das últimas 8 batalhas (S.rec); a ajuda cresce com as derrotas na janela (acima de 2) e com a sequência de derrotas atual, até no máximo 0,45, e some sozinha conforme voltam as vitórias. Guardiões e Boss recebem só metade.
+  const ajudaDerrota = () => { const r = (S && S.rec) || []; if (r.length < 3) return 0; const L = r.filter(x => !x).length; let seq = 0; for (let k = r.length - 1; k >= 0 && !r[k]; k--) seq++; return Math.min(.45, .05 * Math.max(0, L - 2) + .06 * Math.max(0, seq - 1)); };
+  const regResultado = venceu => { S.rec = ((S.rec || []).concat(venceu ? 1 : 0)).slice(-8); };
+  const nivelBot = n => { const ajuda = ajudaDerrota() * (n.tipo === 'guardiao' || n.tipo === 'boss' ? .5 : 1); if (n.tipo === 'boss') return Math.max(0, 1 - ajuda); const v = nBat(), b = v <= MARCO_GUARDIOES ? .85 * Math.pow(v / MARCO_GUARDIOES, 1.2) : .85 + .15 * Math.min(1, (v - MARCO_GUARDIOES) / 15); return Math.max(0, (n.tipo === 'guardiao' ? Math.max(.9, b) : Math.min(1, b + (OFF_NIVEL[n.tipo] || 0))) - ajuda); };
   const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
   const premioBase = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
   const premioDe = n => Math.round(premioBase(n) * (NPC && NPC.tem('bolsa') ? 1.2 : 1));   // melhoria "Bolsa cheia": +20%
@@ -543,7 +546,7 @@
       const hist = { musica, id, fundo: ({ normal: 'normal', miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null, aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         SND.histLock = null; const ganhou = res.venceu && !cleared(id); try { if (ganhou) { SND.histStop(true); SND.histPlay('vitoria'); setTimeout(() => quandoLivre(() => { try { SND.histPlay('mapa'); } catch (e) { } }), 6000); } else SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
-        S.vistos = S.vistos || {}; S.vistos[id] = 1;
+        S.vistos = S.vistos || {}; S.vistos[id] = 1; regResultado(res.venceu);
         S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save();
         if (res.venceu && !cleared(id)) {
           if (S.mgLock && Object.keys(S.mgLock).length) { S.mgLock = {}; setTimeout(() => toast('Minigames desbloqueados'), 1800); }   // vencer uma batalha destrava os minigames em que você falhou
@@ -573,6 +576,7 @@
           aoFim: res => {
             if (res.venceu && F < 3) { setTimeout(() => lanca(F + 1), 200); return; }
             SND.histLock = null; try { SND.histStop(); } catch (e) { }
+            regResultado(res.venceu); save();
             voltarMapa = true; U.show('uniao');
             if (res.venceu && !cleared(id)) { setTimeout(() => toggleWin(id), 450); } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
           } };

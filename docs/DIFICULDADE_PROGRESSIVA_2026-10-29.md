@@ -26,3 +26,9 @@ Pedido do autor: o início estava difícil demais. A CPU deve errar mais no come
 | 6 | 40% | 50% |
 | 7 | 56% | 53% |
 (10–12 partidas por ponto; sem capturas nem cansaço; jogador humano iniciante tende a ir pior que a CPU normal.)
+
+## Ajuda para quem perde muito (adicionado em 29/10/2026)
+- O jogo guarda o resultado das últimas 8 batalhas (`S.rec`, vitória/derrota; no Boss conta só o resultado final).
+- Ajuda = 0,05 × (derrotas na janela − 2) + 0,06 × (derrotas seguidas atuais − 1), no máximo 0,45; só vale com 3 ou mais resultados. É subtraída do nível da CPU (nunca abaixo de 0). Guardiões e Boss recebem metade.
+- Exemplos: 2 derrotas seguidas 0,00 · 3 seguidas 0,17 · 4 seguidas 0,28 · 6 seguidas 0,45 · 4 derrotas alternadas 0,10 · 8 vitórias 0,00.
+- A ajuda some sozinha conforme as vitórias voltam. Não há nenhum aviso na tela.
