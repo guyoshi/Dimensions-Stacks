@@ -18,7 +18,7 @@ try:
     pg.goto('http://localhost:8777/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500)
     chk(pg.evaluate("document.querySelector('#nav').hidden") is True, 'barra inferior oculta no modo história')
-    chk(pg.evaluate("document.querySelector('[data-a=cont]').disabled") is True, 'Continuar desativado sem jornada salva')
+    chk(pg.evaluate("!document.querySelector('[data-a=cont]')"), 'sem Continuar sem jornada salva')
     pg.screenshot(path=shots + '/hist_hub.png')
     pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1500)
     n = pg.evaluate("document.querySelectorAll('.n').length"); e = pg.evaluate("document.querySelectorAll('.hs-edges .e').length")
@@ -38,9 +38,9 @@ try:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
         bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
-        pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(1500)
+        pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(3500)
         if gi == 0: chk('Besta' in pg.evaluate("document.querySelector('#hsToast').textContent"), 'ao derrotar guardião a Besta é atingida (aviso do bônus)')
-        pg.wait_for_timeout(3000)
+        pg.evaluate("document.querySelectorAll('.npc,.bau-ov,.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(500)
     pg.wait_for_timeout(600)
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None

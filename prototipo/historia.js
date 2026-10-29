@@ -7,7 +7,7 @@
   const U = window.DSUI, M = window.DS_MAPA;
   if (!U || !M) return;
   const { $, $$, el, esc, SND } = U;
-  const KEY = 'dsstacks.historia', PKEY = 'dsstacks.historia.prefs';
+  const KEY0 = 'dsstacks.historia', kSlot = n => n > 1 ? KEY0 + '.' + n : KEY0, PKEY = 'dsstacks.historia.prefs';
   const rd = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } };
   const wr = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } };
 
@@ -52,7 +52,7 @@
     return S.guardas[id];
   }
   // cada arauto (tipo 'miniboss') prende um membro da União; vencê-lo o liberta e abre o minigame do setor/série
-  const EXC = new Set(['S11', 'V26']);   // fora de decks inimigos, baús, lojas, capturas e mão inicial: a Besta só no Boss; Átila só como recompensa final da cadeia de NPCs
+  const EXC = new Set(['S11', 'V26', 'J30']);   // fora de decks inimigos, baús, lojas, capturas e mão inicial: a Besta só no Boss; Átila só como recompensa final da cadeia de NPCs
   const LIBERTA = { B059: 'D06', B062: 'M01', B066: 'J03', B080: 'B01', B072: 'S01', B064: 'M10', B057: 'V15', B078: 'V02' };
   const MINIS = Object.keys(LIBERTA), UNIAO = Object.values(LIBERTA);
   // deixa o mapa menos redondo e mais orgânico: deformação suave por ângulo + pequeno desvio por ponto (determinístico; ids e ligações não mudam)
@@ -72,10 +72,11 @@
   let lastVis = null;
 
   let S = null;                                   // jornada salva (ou null)
-  let P = Object.assign({ aberto: false, escuro: true }, rd(PKEY, {}));   // preferências (mapa aberto = modo teste, desligado por padrão: só se avança vencendo)
+  let P = Object.assign({ aberto: false, escuro: true, slot: 1 }, rd(PKEY, {}));   // preferências (mapa aberto = modo teste, desligado por padrão: só se avança vencendo)
   if (P.v2 !== 1) { P.aberto = false; P.v2 = 1; try { wr(PKEY, P); } catch (e) { } }   // migração: o mapa aberto (teste) passa a vir desligado
-  const save = () => { if (S) wr(KEY, S); wr(PKEY, P); };
-  const load = () => { const s = rd(KEY, null); S = s && s.v === 1 && BY[s.startId] ? s : null; return S; };
+  const save = () => { if (S) wr(kSlot(P.slot), S); wr(PKEY, P); };   // 3 saves: o 1 usa a chave antiga
+  const slotOk = n => { const s = rd(kSlot(n), null); return s && s.v === 1 && BY[s.startId] ? s : null; };
+  const load = () => { const s = rd(kSlot(P.slot), null); S = s && s.v === 1 && BY[s.startId] ? s : null; return S; };
 
   // ---------------------------------------------------------------- regras do mapa
   const cleared = id => !!(S && S.cleared[id]);
@@ -161,17 +162,22 @@
     if (voltarMapa && S) { voltarMapa = false; openMap(); return; }
     view = 'hub'; load(); try { if (SND.histNow) SND.histStop(); } catch (e) { }   // tela inicial: volta a música normal do menu
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
-    const c = S;
+    const linhas = [1, 2, 3].map(n => { const s = slotOk(n), nb = s ? Object.keys(s.cleared || {}).length : 0;
+      return `<div class="hs-slot${s ? ' on' : ''}"><b>${n}</b>${s ? `<span class="hs-sn">${esc(s.nome || 'Viajante')}<small>${nb} / ${BATALHAS.length}</small></span><button class="btn primary" data-a="cont" data-s="${n}">Continuar</button><button class="btn ibtn" data-a="del" data-s="${n}" aria-label="Apagar save ${n}">✕</button>` : `<span class="hs-sn"><small>Vazio</small></span><button class="btn primary" data-a="novo" data-s="${n}">Novo jogo</button>`}</div>`; }).join('');
     h.innerHTML = `      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
-      <div class="hs-hubin"><div class="hs-seal"></div><h1>A União</h1>
-        <div class="hs-btns"><button class="btn primary big" data-a="novo">Novo jogo</button>
-        <button class="btn big" data-a="cont" ${c ? '' : 'disabled'}>Continuar${c ? `<small>${nBat()} / ${BATALHAS.length}</small>` : ''}</button></div></div>`;
+      <div class="hs-hubin"><div class="hs-seal"></div><h1>A União</h1><div class="hs-slots">${linhas}</div></div>`;
     h.onclick = e => {
-      const b = e.target.closest('[data-a]'); if (!b || b.disabled) return; SND.init(); SND.play('click');
+      const b = e.target.closest('[data-a]'); if (!b || b.disabled) return; SND.init(); SND.play('click'); const n = +b.dataset.s || 1;
       if (b.dataset.a === 'sair') U.show('menu');
-      else if (b.dataset.a === 'cont') openMap(false, false, true);
-      else if (b.dataset.a === 'novo') { if (S) confirmNovo(); else sortear(); }
+      else if (b.dataset.a === 'cont') { P.slot = n; save(); load(); openMap(false, false, true); }
+      else if (b.dataset.a === 'novo') { P.slot = n; S = null; sortear(); }
+      else if (b.dataset.a === 'del') confirmDel(n);
     };
+  }
+  function confirmDel(n) {
+    const box = el(`<div class="hs-conf"><h3>Apagar o save ${n}?</h3><p>O progresso será perdido.</p><div class="row"><button class="btn" data-a="n">Cancelar</button><button class="btn primary" data-a="s">Apagar</button></div></div>`);
+    const m = U.modal(box, { cls: 'hs-modal' });
+    box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); if (b.dataset.a === 's') { try { localStorage.removeItem(kSlot(n)); } catch (x) { } if (P.slot === n) S = null; hub(); } };
   }
   function confirmNovo() {
     const box = el(`<div class="hs-conf"><h3>Começar uma nova jornada?</h3><p>O progresso atual (${nBat()} batalhas vencidas) será apagado.</p><div class="row"><button class="btn" data-a="n">Cancelar</button><button class="btn primary" data-a="s">Nova jornada</button></div></div>`);
@@ -386,7 +392,7 @@
       if (primeira && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
       if (NPC) NPC.fragMini(n.mg, res.tier);
     } else if (primeira) S.mgLock[id] = 1;
-    let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
+    let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && x.raridade !== 'lendaria' && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
     save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
     if (cartaMg) { await new Promise(r => revelarCarta([cartaMg], r)); try { SND.histPlay('mapa'); } catch (e) { } }
     if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado até vencer a próxima batalha, ou pague ' + MG_CUSTO + ' pêndulos.'); openNode(id); } else openNode(id);
@@ -423,7 +429,7 @@
   // filtro de cartas (raridade, cansadas e série) usado em Minhas cartas e na escolha do time
   function filtros(onChange) {
     const st = { r: '', s: '' };
-    const bar = el(`<div class="hs-fil"><div class="hs-fr">${[['', 'Todas'], ['lendaria', 'Lend.'], ['epica', 'Épica'], ['rara', 'Rara'], ['comum', 'Comum'], ['cans', 'Cansadas']].map(([k, t]) => `<button data-r="${k}" class="${k === '' ? 'on' : ''}">${t}</button>`).join('')}</div><select aria-label="Série"><option value="">Todas as séries</option>${Object.keys(U.SERIES || {}).map(k => `<option value="${k}">${esc(U.SERIES[k].nome)}</option>`).join('')}</select></div>`);
+    const bar = el(`<div class="hs-fil"><div class="hs-fr">${[['', 'Todas']].concat((S.owned || []).some(id => U.CARDS[id] && U.CARDS[id].raridade === 'quasar') ? [['quasar', 'Quasar']] : [], [['lendaria', 'Lend.'], ['epica', 'Épica'], ['rara', 'Rara'], ['comum', 'Comum'], ['cans', 'Cansadas']]).map(([k, t]) => `<button data-r="${k}" class="${k === '' ? 'on' : ''}">${t}</button>`).join('')}</div><select aria-label="Série"><option value="">Todas as séries</option>${Object.keys(U.SERIES || {}).map(k => `<option value="${k}">${esc(U.SERIES[k].nome)}</option>`).join('')}</select></div>`);
     bar.onclick = e => { const b = e.target.closest('[data-r]'); if (!b) return; st.r = b.dataset.r; $$('[data-r]', bar).forEach(x => x.classList.toggle('on', x === b)); onChange(); };
     $('select', bar).onchange = e => { st.s = e.target.value; onChange(); };
     return { bar, ok: id => { const c = U.CARDS[id]; if (!c) return false; if (st.r === 'cans') { if (!fad(id)) return false; } else if (st.r && c.raridade !== st.r) return false; return !st.s || c.serie === st.s; } };
@@ -709,10 +715,10 @@
   const PRECO = { comum: 25, rara: 60, epica: 130, lendaria: 300 };   // preços das cartas nas lojas em pêndulos (autor aprovou 29/10)
   // Baús (autor aprovou 29/10): ficam em becos sem saída e abrem ao vencer o ponto pela primeira vez. {pend:n} ou {carta:raridade}
   const BAUS = { B003: { pend: 25 }, B006: { carta: 'comum' }, B010: { pend: 15 }, B022: { pend: 20 }, B028: { pend: 20 }, B034: { carta: 'comum' }, B049: { pend: 25 },
-    B042: { pend: 40 }, B044: { carta: 'rara', opcoes: 2 }, B070: { pend: 50 }, B085: { pend: 75 }, B087: { carta: 'epica', opcoes: 2 }, B096: { pend: 140 }, B099: { carta: 'lendaria', opcoes: 2 } };
+    B042: { pend: 40 }, B044: { carta: 'rara', opcoes: 2 }, B070: { pend: 50 }, B085: { pend: 75 }, B087: { carta: 'epica', opcoes: 2 }, B096: { pend: 140 }, B099: { fixa: 'J30' } };
   function premioBau(id) {
     const b = BAUS[id]; if (!b || !S || (S.baus && S.baus[id])) return null;
-    let p = b; if (b.carta) { const em = new Set(S.owned || []); const pool = U.D.CARTAS.filter(x => x.raridade === b.carta && !x.uniao && !EXC.has(x.id) && !em.has(x.id));
+    let p = b; if (b.fixa) p = (S.owned || []).includes(b.fixa) ? { pend: 150 } : { cartas: [b.fixa] }; else if (b.carta) { const em = new Set(S.owned || []); const pool = U.D.CARTAS.filter(x => x.raridade === b.carta && !x.uniao && !EXC.has(x.id) && !em.has(x.id));
       const alt = ['lendaria', 'epica', 'rara', 'comum'].slice(['lendaria', 'epica', 'rara', 'comum'].indexOf(b.carta)); let q = pool;
       for (const r of alt) { if (q.length) break; q = U.D.CARTAS.filter(x => x.raridade === r && !x.uniao && !EXC.has(x.id) && !em.has(x.id)); }
       p = q.length >= 2 && b.opcoes ? { opcoes: embaralha(q).slice(0, 2).map(x => x.id) } : q.length ? { cartas: [q[Math.floor(Math.random() * q.length)].id] } : { pend: 60 }; }   // alguns baús oferecem 2 cartas: leva só a escolhida

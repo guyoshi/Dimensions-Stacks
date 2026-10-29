@@ -1776,3 +1776,10 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 .bau-prize.pick .bau-card { cursor: pointer; transition: transform .2s, opacity .2s; } .bau-card.sel { animation: none; opacity: 1; transform: scale(1.08); filter: drop-shadow(0 0 14px var(--gold)); } .bau-card.no { animation: none; opacity: .35; transform: scale(.94); }
 .bau-card { position: relative; } .bau-new { position: absolute; left: 50%; top: -9px; transform: translateX(-50%); background: var(--gold); color: #1a1140; font: 800 10.5px var(--f-disp); letter-spacing: .1em; padding: 2px 8px; border-radius: 999px; z-index: 2; box-shadow: 0 0 10px #ffc46b99; }
 .bau-ok:disabled { opacity: .55; }
+.hs-slots { display: flex; flex-direction: column; gap: 10px; width: min(340px, 86vw); }
+.hs-slot { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line2); border-radius: 12px; background: #ffffff0d; }
+.hs-slot > b { font-family: var(--f-disp); font-size: 20px; width: 22px; text-align: center; opacity: .7; }
+.hs-slot .hs-sn { flex: 1; display: flex; flex-direction: column; font-weight: 700; min-width: 0; }
+.hs-slot .hs-sn small { font-size: 11.5px; font-weight: 600; opacity: .7; }
+.hs-slot .btn { padding: 8px 12px; }
+.hs-slot .ibtn { padding: 8px 10px; }

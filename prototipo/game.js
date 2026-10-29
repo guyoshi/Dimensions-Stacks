@@ -250,7 +250,7 @@
     n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a;
       if (a === 'n') { if (!sureN) { sureN = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.rerollBotNames && U.rerollBotNames(lastCfg.players); U.startGame(lastCfg); } }
       else if (a === 'c') m.close(); else if (a === 'r') U.rules(); else if (a === 'o') U.options();
-      else if (a === 'q') { if (!sure) { sure = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); U.killRun(); $$('#layer > *').forEach(x => x.remove()); if (V.online) { U.onlineOff && U.onlineOff(); V.ctl.leave(); } else U.show('menu'); } } };
+      else if (a === 'q') { if (!sure) { sure = true; b.textContent = 'Toque de novo para confirmar'; } else { m.close(); const HH = G.cfg && G.cfg.historia; U.killRun(); $$('#layer > *').forEach(x => x.remove()); if (HH) HH.aoFim({ venceu: false, capturadas: [], disputas: G.s.combats, espUsos: 0, abandonou: true }); else if (V.online) { U.onlineOff && U.onlineOff(); V.ctl.leave(); } else U.show('menu'); } } };
   }
 
   function buildBoard() {

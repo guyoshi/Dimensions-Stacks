@@ -25,7 +25,7 @@ try:
         r = pg.evaluate("""(() => { const S = window.DSHistoria.state(); const out = S.owned.slice(7, 14); window.DSHistoria.aplicaCansaco(out); const antes = S.owned.slice(0, 7).reduce((a, id) => a + (S.fadiga[id] | 0), 0); return antes; })()""")
         chk(r >= 0, 'as não usadas descansam 1 ponto: restante %s' % r)
         pg.evaluate("window.__sel = null; window.DSHistoria.escolher7({}, m => { window.__sel = m; })"); pg.wait_for_selector('.hs-escg'); pg.wait_for_timeout(300)
-        tired = pg.evaluate("document.querySelectorAll('.hs-escc.tired').length"); on = pg.evaluate("document.querySelectorAll('.hs-escc.on').length"); onTired = pg.evaluate("document.querySelectorAll('.hs-escc.tired.on').length")
+        tired = pg.evaluate("document.querySelectorAll('.hs-escg .hs-escc.tired').length"); on = pg.evaluate("document.querySelectorAll('.hs-escg .hs-escc.on').length"); onTired = pg.evaluate("document.querySelectorAll('.hs-escg .hs-escc.tired.on').length")
         chk(tired >= 7 and on == 7 and onTired == 0, 'cansadas aparecem apagadas e não entram na seleção (cansadas %d, marcadas %d)' % (tired, on))
         # descansar uma carta cansada com pêndulos
         pg0 = pg.evaluate("window.DSHistoria.state().pend")
