@@ -39,11 +39,11 @@ try:
         pg.screenshot(path='tests/shots/olho.png')
         # ---- Aluguel
         pg.evaluate("(()=>{const s=DSHistoria.state();s.frag={};for(let i=0;i<40;i++)s.frag['t'+i]=1;s.frGasto=0})()")
-        pg.evaluate("document.querySelectorAll('.modal').forEach(m=>m.remove())"); pg.evaluate("DSNpc.compraExtra('M:aluguel')"); pg.wait_for_selector('.npc', timeout=5000)
+        pg.evaluate("window.__km=setInterval(()=>document.querySelectorAll('.modal').forEach(m=>m.remove()),200)"); pg.evaluate("DSNpc.compraExtra('M:aluguel')"); pg.wait_for_selector('.npc', timeout=15000)
         st = pg.evaluate("DSHistoria.state()"); chk(bool(st.get('alug')) and st['melh'].get('aluguel') == 1, 'comprar a melhoria apresenta o mercador')
         for i in range(14):
             pg.evaluate("(()=>{const n=document.querySelector('.npc');if(n)n.click()})()"); pg.wait_for_timeout(250)
-        pg.wait_for_timeout(400); chk(pg.query_selector('.npc') is None, 'cutscene do mercador termina')
+        pg.wait_for_timeout(400); chk(pg.query_selector('.npc') is None, 'cutscene do mercador termina'); pg.evaluate("clearInterval(window.__km)")
         chk(pg.evaluate("!document.getElementById('hsAlug').hidden"), 'botão de aluguel aparece')
         pg.click('#hsAlug'); pg.wait_for_selector('.hs-alug'); pg.wait_for_timeout(300); pg.screenshot(path='tests/shots/aluguel.png')
         ids = pg.evaluate("[...document.querySelectorAll('.al-buy')].map(x=>x.dataset.id)"); chk(len(ids) >= 5, 'estoque de aluguel: %d' % len(ids))
@@ -59,6 +59,15 @@ try:
         chk(pg.evaluate("DSHistoria.state().owned.includes('%s')" % alug) is False, 'alugada não entra no owned')
         pg.click('[data-a=melhores]'); pg.wait_for_timeout(200); pg.evaluate("(a=>{const on=document.querySelector('.hs-esc .hs-escc.on');on.click();document.querySelector('.hs-esc .hs-escc[data-id='+a+']').click()})('%s')" % alug); pg.wait_for_timeout(200); pg.click('[data-a=go]'); pg.wait_for_timeout(1500)
         chk(pg.evaluate("DSHistoria.state().alugadas.length") == 0, 'alugada some ao começar a batalha')
+        # ---- baú com 2 cartas: escolher uma, a outra não vem; NOVA indicada
+        two = pg.evaluate("(()=>{const o=new Set(DSHistoria.state().owned);return DSUI.D.CARTAS.filter(c=>!o.has(c.id)&&!c.uniao&&c.id!='S11'&&c.id!='V26'&&c.raridade=='rara').slice(0,2).map(c=>c.id)})()")
+        pg.evaluate("document.querySelectorAll('.modal,.npc').forEach(m=>m.remove())")
+        pg.evaluate("t=>DSHistoria.abrirBau({opcoes:t})", two); pg.wait_for_selector('.bau-prize.pick .bau-card', timeout=5000); pg.wait_for_timeout(500)
+        chk(len(pg.query_selector_all('.bau-card')) == 2 and len(pg.query_selector_all('.bau-new')) == 2, 'baú de escolha mostra 2 cartas com NOVA')
+        chk(pg.evaluate("document.querySelector('.bau-ok').disabled"), 'botão travado até escolher'); pg.screenshot(path='tests/shots/bau_pick0.png')
+        pg.evaluate("document.querySelectorAll('.bau-card')[1].click()"); pg.wait_for_timeout(300); pg.screenshot(path='tests/shots/bau_pick1.png')
+        pg.evaluate("document.querySelector('.bau-ok').click()"); pg.wait_for_timeout(600)
+        ow = pg.evaluate("DSHistoria.state().owned"); chk(two[1] in ow and two[0] not in ow, 'só a escolhida entra na coleção')
         chk(not errs, 'sem erros de página %s' % errs)
         b.close()
 finally:

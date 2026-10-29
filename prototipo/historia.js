@@ -539,7 +539,7 @@
       if (!auto && UNIAO.some(c => mao0.includes(c))) entradaUniao(mao0.filter(c => UNIAO.includes(c)), mao0.filter(c => UNIAO.includes(c)).length === UNIAO.length, () => lanca(1)); else lanca(1);
     });
   }
-  function quandoLivre(fn, n) { n = n || 0; if (n > 40) return; if ($('.bau-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1), 700); return; } fn(); }   // espera baús e outros diálogos fecharem
+  function quandoLivre(fn, n, calmo) { n = n || 0; if (n > 60) return; if ($('.bau-ov, .rv-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1, false), 700); return; } if (!calmo) { setTimeout(() => quandoLivre(fn, n + 1, true), 1200); return; } fn(); }   // ordem pós-batalha: baús e animações primeiro, uma pausa, e só então os diálogos
   // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
   function npcFala(cid, linhas, done) {
     const reab = curId, mods = $$('.modal').filter(m => m.style.display !== 'none'); mods.forEach(m => { m.style.display = 'none'; });   // o diálogo tem prioridade: esconde menus e os devolve no fim
@@ -676,7 +676,7 @@
     render();
   }
   function abrirBau(premio, done) {
-    closeSheet(); const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, cartas = premio.cartas || [];
+    closeSheet(); const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, pick = !!premio.opcoes, cartas = premio.opcoes || premio.cartas || []; let escolhida = null;
     const ov = el(`<div class="bau-ov"><div class="bau-stage"><div class="bau-glow"></div><div class="bau-box">${bauSvg()}</div><div class="bau-prize"></div></div><button class="btn primary bau-ok" hidden>Continuar</button></div>`);
     document.body.appendChild(ov);
     const box = $('.bau-box', ov), prize = $('.bau-prize', ov), ok = $('.bau-ok', ov); let fim = false;
@@ -688,12 +688,12 @@
         prize.innerHTML = Array.from({ length: Math.min(14, 4 + pend) }, (_, i) => `<span class="bau-coin" style="--dx:${(Math.random() * 220 - 110).toFixed(0)}px;--dy:${(-70 - Math.random() * 120).toFixed(0)}px;--d:${(i * 60)}ms">${coinSvg(30)}</span>`).join('') + `<div class="bau-amt">+${pend}</div>`; SND.play('bauCoin');
       }
       if (cartas.length) {
-        prize.classList.add('cards'); cartas.forEach((id, i) => { const w = el('<div class="bau-card" style="--d:' + (i * 280) + 'ms"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cartas.length > 2 ? 92 : 118 })); prize.append(w); setTimeout(() => { if (!fim) SND.play('bauCard'); }, red ? 0 : i * 280); });
+        prize.classList.add('cards'); if (pick) prize.classList.add('pick'); cartas.forEach((id, i) => { const w = el('<div class="bau-card" data-id="' + id + '" style="--d:' + (i * 280) + 'ms"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cartas.length > 2 ? 92 : 118 })); if (!(S.owned || []).includes(id)) w.append(el('<span class="bau-new">NOVA</span>')); prize.append(w); setTimeout(() => { if (!fim) SND.play('bauCard'); }, red ? 0 : i * 280); });
         if (cartas.some(id => U.CARDS[id] && U.CARDS[id].raridade === 'lendaria')) T(() => SND.play('legend'), 400);
       }
-      ok.hidden = false;
+      ok.hidden = false; if (pick) { ok.disabled = true; ok.textContent = 'Escolha uma'; prize.onclick = e => { const w = e.target.closest('.bau-card'); if (!w) return; escolhida = w.dataset.id; $$('.bau-card', prize).forEach(x => { x.classList.toggle('sel', x === w); x.classList.toggle('no', x !== w); }); ok.disabled = false; ok.textContent = 'Pegar'; SND.play('tick'); }; }
     }, 1700);
-    const fechar = () => { if (fim) return; fim = true; if (!premio.semDica) setTimeout(() => dica('bau'), 600); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (S) { S.pend = (S.pend | 0) + pend; S.ganho = (S.ganho | 0) + pend; cartas.forEach(id => { if (!S.owned.includes(id)) S.owned.push(id); }); save(); if (view === 'map' && svg && svg.isConnected) paintAll(); } done && done(); if (NPC) setTimeout(() => NPC.check(), 600); };
+    const fechar = () => { if (fim) return; fim = true; if (!premio.semDica) setTimeout(() => dica('bau'), 600); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (S) { S.pend = (S.pend | 0) + pend; S.ganho = (S.ganho | 0) + pend; (pick ? [escolhida] : cartas).forEach(id => { if (id && !S.owned.includes(id)) S.owned.push(id); }); save(); if (view === 'map' && svg && svg.isConnected) paintAll(); } done && done(); if (NPC) setTimeout(() => NPC.check(), 600); };
     ok.onclick = () => { SND.play('click'); fechar(); };
   }
   function sorteioBau() {   // teste: 60% pêndulos, 40% de 1 a 3 cartas novas (ainda não possuídas)
@@ -709,13 +709,13 @@
   const PRECO = { comum: 25, rara: 60, epica: 130, lendaria: 300 };   // preços das cartas nas lojas em pêndulos (autor aprovou 29/10)
   // Baús (autor aprovou 29/10): ficam em becos sem saída e abrem ao vencer o ponto pela primeira vez. {pend:n} ou {carta:raridade}
   const BAUS = { B003: { pend: 25 }, B006: { carta: 'comum' }, B010: { pend: 15 }, B022: { pend: 20 }, B028: { pend: 20 }, B034: { carta: 'comum' }, B049: { pend: 25 },
-    B042: { pend: 40 }, B044: { carta: 'rara' }, B070: { pend: 50 }, B085: { pend: 75 }, B087: { carta: 'epica' }, B096: { pend: 140 }, B099: { carta: 'lendaria' } };
+    B042: { pend: 40 }, B044: { carta: 'rara', opcoes: 2 }, B070: { pend: 50 }, B085: { pend: 75 }, B087: { carta: 'epica', opcoes: 2 }, B096: { pend: 140 }, B099: { carta: 'lendaria', opcoes: 2 } };
   function premioBau(id) {
     const b = BAUS[id]; if (!b || !S || (S.baus && S.baus[id])) return null;
     let p = b; if (b.carta) { const em = new Set(S.owned || []); const pool = U.D.CARTAS.filter(x => x.raridade === b.carta && !x.uniao && !EXC.has(x.id) && !em.has(x.id));
       const alt = ['lendaria', 'epica', 'rara', 'comum'].slice(['lendaria', 'epica', 'rara', 'comum'].indexOf(b.carta)); let q = pool;
       for (const r of alt) { if (q.length) break; q = U.D.CARTAS.filter(x => x.raridade === r && !x.uniao && !EXC.has(x.id) && !em.has(x.id)); }
-      p = q.length ? { cartas: [q[Math.floor(Math.random() * q.length)].id] } : { pend: 60 }; }
+      p = q.length >= 2 && b.opcoes ? { opcoes: embaralha(q).slice(0, 2).map(x => x.id) } : q.length ? { cartas: [q[Math.floor(Math.random() * q.length)].id] } : { pend: 60 }; }   // alguns baús oferecem 2 cartas: leva só a escolhida
     S.baus = S.baus || {}; S.baus[id] = 1; save(); return p;
   }
   function descansar(id) {   // paga e descansa uma carta; devolve o custo ou 0 se faltar

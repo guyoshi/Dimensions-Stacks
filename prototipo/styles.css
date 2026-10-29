@@ -1773,3 +1773,6 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 .hs-deck { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 6px; border-radius: 12px; background: #ffffff08; border: 1px dashed #ffffff22; max-height: 30vh; overflow-y: auto; }
 .hs-deck .hs-escc { padding: 1px; cursor: pointer; } .hs-slot { border-radius: 6px; border: 1px dashed #ffffff30; display: block; }
 .cin-q.cin-qs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 5; background: #0a0820ee; padding: 16px; border-radius: 16px; border: 1px solid var(--line); display: flex; gap: 8px; }
+.bau-prize.pick .bau-card { cursor: pointer; transition: transform .2s, opacity .2s; } .bau-card.sel { animation: none; opacity: 1; transform: scale(1.08); filter: drop-shadow(0 0 14px var(--gold)); } .bau-card.no { animation: none; opacity: .35; transform: scale(.94); }
+.bau-card { position: relative; } .bau-new { position: absolute; left: 50%; top: -9px; transform: translateX(-50%); background: var(--gold); color: #1a1140; font: 800 10.5px var(--f-disp); letter-spacing: .1em; padding: 2px 8px; border-radius: 999px; z-index: 2; box-shadow: 0 0 10px #ffc46b99; }
+.bau-ok:disabled { opacity: .55; }
