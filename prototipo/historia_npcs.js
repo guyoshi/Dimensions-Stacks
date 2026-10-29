@@ -162,9 +162,9 @@
     const n = BYID[id]; if (!n || A.andando()) return;
     const pick = destino(n);
     if (!acessivel(n) || !A.caminho(pick)) return A.toast('Vença a batalha do caminho para falar com ' + n.nome.split(' ')[0] + '.');
-    // Tocar no NPC só leva o jogador até ele. A conversa sempre é uma ação separada.
-    if (A.posId() === pick) return A.openNode(pick);
-    A.andar(pick);
+    // Tocar no NPC leva o jogador até a casa dele e ele PARA ali; tocar de novo (ou "Falar" no painel) abre a conversa.
+    if (A.casa() === id) return falar(id);
+    A.andarNpc(pick, pos(n), n.a === pick ? n.b : n.a, id);
   }
 
   // ---- bloco no painel do ponto (quem está nesse cruzamento, com barra de progresso)

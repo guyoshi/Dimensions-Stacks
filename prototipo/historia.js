@@ -207,10 +207,10 @@
   function openMap(novo, intro, comFade) {
     if (!S) return; view = 'map';
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
-    mp.innerHTML = `<div class="hs-bg" id="hsBg" aria-hidden="true"></div><div class="hs-particles" aria-hidden="true">${particulasMapa()}</div><svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
+    mp.innerHTML = `<div class="hs-particles" aria-hidden="true">${particulasMapa()}</div><svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsGalG"><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="hsGalM" maskUnits="userSpaceOnUse" x="-3181" y="-1398" width="6400" height="3200"><rect x="-3181" y="-1398" width="6400" height="3200" fill="url(#hsGalG)"/></mask><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
+        <g id="hsCam"><image class="hs-gal" href="cena/mapa-galaxia.png" x="-3181" y="-1398" width="6400" height="3200" preserveAspectRatio="none" mask="url(#hsGalM)"/><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">${U.uniaoLogo('uniao-logo-map')}</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral">▣</button><button class="ibtn" data-a="missoes" aria-label="Missões" title="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção" title="Coleção">✦</button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn" data-a="opts" aria-label="Configurações" title="Configurações">⚙</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda e opções" title="Ajuda">?</button></div>
@@ -262,7 +262,6 @@
     camG.style.transition = anim ? 'transform .75s cubic-bezier(.3,.8,.3,1)' : 'none';
     if (svg) { svg.classList.add('mov'); clearTimeout(movT); movT = setTimeout(() => svg && svg.classList.remove('mov'), anim ? 850 : 220); }   // em movimento: animações pausadas (mapa mais leve)
     camG.style.transform = `translate(${cam.x}px,${cam.y}px) scale(${cam.k})`;
-    const bg = $('#hsBg', root); if (bg) { const ox = Math.max(-.25 * w, Math.min(.25 * w, (cam.x - w / 2) * .3)), oy = Math.max(-.25 * h, Math.min(.25 * h, (cam.y - h / 2) * .3)), z = .85 + Math.max(0, Math.min(1.1, cam.k)) * .35; bg.style.transition = camG.style.transition === 'none' ? 'none' : 'transform .75s cubic-bezier(.3,.8,.3,1)'; bg.style.transform = `translate(${ox}px,${oy}px) scale(${z})`; }   // fundo panorâmico: acompanha o arrastar (paralaxe) e o zoom
     svg.classList.toggle('far', cam.k < .42);
   }
   function centerOn(mx, my, k, anim) { const { w, h } = view$(); cam.k = k == null ? cam.k : k; cam.x = w / 2 - mx * cam.k; cam.y = h / 2 - my * cam.k; applyCam(anim); }
@@ -344,7 +343,16 @@
   }
   function heroPlace(id, anim) {
     const h = $('#hsHero', root); if (!h) return; const n = BY[id], r = TIPOS[n.tipo].r;
-    h.style.transition = anim ? 'transform .34s linear' : 'none'; h.style.transform = `translate(${n.x}px,${n.y - r - 10}px)`;
+    casa = null; h.style.transition = anim ? 'transform .34s linear' : 'none'; h.style.transform = `translate(${n.x}px,${n.y - r - 10}px)`;
+  }
+  let casa = null;   // NPC em cuja casa o boneco está parado (null = em um ponto)
+  async function andarNpc(to, pt, via, id) {   // anda até a casa do NPC (marcador sobre a ligação) e PARA ali; falar é um segundo toque
+    if (andando) return; let p = caminho(to) || [to]; if (p.length >= 2 && p[p.length - 2] === via) p = p.slice(0, -1);
+    andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
+    for (let i = 1; i < p.length; i++) { const n = BY[p[i]]; S.pos = n.id; heroPlace(n.id, !red); SND.play('tick'); paintLuz(); centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red); await new Promise(r => setTimeout(r, red ? 60 : 360)); }
+    const hh = $('#hsHero', root); if (hh) { hh.style.transition = red ? 'none' : 'transform .45s linear'; hh.style.transform = `translate(${pt.x}px,${pt.y - 22}px)`; }
+    SND.play('tick'); centerOn(pt.x, pt.y, cam.k < .6 ? .75 : null, !red); await new Promise(r => setTimeout(r, red ? 60 : 480));
+    save(); andando = false; paintAll(); casa = id;
   }
   async function andar(to) {
     if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
@@ -848,6 +856,6 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } else if (e.target.dataset.a === 'numeros') { P.numeros = e.target.checked; if (svg) svg.classList.toggle('no-nums', !P.numeros); save(); } });
   }
 
-  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
+  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, andarNpc, casa: () => casa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
   window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S, openNode };
 })();

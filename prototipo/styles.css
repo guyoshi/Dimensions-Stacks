@@ -1840,5 +1840,4 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 .hs-slot .btn { padding: 8px 12px; }
 .hs-slot .ibtn { padding: 8px 10px; }
 
-.hs-bg { position: absolute; inset: -30%; z-index: 0; background: url(cena/mapa-galaxia.png) center / cover no-repeat; transform-origin: 50% 50%; will-change: transform; pointer-events: none; }
-.hs-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, #07051466); }
+.hs-gal { opacity: .8; pointer-events: none; }   /* fundo preso ao mapa: o buraco negro fica exatamente no Boss (0,0) */
