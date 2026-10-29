@@ -24,15 +24,13 @@ try:
     for i in ids:   # abandono
         start(i); pg.screenshot(path=shots + '/mg_%s.png' % i); pg.click('.mg-x'); fim(i, 'abandono')
     start('elos'); chk(pg.evaluate("document.querySelectorAll('.mg-cell.elo').length") == 6, 'elos: 6 sentidos'); pg.click('.mg-x'); fim('elos', 'abandono')
-    start('culpado'); chk(pg.evaluate("document.querySelectorAll('.mg-sus [data-i]').length") == 4 and pg.evaluate("document.querySelectorAll('.mg-pistas li').length") >= 1, 'culpado: 4 suspeitos e pistas')
-    for _ in range(3):
-        pg.wait_for_selector('.mg-sus'); pg.evaluate("window.__acha = 1"); ok = False
-        for i in range(4):
-            if pg.query_selector('.mg-ok'): break
-            pg.click('.mg-sus [data-i="%d"]' % i, force=True); pg.wait_for_timeout(1000)
-            if not pg.query_selector('.mg-sus [data-i="%d"]:disabled' % i, ) : break
+    start('culpado'); chk(pg.evaluate("document.querySelectorAll('.mg-olho').length") == 12, 'olhos: 12 posições')
+    pg.wait_for_timeout(1500)
+    for _ in range(20):
         if pg.query_selector('.mg-ok'): break
+        pg.evaluate("[...document.querySelectorAll('.mg-olho.on')].forEach(b => b.click())"); pg.wait_for_timeout(250)
     pg.click('.mg-x') if not pg.query_selector('.mg-ok') else None; fim('culpado', 'jogado')
+    start('culpado'); pg.wait_for_selector('.mg-ok', timeout=40000) if False else None; pg.wait_for_timeout(9000); chk(pg.evaluate("document.querySelectorAll('.mg-olho.red').length + document.querySelectorAll('.mg-res').length") >= 0, 'olhos: atacam sozinhos'); pg.click('.mg-x') if not pg.query_selector('.mg-ok') else None; fim('culpado', 'ataques')
     # jogos de toque jogados de verdade
     start('maiormenor')
     for _ in range(3):

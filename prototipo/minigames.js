@@ -34,7 +34,7 @@
     { id: 'luas', nome: 'Duas luas', serie: 'Ciclo de Jesed', desc: 'Toque quando as duas luas de Jesed estiverem alinhadas.', cortes: [.35, .65, .9] },
     { id: 'poderes', nome: 'Poderes dos Lins', serie: 'Viajantes Dimensionais', desc: 'Cada obstáculo pede o poder certo de um dos irmãos.', cortes: [.4, .7, .9] },
     { id: 'gancho', nome: 'Símbolos estelares', serie: 'Spacetheft', desc: 'Toque nos símbolos espaciais que aparecem. Cuidado com a caveira.', cortes: [.34, .67, .84] },
-    { id: 'culpado', nome: 'Quem é o culpado?', serie: 'Mistério Oculto', desc: 'Use as pistas para descobrir o culpado. 3 casos.', cortes: [.34, .67, .99] },
+    { id: 'culpado', nome: 'Olhos na escuridão', serie: 'Mistério Oculto', desc: 'Feche os olhos que se abrem antes que ataquem. 3 corações.', cortes: [.5, .75, .96] },
     { id: 'ritmo', nome: 'Mar, fogo e gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
     { id: 'formacao', nome: 'Formação da União', serie: 'A União', desc: 'Escolha 3 heróis cujos atributos somados cubram o desafio.', cortes: [.34, .67, .99] },
   ];
@@ -264,20 +264,21 @@
       tm = setInterval(() => { left--; pinta(); if (left <= 0) fimJ(); }, 1000); pinta(); mostra();
       return () => { acabou = true; clearInterval(tm); clearTimeout(sp); };
     },
-    // Mistério Oculto: dedução por pistas (3 casos)
+    // Mistério Oculto: olhos que se abrem no escuro; feche-os antes que ataquem (36 olhos, 3 corações)
     culpado(body, c, fim) {
-      const NOMES = ['Diana', 'Marta', 'Padre Tomas', 'Sete', 'Hyde', 'Lúcio', 'Vera', 'Caio'], COR = ['vermelho', 'azul', 'verde', 'preto'], LOC = ['Biblioteca', 'Cozinha', 'Jardim', 'Porão'], HEX = { vermelho: '#ff6a5c', azul: '#6cc6ff', verde: '#7dffb0', preto: '#8a84a8' };
-      let caso = 0, pts = 0; const N = 3;
-      const gera = () => { const nm = shuffle(NOMES).slice(0, 4), cs = shuffle(COR), ls = shuffle(LOC), S = nm.map((n, i) => ({ n, c: cs[i], l: ls[i] })), cul = rnd(4), pistas = [], vivos = new Set([0, 1, 2, 3]);
-        const cand = []; COR.forEach(x => { if (x !== S[cul].c) cand.push({ t: 'O culpado não usava casaco ' + x + '.', f: s => s.c !== x }); }); LOC.forEach(x => { if (x !== S[cul].l) cand.push({ t: 'O culpado não estava na ' + (x === 'Porão' ? 'o Porão' : x).replace('na o', 'no') + '.', f: s => s.l !== x }); });
-        cand.forEach(k => { if (k.t.includes('na o ')) k.t = k.t.replace('na o ', 'no '); }); LOC.forEach(x => { if (x !== S[cul].l) { const y = pick(LOC.filter(z => z !== x)); } });
-        while (vivos.size > 1 && cand.length) { let melhor = null, mi = -1; cand.forEach((k, i) => { const e = [...vivos].filter(v => v !== cul && !k.f(S[v])).length; if (e > (melhor === null ? 0 : melhor)) { melhor = e; mi = i; } }); if (mi < 0) break; const k = cand.splice(mi, 1)[0]; pistas.push(k.t); [...vivos].forEach(v => { if (v !== cul && !k.f(S[v])) vivos.delete(v); }); }
-        return { S, cul, pistas }; };
-      const tela = () => { const P = gera(); let tent = 0;
-        body.innerHTML = `<p class="mg-q">Caso ${caso + 1}/${N}</p><div class="mg-sus">${P.S.map((s, i) => `<button class="btn" data-i="${i}"><b>${s.n}</b><br><small style="color:${HEX[s.c]}">casaco ${s.c}</small><br><small>${s.l}</small></button>`).join('')}</div><ul class="mg-pistas">${P.pistas.map(t => `<li>${t}</li>`).join('')}</ul><p class="hint" id="mm">Quem é o culpado?</p>`;
-        body.onclick = async e => { const b = e.target.closest('[data-i]'); if (!b || b.disabled) return; const i = +b.dataset.i; tent++;
-          if (i === P.cul) { pts += tent === 1 ? 1 : .5; SND.play('win'); await wait(900); caso++; if (caso >= N) return fim(pts / N, pts + ' de ' + N + ' pontos'); tela(); } else { b.disabled = true; b.style.opacity = .4; SND.play('lose'); if (tent >= 2) { await wait(700); caso++; if (caso >= N) return fim(pts / N, pts + ' de ' + N + ' pontos'); tela(); } } }; };
-      tela();
+      const N = 36, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
+      body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-olhos">${Array.from({ length: SPOTS }, (_, i) => `<button class="mg-olho" data-i="${i}" aria-label="olho"><i></i></button>`).join('')}</div>`; const q = $('#mq', body), g = $('.mg-olhos', body);
+      const pinta = () => { q.innerHTML = `${'♥'.repeat(vidas)}<span style="opacity:.3">${'♥'.repeat(3 - vidas)}</span> · olhos ${Math.min(nasc, N)}/${N}`; };
+      const ate = () => nasc / (N - 1);
+      const fecha = (i, ataque) => { const b = g.children[i]; b.className = 'mg-olho'; olhos[i] = null; if (ataque) { perdidos++; vidas--; SND.play('lose'); g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 250); } else { fechados++; SND.play('flip'); } pinta();
+        if (vidas <= 0) return fimJ(); if (nasc >= N && !olhos.some(Boolean)) fimJ(); };
+      const fimJ = () => { if (acabou) return; acabou = true; clearInterval(tm); const morreu = vidas <= 0, pct = morreu ? Math.min(.7, fechados / N) : 1 - perdidos / N; fim(pct, morreu ? 'Os olhos venceram (' + fechados + ' fechados)' : fechados + ' de ' + N + ' olhos fechados'); };
+      g.onclick = e => { const b = e.target.closest('.mg-olho'); if (!b || acabou) return; const i = +b.dataset.i; if (olhos[i]) fecha(i, false); };
+      tm = setInterval(() => { if (acabou) return; const agora = Date.now() - t0;
+        if (nasc < N && agora >= prox) { const livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (livres.length) { const i = pick(livres); const life = (3000 - 1300 * ate()) / c.dif; olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; pinta(); prox = agora + (1250 - 650 * ate()) / c.dif; } else prox = agora + 150; }
+        olhos.forEach((o, i) => { if (!o) return; const f = (agora - o.ini) / o.life, b = g.children[i]; if (f >= 1) return fecha(i, true); b.classList.toggle('tre', f > .4); b.classList.toggle('red', f > .7); });
+        if (nasc >= N && !olhos.some(Boolean)) fimJ(); }, 50);
+      pinta(); return () => { acabou = true; clearInterval(tm); };
     },
     // Édelin Lys: ritmo de três elementos (20 notas)
     ritmo(body, c, fim) {

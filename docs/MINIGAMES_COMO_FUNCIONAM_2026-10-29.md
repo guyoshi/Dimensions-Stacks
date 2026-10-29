@@ -19,7 +19,7 @@ Todos usam a mesma casca: tela cheia, botão ✕ (sair = 0%), resultado em % →
 12. **Duas luas** (Ciclo de Jesed) [35/65/90%]: duas luas giram em órbitas diferentes; toque "Alinhar!" quando alinhadas. 5 toques; alinhada = 1 ponto, quase = meio. % = pontos/5.
 13. **Poderes dos Lins** (Viajantes Dimensionais) [40/70/90%]: 10 obstáculos, 3 s cada (÷ dif). Cada um pede o poder certo: Breno atravessa, Bruno congela, Beatriz queima, Banjo move à distância. % = acertos/10.
 14. **Símbolos estelares** (Spacetheft) [34/67/84%]: 8 quadrados; símbolos espaciais aparecem rápido (0,8 s ÷ dif). Acerto +1, caveira −2. 25 s. % = pontos/18.
-15. **Quem é o culpado?** (Mistério Oculto) [34/67/99%]: 3 casos, pistas para deduzir o culpado. Acerto de primeira = 1 ponto; depois de errar = meio. % = pontos/3.
+15. **Olhos na escuridão** (Mistério Oculto) [50/75/96%]: matriz 3×4; 36 olhos abrem um a um (a cada 1,25 s caindo para 0,6 s). Cada olho fica aberto 3,0 s caindo para 1,7 s (÷ dif): treme após 40% do tempo e fica vermelho após 70%; ao fim ataca e tira 1 de 3 corações. Toque fecha o olho com um som. % = 1 − ataques/36; sem corações = no máximo 70%. Ótimo = sobreviver; Perfeito = no máximo 1 olho escapa.
 16. **Mar, fogo e gelo** (Édelin Lys) [40/70/90%]: jogo de ritmo, 20 notas em 3 pistas (um elemento por pista); toque quando a nota chega à linha. % = notas/20.
 17. **Formação da União** (A União) [34/67/99%]: 3 casos com tempo. Escolha 3 heróis cujos atributos somados cubram o desafio (dois atributos mínimos). % = casos vencidos/3.
 
