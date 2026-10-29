@@ -204,7 +204,7 @@
       const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
       s.buffer = m.buf; s.loop = true; s.loopStart = m.a || 0; s.loopEnd = m.b || m.buf.duration; s.connect(g); g.connect(this.musicGain);
       const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0;
-      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(1, now + 1.2); s.start(now, off);
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(({ batalha: 0.5, mini: 0.55, boss: 0.6 })[k] || 1, now + 1.2); s.start(now, off);   // trilhas de batalha mais baixas
       if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
       this.histStop(true); this.histNodes = { s, g, k, t0: now, off, dur: m.buf.duration };
     },

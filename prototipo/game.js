@@ -505,6 +505,7 @@
     async combatStart({ initiator, round }) {
       V.init = initiator; V.win = {}; { const cp = $('#calcpill'); if (cp) cp.remove(); } refresh();
       caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · especiais liberam na Rodada 2' : '')); await sleep(350);
+      if (G.combat && G.combat.alvo != null) { banner('Alvo do dia: ' + G.combat.alvo, 'vence o valor mais próximo', '#ffd25f', 1600); await sleep(900); }
     },
     async prepare({ pid }) {
       const to = seatPrep(pid); const from = seatDeck(pid);
@@ -745,7 +746,12 @@
         $('.cardbox', node).append(cardEl(top, { up: true, noanim: true, cw: Math.min(96, V.cw || 96) }));
         const v = await ask(node, '[data-v]'); if (v === 'n') V.noPrep[p.pid] = true; return v === '1';
       },
-      async attr(p, entry, options, combat, canPrep) {
+      attr(p, entry, options, combat, canPrep) {   // modo história: Pressa cósmica (3 s) e Contagem final (5 s, −0,3 s por rodada)
+        const rg = G.cfg.regra, sec = rg && rg.id === 'pressa' ? 3 : rg && rg.id === 'contagem' ? Math.max(1.5, 5 - 0.3 * (G.s.round - 1)) : 0;
+        if (!sec || p.bot) return this.attr0(p, entry, options, combat, canPrep);
+        return timed(sec, () => this.attr0(p, entry, options, combat, canPrep), () => options[Math.floor(Math.random() * options.length)]);
+      },
+      async attr0(p, entry, options, combat, canPrep) {
         await cover(p);
         const init = combat.initiator === p.pid; const ia = combat.entries.find(e => e.pid === combat.initiator).attr;
         if (U.tip) await U.tip(init ? 'attr_init' : 'attr_follow');
@@ -758,11 +764,11 @@
           : options.length === 1 ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Por causa de um especial, você deve usar ${lst}.`
           : novice() ? `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b>. Escolha entre ${lst} — em segredo.`
           : `${esc(nameOf(combat.initiator))} iniciou em <b>${ATT[ia].nome}</b> · escolha: ${lst}`;
-        const fog = (() => { const f = combat.ctl && combat.ctl.fog; return !!f && f.pid !== p.pid && !(G && G.sameTeam && G.sameTeam(f.pid, p.pid)); })();   // Névoa de Dados: rivais escolhem sem ver os números
+        const fog = (() => { const f = combat.ctl && combat.ctl.fog; return !!f && f.pid !== p.pid && (f.pid < 0 || !(G && G.sameTeam && G.sameTeam(f.pid, p.pid))); })();   // Névoa de Dados: rivais escolhem sem ver os números
         const evsum = (() => { if (!combat.ev || !entry.evm || fog) return ''; const b = CARDS[entry.card].stats; const ch = AIDS.filter(a => entry.stats[a] !== b[a]); return ch.length ? `<div class="evsum">Sua carta nesta rodada: ${ch.map(a => `${ATT[a].nome} ${b[a]} → <b>${entry.stats[a]}</b>`).join(' · ')}</div>` : ''; })();
         const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}${evsum}</div>` : '';
         const em = entry.evm || {};
-        const fogTxt = fog ? `<div class="evnote" style="--ec:#c58cff">☁ <b>Névoa de Dados</b>: ${esc(nameOf(combat.ctl.fog.pid))} é o único que vê os números. Escolha às cegas.</div>` : '';
+        const fogTxt = fog ? (combat.ctl.fog.pid < 0 ? `<div class="evnote" style="--ec:#c58cff">☁ <b>Névoa estelar</b>: os números estão ocultos. Escolha às cegas.</div>` : `<div class="evnote" style="--ec:#c58cff">☁ <b>Névoa de Dados</b>: ${esc(nameOf(combat.ctl.fog.pid))} é o único que vê os números. Escolha às cegas.</div>`) : '';
         const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}${fogTxt}</div>
           <div class="attrs">${AIDS.filter(a => options.includes(a) || a === blkShow).map(a => a === blkShow ? `<button class="attrbtn blocked" data-a="${a}" disabled>${ICON[a]}<span><b>${ATT[a].nome}</b><small>bloqueado</small></span><span class="v">✕</span></button>` : `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${fog ? '?' : entry.stats[a]}</span></button>`).join('')}</div>
           ${spLine(entry.card, combat, canPrep)}</div>`);
@@ -882,9 +888,11 @@
         let arr = hand.slice(), sel = -1, last = 0;
         const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: ${rf ? 'reordene as cartas da reserva' : 'monte seu baralho'}</h2>
           <div class="hint">${rf ? 'Seu baralho acabou: estas cartas vieram da reserva. ' : ''}<b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.${st != null ? `<br>Iniciativa: <b>${esc(seq)}</b>. <i class="ini">★</i> = disputa em que você inicia (declara o atributo).` : ''}</div></div>
+          ${(() => { const rg = G.cfg.regra, ab = rg && (rg.id === 'abertas' || rg.id === 'clarividente') && !rf && G.cfg.maos ? G.cfg.maos.slice(1).flat() : null; return ab ? `<div class="hint" style="margin-top:4px"><b>Cartas do inimigo</b> (na ordem em que entram)</div><div class="row abertas" style="justify-content:center;flex-wrap:wrap;gap:3px">${ab.map(c => `<span data-c="${c}"></span>`).join('')}</div>` : ''; })()}
           <div class="grid"></div><div class="info"></div>
           <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button>${!rf && o && o.reserve && o.reserve.length ? `<button class="btn sm" data-a="res">Ver reserva (${o.reserve.length})</button>` : ''}</div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);
+        $$('.abertas [data-c]', ov).forEach(sp => sp.append(cardEl(sp.dataset.c, { up: true, noanim: true, cw: 40 })));
         const W = window.innerWidth - 32;
         let cw = Math.floor((W - 6 * 10) / 7); if (cw < 70) cw = Math.floor((W - 3 * 10) / 4); cw = Math.max(64, Math.min(112, cw));
         function renum() { $$('.oc', $('.grid', ov)).forEach((n, k) => { $('.no', n).innerHTML = lab(k); }); }
@@ -940,8 +948,9 @@
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
     SND.histLock = cfg.historia ? cfg.historia.musica : null; U.show('game'); shell();
+    if (cfg.historia && cfg.historia.evento) { const ev = cfg.historia.evento, host = $('#game'); const chip = el(`<button class="evchip" type="button" aria-label="Evento: ${esc(ev.nome)}">⚡ Evento</button>`); chip.onclick = () => { SND.play('click'); U.modal(el(`<div class="evbox"><h2 style="color:var(--gold2)">⚡ ${esc(ev.nome)}</h2><p>${esc(ev.regra)}</p></div>`)); }; if (host) host.append(chip); setTimeout(() => banner(ev.nome, ev.regra, '#ffd25f', 3600), 500); }
     newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, duo: !!cfg.teams, ev: cfg.events !== false, shared: true });
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, maos: cfg.maos || null, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, maos: cfg.maos || null, regra: cfg.regra || null, bonusPids: cfg.bonusPids || null, bonusVal: cfg.bonusVal || 0, bonusCards: cfg.bonusCards || null, semMontar: !!cfg.semMontar, maxCombats: cfg.maxCombats || 400, historia: cfg.historia || null, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };

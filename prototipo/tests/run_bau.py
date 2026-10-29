@@ -17,7 +17,7 @@ try:
     pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text else None)
     pg.goto('http://localhost:8779/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(400); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(800)
-    for nome, premio in (('pend', {'pend': 12}), ('cartas', {'cartas': ['J01', 'J02', 'J24']})):
+    for nome, premio in (('pend', {'pend': 12, 'semDica': True}), ('cartas', {'cartas': ['J01', 'J02', 'J24'], 'semDica': True})):
         pg.evaluate("p => window.DSHistoria.abrirBau(p)", premio); pg.wait_for_timeout(1300); pg.screenshot(path=shots + '/bau_%s_a.png' % nome)
         pg.wait_for_timeout(2200); pg.screenshot(path=shots + '/bau_%s_b.png' % nome)
         chk(not pg.evaluate("document.querySelector('.bau-ok').hidden"), 'botão Continuar aparece (%s)' % nome)

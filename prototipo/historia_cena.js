@@ -60,3 +60,15 @@ window.DS_CINEMATICA_FINAL = {
     { img: 'selo.png', mov: 'zoom', pos: 'center', textos: ['Fim.'] },
   ],
 };
+
+/* Falas curtas de cada membro da União quando é libertado num miniboss (rascunho do assistente: o autor pode reescrever no tom de cada personagem). {nome} = jogador. */
+window.DS_FALAS_UNIAO = {
+  D06: ['Eu senti você chegando, {nome}. Os espíritos sussurraram o seu nome.', 'Obrigada por me libertar.'],
+  M01: ['Interessante. Todas as pistas apontavam para você, {nome}.', 'Estou dentro. Vamos juntar as peças sobre a Besta.'],
+  J03: ['Já atravessei muitas eras, mas poucas vezes fui resgatado.', 'Conte comigo, {nome}.'],
+  B01: ['Dois mil anos, e nunca fui libertada por alguém tão determinado.', 'Obrigada, {nome}. Lutarei ao seu lado.'],
+  S01: ['Fui eu quem abriu aquela tumba, e paguei caro por isso.', 'Eu devo isso a você, {nome}. Vamos consertar o que eu fiz.'],
+  M10: ['A Luz me deixou aqui por um motivo.', 'Acho que agora eu sei qual. Vamos, {nome}.'],
+  V15: ['Demorou, hein? Brincadeira! Valeu por me tirar dessa, {nome}.', 'Agora é a minha vez de brilhar.'],
+  V02: ['Frio demais lá dentro, até para mim.', 'Vamos, {nome}: ainda temos uma Besta para congelar.'],
+};

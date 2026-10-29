@@ -33,21 +33,27 @@ try:
     chk(pg.evaluate("!document.querySelector('#hsSheet').hidden"), 'toque no ponto abre o painel')
     chk(pg.evaluate("(()=>{const r=document.querySelector('.n[data-id=B050]').getBoundingClientRect(),s=document.querySelector('#hsSheet').getBoundingClientRect();return r.bottom<s.top&&r.top>0})()"), 'o ponto tocado fica visível acima do painel')
     pg.screenshot(path=shots + '/hist_painel.png')
-    for g in M['guardioes'].values():
+    chk(not pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'ponto da Besta ainda não dourado com guardiões vivos')
+    for gi, g in enumerate(M['guardioes'].values()):
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
         bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
-        pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(250)
+        pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(1500)
+        if gi == 0: chk('Besta' in pg.evaluate("document.querySelector('#hsToast').textContent"), 'ao derrotar guardião a Besta é atingida (aviso do bônus)')
+        pg.wait_for_timeout(3000)
     pg.wait_for_timeout(600)
-    chk(not pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'boss continua fechado só com os guardiões')
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
         bx = pos(n); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
-        pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.lib .bau-ok', timeout=4000); pg.click('.lib .bau-ok'); pg.wait_for_timeout(500)
+        pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.lib .bau-ok', timeout=4000); pg.click('.lib .bau-ok'); pg.wait_for_timeout(700)
+        for _ in range(14):
+            if not pg.query_selector('.npc'): break
+            pg.evaluate("(()=>{const n=document.querySelector('.npc');if(n)n.click()})()"); pg.wait_for_timeout(120); pg.evaluate("(()=>{const n=document.querySelector('.npc');if(n)n.click()})()"); pg.wait_for_timeout(250)
+        pg.wait_for_timeout(900)
     pg.wait_for_timeout(1800)
     chk(set(['D06','M01','J03','B01','S01','M10','V15','V02']) <= set(pg.evaluate("window.DSHistoria.state().owned")), 'os 8 membros da União foram libertados')
-    chk(pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'boss abre com os 4 guardiões e a União completa')
+    chk(pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'sem guardião vivo o ponto da Besta fica dourado')
     pg.screenshot(path=shots + '/hist_boss_aberto.png')
     # mapa fechado: caminhos escuros
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(300)

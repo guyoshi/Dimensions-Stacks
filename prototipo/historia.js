@@ -15,8 +15,8 @@
     normal:   { nome: 'Normal',    cor: '#6cc6ff', r: 19, desc: 'Duelo comum contra um inimigo.' },
     evento:   { nome: 'Evento',    cor: '#ffd25f', r: 19, desc: 'Duelo com uma regra especial (tempo, cartas, atributos...).' },
     elite:    { nome: 'Elite',     cor: '#c58cff', r: 23, desc: 'Inimigo mais forte, com cartas raras.' },
-    miniboss: { nome: 'Miniboss',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores. Prende um membro da União: vencer liberta o herói para a sua equipe.' },
-    guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões do centro. Vencer os 4 e libertar toda a União abre o Boss.' },
+    miniboss: { nome: 'Arauto',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores. Prende um membro da União: vencer liberta o herói para a sua equipe e abre o minigame do setor.' },
+    guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões espalhados pelo mapa. Cada um vencido tira 30 pontos de cada atributo das cartas da Besta.' },
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
@@ -25,9 +25,9 @@
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
-  // cada miniboss prende um membro da União; vencê-lo o liberta e ele entra na equipe (o Boss só abre com os 8)
+  // cada arauto (tipo 'miniboss') prende um membro da União; vencê-lo o liberta e abre o minigame do setor/série
   const LIBERTA = { B059: 'D06', B088: 'M01', B062: 'J03', B086: 'B01', B064: 'S01', B072: 'M10', B081: 'V15', B078: 'V02' };
-  const MINIS = Object.keys(LIBERTA);
+  const MINIS = Object.keys(LIBERTA), UNIAO = Object.values(LIBERTA);
   // deixa o mapa menos redondo e mais orgânico: deformação suave por ângulo + pequeno desvio por ponto (determinístico; ids e ligações não mudam)
   (function organico() {
     if (M._org) return; M._org = 1;
@@ -50,7 +50,8 @@
 
   // ---------------------------------------------------------------- regras do mapa
   const cleared = id => !!(S && S.cleared[id]);
-  const bossOpen = () => GUARD.every(cleared) && MINIS.every(cleared);
+  const bossOpen = () => true;   // REGRA (autor, 29/10): a Besta pode ser enfrentada desde o início; cada guardião vivo dá +30 em todos os atributos às cartas dela
+  const guardVivos = () => GUARD.filter(x => !cleared(x)).length, bonusBoss = () => 30 * guardVivos();
   // liberados: vizinhos de pontos vencidos, mais o ponto de partida. Loja não bloqueia: ao alcançá-la, o que vem depois também fica liberado.
   let libKey = '', libSet = new Set();
   function liberados() {
@@ -166,7 +167,7 @@
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
         <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
-        <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill" title="Cartas no bestiário"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></div></div>
+        <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
@@ -189,17 +190,17 @@
   }
   // ---- o que aparece: só o que foi vencido ilumina. Caminhos e bifurcações surgem ao vencer uma fase; os vizinhos aparecem (abertos ou trancados) mesmo com o boneco longe. O núcleo está sempre visível.
   const NUCLEO = new Set(NOS.filter(n => n.tier === 4).map(n => n.id));
-  function paintLuz() {   // visibilidade: ramos de pontos vencidos (coloridos) e de pontos liberados (cinza). O resto fica escondido; o núcleo é sempre visível.
+  function paintLuz() {   // visibilidade: só se vê o ponto onde está, o que já venceu e os PRÓXIMOS pontos (ramos cinza). O que está além fica escondido; o núcleo é sempre visível.
     const ocultar = P.escuro !== false; svg.classList.toggle('escuro', ocultar);
-    const lib = liberados(), vis = new Set(NUCLEO);
-    NOS.forEach(n => { if (cleared(n.id) || lib.has(n.id) || n.id === posId()) { vis.add(n.id); n.viz.forEach(v => vis.add(v)); } });
+    const rev = new Set([posId()]); NOS.forEach(n => { if (aberto_(n.id)) rev.add(n.id); });   // quem revela os vizinhos: onde estou, o que venci e lojas já alcançadas
+    const vis = new Set(NUCLEO); rev.forEach(i => { vis.add(i); BY[i].viz.forEach(v => vis.add(v)); });
     $$('.n', root).forEach(g => g.classList.toggle('fog', ocultar && !vis.has(g.dataset.id)));
-    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', ocultar && !(aberto_(a) || aberto_(b) || lib.has(a) || lib.has(b) || cleared(a) || cleared(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); });
+    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', ocultar && !(rev.has(a) || rev.has(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); });
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
     g.classList.toggle('done', ok); g.classList.toggle('avail', av && !ok); g.classList.toggle('lock', !av && !ok); g.classList.toggle('isstart', n.id === S.startId);
-    if (n.tipo === 'boss') g.classList.toggle('opened', bossOpen());
+    if (n.tipo === 'boss') g.classList.toggle('opened', guardVivos() === 0);
   }
 
   // ---- câmera: arrastar, pinça, roda do mouse
@@ -240,6 +241,7 @@
       else if (a === 'start') { const st = BY[posId()]; centerOn(st.x, st.y, .8, true); }
       else if (a === 'fit') fit(true);
       else if (a === 'leg') legenda();
+      else if (a === 'cartas') minhasCartas();
     });
     window.addEventListener('resize', () => { if (view === 'map' && svg && svg.isConnected) applyCam(false); });
   }
@@ -304,18 +306,19 @@
   let curId = null;
   function closeSheet() { if (sheet) { sheet.hidden = true; curId = null; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); } }
   function openNode(id) {
-    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; curId = id; SND.play('click');
+    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; curId = id; SND.play('click'); if (id === posId()) chegada(id);
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id);
+    const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
     const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div><p class="hint">As cartas do inimigo aparecem depois do primeiro duelo.</p>`;
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo de 3 jogadores' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · lado ${esc(LADOS[n.lado].toLowerCase())}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      <p>${esc(T.desc)}</p><p class="hint">${esc(jog)}${n.id === M.boss && !bossOpen() ? ` · faltam ${GUARD.filter(x => !cleared(x)).length} guardiões e ${MINIS.filter(x => !cleared(x)).length} da União` : ''}</p>${cartas}
-      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" disabled>Entrar (em breve)</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <p>${esc(T.desc)}</p>${evLinha}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}
+      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'loja') loja(id); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;
@@ -323,15 +326,15 @@
     if (sy > free - 50 || sy < 60 || sx < 30 || sx > w - 30) { cam.y += want - sy; cam.x += Math.max(30, Math.min(w - 30, sx)) - sx; applyCam(true); }
   }
   function toggleWin(id) {
-    const wasOpen = bossOpen(), ok = cleared(id);
+    const ok = cleared(id);
     if (ok) delete S.cleared[id]; else S.cleared[id] = 1;
     const mem = LIBERTA[id]; if (mem) { S.owned = S.owned || []; if (ok) S.owned = S.owned.filter(x => x !== mem); else if (!S.owned.includes(mem)) S.owned.push(mem); }
     save(); SND.play(ok ? 'tick' : 'capture'); paintAll(); openNode(id);
-    if (mem && !ok) setTimeout(() => libertar(mem), 500);
+    if (mem && !ok) setTimeout(() => libertar(mem, () => { const f = (window.DS_FALAS_UNIAO || {})[mem]; if (f) npcFala(mem, f); }), 500);
+    if (GUARD.includes(id) && !ok) setTimeout(() => quandoLivre(() => golpeBoss()), 500);
     if (!ok && Object.keys(S.cleared).length === 1 && !mem) setTimeout(tutorial, 900);
     if (id === M.boss && !ok) setTimeout(finalCena, 900);
     const g = $('.n[data-id="' + id + '"]', root); if (g && !ok) { g.classList.remove('pop'); void g.getBoundingClientRect(); g.classList.add('pop'); }
-    if (!wasOpen && bossOpen()) bossAbre();
   }
   // ---- duelo de verdade: mãos fixas (7 cartas por lado), captura, pêndulos e volta ao mapa
   const FORCA = id => { const c = U.CARDS[id]; return c ? Object.values(c.stats).reduce((a, b) => a + b, 0) : 0; };
@@ -350,17 +353,18 @@
     usadas.forEach(id => { S.fadiga[id] = (S.fadiga[id] | 0) + pesoCansa(id); n++; }); return n;
   }
   const pontosFad = id => '<span class="hs-fad">' + '●'.repeat(Math.min(6, fad(id))) + '</span>';
-  function escolher7(bat, ok) {   // o jogador escolhe as 7 cartas do duelo
-    const todas = (S.owned || []).slice().sort((a, b) => FORCA(b) - FORCA(a));
-    if (todas.length <= 7 && !fadigaOn()) { ok(todas.slice(0, 7)); return; }
+  function escolher7(bat, ok, opt) {   // o jogador escolhe as cartas do duelo (7, ou menos em alguns eventos)
+    opt = opt || {}; if (opt.so && !(S.owned || []).some(c => (U.CARDS[c] || {}).raridade === opt.so)) opt = { n: opt.n }; const N = opt.n || 7;   // sem carta da raridade pedida: vale a melhor
+    const todas = (S.owned || []).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
+    if (todas.length <= N && !fadigaOn()) { ok(todas.slice(0, N)); return; }
     const livres = () => todas.filter(id => !fadigaOn() || !fad(id));
-    const box = el(`<div class="hs-esc"><h3>Escolha 7 cartas</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores 7</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
+    const box = el(`<div class="hs-esc"><h3>Escolha ${N} ${N === 1 ? 'carta' : 'cartas'}${opt.so ? ' lendária' : ''}</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores 7</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
     const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), msg = $('.hs-msg', box), go = $('[data-a=go]', box);
     const sel = new Set(); let forcadas = new Set();
-    const auto = () => { sel.clear(); forcadas = new Set(); const L = livres(); L.slice(0, 7).forEach(x => sel.add(x));
-      if (sel.size < 7) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < 7) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
+    const auto = () => { sel.clear(); forcadas = new Set(); const L = livres(); L.slice(0, N).forEach(x => sel.add(x));
+      if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
     const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); g.append(w); }); };
-    const upd = () => { cnt.textContent = sel.size + ' / 7'; go.disabled = sel.size !== 7; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
+    const upd = () => { cnt.textContent = sel.size + ' / ' + N; go.disabled = sel.size !== N; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
       msg.textContent = forcadas.size ? 'Faltam cartas descansadas: ' + forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa carta cansada para descansá-la (' + CUSTO_DESC + ' pêndulos por ponto).' : ''; };
     auto(); montar();
     const m = U.modal(box, { cls: 'hs-modal' });
@@ -370,37 +374,58 @@
         if (fadigaOn() && fad(id) && !sel.has(id)) {   // carta cansada: pagar para descansar
           const custo = fad(id) * CUSTO_DESC;
           if ((S.pend | 0) < custo) { msg.textContent = 'Faltam pêndulos: descansar custa ' + custo + ' (você tem ' + (S.pend | 0) + ').'; SND.play('tick'); return; }
-          S.pend -= custo; delete S.fadiga[id]; save(); SND.play('capture'); if (sel.size < 7) { sel.add(id); } montar(); upd(); msg.textContent = 'Carta descansada (−' + custo + ' pêndulos).'; return; }
-        SND.play('tick'); forcadas.delete(id); if (sel.has(id)) sel.delete(id); else if (sel.size < 7) sel.add(id); upd(); return; }
+          S.pend -= custo; delete S.fadiga[id]; save(); SND.play('capture'); if (sel.size < N) { sel.add(id); } montar(); upd(); msg.textContent = 'Carta descansada (−' + custo + ' pêndulos).'; return; }
+        SND.play('tick'); forcadas.delete(id); if (sel.has(id)) sel.delete(id); else if (sel.size < N) sel.add(id); upd(); return; }
       if (!b) return; SND.play('click');
       if (b.dataset.a === 'melhores') { auto(); upd(); }
-      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && sel.size === 7) { m.close(); ok(todas.filter(x => sel.has(x))); }
+      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && sel.size === N) { m.close(); ok(todas.filter(x => sel.has(x))); }
     };
     upd();
   }
+  const embaralha = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const textoEvento = ev => { const c = (window.DS_EVENTOS_H || {})[ev.id]; if (!c) return null; return { nome: c.nome, regra: c.regra.replace('{A}', ev.attr && U.ATT[ev.attr] ? U.ATT[ev.attr].nome : '') }; };
   function duelar(id, auto) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
     const n = BY[id], bat = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (!bat || n.tipo === 'loja') return;
-    (auto ? (b, f) => f((S.owned || []).slice(0, 7)) : escolher7)(bat, mao => {
-      const usadas = new Set(mao), inims = bat.i.map(x => x.c.slice()), conf = new Set(mao);
+    const ev = bat.e || null, opt0 = n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
+    const autoMao = () => { const o = (S.owned || []).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so); return (o.length ? o : (S.owned || [])).slice(0, opt.n || 7); };
+    (auto ? (b, f) => f(autoMao()) : (b, f) => escolher7(b, f, opt))(bat, mao0 => {
+      let mao = mao0.slice(); const usadas = new Set(mao), inims = bat.i.map(x => x.c.slice()), conf = new Set(mao);
       inims.forEach(l => l.forEach(c => conf.add(c)));
       const mudou = new Set(mao);   // cartas do inimigo que o jogador já tem em mãos são trocadas por outras da mesma raridade
       inims.forEach(l => l.forEach((c, k) => { if (mudou.has(c) || usadas.has(c)) {
         const raridade = U.CARDS[c].raridade, pool = U.D.CARTAS.filter(x => x.raridade === raridade && !x.uniao && x.id !== 'S11' && !conf.has(x.id));
         const novo = pool.length ? pool[Math.floor(Math.random() * pool.length)].id : c; l[k] = novo; conf.add(novo); } else mudou.add(c); }));
-      const players = [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }].concat(bat.i.map(x => ({ name: x.n, bot: true, diff: NIVEIS[nivelBot(n)] })));
+      const livres = (f, k) => { const pool = embaralha(U.D.CARTAS.filter(x => !x.uniao && x.id !== 'S11' && !conf.has(x.id) && f(x))).slice(0, k); pool.forEach(x => conf.add(x.id)); return pool.map(x => x.id); };
+      const reg = ev ? Object.assign({}, ev) : null; let semMontar = false;
+      if (ev) {   // regras que mexem nas cartas (as de motor ficam em engine.js)
+        if (ev.id === 'desvantagem') inims.forEach(l => l.push(...livres(x => x.raridade === U.CARDS[l[0]].raridade || x.raridade === 'comum', 2)));
+        else if (ev.id === 'horda') inims.forEach((l, k) => { const c = livres(x => x.raridade === 'comum', 10); if (c.length) inims[k] = c; });
+        else if (ev.id === 'curto') inims.forEach((l, k) => { inims[k] = l.slice().sort((a, b) => FORCA(b) - FORCA(a)).slice(0, 3); });
+        else if (ev.id === 'troca') { const mx = l => l.reduce((b, c) => FORCA(c) > FORCA(b) ? c : b, l[0]); const l0 = inims[0], a = mx(mao), b = mx(l0); mao[mao.indexOf(a)] = b; l0[l0.indexOf(b)] = a; }
+        else if (ev.id === 'aleatoria') { semMontar = true; mao = embaralha(mao); inims.forEach((l, k) => { inims[k] = embaralha(l); }); }
+        else if (ev.id === 'reforcos') reg.pool = livres(x => x.raridade === 'comum', 8);
+      }
+      const bots = bat.i.map(x => ({ name: x.n, bot: true, diff: ev && ev.id === 'clarividente' ? 'dificil' : NIVEIS[nivelBot(n)] }));
+      const players = [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }].concat(bots);
       const musica = n.tipo === 'boss' ? 'boss' : (n.tipo === 'miniboss' || n.tipo === 'guardiao') ? 'mini' : 'batalha';
       try { SND.histStop(true); } catch (e) { }
-      const hist = { musica, id, aoFim: res => {
+      const besta = n.tipo === 'boss' ? bonusBoss() : 0, bonusPids = bat.i.map((_, k) => k + 1);
+      const uni = n.tipo === 'boss' ? mao.filter(c => UNIAO.includes(c)) : [], uniTodas = uni.length === UNIAO.length;
+      const hist = { musica, id, evento: ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         SND.histLock = null; try { SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
         if (res.venceu && !cleared(id)) {
-          S.pend = (S.pend | 0) + premioDe(n); const cn = aplicaCansaco(mao); save(); if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
-          setTimeout(() => { toggleWin(id); if (res.capturadas.length) setTimeout(() => abrirBau({ cartas: res.capturadas }), 700); }, 450);
-        } else { try { SND.histPlay('mapa'); } catch (e) { } }
+          S.pend = (S.pend | 0) + premioDe(n); const cn = aplicaCansaco(mao0); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
+          if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Ei, {nome}! Você nos levou à batalha e venceu, mas estamos exaustas.', 'Cartas usadas numa vitória ficam cansadas, e as mais raras cansam mais. As bolinhas laranja mostram quanto falta para descansar.', 'Cada vitória sem nós descansa 1 ponto. Se tiver pressa, os pêndulos descansam na hora: é só tocar numa carta cansada na hora de escolher.', 'Se faltarem cartas descansadas, as menos cansadas completam seu time. Derrota não cansa ninguém.']); });
+          else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
+          setTimeout(() => { toggleWin(id); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } }, 450);
+        } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
       } };
-      U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: false, maos: [mao].concat(inims), historia: hist });
+      const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: false, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
+      if (uni.length && !auto) entradaUniao(uni, uniTodas, lanca); else lanca();
     });
   }
+  function quandoLivre(fn, n) { n = n || 0; if (n > 40) return; if ($('.bau-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1), 700); return; } fn(); }   // espera baús e outros diálogos fecharem
   // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
   function npcFala(cid, linhas, done) {
     closeSheet(); const c = U.CARDS[cid]; let i = 0, tm = null, pronto = false;
@@ -417,19 +442,63 @@
     npcFala(S.npc, ['Você venceu a primeira batalha. Eu estava na sua mão, lembra? Agora vou te mostrar como isso funciona.',
       'Cada vitória ilumina os caminhos à frente. Use as setas ao lado do seu boneco para andar, um passo de cada vez.',
       'Pêndulos compram cartas nas lojas e descansam as suas cartas. Baús e batalhas dão mais.',
-      'Cada miniboss prende um membro da União. Liberte os oito e derrote os quatro guardiões para chegar à Besta.',
+      'Cada arauto prende um membro da União. Liberte os oito e derrote os guardiões para enfraquecer a Besta.',
       'Pelo caminho, alguns viajantes vendem atalhos. Boa sorte, {nome}.']);
   }
   // miniboss vencido: o membro da União preso por ele é libertado e entra na equipe
-  function libertar(cid) {
+  function libertar(cid, depois) {
     closeSheet(); const c = U.CARDS[cid]; if (!c) return;
     const ov = el(`<div class="bau-ov lib"><div class="lib-t">Libertado!</div><div class="lib-c"></div><div class="lib-n">${esc(c.nome)} entrou para a sua equipe</div><div class="lib-k">${(S.owned || []).filter(x => Object.values(LIBERTA).includes(x)).length} / ${MINIS.length} da União</div><button class="btn primary bau-ok">Continuar</button></div>`);
     $('.lib-c', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 150 })); document.body.appendChild(ov); SND.play('legend');
-    $('.bau-ok', ov).onclick = () => { SND.play('click'); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); };
+    $('.bau-ok', ov).onclick = () => { SND.play('click'); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (depois) setTimeout(depois, 450); };
+  }
+  // cartas da União entram no duelo contra a Besta: aparecem na tela; com as oito, a entrada é maior e elas ficam douradas (+5 em tudo)
+  function entradaUniao(cartas, todas, depois) {
+    closeSheet(); const red = document.body.classList.contains('reduce');
+    const ov = el(`<div class="uni-ov${todas ? ' gold' : ''}"><div class="uni-t">${todas ? 'A União completa!' : 'A União entra no duelo'}</div><div class="uni-r"></div><div class="uni-s">${todas ? '+5 em todos os atributos de cada carta da União' : cartas.length + ' / ' + UNIAO.length + ' da União. Com as oito, algo especial acontece.'}</div></div>`);
+    const r = $('.uni-r', ov); cartas.forEach((c, i) => { const w = el('<div class="uni-c" style="--i:' + i + '"></div>'); w.append(U.cardEl(c, { up: true, noanim: true, cw: todas ? 78 : 92 })); r.append(w); });
+    document.body.appendChild(ov); SND.play(todas ? 'legend' : 'capture'); let fim = false;
+    const sai = () => { if (fim) return; fim = true; ov.classList.add('out'); setTimeout(() => { ov.remove(); depois(); }, 350); };
+    ov.onclick = sai; setTimeout(sai, red ? 1200 : todas ? 4200 : 2600);
   }
   function finalCena() {
     if (!window.DSCinema || !window.DS_CINEMATICA_FINAL) return;
     window.DSCinema.play(() => { try { SND.histPlay('mapa'); } catch (e) { } }, window.DS_CINEMATICA_FINAL, { nome: (S && S.nome) || 'Viajante' });
+  }
+  // ao derrotar um guardião: o ponto da Besta é "atingido" (tremor, clarão, golpe), mostrando quanto ela enfraqueceu
+  function golpeBoss() {
+    if (view !== 'map') return; closeSheet(); const b = BY[M.boss], red = document.body.classList.contains('reduce'), hs = $('.hs', root), nodo = $('.n.t-boss', root), vivos = guardVivos();
+    centerOn(b.x, b.y, .75, !red);
+    setTimeout(() => {
+      SND.play('elim'); setTimeout(() => SND.play('defeat'), 140);
+      if (!red) { if (hs) { hs.classList.remove('tremor'); void hs.offsetWidth; hs.classList.add('tremor'); setTimeout(() => hs.classList.remove('tremor'), 1000); }
+        const fl = el('<div class="hs-flash"></div>'); (hs || document.body).append(fl); setTimeout(() => fl.remove(), 900);
+        if (nodo) { nodo.classList.remove('hit'); void nodo.getBoundingClientRect(); nodo.classList.add('hit'); setTimeout(() => nodo.classList.remove('hit'), 1500); } }
+      toast(vivos ? `A Besta foi atingida! Agora ela ganha +${30 * vivos} em todos os atributos (${vivos} guardiões vivos).` : 'A Besta está no seu momento mais fraco: nenhum guardião vivo.');
+    }, red ? 100 : 700);
+    setTimeout(() => { const ps = BY[posId()]; if (view === 'map') centerOn(ps.x, ps.y, null, !red); }, red ? 600 : 3600);
+  }
+  // ---- diálogos de carta, uma única vez cada (S.dicas)
+  const DICAS = {
+    evento: ['O raio marca um evento: uma regra especial que vale só naquela batalha.', 'Durante o duelo, toque no botão ⚡ Evento para rever a regra.'],
+    elite: ['Cuidado: este inimigo é mais forte que os comuns. Em troca, paga mais pêndulos.'],
+    miniboss: ['Este é um dos oito arautos. Ele prende uma carta da União: ao derrotá-lo, ela é libertada e entra para a sua equipe.', 'Cada arauto também guarda a entrada do minigame do setor dele. Há uma coisa que só a União completa vai poder fazer diante da Besta.'],
+    guardiao: ['Um dos quatro guardiões da Besta. Ele é muito mais forte que os outros.', 'Cada guardião derrotado tira 30 pontos de cada atributo das cartas dela. Derrote todos e ela fica no seu momento mais fraco.'],
+    boss: ['É aqui. A Besta.', 'Você pode enfrentá-la quando quiser, mas as cartas dela ganham 30 pontos em todos os atributos por cada guardião que ainda vive.', 'Se levar a União inteira para o duelo, algo especial acontece.'],
+    loja: ['Uma loja! Aqui os pêndulos compram cartas e descansam as cansadas.', 'Lojas não bloqueiam o caminho: o que vem depois delas já fica liberado.'],
+    derrota: ['Perdemos esta, mas calma. Derrota não custa nada: nem cartas, nem pêndulos.', 'Reorganize o time, descanse as cartas se precisar, e tente de novo.'],
+    captura: ['Viu? Capturamos uma carta do inimigo e agora ela é nossa.', 'Só vale a carta realmente capturada: a que o inimigo usou como especial, ou que você derrotou sem capturar, não vem para cá.'],
+    bau: ['Baús escondem pêndulos ou cartas novas.', 'Costumam ficar nos becos sem saída, então vale explorar os ramos que não levam a lugar nenhum.'],
+    minigame: ['Um desafio extra! Não bloqueia o caminho.', 'Quem o vence leva um broche.'],
+    broche: ['Um broche… Não sei para que serve.', 'Mas algo me diz que vale a pena juntá-los todos.'],
+  };
+  function dica(chave, quem) {
+    if (!S || (S.dicas && S.dicas[chave]) || !DICAS[chave]) return; S.dicas = S.dicas || {}; S.dicas[chave] = 1; save();
+    quandoLivre(() => npcFala(quem || S.npc || (S.owned || [])[0], DICAS[chave]));
+  }
+  function chegada(id) {   // o boneco está neste ponto: diálogo da primeira vez
+    const n = BY[id]; if (!n || !S.tutorial) return;   // antes do tutorial, a primeira vitória tem a vez
+    if (n.tipo === 'evento') dica('evento'); else if (n.tipo === 'elite') dica('elite'); else if (n.tipo === 'miniboss') dica('miniboss'); else if (n.tipo === 'guardiao') dica('guardiao'); else if (n.tipo === 'boss') dica('boss'); else if (n.tipo === 'loja') dica('loja');
   }
   function bossAbre() {
     closeSheet(); const b = BY[M.boss]; const red = document.body.classList.contains('reduce');
@@ -463,7 +532,7 @@
       }
       ok.hidden = false;
     }, 1700);
-    const fechar = () => { if (fim) return; fim = true; ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (S) { S.pend = (S.pend | 0) + pend; cartas.forEach(id => { if (!S.owned.includes(id)) S.owned.push(id); }); save(); if (view === 'map' && svg && svg.isConnected) paintAll(); } done && done(); };
+    const fechar = () => { if (fim) return; fim = true; if (!premio.semDica) setTimeout(() => dica('bau'), 600); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (S) { S.pend = (S.pend | 0) + pend; cartas.forEach(id => { if (!S.owned.includes(id)) S.owned.push(id); }); save(); if (view === 'map' && svg && svg.isConnected) paintAll(); } done && done(); };
     ok.onclick = () => { SND.play('click'); fechar(); };
   }
   function sorteioBau() {   // teste: 60% pêndulos, 40% de 1 a 3 cartas novas (ainda não possuídas)
@@ -474,6 +543,54 @@
   }
 
   // ---- legenda e opções de teste
+  // ---- minhas cartas (menu) e lojas
+  const ORD = { lendaria: 0, epica: 1, rara: 2, comum: 3 };
+  const PRECO = { comum: 40, rara: 90, epica: 200, lendaria: 450 };   // PROPOSTA: preço das cartas nas lojas em pêndulos (a calibrar)
+  function descansar(id) {   // paga e descansa uma carta; devolve o custo ou 0 se faltar
+    const custo = fad(id) * CUSTO_DESC; if (!custo || (S.pend | 0) < custo) return 0;
+    S.pend -= custo; delete S.fadiga[id]; save(); return custo;
+  }
+  function minhasCartas(emLoja) {
+    closeSheet(); const box = el('<div class="hs-esc hs-mc"><h3>Minhas cartas</h3><p class="hint hs-info"></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="todas">Descansar todas</button><button class="btn primary" data-a="x">Fechar</button></div></div>');
+    const g = $('.hs-escg', box), info = $('.hs-info', box), bt = $('[data-a=todas]', box); let msg = '';
+    const lista = () => (S.owned || []).slice().sort((a, b) => (ORD[(U.CARDS[a] || {}).raridade] - ORD[(U.CARDS[b] || {}).raridade]) || FORCA(b) - FORCA(a));
+    const render = () => {
+      const L = lista(), cans = L.filter(id => fad(id)), total = cans.reduce((t, id) => t + fad(id) * CUSTO_DESC, 0);
+      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque numa para descansar (' + CUSTO_DESC + ' pêndulos por ponto). Cada vitória sem usá-las descansa 1 ponto.' : 'Todas as cartas estão descansadas.') : 'O cansaço começa quando você tiver 21 cartas (' + L.length + ' agora).') + ' Pêndulos: ' + (S.pend | 0);
+      g.innerHTML = ''; L.forEach(id => { const w = el('<div class="hs-escc on' + (fad(id) ? ' tired' : '') + '" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fad(id)) w.append(el('<div class="hs-fadb">' + pontosFad(id) + '</div>')); g.append(w); });
+      bt.hidden = !cans.length; bt.textContent = 'Descansar todas (' + total + ')'; bt.disabled = total > (S.pend | 0); paintAll();
+    };
+    const m = U.modal(box, { cls: 'hs-modal' }); render();
+    box.onclick = e => {
+      const c = e.target.closest('.hs-escc'), b = e.target.closest('[data-a]');
+      if (c && fad(c.dataset.id)) { const id = c.dataset.id, custo = descansar(id); if (custo) { SND.play('capture'); msg = U.CARDS[id].nome + ' descansou (−' + custo + ' pêndulos).'; } else { SND.play('tick'); msg = 'Faltam pêndulos: descansar custa ' + fad(id) * CUSTO_DESC + '.'; } render(); return; }
+      if (!b) return; SND.play('click');
+      if (b.dataset.a === 'x') m.close();
+      else if (b.dataset.a === 'todas') { let t = 0; Object.keys(S.fadiga || {}).forEach(id => { const k = fad(id) * CUSTO_DESC; if ((S.pend | 0) >= k) { S.pend -= k; delete S.fadiga[id]; t += k; } }); save(); SND.play('capture'); msg = t ? 'Descansadas (−' + t + ' pêndulos).' : 'Faltam pêndulos.'; render(); }
+    };
+  }
+  // estoque fixo por loja (sorteado uma vez e guardado): 6 cartas que o jogador ainda não tem; raridade sobe com a região
+  function estoque(id) {
+    S.lojas = S.lojas || {}; if (S.lojas[id]) return S.lojas[id];
+    const tier = BY[id].tier || 1, plano = [['comum', 'comum', 'comum', 'rara', 'rara', 'epica'], ['comum', 'comum', 'rara', 'rara', 'epica', 'epica'], ['comum', 'rara', 'rara', 'epica', 'epica', 'lendaria'], ['rara', 'rara', 'epica', 'epica', 'lendaria', 'lendaria']][Math.min(3, tier - 1)];
+    const em = new Set(S.owned || []); S.lojas[id] = { itens: [], comprados: [] };
+    plano.forEach(r => { const pool = embaralha(U.D.CARTAS.filter(x => x.raridade === r && !x.uniao && x.id !== 'S11' && !em.has(x.id))); const x = pool[0]; if (x) { em.add(x.id); S.lojas[id].itens.push(x.id); } });
+    save(); return S.lojas[id];
+  }
+  function loja(id) {
+    closeSheet(); const est = estoque(id); const box = el('<div class="hs-esc hs-loja"><h3>Loja</h3><p class="hint hs-info"></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="mc">Minhas cartas</button><button class="btn primary" data-a="x">Sair</button></div></div>');
+    const g = $('.hs-escg', box), info = $('.hs-info', box); let msg = '';
+    const render = () => { info.textContent = (msg || 'Toque numa carta para comprar.') + ' Pêndulos: ' + (S.pend | 0); g.innerHTML = '';
+      est.itens.forEach(c => { const got = est.comprados.includes(c), p = PRECO[U.CARDS[c].raridade] || 50; const w = el('<div class="hs-escc on hs-item' + (got ? ' got' : '') + '" data-id="' + c + '"></div>'); w.append(U.cardEl(c, { up: true, noanim: true, cw: 72 })); w.append(el('<div class="hs-preco">' + (got ? 'comprada' : p) + '</div>')); g.append(w); }); paintAll(); };
+    const m = U.modal(box, { cls: 'hs-modal' }); render();
+    box.onclick = e => {
+      const c = e.target.closest('.hs-item'), b = e.target.closest('[data-a]');
+      if (c) { const k = c.dataset.id; if (est.comprados.includes(k)) return; const p = PRECO[U.CARDS[k].raridade] || 50;
+        if ((S.pend | 0) < p) { SND.play('tick'); msg = 'Faltam pêndulos: ' + U.CARDS[k].nome + ' custa ' + p + '.'; render(); return; }
+        S.pend -= p; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); msg = U.CARDS[k].nome + ' entrou para a sua coleção (−' + p + ').'; render(); return; }
+      if (!b) return; SND.play('click'); if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'mc') { m.close(); minhasCartas(); }
+    };
+  }
   function legenda() {
     const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><span class="hs-dot" style="background:${TIPOS[k].cor}"></span><b>${TIPOS[k].nome}</b><span>${esc(TIPOS[k].desc)}</span></li>`).join('');
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
@@ -494,5 +611,5 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } });
   }
 
-  window.DSHistoria = { escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S };
+  window.DSHistoria = { loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S };
 })();

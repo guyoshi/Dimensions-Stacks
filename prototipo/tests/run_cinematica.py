@@ -48,7 +48,7 @@ try:
         if not pg.query_selector('.npc'): break
         pg.click('.npc'); pg.wait_for_timeout(150); pg.click('.npc'); pg.wait_for_timeout(150)
     chk(pg.query_selector('.npc') is None and pg.evaluate('window.DSHistoria.state().tutorial') == 1, 'tutorial termina e não repete')
-    e1 = pg.evaluate("document.querySelectorAll('.hs-edges .e:not(.fog)').length"); chk(e1 > e0, 'caminhos surgem ao vencer: %d antes, %d depois' % (e0, e1))
+    e1 = pg.evaluate("document.querySelectorAll('.hs-edges .e:not(.fog)').length"); chk(e1 >= e0 and e1 < 20, 'só os caminhos próximos ficam visíveis: %d antes, %d depois' % (e0, e1))
     chk(pg.evaluate("document.querySelectorAll('.flag').length") == 0, 'sem faixas Início/Partida')
     pg.keyboard.press('Escape')
     # pular

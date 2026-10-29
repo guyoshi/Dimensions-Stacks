@@ -1,0 +1,225 @@
+{
+ "v": 1,
+ "aviso": "Etapa 3 aplicada (tools/atribuir_eventos_historia.py). Só regras já implementadas no motor; as demais ficam para os próximos lotes.",
+ "convertidos": [
+  "B007",
+  "B008",
+  "B011",
+  "B013",
+  "B017",
+  "B019",
+  "B020",
+  "B022",
+  "B023",
+  "B024",
+  "B025",
+  "B027",
+  "B029",
+  "B033",
+  "B034",
+  "B035",
+  "B036",
+  "B038",
+  "B042",
+  "B043",
+  "B044",
+  "B047",
+  "B053",
+  "B054",
+  "B055",
+  "B058",
+  "B063",
+  "B069",
+  "B080",
+  "B083",
+  "B087",
+  "B089",
+  "B090",
+  "B092"
+ ],
+ "eventos": {
+  "B080": {
+   "id": "davi"
+  },
+  "B089": {
+   "id": "clarividente"
+  },
+  "B066": {
+   "id": "contagem"
+  },
+  "B057": {
+   "id": "alvo"
+  },
+  "B058": {
+   "id": "magnetico"
+  },
+  "B055": {
+   "id": "desvantagem"
+  },
+  "B052": {
+   "id": "sobrecarga"
+  },
+  "B044": {
+   "id": "troca"
+  },
+  "B070": {
+   "id": "solar"
+  },
+  "B048": {
+   "id": "pressa"
+  },
+  "B033": {
+   "id": "limite",
+   "n": 15
+  },
+  "B017": {
+   "id": "abertas"
+  },
+  "B045": {
+   "id": "unico",
+   "attr": "def"
+  },
+  "B049": {
+   "id": "horda"
+  },
+  "B008": {
+   "id": "tregua"
+  },
+  "B056": {
+   "id": "reforcos"
+  },
+  "B069": {
+   "id": "arsenal"
+  },
+  "B034": {
+   "id": "estelar"
+  },
+  "B011": {
+   "id": "avesso"
+  },
+  "B020": {
+   "id": "meio"
+  },
+  "B019": {
+   "id": "invertidos"
+  },
+  "B023": {
+   "id": "proibido",
+   "attr": "pod"
+  },
+  "B035": {
+   "id": "rodizio"
+  },
+  "B043": {
+   "id": "curto"
+  },
+  "B036": {
+   "id": "aleatoria"
+  },
+  "B025": {
+   "id": "mare"
+  },
+  "B007": {
+   "id": "morte",
+   "n": 3
+  },
+  "B022": {
+   "id": "silencio"
+  },
+  "B010": {
+   "id": "limite",
+   "n": 15
+  },
+  "B053": {
+   "id": "morte",
+   "n": 3
+  },
+  "B083": {
+   "id": "alvo"
+  },
+  "B099": {
+   "id": "reforcos"
+  },
+  "B029": {
+   "id": "silencio"
+  },
+  "B065": {
+   "id": "unico",
+   "attr": "int"
+  },
+  "B091": {
+   "id": "magnetico"
+  },
+  "B013": {
+   "id": "pressa"
+  },
+  "B061": {
+   "id": "horda"
+  },
+  "B082": {
+   "id": "arsenal"
+  },
+  "B012": {
+   "id": "meio"
+  },
+  "B063": {
+   "id": "solar"
+  },
+  "B090": {
+   "id": "troca"
+  },
+  "B024": {
+   "id": "estelar"
+  },
+  "B077": {
+   "id": "avesso"
+  },
+  "B087": {
+   "id": "aleatoria"
+  },
+  "B027": {
+   "id": "mare"
+  },
+  "B047": {
+   "id": "abertas"
+  },
+  "B075": {
+   "id": "sobrecarga"
+  },
+  "B037": {
+   "id": "invertidos"
+  },
+  "B042": {
+   "id": "curto"
+  },
+  "B092": {
+   "id": "proibido",
+   "attr": "vel"
+  },
+  "B031": {
+   "id": "rodizio"
+  },
+  "B054": {
+   "id": "desvantagem"
+  },
+  "B005": {
+   "id": "tregua"
+  },
+  "B076": {
+   "id": "contagem"
+  },
+  "B001": {
+   "id": "aleatoria"
+  },
+  "B050": {
+   "id": "pressa"
+  },
+  "B038": {
+   "id": "silencio"
+  },
+  "B030": {
+   "id": "morte",
+   "n": 3
+  }
+ }
+}

@@ -1571,3 +1571,34 @@ body.reduce .cin-foto { animation-duration: .01s; }
 .hs-esc .row { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
 .hs-escc { position: relative; } .hs-escc.tired { opacity: .35; filter: grayscale(.7); } .hs-escc.tired.on { opacity: .8; }
 .hs-fadb { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; pointer-events: none; } .hs-fad { color: #ff8a5c; font-size: 11px; letter-spacing: 1px; text-shadow: 0 1px 3px #000; }
+
+.evchip { position: absolute; z-index: 30; left: 8px; top: 128px; border: 1px solid #ffd25f88; background: #0b0820dd; color: #ffd25f; font: 800 12px/1 var(--f-body); padding: 6px 12px; border-radius: 99px; cursor: pointer; max-width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.abertas span { display: inline-block; }
+.hs-ev { color: #ffd25f; margin: 4px 0; }
+
+.hs.tremor { animation: hstremor .9s linear; } @keyframes hstremor { 0%,100% { transform: translate(0,0); } 10% { transform: translate(-9px,5px); } 20% { transform: translate(8px,-6px); } 30% { transform: translate(-7px,-4px); } 40% { transform: translate(6px,7px); } 55% { transform: translate(-4px,3px); } 70% { transform: translate(3px,-3px); } 85% { transform: translate(-2px,1px); } }
+.hs-flash { position: absolute; inset: 0; z-index: 20; pointer-events: none; background: radial-gradient(circle at 50% 50%, #fff 0, #ff4a4acc 40%, #ff4a4a00 75%); animation: hsflash .9s ease-out forwards; } @keyframes hsflash { 0% { opacity: 0; } 12% { opacity: .95; } 100% { opacity: 0; } }
+.n.hit .body, .n.hit image { animation: hshit 1.4s ease-out; transform-box: fill-box; transform-origin: center; } @keyframes hshit { 0% { transform: scale(1); filter: brightness(1); } 12% { transform: scale(1.35) rotate(-6deg); filter: brightness(3) saturate(2); } 28% { transform: scale(.88) rotate(5deg); } 45% { transform: scale(1.12) rotate(-3deg); } 100% { transform: scale(1); filter: brightness(1); } }
+/* entrada da União no duelo contra a Besta */
+.uni-ov{position:fixed;inset:0;z-index:9000;background:#05031add;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:16px;animation:uniIn .35s ease both}
+.uni-ov.out{opacity:0;transition:opacity .35s}
+.uni-t{font-family:var(--f-disp);font-size:22px;font-weight:700;color:var(--gold2);text-align:center}
+.uni-ov.gold .uni-t{font-size:30px;color:var(--gold);text-shadow:0 0 18px #ffc46bcc}
+.uni-r{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:100%}
+.uni-c{animation:uniCard .6s cubic-bezier(.2,.9,.3,1.2) both;animation-delay:calc(var(--i)*.14s);border-radius:10px}
+.uni-ov.gold .uni-c{box-shadow:0 0 0 2px var(--gold),0 0 22px 4px #ffc46bbb;animation:uniCard .8s cubic-bezier(.2,.9,.3,1.3) both,uniGold 1.4s ease-in-out .9s infinite alternate;animation-delay:calc(var(--i)*.18s),calc(.9s + var(--i)*.1s)}
+.uni-s{font-size:14px;color:var(--ink2);text-align:center;max-width:320px}
+.uni-ov.gold .uni-s{color:var(--gold2);font-weight:700}
+@keyframes uniIn{from{opacity:0}to{opacity:1}}
+@keyframes uniCard{from{opacity:0;transform:translateY(60px) scale(.5)}to{opacity:1;transform:none}}
+@keyframes uniGold{from{box-shadow:0 0 0 2px var(--gold),0 0 14px 2px #ffc46b88}to{box-shadow:0 0 0 3px var(--gold2),0 0 34px 8px #ffc46bff}}
+body.reduce .uni-c,body.reduce .uni-ov{animation:none!important}
+/* dica da mesa: botões sempre visíveis, o conteúdo rola por baixo */
+.coach .box { max-height: calc(100% - 8px); }
+.coach .tipbar { position: sticky; bottom: -18px; z-index: 5; padding: 10px 0 18px; margin: 6px 0 -18px; background: linear-gradient(180deg, #110a2800, #110a28 28%); }
+.coach.spot .tipbar { bottom: -10px; padding-bottom: 10px; margin-bottom: -10px; }
+/* minhas cartas e loja */
+button.hs-pill { font: inherit; color: inherit; cursor: pointer; }
+.hs-preco { position: absolute; left: 0; right: 0; bottom: 3px; text-align: center; font-size: 12px; font-weight: 800; color: var(--gold2); text-shadow: 0 1px 3px #000; pointer-events: none; }
+.hs-item.got { opacity: .35; }
+.hs-mc .hs-escc, .hs-loja .hs-escc { opacity: 1; outline-color: transparent; } .hs-mc .hs-escc.tired { opacity: .45; }

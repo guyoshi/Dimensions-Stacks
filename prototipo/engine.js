@@ -233,7 +233,8 @@
       this.io = cfg.io || {};
       this.rand = mkRng(this.cfg.seed);
       this.logs = [];
-      this.s = { players: [], bh: [], clones: {}, round: 1, combats: 0, initiator: 0, initiated: new Set(), over: false, winner: null };
+      this.rg = this.cfg.regra ? this.cfg.regra.id : null; this.rgp = this.cfg.regra || {}; this.t0 = Date.now();   // regra fixa da batalha (modo história)
+      this.s = { caps: {}, extra: 0, players: [], bh: [], clones: {}, round: 1, combats: 0, initiator: 0, initiated: new Set(), over: false, winner: null };
       this.cards = CARDS; this.specials = SP;
     }
     // agenda determinística (pela semente): no máximo um fenômeno por rodada, nunca em rodadas seguidas, a partir da Rodada 2
@@ -250,11 +251,18 @@
       }
       return out;
     }
-    curEv() { return (this.s.events && this.s.events[this.s.round]) || null; }
+    curEv() { if (this.rg === 'avesso') return { id: 'avesso' }; return (this.s.events && this.s.events[this.s.round]) || null; }
     // atributos da carta já com o efeito do fenômeno da rodada; "mark" diz à interface o que mudou
-    evBase(card) {
-      const st = Object.assign({}, CARDS[card].stats), ev = this.curEv(); if (!ev) return { st, mark: null };
-      const m = {}, chg = (k, d) => { const v = Math.max(0, st[k] + d); m[k] = v - st[k]; st[k] = v; };
+    evBase(card, pid) {
+      const st = Object.assign({}, CARDS[card].stats), ev = this.curEv(), rg = this.rg; if (!ev && !rg && !this.cfg.bonusVal && !this.cfg.bonusCards) return { st, mark: null };
+      const m = {}, chg = (k, d) => { const v = Math.max(0, st[k] + d); m[k] = (m[k] || 0) + v - st[k]; st[k] = v; };
+      if (pid != null && this.cfg.bonusVal && (this.cfg.bonusPids || []).includes(pid)) AID.forEach(k => chg(k, this.cfg.bonusVal));   // Besta: +30 por miniboss vivo (só enquanto a carta está com ela)
+      const bc = this.cfg.bonusCards; if (bc && pid === bc.pid && bc.cards.includes(card)) AID.forEach(k => chg(k, bc.val));   // União completa contra a Besta: +5 em tudo
+      if (rg === 'invertidos') { const o = Object.assign({}, st); chg('pod', o.def - o.pod); chg('def', o.pod - o.def); chg('int', o.vel - o.int); chg('vel', o.int - o.vel); }   // ATQ↔DEF e INT↔VEL
+      else if (rg === 'mare') chg('def', 15);
+      else if (rg === 'sobrecarga' && this.s.fortes && this.s.fortes.has(card)) chg('vel', -20);
+      else if (rg === 'solar' && this.s.round % 3 === 0) AID.forEach(k => chg(k, -10));
+      if (!ev) return { st, mark: Object.keys(m).length ? m : null };
       if (ev.id === 'forca') chg('pod', 10);
       else if (ev.id === 'nevoa') { chg('int', 10); chg('vel', -10); }
       else if (ev.id === 'correnteza') { chg('vel', 10); chg('pod', -5); chg('def', -5); chg('int', -5); }
@@ -265,7 +273,7 @@
     }
     // efeitos físicos no início da rodada (primeira disputa)
     async roundEventStart() {
-      const ev = this.curEv(); if (!ev) return;
+      const ev = this.curEv(); if (!ev || this.rg) return;
       this.log(`Fenômeno dimensional: ${EVENTOS[ev.id].nome}.`, 'rodada');
       await this.emit('eventStart', { round: this.s.round, ev });
     }
@@ -330,7 +338,10 @@
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
       }
+      if (this.rg === 'sobrecarga') this.s.fortes = new Set(hands.map(h => h.slice().sort((a, b) => sum4(CARDS[b].stats) - sum4(CARDS[a].stats))[0]));
+      if (this.rg === 'arsenal') this.s.players.forEach(q => { const cs = q.deck.filter(c => { const sp = SP[CARDS[c].especial]; return sp && !sp.stub; }).slice(0, 2); cs.forEach(c => { q.deck.splice(q.deck.indexOf(c), 1); q.prepared.push(c); }); });   // Arsenal: começam com 2 especiais preparados
       this.memInit();
+      if (this.rg === 'clarividente') this.s.players.forEach(q => { if (q.bot) this.s.players.forEach(o => { if (o.pid !== q.pid) q.mem.q[o.pid] = o.deck.slice(); }); });   // conhece a ordem do baralho do rival
       await this.emit('ready', {});
     }
     botOrderHand(hand, p, start) { // fácil: melhores primeiro, com ruído; normal/difícil: planejam pela iniciativa e pelo valor dos especiais
@@ -461,7 +472,7 @@
       }
       e.mods.push({ src, label, fn, off: false }); fn(e);
     }
-    swapEntryCard(e, card) { const old = e.card; e.card = card; const eb = this.evBase(card); e.base = Object.assign({}, eb.st); e.evm = eb.mark; this.recalc(e); return old; }
+    swapEntryCard(e, card) { const old = e.card; e.card = card; const eb = this.evBase(card, e.pid); e.base = Object.assign({}, eb.st); e.evm = eb.mark; this.recalc(e); return old; }
     async askCards(pid, spec, bot) {
       const p = this.p(pid); const min = spec.min == null ? 1 : spec.min, max = spec.max == null ? 1 : spec.max;
       const fallback = () => { let r = bot && !this.blindNow(p) ? bot() : (p.bot && bot ? shuffle(spec.cards.slice(), () => this.rand()).slice(0, Math.max(min, Math.min(max, spec.cards.length))) : spec.cards.slice(0, max)); r = (r || []).filter((c, i, a) => spec.cards.includes(c) && a.indexOf(c) === i).slice(0, max); if (r.length < min) r = spec.cards.slice(0, min); return r; };
@@ -499,6 +510,13 @@
       if (es.length < 2) return { winners: [], tie: false, none: true, top: 0 };
       const val = e => e.stats[e.attr] + e.bonus;
       const aw = es.find(e => e.autoWin); if (aw) return { winners: [aw], tie: false, none: false, top: val(aw) };
+      if (this.rg === 'tregua' && this.s.round === 1) { if (!combat.treguaLog) { combat.treguaLog = 1; if (!quiet) this.log('Trégua: nada é capturado na primeira rodada.', 'rodada'); } return { winners: [], tie: false, none: true, top: 0 }; }
+      const alvo = this.rg === 'meio' ? 50 : this.rg === 'alvo' ? combat.alvo : null;
+      if (alvo != null) {   // vence o valor mais próximo do alvo (50 no Meio-termo; sorteado no Alvo do dia)
+        const dist = e => Math.abs(val(e) - alvo), best = Math.min(...es.map(dist)); let pool = es.filter(e => dist(e) === best), tie = false, tb = null;
+        if (pool.length > 1) { tb = { stage: 1, inv: false, top: val(pool[0]), list: pool.map(e => ({ pid: e.pid, v: sum4(e.stats) })), rows: pool.map(e => ({ pid: e.pid, card: e.card, stats: Object.assign({}, e.stats) })) }; const b2 = Math.max(...pool.map(e => sum4(e.stats))); pool = pool.filter(e => sum4(e.stats) === b2); if (pool.length > 1) tie = true; }
+        return { winners: pool, tie, none: false, top: val(pool[0]), tb };
+      }
       const inv = !!(combat.ev && combat.ev.id === 'avesso');   // Mundo ao Avesso: vence o menor
       const top = inv ? Math.min(...es.map(val)) : Math.max(...es.map(val));
       let pool = es.filter(e => val(e) === top);
@@ -558,6 +576,17 @@
       p.prepared.forEach(c => this.s.bh.push({ id: c, kind: 'especial' })); p.prepared = [];
       this.log(`${p.name} foi eliminado!`, 'elim'); await this.emit('eliminated', { pid });
     }
+    // fim por regra da batalha (modo história): Morte súbita, Limite de rodadas, Relógio de Gerbe
+    endRule(al) {
+      const g = this.rg, P = this.rgp;
+      if (g === 'morte') { const w = al.find(pid => (this.s.caps[pid] || 0) >= (P.n || 3)); if (w != null) { this.s.over = true; this.s.winner = w; return true; } return false; }
+      const lim = (g === 'limite' && this.s.round > (P.n || 15)) || (g === 'relogio' && Date.now() - this.t0 > (P.seg || 240) * 1000);
+      if (!lim) return false;
+      this.s.over = true; this.s.byLimit = true;
+      const tot = pid => this.totalCards(this.p(pid)), soma = pid => { const q = this.p(pid); return [...q.deck, ...q.reserve, ...q.prepared].reduce((a, c) => a + sum4(CARDS[c].stats), 0); };
+      const ord = al.slice().sort((a, b) => tot(b) - tot(a) || soma(b) - soma(a));
+      this.s.winner = ord.length > 1 && tot(ord[0]) === tot(ord[1]) && soma(ord[0]) === soma(ord[1]) ? null : ord[0]; return true;
+    }
     checkEnd() {
       this.purgeClones();
       const al = this.alive();
@@ -573,6 +602,7 @@
         return false;
       }
       if (al.length <= 1) { this.s.over = true; this.s.winner = al.length ? al[0] : null; return true; }
+      if (this.rg && this.endRule(al)) return true;
       if (this.s.combats >= this.cfg.maxCombats) {
         this.s.over = true; let best = -1, w = null, tie = false;
         al.forEach(pid => { const t = this.totalCards(this.p(pid)); if (t > best) { best = t; w = pid; tie = false; } else if (t === best) tie = true; });
@@ -592,7 +622,7 @@
         this.s.initiated.add(this.s.initiator);
         const roundDone = this.alive().every(pid => this.s.initiated.has(pid));
         await this.refill();   // compras e eliminações aparecem ANTES do aviso de nova rodada (a contagem da rodada não muda)
-        if (roundDone) { this.s.round++; this.s.initiated = new Set(); if (!this.checkEnd()) { this.log(`— Rodada ${this.s.round} —`, 'rodada'); await this.emit('round', { round: this.s.round }); } }
+        if (roundDone) { this.s.round++; this.s.initiated = new Set(); if (this.rg === 'reforcos' && (this.s.round - 1) % 3 === 0 && this.s.extra < 4) await this.reforcar(); if (!this.checkEnd()) { this.log(`— Rodada ${this.s.round} —`, 'rodada'); await this.emit('round', { round: this.s.round }); } }
         this.s.initiator = this.nextAlive(this.s.initiator);
         if (this.checkEnd()) break;
       }
@@ -601,6 +631,10 @@
       return this.s.winner;
     }
 
+    async reforcar() {   // Reforços: a cada 3 rodadas o inimigo ganha 1 carta comum do tema no fim do baralho (máx. 4)
+      const pool = this.rgp.pool || []; if (!pool.length) return;
+      for (const q of this.s.players) { if (!q.bot || !q.alive || !pool.length) continue; const c = pool.shift(); q.deck.push(c); this.s.extra++; this.log(`Reforços: ${q.name} ganha ${CARDS[c].nome}.`, 'efeito'); await this.emit('refill', { pid: q.pid, cards: [c] }); }
+    }
     async decide(p, kind, ...args) {
       if (p.bot) return this['bot_' + kind](p, ...args);
       return this.io[kind](p, ...args);
@@ -612,10 +646,18 @@
       // Bloqueio Dimensional: um atributo sorteado por disputa, diferente do bloqueado na disputa anterior
       let blocked = null; { const e1 = this.curEv(); if (e1 && e1.id === 'bloqueio') { const op = AID.filter(a => a !== this.s.lastBlock); blocked = op[Math.floor(this.rand() * op.length)]; this.s.lastBlock = blocked; } }
       const g = this, order = this.order(init);
-      const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2),
+      const combat = { initiator: init, order, entries: [], activations: [], ctrlActs: [], specialsAllowed: this.s.round >= (this.cfg.specialsFrom || 2) && this.rg !== 'silencio',
         def: {}, ctl: { per: {} }, claims: [], onWin: [], after: [], pierce: {}, shield: {}, used: {}, locked: new Set() };
       { const ev0 = this.curEv(); combat.eco = !!ev0 && ev0.id === 'eco'; combat.ev = ev0; }
       combat.blocked = blocked; this.combat = combat; this.memTick();
+      if (this.rg) {
+        if (this.rg === 'proibido') combat.blocked = this.rgp.attr;
+        else if (this.rg === 'unico') combat.ctl.universal = this.rgp.attr;
+        else if (this.rg === 'rodizio') combat.ctl.universal = AID[this.s.combats % AID.length];
+        else if (this.rg === 'alvo') { combat.alvo = 30 + Math.floor(this.rand() * 41); this.log(`Alvo do dia: vence o valor mais próximo de ${combat.alvo}.`, 'rodada'); }
+        else if (this.rg === 'estelar') combat.ctl.fog = { pid: -1 };
+        combat.rgInfo = this.rg === 'alvo' ? { alvo: combat.alvo } : null;
+      }
       await this.emit('combatStart', { initiator: init, round: this.s.round });
       if (blocked) { this.log(`Bloqueio Dimensional: ${ATTR[blocked].nome} está bloqueado nesta disputa.`, 'rodada'); await this.emit('eventFx', { id: 'bloqueio', attr: blocked }); }
       // 1) preparação dos bots [PROPOSTA]
@@ -627,7 +669,7 @@
       // 2) cartas em campo
       for (const pid of order) {
         const p = this.p(pid); const c = p.deck.shift();
-        const eb = this.evBase(c);
+        const eb = this.evBase(c, pid);
         combat.entries.push({ pid, card: c, base: Object.assign({}, eb.st), stats: Object.assign({}, eb.st), evm: eb.mark, bonus: 0, extra: [], mods: [], attr: null, withdrawn: false, gone: false, noCaptureBy: new Set() });
       }
       this.memCommit(combat);
@@ -767,7 +809,7 @@
     // Escolha de atributo. O humano também pode "preparar" a carta da mesa como especial: ela sai do combate
     // e a próxima do baralho entra no lugar (nova escolha). Proposta de fluxo pedida pelo autor.
     // Névoa de Dados: quem não é o conjurador (nem seu parceiro) escolhe o atributo sem ver os números da própria carta
-    fogged(combat, pid) { const f = combat && combat.ctl && combat.ctl.fog; return !!f && f.pid !== pid && !this.sameTeam(f.pid, pid); }
+    fogged(combat, pid) { const f = combat && combat.ctl && combat.ctl.fog; return !!f && f.pid !== pid && (f.pid < 0 || !this.sameTeam(f.pid, pid)); }
     makeClone(orig, owner) {
       const b = cloneBase(orig); let n = 1; while (this.s.clones[b + '*' + n]) n++;
       const id = b + '*' + n; regClone(id); this.s.clones[id] = { owner }; return id;
@@ -793,7 +835,7 @@
         const r = await this.decide(p, 'attr', e, options, combat, canPrep);
         if (r === '@prep' && canPrep) {
           const old = e.card; p.prepared.push(old);
-          const c2 = p.deck.shift(); e.card = c2; { const eb = this.evBase(c2); e.base = Object.assign({}, eb.st); e.evm = eb.mark; } e.mods = []; e.extra = []; e.attr = null; this.recalc(e);
+          const c2 = p.deck.shift(); e.card = c2; { const eb = this.evBase(c2, p.pid); e.base = Object.assign({}, eb.st); e.evm = eb.mark; } e.mods = []; e.extra = []; e.attr = null; this.recalc(e);
           this.log(`${p.name} prepara um especial.`, 'prep');
           await this.emit('swapCard', { pid: e.pid, old, card: c2, combat });
           continue;
@@ -831,7 +873,7 @@
         else { const kc = gone(e, cardsOf(e)); kc.forEach(c => this.s.bh.push({ id: c, kind: 'normal' })); moves.push({ cards: kc.length ? kc : cardsOf(e), from: e.pid, to: 'bh' }); }
       };
       const back = (e) => { give(e.pid, cardsOf(e)); moves.push({ cards: cardsOf(e), from: e.pid, to: e.pid }); };
-      const capture = (e, pid) => { const cs = cardsOf(e).filter(c => !isClone(c) || (this.s.clones[c] || {}).owner === pid); const lost = cardsOf(e).filter(c => !cs.includes(c)); if (lost.length) { lost.forEach(c => delete this.s.clones[c]); this.log('Uma carta clone não pode ser capturada: desaparece.', 'res'); } if (cs.length) give(pid, cs); moves.push({ cards: cs.length ? cs : cardsOf(e), from: e.pid, to: cs.length ? pid : 'bh' }); };
+      const capture = (e, pid) => { const cs = cardsOf(e).filter(c => !isClone(c) || (this.s.clones[c] || {}).owner === pid); const lost = cardsOf(e).filter(c => !cs.includes(c)); if (lost.length) { lost.forEach(c => delete this.s.clones[c]); this.log('Uma carta clone não pode ser capturada: desaparece.', 'res'); } if (cs.length) { give(pid, cs); this.s.caps[pid] = (this.s.caps[pid] || 0) + cs.length; } moves.push({ cards: cs.length ? cs : cardsOf(e), from: e.pid, to: cs.length ? pid : 'bh' }); };
       let result = { type: 'none', winners: [], winnerPid: null };
       const live = es.filter(e => !e.withdrawn);
       es.filter(e => e.withdrawn && !e.gone).forEach(back);
@@ -873,6 +915,9 @@
             if (w.defCapture && special === l) { if (blocked) toBH(l); else capture(l, w.pid); continue; }
             toBH(l);
           }
+        }
+        if (this.rg === 'magnetico' && es.length > 1 && es.every(e => e.attr === es[0].attr)) {   // Campo magnético: mesmo atributo → captura também a carta seguinte do topo
+          for (const l of losers) { const lp = this.p(l.pid); if (lp.deck.length) { const c = lp.deck.shift(); this.p(w.pid).deck.push(c); this.s.caps[w.pid] = (this.s.caps[w.pid] || 0) + 1; moves.push({ cards: [c], from: l.pid, to: w.pid }); this.log(`Campo magnético: ${this.p(w.pid).name} captura também a próxima carta de ${lp.name}.`, 'efeito'); } }
         }
         if (attack && w.atkBanish) {   // AE-106: depois de capturar, a carta do topo do baralho de 1 derrotado vai ao Buraco Negro
           const cand = losers.filter(l => !l.saveOnLoss && !l.noBHBySpecial && this.p(l.pid).deck.length > 0);
@@ -959,6 +1004,7 @@
     }
     // chance (0..1) de ganhar com o atributo a contra os rivais cujas cartas ele conhece; os desconhecidos entram pelo percentil
     pWin(p, entry, a, combat) {
+      if (this.rg === 'meio' || this.rg === 'alvo') { const T = this.rg === 'meio' ? 50 : (combat && combat.alvo != null ? combat.alvo : 50), v0 = entry.stats[a]; let P = 1, known = 0; (combat ? combat.entries : []).forEach(x => { if (x.pid === p.pid || x.withdrawn || this.sameTeam(x.pid, p.pid)) return; const c = this.foeNow(p, x.pid); if (!c) { P *= Math.max(0.05, 1 - Math.abs(v0 - T) / 60); return; } known++; const st = CARDS[c].stats, cand = x.attr ? [x.attr] : AID.filter(k => ATTR[k].par === ATTR[a].par), od = Math.min(...cand.map(k => Math.abs(st[k] - T))); P *= 1 / (1 + Math.exp(-(od - Math.abs(v0 - T)) / 7)); }); return { P, known }; }
       const v = entry.stats[a], inv = !!(combat && combat.ev && combat.ev.id === 'avesso'), ab = !!(combat && combat.ev && combat.ev.id === 'aberta'); let P = 1, known = 0;
       (combat ? combat.entries : []).forEach(x => {
         if (x.pid === p.pid || x.withdrawn || this.sameTeam(x.pid, p.pid)) return; const c = this.foeNow(p, x.pid);
@@ -975,7 +1021,7 @@
       if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
       options.forEach(a => {
         const v = entry.stats[a], w = this.pWin(p, entry, a, combat);
-        let s = w.known ? w.P * 1.1 + (this.rand() - 0.5) * (0.35 - 0.3 * sk) : (combat && combat.ev && combat.ev.id === 'avesso' ? 1 - pct(a, v) : pct(a, v)) * (0.6 + 0.4 * sk) + (this.rand() - 0.5) * (0.5 - 0.4 * sk);   // com a carta do rival na memória, prevê o resultado
+        let s = w.known ? w.P * 1.1 + (this.rand() - 0.5) * (0.35 - 0.3 * sk) : (this.rg === 'meio' || this.rg === 'alvo' ? Math.max(0.05, 1 - Math.abs(v - (this.rg === 'meio' ? 50 : (combat && combat.alvo != null ? combat.alvo : 50))) / 60) : combat && combat.ev && combat.ev.id === 'avesso' ? 1 - pct(a, v) : pct(a, v)) * (0.6 + 0.4 * sk) + (this.rand() - 0.5) * (0.5 - 0.4 * sk);   // com a carta do rival na memória, prevê o resultado
         s += ATTR[a].tipo === 'ataque' ? 0.03 : 0; if (s > bs) { bs = s; best = a; }
       });
       return best;
