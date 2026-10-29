@@ -25,7 +25,7 @@ try:
         pg.click('.hs-mc [data-a=todas]'); pg.wait_for_timeout(200)
         chk(pg.evaluate("document.querySelectorAll('.hs-mc .hs-escc.tired').length") == 0, 'descansar todas')
         pg.click('.hs-mc [data-a=x]'); pg.wait_for_timeout(300)
-        pg.evaluate("window.DSHistoria.loja('L3')"); pg.wait_for_selector('.hs-loja')
+        pg.evaluate("window.DSHistoria.loja('L3')"); pg.wait_for_selector('.hs-loja .hs-item')
         n = pg.evaluate("document.querySelectorAll('.hs-loja .hs-item').length"); chk(n >= 5, 'loja tem estoque: %d' % n)
         antes = pg.evaluate("window.DSHistoria.state().owned.length"); pg.click('.hs-loja .hs-item'); pg.wait_for_timeout(200)
         chk(pg.evaluate("window.DSHistoria.state().owned.length") == antes + 1, 'comprar adiciona a carta')

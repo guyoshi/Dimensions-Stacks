@@ -590,18 +590,33 @@
     save(); return S.lojas[id];
   }
   function loja(id) {
-    closeSheet(); const est = estoque(id); const box = el('<div class="hs-esc hs-loja"><h3>Loja</h3><p class="hint hs-info"></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="mc">Minhas cartas</button><button class="btn primary" data-a="x">Sair</button></div></div>');
-    const g = $('.hs-escg', box), info = $('.hs-info', box); let msg = '';
-    const render = () => { info.textContent = (msg || 'Toque numa carta para comprar.') + ' Pêndulos: ' + (S.pend | 0); g.innerHTML = '';
-      est.itens.forEach(c => { const got = est.comprados.includes(c), p = PRECO[U.CARDS[c].raridade] || 50; const w = el('<div class="hs-escc on hs-item' + (got ? ' got' : '') + '" data-id="' + c + '"></div>'); w.append(U.cardEl(c, { up: true, noanim: true, cw: 72 })); w.append(el('<div class="hs-preco">' + (got ? 'comprada' : p) + '</div>')); g.append(w); }); paintAll(); };
-    const m = U.modal(box, { cls: 'hs-modal' }); render();
-    box.onclick = e => {
-      const c = e.target.closest('.hs-item'), b = e.target.closest('[data-a]');
-      if (c) { const k = c.dataset.id; if (est.comprados.includes(k)) return; const p = PRECO[U.CARDS[k].raridade] || 50;
-        if ((S.pend | 0) < p) { SND.play('tick'); msg = 'Faltam pêndulos: ' + U.CARDS[k].nome + ' custa ' + p + '.'; render(); return; }
-        S.pend -= p; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); msg = U.CARDS[k].nome + ' entrou para a sua coleção (−' + p + ').'; render(); return; }
-      if (!b) return; SND.play('click'); if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'mc') { m.close(); minhasCartas(); }
+    closeSheet(); const est = estoque(id), RAR = { comum: 'Comum', rara: 'Rara', epica: 'Épica', lendaria: 'Lendária' }; let aba = 'comprar', msg = '', saldo = S.pend | 0;
+    const ov = el(`<div class="hs-loja loja-ov"><div class="loja-top"><button class="ibtn" data-a="x" aria-label="Sair">←</button><div class="loja-tt"><small>LOJA</small><b>Bazar dos Viajantes</b></div><div class="loja-bal">${coinSvg(26)}<b id="lojaBal">${saldo}</b></div></div><div class="loja-tabs"><button class="on" data-a="t:comprar">Comprar</button><button data-a="t:descansar">Descansar</button></div><p class="loja-msg"></p><div class="loja-g"></div></div>`);
+    document.body.appendChild(ov); const g = $('.loja-g', ov), bal = $('#lojaBal', ov), ms = $('.loja-msg', ov);
+    const conta = alvo => { const de = saldo; saldo = alvo; const t0 = performance.now(), dur = document.body.classList.contains('reduce') ? 0 : 600; const f = t => { const k = dur ? Math.min(1, (t - t0) / dur) : 1; bal.textContent = Math.round(de + (alvo - de) * k); if (k < 1) requestAnimationFrame(f); }; bal.parentNode.classList.remove('gasta'); void bal.offsetWidth; bal.parentNode.classList.add('gasta'); requestAnimationFrame(f); };
+    const flutua = (el0, txt) => { const r = el0.getBoundingClientRect(), f = el(`<div class="loja-fl">−${txt}</div>`); f.style.left = r.left + r.width / 2 + 'px'; f.style.top = r.top + 'px'; document.body.appendChild(f); setTimeout(() => f.remove(), 1100); };
+    const preco = c => PRECO[U.CARDS[c].raridade] || 50;
+    const render = () => {
+      ms.textContent = msg; $$('.loja-tabs button', ov).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba)); g.innerHTML = '';
+      if (aba === 'comprar') est.itens.forEach(c => { const got = est.comprados.includes(c), p = preco(c), pobre = !got && p > saldo;
+        const w = el(`<div class="loja-it hs-item${got ? ' got' : ''}${pobre ? ' pobre' : ''}" data-id="${c}"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 }));
+        w.append(el(`<div class="loja-pr">${got ? '<span>Vendida</span>' : coinSvg(16) + '<b>' + p + '</b>'}</div>`)); w.append(el(`<small class="loja-rar r-${U.CARDS[c].raridade}">${RAR[U.CARDS[c].raridade] || ''}</small>`)); g.append(w); });
+      else { const L = (S.owned || []).filter(c => fad(c)); if (!fadigaOn() || !L.length) g.append(el('<p class="loja-vz">Nenhuma carta cansada.</p>'));
+        else L.forEach(c => { const p = fad(c) * CUSTO_DESC, w = el(`<div class="loja-it tired${p > saldo ? ' pobre' : ''}" data-id="${c}" data-rest="1"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 })); w.append(el(`<div class="loja-pr">${coinSvg(16)}<b>${p}</b></div>`)); w.append(el(`<div class="hs-fadb">${pontosFad(c)}</div>`)); g.append(w); }); }
     };
+    const sai = () => { ov.classList.add('out'); setTimeout(() => ov.remove(), 250); if (view === 'map') paintAll(); };
+    ov.onclick = e => {
+      const b = e.target.closest('[data-a]'), c = e.target.closest('.loja-it');
+      if (b) { SND.play('click'); if (b.dataset.a === 'x') return sai(); if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); msg = ''; render(); } return; }
+      if (!c) return; const k = c.dataset.id;
+      if (c.dataset.rest) { const p = fad(k) * CUSTO_DESC; if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: descansar custa ' + p + '.'; ms.textContent = msg; return; }
+        S.pend -= p; delete S.fadiga[k]; save(); SND.play('capture'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' descansou.'; render(); return; }
+      if (est.comprados.includes(k)) return; const p = preco(k);
+      if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: ' + U.CARDS[k].nome + ' custa ' + p + '.'; ms.textContent = msg; return; }
+      S.pend -= p; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' é sua!'; render();
+      const nw = $('.loja-it[data-id="' + k + '"]', g); if (nw) nw.classList.add('comprou');
+    };
+    render();
   }
   function legenda() {
     const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><span class="hs-dot" style="background:${TIPOS[k].cor}"></span><b>${TIPOS[k].nome}</b><span>${esc(TIPOS[k].desc)}</span></li>`).join('');

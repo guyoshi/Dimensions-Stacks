@@ -1605,3 +1605,27 @@ button.hs-pill { font: inherit; color: inherit; cursor: pointer; }
 .hs-bro { color: var(--gold2); } .hs-bro .ci { color: var(--gold); }
 
 .hs-edges .e.lit { animation: none; }   /* sem animação de traço: pesava com muitos caminhos abertos */
+/* loja */
+.loja-ov { position: fixed; inset: 0; z-index: 9000; display: flex; flex-direction: column; gap: 10px; padding: calc(12px + env(safe-area-inset-top, 0px)) 14px calc(14px + env(safe-area-inset-bottom, 0px)); overflow: hidden; animation: bauin .3s ease;
+  background: radial-gradient(120% 50% at 50% 0%, #19d68b33, transparent 62%), radial-gradient(90% 40% at 100% 100%, #ffd25f22, transparent 62%), linear-gradient(180deg, #06241d, #07121a 55%, #05030f); }
+.loja-ov.out { opacity: 0; transition: opacity .25s; }
+.loja-top { display: flex; align-items: center; gap: 10px; }
+.loja-tt { flex: 1; min-width: 0; display: flex; flex-direction: column; } .loja-tt small { color: #7dffb0; letter-spacing: .3em; font-weight: 800; font-size: 11px; } .loja-tt b { font-family: var(--f-disp); font-size: 19px; color: #eafff4; }
+.loja-bal { display: flex; align-items: center; gap: 7px; padding: 6px 14px 6px 10px; border-radius: 99px; background: #00000066; border: 1.5px solid #ffd25f88; box-shadow: 0 0 18px #ffd25f22; }
+.loja-bal b { font-family: var(--f-disp); font-size: 22px; color: var(--gold2); font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right; }
+.loja-bal.gasta { animation: lojaGasta .6s ease; } @keyframes lojaGasta { 0% { transform: scale(1); } 25% { transform: scale(1.12); border-color: #ff5a4f; box-shadow: 0 0 22px #ff5a4f88; } 100% { transform: scale(1); } }
+.loja-tabs { display: flex; gap: 8px; } .loja-tabs button { flex: 1; min-height: 40px; border-radius: 12px; border: 1.5px solid #7dffb044; background: #ffffff0a; color: #bff5d9; font-weight: 800; font: inherit; font-weight: 800; cursor: pointer; }
+.loja-tabs button.on { background: linear-gradient(135deg, #19d68b, #0fa36a); color: #03150d; border-color: transparent; }
+.loja-msg { margin: 0; min-height: 20px; text-align: center; color: #bff5d9; font-size: 13.5px; }
+.loja-g { flex: 1; overflow: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 10px; justify-items: center; align-content: start; padding: 6px 2px 10px; }
+.loja-it { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 8px 6px; border-radius: 16px; background: linear-gradient(180deg, #ffffff12, #ffffff06); border: 1px solid #7dffb033; cursor: pointer; transition: transform .15s; }
+.loja-it:active { transform: scale(.96); }
+.loja-pr { display: flex; align-items: center; gap: 5px; padding: 3px 12px 3px 8px; border-radius: 99px; background: #000000aa; border: 1.5px solid #ffd25f99; } .loja-pr b { font-family: var(--f-disp); color: var(--gold2); font-size: 15px; }
+.loja-pr span { color: #7dffb0; font-weight: 800; font-size: 12px; padding: 1px 4px; }
+.loja-rar { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; color: #9cc9b6; } .loja-rar.r-lendaria { color: #ffd25f; } .loja-rar.r-epica { color: #c58cff; } .loja-rar.r-rara { color: #6cc6ff; }
+.loja-it.got { opacity: .4; filter: grayscale(.6); cursor: default; } .loja-it.pobre .loja-pr { border-color: #ff5a4f99; } .loja-it.pobre .loja-pr b { color: #ff9a8f; }
+.loja-it.tired .card { opacity: .6; } .loja-it.no { animation: lojaNo .4s; } @keyframes lojaNo { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.loja-it.comprou { animation: lojaOk .7s ease; } @keyframes lojaOk { 0% { transform: scale(.85); box-shadow: 0 0 0 #7dffb0; } 40% { transform: scale(1.08); box-shadow: 0 0 30px #7dffb0; } 100% { transform: scale(1); } }
+.loja-vz { grid-column: 1 / -1; text-align: center; color: #9cc9b6; margin-top: 30px; }
+.loja-fl { position: fixed; z-index: 9200; transform: translateX(-50%); color: #ff9a8f; font-family: var(--f-disp); font-weight: 800; font-size: 24px; text-shadow: 0 2px 8px #000; pointer-events: none; animation: lojaFl 1.1s ease-out forwards; } @keyframes lojaFl { to { transform: translate(-50%, -70px); opacity: 0; } }
+body.reduce .loja-ov, body.reduce .loja-it, body.reduce .loja-bal, body.reduce .loja-fl { animation: none !important; }
