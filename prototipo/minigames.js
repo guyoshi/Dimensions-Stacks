@@ -361,8 +361,8 @@
     // Édelin Lys: ritmo de três elementos (20 notas)
     ritmo(body, c, fim) {
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 400, g = cv.getContext('2d');
-      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 20, GAP = .62 / Math.sqrt(c.dif), FALL = 1.5 / c.dif, LY = H - 70, JAN = .13 * (1.1 / c.dif);
-      const notas = Array.from({ length: N }, (_, i) => ({ t: 1.5 + i * GAP + (i % 3 === 2 ? GAP * .3 : 0), l: rnd(3), est: 0 })); let t0 = 0, raf = 0, hit = 0, msg = '', msgT = 0, acabou = false;
+      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 56, GAP = .68 / Math.sqrt(c.dif), FALL = 1.25 / c.dif, LY = H - 70, JAN = .13 * (1.1 / c.dif);
+      const notas = []; { let tt = 1.5, i = 0; while (notas.length < N) { const a = i / 40, pr = Math.min(1, a); tt += GAP * (1 - .5 * pr) * (.85 + Math.random() * .3); const l = rnd(3); notas.push({ t: tt, l, est: 0 }); if (notas.length < N && i > 8 && Math.random() < .12 + .3 * pr) notas.push({ t: tt, l: (l + 1 + rnd(2)) % 3, est: 0 }); i++; } } let t0 = 0, raf = 0, hit = 0, msg = '', msgT = 0, acabou = false;
       const bar = mk('<div class="mg-btns">' + NOME.map((n, i) => `<button class="btn" data-l="${i}" style="border-color:${COR[i]}">${n}</button>`).join('') + '</div>'); body.append(bar);
       const toque = l => { const now = (performance.now() - t0) / 1000; let best = null; notas.forEach(n => { if (n.est === 0 && n.l === l && Math.abs(n.t - now) < JAN * 2 && (!best || Math.abs(n.t - now) < Math.abs(best.t - now))) best = n; });
         if (best) { const ex = Math.abs(best.t - now) < JAN; best.est = ex ? 1 : 2; if (ex) hit++; else hit += .5; msg = ex ? 'Perfeito' : 'Bom'; SND.play('tick'); } else { msg = 'Errou'; SND.play('lose'); } msgT = .5; };
