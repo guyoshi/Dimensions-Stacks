@@ -319,11 +319,11 @@
   "V14": {
    "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Tio Frank.png",
    "mtimeMs": 1791821855980,
-   "bytes": 2402188,
-   "sha1": "9761547823",
+   "bytes": 2523569,
+   "sha1": "21784c9eb5",
    "w": 720,
    "h": 1080,
-   "webp": 133924
+   "webp": 140784
   },
   "V15": {
    "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Brenda Koraveli.png",
@@ -400,11 +400,11 @@
   "D08": {
    "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Glenda.png",
    "mtimeMs": 1791824493704,
-   "bytes": 2051420,
-   "sha1": "f7f19f6397",
+   "bytes": 2211346,
+   "sha1": "6202efa7ad",
    "w": 720,
    "h": 1080,
-   "webp": 82468
+   "webp": 85982
   },
   "D09": {
    "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Diego.png",
@@ -454,11 +454,11 @@
   "D14": {
    "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Filipo.png",
    "mtimeMs": 1791824918884,
-   "bytes": 2525440,
-   "sha1": "f9ab25ceb5",
+   "bytes": 2697247,
+   "sha1": "490555f1fc",
    "w": 720,
    "h": 1080,
-   "webp": 157488
+   "webp": 163658
   },
   "D15": {
    "src": "Diário Sobrenatural/1 - Os Elos das Sombras/02 - Assets/Personagens/Família Carnam/Carnam - Pai.png",
@@ -877,11 +877,11 @@
   "D19": {
    "src": "Diário Sobrenatural/2 - A Alvorada das Ilusões/02 - Assets/Personagens/Manu.png",
    "mtimeMs": 1791849405987,
-   "bytes": 2808419,
-   "sha1": "03c18d4b44",
+   "bytes": 2738714,
+   "sha1": "2d1b2efa6b",
    "w": 720,
    "h": 1080,
-   "webp": 161356
+   "webp": 143968
   },
   "B02": {
    "src": "Édelin Lys/1 - Promessas do Mar/02 - Assets/Personagens/Tack Ergson.png",
@@ -1044,6 +1044,15 @@
    "w": 720,
    "h": 900,
    "webp": 129094
+  },
+  "V26": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Átila.png",
+   "mtimeMs": 1793277531317,
+   "bytes": 2685363,
+   "sha1": "ac4392325f",
+   "w": 720,
+   "h": 1080,
+   "webp": 158120
   }
  }
 }

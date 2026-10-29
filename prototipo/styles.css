@@ -1705,3 +1705,8 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .hs-lerreg { display: flex; flex-direction: column; align-items: center; gap: 12px; } .lr-t { text-align: center; } .lr-t h3 { margin: 2px 0 6px; } .lr-t p { margin: 0 0 6px; color: var(--ink2); line-height: 1.5; } .lr-t small { color: var(--ink2); letter-spacing: .08em; }
 .loja-vend { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 14px; background: #ffffff12; border: 1px solid var(--line); } .loja-vend[hidden] { display: none; } .lv-t { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .lv-t b { color: #bff5d9; font-size: 13px; } .lv-t span { font-size: 14px; line-height: 1.35; } .loja-vend.fala .lv-t span { animation: lvin .35s ease; } @keyframes lvin { from { opacity: 0; transform: translateY(3px); } }
 .loja-x .lx-art { width: 92px; height: 138px; display: grid; place-items: center; border-radius: 10px; background: #ffffff0f; border: 1px solid var(--line2); } .loja-x .lx-art .cr { width: 56px; height: 72px; } .loja-x .lx-art.reg { background: none; border: 0; } .loja-rar.r-x { color: #8fe3ff; }
+
+.hs-pill.hs-frg svg.cr{width:16px;height:19px;flex:none}
+.hs-pill.hs-frg[hidden]{display:none}
+.loja-x .loja-pr svg.cr{width:14px;height:17px}
+.col-frag{grid-template-columns:48px;justify-content:center}

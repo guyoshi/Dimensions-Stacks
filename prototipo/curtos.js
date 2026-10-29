@@ -139,5 +139,6 @@
 "AE-141": "Um rival perde 12 em Força e em Inteligência.",
 "AE-142": "+15 Resistência e +15 Velocidade.",
 "AE-143": "Os rivais escolhem o atributo sem ver os números da própria carta.",
-"AE-144": "Se não vencer, copia a carta vencedora para o fim do seu baralho (CLONE)."
+"AE-144": "Se não vencer, copia a carta vencedora para o fim do seu baralho (CLONE).",
+"AE-145": "Recupera a carta mais recente do Buraco Negro para o topo do seu baralho."
 }; })(typeof window !== "undefined" ? window : globalThis);

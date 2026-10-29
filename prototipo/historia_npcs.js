@@ -1,17 +1,21 @@
-/* Modo história: NPCs (cadeia da Encomenda com 12, 19 missões de conquista), vendedores das lojas, fragmentos dimensionais (30),
+/* Modo história: NPCs (cadeia da Encomenda com 12, 19 missões de conquista), vendedores das lojas, fragmentos dimensionais (48 fontes; moeda das melhorias das lojas),
    registros (8) e selos de contenção. Aprovado pelo autor em 29/10/2026. Dados em historia_npcs_dados.js (tabela: mudar o mapa é editar a linha).
-   A recompensa final da cadeia é PROVISÓRIA (o autor ainda vai definir): 50 pêndulos + 1 fragmento. */
+   A recompensa final da cadeia é a carta lendária Átila (V26) + 50 pêndulos; só ali ela existe. */
 (function () {
   'use strict';
   const D = window.DS_NPCS; if (!D) return;
   let A = null;                                   // API entregue por historia.js
   const CH = D.cadeia, QS = D.quests, ALL = CH.concat(QS), BYID = {}; ALL.forEach(n => { BYID[n.id] = n; });
   const isCh = n => CH.includes(n);
-  const FRAG_TOTAL = 30, PEND_CADEIA = 15, FINAL = { pend: 50, frag: 'N:final' };
+  const FRAG_TOTAL = 48, PEND_CADEIA = 15, FINAL = { pend: 50, carta: 'V26' };   // 48 fontes de fragmentos; o último NPC da cadeia dá a carta Átila (V26) no lugar do fragmento
+  // melhorias gerais: 1 por loja, compradas com fragmentos. Preenchidas quando o autor definir (nome, texto, preço em fragmentos); sem entrada, a loja não mostra nada.
+  const MELH = { L1: null, L2: null, L3: null, L4: null, L5: null };
   const rnd = a => a[Math.floor(Math.random() * a.length)];
   const S = () => A.S();
-  const ini = () => { const s = S(); if (!s) return null; s.mis = s.mis || {}; s.itens = s.itens || []; s.frag = s.frag || {}; s.reg = s.reg || {}; ['ganho', 'gasto', 'compras', 'capt', 'seq', 'seqMax', 'semHab'].forEach(k => { s[k] = s[k] | 0; }); return s; };
-  const nFrag = () => Math.min(FRAG_TOTAL, Object.keys(ini().frag).length);
+  const ini = () => { const s = S(); if (!s) return null; s.mis = s.mis || {}; s.itens = s.itens || []; s.frag = s.frag || {}; s.reg = s.reg || {}; s.melh = s.melh || {}; s.frGasto = s.frGasto | 0; ['ganho', 'gasto', 'compras', 'capt', 'seq', 'seqMax', 'semHab'].forEach(k => { s[k] = s[k] | 0; }); return s; };
+  const nGanho = () => Object.keys(ini().frag).length;   // fragmentos já encontrados (cada fonte dá 1 só vez)
+  const nFrag = () => Math.max(0, nGanho() - (ini().frGasto | 0));   // saldo: fragmentos são moeda das melhorias nas lojas
+  const tem = lid => !!(ini().melh || {})[lid];
 
   // ---- primeiro NPC da cadeia: o inicial (Pedro, Efepar, Kali ou Buni) mais perto do ponto de partida; fica guardado no save
   function primeiro() {
@@ -71,7 +75,8 @@
     const s = ini(), L = [];
     if (r.pend) { s.pend = (s.pend | 0) + r.pend; L.push(`<b>+${r.pend}</b> pêndulos`); }
     (r.itens || []).forEach(i => { if (!s.itens.includes(i)) s.itens.push(i); L.push('Item: <b>' + A.esc(i) + '</b>'); });
-    if (r.frag && darFrag(r.frag)) L.push(`Fragmento dimensional <b>(${nFrag()}/${FRAG_TOTAL})</b>`);
+    if (r.frag && darFrag(r.frag)) L.push(`<b>+1</b> fragmento dimensional <b>(${nFrag()})</b>`);
+    if (r.carta && !s.owned.includes(r.carta)) { s.owned.push(r.carta); L.push('Carta lendária: <b>' + A.esc(A.U.CARDS[r.carta].nome) + '</b>'); }
     if (r.reg && darReg(r.reg)) L.push('Registro de <b>' + A.esc(A.U.CARDS[r.reg].nome) + '</b>');
     A.save(); A.paintAll(); setTimeout(() => popup(L, titulo), 250);
   }
@@ -94,9 +99,9 @@
       const r = { itens: [n.da] };
       if (!m.first) { const i = s.itens.indexOf(n.pede); if (i >= 0) s.itens.splice(i, 1); r.pend = PEND_CADEIA; }
       if (n.reg) r.reg = n.reg;
-      if (n.id === ultimo()) { r.pend = (r.pend | 0) + FINAL.pend; r.frag = FINAL.frag; }   // PROVISÓRIO
+      if (n.id === ultimo()) { r.pend = (r.pend | 0) + FINAL.pend; r.carta = FINAL.carta; } else r.frag = 'C:' + n.id;
       recebe(r, 'Missão cumprida');
-    } else recebe({ pend: n.pend, frag: n.frag, reg: n.reg }, 'Missão cumprida');
+    } else recebe({ pend: n.pend, frag: 'Q:' + n.id, reg: n.reg }, 'Missão cumprida');
     A.SND.play('capture');
   }
   // avisa quando uma missão ativa fica pronta
@@ -107,7 +112,7 @@
   }
 
   // ---- ganchos de fragmentos
-  function fragEvento(key) { if (darFrag(key)) A.quandoLivre(() => popup([`Fragmento dimensional <b>(${nFrag()}/${FRAG_TOTAL})</b>`], 'Fragmento encontrado')); }
+  function fragEvento(key) { if (darFrag(key)) A.quandoLivre(() => popup([`<b>+1</b> fragmento dimensional <b>(${nFrag()})</b>`], 'Fragmento encontrado')); }
   function vitoria(id) { ini(); if (A.MINIS.includes(id)) fragEvento('A:' + id); else if (A.GUARD.includes(id)) fragEvento('G:' + id); }
   function fragBau(id) { if (D.fragBaus.includes(id)) fragEvento('B:' + id); }
 
@@ -180,7 +185,7 @@
       } else {
         const L = QS.filter(n => estado(n)).sort((a, b) => (estado(a) === 'entregue') - (estado(b) === 'entregue'));
         h = L.length ? L.map(n => {
-          const st = estado(n), pr = prog(n), pron = pronta(n), ex = [n.pend + ' pêndulos'].concat(n.frag ? ['fragmento'] : [], n.reg ? ['registro'] : []).join(' + ');
+          const st = estado(n), pr = prog(n), pron = pronta(n), ex = [n.pend + ' pêndulos'].concat(['fragmento'], n.reg ? ['registro'] : []).join(' + ');
           return row(n, `<span>${A.esc(n.d)}</span>${st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : ''}<small>${ex}</small><em>${st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + A.esc(n.nome.split(' ')[0]) : 'Em andamento'}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
         }).join('') : '<p class="mis-vz">Nenhuma missão ainda.</p>';
       }
@@ -202,7 +207,7 @@
     const body = U.$('.col-body', box), m = U.modal(box, { cls: 'hs-modal' });
     const render = () => {
       U.$$('.mis-tabs button', box).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba));
-      if (aba === 'frag') { const n = nFrag(); body.innerHTML = `<p class="col-n"><b>${n}</b> / ${FRAG_TOTAL} fragmentos dimensionais</p><div class="col-frag">${Array.from({ length: FRAG_TOTAL }, (_, i) => cristal(i < n)).join('')}</div>`; }
+      if (aba === 'frag') { const n = nFrag(), g = nGanho(); body.innerHTML = `<p class="col-n"><b>${n}</b> fragmentos dimensionais</p><p class="col-n"><small>${g} de ${FRAG_TOTAL} encontrados</small></p><div class="col-frag">${cristal(n > 0)}</div>`; }
       else if (aba === 'reg') { const regs = Object.keys(s.reg).length; body.innerHTML = `<p class="col-n"><b>${regs}</b> / 8 registros</p><div class="col-reg">${REGS.map(c => s.reg[c] ? `<button class="reg-it" data-r="${c}"><b>${A.esc(U.CARDS[c].nome)}</b><small>Toque para ler</small></button>` : `<div class="reg-it lock"><b>?</b><small>Não encontrado</small></div>`).join('')}</div>`; }
       else { const G = A.GUARD, v = G.filter(g => s.cleared[g]).length; body.innerHTML = `<p class="col-n"><b>${v}</b> / ${G.length} selos de contenção</p><div class="col-selo">${G.map(g => `<div class="selo ${s.cleared[g] ? 'on' : ''}"><svg viewBox="-20 -20 40 40"><polygon points="0,-18 16,-9 16,9 0,18 -16,9 -16,-9"/><path d="M-6 0 L-2 4 L7 -5"/></svg><small>${A.esc(A.LADOS[A.BY[g].lado])}</small></div>`).join('')}</div><p class="col-nota">Poder da Besta: +${A.bonusBoss()}</p>`; }
     };
@@ -224,12 +229,17 @@
   // ---- lojas: vendedor e itens extras (fragmentos e registros)
   const vend = lid => D.vend[lid] || null;
   function lojaExtras(lid) {
-    const e = D.lojasExtra[lid]; if (!e) return []; const s = ini(), out = [];
-    e.frag.forEach((p, i) => { const k = 'L:' + lid + ':' + i; out.push({ k, tipo: 'frag', p, got: !!s.frag[k] }); });
-    e.reg.forEach(([c, p]) => out.push({ k: 'R:' + c, tipo: 'reg', card: c, p, got: !!s.reg[c] }));
+    const e = D.lojasExtra[lid], s = ini(), out = [];
+    if (e) e.reg.forEach(([c, p]) => out.push({ k: 'R:' + c, tipo: 'reg', card: c, p, got: !!s.reg[c] }));
+    const m = MELH[lid]; if (m) out.push({ k: 'M:' + lid, tipo: 'melh', nome: m.nome, txt: m.txt, p: m.preco, got: tem(lid) });
     return out;
   }
-  function compraExtra(k) { const s = ini(); if (k[0] === 'L') s.frag[k] = 1; else s.reg[k.slice(2)] = 1; A.save(); }
+  function compraExtra(k) {
+    const s = ini();
+    if (k[0] === 'M') { const lid = k.slice(2), m = MELH[lid]; if (!m || s.melh[lid] || nFrag() < m.preco) return false; s.melh[lid] = 1; s.frGasto += m.preco; }
+    else s.reg[k.slice(2)] = 1;
+    A.save(); return true;
+  }
 
-  window.DSNpc = { init: a => { A = a; }, paint, toque, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, vend, lojaExtras, compraExtra, cristal, nFrag, state: () => ini(), primeiro, dados: D };
+  window.DSNpc = { init: a => { A = a; }, paint, toque, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, vend, lojaExtras, compraExtra, cristal, nFrag, tem, entrega, ultimo, byId: id => BYID[id], melh: MELH, state: () => ini(), primeiro, dados: D };
 })();

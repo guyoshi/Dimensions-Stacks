@@ -159,6 +159,11 @@
     async apply(ctx, act) { const l = ctx.bhNormal(); if (!l.length) return; const c = l[l.length - 1]; ctx.fromBH(c); ctx.player(act.pid).deck.push(c); ctx.say(`${ctx.name(act.pid)} resgata ${CARDS[c].nome}.`); await ctx.emit('rescue', { pid: act.pid, card: c }); },
     ai(ctx, pid, c) { const l = ctx.bhNormal(); if (!l.length) return 0; return Math.max(0.03, Math.min(0.85, 0.15 + 0.45 * ((sum4(CARDS[l[l.length - 1]].stats) - (c ? sum4(CARDS[c].stats) : 130)) / 210))); },
   });
+  def('AE-145', 'Traz o chinelo', 'Recupere a carta normal mais recente do Buraco Negro para o topo do seu baralho (será a próxima a ser jogada).', 'Buraco Negro', {
+    can(ctx) { return ctx.bhNormal().length > 0; },
+    async apply(ctx, act) { const l = ctx.bhNormal(); if (!l.length) return; const c = l[l.length - 1]; ctx.fromBH(c); ctx.player(act.pid).deck.unshift(c); ctx.say(`${ctx.name(act.pid)} traz de volta ${CARDS[c].nome} ao topo do baralho.`); await ctx.emit('rescue', { pid: act.pid, card: c }); },
+    ai(ctx, pid, c) { const l = ctx.bhNormal(); if (!l.length) return 0; return Math.max(0.03, Math.min(0.88, 0.2 + 0.45 * ((sum4(CARDS[l[l.length - 1]].stats) - (c ? sum4(CARDS[c].stats) : 130)) / 210))); },
+  });
   def('AE-090', 'Segunda chance', 'Se sua carta de combate fosse ao Buraco Negro nesta disputa, ela vai ao fim da sua reserva.', 'Defesa', {
     apply(ctx, act) { ctx.entry(act.pid).toReserve = true; ctx.say(`${ctx.name(act.pid)} se prepara para uma segunda chance.`); },
     ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'defesa' ? 0.7 : 0.04; },

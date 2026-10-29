@@ -12,6 +12,7 @@ poder = lambda c: sum(c['st']) + 16 * max(c['st'])
 TEMA = {'esq': ('diario', 'Diário Sobrenatural'), 'cima': ('jesed', 'Ciclo de Jesed'), 'dir': ('viajantes', 'Viajantes Dimensionais'), 'baixo': ('spacetheft', 'Spacetheft')}
 OUTRAS = ['misterio', 'belfex']          # séries sem região própria: aparecem como "visitantes" nas regiões média e interna
 BESTA = 'S11'                            # exclusiva do Boss
+EXCLUSIVAS = {'S11', 'V26'}              # S11 só no Boss; V26 (Átila) só como recompensa final da cadeia de NPCs
 UNIAO = [c['id'] for c in d['cartas'] if c['uniao']]
 # receita de raridades por tipo e região (comum, rara, épica, lendária) para cada inimigo de 7 cartas
 REC = {('normal', 1): (6, 1, 0, 0), ('evento', 1): (5, 2, 0, 0), ('elite', 1): (3, 3, 1, 0),
@@ -22,7 +23,7 @@ rnd = random.Random(2820)
 uso = collections.Counter()
 def pool(lado, tier, rar):
     ser = TEMA[lado][0]
-    p = [c for c in d['cartas'] if c['rar'] == rar and c['id'] != BESTA and not c['uniao']]
+    p = [c for c in d['cartas'] if c['rar'] == rar and c['id'] not in EXCLUSIVAS and not c['uniao']]
     tema = [c for c in p if c['serie'] == ser]
     cross = [c for c in p if c['serie'] != ser and (c['serie'] in OUTRAS or tier >= 3)]
     return tema, cross
@@ -51,7 +52,7 @@ for n in sorted(nos, key=lambda n: (-n['tier'], n['id'])):
         inims.append({'nome': C[lider]['nome'], 'avatar': lider, 'cartas': ordem(deck)})
     batalhas[n['id']] = {'id': n['id'], 'tipo': t, 'regiao': n['tier'], 'lado': n['lado'], 'tema': TEMA[n['lado']][1], 'inimigos': inims}
 # Boss: A Besta + 6 cartas da União (exclusivo)
-uni6 = sorted([c['id'] for c in d['cartas'] if not c['uniao'] and c['id'] != BESTA and c['rar'] == 'lendaria'], key=lambda i: -poder(C[i]))[:6]   # a União agora é libertada nos minibosses e fica com o jogador: o Boss usa a Besta + as 6 lendárias mais fortes
+uni6 = sorted([c['id'] for c in d['cartas'] if not c['uniao'] and c['id'] not in EXCLUSIVAS and c['rar'] == 'lendaria'], key=lambda i: -poder(C[i]))[:6]   # a União agora é libertada nos minibosses e fica com o jogador: o Boss usa a Besta + as 6 lendárias mais fortes
 batalhas[d['boss']] = {'id': d['boss'], 'tipo': 'boss', 'regiao': 4, 'lado': 'centro', 'tema': 'A União', 'inimigos': [{'nome': 'A Besta', 'avatar': BESTA, 'cartas': ordem([BESTA] + uni6)}]}
 for i in [BESTA] + uni6: uso[i] += 1
 # reparo: toda carta que não é da União (nem a Besta) aparece em pelo menos MIN batalhas; troca por uma carta da mesma raridade que apareça demais
@@ -62,7 +63,7 @@ def conta():
         for e in b['inimigos']:
             for c in e['cartas']: t[c] += 1
     return t
-regulares = [c for c in d['cartas'] if not c['uniao'] and c['id'] != BESTA]
+regulares = [c for c in d['cartas'] if not c['uniao'] and c['id'] not in EXCLUSIVAS]
 semdoador = set()
 for _ in range(2000):
     t = conta(); falta = sorted([c for c in regulares if t[c['id']] < MIN], key=lambda c: t[c['id']])

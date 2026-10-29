@@ -105,6 +105,7 @@
     ['V23', 'Erick Corvane', 'viajantes', 'Gêmeo de Nicolas, aprendiz de McCroys'],
     ['V24', 'Maria Santoro', 'viajantes', 'Aprendiz de Belfex e melhor amiga de Eshley'],
     ['V25', 'Eshley', 'viajantes', 'Aprendiz veloz criada pela avó dimensal'],
+    ['V26', 'Átila', 'viajantes', 'Cão brincalhão do Velho-Sábio'],
     // Spacetheft
     ['S01', 'Jasmey Badrock', 'spacetheft', 'Pirata Dale e protagonista; braço metálico', 1],
     ['S02', 'Amanda', 'spacetheft', 'Aliada de Jasmey, crítica do regime da Lebargan'],
@@ -219,7 +220,7 @@
   // Vale para as séries já ranqueadas pelo autor; as demais seguem os cortes fixos acima até serem ranqueadas.
   const SERIES_POR_POSICAO = ['jesed', 'viajantes', 'belfex', 'misterio', 'spacetheft', 'diario'];
   // Raridade fixada pelo autor (14/10/2026): Korvo e Velho-Sábio são Lendárias; ocupam vagas da cota da série.
-  const RARIDADE_FIXA = { V10: 'lendaria', V05: 'lendaria', J03: 'lendaria' };
+  const RARIDADE_FIXA = { V10: 'lendaria', V05: 'lendaria', J03: 'lendaria', V26: 'lendaria' };
   function raridadePorPosicao(cartas) {
     SERIES_POR_POSICAO.forEach(function (sid) {
       const L = cartas.filter(c => c.serie === sid).sort((a, b) => poder([b.stats.pod, b.stats.def, b.stats.int, b.stats.vel]) - poder([a.stats.pod, a.stats.def, a.stats.int, a.stats.vel]) || a.id.localeCompare(b.id));
