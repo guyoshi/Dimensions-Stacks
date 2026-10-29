@@ -56,7 +56,7 @@ try:
         pg.click('.hs-mis [data-a=x]'); pg.wait_for_timeout(200)
         pg.click('.hs-hud [data-a=colecao]'); pg.wait_for_selector('.hs-col'); pg.click('.hs-col [data-a="t:reg"]'); pg.click('.hs-col [data-a="t:selo"]'); pg.screenshot(path='/tmp/m2.png'); pg.click('.hs-col [data-a=x]')
         # loja com vendedor e extras
-        pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") == 1, 'loja 5: só registro (fragmento saiu da loja)')
+        pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") == 2, 'loja 5: registro + melhoria (sem fragmento à venda)')
         chk('Maria' in pg.evaluate("document.querySelector('.loja-vend').textContent"), 'vendedor aparece')
         pg.screenshot(path='/tmp/m3.png')
         pg.click('.hs-loja .loja-x'); pg.wait_for_timeout(300)
@@ -64,21 +64,37 @@ try:
         pg.click('.hs-loja [data-a=x]'); pg.wait_for_timeout(400)
         # fragmentos = moeda; carta do Átila só no último NPC da cadeia
         r = pg.evaluate("""(()=>{const s=DSNpc.state(),u=DSNpc.ultimo(),p=DSNpc.primeiro();const ch=DSNpc.dados.cadeia;
-          const outro=ch.find(n=>n.id!==u&&n.id!==p);
+          const outro=ch.find(n=>n.id!==u&&n.id!==p&&!s.mis[n.id]);
           s.mis[outro.id]={st:'ativa',base:0,first:false}; if(outro.pede&&!s.itens.includes(outro.pede))s.itens.push(outro.pede);
           const f0=Object.keys(s.frag).length; DSNpc.entrega(DSNpc.byId(outro.id)); const f1=Object.keys(s.frag).length;
           const tinha=s.owned.includes('V26');
           const un=DSNpc.byId(u); s.mis[u]={st:'ativa',base:0,first:false}; if(un.pede&&!s.itens.includes(un.pede))s.itens.push(un.pede);
           const f2=Object.keys(s.frag).length; DSNpc.entrega(un);
           return {d1:f1-f0, tinha, d2:Object.keys(s.frag).length-f2, atila:s.owned.includes('V26'), saldo:DSNpc.nFrag()};})()""")
-        chk(r['d1'] == 1 and not r['tinha'], 'NPC comum da cadeia dá 1 fragmento e não dá o Átila')
+        chk(r['d1'] == 1 and not r['tinha'], 'NPC comum da cadeia dá 1 fragmento e não dá o Átila %s' % r)
         chk(r['d2'] == 0 and r['atila'], 'último NPC dá o Átila (sem fragmento)')
         chk(r['saldo'] >= 1, 'saldo de fragmentos conta')
-        pg.evaluate("DSNpc.melh.L3={nome:'Teste',txt:'t',preco:1}"); pg.evaluate("DSHistoria.loja('L3')"); pg.wait_for_selector('.hs-loja .loja-x')
-        chk(pg.evaluate("[...document.querySelectorAll('.hs-loja .loja-x .loja-rar')].some(e=>e.textContent==='Teste')"), 'melhoria definida aparece na loja')
-        s0 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("[...document.querySelectorAll('.hs-loja .loja-x')].find(e=>e.textContent.includes('Teste')).click()"); pg.wait_for_timeout(300)
-        chk(pg.evaluate("DSNpc.tem('L3')") and pg.evaluate("DSNpc.nFrag()") == s0 - 1, 'comprar melhoria gasta fragmento')
-        pg.click('.hs-loja [data-a=x]'); pg.wait_for_timeout(300)
+        pg.evaluate("(()=>{const s=DSNpc.state();for(let i=0;i<40;i++)s.frag['T:'+i]=1;})()"); base = pg.evaluate("DSNpc.nFrag()")
+        chk(pg.evaluate("document.querySelector('.hs-svg').classList.contains('escuro')"), 'sem a melhoria o mapa tem névoa')
+        def compra(loja, nome):
+            pg.evaluate("DSHistoria.loja('%s')" % loja); pg.wait_for_selector('.hs-loja .loja-x')
+            ok = pg.evaluate("[...document.querySelectorAll('.hs-loja .loja-x')].some(e=>e.textContent.includes('%s'))" % nome)
+            s0 = pg.evaluate("DSNpc.nFrag()")
+            pg.evaluate("[...document.querySelectorAll('.hs-loja .loja-x')].find(e=>e.textContent.includes('%s')).click()" % nome); pg.wait_for_timeout(300)
+            pg.click('.hs-loja [data-a=x]'); pg.wait_for_timeout(300)
+            return ok, s0 - pg.evaluate("DSNpc.nFrag()")
+        ok, gasto = compra('L2', 'Mapa revelado'); chk(ok and gasto > 0 and pg.evaluate("DSNpc.tem('mapa')"), 'comprar Mapa revelado gasta fragmentos (%s)' % gasto)
+        chk(not pg.evaluate("document.querySelector('.hs-svg').classList.contains('escuro')"), 'Mapa revelado tira a névoa')
+        pg.evaluate("DSHistoria.loja('L1')"); pg.wait_for_selector('.hs-loja .loja-it'); p0 = pg.evaluate("+document.querySelector('.hs-loja .loja-it:not(.loja-x) .loja-pr b').textContent"); pg.click('.hs-loja [data-a=x]'); pg.wait_for_timeout(300)
+        ok, gasto = compra('L1', 'Preços menores'); chk(ok and pg.evaluate("DSNpc.tem('preco')"), 'comprar Preços menores')
+        pg.evaluate("DSHistoria.loja('L1')"); pg.wait_for_selector('.hs-loja .loja-it'); p1 = pg.evaluate("+document.querySelector('.hs-loja .loja-it:not(.loja-x) .loja-pr b').textContent"); pg.click('.hs-loja [data-a=x]'); pg.wait_for_timeout(300)
+        chk(p1 < p0, 'preço da carta caiu (%s -> %s)' % (p0, p1))
+        for lj, nm, idm in [('L3', 'Iniciativa', 'atr'), ('L4', 'Sorte de combate', 'sorte'), ('L5', 'Mão ampliada', 'maos')]:
+            ok, gasto = compra(lj, nm); chk(ok and pg.evaluate("DSNpc.tem('%s')" % idm), 'comprar ' + nm)
+        chk(pg.evaluate("DSNpc.nFrag()") == base - (4 + 6 + 8 + 10 + 12), 'saldo = antes - preços provisórios (%s)' % pg.evaluate("DSNpc.nFrag()"))
+        # fragmento de minigame só no prêmio máximo
+        f0 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("DSNpc.fragMini('x',2)"); f1 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("DSNpc.fragMini('x',3)"); pg.evaluate("DSNpc.fragMini('x',3)"); f2 = pg.evaluate("DSNpc.nFrag()")
+        chk(f1 == f0 and f2 == f0 + 1, 'minigame: só o Perfeito dá 1 fragmento (uma vez)')
         # nó com NPC
         n = pg.evaluate("DSNpc.dados.quests[0].a"); pg.evaluate("DSHistoria.state().pos='%s'" % n)
         chk(not errs, 'sem erros %s' % errs)

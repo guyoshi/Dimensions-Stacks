@@ -212,7 +212,7 @@
   // ---- o que aparece: só o que foi vencido ilumina. Caminhos e bifurcações surgem ao vencer uma fase; os vizinhos aparecem (abertos ou trancados) mesmo com o boneco longe. O núcleo está sempre visível.
   const NUCLEO = new Set(NOS.filter(n => n.tier === 4).map(n => n.id));
   function paintLuz() {   // visibilidade: só se vê o ponto onde está, o que já venceu e os PRÓXIMOS pontos (ramos cinza). O que está além fica escondido; o núcleo é sempre visível.
-    const ocultar = P.escuro !== false; svg.classList.toggle('escuro', ocultar);
+    const ocultar = P.escuro !== false && !(NPC && NPC.tem('mapa')); svg.classList.toggle('escuro', ocultar);
     const rev = new Set([posId()]); NOS.forEach(n => { if (aberto_(n.id)) rev.add(n.id); });   // quem revela os vizinhos: onde estou, o que venci e lojas já alcançadas
     const vis = new Set(NUCLEO); rev.forEach(i => { vis.add(i); BY[i].viz.forEach(v => vis.add(v)); });
     $$('.n', root).forEach(g => g.classList.toggle('fog', ocultar && !vis.has(g.dataset.id)));
@@ -419,7 +419,8 @@
     const bat = gd ? Object.assign({}, bat0, { i: gd.nomes.map((nm, k) => { const R = (() => { let a = (id.charCodeAt(3) * 131 + k * 977 + gd.m * 31) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
       const m = Array.isArray(gd.m) ? gd.m[k] : gd.m, deck = gd.fraco ? [] : [gd.av[k]], used = new Set(gd.av); for (let q = gd.fraco ? 0 : 1; q < m; q++) { const r = gd.fraco ? 'comum' : q === 1 ? 'rara' : q % 2 ? 'epica' : 'lendaria', pool = U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && c.raridade === r && !used.has(c.id)); if (gd.fraco) pool.sort((x, y) => FORCA(x.id) - FORCA(y.id)); if (!pool.length) break; const c = gd.fraco ? pool[Math.floor(R() * Math.min(6, pool.length))] : pool[Math.floor(R() * pool.length)]; deck.push(c.id); used.add(c.id); }
       return { n: nm, a: gd.av[k], c: deck.sort((x, y) => FORCA(x) - FORCA(y)) }; }) }) : bat0;
-    const ev = bat.e || null, opt0 = n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : n.tipo === 'miniboss' ? { n: Math.max(7, ...bat.i.map(x => x.c.length)), livre: true } : gd ? { n: 14, livre: true } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
+    const ev = bat.e || null, mais = NPC && NPC.tem('maos') && n.tipo !== 'boss' && !gd ? 2 : 0;   // melhoria "Mão ampliada": +2 cartas (não vale no Boss nem nos guardiões)
+    const opt0 = n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : n.tipo === 'miniboss' ? { n: Math.max(7, ...bat.i.map(x => x.c.length)) + mais, livre: true } : gd ? { n: 14, livre: true } : mais ? { n: 7 + mais } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
     const autoMao = () => { const o = (S.owned || []).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so); return (o.length ? o : (S.owned || [])).slice(0, opt.n || 7); };
     const emprestadas = () => {   // Baralho emprestado: as 7 cartas mais fortes do tema (não são suas e não cansam)
       const tm = (bat.tema || '').toLowerCase(), noTema = c => { const sr = U.SERIES[c.serie]; return sr && sr.nome.toLowerCase() === tm; };
@@ -461,7 +462,7 @@
           setTimeout(() => { toggleWin(id); if (NPC) NPC.vitoria(id); const bp = premioBau(id); if (bp) setTimeout(() => abrirBau(bp, () => { if (NPC) NPC.fragBau(id); }), res.capturadas.length ? 2600 : 700); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
         } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
       } };
-      const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), simbolos: gd && gd.simbolos ? { val: 5 } : null, bhRefill: gd && gd.evTodas ? [1] : null, teams: gd && gd.regra === 'g_duo' ? [[0], [1, 2]] : null, teamPool: gd && gd.regra === 'g_duo' ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
+      const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, escolheSempre: NPC && NPC.tem('atr') && n.tipo !== 'boss' && !gd ? 0 : null, sorte: NPC && NPC.tem('sorte') && n.tipo !== 'boss' && !gd ? { pid: 0, p: NPC.val.sorteP, v: NPC.val.sorteV } : null, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), simbolos: gd && gd.simbolos ? { val: 5 } : null, bhRefill: gd && gd.evTodas ? [1] : null, teams: gd && gd.regra === 'g_duo' ? [[0], [1, 2]] : null, teamPool: gd && gd.regra === 'g_duo' ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
       if (uni.length && !auto) entradaUniao(uni, uniTodas, lanca); else lanca();
     });
   }
@@ -528,7 +529,8 @@
   }
   function finalCena() {
     if (!window.DSCinema || !window.DS_CINEMATICA_FINAL) return;
-    window.DSCinema.play(() => { try { SND.histPlay('mapa'); } catch (e) { } }, window.DS_CINEMATICA_FINAL, { nome: (S && S.nome) || 'Viajante' });
+    const vars = { nome: (S && S.nome) || 'Viajante' }, volta = () => { try { SND.histPlay('mapa'); } catch (e) { } };
+    window.DSCinema.play(() => { if (nBroches() >= 7 && window.DS_CINEMATICA_SECRETA) window.DSCinema.play(volta, window.DS_CINEMATICA_SECRETA, vars); else volta(); }, window.DS_CINEMATICA_FINAL, vars);
   }
   // ao derrotar um guardião: o ponto da Besta é "atingido" (tremor, clarão, golpe), mostrando quanto ela enfraqueceu
   function golpeBoss() {
@@ -661,11 +663,12 @@
     const V = NPC ? NPC.vend(id) : null, vd = $('.loja-vend', ov);
     const diz = t => { if (!V) return; $('.lv-t span', ov).textContent = t; vd.classList.remove('fala'); void vd.offsetWidth; vd.classList.add('fala'); };
     if (V) { vd.hidden = false; $('.lv-p', ov).append(U.cardEl(V.card, { up: true, noanim: true, cw: 46 })); $('.lv-t b', ov).textContent = V.nome; diz(V.oi); }
-    const extras = () => NPC ? NPC.lojaExtras(id) : [];
+    const extras = () => NPC ? NPC.lojaExtras(id).map(x => x.tipo === 'reg' ? Object.assign({}, x, { p: dsc(x.p) }) : x) : [];
     const conta = alvo => { const de = saldo; saldo = alvo; const t0 = performance.now(), dur = document.body.classList.contains('reduce') ? 0 : 600; const f = t => { const k = dur ? Math.min(1, (t - t0) / dur) : 1; bal.textContent = Math.round(de + (alvo - de) * k); if (k < 1) requestAnimationFrame(f); }; bal.parentNode.classList.remove('gasta'); void bal.offsetWidth; bal.parentNode.classList.add('gasta'); requestAnimationFrame(f); };
     const flutua = (el0, txt) => { const r = el0.getBoundingClientRect(), f = el(`<div class="loja-fl">−${txt}</div>`); f.style.left = r.left + r.width / 2 + 'px'; f.style.top = r.top + 'px'; document.body.appendChild(f); setTimeout(() => f.remove(), 1100); };
     if (est.promo === undefined) { const q = est.itens.filter(c => !est.comprados.includes(c)); est.promo = q.length ? q[[...id].reduce((a, ch) => a + ch.charCodeAt(0), 0) % q.length] : null; save(); }   // 1 item por loja com −30% fixo
-    const base = c => PRECO[U.CARDS[c].raridade] || 50;
+    const dsc = p => NPC && NPC.tem('preco') ? Math.max(1, Math.round(p * (1 - NPC.val.preco))) : p;   // melhoria "Preços menores"
+    const base = c => dsc(PRECO[U.CARDS[c].raridade] || 50);
     const ajudaId = () => {   // quem está sem saldo para nada na loja ganha −20% na carta mais barata (uma vez por loja)
       if (est.ajuda) return null; const q = est.itens.filter(c => !est.comprados.includes(c) && c !== est.promo); if (!q.length) return null;
       const pr = c => c === est.promo ? Math.round(base(c) * .7) : base(c), todos = est.itens.filter(c => !est.comprados.includes(c)), min = Math.min(...todos.map(pr));
@@ -680,9 +683,9 @@
         w.append(el(`<div class="loja-pr">${got ? '<span>Vendida</span>' : coinSvg(16) + '<b>' + p + '</b>' + (tag(c) && !got ? '<i class="loja-off">' + tag(c) + '</i>' : '')}</div>`)); w.append(el(`<small class="loja-rar r-${U.CARDS[c].raridade}">${RAR[U.CARDS[c].raridade] || ''}</small>`)); g.append(w); });
       if (aba === 'comprar') extras().forEach(x => { const pobre = !x.got && x.p > (x.tipo === 'melh' ? NPC.nFrag() : saldo), w = el(`<div class="loja-it loja-x${x.got ? ' got' : ''}${pobre ? ' pobre' : ''}" data-x="${x.k}"></div>`);
         if (x.tipo === 'melh') w.append(el(`<div class="lx-art">${NPC.cristal(true)}</div>`)); else { const a = el('<div class="lx-art reg"></div>'); a.append(U.cardEl(x.card, { up: true, noanim: true, cw: 92 })); w.append(a); }
-        w.append(el(`<div class="loja-pr">${x.got ? '<span>Comprado</span>' : (x.tipo === 'melh' ? NPC.cristal(true) : coinSvg(16)) + '<b>' + x.p + '</b>'}</div>`)); w.append(el(`<small class="loja-rar r-x">${x.tipo === 'melh' ? esc(x.nome) : 'Registro'}</small>`)); g.append(w); });
+        w.append(el(`<div class="loja-pr">${x.got ? '<span>Comprado</span>' : (x.tipo === 'melh' ? NPC.cristal(true) : coinSvg(16)) + '<b>' + x.p + '</b>'}</div>`)); w.append(el(`<small class="loja-rar r-x">${x.tipo === 'melh' ? esc(x.nome) : 'Registro'}</small>`)); if (x.txt) w.append(el(`<small class="lx-txt">${esc(x.txt)}</small>`)); g.append(w); });
       if (aba !== 'comprar') { const L = (S.owned || []).filter(c => fad(c)); if (!fadigaOn() || !L.length) g.append(el('<p class="loja-vz">Nenhuma carta cansada.</p>'));
-        else L.forEach(c => { const p = fad(c) * CUSTO_DESC, w = el(`<div class="loja-it tired${p > saldo ? ' pobre' : ''}" data-id="${c}" data-rest="1"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 })); w.append(el(`<div class="loja-pr">${coinSvg(16)}<b>${p}</b></div>`)); w.append(el(`<div class="hs-fadb">${pontosFad(c)}</div>`)); g.append(w); }); }
+        else L.forEach(c => { const p = dsc(fad(c) * CUSTO_DESC), w = el(`<div class="loja-it tired${p > saldo ? ' pobre' : ''}" data-id="${c}" data-rest="1"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 })); w.append(el(`<div class="loja-pr">${coinSvg(16)}<b>${p}</b></div>`)); w.append(el(`<div class="hs-fadb">${pontosFad(c)}</div>`)); g.append(w); }); }
     };
     const sai = () => { ov.classList.add('out'); setTimeout(() => ov.remove(), 250); if (view === 'map') paintAll(); if (NPC) NPC.check(); };
     ov.onclick = e => {
@@ -694,7 +697,7 @@
           if (!NPC.compraExtra(x.k)) return; save(); SND.play('legend'); flutua(c, x.p); paintAll(); msg = x.nome + ': melhoria adquirida.'; if (V) diz(rnd0(V.obr)); render(); return; }
         if (x.p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: custa ' + x.p + '.'; ms.textContent = msg; return; }
         S.pend -= x.p; S.gasto = (S.gasto | 0) + x.p; NPC.compraExtra(x.k); save(); SND.play('legend'); flutua(c, x.p); conta(S.pend | 0); msg = 'Registro de ' + U.CARDS[x.card].nome; if (V) diz(rnd0(V.obr)); render(); return; }
-      if (c.dataset.rest) { const p = fad(k) * CUSTO_DESC; if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: descansar custa ' + p + '.'; ms.textContent = msg; return; }
+      if (c.dataset.rest) { const p = dsc(fad(k) * CUSTO_DESC); if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: descansar custa ' + p + '.'; ms.textContent = msg; return; }
         S.pend -= p; S.gasto = (S.gasto | 0) + p; delete S.fadiga[k]; save(); SND.play('capture'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' descansou.'; render(); return; }
       if (est.comprados.includes(k)) return; const p = preco(k), usouAjuda = k === ajudaId();
       if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: ' + U.CARDS[k].nome + ' custa ' + p + '.'; ms.textContent = msg; return; }

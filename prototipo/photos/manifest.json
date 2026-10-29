@@ -1053,6 +1053,150 @@
    "w": 720,
    "h": 1080,
    "webp": 158120
+  },
+  "V27": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Farol.png",
+   "mtimeMs": 1792573491309,
+   "bytes": 2561307,
+   "sha1": "7ef95a956c",
+   "w": 720,
+   "h": 1080,
+   "webp": 143944
+  },
+  "V28": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Ferris Montfort.png",
+   "mtimeMs": 1792586667793,
+   "bytes": 3028305,
+   "sha1": "0132164cf9",
+   "w": 720,
+   "h": 1080,
+   "webp": 244760
+  },
+  "V29": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Gabrielle Lins.png",
+   "mtimeMs": 1792585674867,
+   "bytes": 2340232,
+   "sha1": "825ea1acd9",
+   "w": 720,
+   "h": 1080,
+   "webp": 133176
+  },
+  "V30": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Jack Lins.png",
+   "mtimeMs": 1792536732648,
+   "bytes": 2447120,
+   "sha1": "31c759f3bf",
+   "w": 720,
+   "h": 1080,
+   "webp": 131846
+  },
+  "V31": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Kali.png",
+   "mtimeMs": 1792586533402,
+   "bytes": 2734925,
+   "sha1": "5163acb8fc",
+   "w": 720,
+   "h": 1080,
+   "webp": 178620
+  },
+  "V32": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Téorix.png",
+   "mtimeMs": 1792578824652,
+   "bytes": 2222775,
+   "sha1": "121cb3ee44",
+   "w": 720,
+   "h": 1080,
+   "webp": 85054
+  },
+  "V33": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Trolhos.png",
+   "mtimeMs": 1792579229536,
+   "bytes": 3204832,
+   "sha1": "76580932de",
+   "w": 720,
+   "h": 1080,
+   "webp": 245120
+  },
+  "V34": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Devorantes.png",
+   "mtimeMs": 1792578924578,
+   "bytes": 2431925,
+   "sha1": "1e06f3de66",
+   "w": 720,
+   "h": 1080,
+   "webp": 108306
+  },
+  "V35": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Láridas Celestes.png",
+   "mtimeMs": 1791851740396,
+   "bytes": 2774718,
+   "sha1": "1e292808c4",
+   "w": 720,
+   "h": 1080,
+   "webp": 160956
+  },
+  "V36": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Karoli Morger.png",
+   "mtimeMs": 1792581475541,
+   "bytes": 3336889,
+   "sha1": "d33d3ea7f0",
+   "w": 720,
+   "h": 1080,
+   "webp": 232846
+  },
+  "V37": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Lioro.png",
+   "mtimeMs": 1792581257732,
+   "bytes": 2547100,
+   "sha1": "a78018053f",
+   "w": 720,
+   "h": 1080,
+   "webp": 157446
+  },
+  "V38": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Peryth.png",
+   "mtimeMs": 1792593218686,
+   "bytes": 2842442,
+   "sha1": "7416d3c7dd",
+   "w": 720,
+   "h": 405,
+   "webp": 105494
+  },
+  "V39": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Serafira Dalmora.png",
+   "mtimeMs": 1792586611148,
+   "bytes": 2162028,
+   "sha1": "c18006b854",
+   "w": 720,
+   "h": 1080,
+   "webp": 96036
+  },
+  "V40": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Tango.png",
+   "mtimeMs": 1792584067253,
+   "bytes": 2590569,
+   "sha1": "a216a12ff1",
+   "w": 720,
+   "h": 1080,
+   "webp": 171292
+  },
+  "V41": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Elowen.png",
+   "mtimeMs": 1792582616689,
+   "bytes": 2013982,
+   "sha1": "524654f6ee",
+   "w": 720,
+   "h": 1080,
+   "webp": 99450
+  },
+  "V42": {
+   "src": "Viajantes Dimensionais/1 - A Patrulha de Korvo/02 - Assets/Personagens/Mereditha.png",
+   "mtimeMs": 1792581546942,
+   "bytes": 3010275,
+   "sha1": "fe85d880fe",
+   "w": 720,
+   "h": 1080,
+   "webp": 200238
   }
  }
 }

@@ -805,17 +805,22 @@
         if (pe) { const ok = !p0.bot && this.io.bossMini ? !!(await this.io.bossMini(p0, { round: this.s.round })) : this.rand() < (this.cfg.boss.q == null ? 0.7 : this.cfg.boss.q); const d = ok ? 10 : -10;
           this.addMod(pe, 0, 'Desafio', x => { for (const k of AID) x.stats[k] = Math.max(0, x.stats[k] + d); }); this.log(ok ? 'Desafio cumprido: +10 em todos os atributos.' : 'Desafio falhou: −10 em todos os atributos.', 'efeito'); }
       }
+      if (this.cfg.sorte) {   // melhoria "Sorte de combate" (Modo História): chance p de a carta do jogador ganhar v% em todos os atributos nesta disputa
+        const sg = this.cfg.sorte, se = combat.entries.find(e => e.pid === sg.pid);
+        if (se && this.rand() < sg.p) { this.addMod(se, sg.pid, 'Sorte', x => { for (const k of AID) x.stats[k] = Math.round(x.stats[k] * (1 + sg.v)); }); this.log(`Sorte dimensional: ${this.p(sg.pid).name} ganha ${Math.round(sg.v * 100)}% em todos os atributos.`, 'efeito'); await this.emit('sorteFx', { pid: sg.pid }); }
+      }
       // 2b) especiais de controle (antes de declarar atributos)
       if (combat.specialsAllowed) await this.ctrlWindow(combat);
       // 3) atributos: iniciador escolhe (dentro do que os controles permitem); os demais no mesmo par
-      const ie = combat.entries.find(e => e.pid === init);
+      const escolhe = this.cfg.escolheSempre != null && combat.entries.some(e => e.pid === this.cfg.escolheSempre) ? this.cfg.escolheSempre : init;   // melhoria "Iniciativa" (Modo História): o jogador sempre escolhe o tipo primeiro
+      const ie = combat.entries.find(e => e.pid === escolhe);
       ie.attr = await this.chooseAttr(combat, ie, this.attrOptions(combat, ie, AID));
       if (!AID.includes(ie.attr)) ie.attr = AID[0];
-      this.log(`${this.p(init).name} inicia em ${ATTR[ie.attr].nome}.`, 'attr');
-      await this.emit('initiatorAttr', { combat, pid: init, attr: ie.attr });
+      this.log(`${this.p(escolhe).name} inicia em ${ATTR[ie.attr].nome}.`, 'attr');
+      await this.emit('initiatorAttr', { combat, pid: escolhe, attr: ie.attr });
       const pair = combat.ev && combat.ev.id === 'aberta' ? AID.slice() : AID.filter(a => ATTR[a].par === ATTR[ie.attr].par);
       for (const e of combat.entries) {
-        if (e.pid === init) continue;
+        if (e.pid === escolhe) continue;
         const opts = this.attrOptions(combat, e, pair);
         e.attr = await this.chooseAttr(combat, e, opts);
         if (!opts.includes(e.attr)) e.attr = opts[0];

@@ -5,10 +5,10 @@
   "status": "APROVADO_PELO_AUTOR",
   "data_aprovacao": "2026-10-12",
   "idioma": "pt-BR",
-  "total_cartas": 117,
+  "total_cartas": 133,
   "origens": {
    "J": 37,
-   "V": 26,
+   "V": 42,
    "S": 18,
    "D": 19,
    "M": 12,
@@ -49,7 +49,8 @@
   "revisao_14_10_2026_besta_korvo": "A Besta 95/95/49/33 -> 95/95/68/70 e Korvo 90/79/67/66 -> 95/85/70/68 (autor, 14/10/2026: cartas de destaque; dentro da regra do par fraco, par fraco no maximo 70).",
   "revisao_14_10_2026_releuz_bruno": "Releuz passa a ter a maior Inteligência (95) e Bruno Lins a maior Velocidade (95) de todas as cartas (autor, 14/10/2026); demais atributos deles reduzidos para manter o rendimento; A Engenheira, Daryon Polar, Velho-Sabio e Lias Hardman com Inteligência limitada a 93 (maximo de qualquer outra carta) e demais atributos ajustados +0 a +3.",
   "revisao_28_10_2026_novas_cartas": "J24–J37 adicionadas a pedido do autor (Litara mais velha, Alveris Polar, Sumo Vigia, Tair/Kalan/Orel Nular, Kharvok, Orionus Polar, Raukhar, Tavra Vendrar, Efepar, Liri, Professor Taliver, Yndra), com status PROPOSTA_AGUARDANDO_APROVACAO: atributos, perfil e especial são propostas do Claude, a aprovar pelo autor. Cada uma recebeu um especial que estava sem carta (todos distintos).",
-  "revisao_29_10_2026_atila": "V26 Átila adicionada a pedido do autor (29/10/2026): Lendária exclusiva, recompensa final da cadeia de NPCs. Especial novo AE-145 (Traz o chinelo)."
+  "revisao_29_10_2026_atila": "V26 Átila adicionada a pedido do autor (29/10/2026): Lendária exclusiva, recompensa final da cadeia de NPCs. Especial novo AE-145 (Traz o chinelo).",
+  "revisao_29_10_2026_novas_cartas_v27_v42": "V27–V42 adicionadas a pedido do autor (Farol, Ferris Montfort, Gabrielle Lins, Jack Lins, Kali, Téorix, Trolhos, Devorante, Lárida Celeste, Karoli Morger, Lioro, Peryth, Serafira Dalmora, Tango, Elowen, Mereditha), status PROPOSTA_AGUARDANDO_APROVACAO. Cada uma recebeu um especial que estava sem carta."
  },
  "cartas": [
   {
@@ -2892,6 +2893,406 @@
    },
    "status": "PROPOSTA_AGUARDANDO_APROVACAO",
    "observacao": "Carta criada em 14/10/2026 a pedido do autor. Atributos, descrição e especial provisórios (aguardam o ranking do autor); descrição sem os desfechos de Tack e Jork. Sobrenome tirado do nome do arquivo de referência visual."
+  },
+  {
+   "id": "V27",
+   "nome": "Farol",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Petrisco luminoso que Banjo ganha no Bazar do Oeste: entra em frestas e ilumina o escuro.",
+   "atributos": {
+    "FOR": 12,
+    "RES": 30,
+    "INT": 55,
+    "VEL": 78
+   },
+   "soma_atributos": 175,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-094",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V28",
+   "nome": "Ferris Montfort",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Aprendiz de Tayo que nunca perdeu uma corrida de dassi; filho do senavelita mais forte vivo.",
+   "atributos": {
+    "FOR": 55,
+    "RES": 66,
+    "INT": 82,
+    "VEL": 93
+   },
+   "soma_atributos": 296,
+   "perfil_balanceamento": "Forte",
+   "habilidade_especial_id": "AE-142",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V29",
+   "nome": "Gabrielle Lins",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Mãe dos irmãos Lins, senavelita de fogo extraordinária ligada a Belfex; já falecida.",
+   "atributos": {
+    "FOR": 95,
+    "RES": 82,
+    "INT": 70,
+    "VEL": 65
+   },
+   "soma_atributos": 312,
+   "perfil_balanceamento": "Elite",
+   "habilidade_especial_id": "AE-010",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V30",
+   "nome": "Jack Lins",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Pai dos irmãos Lins, ligado a Belfex como Gabrielle; já falecido.",
+   "atributos": {
+    "FOR": 55,
+    "RES": 58,
+    "INT": 47,
+    "VEL": 44
+   },
+   "soma_atributos": 204,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-008",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V31",
+   "nome": "Kali",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Tela dourada falante, assistente de Velho-Sábio: cuida da casa e acompanha tudo o que acontece em Tayo.",
+   "atributos": {
+    "FOR": 6,
+    "RES": 41,
+    "INT": 92,
+    "VEL": 60
+   },
+   "soma_atributos": 199,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-019",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V32",
+   "nome": "Téorix",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Fera cega e perigosa da jornada dos irmãos: não enxerga, mas ouve tudo.",
+   "atributos": {
+    "FOR": 88,
+    "RES": 72,
+    "INT": 40,
+    "VEL": 67
+   },
+   "soma_atributos": 267,
+   "perfil_balanceamento": "Padrão",
+   "habilidade_especial_id": "AE-017",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V33",
+   "nome": "Trolhos",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Pequenos produtores do mel rosado que fecha cortes e alivia queimaduras.",
+   "atributos": {
+    "FOR": 8,
+    "RES": 42,
+    "INT": 52,
+    "VEL": 38
+   },
+   "soma_atributos": 140,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-080",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V34",
+   "nome": "Devorante",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Criatura do Sepulcro dos Esquecidos que caça tudo o que respira.",
+   "atributos": {
+    "FOR": 80,
+    "RES": 40,
+    "INT": 12,
+    "VEL": 56
+   },
+   "soma_atributos": 188,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-033",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V35",
+   "nome": "Lárida Celeste",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Montaria voadora da prova de corrida dos aprendizes de Tayo, que cruza as nuvens até o rio.",
+   "atributos": {
+    "FOR": 20,
+    "RES": 38,
+    "INT": 30,
+    "VEL": 80
+   },
+   "soma_atributos": 168,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-122",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V36",
+   "nome": "Karoli Morger",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Tutora de Brenda e da Sociedade de Tayo: postura impecável, olhar afiado e voz que mesmo dura encoraja.",
+   "atributos": {
+    "FOR": 82,
+    "RES": 95,
+    "INT": 62,
+    "VEL": 60
+   },
+   "soma_atributos": 299,
+   "perfil_balanceamento": "Forte",
+   "habilidade_especial_id": "AE-078",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V37",
+   "nome": "Lioro",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Tutor simpático da Sociedade de Tayo, que parece enxergar através das pessoas e pedir desculpa pelo espaço que ocupa.",
+   "atributos": {
+    "FOR": 36,
+    "RES": 49,
+    "INT": 80,
+    "VEL": 40
+   },
+   "soma_atributos": 205,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-107",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V38",
+   "nome": "Peryth",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Figura espalhafatosa e inconfundível de Belfex, que avisa: a glória pode ser um doce veneno.",
+   "atributos": {
+    "FOR": 22,
+    "RES": 40,
+    "INT": 66,
+    "VEL": 54
+   },
+   "soma_atributos": 182,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-034",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V39",
+   "nome": "Serafira Dalmora",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Integrante da Sociedade de Tayo, de cabelos prateados e olhos verdes; analisa cada ameaça com calma.",
+   "atributos": {
+    "FOR": 60,
+    "RES": 65,
+    "INT": 92,
+    "VEL": 80
+   },
+   "soma_atributos": 297,
+   "perfil_balanceamento": "Forte",
+   "habilidade_especial_id": "AE-031",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V40",
+   "nome": "Tango",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Tutor brincalhão e enérgico de Tayo: treina os irmãos e bagunça o cabelo de quem acerta.",
+   "atributos": {
+    "FOR": 84,
+    "RES": 80,
+    "INT": 64,
+    "VEL": 66
+   },
+   "soma_atributos": 294,
+   "perfil_balanceamento": "Forte",
+   "habilidade_especial_id": "AE-005",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V41",
+   "nome": "Elowen",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Jovem de cabelos volumosos que acredita em todo mundo até provarem o contrário.",
+   "atributos": {
+    "FOR": 30,
+    "RES": 52,
+    "INT": 60,
+    "VEL": 47
+   },
+   "soma_atributos": 189,
+   "perfil_balanceamento": "Modesta",
+   "habilidade_especial_id": "AE-119",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
+  },
+  {
+   "id": "V42",
+   "nome": "Mereditha",
+   "origem": {
+    "codigo_serie": "V",
+    "cor_base": "azul"
+   },
+   "descricao_curta": "Aliada de Tayo de pele escamosa e olhos âmbar; as escamas mudam de cor com a emoção.",
+   "atributos": {
+    "FOR": 58,
+    "RES": 85,
+    "INT": 66,
+    "VEL": 48
+   },
+   "soma_atributos": 257,
+   "perfil_balanceamento": "Padrão",
+   "habilidade_especial_id": "AE-105",
+   "uniao": "NAO",
+   "base_narrativa": {
+    "fonte": "V-manuscrito",
+    "confianca": "Alta"
+   },
+   "status": "PROPOSTA_AGUARDANDO_APROVACAO",
+   "observacao": "Carta criada em 29/10/2026 a pedido do autor (imagem da pasta Personagens). Descrição baseada no manuscrito e no canon; atributos (regra do par forte, soma única) e especial (antes sem carta) propostos pela IA, aguardando aprovação."
   }
  ]
 }

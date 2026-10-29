@@ -61,6 +61,15 @@ window.DS_CINEMATICA_FINAL = {
   ],
 };
 
+/* Final alternativo (só com os 7 broches): toca depois do "Fim." — um MAS… e Korvo em Quasar 2. Texto provisório: o autor escreve o definitivo. */
+window.DS_CINEMATICA_SECRETA = {
+  musica: 'final',
+  cenas: [
+    { img: null, tom: 'grito', textos: ['Mas…'] },
+    { img: 'cena/korvo_quasar2.webp', mov: 'zoom', pos: 'top', textos: [''] },
+  ],
+};
+
 /* Falas curtas de cada membro da União quando é libertado num miniboss (rascunho do assistente: o autor pode reescrever no tom de cada personagem). {nome} = jogador. */
 window.DS_FALAS_UNIAO = {
   D06: ['Eu senti você chegando, {nome}. Os espíritos sussurraram o seu nome.', 'Obrigada por me libertar.'],

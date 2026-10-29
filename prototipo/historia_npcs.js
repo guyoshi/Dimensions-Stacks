@@ -9,13 +9,23 @@
   const isCh = n => CH.includes(n);
   const FRAG_TOTAL = 48, PEND_CADEIA = 15, FINAL = { pend: 50, carta: 'V26' };   // 48 fontes de fragmentos; o último NPC da cadeia dá a carta Átila (V26) no lugar do fragmento
   // melhorias gerais: 1 por loja, compradas com fragmentos. Preenchidas quando o autor definir (nome, texto, preço em fragmentos); sem entrada, a loja não mostra nada.
-  const MELH = { L1: null, L2: null, L3: null, L4: null, L5: null };
+  // 2 por loja (slot 2 ainda vazio: o autor escolhe 5 entre 10 sugestões). Preços em fragmentos PROVISÓRIOS até o autor fechar as 10 melhorias.
+  const MELH = {
+    L1: [{ id: 'preco', nome: 'Preços menores', txt: 'Lojas cobram 15% menos.', preco: 6 }, null],
+    L2: [{ id: 'mapa', nome: 'Mapa revelado', txt: 'Todos os caminhos ficam visíveis.', preco: 4 }, null],
+    L3: [{ id: 'atr', nome: 'Iniciativa', txt: 'Você sempre escolhe o atributo primeiro.', preco: 8 }, null],
+    L4: [{ id: 'sorte', nome: 'Sorte de combate', txt: 'Chance de a carta ganhar atributos na disputa.', preco: 10 }, null],
+    L5: [{ id: 'maos', nome: 'Mão ampliada', txt: 'Comece as batalhas com 2 cartas a mais.', preco: 12 }, null],
+  };
+  const MELH_ID = {}; Object.values(MELH).forEach(l => l.forEach(m => { if (m) MELH_ID[m.id] = m; }));
+  // valores calibrados por simulação (ver docs): desconto de loja e sorte de combate
+  const MELH_VAL = { preco: 0.15, sorteP: 0.10, sorteV: 0.10 };
   const rnd = a => a[Math.floor(Math.random() * a.length)];
   const S = () => A.S();
   const ini = () => { const s = S(); if (!s) return null; s.mis = s.mis || {}; s.itens = s.itens || []; s.frag = s.frag || {}; s.reg = s.reg || {}; s.melh = s.melh || {}; s.frGasto = s.frGasto | 0; ['ganho', 'gasto', 'compras', 'capt', 'seq', 'seqMax', 'semHab'].forEach(k => { s[k] = s[k] | 0; }); return s; };
   const nGanho = () => Object.keys(ini().frag).length;   // fragmentos já encontrados (cada fonte dá 1 só vez)
   const nFrag = () => Math.max(0, nGanho() - (ini().frGasto | 0));   // saldo: fragmentos são moeda das melhorias nas lojas
-  const tem = lid => !!(ini().melh || {})[lid];
+  const tem = id => { const s = S(); return !!(s && s.melh && s.melh[id]); };
 
   // ---- primeiro NPC da cadeia: o inicial (Pedro, Efepar, Kali ou Buni) mais perto do ponto de partida; fica guardado no save
   function primeiro() {
@@ -114,6 +124,7 @@
   // ---- ganchos de fragmentos
   function fragEvento(key) { if (darFrag(key)) A.quandoLivre(() => popup([`<b>+1</b> fragmento dimensional <b>(${nFrag()})</b>`], 'Fragmento encontrado')); }
   function vitoria(id) { ini(); if (A.MINIS.includes(id)) fragEvento('A:' + id); else if (A.GUARD.includes(id)) fragEvento('G:' + id); }
+  function fragMini(id, tier) { if (tier >= 3) fragEvento('J:' + id); }   // minigame: o prêmio máximo (Perfeito) dá 1 fragmento, uma vez por minigame
   function fragBau(id) { if (D.fragBaus.includes(id)) fragEvento('B:' + id); }
 
   // ---- marcadores no mapa (sobre a ligação entre dois pontos)
@@ -231,15 +242,15 @@
   function lojaExtras(lid) {
     const e = D.lojasExtra[lid], s = ini(), out = [];
     if (e) e.reg.forEach(([c, p]) => out.push({ k: 'R:' + c, tipo: 'reg', card: c, p, got: !!s.reg[c] }));
-    const m = MELH[lid]; if (m) out.push({ k: 'M:' + lid, tipo: 'melh', nome: m.nome, txt: m.txt, p: m.preco, got: tem(lid) });
+    (MELH[lid] || []).forEach(m => { if (m) out.push({ k: 'M:' + m.id, tipo: 'melh', nome: m.nome, txt: m.txt, p: m.preco, got: tem(m.id) }); });
     return out;
   }
   function compraExtra(k) {
     const s = ini();
-    if (k[0] === 'M') { const lid = k.slice(2), m = MELH[lid]; if (!m || s.melh[lid] || nFrag() < m.preco) return false; s.melh[lid] = 1; s.frGasto += m.preco; }
+    if (k[0] === 'M') { const id = k.slice(2), m = MELH_ID[id]; if (!m || s.melh[id] || nFrag() < m.preco) return false; s.melh[id] = 1; s.frGasto += m.preco; }
     else s.reg[k.slice(2)] = 1;
     A.save(); return true;
   }
 
-  window.DSNpc = { init: a => { A = a; }, paint, toque, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, vend, lojaExtras, compraExtra, cristal, nFrag, tem, entrega, ultimo, byId: id => BYID[id], melh: MELH, state: () => ini(), primeiro, dados: D };
+  window.DSNpc = { init: a => { A = a; }, paint, toque, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
 })();

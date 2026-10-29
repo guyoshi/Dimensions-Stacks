@@ -11,8 +11,8 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "A Engenheira",
-     "avatar": "S16",
+     "nome": "Ferris Montfort",
+     "avatar": "V28",
      "cartas": [
       "S07",
       "S08",
@@ -20,7 +20,7 @@
       "S04",
       "S02",
       "S09",
-      "S16"
+      "V28"
      ]
     }
    ],
@@ -35,16 +35,16 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Velho-Sábio",
-     "avatar": "V05",
+     "nome": "Karoli Morger",
+     "avatar": "V36",
      "cartas": [
       "S13",
       "S02",
       "J08",
       "J01",
-      "S16",
-      "D07",
-      "V05"
+      "V05",
+      "V28",
+      "V36"
      ]
     }
    ],
@@ -107,8 +107,8 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Ricochet Bombergue",
-     "avatar": "V09",
+     "nome": "Serafira Dalmora",
+     "avatar": "V39",
      "cartas": [
       "V19",
       "V21",
@@ -116,7 +116,7 @@
       "V14",
       "B05",
       "V06",
-      "V09"
+      "V39"
      ]
     }
    ],
@@ -131,16 +131,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Alveris Polar",
-     "avatar": "J25",
+     "nome": "Gabrielle Lins",
+     "avatar": "V29",
      "cartas": [
-      "D18",
-      "D08",
-      "J09",
-      "J01",
-      "J08",
-      "B04",
-      "J25"
+      "J17",
+      "V32",
+      "S02",
+      "D01",
+      "V01",
+      "V28",
+      "V29"
      ]
     }
    ],
@@ -161,7 +161,7 @@
       "D19",
       "V07",
       "J21",
-      "M12",
+      "V31",
       "D05",
       "S09",
       "J32"
@@ -183,11 +183,16 @@
      "avatar": "J26",
      "cartas": [
       "V16",
+      "V07",
+      "V20",
+      "V24",
       "D09",
+      "V08",
       "J33",
       "M02",
       "V09",
       "V03",
+      "V01",
       "J26"
      ]
     },
@@ -195,10 +200,15 @@
      "nome": "Beatriz Lins",
      "avatar": "V04",
      "cartas": [
+      "V18",
       "V22",
+      "V12",
+      "V14",
       "V24",
       "V08",
+      "V13",
       "V06",
+      "V09",
       "V03",
       "V01",
       "V04"
@@ -208,10 +218,15 @@
      "nome": "Rendar",
      "avatar": "J12",
      "cartas": [
+      "V18",
       "V23",
+      "V12",
       "M03",
+      "V24",
+      "V08",
       "J36",
       "D04",
+      "V06",
       "V09",
       "V01",
       "J12"
@@ -253,42 +268,57 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Alveris Polar",
-     "avatar": "J25",
+     "nome": "Breno Lins",
+     "avatar": "V01",
      "cartas": [
-      "D16",
-      "D10",
-      "J36",
-      "J37",
-      "J08",
-      "D01",
-      "J25"
-     ]
-    },
-    {
-     "nome": "Raukhar",
-     "avatar": "J32",
-     "cartas": [
-      "J27",
-      "V08",
+      "B02",
+      "B03",
+      "V20",
+      "B05",
+      "J17",
       "J07",
-      "J09",
+      "J04",
+      "S04",
       "J01",
-      "D04",
-      "J32"
+      "B04",
+      "V03",
+      "V01"
      ]
     },
     {
-     "nome": "Daryon Polar",
-     "avatar": "J10",
+     "nome": "Velho-Sábio",
+     "avatar": "V05",
      "cartas": [
-      "J24",
-      "V14",
-      "J30",
-      "J15",
-      "S15",
+      "B02",
+      "B03",
+      "J06",
+      "B05",
+      "V17",
+      "J36",
+      "D11",
+      "S04",
+      "M11",
+      "S09",
+      "V09",
+      "V05"
+     ]
+    },
+    {
+     "nome": "A Engenheira",
+     "avatar": "S16",
+     "cartas": [
+      "B02",
+      "B03",
+      "V12",
+      "S13",
+      "V20",
+      "B05",
+      "D11",
+      "M11",
       "D04",
-      "J10"
+      "V06",
+      "D12",
+      "S16"
      ]
     }
    ],
@@ -309,9 +339,9 @@
       "V19",
       "V16",
       "V23",
-      "M06",
       "M07",
       "M12",
+      "V32",
       "V03"
      ]
     }
@@ -327,16 +357,16 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
+     "nome": "Karoli Morger",
+     "avatar": "V36",
      "cartas": [
       "D17",
       "D02",
-      "J05",
+      "V34",
       "J11",
       "J09",
       "D05",
-      "D07"
+      "V36"
      ]
     }
    ],
@@ -436,16 +466,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "X",
-     "avatar": "M11",
+     "nome": "Gabrielle Lins",
+     "avatar": "V29",
      "cartas": [
-      "V18",
-      "J13",
-      "M06",
-      "J07",
-      "J30",
-      "S04",
-      "M11"
+      "M09",
+      "M08",
+      "M03",
+      "M12",
+      "S15",
+      "M11",
+      "V29"
      ]
     }
    ],
@@ -513,9 +543,9 @@
      "cartas": [
       "J29",
       "V21",
-      "V24",
       "M07",
-      "J17",
+      "V42",
+      "V32",
       "J09",
       "M02"
      ]
@@ -532,16 +562,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Breno Lins",
-     "avatar": "V01",
+     "nome": "Karoli Morger",
+     "avatar": "V36",
      "cartas": [
-      "M05",
-      "V25",
-      "V12",
-      "M03",
-      "V17",
-      "M11",
-      "V01"
+      "B02",
+      "B03",
+      "J21",
+      "B05",
+      "D05",
+      "V03",
+      "V36"
      ]
     }
    ],
@@ -556,16 +586,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Velho-Sábio",
-     "avatar": "V05",
+     "nome": "Gabrielle Lins",
+     "avatar": "V29",
      "cartas": [
       "V19",
       "J19",
       "V24",
       "D11",
       "V09",
-      "V03",
-      "V05"
+      "V39",
+      "V29"
      ]
     }
    ],
@@ -628,16 +658,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Jelatira",
-     "avatar": "J20",
+     "nome": "Tango",
+     "avatar": "V40",
      "cartas": [
       "M09",
       "M04",
       "M08",
       "J16",
-      "B05",
       "M12",
-      "J20"
+      "J20",
+      "V40"
      ]
     }
    ],
@@ -652,16 +682,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Cal Edran",
-     "avatar": "J11",
+     "nome": "Erla",
+     "avatar": "V06",
      "cartas": [
-      "J18",
-      "J02",
-      "J23",
-      "J28",
+      "B02",
+      "J16",
+      "B03",
       "J21",
-      "J34",
-      "J11"
+      "B05",
+      "V42",
+      "V06"
      ]
     }
    ],
@@ -761,16 +791,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Dareth Polar",
-     "avatar": "J15",
+     "nome": "Yndra",
+     "avatar": "J37",
      "cartas": [
-      "J35",
-      "J02",
-      "J23",
-      "M03",
-      "M12",
-      "J04",
-      "J15"
+      "B02",
+      "D14",
+      "B03",
+      "V37",
+      "D03",
+      "V08",
+      "J37"
      ]
     }
    ],
@@ -785,16 +815,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Lanigiah",
-     "avatar": "V17",
+     "nome": "Primus Senan",
+     "avatar": "B05",
      "cartas": [
+      "V41",
       "V19",
-      "V25",
       "V21",
       "V11",
+      "V34",
       "V14",
-      "B05",
-      "V17"
+      "B05"
      ]
     }
    ],
@@ -812,9 +842,9 @@
      "nome": "Eric",
      "avatar": "S03",
      "cartas": [
+      "V33",
+      "V38",
       "M08",
-      "S14",
-      "S17",
       "S07",
       "S05",
       "S08",
@@ -833,16 +863,16 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Agente Seis",
-     "avatar": "M07",
+     "nome": "Mereditha",
+     "avatar": "V42",
      "cartas": [
       "M04",
       "S17",
       "S10",
       "S12",
-      "S13",
       "M06",
-      "M07"
+      "M07",
+      "V42"
      ]
     }
    ],
@@ -857,16 +887,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Breno Lins",
-     "avatar": "V01",
+     "nome": "Kaelina Polar",
+     "avatar": "J08",
      "cartas": [
-      "V18",
-      "V16",
-      "V21",
-      "V12",
-      "V20",
-      "V13",
-      "V01"
+      "B02",
+      "J24",
+      "B03",
+      "B05",
+      "J17",
+      "J04",
+      "J08"
      ]
     }
    ],
@@ -881,29 +911,35 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "A Engenheira",
-     "avatar": "S16",
+     "nome": "Agouro",
+     "avatar": "D12",
      "cartas": [
-      "S12",
-      "V13",
-      "S03",
-      "S15",
-      "S02",
-      "S09",
-      "S16"
+      "V18",
+      "V16",
+      "V24",
+      "D09",
+      "V08",
+      "J11",
+      "J33",
+      "D01",
+      "D12",
+      "V01"
      ]
     },
     {
-     "nome": "A Engenheira",
-     "avatar": "S16",
+     "nome": "Ricochet Bombergue",
+     "avatar": "V09",
      "cartas": [
-      "S18",
-      "J06",
+      "D16",
+      "V25",
+      "V20",
+      "V14",
+      "V24",
+      "V17",
       "S05",
-      "S04",
-      "J01",
-      "D12",
-      "S16"
+      "S15",
+      "V06",
+      "V09"
      ]
     }
    ],
@@ -949,7 +985,9 @@
       "D15",
       "D03",
       "D10",
+      "D09",
       "D11",
+      "D08",
       "D01",
       "D04"
      ]
@@ -961,7 +999,9 @@
       "D17",
       "D16",
       "D18",
+      "D10",
       "D09",
+      "D11",
       "D08",
       "D05",
       "D12"
@@ -1016,16 +1056,16 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Agouro",
-     "avatar": "D12",
+     "nome": "Capitã Nastácia",
+     "avatar": "S09",
      "cartas": [
-      "D17",
-      "D19",
-      "D15",
-      "D03",
-      "B05",
-      "D11",
-      "D12"
+      "M04",
+      "J13",
+      "V35",
+      "M07",
+      "M12",
+      "S03",
+      "S09"
      ]
     }
    ],
@@ -1040,42 +1080,54 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Kaelina Polar",
-     "avatar": "J08",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "J14",
-      "J16",
-      "M06",
-      "J17",
-      "J11",
-      "J08",
-      "J01"
-     ]
-    },
-    {
-     "nome": "Agente Sete",
-     "avatar": "M02",
-     "cartas": [
-      "J18",
+      "M04",
+      "M05",
       "J22",
-      "J06",
-      "B05",
-      "J20",
+      "M03",
+      "V14",
+      "M06",
+      "M07",
+      "M12",
       "J37",
-      "M02"
+      "M02",
+      "M11"
      ]
     },
     {
-     "nome": "Jokara Amarëa",
-     "avatar": "J01",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
+      "J35",
+      "M08",
       "J19",
-      "J27",
-      "J21",
-      "J33",
-      "J30",
-      "J09",
-      "J01"
+      "M03",
+      "D10",
+      "M06",
+      "M07",
+      "M12",
+      "M02",
+      "J01",
+      "M11"
+     ]
+    },
+    {
+     "nome": "Kelly Fontenelle",
+     "avatar": "D04",
+     "cartas": [
+      "M09",
+      "M04",
+      "M05",
+      "M03",
+      "M06",
+      "M07",
+      "V17",
+      "M12",
+      "M02",
+      "M11",
+      "D04"
      ]
     }
    ],
@@ -1114,42 +1166,48 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Capitã Nastácia",
-     "avatar": "S09",
+     "nome": "Jokara Amarëa",
+     "avatar": "J01",
      "cartas": [
-      "S12",
-      "S07",
-      "S13",
-      "S08",
-      "S06",
-      "S04",
-      "S09"
+      "M08",
+      "S10",
+      "M03",
+      "M06",
+      "M07",
+      "M12",
+      "J05",
+      "J15",
+      "J01"
+     ]
+    },
+    {
+     "nome": "Vinícius Silva",
+     "avatar": "D05",
+     "cartas": [
+      "M09",
+      "J23",
+      "V12",
+      "M03",
+      "M06",
+      "M07",
+      "M12",
+      "M02",
+      "D05"
      ]
     },
     {
      "nome": "X",
      "avatar": "M11",
      "cartas": [
-      "S14",
-      "S17",
-      "S13",
-      "S08",
-      "S03",
-      "S02",
-      "M11"
-     ]
-    },
-    {
-     "nome": "Amanda",
-     "avatar": "S02",
-     "cartas": [
-      "S18",
-      "S10",
+      "M04",
+      "M05",
+      "M03",
+      "M06",
       "M07",
-      "S05",
-      "S03",
-      "S15",
-      "S02"
+      "M12",
+      "J07",
+      "M02",
+      "M11"
      ]
     }
    ],
@@ -1188,42 +1246,54 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
+     "nome": "Yndra",
+     "avatar": "J37",
      "cartas": [
-      "D14",
-      "V13",
-      "D08",
-      "D05",
-      "D04",
-      "D12",
-      "D07"
+      "J02",
+      "D13",
+      "J27",
+      "J06",
+      "J34",
+      "J05",
+      "J30",
+      "D11",
+      "J09",
+      "J37",
+      "J15"
      ]
     },
     {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
+     "nome": "Kaelina Polar",
+     "avatar": "J08",
      "cartas": [
+      "J35",
+      "J14",
       "D15",
-      "V12",
-      "D18",
-      "D01",
-      "D04",
-      "D12",
-      "D07"
+      "J06",
+      "J05",
+      "J20",
+      "J33",
+      "J36",
+      "J09",
+      "J15",
+      "J08"
      ]
     },
     {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
+     "nome": "Jokara Amarëa",
+     "avatar": "J01",
      "cartas": [
-      "D02",
-      "D09",
-      "J04",
-      "D05",
-      "D12",
-      "V06",
-      "D07"
+      "J14",
+      "J16",
+      "S18",
+      "D18",
+      "D10",
+      "J05",
+      "V13",
+      "J20",
+      "J09",
+      "J15",
+      "J01"
      ]
     }
    ],
@@ -1238,16 +1308,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Kharvok",
-     "avatar": "J30",
+     "nome": "Mariv",
+     "avatar": "J07",
      "cartas": [
-      "M09",
-      "M05",
+      "B02",
+      "V25",
+      "S10",
       "B03",
-      "J27",
-      "J20",
-      "J07",
-      "J30"
+      "S13",
+      "B05",
+      "J07"
      ]
     }
    ],
@@ -1267,8 +1337,8 @@
      "cartas": [
       "M08",
       "V18",
-      "V23",
       "V07",
+      "V27",
       "V12",
       "V08",
       "V13"
@@ -1316,9 +1386,9 @@
       "J35",
       "J19",
       "J02",
+      "V37",
       "M03",
       "M12",
-      "J17",
       "J15"
      ]
     }
@@ -1379,7 +1449,10 @@
       "S13",
       "M07",
       "M12",
+      "S05",
+      "S03",
       "S04",
+      "S15",
       "S09"
      ]
     },
@@ -1389,10 +1462,13 @@
      "cartas": [
       "S14",
       "S18",
+      "S13",
       "M06",
+      "S08",
       "S06",
       "S03",
       "S15",
+      "S02",
       "S09"
      ]
     },
@@ -1404,9 +1480,12 @@
       "S17",
       "M03",
       "S05",
+      "S08",
+      "S06",
       "S03",
       "S04",
-      "S02"
+      "S02",
+      "S09"
      ]
     }
    ],
@@ -1449,9 +1528,9 @@
      "avatar": "D11",
      "cartas": [
       "D16",
-      "D02",
       "D13",
       "D14",
+      "V35",
       "D18",
       "B05",
       "D11"
@@ -1493,16 +1572,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Banjo Lins",
-     "avatar": "V03",
+     "nome": "Serafira Dalmora",
+     "avatar": "V39",
      "cartas": [
       "B02",
-      "V16",
-      "V22",
-      "M07",
-      "V08",
-      "V17",
-      "V03"
+      "D14",
+      "B03",
+      "D18",
+      "B05",
+      "S08",
+      "V39"
      ]
     }
    ],
@@ -1517,16 +1596,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Maria Santoro",
-     "avatar": "V24",
+     "nome": "Primus Senan",
+     "avatar": "B05",
      "cartas": [
-      "V16",
-      "V25",
-      "V22",
-      "V21",
-      "V11",
-      "V12",
-      "V24"
+      "B02",
+      "J18",
+      "D15",
+      "D02",
+      "B03",
+      "M06",
+      "B05"
      ]
     }
    ],
@@ -1565,16 +1644,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Dareth Polar",
-     "avatar": "J15",
+     "nome": "Agente Sete",
+     "avatar": "M02",
      "cartas": [
-      "J18",
-      "J23",
-      "J24",
-      "J05",
-      "J11",
-      "J33",
-      "J15"
+      "M09",
+      "M08",
+      "M05",
+      "M03",
+      "M12",
+      "V40",
+      "M02"
      ]
     }
    ],
@@ -1640,9 +1719,9 @@
      "nome": "Erla",
      "avatar": "V06",
      "cartas": [
+      "V30",
       "V23",
       "V22",
-      "V11",
       "V20",
       "V17",
       "V13",
@@ -1664,12 +1743,12 @@
      "nome": "Maria Santoro",
      "avatar": "V24",
      "cartas": [
-      "V19",
-      "V18",
+      "V38",
       "V16",
       "V25",
       "V07",
       "V21",
+      "V27",
       "V24"
      ]
     }
@@ -1716,8 +1795,8 @@
       "V16",
       "V25",
       "V22",
-      "V07",
       "V21",
+      "V35",
       "V20"
      ]
     }
@@ -1805,16 +1884,16 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Capitão Tzough",
-     "avatar": "S13",
+     "nome": "Kali",
+     "avatar": "V31",
      "cartas": [
+      "V41",
       "S14",
-      "S18",
       "S17",
       "S10",
       "S12",
       "S07",
-      "S13"
+      "V31"
      ]
     }
    ],
@@ -1829,8 +1908,8 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "O'reilly",
-     "avatar": "S06",
+     "nome": "Kali",
+     "avatar": "V31",
      "cartas": [
       "S14",
       "S18",
@@ -1838,7 +1917,7 @@
       "S10",
       "S12",
       "S07",
-      "S06"
+      "V31"
      ]
     }
    ],
@@ -1901,16 +1980,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Platisa",
-     "avatar": "J06",
+     "nome": "Benjamin Karnudo",
+     "avatar": "M06",
      "cartas": [
-      "J35",
-      "J18",
-      "J19",
-      "J22",
-      "J14",
-      "J16",
-      "J06"
+      "M09",
+      "M04",
+      "M08",
+      "M05",
+      "J28",
+      "M03",
+      "M06"
      ]
     }
    ],
@@ -1997,16 +2076,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Mariv",
-     "avatar": "J07",
+     "nome": "Primus Senan",
+     "avatar": "B05",
      "cartas": [
-      "J29",
-      "J22",
-      "J14",
-      "J16",
-      "J24",
-      "J27",
-      "J07"
+      "B02",
+      "S18",
+      "V22",
+      "S17",
+      "S07",
+      "B03",
+      "B05"
      ]
     }
    ],
@@ -2117,16 +2196,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Tavra Vendrar",
-     "avatar": "J33",
+     "nome": "Primus Senan",
+     "avatar": "B05",
      "cartas": [
-      "J18",
-      "J19",
-      "J02",
-      "J23",
-      "J24",
+      "J29",
+      "D19",
+      "B02",
+      "S12",
+      "B03",
       "J27",
-      "J33"
+      "B05"
      ]
     }
    ],
@@ -2144,12 +2223,12 @@
      "nome": "Tio Frank",
      "avatar": "V14",
      "cartas": [
-      "V18",
       "V25",
       "V22",
       "V07",
       "V21",
       "V11",
+      "V27",
       "V14"
      ]
     }
@@ -2213,16 +2292,16 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Cara-de-Larva",
-     "avatar": "D11",
+     "nome": "James Harrow",
+     "avatar": "M12",
      "cartas": [
-      "D17",
-      "D19",
-      "D16",
-      "D15",
-      "D13",
-      "D09",
-      "D11"
+      "M09",
+      "M04",
+      "M08",
+      "M05",
+      "V11",
+      "M07",
+      "M12"
      ]
     }
    ],
@@ -2237,16 +2316,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Garmande Koraveli",
-     "avatar": "V08",
+     "nome": "Maria Santoro",
+     "avatar": "V24",
      "cartas": [
       "V19",
       "V16",
       "V23",
       "V21",
       "V11",
-      "V24",
-      "V08"
+      "V37",
+      "V24"
      ]
     }
    ],
@@ -2264,11 +2343,11 @@
      "nome": "Lanigiah",
      "avatar": "V17",
      "cartas": [
+      "V38",
       "V19",
       "V18",
       "V16",
       "V23",
-      "V22",
       "V07",
       "V17"
      ]
@@ -2357,16 +2436,16 @@
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Pedro Souza",
-     "avatar": "D03",
+     "nome": "James Harrow",
+     "avatar": "M12",
      "cartas": [
+      "V33",
       "D17",
-      "D19",
-      "D16",
-      "D02",
-      "D13",
-      "D14",
-      "D03"
+      "M09",
+      "M08",
+      "M05",
+      "M06",
+      "M12"
      ]
     }
    ],
@@ -2381,16 +2460,16 @@
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Kharvok",
-     "avatar": "J30",
+     "nome": "Agente Seis",
+     "avatar": "M07",
      "cartas": [
-      "J29",
-      "J19",
-      "J18",
-      "J14",
-      "J02",
-      "J17",
-      "J30"
+      "M09",
+      "M04",
+      "M08",
+      "M05",
+      "S14",
+      "M03",
+      "M07"
      ]
     }
    ],
@@ -2405,16 +2484,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Tio Frank",
-     "avatar": "V14",
+     "nome": "Glenda Mendes",
+     "avatar": "D08",
      "cartas": [
-      "V16",
+      "B02",
       "V23",
-      "V25",
-      "V22",
       "V07",
+      "B03",
       "V21",
-      "V14"
+      "B05",
+      "D08"
      ]
     }
    ],
@@ -2432,8 +2511,8 @@
      "nome": "Vivian",
      "avatar": "S08",
      "cartas": [
+      "V41",
       "S14",
-      "S18",
       "S17",
       "S10",
       "S12",
@@ -2525,16 +2604,16 @@
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Maria Santoro",
-     "avatar": "V24",
+     "nome": "Tango",
+     "avatar": "V40",
      "cartas": [
+      "V30",
       "V19",
       "V18",
       "V07",
       "V21",
-      "V11",
       "V12",
-      "V24"
+      "V40"
      ]
     }
    ],
@@ -2552,10 +2631,10 @@
      "nome": "O'reilly",
      "avatar": "S06",
      "cartas": [
+      "V30",
       "S18",
       "S17",
       "S10",
-      "S12",
       "S07",
       "S05",
       "S06"
@@ -2573,16 +2652,16 @@
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "O'reilly",
-     "avatar": "S06",
+     "nome": "Kord",
+     "avatar": "S05",
      "cartas": [
+      "V33",
       "S14",
       "S18",
       "S17",
-      "S10",
       "S07",
-      "S05",
-      "S06"
+      "V34",
+      "S05"
      ]
     }
    ],
