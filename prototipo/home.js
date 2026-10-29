@@ -205,6 +205,7 @@
   }
   U.avatarHTML = avatarHTML;
   function fmtDur(sec) { sec = Math.round(sec); const m = Math.floor(sec / 60); return m ? m + ' min ' + String(sec % 60).padStart(2, '0') + ' s' : sec + ' s'; }
+  let PFT = 'res';
   function profTab() {
     const s = $('#prof'); const p = ST.profile(), t = p.t; const ach = ST.achievements();
     const pct = t.g ? Math.round(t.w / t.g * 100) : 0;
@@ -213,17 +214,21 @@
     s.innerHTML = `<div class="tabwrap">${topbar('Perfil')}
       <section class="pf-head"><button class="pf-av" id="pfAv" aria-label="Trocar avatar">${avatarHTML(p.avatar, p.name || 'Jogador', 84)}<i>✎</i></button>
         <div class="pf-id"><small class="hint">Seu nome</small><div class="pfn" id="pfnRow"><b id="pfNameTxt">${esc(p.name) || 'Sem nome'}</b><button class="ibtn sm" id="pfEdit" aria-label="Editar nome" title="Editar nome">✎</button></div><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Como você quer aparecer" aria-label="Seu nome" value="${esc(p.name)}" autocomplete="off" hidden><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
-      <section class="stats">${stat(t.g, 'Partidas')}${stat(t.w, 'Vitórias')}${stat(t.g ? pct + '%' : '—', 'Aproveitamento')}${stat(t.best, 'Maior sequência')}${stat(t.dispW, 'Disputas ganhas')}${stat(t.esp, 'Especiais usados')}</section>
+      <nav class="pf-tabs" id="pfTabs">${[['res', 'Resumo'], ['car', 'Cartas'], ['con', 'Conquistas'], ['cnt', 'Conta']].map(([k, n]) => `<button data-p="${k}" class="${PFT === k ? 'on' : ''}">${n}</button>`).join('')}</nav>
+      <div class="pf-pane" data-p="res"><section class="stats">${stat(t.g, 'Partidas')}${stat(t.w, 'Vitórias')}${stat(t.g ? pct + '%' : '—', 'Aproveitamento')}${stat(t.best, 'Maior sequência')}${stat(t.dispW, 'Disputas ganhas')}${stat(t.esp, 'Especiais usados')}</section>
       <section class="modes"><div><b>Contra CPU</b><span>${t.pvb.w}/${t.pvb.g} vitórias</span></div><div><b>Contra pessoas</b><span>${t.pvp.w}/${t.pvp.g} vitórias</span></div><div><b>Online</b><span>${t.online.w}/${t.online.g} vitórias</span></div>${t.g ? `<div><b>Partida média</b><span>${fmtDur(t.dur / t.g)} · ${(t.rounds / t.g).toFixed(1)} rodadas</span></div>` : ''}</section>
-      <h3 class="sec">Maestria das cartas <span class="hint">${ST.masteryCount(1)} com emblema</span></h3><div class="mastsec" id="mastsec"></div>
-      <h3 class="sec">Buscar jogador</h3><div class="find" id="pfFind"></div>
+      </div><div class="pf-pane" data-p="car"><h3 class="sec">Maestria das cartas <span class="hint">${ST.masteryCount(1)} com emblema</span></h3><div class="mastsec" id="mastsec"></div>
       <h3 class="sec">Cartas favoritas</h3><div class="favrow" id="favrow"></div>
-      <h3 class="sec">Conquistas <span class="hint">${ach.filter(a => a.done).length}/${ach.length}</span></h3>
+</div><div class="pf-pane" data-p="con"><h3 class="sec">Conquistas <span class="hint">${ach.filter(a => a.done).length}/${ach.length}</span></h3>
       <div class="achs">${ach.map(a => `<div class="ach ${a.done ? 'on' : ''}"><span class="ai">${a.done ? ICO.medal : ICO.lock}</span><div class="at"><b>${esc(a.nome)}</b><small>${esc(a.desc)}</small>${a.done ? '' : (a.meta > 1 ? `<div class="bar"><i style="width:${a.val / a.meta * 100}%"></i></div><em>${a.val}/${a.meta}</em>` : '')}</div></div>`).join('')}</div>
+</div><div class="pf-pane" data-p="cnt">
+      <h3 class="sec">Buscar jogador</h3><div class="find" id="pfFind"></div>
       <div class="row" id="pfAdmin"></div>
       <div class="row" style="margin-top:12px"><button class="btn ghost sm" id="pfReset">Apagar dados deste aparelho</button></div>
-    </div>`;
+    </div></div>`;
     bindTop(s);
+    { const pane = k => { PFT = k; s.querySelectorAll('.pf-pane').forEach(d => { d.hidden = d.dataset.p !== k; }); s.querySelectorAll('#pfTabs button').forEach(b => b.classList.toggle('on', b.dataset.p === k)); };
+      pane(PFT); $('#pfTabs', s).onclick = e => { const b = e.target.closest('button'); if (b) { SND.play('click'); pane(b.dataset.p); } }; }
     { const ms = $('#mastsec', s), top = ST.masteryList().slice(0, 6);
       ms.innerHTML = `<div class="mlegend">${ST.MAST_NOME.slice(1).map((n, i) => `<span>${U.emblem(i + 1, 22)}<b>${esc(n)}</b><small>${ST.MAST_AT[i]} XP</small></span>`).join('')}</div>`
         + (top.length ? `<div class="mtop">${top.map(m => `<button class="mrow" data-id="${m.id}">${U.emblem(m.lv, 30) || '<span class="memp"></span>'}<span class="mn"><b>${esc(CARTAS.find(c => c.id === m.id).nome)}</b><small>${m.xp} XP · ${m.u} usos · ${m.w} vitórias · ${m.s} especiais</small></span></button>`).join('')}</div>` : '<p class="hint">Cada uso, disputa vencida e especial resolvido rende XP à carta. Os emblemas são só reconhecimento: não alteram atributos.</p>')

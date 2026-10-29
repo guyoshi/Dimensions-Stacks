@@ -27,7 +27,7 @@ try:
     chk('Dimensional' in txt and '160 usos' in txt and '100 disputas vencidas' in txt and '60 especiais resolvidos' in txt, 'zoom mostra maestria e contadores')
     pg.screenshot(path=os.path.join(proj, 'tests', 'shots', 'mast_zoom.png')); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
     pg.click('#cgrid .card[data-id=J03]'); pg.click('.zinfo'); pg.click('.morebtn'); pg.wait_for_selector('.mast'); t3 = pg.inner_text('.mast'); chk('ainda sem emblema' in t3 and '1/12 XP' in t3, 'carta sem emblema mostra progresso: ' + t3.replace('\n', ' | ')); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
-    pg.click('#nav [data-tab=prof]'); pg.wait_for_selector('#mastsec .mrow'); rows = pg.evaluate("document.querySelectorAll('#mastsec .mrow').length"); chk(rows == 6, 'perfil lista top de maestria: %d' % rows)
+    pg.click('#nav [data-tab=prof]'); pg.click('#pfTabs [data-p=car]'); pg.wait_for_selector('#mastsec .mrow'); rows = pg.evaluate("document.querySelectorAll('#mastsec .mrow').length"); chk(rows == 6, 'perfil lista top de maestria: %d' % rows)
     chk(pg.evaluate("document.querySelectorAll('#mastsec .mlegend svg').length") == 5, 'legenda com 5 emblemas')
     pg.evaluate("document.querySelector('#mastsec').scrollIntoView()"); pg.wait_for_timeout(300); pg.screenshot(path=os.path.join(proj, 'tests', 'shots', 'mast_perfil.png'))
     pg.click('#mastsec .mrow'); pg.click('.zinfo'); pg.click('.morebtn'); pg.wait_for_selector('.mast'); chk(True, 'abre zoom a partir do perfil'); b.close()

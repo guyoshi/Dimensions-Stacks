@@ -1719,3 +1719,8 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .mg-dc.mark { border-color: #ffd25f; box-shadow: 0 0 18px #ffd25f; }
 .mg-cell.scr.rl-mais { background: #1f7a45; border-color: #7dffb0; color: #eafff2; } .mg-cell.scr.rl-menos { background: #7a1f2b; border-color: #ff5a4f; color: #fff; }
 .mg-cell.scr.open { font-size: 30px; }
+/* perfil: abas internas (Resumo, Cartas, Conquistas, Conta) */
+.pf-tabs { display: flex; gap: 6px; margin: 12px 0 14px; padding: 4px; background: #ffffff0f; border-radius: 12px; position: sticky; top: 0; z-index: 3; backdrop-filter: blur(8px); }
+.pf-tabs button { flex: 1; min-width: 0; padding: 9px 4px; border: 0; border-radius: 9px; background: none; color: var(--ink2); font: 700 13px var(--f-body); cursor: pointer; }
+.pf-tabs button.on { background: var(--prism); color: #fff; }
+.pf-pane[hidden] { display: none; }
