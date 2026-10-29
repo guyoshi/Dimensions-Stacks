@@ -1765,3 +1765,8 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 .hs-tiers i { font-style: normal; color: #7dffb0; font-weight: 800; border: 1.5px solid #ffffff40; border-radius: 50%; width: 16px; height: 16px; display: grid; place-items: center; font-size: 11px; }
 .hs-tiers .on i { border-color: #7dffb0; } .hs-tiers .on { background: #7dffb01a; }
 .hs-tiers span { color: var(--ink2); } .hs-tiers em { font-style: normal; display: flex; gap: 3px; align-items: center; font-weight: 800; color: var(--gold); }
+.hs-fil { display: flex; flex-direction: column; gap: 6px; }
+.hs-fr { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 2px; }
+.hs-fr button { flex: 0 0 auto; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: #ffffff0a; color: var(--ink2); font: 700 12.5px var(--f-body); cursor: pointer; }
+.hs-fr button.on { background: var(--prism); color: #fff; border-color: transparent; }
+.hs-fil select { background: #0a0820; color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font: inherit; font-size: 13px; }

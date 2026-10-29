@@ -420,6 +420,14 @@
     usadas.forEach(id => { S.fadiga[id] = (S.fadiga[id] | 0) + pesoCansa(id); n++; }); return n;
   }
   const pontosFad = id => '<span class="hs-fad">' + '●'.repeat(Math.min(6, fad(id))) + '</span>';
+  // filtro de cartas (raridade, cansadas e série) usado em Minhas cartas e na escolha do time
+  function filtros(onChange) {
+    const st = { r: '', s: '' };
+    const bar = el(`<div class="hs-fil"><div class="hs-fr">${[['', 'Todas'], ['lendaria', 'Lend.'], ['epica', 'Épica'], ['rara', 'Rara'], ['comum', 'Comum'], ['cans', 'Cansadas']].map(([k, t]) => `<button data-r="${k}" class="${k === '' ? 'on' : ''}">${t}</button>`).join('')}</div><select aria-label="Série"><option value="">Todas as séries</option>${Object.keys(U.SERIES || {}).map(k => `<option value="${k}">${esc(U.SERIES[k].nome)}</option>`).join('')}</select></div>`);
+    bar.onclick = e => { const b = e.target.closest('[data-r]'); if (!b) return; st.r = b.dataset.r; $$('[data-r]', bar).forEach(x => x.classList.toggle('on', x === b)); onChange(); };
+    $('select', bar).onchange = e => { st.s = e.target.value; onChange(); };
+    return { bar, ok: id => { const c = U.CARDS[id]; if (!c) return false; if (st.r === 'cans') { if (!fad(id)) return false; } else if (st.r && c.raridade !== st.r) return false; return !st.s || c.serie === st.s; } };
+  }
   function escolher7(bat, ok, opt) {   // o jogador escolhe as cartas do duelo (7, ou menos em alguns eventos)
     opt = opt || {}; if (opt.so && !(S.owned || []).some(c => (U.CARDS[c] || {}).raridade === opt.so)) opt = { n: opt.n }; const N = opt.n || 7;   // sem carta da raridade pedida: vale a melhor
     const todas = (S.owned || []).concat(alugadas().filter(c => !(S.owned || []).includes(c))).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
@@ -427,10 +435,10 @@
     const livres = () => todas.filter(id => !fadigaOn() || !fad(id));
     const box = el(`<div class="hs-esc"><h3>Escolha ${opt.livre ? 'até ' : ''}${N} ${N === 1 ? 'carta' : 'cartas'}${opt.so ? ' lendária' : ''}</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
     const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), msg = $('.hs-msg', box), go = $('[data-a=go]', box);
-    const sel = new Set(); let forcadas = new Set();
+    const sel = new Set(); let forcadas = new Set(); const F = filtros(() => { montar(); upd(); }); g.before(F.bar);
     const auto = () => { sel.clear(); forcadas = new Set(); (opt.prefer || []).filter(x => todas.includes(x) && (!fadigaOn() || !fad(x))).forEach(x => sel.add(x)); const L = livres(); L.slice(0, N).forEach(x => { if (sel.size < N) sel.add(x); });
       if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
-    const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
+    const montar = () => { g.innerHTML = ''; todas.filter(F.ok).forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
     const upd = () => { cnt.textContent = sel.size + ' / ' + N; go.disabled = opt.livre ? !sel.size : sel.size !== N; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
       msg.textContent = forcadas.size ? forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa cansada para descansar (' + CUSTO_DESC + ' por ponto).' : ''; };
     auto(); montar();
@@ -715,12 +723,12 @@
   }
   function minhasCartas(emLoja) {
     closeSheet(); const box = el('<div class="hs-esc hs-mc"><h3>Minhas cartas</h3><p class="hint hs-info"></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="todas">Descansar todas</button><button class="btn primary" data-a="x">Fechar</button></div></div>');
-    const g = $('.hs-escg', box), info = $('.hs-info', box), bt = $('[data-a=todas]', box); let msg = '';
+    const g = $('.hs-escg', box), info = $('.hs-info', box), bt = $('[data-a=todas]', box); let msg = ''; const F = filtros(() => render()); g.before(F.bar);
     const lista = () => (S.owned || []).slice().sort((a, b) => (ORD[(U.CARDS[a] || {}).raridade] - ORD[(U.CARDS[b] || {}).raridade]) || FORCA(b) - FORCA(a));
     const render = () => {
       const L = lista(), cans = L.filter(id => fad(id)), total = cans.reduce((t, id) => t + fad(id) * CUSTO_DESC, 0);
       info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque para descansar (' + CUSTO_DESC + ' por ponto).' : 'Todas descansadas.') : '') + ' Pêndulos: ' + (S.pend | 0);
-      g.innerHTML = ''; L.forEach(id => { const w = el('<div class="hs-escc on' + (fad(id) ? ' tired' : '') + '" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fad(id)) w.append(el('<div class="hs-fadb">' + pontosFad(id) + '</div>')); g.append(w); });
+      g.innerHTML = ''; L.filter(F.ok).forEach(id => { const w = el('<div class="hs-escc on' + (fad(id) ? ' tired' : '') + '" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fad(id)) w.append(el('<div class="hs-fadb">' + pontosFad(id) + '</div>')); g.append(w); });
       bt.hidden = !cans.length; bt.textContent = 'Descansar todas (' + total + ')'; bt.disabled = total > (S.pend | 0); paintAll();
     };
     const m = U.modal(box, { cls: 'hs-modal' }); render();
