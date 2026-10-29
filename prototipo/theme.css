@@ -175,3 +175,18 @@ h1, h2, h3 { letter-spacing: .03em; }
 /* coleção: cartas aparecem aos poucos (primeiro o verso, depois a carta) */
 .cgrid .card.cph { pointer-events: none; opacity: .9; }
 .cgrid .card.flipin .flip { transition: transform .5s cubic-bezier(.3, 1.2, .5, 1); }
+
+/* ---------- fundos das batalhas especiais do modo história ---------- */
+#game[data-fundo="arauto"] { background:
+  radial-gradient(120% 70% at 50% 0%, #ff5a7a38, transparent 62%),
+  radial-gradient(110% 60% at 0% 100%, #ffd25f22, transparent 62%),
+  linear-gradient(180deg, #1f0a22, #0c0618 70%); }
+#game[data-fundo="guardiao"] { background:
+  radial-gradient(120% 70% at 50% 0%, #ff9a3c40, transparent 60%),
+  radial-gradient(100% 60% at 100% 100%, #4cc3ff26, transparent 62%),
+  linear-gradient(180deg, #221404, #0b0710 72%); }
+#game[data-fundo="boss"] { background:
+  radial-gradient(90% 55% at 50% 45%, #ff2a4a30, transparent 66%),
+  radial-gradient(130% 70% at 50% 100%, #8f5cff30, transparent 60%),
+  radial-gradient(60% 40% at 50% 0%, #ffffff12, transparent 70%),
+  linear-gradient(180deg, #14000a, #05020c 75%); }

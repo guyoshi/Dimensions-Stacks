@@ -44,9 +44,10 @@ try:
     st = pg.evaluate('window.DSHistoria.state().startId'); bx = pg.evaluate("id => {const r=document.querySelector('.n[data-id=\"'+id+'\"]').getBoundingClientRect();return [r.x+r.width/2,r.y+r.height/2]}", st)
     pg.mouse.click(bx[0], bx[1]); pg.wait_for_selector('#hsSheet [data-a=win]'); pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.npc', timeout=4000)
     chk(True, 'NPC do tutorial aparece depois da primeira vitória')
-    for _ in range(6):
+    for _ in range(14):
+        if not pg.query_selector('.npc'): pg.wait_for_timeout(400)
         if not pg.query_selector('.npc'): break
-        pg.click('.npc'); pg.wait_for_timeout(150); pg.click('.npc'); pg.wait_for_timeout(150)
+        pg.evaluate("(()=>{const n=document.querySelector('.npc');if(n)n.click()})()"); pg.wait_for_timeout(150); pg.evaluate("(()=>{const n=document.querySelector('.npc');if(n)n.click()})()"); pg.wait_for_timeout(250)
     chk(pg.query_selector('.npc') is None and pg.evaluate('window.DSHistoria.state().tutorial') == 1, 'tutorial termina e não repete')
     e1 = pg.evaluate("document.querySelectorAll('.hs-edges .e:not(.fog)').length"); chk(e1 >= e0 and e1 < 20, 'só os caminhos próximos ficam visíveis: %d antes, %d depois' % (e0, e1))
     chk(pg.evaluate("document.querySelectorAll('.flag').length") == 0, 'sem faixas Início/Partida')

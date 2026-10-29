@@ -42,18 +42,16 @@ try:
     while x is not None: path.insert(0, x); x = prevn[x]
     # sem o modo aberto, a casa de partida ainda não foi vencida: nenhuma seta para frente
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(400)
-    chk(pg.evaluate("document.querySelectorAll('.seta').length") == 0, 'sem vitória na casa atual, não há setas')
+    chk(pg.evaluate("document.querySelectorAll('.seta').length") == 0, 'sem setas no mapa')
+    bx = pos(path[1]); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(700)
+    chk(pg.evaluate("window.DSHistoria.state().pos") == S['startId'], 'sem vitória na casa atual, tocar na bolinha vizinha não anda')
+    pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.check('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(400)
-    nviz = len([v for v in nodes[S['startId']]['viz'] if v != M['boss']])
-    chk(pg.evaluate("document.querySelectorAll('.seta').length") == nviz, 'modo aberto: uma seta para cada direção (%d)' % nviz)
-    # clicar na bolinha do ponto vizinho só abre o painel, não anda
-    bx = pos(path[1]); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(600)
-    chk(pg.evaluate("window.DSHistoria.state().pos") == S['startId'], 'clicar na bolinha não move o boneco')
-    pg.click('#hsSheet [data-a=x]')
     for k, nx in enumerate(path[1:]):
-        seta = pg.query_selector('.seta[data-to="%s"]' % nx); bb = seta.bounding_box(); pg.mouse.click(bb['x'] + bb['width'] / 2, bb['y'] + bb['height'] / 2); pg.wait_for_timeout(900)
-        chk(pg.evaluate("window.DSHistoria.state().pos") == nx, 'seta leva um passo: ' + nx)
-        if k < len(path) - 2: pg.click('#hsSheet [data-a=x]')
+        pg.click('[data-a=fit]'); pg.wait_for_timeout(700)
+        bx = pos(nx); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(1200)
+        chk(pg.evaluate("window.DSHistoria.state().pos") == nx, 'tocar na bolinha vizinha leva até ela: ' + nx)
+        pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
     pg.screenshot(path=shots + '/hist_andar.png')
     pg.reload(); pg.wait_for_timeout(900); pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(400); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(500)
     chk(pg.evaluate("window.DSHistoria.state().pos") == far, 'posição salva depois de recarregar')

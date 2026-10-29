@@ -1603,3 +1603,5 @@ button.hs-pill { font: inherit; color: inherit; cursor: pointer; }
 .hs-item.got { opacity: .35; }
 .hs-mc .hs-escc, .hs-loja .hs-escc { opacity: 1; outline-color: transparent; } .hs-mc .hs-escc.tired { opacity: .45; }
 .hs-bro { color: var(--gold2); } .hs-bro .ci { color: var(--gold); }
+
+.hs-edges .e.lit { animation: none; }   /* sem animação de traço: pesava com muitos caminhos abertos */

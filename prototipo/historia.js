@@ -229,10 +229,10 @@
       else if (ptrs.size === 2 && pinch0) { p.x = e.clientX; p.y = e.clientY; const [a, b] = [...ptrs.values()]; const d = Math.hypot(a.x - b.x, a.y - b.y), r = svg.getBoundingClientRect(); zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, (pinch0.k * d / pinch0.d) / cam.k, false); moved = 99; }
     });
     const up = e => { if (!ptrs.has(e.pointerId)) return; ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = null;
-      if (!ptrs.size && moved <= 8 && startPt) { const sa = startPt.t.closest && startPt.t.closest('.seta'); if (sa) { passo(sa.dataset.to); return; } const g = (startPt.t.closest && startPt.t.closest('.n')); if (g) openNode(g.dataset.id); else closeSheet(); } };
+      if (!ptrs.size && moved <= 8 && startPt) { const g = (startPt.t.closest && startPt.t.closest('.n')); if (g) toque(g.dataset.id); else closeSheet(); } };
     svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', e => { ptrs.delete(e.pointerId); pinch0 = null; });
     svg.addEventListener('wheel', e => { e.preventDefault(); const r = svg.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15, false); }, { passive: false });
-    svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.seta')) { e.preventDefault(); passo(e.target.closest('.seta').dataset.to); } else if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.n')) { e.preventDefault(); openNode(e.target.closest('.n').dataset.id); } });
+    svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.seta')) { e.preventDefault(); passo(e.target.closest('.seta').dataset.to); } else if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.n')) { e.preventDefault(); toque(e.target.closest('.n').dataset.id); } });
     mp.addEventListener('click', e => {
       const b = e.target.closest('.hs-hud [data-a]'); if (!b) return; SND.init(); SND.play('click'); const { w, h } = view$();
       const a = b.dataset.a;
@@ -270,13 +270,16 @@
   }
   function caminho(to) { const prev = alcance(); if (!(to in prev)) return null; const p = []; for (let x = to; x != null; x = prev[x]) p.unshift(x); return p; }
   let andando = false;
-  // setas: parado numa casa, cada direção possível aparece como seta; clicar na seta dá UM passo (clicar na bolinha só mostra o painel)
+  // toque numa bolinha: se o caminho até ela está aberto, o boneco anda até lá; senão só mostra o painel
+  function toque(id) { if (andando) return; if (id !== posId()) { if (passos().includes(id)) return passo(id); } openNode(id); }
+  // (sem setas) parado numa casa, cada direção possível aparece como seta; clicar na seta dá UM passo (clicar na bolinha só mostra o painel)
   function passos() {
     const u = posId(), n = BY[u], pass = passa(u);
     return n.viz.filter(v => !(v === M.boss && !bossOpen() && !P.aberto) && (pass || passa(v)));
   }
   function paintSetas() {
-    const g = $('#hsArrows', root); if (!g) return; if (andando) { g.innerHTML = ''; return; }
+    const g = $('#hsArrows', root); if (!g) return; g.innerHTML = ''; return;   // setas removidas: toque direto na bolinha
+    if (andando) { g.innerHTML = ''; return; }
     const u = BY[posId()], r = TIPOS[u.tipo].r;
     g.innerHTML = passos().map(v => { const t = BY[v], dx = t.x - u.x, dy = t.y - u.y, d = Math.hypot(dx, dy) || 1, ang = Math.atan2(dy, dx) * 180 / Math.PI, dist = r + 40;
       return `<g class="seta" data-to="${v}" transform="translate(${(u.x + dx / d * dist).toFixed(1)} ${(u.y + dy / d * dist).toFixed(1)}) rotate(${ang.toFixed(1)})" role="button" tabindex="0" aria-label="Ir para ${esc(nome(t))}"><circle r="17"/><path d="M-5 -8 L6 0 L-5 8 Z"/></g>`; }).join('');
@@ -346,7 +349,7 @@
   const premioDe = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
   // ---- cansaço das cartas (PROPOSTA, a calibrar): só vale com 21 ou mais cartas. Carta usada numa vitória cansa conforme a raridade; as não usadas descansam 1 ponto por vitória; derrota não cansa. Carta cansada não entra no duelo; pêndulos descansam.
   const CANSA = { comum: 1, rara: 2, epica: 3, lendaria: 4 }, CUSTO_DESC = 6;
-  const fadigaOn = () => (S.owned || []).length >= 21;
+  const fadigaOn = () => (S.owned || []).length >= 14 || UNIAO.some(c => (S.owned || []).includes(c));   // REGRA (autor, 29/10): cansaço a partir de 14 cartas ou da primeira carta da União
   const fad = id => (S.fadiga && S.fadiga[id]) | 0;
   const pesoCansa = id => CANSA[(U.CARDS[id] || {}).raridade] || 1;
   function aplicaCansaco(usadas) {   // chamado depois de uma vitória
@@ -419,7 +422,7 @@
       try { SND.histStop(true); } catch (e) { }
       const besta = n.tipo === 'boss' ? bonusBoss() : 0, bonusPids = bat.i.map((_, k) => k + 1);
       const uni = n.tipo === 'boss' ? mao.filter(c => UNIAO.includes(c)) : [], uniTodas = uni.length === UNIAO.length;
-      const hist = { musica, id, aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
+      const hist = { musica, id, fundo: ({ miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null, aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         SND.histLock = null; try { SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
         if (res.venceu && !cleared(id)) {
@@ -436,19 +439,20 @@
   function quandoLivre(fn, n) { n = n || 0; if (n > 40) return; if ($('.bau-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1), 700); return; } fn(); }   // espera baús e outros diálogos fecharem
   // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
   function npcFala(cid, linhas, done) {
+    const reab = curId, mods = $$('.modal').filter(m => m.style.display !== 'none'); mods.forEach(m => { m.style.display = 'none'; });   // o diálogo tem prioridade: esconde menus e os devolve no fim
     closeSheet(); const c = U.CARDS[cid]; let i = 0, tm = null, pronto = false;
     const ov = el(`<div class="npc"><div class="npc-box"><div class="npc-p"></div><div class="npc-b"><b>${esc(c ? c.nome : 'Viajante')}</b><p></p><i class="cin-next on">▾</i></div></div></div>`);
     if (c) $('.npc-p', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 84 }));
     document.body.appendChild(ov); const P_ = $('p', ov), red = document.body.classList.contains('reduce');
     const fala = () => { const t = linhas[i].replace(/\{nome\}/g, (S && S.nome) || 'viajante'); pronto = false; P_.textContent = ''; clearInterval(tm); let k = 0; const fim = () => { clearInterval(tm); P_.textContent = t; pronto = true; };
       if (red) return fim(); tm = setInterval(() => { k += 2; P_.textContent = t.slice(0, k); if (k >= t.length) fim(); }, 22); };
-    ov.onclick = () => { SND.play('click'); if (!pronto) { clearInterval(tm); P_.textContent = linhas[i].replace(/\{nome\}/g, (S && S.nome) || 'viajante'); pronto = true; return; } i++; if (i >= linhas.length) { ov.remove(); done && done(); } else fala(); };
+    ov.onclick = () => { SND.play('click'); if (!pronto) { clearInterval(tm); P_.textContent = linhas[i].replace(/\{nome\}/g, (S && S.nome) || 'viajante'); pronto = true; return; } i++; if (i >= linhas.length) { ov.remove(); mods.forEach(m => { m.style.display = ''; }); done && done(); if (reab) setTimeout(() => { if (view === 'map' && !andando && sheet && sheet.hidden && !$('.npc, .bau-ov, .cin')) openNode(reab); }, 150); } else fala(); };
     fala();
   }
   function tutorial() {
     if (!S || S.tutorial || !S.npc) return; S.tutorial = 1; save();
     npcFala(S.npc, ['Você venceu a primeira batalha. Eu estava na sua mão, lembra? Agora vou te mostrar como isso funciona.',
-      'Cada vitória ilumina os caminhos à frente. Use as setas ao lado do seu boneco para andar, um passo de cada vez.',
+      'Cada vitória ilumina os caminhos à frente. Toque numa bolinha ao lado do seu boneco para caminhar até ela.',
       'Pêndulos compram cartas nas lojas e descansam as suas cartas. Baús e batalhas dão mais.',
       'Cada arauto prende um membro da União. Liberte os oito e derrote os guardiões para enfraquecer a Besta.',
       'Pelo caminho, alguns viajantes vendem atalhos. Boa sorte, {nome}.']);
@@ -564,7 +568,7 @@
     const lista = () => (S.owned || []).slice().sort((a, b) => (ORD[(U.CARDS[a] || {}).raridade] - ORD[(U.CARDS[b] || {}).raridade]) || FORCA(b) - FORCA(a));
     const render = () => {
       const L = lista(), cans = L.filter(id => fad(id)), total = cans.reduce((t, id) => t + fad(id) * CUSTO_DESC, 0);
-      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque numa para descansar (' + CUSTO_DESC + ' pêndulos por ponto). Cada vitória sem usá-las descansa 1 ponto.' : 'Todas as cartas estão descansadas.') : 'O cansaço começa quando você tiver 21 cartas (' + L.length + ' agora).') + ' Pêndulos: ' + (S.pend | 0);
+      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque numa para descansar (' + CUSTO_DESC + ' pêndulos por ponto). Cada vitória sem usá-las descansa 1 ponto.' : 'Todas as cartas estão descansadas.') : '') + ' Pêndulos: ' + (S.pend | 0);
       g.innerHTML = ''; L.forEach(id => { const w = el('<div class="hs-escc on' + (fad(id) ? ' tired' : '') + '" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fad(id)) w.append(el('<div class="hs-fadb">' + pontosFad(id) + '</div>')); g.append(w); });
       bt.hidden = !cans.length; bt.textContent = 'Descansar todas (' + total + ')'; bt.disabled = total > (S.pend | 0); paintAll();
     };
