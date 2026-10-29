@@ -15,7 +15,7 @@ try:
         pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.historia.prefs', JSON.stringify({aberto:true,v2:1}));")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.goto('http://localhost:8785/_page.html'); pg.wait_for_timeout(900)
-        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
+        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
         r = pg.evaluate("""(() => { const S = window.DSHistoria.state(); const all = window.DSUI.D.CARTAS.map(c => c.id);
           S.owned = all.slice(0, 25); S.pend = 100; S.fadiga = {}; const usadas = S.owned.slice(0, 7);
           const n = window.DSHistoria.aplicaCansaco(usadas); const peso = { comum: 1, rara: 2, epica: 3, lendaria: 4 };

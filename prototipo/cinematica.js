@@ -61,9 +61,20 @@
       bt.onclick = () => { const v = inp.value.trim(); if (!v) { inp.focus(); return; } vars[q.chave || 'nome'] = v; box.remove(); perguntando = false; SND.play('click'); avanca(); };
       setTimeout(() => inp.focus(), 600);
     }
-    function key(e) { if (perguntando) { if (e.key === 'Escape') { e.preventDefault(); fecha(true); } return; } if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); avanca(); } else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); fecha(true); } }
+    function pular() {   // pular a cena ainda pede o nome; vazio vira o nome padrão (Viajante)
+      const c = D.cenas.find(x => x.pergunta);
+      if (fim) return; if (!c || vars.nome) { fecha(true); return; }
+      if (perguntando) { const i0 = ov.querySelector('.cin-q input'); if (i0 && i0.value.trim()) vars[c.pergunta.chave || 'nome'] = i0.value.trim(); fecha(true); return; }
+      perguntando = true; clearInterval(digit); const q = c.pergunta, box = document.createElement('div'); box.className = 'cin-q cin-qs';
+      box.innerHTML = '<input type="text" maxlength="' + (q.max || 16) + '" placeholder="' + (q.rotulo || '') + '" autocomplete="off" spellcheck="false"><button type="button" class="btn primary">Continuar</button>';
+      ov.appendChild(box); const inp = box.querySelector('input'), bt = box.querySelector('button');
+      box.addEventListener('click', e => e.stopPropagation()); inp.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') bt.click(); });
+      bt.onclick = () => { const v = inp.value.trim(); if (v) vars[q.chave || 'nome'] = v; SND.play('click'); fecha(true); };
+      setTimeout(() => inp.focus(), 100);
+    }
+    function key(e) { if (perguntando) { if (e.key === 'Escape') { e.preventDefault(); fecha(true); } return; } if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); avanca(); } else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); pular(); } }
     document.addEventListener('keydown', key, true);
-    ov.addEventListener('click', e => { if (e.target.closest('.cin-skip')) { fecha(true); return; } avanca(); });
+    ov.addEventListener('click', e => { if (e.target.closest('.cin-skip')) { pular(); return; } avanca(); });
     setTimeout(avanca, reduce() ? 0 : 900);       // começa no preto, um instante de silêncio
   }
   window.DSCinema = { play };

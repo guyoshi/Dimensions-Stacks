@@ -14,7 +14,7 @@ try:
         pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false,speed:'rapido'}));")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.goto('http://localhost:8787/_page.html'); pg.wait_for_timeout(900)
-        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
+        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
         ids = pg.evaluate("DSMini.LISTA.map(m=>m.id)"); print(len(ids), 'jogos')
         for k, gid in enumerate(ids):
             pg.evaluate("id=>{window.__r=null;DSMini.play(id,{teste:true}).then(r=>window.__r=r)}", gid); pg.wait_for_selector('.mg-intro', timeout=3000)

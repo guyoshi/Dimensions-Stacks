@@ -20,7 +20,7 @@ try:
     chk(pg.evaluate("document.querySelector('#nav').hidden") is True, 'barra inferior oculta no modo história')
     chk(pg.evaluate("document.querySelector('[data-a=cont]').disabled") is True, 'Continuar desativado sem jornada salva')
     pg.screenshot(path=shots + '/hist_hub.png')
-    pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1200)
+    pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1200)
     M = pg.evaluate("window.DSHistoria.data"); S = pg.evaluate("window.DSHistoria.state()")
     chk(S['pos'] == S['startId'] and pg.evaluate("!!document.querySelector('#hsHero')"), 'boneco começa no ponto de partida')
     pos = lambda i: pg.evaluate("id => {const r=document.querySelector('.n[data-id=\"'+id+'\"]').getBoundingClientRect();return [r.x+r.width/2,r.y+r.height/2]}", i)

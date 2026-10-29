@@ -14,7 +14,7 @@ try:
         pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false,speed:'rapido'}));")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.goto('http://localhost:8785/_page.html'); pg.wait_for_timeout(900)
-        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
+        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
         ids = pg.evaluate("window.DS_CARTAS_IDS || DSUI.D.CARTAS.filter(x=>!x.uniao).slice(0,30).map(x=>x.id)")
         pg.evaluate("(()=>{const k='dsstacks.historia',o=JSON.parse(localStorage.getItem(k));o.tutorial=1;o.pend=1000;o.owned=%s;o.fadiga={%s:3,%s:1};localStorage.setItem(k,JSON.stringify(o));})()" % (ids, '"'+ids[0]+'"', '"'+ids[1]+'"')); pg.reload(); pg.wait_for_timeout(900)
         pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1000)

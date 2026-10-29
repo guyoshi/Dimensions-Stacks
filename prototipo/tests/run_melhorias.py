@@ -14,7 +14,7 @@ try:
         pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false,speed:'rapido'}));")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.goto('http://localhost:8787/_page.html'); pg.wait_for_timeout(900)
-        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
+        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
         pg.evaluate("(()=>{const s=DSHistoria.state();s.tutorial=1;s.pend=200;s.dicas={minigame:1,evento:1,elite:1,miniboss:1,loja:1,guardiao:1,captura:1,derrota:1,bau:1,cansaco:1};s.owned=DSHistoria.data.cartasIds?[]:s.owned})()")
         # ---- Segunda tentativa
         pg.evaluate("(()=>{const s=DSHistoria.state();s.pos='B018';s.mgLock={B018:1};s.melh={segunda:1}})()")

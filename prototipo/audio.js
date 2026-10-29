@@ -203,7 +203,7 @@
       if (this.histNow !== k || !m) { if (this.histNow === k && !m) this.histNow = null; return; }
       const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
       s.buffer = m.buf; s.loop = true; s.loopStart = m.a || 0; s.loopEnd = m.b || m.buf.duration; s.connect(g); g.connect(this.musicGain);
-      const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0, vol = ({ batalha: 0.5, mini: 0.55, arauto: 0.55, guardiao: 0.55, boss: 0.6, vitoria: 0.9, mgmod: 0.55, mgdiv: 0.55, mgfut: 0.42 })[k] || 1;
+      const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0, vol = ({ batalha: 0.32, mini: 0.38, arauto: 0.38, guardiao: 0.38, boss: 0.42, vitoria: 0.9, mgmod: 0.55, mgdiv: 0.55, mgfut: 0.42 })[k] || 1;
       g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(vol, now + 1.2); s.start(now, off);   // trilhas de batalha mais baixas
       if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
       this.histStop(true); const nd = this.histNodes = { s, g, k, t0: now, off, dur: m.buf.duration, segs: [{ s, g }] };

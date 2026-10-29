@@ -53,7 +53,7 @@ try:
     chk(pg.evaluate("document.querySelectorAll('.flag').length") == 0, 'sem faixas Início/Partida')
     pg.keyboard.press('Escape')
     # pular
-    pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.click('[data-a=intro]'); pg.wait_for_selector('.cin'); pg.click('.cin-skip'); pg.wait_for_timeout(900)
+    pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.click('[data-a=intro]'); pg.wait_for_selector('.cin'); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_timeout(900)
     chk(pg.query_selector('.cin') is None, 'Pular fecha a cinemática')
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=escuro]'); pg.wait_for_timeout(200)
     chk(pg.evaluate("document.querySelectorAll('.n.fog').length") == 0, 'opção desliga o escuro')
