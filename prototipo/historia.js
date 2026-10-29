@@ -20,13 +20,19 @@
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
-  const LADOS = { esq: 'Terras das Sombras', cima: 'Reino Polar', dir: 'Fronteira dos Portais', baixo: 'Mar de Gerbe' };   // PROPOSTA: nome de cada setor (série do lado)
-  const REGIAO = { 1: 'Orla', 2: 'Margem', 3: 'Umbral', 4: 'Núcleo' };   // PROPOSTA: nome de cada região
+  const LADOS = { esq: 'Vila Velha', cima: 'Kaeliran', dir: 'Belfex', baixo: 'Braço de Origem', nw: 'Cidade Crepúsculo', ne: 'Promessas do Mar' };   // setores: lugares dos livros (Diário Sobrenatural, Ciclo de Jesed, Viajantes, Spacetheft, Mistério Oculto, Édelin Lys)
+  const REGIAO = { 1: 'Orla', 2: 'Margem', 3: 'Umbral', 4: 'Núcleo' };
+  const STARTS = new Set(Object.values(M.starts || {}));
+  function setor(n) {   // cunhas diagonais: NW = Mistério Oculto, NE = Édelin Lys (mesmas faixas de tools/regioes_diagonais.py)
+    if (!['normal', 'evento', 'elite', 'miniboss'].includes(n.tipo) || STARTS.has(n.id)) return n.lado;
+    const g = Math.atan2(n.y, n.x) * 180 / Math.PI;
+    return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
+  }
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
   // cada arauto (tipo 'miniboss') prende um membro da União; vencê-lo o liberta e abre o minigame do setor/série
-  const LIBERTA = { B059: 'D06', B066: 'M01', B062: 'J03', B080: 'B01', B064: 'S01', B072: 'M10', B057: 'V15', B078: 'V02' };
+  const LIBERTA = { B059: 'D06', B062: 'M01', B066: 'J03', B080: 'B01', B072: 'S01', B064: 'M10', B057: 'V15', B078: 'V02' };
   const MINIS = Object.keys(LIBERTA), UNIAO = Object.values(LIBERTA);
   // deixa o mapa menos redondo e mais orgânico: deformação suave por ângulo + pequeno desvio por ponto (determinístico; ids e ligações não mudam)
   (function organico() {
@@ -318,7 +324,7 @@
     const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo de 3 jogadores' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
-      <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[n.lado])}</small></div></div>
+      <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[setor(n)])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
       <p>${esc(T.desc)}</p>${evLinha}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}
       <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
