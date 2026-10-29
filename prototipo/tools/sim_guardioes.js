@@ -13,7 +13,7 @@ const CFGS = {
 const total = g => { let n = g.s.bh.length; g.s.players.forEach(p => { n += p.deck.length + p.reserve.length + p.prepared.length; }); if (g.s.blk) Object.values(g.s.blk.held).forEach(h => { n += h.length; }); return n; };
 async function jogo(id, k, N, M, P) {
   const R = rngF(900 + k * 7), pick = (a, n) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b.slice(0, n); };
-  const dono = P.uniao ? UN.map(c => c.id) : []; const mao = dono.concat(NU.slice(P.off || 0, (P.off || 0) + (P.pool || 30)).map(c => c.id)).sort((a, b) => pw(D.CARTAS.find(c => c.id === b)) - pw(D.CARTAS.find(c => c.id === a))).slice(0, N);
+  const dono = P.nuniao != null ? pick(UN.map(c => c.id), P.nuniao) : P.uniao ? UN.map(c => c.id) : []; const mao = dono.concat(NU.slice(P.off || 0, (P.off || 0) + (P.pool || 30)).map(c => c.id)).sort((a, b) => pw(D.CARTAS.find(c => c.id === b)) - pw(D.CARTAS.find(c => c.id === a))).slice(0, N);
   const used = new Set(mao), RARO = r => D.CARTAS.filter(c => !c.uniao && c.id !== 'S11' && c.raridade === r && !used.has(c.id));
   const deckG = () => { const d = []; const rec = ['rara'].concat(Array(3).fill('epica'), Array(3).fill('lendaria')); for (let i = 0; i < M; i++) { const r = i < 1 ? 'rara' : i % 2 ? 'epica' : 'lendaria'; const c = pick(RARO(r).filter(x => !d.includes(x.id)), 1)[0]; if (c) { d.push(c.id); used.add(c.id); } } return d; };
   const g1 = deckG(), g2 = deckG();
@@ -25,7 +25,7 @@ async function jogo(id, k, N, M, P) {
 }
 (async () => {
   const n = +process.argv[2] || 60, ids = (process.argv[3] || 'G1,G2,G3,G4').split(','), Ns = (process.argv[4] || '10').split(',').map(Number), Ms = (process.argv[5] || '7').split(',').map(Number), cen = process.argv[6] || 'cheia';
-  const P = cen === 'sem' ? { uniao: false, off: 25, pool: 20 } : cen === 'meia' ? { uniao: false, off: 8, pool: 20 } : { uniao: true, pool: 30 };   // cheia: 8 da União + 30 melhores; meia: União + 12; sem: 14 melhores sem União
+  const P = cen === 'media' ? { nuniao: 4, off: 5, pool: 20 } : cen === 'sem' ? { uniao: false, off: 25, pool: 20 } : cen === 'meia' ? { uniao: false, off: 8, pool: 20 } : { uniao: true, pool: 30 };   // cheia: 8 da União + 30 melhores; meia: União + 12; sem: 14 melhores sem União
   for (const id of ids) for (const N of Ns) for (const M of Ms) {
     let v = 0, rod = 0, lim = 0, errs = 0, fail = 0; for (let k = 0; k < n; k++) { try { const r = await jogo(id, k, N, M, P); if (r.w === 0) v++; rod += r.rounds; if (r.lim) lim++; if (r.err) { errs++; if (errs === 1) console.log(' ', r.err); } } catch (e) { fail++; if (fail === 1) console.log(' erro', e.message.slice(0, 160)); } }
     console.log(id, cen, `N${N} M${M}: vitória ${(100 * v / n).toFixed(0)}% · rodadas ${(rod / n).toFixed(1)} · limite ${lim} · conservação ${errs} · falhas ${fail}`);
