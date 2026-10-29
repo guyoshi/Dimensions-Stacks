@@ -750,7 +750,7 @@
   // estoque fixo por loja (sorteado uma vez e guardado): 6 cartas que o jogador ainda não tem; raridade sobe com a região
   function estoque(id) {
     S.lojas = S.lojas || {}; if (S.lojas[id]) return S.lojas[id];
-    const tier = BY[id].tier || 1, plano = [['comum', 'comum', 'comum', 'rara', 'rara', 'epica'], ['comum', 'comum', 'rara', 'rara', 'epica', 'epica'], ['comum', 'rara', 'rara', 'epica', 'epica', 'lendaria'], ['rara', 'rara', 'epica', 'epica', 'lendaria', 'lendaria']][Math.min(3, tier - 1)];
+    const tier = BY[id].tier || 1, plano = [['comum', 'comum', 'comum', 'rara', 'rara', 'epica'], ['comum', 'comum', 'rara', 'rara', 'epica', 'epica'], ['comum', 'rara', 'rara', 'epica', 'epica', 'epica'], ['rara', 'rara', 'epica', 'epica', 'epica', 'epica']][Math.min(3, tier - 1)];
     const em = new Set(S.owned || []); S.lojas[id] = { itens: [], comprados: [] };
     plano.forEach(r => { const pool = embaralha(U.D.CARTAS.filter(x => x.raridade === r && !x.uniao && !EXC.has(x.id) && !em.has(x.id))); const x = pool[0]; if (x) { em.add(x.id); S.lojas[id].itens.push(x.id); } });
     save(); return S.lojas[id];
