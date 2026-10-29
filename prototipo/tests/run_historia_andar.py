@@ -32,20 +32,28 @@ try:
         u = q.popleft()
         for v in nodes[u]['viz']:
             if v not in d: d[v] = d[u] + 1; q.append(v)
-    far = [i for i, k in d.items() if k == 3 and nodes[i]['tipo'] != 'loja'][0]
-    pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(300)
-    pg.click('[data-a=fit]'); pg.wait_for_timeout(800)
-    bx = pos(far); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(700)
-    chk('Fora de alcance' in pg.inner_text('#hsSheet'), 'sem o modo aberto, ponto a 3 passos está fora de alcance')
-    pg.click('#hsSheet [data-a=x]'); pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.check('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(300)
-    pg.click('[data-a=fit]'); pg.wait_for_timeout(800)
-    bx = pos(far); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(700)
-    chk('Caminhar até aqui · 3 passos' in pg.inner_text('#hsSheet'), 'modo aberto: botão mostra 3 passos')
-    pg.click('#hsSheet [data-a=go]'); pg.wait_for_timeout(450)
-    mid = pg.evaluate("window.DSHistoria.state().pos"); chk(mid != S['startId'] and mid != far, 'a meio do caminho o boneco está num ponto intermediário: ' + mid)
-    pg.wait_for_timeout(1500)
-    chk(pg.evaluate("window.DSHistoria.state().pos") == far, 'chegou ao destino casa por casa')
-    chk(pg.evaluate("!document.querySelector('#hsSheet').hidden"), 'painel do destino abre ao chegar')
+    # caminho mais curto de 3 passos até 'far'
+    prevn = {S['startId']: None}; q = deque([S['startId']])
+    while q:
+        u = q.popleft()
+        for v in nodes[u]['viz']:
+            if v not in prevn: prevn[v] = u; q.append(v)
+    far = [i for i, k in d.items() if k == 3 and nodes[i]['tipo'] != 'loja'][0]; path = []; x = far
+    while x is not None: path.insert(0, x); x = prevn[x]
+    # sem o modo aberto, a casa de partida ainda não foi vencida: nenhuma seta para frente
+    pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(400)
+    chk(pg.evaluate("document.querySelectorAll('.seta').length") == 0, 'sem vitória na casa atual, não há setas')
+    pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.check('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(400)
+    nviz = len([v for v in nodes[S['startId']]['viz'] if v != M['boss']])
+    chk(pg.evaluate("document.querySelectorAll('.seta').length") == nviz, 'modo aberto: uma seta para cada direção (%d)' % nviz)
+    # clicar na bolinha do ponto vizinho só abre o painel, não anda
+    bx = pos(path[1]); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(600)
+    chk(pg.evaluate("window.DSHistoria.state().pos") == S['startId'], 'clicar na bolinha não move o boneco')
+    pg.click('#hsSheet [data-a=x]')
+    for k, nx in enumerate(path[1:]):
+        seta = pg.query_selector('.seta[data-to="%s"]' % nx); bb = seta.bounding_box(); pg.mouse.click(bb['x'] + bb['width'] / 2, bb['y'] + bb['height'] / 2); pg.wait_for_timeout(900)
+        chk(pg.evaluate("window.DSHistoria.state().pos") == nx, 'seta leva um passo: ' + nx)
+        if k < len(path) - 2: pg.click('#hsSheet [data-a=x]')
     pg.screenshot(path=shots + '/hist_andar.png')
     pg.reload(); pg.wait_for_timeout(900); pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(400); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(500)
     chk(pg.evaluate("window.DSHistoria.state().pos") == far, 'posição salva depois de recarregar')

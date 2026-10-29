@@ -66,7 +66,7 @@
     const tab = name in render, full = name === 'uniao'; nav.hidden = !tab || full;   // o modo história ocupa a tela toda (jogo dentro do jogo)
     $$('button', nav).forEach(b => b.classList.toggle('on', b.dataset.tab === name));
     $('#app').classList.toggle('hasnav', tab && !full);
-    try { if (full) SND.histPlay('mapa'); else if (SND.histNow) SND.histStop(); } catch (e) { }   // trilha do mapa (se o arquivo existir)
+    try { if (!full && SND.histNow) SND.histStop(); } catch (e) { }   // a trilha do mapa só toca no mapa (historia.js); na tela inicial do modo toca o menu normal
     if (tab) { render[name](); const s = $('#' + name); if (s) s.scrollTop = 0; }
   };
 

@@ -2,6 +2,7 @@
    Cada cena tem uma imagem (opcional) e uma lista de falas; cada toque mostra a próxima fala (digitada letra por letra).
    Campos da cena:  img: caminho da imagem ou null (fica só o preto)
                     mov: 'zoom' | 'zoomout' | 'esq' | 'dir' | 'fixo'   (movimento lento da imagem)
+                    fotos: ['photos/X.webp', ...]  até 6 fotos que aparecem uma a uma em cantos diferentes da tela
                     cor: cor de fundo atrás da imagem (padrão preto) · pos: enquadramento da imagem
                     textos: ['fala 1', ...]  ({nome} vira o nome que o jogador digitou)
                     tom: 'narr' (padrão) | 'fala' | 'grito' (grande, tremendo)
@@ -12,16 +13,16 @@ window.DS_CINEMATICA = {
   cenas: [
     { img: null, textos: ['Existe um silêncio que só o espaço conhece.', 'Foi nele que a Besta dormiu por eras.'] },
     { img: 'cena/gerbe.webp', mov: 'zoom', pos: 'center', textos: [
-      'Há muito tempo, a Besta foi aprisionada no coração de um planeta de gerbe, um dos materiais mais valiosos de todo o universo.',
+      'Há muito tempo, a Besta foi aprisionada em um planeta conhecido como Aurora, feito de gerbe, um dos materiais mais valiosos de todo o universo.',
       'O metal a cobriu como uma tumba. Ninguém soube o que dormia lá dentro. Ninguém quis saber.'] },
     { img: 'photos/S01.webp', mov: 'zoomout', pos: 'top', textos: [
-      'Até que Jasmey Badrock e sua equipe, caçadores de tesouros em busca do próximo grande achado, pousaram em Gerbe.',
+      'Até que Jasmey Badrock e sua equipe, caçadores de tesouros em busca do próximo grande achado, pousaram na Aurora.',
       'Eles viram riqueza. Cavaram fundo. E cavaram demais.'] },
     { img: 'cena/besta.webp', mov: 'zoom', pos: 'center', tom: 'grito', textos: ['Ela acordou.'] },
     { img: 'cena/besta.webp', mov: 'esq', pos: 'center', textos: [
       'A Besta engoliu estrelas. Depois, sistemas inteiros.',
       'E então começou a rasgar as paredes entre as dimensões.'] },
-    { img: 'photos/J03.webp', mov: 'zoomout', pos: 'top', textos: [
+    { img: null, fotos: ['photos/J03.webp', 'photos/V02.webp', 'photos/D06.webp', 'photos/M01.webp', 'photos/V15.webp', 'photos/B01.webp'], textos: [
       'Sem saída, Jasmey pediu ajuda à União: heróis de todos os cantos do universo, o único grupo que talvez pudesse deter a Besta.',
       'Eles atenderam ao chamado.'] },
     { img: 'cena/besta.webp', mov: 'dir', pos: 'center', textos: [
@@ -47,11 +48,11 @@ window.DS_CINEMATICA_FINAL = {
     { img: 'cena/besta.webp', mov: 'zoomout', pos: 'center', textos: [
       '{nome} enfrentou a Besta onde ninguém mais ousou chegar.',
       'Foi a batalha mais longa que a galáxia já viu. E, no fim, a Besta caiu.'] },
-    { img: 'photos/J03.webp', mov: 'zoomout', pos: 'top', textos: [
+    { img: null, fotos: ['photos/J03.webp', 'photos/V02.webp', 'photos/D06.webp', 'photos/M01.webp', 'photos/V15.webp', 'photos/B01.webp'], textos: [
       'Com ela, caíram as correntes que prendiam a União.',
       'Um a um, os heróis foram libertados, e todos voltaram a se erguer ao lado de {nome}.'] },
     { img: 'photos/S01.webp', mov: 'zoom', pos: 'top', textos: [
-      'Jasmey Badrock olhou para o planeta que um dia cavou e, desta vez, deixou o gerbe em paz.'] },
+      'Jasmey Badrock olhou para a Aurora, o planeta que um dia cavou, e desta vez deixou o gerbe em paz.'] },
     { img: 'cena/gerbe.webp', mov: 'zoomout', pos: 'center', textos: [
       'As dimensões voltaram a se fechar. As estrelas que restaram voltaram a brilhar.',
       'A galáxia inteira soube o nome de quem não desistiu.'] },

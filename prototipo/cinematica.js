@@ -8,7 +8,7 @@
   function play(done, data, extra) {
     const D = data || window.DS_CINEMATICA; if (!D || !D.cenas || !D.cenas.length) { done && done(); return; }
     const ov = document.createElement('div'); ov.className = 'cin'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'Introdução');
-    ov.innerHTML = '<div class="cin-img a"></div><div class="cin-img b"></div><div class="cin-shade"></div><div class="cin-txt"><p></p><i class="cin-next" aria-hidden="true">▾</i></div><button class="cin-skip" type="button">Pular ›</button><div class="cin-bar"><b></b></div>';
+    ov.innerHTML = '<div class="cin-img a"></div><div class="cin-img b"></div><div class="cin-fotos"></div><div class="cin-shade"></div><div class="cin-txt"><p></p><i class="cin-next" aria-hidden="true">▾</i></div><button class="cin-skip" type="button">Pular ›</button><div class="cin-bar"><b></b></div>';
     document.body.appendChild(ov);
     const layers = [ov.querySelector('.a'), ov.querySelector('.b')], P = ov.querySelector('.cin-txt p'), nx = ov.querySelector('.cin-next'), bar = ov.querySelector('.cin-bar b');
     const total = D.cenas.reduce((s, c) => s + (c.textos || ['']).length, 0);
@@ -19,7 +19,14 @@
       if (fim) return; fim = true; if (!vars.nome) vars.nome = (D.cenas.find(c => c.pergunta) || { pergunta: {} }).pergunta.padrao || ''; clearInterval(digit); document.removeEventListener('keydown', key, true);
       ov.classList.add('out'); setTimeout(() => { ov.remove(); done && done(pulou, vars); }, reduce() ? 30 : 700);
     }
+    const POS = [[4, 4, -4], [58, 7, 5], [2, 25, 3], [61, 28, -5], [6, 46, -3], [57, 47, 4]];   // cantos diferentes (x%, y%, giro)
+    function fotos(c) {
+      const box = ov.querySelector('.cin-fotos'); box.innerHTML = ''; if (!c.fotos) return;
+      c.fotos.slice(0, POS.length).forEach((src, i) => { const f = document.createElement('div'); f.className = 'cin-foto'; const [x, y, r] = POS[i];
+        f.style.cssText = `left:${x}%;top:${y}%;--r:${r}deg;background-image:url(${src});animation-delay:${reduce() ? 0 : 500 + i * 650}ms`; box.appendChild(f); });
+    }
     function mostraImg(c) {
+      fotos(c);
       if (c.img === imgAtual && c.cor === undefined) return; imgAtual = c.img;
       const nova = layers[vez ^= 1], velha = layers[vez ^ 1];
       nova.style.background = c.img ? `${c.cor || '#000'} url(${c.img}) ${c.pos || 'center'} / cover no-repeat` : (c.cor || '#000');

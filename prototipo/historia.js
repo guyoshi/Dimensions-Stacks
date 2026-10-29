@@ -115,7 +115,7 @@
 
   // ---- tela inicial: só o selo, "Novo jogo" e "Continuar"
   function hub() {
-    view = 'hub'; load();
+    view = 'hub'; load(); try { if (SND.histNow) SND.histStop(); } catch (e) { }   // tela inicial: volta a música normal do menu
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
     const c = S;
     h.innerHTML = `      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
@@ -148,7 +148,7 @@
     mp.innerHTML = `<svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}</g></svg>
+        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill" title="Cartas no bestiário"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></div></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button></div>
@@ -167,7 +167,7 @@
   function paintAll() {
     $$('.hs-edges .e', root).forEach(p => { p.setAttribute('class', 'e ' + edgeState(p.dataset.a, p.dataset.b)); });
     $$('.n', root).forEach(g => paintNode(g));
-    svg.classList.toggle('aberto', !!P.aberto); paintLuz();
+    svg.classList.toggle('aberto', !!P.aberto); paintLuz(); paintSetas();
     const mk = $('#hsMarks', root), st = BY[S.startId];
     const flag = (n, txt, cls) => `<g class="flag ${cls}" transform="translate(${n.x} ${n.y - TIPOS[n.tipo].r - 30})"><path d="M0 22 V-6 L18 0 L0 6" fill="currentColor"/><text x="24" y="3">${txt}</text></g>`;
     mk.innerHTML = flag(st, 'Início', 'on') + (P.aberto ? Object.values(M.starts).filter(i => i !== S.startId).map(i => flag(BY[i], 'Partida', 'off')).join('') : '');
@@ -177,12 +177,12 @@
   function paintLuz() {
     const esc_ = P.escuro !== false; svg.classList.toggle('escuro', esc_);
     const lg = $('#hsLights', root); if (lg) lg.innerHTML = '';
-    const luz = new Set([posId()]); NOS.forEach(n => { if (cleared(n.id)) luz.add(n.id); });
-    const perto = new Set(luz); luz.forEach(i => BY[i].viz.forEach(v => perto.add(v)));
+    const luz = new Set([S.startId]); NOS.forEach(n => { if (cleared(n.id)) luz.add(n.id); });   // só o que foi vencido (e a partida) ilumina os vizinhos; andar não revela ramos novos
+    const perto = new Set(luz); luz.forEach(i => BY[i].viz.forEach(v => perto.add(v))); perto.add(posId());
     const longe = new Set(perto); perto.forEach(i => BY[i].viz.forEach(v => longe.add(v)));
     $$('.n', root).forEach(g => { const i = g.dataset.id; g.classList.toggle('fog', esc_ && !longe.has(i)); g.classList.toggle('far1', esc_ && longe.has(i) && !perto.has(i)); });
     $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', esc_ && !(luz.has(a) || luz.has(b) || (perto.has(a) && perto.has(b)))); p.classList.toggle('far1', esc_ && !(luz.has(a) || luz.has(b)) && (perto.has(a) && perto.has(b))); });
-    if (esc_ && lg) { const here = posId(); lg.innerHTML = [...luz].map(i => { const n = BY[i], hero = i === here, r = hero ? 330 : (cleared(i) ? 210 : 160); return `<circle class="hs-light" cx="${n.x}" cy="${n.y}" r="${r}" ${hero ? 'style="fill:url(#hsLightH)"' : ''}/>`; }).join(''); }
+    if (esc_ && lg) { const here = posId(); lg.innerHTML = [...new Set([...luz, here])].map(i => { const n = BY[i], hero = i === here, r = hero ? 330 : (cleared(i) ? 210 : 160); return `<circle class="hs-light" cx="${n.x}" cy="${n.y}" r="${r}" ${hero ? 'style="fill:url(#hsLightH)"' : ''}/>`; }).join(''); }
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
@@ -213,10 +213,10 @@
       else if (ptrs.size === 2 && pinch0) { p.x = e.clientX; p.y = e.clientY; const [a, b] = [...ptrs.values()]; const d = Math.hypot(a.x - b.x, a.y - b.y), r = svg.getBoundingClientRect(); zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, (pinch0.k * d / pinch0.d) / cam.k, false); moved = 99; }
     });
     const up = e => { if (!ptrs.has(e.pointerId)) return; ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = null;
-      if (!ptrs.size && moved <= 8 && startPt) { const g = (startPt.t.closest && startPt.t.closest('.n')); if (g) openNode(g.dataset.id); else closeSheet(); } };
+      if (!ptrs.size && moved <= 8 && startPt) { const sa = startPt.t.closest && startPt.t.closest('.seta'); if (sa) { passo(sa.dataset.to); return; } const g = (startPt.t.closest && startPt.t.closest('.n')); if (g) openNode(g.dataset.id); else closeSheet(); } };
     svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', e => { ptrs.delete(e.pointerId); pinch0 = null; });
     svg.addEventListener('wheel', e => { e.preventDefault(); const r = svg.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15, false); }, { passive: false });
-    svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.n')) { e.preventDefault(); openNode(e.target.closest('.n').dataset.id); } });
+    svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.seta')) { e.preventDefault(); passo(e.target.closest('.seta').dataset.to); } else if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.n')) { e.preventDefault(); openNode(e.target.closest('.n').dataset.id); } });
     mp.addEventListener('click', e => {
       const b = e.target.closest('.hs-hud [data-a]'); if (!b) return; SND.init(); SND.play('click'); const { w, h } = view$();
       const a = b.dataset.a;
@@ -252,6 +252,22 @@
   }
   function caminho(to) { const prev = alcance(); if (!(to in prev)) return null; const p = []; for (let x = to; x != null; x = prev[x]) p.unshift(x); return p; }
   let andando = false;
+  // setas: parado numa casa, cada direção possível aparece como seta; clicar na seta dá UM passo (clicar na bolinha só mostra o painel)
+  function passos() {
+    const u = posId(), n = BY[u], pass = passa(u);
+    return n.viz.filter(v => !(v === M.boss && !bossOpen() && !P.aberto) && (pass || passa(v)));
+  }
+  function paintSetas() {
+    const g = $('#hsArrows', root); if (!g) return; if (andando) { g.innerHTML = ''; return; }
+    const u = BY[posId()], r = TIPOS[u.tipo].r;
+    g.innerHTML = passos().map(v => { const t = BY[v], dx = t.x - u.x, dy = t.y - u.y, d = Math.hypot(dx, dy) || 1, ang = Math.atan2(dy, dx) * 180 / Math.PI, dist = r + 40;
+      return `<g class="seta" data-to="${v}" transform="translate(${(u.x + dx / d * dist).toFixed(1)} ${(u.y + dy / d * dist).toFixed(1)}) rotate(${ang.toFixed(1)})" role="button" tabindex="0" aria-label="Ir para ${esc(nome(t))}"><circle r="17"/><path d="M-5 -8 L6 0 L-5 8 Z"/></g>`; }).join('');
+  }
+  async function passo(to) {
+    if (andando || !passos().includes(to)) return; andando = true; closeSheet(); paintSetas(); const red = document.body.classList.contains('reduce'), n = BY[to];
+    S.pos = n.id; heroPlace(n.id, !red); SND.play('tick'); paintLuz(); centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red);
+    await new Promise(r => setTimeout(r, red ? 60 : 380)); save(); andando = false; paintAll(); openNode(n.id);
+  }
   function heroSvg() {
     return `<g id="hsHero" class="hs-hero"><circle class="hr-sh" r="15" cy="13"/><circle class="hr-body" r="14" cy="-4"/><circle class="hr-core" r="5" cy="-4"/><path class="hr-pin" d="M0 12 L-6 0 H6 Z"/></g>`;
   }
@@ -283,9 +299,9 @@
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · lado ${esc(LADOS[n.lado].toLowerCase())}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
       <p>${esc(T.desc)}</p><p class="hint">${esc(jog)}${n.id === M.boss && !bossOpen() ? ` · faltam ${GUARD.filter(x => !cleared(x)).length} guardiões e ${MINIS.filter(x => !cleared(x)).length} da União` : ''}</p>${cartas}
-      <div class="row">${aqui ? `<button class="btn primary" disabled>${n.tipo === 'loja' ? 'Entrar (em breve)' : ok ? 'Você está aqui' : 'Duelar (em breve)'}</button>` : cam_ ? `<button class="btn primary" data-a="go">Caminhar até aqui · ${cam_.length - 1} ${cam_.length === 2 ? 'passo' : 'passos'}</button>` : `<button class="btn" disabled>Fora de alcance</button>`}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <div class="row">${aqui ? `<button class="btn primary" disabled>${n.tipo === 'loja' ? 'Entrar (em breve)' : ok ? 'Você está aqui' : 'Duelar (em breve)'}</button>` : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'go') andar(id); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;

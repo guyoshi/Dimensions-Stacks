@@ -132,6 +132,7 @@
 
       <section class="adm-box"><h3>Sons do jogo</h3>
         <div class="adm-f"><button class="btn primary sm" data-a="sndopen">Abrir tela de sons</button></div>
+        <h3 style="margin-top:14px">Minigames do modo história</h3><div class="adm-f"><button class="btn primary sm" data-a="miniopen">Testar e calibrar minigames</button></div>
         <p class="hint">Ouvir as 5 versões de cada efeito e gravar a escolha. A música para enquanto a tela de sons estiver aberta.</p></section>
       <section class="adm-box"><h3>Análise com IA</h3><div class="adm-f"><button class="btn primary sm" data-a="ai"${A.n ? '' : ' disabled'}>Analisar balanceamento</button><button class="btn ghost sm" data-a="dl"${A.n ? '' : ' disabled'}>Baixar dados (JSON)</button></div><div class="aiout" id="aiOut"></div></section>
     </div>`;
@@ -165,14 +166,44 @@
       especiaisMaisUsados: ok.filter(r => r.s).sort((a, b) => b.sr - a.sr).slice(0, 8).map(r => ({ carta: r.nome, especial: r.esp, usoPct: Math.round(r.sr * 100) })) };
   }
 
+  // minigames: testar cada um e calibrar dificuldade, cortes e prêmios (valem neste aparelho)
+  let mov = null;
+  function miniHtml() {
+    const M = window.DSMini, st = M.stats();
+    const linhas = M.LISTA.map(m => { const c = M.cfg(m.id), s = st[m.id], n = s.n || 0;
+      return `<tr data-id="${m.id}"><td><b>${esc(m.nome)}</b><br><small>${esc(m.desc)}</small></td>
+        <td><button class="btn primary sm" data-a="miniplay" data-id="${m.id}">Testar</button></td>
+        <td><input type="number" step="0.1" min="0.5" max="2" value="${c.dif}" data-m="dif" style="width:56px"></td>
+        <td><input type="text" value="${c.cortes.join(' ')}" data-m="cortes" style="width:96px" title="pct mínimo para o tier 1, 2 e 3"></td>
+        <td><input type="text" value="${c.premios.join(' ')}" data-m="premios" style="width:96px" title="pêndulos nos tiers 0, 1, 2 e 3"></td>
+        <td>${n}</td><td>${n ? Math.round(s.pct / n * 100) + '%' : '—'}</td><td>${n ? s.t.map(x => Math.round(x / n * 100)).join(' / ') + '%' : '—'}</td><td>${n ? (s.rw / n).toFixed(1) : '—'}</td><td>${n ? Math.round(s.ms / n / 1000) + 's' : '—'}</td></tr>`; }).join('');
+    const tot = M.LISTA.reduce((a, m) => a + (M.cfg(m.id).premios[3] | 0), 0);
+    return `<div class="adm-in"><header class="adm-h"><h2>Minigames</h2><button class="ibtn" data-a="miniclose" aria-label="Fechar">✕</button></header>
+      <section class="adm-box"><p class="hint">Teste cada minigame e ajuste: <b>dif</b> (dificuldade, 0,5 a 2), <b>cortes</b> (percentual mínimo para tier 1, 2 e 3) e <b>prêmios</b> (pêndulos nos tiers 0 a 3). As mudanças valem neste aparelho. Colunas à direita: partidas de teste, média, distribuição dos tiers (0/1/2/3), pêndulos médios e tempo médio. Se quase ninguém passa do tier 0 ou todo mundo faz tier 3, o minigame está mal calibrado.</p>
+      <p class="hint">Prêmio máximo somado dos 10 minigames: <b>${tot}</b> pêndulos.</p>
+      <div class="tblw"><table class="adm-t"><thead><tr><th>Minigame</th><th></th><th>Dif.</th><th>Cortes</th><th>Prêmios</th><th>Jogos</th><th>Média</th><th>Tiers</th><th>Pênd.</th><th>Tempo</th></tr></thead><tbody>${linhas}</tbody></table></div>
+      <div class="adm-f"><button class="btn ghost sm" data-a="minireset">Zerar resultados</button><button class="btn ghost sm" data-a="minicfgreset">Voltar calibragem ao padrão</button></div></section></div>`;
+  }
+  function paintMini() { if (!mov) return; const sc = mov.scrollTop; mov.innerHTML = miniHtml(); mov.scrollTop = sc; }
+  function openMini() { if (mov || !window.DSMini) return; mov = el('<div class="adm sov" role="dialog" aria-label="Minigames"></div>'); mov.innerHTML = miniHtml(); mov.onclick = root.onclick;
+    mov.onchange = e => { const m = e.target.dataset.m, tr = e.target.closest('tr'); if (!m || !tr) return; const num = v => String(v).split(/[\s,;]+/).filter(Boolean).map(Number).filter(x => !isNaN(x));
+      const v = m === 'dif' ? Math.max(.5, Math.min(2, +e.target.value || 1)) : num(e.target.value); if (m !== 'dif' && v.length !== (m === 'cortes' ? 3 : 4)) { paintMini(); return; } window.DSMini.setCfg(tr.dataset.id, { [m]: v }); paintMini(); };
+    U.layer().appendChild(mov); }
+  function closeMini() { if (mov) { mov.remove(); mov = null; } }
+
   function bind() {
     root.onclick = async e => {
       const b = e.target.closest('[data-a],th[data-s]'); if (!b) return;
       if (b.dataset.s) { if (S.sort === b.dataset.s) S.dir *= -1; else { S.sort = b.dataset.s; S.dir = b.dataset.s === 'nome' ? 1 : -1; } return paint(); }
       const a = b.dataset.a;
-      if (a === 'sndopen') openSounds();
+      if (a === 'miniopen') openMini();
+      else if (a === 'miniclose') closeMini();
+      else if (a === 'miniplay') { const id = b.dataset.id; await window.DSMini.play(id, { teste: true }); paintMini(); }
+      else if (a === 'minireset') { window.DSMini.resetLog(); paintMini(); }
+      else if (a === 'minicfgreset') { window.DSMini.resetCfg(); paintMini(); }
+      else if (a === 'sndopen') openSounds();
       else if (a === 'sndclose') closeSounds();
-      else if (a === 'close') { closeSounds(); root.remove(); root = null; SVok = false; stopSim.on = true; U.SND.setMode('menu'); }
+      else if (a === 'close') { closeSounds(); closeMini(); root.remove(); root = null; SVok = false; stopSim.on = true; U.SND.setMode('menu'); }
       else if (a === 'snd') { U.SND.init(); U.SND.play(b.dataset.k); }
       else if (a === 'sv') { const k = b.dataset.k, i = +b.dataset.i; U.SND.init(); U.SND.preview(k, i); SV[k] = i; $$('.sfxv', b.parentNode).forEach(x => x.classList.toggle('on', x === b)); const m = $('#svmsg'); if (m) m.textContent = 'Há escolhas não gravadas'; }
       else if (a === 'svsave') { const o = {}; Object.keys(SV).forEach(k => { if (SV[k]) o[k] = SV[k]; }); U.store.set('sfx', o); U.SND.escolha = o; const m = $('#svmsg'); if (m) m.textContent = 'Gravado ✓ (' + Object.keys(o).length + ' diferentes do original)'; }
