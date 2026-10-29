@@ -171,22 +171,21 @@
   function miniHtml() {
     const M = window.DSMini, st = M.stats();
     const linhas = M.LISTA.map(m => { const c = M.cfg(m.id), s = st[m.id], n = s.n || 0;
-      return `<tr data-id="${m.id}"><td><b>${esc(m.nome)}</b>${m.serie ? ' <small>(' + esc(m.serie) + ')</small>' : ''}<br><small>${esc(m.desc)}</small></td>
-        <td><button class="btn primary sm" data-a="miniplay" data-id="${m.id}">Testar</button></td>
-        <td><input type="number" step="0.1" min="0.5" max="2" value="${c.dif}" data-m="dif" style="width:56px"></td>
-        <td><input type="text" value="${c.cortes.join(' ')}" data-m="cortes" style="width:96px" title="pct mínimo para o tier 1, 2 e 3"></td>
-        <td><input type="text" value="${c.premios.join(' ')}" data-m="premios" style="width:96px" title="pêndulos nos tiers 0, 1, 2 e 3"></td>
-        <td>${n}</td><td>${n ? Math.round(s.pct / n * 100) + '%' : '—'}</td><td>${n ? s.t.map(x => Math.round(x / n * 100)).join(' / ') + '%' : '—'}</td><td>${n ? (s.rw / n).toFixed(1) : '—'}</td><td>${n ? Math.round(s.ms / n / 1000) + 's' : '—'}</td></tr>`; }).join('');
+      return `<div class="mini-c" data-id="${m.id}"><div class="mini-top"><div><b>${esc(m.nome)}</b>${m.serie ? ' <small>(' + esc(m.serie) + ')</small>' : ''}<br><small>${esc(m.desc)}</small></div><button class="btn primary sm" data-a="miniplay" data-id="${m.id}">Testar</button></div>
+        <div class="mini-f"><label>Dificuldade<input type="number" step="0.1" min="0.5" max="2" value="${c.dif}" data-m="dif"></label>
+        <label>Cortes (tier 1 2 3)<input type="text" value="${c.cortes.join(' ')}" data-m="cortes"></label>
+        <label>Prêmios (tier 0 1 2 3)<input type="text" value="${c.premios.join(' ')}" data-m="premios"></label></div>
+        <div class="mini-s">${n ? `<span>${n} jogos</span><span>média ${Math.round(s.pct / n * 100)}%</span><span>tiers ${s.t.map(x => Math.round(x / n * 100)).join(' / ')}%</span><span>${(s.rw / n).toFixed(1)} pênd.</span><span>${Math.round(s.ms / n / 1000)}s</span>` : '<span>sem partidas de teste</span>'}</div></div>`; }).join('');
     const tot = M.LISTA.reduce((a, m) => a + (M.cfg(m.id).premios[3] | 0), 0);
     return `<div class="adm-in"><header class="adm-h"><h2>Minigames</h2><button class="ibtn" data-a="miniclose" aria-label="Fechar">✕</button></header>
       <section class="adm-box"><p class="hint">Teste cada minigame e ajuste: <b>dif</b> (dificuldade, 0,5 a 2), <b>cortes</b> (percentual mínimo para tier 1, 2 e 3) e <b>prêmios</b> (pêndulos nos tiers 0 a 3). As mudanças valem neste aparelho. Colunas à direita: partidas de teste, média, distribuição dos tiers (0/1/2/3), pêndulos médios e tempo médio. Se quase ninguém passa do tier 0 ou todo mundo faz tier 3, o minigame está mal calibrado.</p>
       <p class="hint">Prêmio máximo somado dos minigames: <b>${tot}</b> pêndulos.</p>
-      <div class="tblw"><table class="adm-t"><thead><tr><th>Minigame</th><th></th><th>Dif.</th><th>Cortes</th><th>Prêmios</th><th>Jogos</th><th>Média</th><th>Tiers</th><th>Pênd.</th><th>Tempo</th></tr></thead><tbody>${linhas}</tbody></table></div>
+      <div class="mini-l">${linhas}</div>
       <div class="adm-f"><button class="btn ghost sm" data-a="minireset">Zerar resultados</button><button class="btn ghost sm" data-a="minicfgreset">Voltar calibragem ao padrão</button></div></section></div>`;
   }
   function paintMini() { if (!mov) return; const sc = mov.scrollTop; mov.innerHTML = miniHtml(); mov.scrollTop = sc; }
   function openMini() { if (mov || !window.DSMini) return; mov = el('<div class="adm sov" role="dialog" aria-label="Minigames"></div>'); mov.innerHTML = miniHtml(); mov.onclick = root.onclick;
-    mov.onchange = e => { const m = e.target.dataset.m, tr = e.target.closest('tr'); if (!m || !tr) return; const num = v => String(v).split(/[\s,;]+/).filter(Boolean).map(Number).filter(x => !isNaN(x));
+    mov.onchange = e => { const m = e.target.dataset.m, tr = e.target.closest('.mini-c'); if (!m || !tr) return; const num = v => String(v).split(/[\s,;]+/).filter(Boolean).map(Number).filter(x => !isNaN(x));
       const v = m === 'dif' ? Math.max(.5, Math.min(2, +e.target.value || 1)) : num(e.target.value); if (m !== 'dif' && v.length !== (m === 'cortes' ? 3 : 4)) { paintMini(); return; } window.DSMini.setCfg(tr.dataset.id, { [m]: v }); paintMini(); };
     U.layer().appendChild(mov); }
   function closeMini() { if (mov) { mov.remove(); mov = null; } }
