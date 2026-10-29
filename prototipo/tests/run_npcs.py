@@ -56,7 +56,7 @@ try:
         pg.click('.hs-mis [data-a=x]'); pg.wait_for_timeout(200)
         pg.click('.hs-hud [data-a=colecao]'); pg.wait_for_selector('.hs-col'); pg.click('.hs-col [data-a="t:reg"]'); pg.click('.hs-col [data-a="t:selo"]'); pg.screenshot(path='/tmp/m2.png'); pg.click('.hs-col [data-a=x]')
         # loja com vendedor e extras
-        pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") == 2, 'loja 5: registro + melhoria (sem fragmento à venda)')
+        pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") == 3, 'loja 5: registro + 2 melhorias')
         chk('Maria' in pg.evaluate("document.querySelector('.loja-vend').textContent"), 'vendedor aparece')
         pg.screenshot(path='/tmp/m3.png')
         pg.click('.hs-loja .loja-x'); pg.wait_for_timeout(300)

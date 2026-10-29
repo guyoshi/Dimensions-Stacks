@@ -9,13 +9,13 @@
   const isCh = n => CH.includes(n);
   const FRAG_TOTAL = 48, PEND_CADEIA = 15, FINAL = { pend: 50, carta: 'V26' };   // 48 fontes de fragmentos; o último NPC da cadeia dá a carta Átila (V26) no lugar do fragmento
   // melhorias gerais: 1 por loja, compradas com fragmentos. Preenchidas quando o autor definir (nome, texto, preço em fragmentos); sem entrada, a loja não mostra nada.
-  // 2 por loja (slot 2 ainda vazio: o autor escolhe 5 entre 10 sugestões). Preços em fragmentos PROVISÓRIOS até o autor fechar as 10 melhorias.
+  // 2 por loja (10 melhorias aprovadas em 29/10/2026). Preços em fragmentos: 62 no total para 48 fontes (não dá para comprar tudo).
   const MELH = {
-    L1: [{ id: 'preco', nome: 'Preços menores', txt: 'Lojas cobram 15% menos.', preco: 6 }, null],
-    L2: [{ id: 'mapa', nome: 'Mapa revelado', txt: 'Todos os caminhos ficam visíveis.', preco: 4 }, null],
-    L3: [{ id: 'atr', nome: 'Iniciativa', txt: 'Você sempre escolhe o atributo primeiro.', preco: 8 }, null],
-    L4: [{ id: 'sorte', nome: 'Sorte de combate', txt: 'Chance de a carta ganhar atributos na disputa.', preco: 10 }, null],
-    L5: [{ id: 'maos', nome: 'Mão ampliada', txt: 'Comece as batalhas com 2 cartas a mais.', preco: 12 }, null],
+    L1: [{ id: 'preco', nome: 'Preços menores', txt: 'Lojas cobram 15% menos.', preco: 6 }, { id: 'bolsa', nome: 'Bolsa cheia', txt: 'Batalhas vencidas pagam 20% mais pêndulos.', preco: 4 }],
+    L2: [{ id: 'mapa', nome: 'Mapa revelado', txt: 'Todos os caminhos ficam visíveis.', preco: 4 }, { id: 'olho', nome: 'Olho vivo', txt: 'Veja as cartas de qualquer inimigo antes de entrar na batalha.', preco: 3 }],
+    L3: [{ id: 'atr', nome: 'Iniciativa', txt: 'Você sempre escolhe o atributo primeiro.', preco: 8 }, { id: 'descanso', nome: 'Descanso veloz', txt: 'Cartas paradas descansam 2 pontos por vitória, em vez de 1.', preco: 4 }],
+    L4: [{ id: 'sorte', nome: 'Sorte de combate', txt: 'Chance de a carta ganhar atributos na disputa.', preco: 10 }, { id: 'segunda', nome: 'Segunda tentativa', txt: 'Uma vez por minigame, desbloqueie de graça depois de falhar.', preco: 3 }],
+    L5: [{ id: 'maos', nome: 'Mão ampliada', txt: 'Comece as batalhas com 2 cartas a mais.', preco: 12 }, { id: 'aluguel', nome: 'Aluguel de cartas', txt: 'Um mercador surge no mapa e aluga cartas por pêndulos. Valem uma batalha só.', preco: 8 }],
   };
   const MELH_ID = {}; Object.values(MELH).forEach(l => l.forEach(m => { if (m) MELH_ID[m.id] = m; }));
   // valores calibrados por simulação (ver docs): desconto de loja e sorte de combate
@@ -247,7 +247,7 @@
   }
   function compraExtra(k) {
     const s = ini();
-    if (k[0] === 'M') { const id = k.slice(2), m = MELH_ID[id]; if (!m || s.melh[id] || nFrag() < m.preco) return false; s.melh[id] = 1; s.frGasto += m.preco; }
+    if (k[0] === 'M') { const id = k.slice(2), m = MELH_ID[id]; if (!m || s.melh[id] || nFrag() < m.preco) return false; s.melh[id] = 1; s.frGasto += m.preco; if (A.aoMelhoria) setTimeout(() => A.aoMelhoria(id), 50); }
     else s.reg[k.slice(2)] = 1;
     A.save(); return true;
   }

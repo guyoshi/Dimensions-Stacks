@@ -66,7 +66,7 @@
     const ov = shell(m), body = $('.mg-body', ov); let ended = false, stop = () => { }, res; const t0 = Date.now();
     const out = await new Promise(resolve => {
       const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = tierOf(id, pct), reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
-        body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + ' + U.CARDS[res.carta].nome : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
+        body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + 1 carta' : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
         try { SND.play(tier ? (tier === 3 ? 'bauOpen' : 'bauCoin') : 'lose'); } catch (e) { }
         const L = log(); L.push({ id, pct: res.pct, tier, reward, ms: res.ms, t: Date.now(), teste: !!opts.teste }); wr(LOG_KEY, L.slice(-500));
         $('.mg-ok', ov).onclick = () => { try { SND.play('click'); } catch (e) { } resolve(res); };

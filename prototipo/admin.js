@@ -99,8 +99,9 @@
     const chip = r => `<span class="chip2" title="${esc(r.nome)}"><i style="background:${SERIES[r.serie] ? SERIES[r.serie].cor : '#888'}"></i>${esc(r.nome)} <b>${Math.round(r.wr * 100)}%</b></span>`;
     return `<div class="adm-in">
       <header class="adm-h"><h2>Painel do administrador</h2><button class="ibtn" data-a="close" aria-label="Fechar">✕</button></header>
+      <nav class="adm-tabs">${[['dados', 'Dados'], ['sim', 'Simulador'], ['ferr', 'Ferramentas'], ['ia', 'Análise IA']].map(([k, t]) => `<button class="${(S.aba || 'dados') === k ? 'on' : ''}" data-a="aba" data-k="${k}">${t}</button>`).join('')}</nav>
       ${S.err ? `<p class="hint warn">${esc(S.err)}</p>` : ''}
-      <section class="adm-box"><div class="adm-f">
+      <section class="adm-box" data-t="dados"><div class="adm-f">
         <label>Origem <select data-f="src"><option value="todas"${S.src === 'todas' ? ' selected' : ''}>Real + simulada</option><option value="real"${S.src === 'real' ? ' selected' : ''}>Partidas reais</option><option value="sim"${S.src === 'sim' ? ' selected' : ''}>Simuladas</option></select></label>
         <label>Modo <select data-f="mode"><option value="todos">Todos</option>${Object.keys(MODE).map(k => `<option value="${k}"${S.mode === k ? ' selected' : ''}>${MODE[k]}</option>`).join('')}</select></label>
         <label>Regras <select data-f="rules">${[['todas', 'Todas'], ['ind', 'Todos contra todos'], ['duo', 'Duplas'], ['sev', 'Sem fenômenos'], ['ssp', 'Sem especiais']].map(([k, t]) => `<option value="${k}"${S.rules === k ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
@@ -108,7 +109,7 @@
         <button class="btn sm" data-a="reload">Atualizar</button><button class="btn sm" data-a="invite">Como convidar alguém</button></div>
         <div class="hint">${S.real.filter(m => !m.sim).length} partidas reais no registro · ${S.sims.length} simuladas nesta sessão · ${L.length} na análise</div></section>
 
-      <section class="adm-box"><h3>Simulador (CPU × CPU)</h3><div class="adm-f">
+      <section class="adm-box" data-t="sim"><h3>Simulador (CPU × CPU)</h3><div class="adm-f">
         <label>Partidas <select id="sN">${[20, 50, 100, 200, 500].map(v => `<option${v === 100 ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
         <label>Jogadores <select id="sP"><option>2</option><option>3</option><option selected>4</option></select></label>
         <label>Modo <select id="sM"><option value="0">Todos contra todos</option><option value="1">Duplas (4 jogadores)</option></select></label>
@@ -118,23 +119,24 @@
         <label>Fenômenos <select id="sE"><option value="1">Ligados</option><option value="0">Desligados</option></select></label></div>
         <div class="adm-f"><button class="btn primary sm" data-a="sim">${S.busy ? 'Parar' : 'Rodar simulação'}</button><button class="btn ghost sm" data-a="clrsim">Limpar simuladas</button><button class="btn ghost sm" data-a="savesim">Salvar simuladas no registro</button><span class="hint" id="sProg"></span></div></section>
 
-      <section class="adm-box"><h3>Visão geral</h3><div class="adm-k">
+      <section class="adm-box" data-t="dados"><h3>Visão geral</h3><div class="adm-k">
         <div><b>${A.n}</b><small>partidas</small></div><div><b>${A.n ? fmtS(avg(A.dur, A.n)) : '—'}</b><small>duração média</small></div><div><b>${avg(A.rounds, A.n).toFixed(1)}</b><small>rodadas</small></div><div><b>${avg(A.combats, A.n).toFixed(1)}</b><small>disputas</small></div><div><b>${avg(A.spec, A.n).toFixed(1)}</b><small>especiais/partida</small></div><div><b>${A.n ? Math.round(A.limit / A.n * 100) : 0}%</b><small>fim por limite</small></div><div><b>${fw == null ? '—' : fw + '%'}</b><small>quem começa vence</small></div><div><b>${A.combats ? Math.round(A.ties / A.combats * 100) : 0}%</b><small>disputas empatadas</small></div></div>
         <div class="tblw"><table class="adm-t"><thead><tr><th>Modo</th><th>Partidas</th><th>Duração</th><th>Rodadas</th><th>Disputas</th><th>Especiais</th><th>Limite</th></tr></thead><tbody>${modes || '<tr><td colspan="7">Sem dados</td></tr>'}</tbody></table></div>
         <div class="adm-att">${Object.keys(ATN).map(a => `<div><span>${ATN[a]}</span><div class="bar"><i style="width:${Math.round(A.att[a] / tot * 100)}%"></i></div><em>${Math.round(A.att[a] / tot * 100)}%</em></div>`).join('')}</div>
         <div class="hint">Atributo vencedor nas disputas. Duração de partidas simuladas é estimada (≈15 s por disputa). Base de vitória por carta: ${Math.round(A.base * 100)}% (cada disputa tem vários participantes).</div></section>
 
-      <section class="adm-box"><h3>Cartas</h3>
+      <section class="adm-box" data-t="dados"><h3>Cartas</h3>
         ${hot.length ? `<div class="hint">Acima do esperado (z > 2):</div><div class="chips2">${hot.map(chip).join('')}</div>` : ''}
         ${cold.length ? `<div class="hint">Abaixo do esperado (z < −2):</div><div class="chips2">${cold.map(chip).join('')}</div>` : ''}
         ${!hot.length && !cold.length ? '<div class="hint">Nenhuma carta fora do esperado ainda — rode mais partidas.</div>' : ''}
         <div class="tblw tall"><table class="adm-t" id="cardT"><thead><tr>${th('nome', 'Carta')}${th('p', 'Em jogo')}${th('k', 'Disputas')}${th('wr', 'Vitória')}${th('z', 'z')}${th('sr', 'Especial')}</tr></thead><tbody>${rows.map(r => `<tr class="${r.z > 2 ? 'hot' : r.z < -2 ? 'cold' : ''}"><td><i class="sdot" style="background:${SERIES[r.serie] ? SERIES[r.serie].cor : '#888'}"></i>${esc(r.nome)}</td><td>${r.p}</td><td>${r.k}</td><td>${Math.round(r.wr * 100)}%</td><td>${r.z.toFixed(1)}</td><td>${r.s ? Math.round(r.sr * 100) + '%' : '—'}</td></tr>`).join('') || '<tr><td colspan="6">Sem dados</td></tr>'}</tbody></table></div></section>
 
-      <section class="adm-box"><h3>Sons do jogo</h3>
+      <section class="adm-box" data-t="ferr"><h3>Sons do jogo</h3>
         <div class="adm-f"><button class="btn primary sm" data-a="sndopen">Abrir tela de sons</button></div>
-        <h3 style="margin-top:14px">Minigames do modo história</h3><div class="adm-f"><button class="btn primary sm" data-a="miniopen">Testar e calibrar minigames</button></div>
         <p class="hint">Ouvir as 5 versões de cada efeito e gravar a escolha. A música para enquanto a tela de sons estiver aberta.</p></section>
-      <section class="adm-box"><h3>Análise com IA</h3><div class="adm-f"><button class="btn primary sm" data-a="ai"${A.n ? '' : ' disabled'}>Analisar balanceamento</button><button class="btn ghost sm" data-a="dl"${A.n ? '' : ' disabled'}>Baixar dados (JSON)</button></div><div class="aiout" id="aiOut"></div></section>
+      <section class="adm-box" data-t="ferr"><h3>Minigames do modo história</h3><div class="adm-f"><button class="btn primary sm" data-a="miniopen">Testar e calibrar minigames</button></div>
+        <p class="hint">Teste cada minigame, ajuste dificuldade, cortes e prêmios e veja os resultados registrados.</p></section>
+      <section class="adm-box" data-t="ia"><h3>Análise com IA</h3><div class="adm-f"><button class="btn primary sm" data-a="ai"${A.n ? '' : ' disabled'}>Analisar balanceamento</button><button class="btn ghost sm" data-a="dl"${A.n ? '' : ' disabled'}>Baixar dados (JSON)</button></div><div class="aiout" id="aiOut"></div></section>
     </div>`;
   }
 
@@ -197,6 +199,7 @@
       const b = e.target.closest('[data-a],th[data-s]'); if (!b) return;
       if (b.dataset.s) { if (S.sort === b.dataset.s) S.dir *= -1; else { S.sort = b.dataset.s; S.dir = b.dataset.s === 'nome' ? 1 : -1; } return paint(); }
       const a = b.dataset.a;
+      if (a === 'aba') { S.aba = b.dataset.k; $$('.adm-tabs button', root).forEach(x => x.classList.toggle('on', x.dataset.k === S.aba)); $$('[data-t]', root).forEach(x => { x.hidden = x.dataset.t !== S.aba; }); return; }
       if (a === 'miniopen') openMini();
       else if (a === 'miniclose') closeMini();
       else if (a === 'miniplay') { const id = b.dataset.id; await window.DSMini.play(id, { teste: true }); paintMini(); }
@@ -267,6 +270,7 @@
     const ai = $('#aiOut', root), aiT = ai ? ai.textContent : '';
     root.innerHTML = html(); Object.keys(keep).forEach(k => { const x = $(k, root); if (x) x.value = keep[k]; });
     if (aiT) $('#aiOut', root).textContent = aiT; if (S.busy) { const sb = $('[data-a=sim]', root); if (sb) sb.textContent = 'Parar'; }
+    $$('[data-t]', root).forEach(x => { x.hidden = x.dataset.t !== (S.aba || 'dados'); });
     root.scrollTop = sc; const t2 = $('.tblw.tall', root); if (t2) t2.scrollTop = tsc;
   }
   async function open() {

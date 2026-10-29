@@ -199,7 +199,7 @@
         <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
-      <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button><button class="ibtn" data-a="missoes" aria-label="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção">✦</button></div>
+      <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button><button class="ibtn" data-a="missoes" aria-label="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção">✦</button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
     paintAll(); bindMap(mp); heroPlace(posId(), false);
@@ -217,7 +217,7 @@
     $$('.n', root).forEach(g => paintNode(g));
     svg.classList.toggle('aberto', !!P.aberto); paintLuz(); paintSetas();
     const mk = $('#hsMarks', root); if (mk) mk.innerHTML = '';
-    const pb = $('#hsBro', root); if (pb) pb.textContent = nBroches(); const pe = $('#hsPend', root), pc = $('#hsCards', root); if (NPC) { const fg = $('#hsFrag', root), fp = $('#hsFrgP', root), nf = NPC.nFrag(); if (fg) fg.textContent = nf; if (fp) fp.hidden = !nf; } if (pe) pe.textContent = S.pend; if (pc) pc.textContent = S.owned.length;
+    const pb = $('#hsBro', root); if (pb) pb.textContent = nBroches(); const pe = $('#hsPend', root), pc = $('#hsCards', root); if (NPC) { const fg = $('#hsFrag', root), fp = $('#hsFrgP', root), nf = NPC.nFrag(); if (fg) fg.textContent = nf; if (fp) fp.hidden = !nf; } const ba = $('#hsAlug', root); if (ba) ba.hidden = !S.alug; if (pe) pe.textContent = S.pend; if (pc) pc.textContent = S.owned.length;
   }
   // ---- o que aparece: só o que foi vencido ilumina. Caminhos e bifurcações surgem ao vencer uma fase; os vizinhos aparecem (abertos ou trancados) mesmo com o boneco longe. O núcleo está sempre visível.
   const NUCLEO = new Set(NOS.filter(n => n.tier === 4).map(n => n.id));
@@ -274,7 +274,7 @@
       else if (a === 'start') { const st = BY[posId()]; centerOn(st.x, st.y, .8, true); }
       else if (a === 'fit') fit(true);
       else if (a === 'leg') legenda();
-      else if (a === 'cartas') minhasCartas();
+      else if (a === 'cartas') minhasCartas(); else if (a === 'aluguel') aluguel();
       else if (a === 'missoes' && NPC) NPC.missoes();
       else if (a === 'colecao' && NPC) NPC.colecao();
       else if (a === 'broches') toast(nBroches() ? 'Os broches brilham quando estão juntos. Para que será que servem?' : 'Algo guarda os broches de cada série. Para que será que servem?');
@@ -349,13 +349,15 @@
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
-    const cartas = n.tipo === 'loja' || n.tipo === 'minigame' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
+    const gdn = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null, inimL = NPC && NPC.tem('olho') && bat0 && !['loja', 'minigame', 'boss'].includes(n.tipo) ? (gdn ? [{ n: gdn.nome, c: gdn.av }] : bat0.i) : null;   // melhoria "Olho vivo"
+    const cartas = n.tipo === 'loja' || n.tipo === 'minigame' ? '' : inimL ? '<div class="hs-olho"></div>' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : n.tipo === 'minigame' ? 'Minigame' + (n.serieMg ? ' · dá 1 broche' : '') : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[setor(n)])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : lockMg ? 'Bloqueado: você falhou' : av ? 'Disponível' : 'Caminho fechado'}</p>
       <p>${esc(n.tipo === 'minigame' ? mgInfo(n).desc : T.desc)}</p>${evLinha}${n.tipo === 'minigame' ? `<p class="hs-rec">${coinSvg(15)}<b>${mgPremios(n).join(' / ')}</b> pêndulos (Bom / Ótimo / Perfeito)</p>` : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b> pêndulos${ok ? '' : ' na primeira vitória'}${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
-      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">Desbloquear por ${Math.min(MG_CUSTO, S.pend | 0)} pêndulos</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+    if (inimL) { const ol = $('.hs-olho', sheet); if (ol) inimL.forEach(x => { const r = el('<div class="hs-orow"><small></small><div></div></div>'); $('small', r).textContent = x.n + (gdn ? ' · cartas principais' : ''); x.c.forEach(c => { if (U.CARDS[c]) $('div', r).append(U.cardEl(c, { up: true, noanim: true, cw: 44 })); }); ol.append(r); }); }
     sheet.hidden = false; ensureVisible(n);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
   }
@@ -366,7 +368,8 @@
   }
   const mgPremios = n => { const c = window.DSMini ? window.DSMini.cfg(n.mg).premios : [0, 5, 10, 20]; return [c[1], c[2], c[3]]; };
   function desbloquearMini(id) {
-    if (!S.mgLock || !S.mgLock[id]) return; const c = Math.min(MG_CUSTO, S.pend | 0);   // sem pêndulos suficientes paga o que tiver, para nunca travar o jogador
+    if (!S.mgLock || !S.mgLock[id]) return; S.mgGratis = S.mgGratis || {}; const g1 = NPC && NPC.tem('segunda') && !S.mgGratis[BY[id].mg]; if (g1) S.mgGratis[BY[id].mg] = 1;   // melhoria "Segunda tentativa": 1 desbloqueio grátis por minigame
+    const c = g1 ? 0 : Math.min(MG_CUSTO, S.pend | 0);   // sem pêndulos suficientes paga o que tiver, para nunca travar o jogador
     S.pend -= c; delete S.mgLock[id]; save(); SND.play('capture'); paintAll(); openNode(id);
   }
   async function jogarMini(id) {
@@ -378,7 +381,9 @@
       if (primeira && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
       if (NPC) NPC.fragMini(n.mg, res.tier);
     } else if (primeira) S.mgLock[id] = 1;
+    let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
     save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
+    if (cartaMg) { await new Promise(r => revelarCarta([cartaMg], r)); try { SND.histPlay('mapa'); } catch (e) { } }
     if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado. Pague ' + MG_CUSTO + ' pêndulos para tentar de novo.'); openNode(id); } else openNode(id);
   }
   function toggleWin(id) {
@@ -397,7 +402,8 @@
   const NIVEIS = ['facil', 'normal', 'dificil'];
   const nivelBot = n => n.tipo === 'guardiao' ? 2 : Math.min(2, [0, 1, 1, 2][Math.max(0, (n.tier || 1) - 1)] + (['elite', 'miniboss', 'guardiao'].includes(n.tipo) && n.tier < 3 ? 1 : 0));   // PROPOSTA: dificuldade dos bots por região e tipo (a calibrar)
   const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
-  const premioDe = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
+  const premioBase = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
+  const premioDe = n => Math.round(premioBase(n) * (NPC && NPC.tem('bolsa') ? 1.2 : 1));   // melhoria "Bolsa cheia": +20%
   // ---- cansaço das cartas (PROPOSTA, a calibrar): só vale com 21 ou mais cartas. Carta usada numa vitória cansa conforme a raridade; as não usadas descansam 1 ponto por vitória; derrota não cansa. Carta cansada não entra no duelo; pêndulos descansam.
   const CANSA = { comum: 1, rara: 2, epica: 3, lendaria: 4 }, CUSTO_DESC = 4;
   const fadigaOn = () => (S.owned || []).length >= 14 || UNIAO.some(c => (S.owned || []).includes(c));   // REGRA (autor, 29/10): cansaço a partir de 14 cartas ou da primeira carta da União
@@ -405,13 +411,13 @@
   const pesoCansa = id => CANSA[(U.CARDS[id] || {}).raridade] || 1;
   function aplicaCansaco(usadas) {   // chamado depois de uma vitória
     if (!fadigaOn()) return 0; S.fadiga = S.fadiga || {}; const us = new Set(usadas); let n = 0;
-    Object.keys(S.fadiga).forEach(id => { if (!us.has(id)) { S.fadiga[id] = Math.max(0, S.fadiga[id] - 1); if (!S.fadiga[id]) delete S.fadiga[id]; } });
+    Object.keys(S.fadiga).forEach(id => { if (!us.has(id)) { S.fadiga[id] = Math.max(0, S.fadiga[id] - (NPC && NPC.tem('descanso') ? 2 : 1)); if (!S.fadiga[id]) delete S.fadiga[id]; } });
     usadas.forEach(id => { S.fadiga[id] = (S.fadiga[id] | 0) + pesoCansa(id); n++; }); return n;
   }
   const pontosFad = id => '<span class="hs-fad">' + '●'.repeat(Math.min(6, fad(id))) + '</span>';
   function escolher7(bat, ok, opt) {   // o jogador escolhe as cartas do duelo (7, ou menos em alguns eventos)
     opt = opt || {}; if (opt.so && !(S.owned || []).some(c => (U.CARDS[c] || {}).raridade === opt.so)) opt = { n: opt.n }; const N = opt.n || 7;   // sem carta da raridade pedida: vale a melhor
-    const todas = (S.owned || []).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
+    const todas = (S.owned || []).concat(alugadas().filter(c => !(S.owned || []).includes(c))).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
     if (todas.length <= N && !fadigaOn()) { ok(todas.slice(0, N)); return; }
     const livres = () => todas.filter(id => !fadigaOn() || !fad(id));
     const box = el(`<div class="hs-esc"><h3>Escolha ${opt.livre ? 'até ' : ''}${N} ${N === 1 ? 'carta' : 'cartas'}${opt.so ? ' lendária' : ''}</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
@@ -419,7 +425,7 @@
     const sel = new Set(); let forcadas = new Set();
     const auto = () => { sel.clear(); forcadas = new Set(); (opt.prefer || []).filter(x => todas.includes(x) && (!fadigaOn() || !fad(x))).forEach(x => sel.add(x)); const L = livres(); L.slice(0, N).forEach(x => { if (sel.size < N) sel.add(x); });
       if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
-    const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); g.append(w); }); };
+    const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
     const upd = () => { cnt.textContent = sel.size + ' / ' + N; go.disabled = opt.livre ? !sel.size : sel.size !== N; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
       msg.textContent = forcadas.size ? 'Faltam cartas descansadas: ' + forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa carta cansada para descansá-la (' + CUSTO_DESC + ' pêndulos por ponto).' : ''; };
     auto(); montar();
@@ -456,7 +462,7 @@
       return fortes.filter(noTema).concat(fortes.filter(c => !noTema(c))).slice(0, 7).map(c => c.id);
     };
     (auto ? (b, f) => f(ev && ev.id === 'emprestado' ? emprestadas() : autoMao()) : ev && ev.id === 'emprestado' ? (b, f) => f(emprestadas()) : (b, f) => escolher7(b, f, opt))(bat, mao0 => {
-      let mao = mao0.slice(); const usadas = new Set(mao), inims = bat.i.map(x => x.c.slice()), conf = new Set(mao);
+      const alug0 = consumirAlugadas(mao0); let mao = mao0.slice(); const usadas = new Set(mao), inims = bat.i.map(x => x.c.slice()), conf = new Set(mao);
       inims.forEach(l => l.forEach(c => conf.add(c)));
       const mudou = new Set(mao);   // cartas do inimigo que o jogador já tem em mãos são trocadas por outras da mesma raridade
       inims.forEach(l => l.forEach((c, k) => { if (mudou.has(c) || usadas.has(c)) {
@@ -484,7 +490,7 @@
         voltarMapa = true; U.show('uniao');
         S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save();
         if (res.venceu && !cleared(id)) {
-          S.pend = (S.pend | 0) + premioDe(n); S.ganho = (S.ganho | 0) + premioDe(n); S.capt = (S.capt | 0) + res.capturadas.length; const cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
+          S.pend = (S.pend | 0) + premioDe(n); S.ganho = (S.ganho | 0) + premioDe(n); S.capt = (S.capt | 0) + res.capturadas.length; const cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0.filter(c => !alug0.has(c))); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
           if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Ei, {nome}! Você nos levou à batalha e venceu, mas estamos exaustas.', 'Cartas usadas numa vitória ficam cansadas, e as mais raras cansam mais. As bolinhas laranja mostram quanto falta para descansar.', 'Cada vitória sem nós descansa 1 ponto. Se tiver pressa, os pêndulos descansam na hora: é só tocar numa carta cansada na hora de escolher.', 'Se faltarem cartas descansadas, as menos cansadas completam seu time. Derrota não cansa ninguém.']); });
           else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
           setTimeout(() => { toggleWin(id); if (NPC) NPC.vitoria(id); const bp = premioBau(id); if (bp) setTimeout(() => abrirBau(bp, () => { if (NPC) NPC.fragBau(id); }), res.capturadas.length ? 2600 : 700); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
@@ -501,7 +507,7 @@
     const n = BY[id], opt = { n: 30, livre: true, prefer: UNIAO.filter(c => (S.owned || []).includes(c)) };
     const autoMao = () => { const o = S.owned || []; return UNIAO.filter(c => o.includes(c)).concat(o.filter(c => !UNIAO.includes(c)).sort((a, b) => FORCA(b) - FORCA(a))).slice(0, 30); };
     (auto ? (b, f) => f(autoMao()) : (b, f) => escolher7(b, f, opt))(null, mao0 => {
-      try { SND.histStop(true); } catch (e) { }
+      consumirAlugadas(mao0); try { SND.histStop(true); } catch (e) { }
       const vivos = guardVivos(), pids = [1];
       const lanca = F => {
         const mao = mao0.slice(), usadas = new Set(mao), pool = embaralha(U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && !usadas.has(c.id)).sort((a, b) => FORCA(b.id) - FORCA(a.id)).slice(0, 40)).slice(0, BOSS_N[F - 1] - 1);
@@ -608,6 +614,53 @@
       <ellipse cx="0" cy="42" rx="48" ry="7" fill="#0008"/>
       <g class="bau-base"><rect x="-40" y="-6" width="80" height="46" rx="6" fill="url(#bWood)" stroke="#2a1608" stroke-width="2"/><rect x="-40" y="10" width="80" height="6" fill="url(#bGold)"/><rect x="-6" y="6" width="12" height="16" rx="2" fill="url(#bGold)" stroke="#6b430c"/></g>
       <g class="bau-lid"><path d="M-40 -6 V-22 Q-40 -42 0 -42 Q40 -42 40 -22 V-6 Z" fill="url(#bWood)" stroke="#2a1608" stroke-width="2"/><path d="M-40 -16 H40" stroke="url(#bGold)" stroke-width="5"/></g></svg>`;
+  }
+  // ---- animação de carta desbloqueada: o verso treme, vira e revela a carta com brilho da raridade
+  function revelarCarta(ids, done) {
+    ids = (ids || []).filter(id => U.CARDS[id]); if (!ids.length) { done && done(); return; }
+    const red = document.body.classList.contains('reduce'), RAR = { comum: 'Comum', rara: 'Rara', epica: 'Épica', lendaria: 'Lendária' }; let i = 0;
+    const passo = () => {
+      if (i >= ids.length) { done && done(); return; }
+      const id = ids[i++], c = U.CARDS[id], r = c.raridade;
+      const ov = el(`<div class="rv-ov r-${r}"><div class="rv-rays"></div><div class="rv-glow"></div><div class="rv-card"><div class="rv-face"></div><div class="rv-back"><i></i></div></div><div class="rv-info"><small>${RAR[r] || ''}</small><b>${esc(c.nome)}</b><span>Carta desbloqueada</span></div><button class="btn primary rv-ok" hidden>Continuar</button></div>`);
+      $('.rv-face', ov).append(U.cardEl(id, { up: true, noanim: true, cw: 190 })); document.body.appendChild(ov); SND.play('bauShake');
+      const T = (f, ms) => setTimeout(f, red ? 40 : ms);
+      T(() => { ov.classList.add('flip'); SND.play(r === 'lendaria' ? 'legend' : 'bauCard'); }, 1000);
+      T(() => { ov.classList.add('done'); $('.rv-ok', ov).hidden = false; }, 1900);
+      $('.rv-ok', ov).onclick = () => { SND.play('click'); ov.classList.add('out'); setTimeout(() => { ov.remove(); passo(); }, 280); };
+    };
+    passo();
+  }
+  // ---- aluguel de cartas (melhoria "Aluguel de cartas"): um mercador aparece no mapa; carta alugada vale uma batalha, não é lendária nem repetida
+  const PRECO_ALUG = { comum: 8, rara: 18, epica: 40 };
+  const alugadas = () => (S.alugadas = S.alugadas || []);
+  function consumirAlugadas(mao) { const us = new Set(); const a = alugadas(); mao.forEach(c => { const k = a.indexOf(c); if (k >= 0) { a.splice(k, 1); us.add(c); } }); if (us.size) save(); return us; }
+  function apresentarAluguel() {
+    if (S.alug) return; const pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && x.raridade !== 'lendaria'), c = pool[Math.floor(Math.random() * pool.length)];
+    S.alug = { nome: c.nome, card: c.id, estoque: null, marca: -1 }; save(); paintAll();
+    npcFala({ nome: c.nome, card: c.id }, ['Psiu, {nome}! Sou ' + c.nome + ', e acabo de chegar a este mapa.', 'Tenho cartas de sobra e alugo por pêndulos. Cada uma vale uma batalha só e leva o selo ALUGADA.', 'Não alugo lendárias, nem cartas que você já tem. Me procure no botão ⇄ ao lado do mapa.']);
+  }
+  function estoqueAlug() {
+    const a = S.alug, marca = Object.keys(S.cleared || {}).length, em = new Set((S.owned || []).concat(alugadas()));
+    if (!a.estoque || a.marca !== marca) { const pool = embaralha(U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && x.raridade !== 'lendaria' && !em.has(x.id)));
+      const por = r => pool.filter(x => x.raridade === r); a.estoque = por('comum').slice(0, 4).concat(por('rara').slice(0, 3), por('epica').slice(0, 1)).map(x => x.id); a.marca = marca; save(); }
+    return a.estoque.filter(id => !em.has(id));
+  }
+  function aluguel() {
+    if (!S.alug) return; closeSheet(); let msg = '';
+    const box = el(`<div class="hs-esc hs-alug"><div class="al-h"><div class="al-p"></div><div><small>MERCADOR</small><h3></h3></div></div><p class="hint"><span class="al-m"></span> Pêndulos: <b class="al-b"></b></p><div class="hs-escg"></div><div class="row"><button class="btn primary" data-a="x">Fechar</button></div></div>`);
+    $('h3', box).textContent = S.alug.nome; $('.al-p', box).append(U.cardEl(S.alug.card, { up: true, noanim: true, cw: 46 }));
+    const g = $('.hs-escg', box);
+    const render = () => { g.innerHTML = ''; $('.al-b', box).textContent = S.pend | 0; $('.al-m', box).textContent = msg || 'Aluguel vale para uma batalha.';
+      alugadas().forEach(id => { const w = el('<div class="hs-escc al-own"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); });
+      const est = estoqueAlug(); est.forEach(id => { const p = PRECO_ALUG[U.CARDS[id].raridade] || 20, w = el('<div class="hs-escc al-buy" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); w.append(el('<div class="al-pr">' + coinSvg(12) + '<b>' + p + '</b></div>')); if (p > (S.pend | 0)) w.classList.add('no'); g.append(w); });
+      if (!est.length && !alugadas().length) g.append(el('<p class="loja-vz">Sem cartas para alugar agora. Volte depois de vencer mais um ponto.</p>')); };
+    const m = U.modal(box, { cls: 'hs-modal' });
+    box.onclick = e => { const b = e.target.closest('[data-a]'), c = e.target.closest('.al-buy');
+      if (b && b.dataset.a === 'x') { SND.play('click'); m.close(); paintAll(); return; }
+      if (c) { const id = c.dataset.id, p = PRECO_ALUG[U.CARDS[id].raridade] || 20; if ((S.pend | 0) < p) { SND.play('tick'); msg = 'Faltam pêndulos: este aluguel custa ' + p + '.'; render(); return; }
+        S.pend -= p; S.gasto = (S.gasto | 0) + p; alugadas().push(id); S.alug.estoque = S.alug.estoque.filter(x => x !== id); save(); SND.play('capture'); msg = U.CARDS[id].nome + ' alugada (−' + p + ').'; paintAll(); render(); } };
+    render();
   }
   function abrirBau(premio, done) {
     closeSheet(); const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, cartas = premio.cartas || [];
@@ -754,6 +807,6 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } });
   }
 
-  if (NPC) NPC.init({ S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
+  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
   window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S, openNode };
 })();
