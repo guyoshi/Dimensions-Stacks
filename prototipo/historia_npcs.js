@@ -136,6 +136,10 @@
     return { x: .25 * a.x + .5 * cx + .25 * b.x, y: .25 * a.y + .5 * cy + .25 * b.y };
   }
   const ini1 = n => n.nome.replace(/^(Sra\.|Dra\.|Capitão|Capitã|Professor|Tio|Agente)\s+/, '')[0].toUpperCase();
+  // O marcador fica sobre uma ligação, mas o NPC mora no segundo ponto dela.
+  // Assim, uma missão não pode ser iniciada pelo lado anterior do caminho.
+  const destino = n => n.no || n.b;
+  const acessivel = n => !!A.available(destino(n));
   function paint(vis, ocultar) {   // vis = pontos revelados (onde estou, vencidos, lojas): o NPC só aparece quando a ligação dele está visível
     if (!A || !S()) return; const g = A.$('#hsNpcs', A.root()); if (!g) return;
     if (!g.firstChild) {
@@ -145,25 +149,29 @@
     let aviso = false;
     ALL.forEach(n => {
       const e = A.$('.npcm[data-id="' + n.id + '"]', g); if (!e) return;
-      const st = estado(n), pr = pronta(n), nova = !st && A.available(n.a) || !st && A.available(n.b);
+      const st = estado(n), pr = pronta(n), podeFalar = acessivel(n);
       e.classList.toggle('fog', !!ocultar && vis && !(vis.has(n.a) || vis.has(n.b)));
-      e.classList.toggle('done', st === 'entregue'); e.classList.toggle('bang', pr || (!st && !!nova));
-      if (pr) aviso = true;
+      e.classList.toggle('done', st === 'entregue');
+      // A exclamação representa algo para entregar, nunca uma conversa ainda bloqueada.
+      e.classList.toggle('bang', podeFalar && pr);
+      if (podeFalar && pr) aviso = true;
     });
     const b = A.$('.hs-hud [data-a="missoes"] .dot', A.root()); if (b) b.hidden = !aviso;
   }
   function toque(id) {
-    const n = BYID[id]; if (!n || A.andando()) return; const p = A.posId();
-    if (p === n.a || p === n.b) return falar(id);
-    const pa = A.caminho(n.a), pb = A.caminho(n.b), pick = pa && pb ? (pa.length <= pb.length ? n.a : n.b) : pa ? n.a : pb ? n.b : null;
-    if (!pick) return A.toast('Ainda não dá para chegar lá.');
+    const n = BYID[id]; if (!n || A.andando()) return;
+    const pick = destino(n);
+    if (!acessivel(n) || !A.caminho(pick)) return A.toast('Vença a batalha do caminho para falar com ' + n.nome.split(' ')[0] + '.');
+    // Tocar no NPC só leva o jogador até ele. A conversa sempre é uma ação separada.
+    if (A.posId() === pick) return A.openNode(pick);
     A.andar(pick);
   }
 
   // ---- bloco no painel do ponto (quem está nesse cruzamento, com barra de progresso)
   function sheetHtml(nodeId, aqui) {
     const s = ini(); if (!s) return '';
-    const L = ALL.filter(n => n.a === nodeId || n.b === nodeId); if (!L.length) return '';
+    // Um NPC só entra no painel do seu próprio ponto, já desbloqueado.
+    const L = ALL.filter(n => destino(n) === nodeId && acessivel(n)); if (!L.length) return '';
     return L.map(n => {
       const st = estado(n), pr = prog(n), pron = pronta(n);
       let linha;
@@ -172,7 +180,8 @@
       else if (isCh(n)) linha = pron ? 'Cumprida: fale com ' + n.nome.split(' ')[0] + '.' : (s.mis[n.id].first ? 'Vença 3 batalhas.' : 'Procura: ' + n.pede + '.');
       else linha = n.d + (pron ? '. Cumprida: fale com ' + n.nome.split(' ')[0] + '.' : '');
       const barra = st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : '';
-      return `<div class="npc-row${st === 'entregue' ? ' done' : ''}"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div class="npc-tx"><b>${A.esc(n.nome)}</b><span>${A.esc(linha)}</span>${barra}</div>${aqui ? `<button class="btn sm primary" data-a="npc:${n.id}">Falar</button>` : ''}</div>`;
+      const alerta = pron ? '<i class="npc-notice" aria-label="Missão pronta">!</i>' : '';
+      return `<div class="npc-row${st === 'entregue' ? ' done' : ''}"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div class="npc-tx"><b>${A.esc(n.nome)}</b><span>${A.esc(linha)}</span>${barra}</div>${aqui ? `<button class="btn sm primary npc-talk${pron ? ' has-notice' : ''}" data-a="npc:${n.id}">Falar${alerta}</button>` : ''}</div>`;
     }).join('');
   }
 
