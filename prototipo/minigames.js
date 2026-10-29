@@ -36,7 +36,7 @@
     { id: 'gancho', nome: 'Constelação Pirata', serie: 'Spacetheft', desc: 'Toque nos símbolos espaciais que aparecem. Cuidado com a caveira.', cortes: [.34, .67, .84] },
     { id: 'culpado', nome: 'Vigília Escura', serie: 'Mistério Oculto', desc: 'Feche os olhos que se abrem antes que ataquem. 3 corações.', cortes: [.5, .75, .96] },
     { id: 'ritmo', nome: 'Maré, Chama e Gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
-    { id: 'formacao', nome: 'Chamado da União', serie: 'A União', desc: 'Escolha 3 heróis cujos atributos somados cubram o desafio.', cortes: [.34, .67, .99] },
+    { id: 'formacao', nome: 'Chamado da União', serie: 'A União', desc: 'Arraste cada herói para longe das hordas: eles atacam sozinhos. Sobreviva com o máximo deles.', cortes: [.34, .6, .99] },
   ];
   const BYID = {}; LISTA.forEach(m => { BYID[m.id] = m; });
   const cfgAll = () => rd(CFG_KEY, {});
@@ -85,6 +85,27 @@
   const card = (id, cw) => U.cardEl(id, { up: true, noanim: true, cw: cw || 96 });
   const hidden = cw => U.cardEl('?', { noanim: true, cw: cw || 96 });
   const randCards = n => shuffle(CARTAS()).slice(0, n).map(c => c.id);
+
+  // ---- simulação do Chamado da União (lógica pura, testável): 8 membros atacam à distância; as hordas perseguem o membro mais próximo
+  function uniaoSim(dif, rand) {
+    const W = 380, H = 480, NM = 8, R = 11, RE = 9, RANGE = 100, CD = .6, WAVES = 7, GAP = 4.3;
+    const ms = Array.from({ length: NM }, (_, i) => ({ x: W / 2 + Math.cos(i / NM * 6.283) * 60, y: H / 2 + Math.sin(i / NM * 6.283) * 60, vivo: true, cd: rand() * CD }));
+    const es = [], atk = []; let t = 0, wave = 0, prox = 1.2, kills = 0;
+    const spawn = n => { const lados = [Math.floor(rand() * 4), Math.floor(rand() * 4)]; for (let i = 0; i < n; i++) { const l = lados[i % 2], u = rand(); let x, y; if (l === 0) { x = u * W; y = -10 - rand() * 30; } else if (l === 1) { x = W + 10 + rand() * 30; y = u * H; } else if (l === 2) { x = u * W; y = H + 10 + rand() * 30; } else { x = -10 - rand() * 30; y = u * H; }
+      es.push({ x, y, hp: wave >= 3 && rand() < .18 ? 2 : 1, v: (46 + wave * 5) * dif * (.85 + rand() * .3) }); } };
+    const S = { W, H, R, RE, RANGE, ms, es, atk, get t() { return t; }, get wave() { return wave; }, WAVES, get kills() { return kills; }, done: false,
+      vivos: () => ms.filter(m => m.vivo).length,
+      move(i, x, y) { const m = ms[i]; if (m && m.vivo) { m.x = Math.max(R, Math.min(W - R, x)); m.y = Math.max(R, Math.min(H - R, y)); } },
+      step(dt) { if (S.done) return; t += dt;
+        if (wave < WAVES && t >= prox) { spawn(7 + wave * 5); wave++; prox += GAP / Math.sqrt(dif); }
+        const vivos = ms.filter(m => m.vivo);
+        es.forEach(e => { let a = null, d = 1e9; vivos.forEach(m => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = m; } }); if (a) { e.x += (a.x - e.x) / d * e.v * dt; e.y += (a.y - e.y) / d * e.v * dt; } });
+        es.forEach(e => { vivos.forEach(m => { if (m.vivo && Math.hypot(m.x - e.x, m.y - e.y) < R + RE - 3) { m.vivo = false; S.morreu = (S.morreu || 0) + 1; S.ultimaMorte = m; } }); });
+        vivos.forEach(m => { if (!m.vivo) return; m.cd -= dt; if (m.cd > 0) return; let a = null, d = 1e9; es.forEach(e => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = e; } }); if (a && d <= RANGE) { m.cd = CD; a.hp--; atk.push({ x1: m.x, y1: m.y, x2: a.x, y2: a.y, l: .14 }); if (a.hp <= 0) { es.splice(es.indexOf(a), 1); kills++; } } });
+        for (let i = atk.length - 1; i >= 0; i--) { atk[i].l -= dt; if (atk[i].l <= 0) atk.splice(i, 1); }
+        if (!ms.some(m => m.vivo) || (wave >= WAVES && !es.length) || t > 90) S.done = true; } };
+    return S;
+  }
 
   const GAMES = {
     // 1. portas: 3 rodadas, 3 portas cada; última porta pode dar uma carta
@@ -375,19 +396,29 @@
         if (now > notas[N - 1].t + 1 && !acabou) { acabou = true; fim(hit / N, Math.floor(hit) + ' de ' + N + ' notas'); } raf = requestAnimationFrame(loop); };
       t0 = performance.now(); raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); document.removeEventListener('keydown', key); };
     },
-    // A União: escolha 3 heróis para cobrir o desafio (3 casos)
+    // A União: Chamado da União — controle cada herói com o dedo (arraste) para longe das hordas; eles atacam sozinhos à distância. Tocado, o herói morre
     formacao(body, c, fim) {
-      const UN = CARTAS().filter(x => x.uniao).map(x => x.id), AT = ['pod', 'def', 'int', 'vel']; let caso = 0, ok = 0, tm = null; const N = 3;
-      const tela = () => { const cand = shuffle(UN).slice(0, 6), combos = []; for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) for (let k = j + 1; k < 6; k++) combos.push([cand[i], cand[j], cand[k]]);
-        const sum = (cs, a) => cs.reduce((t, id) => t + U.CARDS[id].stats[a], 0), alvo = pick(combos), a1 = pick(AT), a2 = pick(AT.filter(x => x !== a1)), r1 = Math.round(sum(alvo, a1) * (.93 / Math.sqrt(c.dif))), r2 = Math.round(sum(alvo, a2) * (.93 / Math.sqrt(c.dif)));
-        let esc = [], left = Math.round(40 / c.dif);
-        const pinta = () => { body.innerHTML = `<p class="mg-q">Desafio ${caso + 1}/${N} · <span id="tl">${left}</span>s<br>Some <b>${NA(a1)} ≥ ${r1}</b> e <b>${NA(a2)} ≥ ${r2}</b> com 3 heróis</p><div class="mg-grid g3">${cand.map(id => `<button class="mg-cell ${esc.includes(id) ? 'ok' : ''}" data-id="${id}" style="padding:2px"></button>`).join('')}</div>
-          <p class="mg-q" id="so">${NA(a1)}: ${sum(esc, a1)} · ${NA(a2)}: ${sum(esc, a2)}</p><button class="btn primary" data-a="ok" ${esc.length === 3 ? '' : 'disabled'}>Confirmar</button>`; $$all('.mg-cell', body).forEach(b => b.append(card(b.dataset.id, 86))); };
-        const $$all = (s, r) => Array.from((r || document).querySelectorAll(s));
-        body.onclick = async e => { const b = e.target.closest('[data-id],[data-a]'); if (!b) return; if (b.dataset.id) { const id = b.dataset.id; esc = esc.includes(id) ? esc.filter(x => x !== id) : esc.length < 3 ? esc.concat(id) : esc; SND.play('tick'); pinta(); }
-          else if (b.dataset.a === 'ok' && esc.length === 3) { if (sum(esc, a1) >= r1 && sum(esc, a2) >= r2) { clearInterval(tm); ok++; SND.play('win'); await wait(800); caso++; if (caso >= N) return fim(ok / N, ok + ' de ' + N + ' desafios'); tela(); } else { SND.play('lose'); esc = []; pinta(); } } };
-        pinta(); clearInterval(tm); tm = setInterval(() => { left--; const t = $('#tl', body); if (t) t.textContent = left; if (left <= 0) { clearInterval(tm); caso++; if (caso >= N) fim(ok / N, ok + ' de ' + N + ' desafios'); else tela(); } }, 1000); };
-      tela(); return () => clearInterval(tm);
+      const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = 380, H = cv.height = 480, g = cv.getContext('2d'); cv.style.width = '100%'; cv.style.maxWidth = '380px'; cv.style.touchAction = 'none';
+      const S = uniaoSim(c.dif, Math.random), UN = ['D06', 'M01', 'J03', 'B01', 'S01', 'M10', 'V15', 'V02'], imgs = UN.map(id => { const im = new Image(); const src = (window.CARD_IMAGES || {})[id]; if (src) im.src = src.replace('photos/', 'photos/t/'); return im; });
+      const cor = id => { const k = U.CARDS[id], sr = (U.SERIES || {})[k && k.serie]; return sr ? sr.cor : '#8f5cff'; };
+      const ptr = new Map(); let raf = 0, last = 0, acabou = false, msgMorte = 0;
+      const pos = e => { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; };
+      cv.onpointerdown = e => { const p = pos(e); let m = -1, d = 48; S.ms.forEach((x, i) => { const dd = Math.hypot(x.x - p.x, x.y - p.y); if (x.vivo && dd < d && ![...ptr.values()].includes(i)) { d = dd; m = i; } }); if (m >= 0) { ptr.set(e.pointerId, m); try { cv.setPointerCapture(e.pointerId); } catch (er) { } } };
+      cv.onpointermove = e => { const i = ptr.get(e.pointerId); if (i == null) return; const p = pos(e); S.move(i, p.x, p.y); };
+      cv.onpointerup = cv.onpointercancel = e => { ptr.delete(e.pointerId); };
+      let mortos = 0;
+      const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); const v = S.vivos(); fim(v ? .34 + .66 * (v - 1) / 7 : 0, v ? v + ' de 8 heróis sobreviveram' : 'Todos caíram'); };
+      const loop = ts => { if (acabou) return; const dt = Math.min(.05, (ts - (last || ts)) / 1000); last = ts; S.step(dt);
+        const n = S.ms.filter(m => !m.vivo).length; if (n > mortos) { mortos = n; SND.play('lose'); }
+        g.fillStyle = '#07040f'; g.fillRect(0, 0, W, H);
+        S.atk.forEach(a => { g.strokeStyle = '#ffd25f'; g.globalAlpha = Math.max(0, a.l / .14); g.lineWidth = 2; g.beginPath(); g.moveTo(a.x1, a.y1); g.lineTo(a.x2, a.y2); g.stroke(); g.globalAlpha = 1; });
+        S.es.forEach(e => { g.beginPath(); g.arc(e.x, e.y, S.RE, 0, 7); g.fillStyle = e.hp > 1 ? '#a01030' : '#ff3b4f'; g.fill(); if (e.hp > 1) { g.strokeStyle = '#ffd25f'; g.lineWidth = 2; g.stroke(); } });
+        S.ms.forEach((m, i) => { if (!m.vivo) { g.fillStyle = '#ffffff22'; g.font = '16px system-ui'; g.textAlign = 'center'; g.fillText('✕', m.x, m.y + 5); g.textAlign = 'left'; return; }
+          const held = [...ptr.values()].includes(i); g.save(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.shadowColor = cor(UN[i]); g.shadowBlur = held ? 20 : 8; g.fillStyle = cor(UN[i]); g.fill(); g.shadowBlur = 0; g.clip();
+          if (imgs[i].complete && imgs[i].naturalWidth) g.drawImage(imgs[i], m.x - S.R, m.y - S.R, S.R * 2, S.R * 2); g.restore(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); });
+        g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Heróis ' + S.vivos() + ' / 8', 10, 20); g.fillText('Onda ' + Math.min(S.wave, S.WAVES) + '/' + S.WAVES, W - 80, 20);
+        if (S.done) return fimJogo(); raf = requestAnimationFrame(loop); };
+      raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); };
     },
   });
 
@@ -395,5 +426,5 @@
     const L = log(), o = {}; LISTA.forEach(m => { o[m.id] = { n: 0, pct: 0, t: [0, 0, 0, 0], rw: 0, ms: 0 }; });
     L.forEach(r => { const s = o[r.id]; if (!s) return; s.n++; s.pct += r.pct; s.t[r.tier]++; s.rw += r.reward; s.ms += r.ms || 0; }); return o;
   }
-  window.DSMini = { LISTA, play, cfg, setCfg, stats, resetLog: () => wr(LOG_KEY, []), resetCfg: () => wr(CFG_KEY, {}), tierOf };
+  window.DSMini = { _uniao: uniaoSim, LISTA, play, cfg, setCfg, stats, resetLog: () => wr(LOG_KEY, []), resetCfg: () => wr(CFG_KEY, {}), tierOf };
 })();
