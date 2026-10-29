@@ -18,6 +18,7 @@
     miniboss: { nome: 'Arauto',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores. Prende um membro da União: vencer liberta o herói para a sua equipe e abre o minigame do setor.' },
     guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões espalhados pelo mapa. Cada um vencido tira 30 pontos de cada atributo das cartas da Besta.' },
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
+    minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Um desafio. Passe com ao menos "Bom" para abrir o caminho; se falhar, pague um pouco para tentar de novo.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
   const LADOS = { esq: 'Vila Velha', cima: 'Kaeliran', dir: 'Belfex', baixo: 'Braço de Origem', nw: 'Cidade Crepúsculo', ne: 'Promessas do Mar' };   // setores: lugares dos livros (Diário Sobrenatural, Ciclo de Jesed, Viajantes, Spacetheft, Mistério Oculto, Édelin Lys)
@@ -29,6 +30,13 @@
     return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
   }
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
+  // Minigames no mapa (autor, 29/10/2026): 7 de série (dão 1 broche) + 10 base, em pontos que fecham caminhos; é preciso passar (nível "Bom" ou mais) para abrir a área seguinte.
+  // Ao falhar o ponto fica bloqueado até pagar MG_CUSTO pêndulos; o prêmio máximo é para quem quer desafio (pode rejogar depois de passar para melhorar o prêmio).
+  const MG = { B082: ['elos', 'diario'], B088: ['culpado', 'misterio'], B089: ['luas', 'jesed'], B052: ['ritmo', 'belfex'], B077: ['poderes', 'viajantes'], B065: ['gancho', 'spacetheft'], B081: ['formacao', 'uniao'],
+    B018: ['maiormenor'], B037: ['mineracao'], B061: ['raspadinha'], B076: ['caracoroa'], B074: ['cacapendulo'], B056: ['ordem'], B053: ['memoria'], B046: ['quemequem'], B054: ['asteroides'], B073: ['cofre'] };
+  const MG_CUSTO = 10;
+  Object.keys(MG).forEach(id => { if (BY[id]) { BY[id].tipo = 'minigame'; BY[id].mg = MG[id][0]; BY[id].serieMg = MG[id][1] || null; } });
+  const mgInfo = n => (window.DSMini && window.DSMini.LISTA.find(m => m.id === n.mg)) || { nome: 'Minigame', desc: '' };
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
   // Guardiões (autor, 29/10): cada ponto sorteia um dos 4 no começo da partida. Cartas por guardião calibradas por simulação (jogador médio: 4 da União + boas cartas ≈ 55–60%).
@@ -102,6 +110,7 @@
     star: '<path d="M0 -9 L2.6 -3 L9 -2.6 L4.2 1.6 L5.6 8 L0 4.7 L-5.6 8 L-4.2 1.6 L-9 -2.6 L-2.6 -3 Z" fill="currentColor"/>',
     swords: '<path d="M-7 -7 L5 5 M7 -7 L-5 5 M-8 6 L-4 2 M8 6 L4 2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
     crown: '<path d="M-9 6 V-5 L-4 0 L0 -8 L4 0 L9 -5 V6 Z" fill="currentColor"/>',
+    dice: '<rect x="-9" y="-9" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="-3.5" cy="-3.5" r="1.8" fill="currentColor"/><circle cx="3.5" cy="3.5" r="1.8" fill="currentColor"/><circle cx="3.5" cy="-3.5" r="1.8" fill="currentColor"/><circle cx="-3.5" cy="3.5" r="1.8" fill="currentColor"/>',
   };
   // pêndulo: moeda vermelha com furo hexagonal
   const coin = (r, id) => { const h = r * .42, pts = [0, 1, 2, 3, 4, 5].map(i => (h * Math.cos(Math.PI / 3 * i + Math.PI / 6)).toFixed(1) + ',' + (h * Math.sin(Math.PI / 3 * i + Math.PI / 6)).toFixed(1)).join(' ');
@@ -122,7 +131,7 @@
     if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle r="${r}" class="body"/><image href="selo.png" x="${-r * .78}" y="${-r * 1.0}" width="${r * 1.56}" height="${r * 2.0}" preserveAspectRatio="xMidYMid meet"/>`;
     else if (n.tipo === 'loja') inner = `<circle class="halo" r="${r + 7}"/>${coin(r)}<text class="lbl" y="${r + 16}">${esc(num)}</text>`;
     else {
-      const g = { evento: 'bolt', elite: 'star', miniboss: 'swords', guardiao: 'crown' }[n.tipo];
+      const g = { evento: 'bolt', elite: 'star', miniboss: 'swords', guardiao: 'crown', minigame: 'dice' }[n.tipo];
       inner = `<circle class="halo" r="${r + 8}"/><circle class="body" r="${r}"/>` +
         (g ? `<g class="glyph" transform="scale(${(r / 14).toFixed(2)})">${ICON[g]}</g><text class="lbl" y="${r + 16}">${esc(num)}</text>` : `<text class="num" y="5">${esc(num)}</text>`);
     }
@@ -132,6 +141,7 @@
     if (n.tipo === 'boss') return 'Boss final: A Besta';
     if (n.tipo === 'guardiao') return 'Guardião: ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
+    if (n.tipo === 'minigame') return mgInfo(n).nome;
     return 'Batalha ' + String(+n.id.slice(1)).padStart(3, '0');
   }
 
@@ -223,6 +233,7 @@
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
     g.classList.toggle('done', ok); g.classList.toggle('avail', av && !ok); g.classList.toggle('lock', !av && !ok); g.classList.toggle('isstart', n.id === S.startId);
     if (n.tipo === 'boss') g.classList.toggle('opened', guardVivos() === 0);
+    if (n.tipo === 'minigame') g.classList.toggle('mglock', !!(S.mgLock && S.mgLock[n.id]) && !ok);
   }
 
   // ---- câmera: arrastar, pinça, roda do mouse
@@ -336,22 +347,39 @@
   function openNode(id) {
     if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; curId = id; SND.play('click'); if (id === posId()) chegada(id);
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
-    const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id);
-    const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
-    const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
-    const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
+    const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
+    const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
+    const cartas = n.tipo === 'loja' || n.tipo === 'minigame' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
+    const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : n.tipo === 'minigame' ? 'Minigame' + (n.serieMg ? ' · dá 1 broche' : '') : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[setor(n)])}</small></div></div>
-      <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      <p>${esc(T.desc)}</p>${evLinha}${n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b> pêndulos${ok ? '' : ' na primeira vitória'}${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
-      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <p class="hs-st ${ok ? 'hs-ok' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : lockMg ? 'Bloqueado: você falhou' : av ? 'Disponível' : 'Caminho fechado'}</p>
+      <p>${esc(n.tipo === 'minigame' ? mgInfo(n).desc : T.desc)}</p>${evLinha}${n.tipo === 'minigame' ? `<p class="hs-rec">${coinSvg(15)}<b>${mgPremios(n).join(' / ')}</b> pêndulos (Bom / Ótimo / Perfeito)</p>` : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b> pêndulos${ok ? '' : ' na primeira vitória'}${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
+      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">Desbloquear por ${Math.min(MG_CUSTO, S.pend | 0)} pêndulos</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;
     const want = Math.min(free / 2 + 30, free - 70);
     if (sy > free - 50 || sy < 60 || sx < 30 || sx > w - 30) { cam.y += want - sy; cam.x += Math.max(30, Math.min(w - 30, sx)) - sx; applyCam(true); }
+  }
+  const mgPremios = n => { const c = window.DSMini ? window.DSMini.cfg(n.mg).premios : [0, 5, 10, 20]; return [c[1], c[2], c[3]]; };
+  function desbloquearMini(id) {
+    if (!S.mgLock || !S.mgLock[id]) return; const c = Math.min(MG_CUSTO, S.pend | 0);   // sem pêndulos suficientes paga o que tiver, para nunca travar o jogador
+    S.pend -= c; delete S.mgLock[id]; save(); SND.play('capture'); paintAll(); openNode(id);
+  }
+  async function jogarMini(id) {
+    const n = BY[id]; if (!window.DSMini || (S.mgLock && S.mgLock[id])) return; closeSheet();
+    const primeira = !cleared(id), ant = (S.mgBest && S.mgBest[id]) || 0, res = await window.DSMini.play(n.mg, {}); if (!res) return;
+    S.mgBest = S.mgBest || {}; S.mgLock = S.mgLock || {}; let ganho = 0;
+    if (res.tier >= 1) {
+      const pr = window.DSMini.cfg(n.mg).premios, antR = ant ? pr[ant] | 0 : 0; ganho = Math.max(0, (pr[res.tier] | 0) - antR); S.mgBest[id] = Math.max(ant, res.tier); S.pend = (S.pend | 0) + ganho; S.ganho = (S.ganho | 0) + ganho;
+      if (primeira && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
+      if (NPC) NPC.fragMini(n.mg, res.tier);
+    } else if (primeira) S.mgLock[id] = 1;
+    save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
+    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado. Pague ' + MG_CUSTO + ' pêndulos para tentar de novo.'); openNode(id); } else openNode(id);
   }
   function toggleWin(id) {
     const ok = cleared(id);
@@ -556,7 +584,7 @@
     derrota: ['Perdemos esta, mas calma. Derrota não custa nada: nem cartas, nem pêndulos.', 'Reorganize o time, descanse as cartas se precisar, e tente de novo.'],
     captura: ['Viu? Capturamos uma carta do inimigo e agora ela é nossa.', 'Só vale a carta realmente capturada: a que o inimigo usou como especial, ou que você derrotou sem capturar, não vem para cá.'],
     bau: ['Baús escondem pêndulos ou cartas novas.', 'Costumam ficar nos becos sem saída, então vale explorar os ramos que não levam a lugar nenhum.'],
-    minigame: ['Um desafio extra! Não bloqueia o caminho.', 'Quem o vence leva um broche.'],
+    minigame: ['Um desafio! Passe com ao menos "Bom" para abrir o caminho.', 'Se falhar, o ponto trava, mas por poucos pêndulos você tenta de novo. O prêmio máximo é para quem gosta de desafio.'],
     broche: ['Um broche… Não sei para que serve.', 'Mas algo me diz que vale a pena juntá-los todos.'],
   };
   function dica(chave, quem) {
@@ -565,7 +593,7 @@
   }
   function chegada(id) {   // o boneco está neste ponto: diálogo da primeira vez
     const n = BY[id]; if (!n || !S.tutorial) return;   // antes do tutorial, a primeira vitória tem a vez
-    if (n.tipo === 'evento') dica('evento'); else if (n.tipo === 'elite') dica('elite'); else if (n.tipo === 'miniboss') dica('miniboss'); else if (n.tipo === 'guardiao') dica('guardiao'); else if (n.tipo === 'boss') dica('boss'); else if (n.tipo === 'loja') dica('loja');
+    if (n.tipo === 'evento') dica('evento'); else if (n.tipo === 'elite') dica('elite'); else if (n.tipo === 'miniboss') dica('miniboss'); else if (n.tipo === 'guardiao') dica('guardiao'); else if (n.tipo === 'boss') dica('boss'); else if (n.tipo === 'loja') dica('loja'); else if (n.tipo === 'minigame') dica('minigame');
   }
   function bossAbre() {
     closeSheet(); const b = BY[M.boss]; const red = document.body.classList.contains('reduce');
@@ -727,5 +755,5 @@
   }
 
   if (NPC) NPC.init({ S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
-  window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S };
+  window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S, openNode };
 })();

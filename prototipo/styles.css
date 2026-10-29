@@ -1724,3 +1724,4 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .pf-tabs button { flex: 1; min-width: 0; padding: 9px 4px; border: 0; border-radius: 9px; background: none; color: var(--ink2); font: 700 13px var(--f-body); cursor: pointer; }
 .pf-tabs button.on { background: var(--prism); color: #fff; }
 .pf-pane[hidden] { display: none; }
+.n.t-minigame .body { stroke-dasharray: 5 3; } .n.t-minigame.mglock .body { fill: #3a1020; stroke: #ff5a4f; stroke-dasharray: none; } .n.t-minigame.mglock .glyph { opacity: .45; }
