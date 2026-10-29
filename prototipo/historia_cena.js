@@ -15,7 +15,7 @@ window.DS_CINEMATICA = {
     { img: 'cena/gerbe.webp', mov: 'zoom', pos: 'center', textos: [
       'Há muito tempo, a Besta foi aprisionada em um planeta conhecido como Aurora, feito de gerbe, um dos materiais mais valiosos de todo o universo.',
       'O metal a cobriu como uma tumba. Ninguém soube o que dormia lá dentro. Ninguém quis saber.'] },
-    { img: 'photos/S01.webp', mov: 'zoomout', pos: 'top', textos: [
+    { img: 'cena/chegada-aurora.png', mov: 'zoomout', pos: 'center', textos: [
       'Até que Jasmey Badrock e sua equipe, caçadores de tesouros em busca do próximo grande achado, pousaram na Aurora.',
       'Eles viram riqueza. Cavaram fundo. E cavaram demais.'] },
     { img: 'cena/besta.webp', mov: 'zoom', pos: 'center', tom: 'grito', textos: ['Ela acordou.'] },
@@ -25,7 +25,7 @@ window.DS_CINEMATICA = {
     { img: null, fotos: ['photos/M01.webp', 'photos/S01.webp', 'photos/V02.webp', 'photos/V15.webp', 'photos/D06.webp', 'photos/M10.webp', 'photos/J03.webp', 'photos/B01.webp'], textos: [
       'Sem saída, Jasmey pediu ajuda à União: heróis de todos os cantos do universo, o único grupo que talvez pudesse deter a Besta.',
       'Eles atenderam ao chamado.'] },
-    { img: 'cena/besta.webp', mov: 'dir', pos: 'center', textos: [
+    { img: 'cena/uniao-dispersao.png', mov: 'dir', pos: 'center', textos: [
       'Não foi o bastante.',
       'A Besta derrotou todos, um a um, e os espalhou pela galáxia como cinzas ao vento.',
       'Depois, saciada, fez do núcleo da galáxia o seu trono.'] },

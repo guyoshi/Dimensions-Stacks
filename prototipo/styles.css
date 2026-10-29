@@ -378,6 +378,8 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 
 /* ---- fundo animado da tela inicial */
 .menu-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.tabwrap.home { position: relative; isolation: isolate; }
+.tabwrap.home::before { content: ''; position: absolute; inset: -20px; z-index: -1; pointer-events: none; background: linear-gradient(90deg, #08051be8 0%, #08051bb8 48%, #08051b55 100%), linear-gradient(#08051b55, #08051bd9), url(cena/hero-menu.png) center / cover no-repeat; opacity: .82; }
 .menu-bg .vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 48%, #07041aee 0%, #07041abb 34%, #07041a55 55%, transparent 78%); }
 .fc { position: absolute; left: var(--x); top: 0; width: var(--cw); opacity: var(--op); will-change: transform; contain: layout paint; backface-visibility: hidden; animation: fcFloat var(--dur) linear var(--delay) infinite; }
 .fc .card { pointer-events: none; }
