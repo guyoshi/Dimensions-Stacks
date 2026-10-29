@@ -32,7 +32,7 @@ try:
         chk(pg.evaluate("DSNpc.state().mis['%s'].st" % prim) == 'ativa', 'primeira conversa ativa a missão')
         pg.evaluate("DSNpc.falar('%s')" % prim); conv()
         chk(pg.evaluate("DSNpc.state().itens.length") == 0, 'sem vitórias: nada é entregue')
-        ids = pg.evaluate("DSHistoria.data.nos.filter(n=>n.tipo!='loja'&&n.tipo!='boss'&&n.tipo!='casa').slice(0,3).map(n=>n.id)")
+        ids = pg.evaluate("DSHistoria.data.nos.filter(n=>n.tipo!='loja'&&n.tipo!='boss'&&n.tipo!='casa'&&n.tipo!='bau').slice(0,3).map(n=>n.id)")
         pg.evaluate("(()=>{const s=DSHistoria.state();%s.forEach(i=>s.cleared[i]=1);})()" % ids)
         pg.evaluate("DSNpc.check()"); pg.wait_for_timeout(300)
         pg.evaluate("DSNpc.falar('%s')" % prim); conv(); popup()

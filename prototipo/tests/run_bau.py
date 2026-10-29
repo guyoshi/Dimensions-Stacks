@@ -31,6 +31,12 @@ try:
       A.histNodes = { s: { stop() {} }, g: { gain: { cancelScheduledValues() {}, setValueAtTime() {}, linearRampToValueAtTime() {}, value: 1 } }, k: 'loja', t0: 130, off: 0, dur: 60 }; A.histStop(true);
       return [a, A.histPos.loja === undefined]; }""")
     chk(r[0] == 35 and r[1], 'mapa guarda onde parou (35s) e a loja não retoma: %s' % r)
+    nb = pg.evaluate("document.querySelectorAll('.n.t-bau').length"); chk(nb == 22, 'baús são pontos do mapa: %d' % nb)
+    cid = pg.evaluate("window.DSHistoria.data.nos.find(n=>n.tipo=='bau'&&n.id=='C_B010').id")
+    pg.evaluate("(()=>{const S=DSHistoria.state();S.pos='%s';})()" % cid); pg.evaluate("DSHistoria.openNode('%s')" % cid); pg.wait_for_timeout(300)
+    chk(pg.evaluate("!!document.querySelector('#hsSheet [data-a=abrir]')"), 'parado no baú: botão Abrir')
+    pg.evaluate("document.querySelector('#hsSheet [data-a=abrir]').click()"); pg.wait_for_selector('.bau-ok:not([hidden])', timeout=8000); pg.click('.bau-ok'); pg.wait_for_timeout(900)
+    chk(pg.evaluate("!!DSHistoria.state().baus['%s']" % cid) and pg.evaluate("document.querySelector('.n[data-id=\"%s\"]').classList.contains('ndone')" % cid), 'baú aberto fica marcado')
     b.close()
 finally:
   srv.terminate(); os.remove(os.path.join(proj, '_page.html'))

@@ -1,4 +1,4 @@
-# Modo história (etapa 1): tela inicial, sorteio de partida, mapa com 136 pontos, painel, vitórias de teste, boss abrindo, continuar após recarregar.
+# Modo história (etapa 1): tela inicial, sorteio de partida, mapa com 158 pontos, painel, vitórias de teste, boss abrindo, continuar após recarregar.
 import sys, os, time, subprocess, json
 from playwright.sync_api import sync_playwright
 proj = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +22,7 @@ try:
     pg.screenshot(path=shots + '/hist_hub.png')
     pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1500)
     n = pg.evaluate("document.querySelectorAll('.n').length"); e = pg.evaluate("document.querySelectorAll('.hs-edges .e').length")
-    chk(n == 136, 'mapa com 136 pontos (100 batalhas + 5 lojas + 31 casas): %d' % n)
+    chk(n == 158, 'mapa com 158 pontos (100 batalhas + 5 lojas + 31 casas + 22 baús): %d' % n)
     M = pg.evaluate("window.DSHistoria.data"); chk(e == sum(len(x['viz']) for x in M['nos']) // 2, 'arestas desenhadas: %d' % e)
     pg.evaluate("(()=>{const k='dsstacks.historia',o=JSON.parse(localStorage.getItem(k));o.tutorial=1;localStorage.setItem(k,JSON.stringify(o));})()"); pg.reload(); pg.wait_for_timeout(900); pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
     S = pg.evaluate("window.DSHistoria.state()"); chk(S and S['startId'] in M['starts'].values(), 'ponto de partida sorteado: ' + S['start'])
@@ -37,9 +37,9 @@ try:
     for gi, g in enumerate(M['guardioes'].values()):
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
-        for _t in range(4):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
+        for _t in range(10):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
             bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(1500)
-            if pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
+            if pg.evaluate("(document.querySelector('.n.sel')||{dataset:{}}).dataset.id") == g and pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
         if 'Desfazer' not in pg.inner_text('#hsSheet [data-a=win]'): pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(3500)
         if gi == 0: chk('Besta' in pg.evaluate("document.querySelector('#hsToast').textContent"), 'ao derrotar guardião a Besta é atingida (aviso do bônus)')
         pg.evaluate("document.querySelectorAll('.npc,.bau-ov,.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(500)
@@ -47,9 +47,9 @@ try:
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
-        for _t in range(4):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
+        for _t in range(10):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
             bx = pos(n); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(1500)
-            if pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
+            if pg.evaluate("(document.querySelector('.n.sel')||{dataset:{}}).dataset.id") == n and pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
         pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.lib .bau-ok', timeout=4000); pg.click('.lib .bau-ok'); pg.wait_for_timeout(700)
         for _ in range(14):
             if not pg.query_selector('.npc'): break

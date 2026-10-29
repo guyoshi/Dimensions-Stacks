@@ -134,7 +134,7 @@
   function fragEvento(key) { if (darFrag(key)) A.quandoLivre(() => avisoFrag()); }
   function vitoria(id) { ini(); if (A.MINIS.includes(id)) fragEvento('A:' + id); else if (A.GUARD.includes(id)) fragEvento('G:' + id); }
   function fragMini(id, tier) { if (tier >= 3) fragEvento('J:' + id); }   // minigame: o prêmio máximo (Perfeito) dá 1 fragmento, uma vez por minigame
-  function fragBau(id) { if (D.fragBaus.includes(id)) fragEvento('B:' + id); }
+  function fragBau(id) { const k = id.replace(/^C_/, ''); if (D.fragBaus.includes(k)) fragEvento('B:' + k); }
 
   const curto = n => { const m = n.nome.match(/^(Sra\.|Dra\.|Dr\.|Capitão|Capitã|Professor|Tio|Agente)\s+(\S+)/); return m ? m[1] + ' ' + m[2] : n.nome.split(' ')[0]; };
   const ini1 = n => n.nome.replace(/^(Sra\.|Dra\.|Capitão|Capitã|Professor|Tio|Agente)\s+/, '')[0].toUpperCase();

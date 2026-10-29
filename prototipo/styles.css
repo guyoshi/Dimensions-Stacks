@@ -1866,3 +1866,4 @@ body.reduce .frg-rays, body.reduce .frg-cr, body.reduce .frg-p { animation: none
 .card.rar-quasar .bot .rar { color: #d9b8ff; text-shadow: 0 0 .5em #a46bff, 0 .06em .25em #000; }
 .card.rar-quasar .nome { color: #f1e6ff; text-shadow: 0 0 .5em #a46bffcc; }
 .qtag { position: absolute; z-index: 6; top: 2.1em; right: .7em; padding: .15em .5em; border-radius: 1em; background: linear-gradient(120deg, #1a0c3a, #5a2fc0); color: #f1e6ff; border: .08em solid #c9a6ff; font: 800 .52em var(--f-disp); letter-spacing: .12em; box-shadow: 0 0 .6em #8f5cff; }
+.n.t-bau.ndone { opacity: .5; } .n.t-bau .body { fill: #3a2a0a; } .hs-leg-ico svg { width: 100%; height: 100%; } .n .bau-n { pointer-events: none; overflow: visible; }
