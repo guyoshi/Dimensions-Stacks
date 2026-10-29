@@ -45,7 +45,7 @@ try:
             pg.evaluate("(()=>{const n=document.querySelector('.npc');if(n)n.click()})()"); pg.wait_for_timeout(250)
         pg.wait_for_timeout(400); chk(pg.query_selector('.npc') is None, 'cutscene do mercador termina'); pg.evaluate("clearInterval(window.__km)")
         chk(pg.evaluate("!document.getElementById('hsAlug').hidden"), 'botão de aluguel aparece')
-        pg.click('#hsAlug'); pg.wait_for_selector('.hs-alug'); pg.wait_for_timeout(300); pg.screenshot(path='tests/shots/aluguel.png')
+        pg.evaluate("document.querySelector('#hsAlug').click()"); pg.wait_for_selector('.hs-alug'); pg.wait_for_timeout(300); pg.screenshot(path='tests/shots/aluguel.png')
         ids = pg.evaluate("[...document.querySelectorAll('.al-buy')].map(x=>x.dataset.id)"); chk(len(ids) >= 5, 'estoque de aluguel: %d' % len(ids))
         raro = pg.evaluate("ids=>ids.filter(i=>DSUI.CARDS[i].raridade=='lendaria'||DSHistoria.state().owned.includes(i)).length", ids); chk(raro == 0, 'sem lendárias nem cartas que já tem')
         pend0 = pg.evaluate("DSHistoria.state().pend"); pg.click('.al-buy'); pg.wait_for_timeout(300)

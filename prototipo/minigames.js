@@ -50,12 +50,13 @@
   const TRILHA = { maiormenor: 'mgdiv', memoria: 'mgdiv', quemequem: 'mgdiv', cofre: 'mgdiv', poderes: 'mgdiv', ordem: 'mgmod', mineracao: 'mgmod', cacapendulo: 'mgmod', luas: 'mgmod', culpado: 'mgmod', raspadinha: 'mgfut', asteroides: 'mgfut', gancho: 'mgfut', formacao: 'mgfut' };
   const MUS = (() => { let ant = null, on = false;
     return {
-      prep(id) { try { ant = SND.histNow || null; SND.histStop(); const k = TRILHA[id]; if (k) SND.histLoad(k); on = true; } catch (e) { on = false; } },   // para a trilha do mapa e já carrega a do jogo; jogos sem trilha ficam em silêncio
+      prep(id) { try { ant = SND.histNow || null; SND.histStop(true); SND.histNow = null; const k = TRILHA[id]; if (k) SND.histLoad(k); on = true; } catch (e) { on = false; } },   // para a trilha do mapa e já carrega a do jogo; jogos sem trilha ficam em silêncio
       start(id) { const k = TRILHA[id]; if (!k) return; try { SND.histPlay(k); } catch (e) { } },
       stop() { if (!on) return; on = false; try { if (ant) SND.histPlay(ant); else SND.histStop(); } catch (e) { } },
     };
   })();
   const dor = () => { try { const ctx = SND.ctx; if (!ctx) return; const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gn = ctx.createGain(), t = ctx.currentTime; o.type = 'sawtooth'; o2.type = 'square'; o.frequency.setValueAtTime(760, t); o.frequency.exponentialRampToValueAtTime(240, t + .28); o2.frequency.setValueAtTime(790, t); o2.frequency.exponentialRampToValueAtTime(250, t + .28); gn.gain.setValueAtTime(.0001, t); gn.gain.exponentialRampToValueAtTime(.16, t + .02); gn.gain.exponentialRampToValueAtTime(.0001, t + .32); o.connect(gn); o2.connect(gn); gn.connect(SND.master || ctx.destination); o.start(t); o2.start(t); o.stop(t + .34); o2.stop(t + .34); } catch (e) { } };   // gritinho de dor
+  const bip = (f, d, v) => { try { const ctx = SND.ctx; if (!ctx) return; const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gn = ctx.createGain(), t = ctx.currentTime; o.type = 'triangle'; o2.type = 'sine'; o.frequency.setValueAtTime(f, t); o2.frequency.setValueAtTime(f * 2, t); gn.gain.setValueAtTime(.0001, t); gn.gain.exponentialRampToValueAtTime(v || .2, t + .015); gn.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(gn); o2.connect(gn); gn.connect(SND.master || ctx.destination); o.start(t); o2.start(t); o.stop(t + d + .02); o2.stop(t + d + .02); } catch (e) { } };   // bip da contagem 3-2-1
   const SEM_MUSICA = ['caracoroa', 'elos', 'ritmo'];
 
   // ---- casca comum: tela cheia, título, sair, resultado
@@ -67,8 +68,8 @@
   async function intro(ov, m, parar) {
     const w = mk(`<div class="mg-intro"><small>${m.serie || 'Minigame'}</small><div class="mg-in-n">${m.nome}</div><div class="mg-in-c"></div></div>`); ov.append(w); const ic = $('.mg-in-c', w), sn = (k) => { try { SND.play(k); } catch (e) { } };
     sn('bauShake'); await wait(1700); if (parar()) { w.remove(); return false; } w.classList.add('sai'); await wait(380);
-    for (const t of ['3', '2', '1']) { if (parar()) { w.remove(); return false; } ic.textContent = t; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop'); sn('tick'); await wait(720); }
-    if (parar()) { w.remove(); return false; } ic.textContent = 'JÁ!'; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop', 'ja'); sn('capture'); w.classList.add('fim'); setTimeout(() => w.remove(), 650); return true;
+    for (const t of ['3', '2', '1']) { if (parar()) { w.remove(); return false; } ic.textContent = t; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop'); bip(t === '1' ? 700 : t === '2' ? 620 : 540, .2); await wait(720); }
+    if (parar()) { w.remove(); return false; } ic.textContent = 'JÁ!'; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop', 'ja'); bip(1050, .5, .26); w.classList.add('fim'); setTimeout(() => w.remove(), 650); return true;
   }
   async function play(id, opts) {
     opts = opts || {}; const m = BYID[id], c = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
