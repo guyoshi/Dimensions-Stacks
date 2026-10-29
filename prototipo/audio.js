@@ -203,15 +203,33 @@
       if (this.histNow !== k || !m) { if (this.histNow === k && !m) this.histNow = null; return; }
       const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
       s.buffer = m.buf; s.loop = true; s.loopStart = m.a || 0; s.loopEnd = m.b || m.buf.duration; s.connect(g); g.connect(this.musicGain);
-      const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0;
-      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(({ batalha: 0.5, mini: 0.55, arauto: 0.55, guardiao: 0.55, boss: 0.6 })[k] || 1, now + 1.2); s.start(now, off);   // trilhas de batalha mais baixas
+      const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0, vol = ({ batalha: 0.5, mini: 0.55, arauto: 0.55, guardiao: 0.55, boss: 0.6 })[k] || 1;
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(vol, now + 1.2); s.start(now, off);   // trilhas de batalha mais baixas
       if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
-      this.histStop(true); this.histNodes = { s, g, k, t0: now, off, dur: m.buf.duration };
+      this.histStop(true); const nd = this.histNodes = { s, g, k, t0: now, off, dur: m.buf.duration, segs: [{ s, g }] };
+      // trilhas de batalha: em vez de repetir seco, a próxima volta entra em crossfade antes de a atual acabar
+      const XF = 4, dur = m.buf.duration;
+      if (['batalha', 'mini', 'arauto', 'guardiao', 'boss'].includes(k) && !m.a && !m.b && dur > XF * 3) {
+        s.loop = false;
+        const agenda = (cur, t0) => {   // t0 = instante (ctx) em que 'cur' começou a tocar do zero
+          const wait = Math.max(0, (t0 + dur - XF - c.currentTime) * 1000);
+          nd.timer = setTimeout(() => {
+            if (this.histNodes !== nd) return;
+            const t = c.currentTime, n = c.createBufferSource(), ng = c.createGain();
+            n.buffer = m.buf; n.connect(ng); ng.connect(this.musicGain);
+            ng.gain.setValueAtTime(0.0001, t); ng.gain.linearRampToValueAtTime(vol, t + XF); n.start(t);
+            try { cur.g.gain.cancelScheduledValues(t); cur.g.gain.setValueAtTime(cur.g.gain.value, t); cur.g.gain.linearRampToValueAtTime(0.0001, t + XF); cur.s.stop(t + XF + 0.05); } catch (e) { }
+            const nx = { s: n, g: ng }; nd.segs.push(nx); nd.s = n; nd.g = ng; nd.t0 = t; nd.off = 0;
+            agenda(nx, t);
+          }, wait);
+        };
+        agenda({ s, g }, now - off);
+      }
     },
     histStop(quick) {
       const n = this.histNodes; if (!quick) this.histNow = null; if (!n) return; this.histNodes = null;
       if (n.k && this.HIST_RESUME[n.k]) this.histPos[n.k] = (n.off + (this.ctx.currentTime - n.t0)) % n.dur;   // guarda onde parou
-      const t = this.ctx.currentTime; try { n.g.gain.cancelScheduledValues(t); n.g.gain.setValueAtTime(Math.max(0.0001, n.g.gain.value), t); n.g.gain.linearRampToValueAtTime(0.0001, t + 0.9); n.s.stop(t + 0.95); } catch (e) { }
+      clearTimeout(n.timer); const t = this.ctx.currentTime; (n.segs || []).forEach(x => { try { x.g.gain.cancelScheduledValues(t); x.g.gain.setValueAtTime(Math.max(0.0001, x.g.gain.value), t); x.g.gain.linearRampToValueAtTime(0.0001, t + 0.9); x.s.stop(t + 0.95); } catch (e) { } }); try { n.g.gain.cancelScheduledValues(t); n.g.gain.setValueAtTime(Math.max(0.0001, n.g.gain.value), t); n.g.gain.linearRampToValueAtTime(0.0001, t + 0.9); n.s.stop(t + 0.95); } catch (e) { }
       if (!quick && this.musicOn && this.mode !== 'game') this.startMenuMusic();
     },
     stopMusic() { if (this.histNodes) this.histStop(true); this.histNow = null; if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); this.stopDefeat(); },

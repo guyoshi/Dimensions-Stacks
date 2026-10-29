@@ -1,6 +1,6 @@
 # Modo História — Economia (auditoria e proposta)
 
-Fonte: `tools/audit_economia.js`. Nada abaixo foi implementado; aguarda OK.
+Fonte: `tools/audit_economia.js`. **Preços, baús e promoção aprovados e implementados em 29/10** (v34 do historia.js). Baús ficam nos becos B003, B006, B010, B022, B028, B034, B049 (tier 1), B042, B044, B070 (tier 2), B085, B087 (tier 3), B096, B099 (tier 4) e abrem na primeira vitória do ponto; 9 de pêndulos (15–140) e 5 de carta (B099 lendária).
 
 ## 1. Auditoria: pêndulos entregues hoje
 

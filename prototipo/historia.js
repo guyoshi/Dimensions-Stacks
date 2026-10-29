@@ -365,7 +365,7 @@
   const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
   const premioDe = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
   // ---- cansaço das cartas (PROPOSTA, a calibrar): só vale com 21 ou mais cartas. Carta usada numa vitória cansa conforme a raridade; as não usadas descansam 1 ponto por vitória; derrota não cansa. Carta cansada não entra no duelo; pêndulos descansam.
-  const CANSA = { comum: 1, rara: 2, epica: 3, lendaria: 4 }, CUSTO_DESC = 6;
+  const CANSA = { comum: 1, rara: 2, epica: 3, lendaria: 4 }, CUSTO_DESC = 4;
   const fadigaOn = () => (S.owned || []).length >= 14 || UNIAO.some(c => (S.owned || []).includes(c));   // REGRA (autor, 29/10): cansaço a partir de 14 cartas ou da primeira carta da União
   const fad = id => (S.fadiga && S.fadiga[id]) | 0;
   const pesoCansa = id => CANSA[(U.CARDS[id] || {}).raridade] || 1;
@@ -451,7 +451,7 @@
           S.pend = (S.pend | 0) + premioDe(n); const cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
           if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Ei, {nome}! Você nos levou à batalha e venceu, mas estamos exaustas.', 'Cartas usadas numa vitória ficam cansadas, e as mais raras cansam mais. As bolinhas laranja mostram quanto falta para descansar.', 'Cada vitória sem nós descansa 1 ponto. Se tiver pressa, os pêndulos descansam na hora: é só tocar numa carta cansada na hora de escolher.', 'Se faltarem cartas descansadas, as menos cansadas completam seu time. Derrota não cansa ninguém.']); });
           else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
-          setTimeout(() => { toggleWin(id); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } }, 450);
+          setTimeout(() => { toggleWin(id); const bp = premioBau(id); if (bp) setTimeout(() => abrirBau(bp), res.capturadas.length ? 2600 : 700); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } }, 450);
         } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
       } };
       const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), simbolos: gd && gd.simbolos ? { val: 5 } : null, bhRefill: gd && gd.evTodas ? [1] : null, teams: gd && gd.regra === 'g_duo' ? [[0], [1, 2]] : null, teamPool: gd && gd.regra === 'g_duo' ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
@@ -603,7 +603,18 @@
   // ---- legenda e opções de teste
   // ---- minhas cartas (menu) e lojas
   const ORD = { lendaria: 0, epica: 1, rara: 2, comum: 3 };
-  const PRECO = { comum: 40, rara: 90, epica: 200, lendaria: 450 };   // PROPOSTA: preço das cartas nas lojas em pêndulos (a calibrar)
+  const PRECO = { comum: 25, rara: 60, epica: 130, lendaria: 300 };   // preços das cartas nas lojas em pêndulos (autor aprovou 29/10)
+  // Baús (autor aprovou 29/10): ficam em becos sem saída e abrem ao vencer o ponto pela primeira vez. {pend:n} ou {carta:raridade}
+  const BAUS = { B003: { pend: 25 }, B006: { carta: 'comum' }, B010: { pend: 15 }, B022: { pend: 20 }, B028: { pend: 20 }, B034: { carta: 'comum' }, B049: { pend: 25 },
+    B042: { pend: 40 }, B044: { carta: 'rara' }, B070: { pend: 50 }, B085: { pend: 75 }, B087: { carta: 'epica' }, B096: { pend: 140 }, B099: { carta: 'lendaria' } };
+  function premioBau(id) {
+    const b = BAUS[id]; if (!b || !S || (S.baus && S.baus[id])) return null;
+    let p = b; if (b.carta) { const em = new Set(S.owned || []); const pool = U.D.CARTAS.filter(x => x.raridade === b.carta && !x.uniao && x.id !== 'S11' && !em.has(x.id));
+      const alt = ['lendaria', 'epica', 'rara', 'comum'].slice(['lendaria', 'epica', 'rara', 'comum'].indexOf(b.carta)); let q = pool;
+      for (const r of alt) { if (q.length) break; q = U.D.CARTAS.filter(x => x.raridade === r && !x.uniao && x.id !== 'S11' && !em.has(x.id)); }
+      p = q.length ? { cartas: [q[Math.floor(Math.random() * q.length)].id] } : { pend: 60 }; }
+    S.baus = S.baus || {}; S.baus[id] = 1; save(); return p;
+  }
   function descansar(id) {   // paga e descansa uma carta; devolve o custo ou 0 se faltar
     const custo = fad(id) * CUSTO_DESC; if (!custo || (S.pend | 0) < custo) return 0;
     S.pend -= custo; delete S.fadiga[id]; save(); return custo;
@@ -641,12 +652,20 @@
     document.body.appendChild(ov); const g = $('.loja-g', ov), bal = $('#lojaBal', ov), ms = $('.loja-msg', ov);
     const conta = alvo => { const de = saldo; saldo = alvo; const t0 = performance.now(), dur = document.body.classList.contains('reduce') ? 0 : 600; const f = t => { const k = dur ? Math.min(1, (t - t0) / dur) : 1; bal.textContent = Math.round(de + (alvo - de) * k); if (k < 1) requestAnimationFrame(f); }; bal.parentNode.classList.remove('gasta'); void bal.offsetWidth; bal.parentNode.classList.add('gasta'); requestAnimationFrame(f); };
     const flutua = (el0, txt) => { const r = el0.getBoundingClientRect(), f = el(`<div class="loja-fl">−${txt}</div>`); f.style.left = r.left + r.width / 2 + 'px'; f.style.top = r.top + 'px'; document.body.appendChild(f); setTimeout(() => f.remove(), 1100); };
-    const preco = c => PRECO[U.CARDS[c].raridade] || 50;
+    if (est.promo === undefined) { const q = est.itens.filter(c => !est.comprados.includes(c)); est.promo = q.length ? q[[...id].reduce((a, ch) => a + ch.charCodeAt(0), 0) % q.length] : null; save(); }   // 1 item por loja com −30% fixo
+    const base = c => PRECO[U.CARDS[c].raridade] || 50;
+    const ajudaId = () => {   // quem está sem saldo para nada na loja ganha −20% na carta mais barata (uma vez por loja)
+      if (est.ajuda) return null; const q = est.itens.filter(c => !est.comprados.includes(c) && c !== est.promo); if (!q.length) return null;
+      const pr = c => c === est.promo ? Math.round(base(c) * .7) : base(c), todos = est.itens.filter(c => !est.comprados.includes(c)), min = Math.min(...todos.map(pr));
+      if ((S.pend | 0) >= min) return null; return q.sort((a, b) => base(a) - base(b))[0];
+    };
+    const preco = c => c === est.promo && !est.comprados.includes(c) ? Math.round(base(c) * .7) : c === ajudaId() ? Math.round(base(c) * .8) : base(c);
+    const tag = c => c === est.promo ? '−30%' : c === ajudaId() ? '−20%' : '';
     const render = () => {
       ms.textContent = msg; $$('.loja-tabs button', ov).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba)); g.innerHTML = '';
       if (aba === 'comprar') est.itens.forEach(c => { const got = est.comprados.includes(c), p = preco(c), pobre = !got && p > saldo;
         const w = el(`<div class="loja-it hs-item${got ? ' got' : ''}${pobre ? ' pobre' : ''}" data-id="${c}"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 }));
-        w.append(el(`<div class="loja-pr">${got ? '<span>Vendida</span>' : coinSvg(16) + '<b>' + p + '</b>'}</div>`)); w.append(el(`<small class="loja-rar r-${U.CARDS[c].raridade}">${RAR[U.CARDS[c].raridade] || ''}</small>`)); g.append(w); });
+        w.append(el(`<div class="loja-pr">${got ? '<span>Vendida</span>' : coinSvg(16) + '<b>' + p + '</b>' + (tag(c) && !got ? '<i class="loja-off">' + tag(c) + '</i>' : '')}</div>`)); w.append(el(`<small class="loja-rar r-${U.CARDS[c].raridade}">${RAR[U.CARDS[c].raridade] || ''}</small>`)); g.append(w); });
       else { const L = (S.owned || []).filter(c => fad(c)); if (!fadigaOn() || !L.length) g.append(el('<p class="loja-vz">Nenhuma carta cansada.</p>'));
         else L.forEach(c => { const p = fad(c) * CUSTO_DESC, w = el(`<div class="loja-it tired${p > saldo ? ' pobre' : ''}" data-id="${c}" data-rest="1"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 })); w.append(el(`<div class="loja-pr">${coinSvg(16)}<b>${p}</b></div>`)); w.append(el(`<div class="hs-fadb">${pontosFad(c)}</div>`)); g.append(w); }); }
     };
@@ -657,9 +676,9 @@
       if (!c) return; const k = c.dataset.id;
       if (c.dataset.rest) { const p = fad(k) * CUSTO_DESC; if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: descansar custa ' + p + '.'; ms.textContent = msg; return; }
         S.pend -= p; delete S.fadiga[k]; save(); SND.play('capture'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' descansou.'; render(); return; }
-      if (est.comprados.includes(k)) return; const p = preco(k);
+      if (est.comprados.includes(k)) return; const p = preco(k), usouAjuda = k === ajudaId();
       if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: ' + U.CARDS[k].nome + ' custa ' + p + '.'; ms.textContent = msg; return; }
-      S.pend -= p; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' é sua!'; render();
+      S.pend -= p; if (usouAjuda) est.ajuda = 1; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' é sua!'; render();
       const nw = $('.loja-it[data-id="' + k + '"]', g); if (nw) nw.classList.add('comprou');
     };
     render();

@@ -1680,3 +1680,4 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .sy-tally { display: flex; gap: 8px; justify-content: center; } .sy-c { display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 10px; border: 1px solid #ffffff2a; background: #1a1540; color: #cfc7f5; font: 700 13px var(--f-disp); } .sy-c.pos { color: #7dffb0; border-color: #7dffb066; } .sy-c.neg { color: #ff7a8a; border-color: #ff7a8a66; } .sy-c svg { width: 18px; height: 18px; }
 .sy-s svg { filter: invert(1) brightness(1.4); }
 .sy-s.neg::after { content: '−'; position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: #ff3b52; color: #fff; font: 800 15px/20px var(--f-disp); text-align: center; }
+.loja-off { font-style: normal; font-size: 11px; font-weight: 800; color: #7dffb0; margin-left: 2px; }
