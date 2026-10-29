@@ -12,3 +12,6 @@ Moeda: fragmentos dimensionais (48 fontes; total das 10 = 62, não dá para comp
 Aluguel: ao comprar, um mercador aleatório (carta comum/rara/épica) aparece com cutscene e ganha o botão ⇄ no mapa. Estoque de 8 cartas (4 comuns 8 pêndulos, 3 raras 18, 1 épica 40), renovado a cada ponto vencido; sem lendárias nem cartas que o jogador já tem. Carta alugada leva o selo ALUGADA, vale uma batalha (gasta ao iniciar), não cansa e não entra na coleção.
 Olho vivo: não vale para Boss; em guardiões mostra só as cartas principais (o resto é sorteado na luta).
 Cartas ganhas em minigame agora entram na coleção e abrem a animação de carta desbloqueada.
+
+## Lendárias exclusivas (autorizado 29/10)
+Cada lendária (fora União, Besta e Átila) aparece só no baralho de um inimigo (o dono; quem tem a carta como avatar, senão quem mais a usava). 281 cartas lendárias de apoio foram trocadas por épicas de poder parecido (`historia_bat.js` e `dados/historia_batalhas.json`). Lojas não vendem mais lendárias (slots viraram épicas). Baú B099 dá Kharvok (J30), exclusiva dele. Preços de fragmentos mantidos (62 para 48 fontes: não dá para comprar tudo).
