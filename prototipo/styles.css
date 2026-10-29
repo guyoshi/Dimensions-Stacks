@@ -1650,10 +1650,11 @@ body.reduce .loja-ov, body.reduce .loja-it, body.reduce .loja-bal, body.reduce .
 .mini-s { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--ink2); }
 
 /* ---- Modo História: fundos por tipo de batalha, aura da Besta, barra de Chamados e desafios do Boss */
-#game[data-fundo="arauto"] { background: radial-gradient(520px 380px at 12% 8%, #ff5a7a38, transparent 70%), radial-gradient(480px 360px at 92% 86%, #ffb36a2e, transparent 70%), radial-gradient(60px 60px at 20% 30%, #ffffff18, transparent 70%), linear-gradient(180deg, #2a0f2e, #120a22 70%); }
-#game[data-fundo="guardiao"] { background: radial-gradient(600px 420px at 50% 0%, #5a8cff3d, transparent 70%), radial-gradient(420px 320px at 8% 90%, #8f5cff30, transparent 70%),
-  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg stroke='%238fb4ff' stroke-opacity='.28' fill='none'%3E%3Cpath d='M20 40 L70 70 L120 50 L170 100 L150 170'/%3E%3C/g%3E%3Cg fill='%23dbe7ff'%3E%3Ccircle cx='20' cy='40' r='2.4'/%3E%3Ccircle cx='70' cy='70' r='1.8'/%3E%3Ccircle cx='120' cy='50' r='2.6'/%3E%3Ccircle cx='170' cy='100' r='2'/%3E%3Ccircle cx='150' cy='170' r='2.4'/%3E%3C/g%3E%3C/svg%3E"), linear-gradient(180deg, #0b1236, #0a0820 75%); background-size: auto, auto, 220px 220px, auto; }
-#game[data-fundo="boss"] { background: radial-gradient(380px 380px at 50% 46%, #000 0 22%, #5b1aa855 38%, transparent 70%), conic-gradient(from 0deg at 50% 46%, #1a0630, #3a0d5c, #0a0414, #4a0f3a, #1a0630); background-size: auto, 220% 220%; animation: bossbg 26s linear infinite; }
+#game[data-fundo] { background-position: center; background-size: cover; background-repeat: no-repeat; }
+#game[data-fundo="normal"] { background-image: linear-gradient(#07051480, #070514c9), url(cena/batalha-normal.png); }
+#game[data-fundo="arauto"] { background-image: linear-gradient(#12030b73, #12030bc9), url(cena/batalha-arauto.png); }
+#game[data-fundo="guardiao"] { background-image: linear-gradient(#07102c72, #070514c9), url(cena/batalha-guardiao.png); }
+#game[data-fundo="boss"] { background-image: linear-gradient(#09021175, #090211d1), url(cena/batalha-boss.png); animation: bossbg 26s linear infinite; }
 @keyframes bossbg { to { background-position: 0 0, 100% 60%; } }
 body.reduce #game[data-fundo="boss"] { animation: none; }
 #game[data-fundo="boss"] .slot[data-pid="1"] .card { box-shadow: 0 0 14px 3px #8a2be2cc, 0 0 34px 8px #2a0a4acc; filter: saturate(.8) contrast(1.06); }
