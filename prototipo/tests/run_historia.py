@@ -13,7 +13,7 @@ shots = os.path.join(proj, 'tests', 'shots'); os.makedirs(shots, exist_ok=True)
 try:
   with sync_playwright() as p:
     b = p.chromium.launch(); ctx = b.new_context(viewport={'width': 400, 'height': 850}, has_touch=True); pg = ctx.new_page()
-    pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.historia.prefs', JSON.stringify({aberto:true,v2:1,escuro:false}));")
+    pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.historia.prefs', JSON.stringify({aberto:true,escuro:false,v2:1,escuro:false}));")
     pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text else None)
     pg.goto('http://localhost:8777/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500)
@@ -36,15 +36,15 @@ try:
     chk(not pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'ponto da Besta ainda não dourado com guardiões vivos')
     for gi, g in enumerate(M['guardioes'].values()):
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
-        pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
+        pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
         bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
-        pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(3500)
+        if 'Desfazer' not in pg.inner_text('#hsSheet [data-a=win]'): pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(3500)
         if gi == 0: chk('Besta' in pg.evaluate("document.querySelector('#hsToast').textContent"), 'ao derrotar guardião a Besta é atingida (aviso do bônus)')
         pg.evaluate("document.querySelectorAll('.npc,.bau-ov,.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(500)
     pg.wait_for_timeout(600)
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
-        pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
+        pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
         bx = pos(n); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
         pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.lib .bau-ok', timeout=4000); pg.click('.lib .bau-ok'); pg.wait_for_timeout(700)
         for _ in range(14):
