@@ -105,7 +105,7 @@
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4, quasar: 5 }[c.raridade] || 1;
-    const bid = c.orig || c.base || id;   // Quasar usa a foto da carta base
+    const bid = c.orig || id;
     const full = o.full || (o.cw || 0) > 170, src = IMG[bid] && (full ? IMG[bid] : IMG[bid].replace('photos/', 'photos/t/'));   // miniatura (300x450) por padrão; foto grande só em tela cheia
     const focoX = FOCO_X[bid] != null ? FOCO_X[bid] : 50, focoY = FOCO[bid] != null ? FOCO[bid] : 0;
     const temFoco = FOCO_X[bid] != null || FOCO[bid] != null || SOBE[bid];

@@ -1197,6 +1197,123 @@
    "w": 720,
    "h": 1080,
    "webp": 200238
+  },
+  "Q01": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Édelin - Quasar 1.png",
+   "mtimeMs": 0,
+   "bytes": 3244294,
+   "sha1": "d696e444b7",
+   "w": 720,
+   "h": 1080,
+   "webp": 223592
+  },
+  "Q02": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Édelin - Quasar 2.png",
+   "mtimeMs": 0,
+   "bytes": 2588104,
+   "sha1": "0cf85e713c",
+   "w": 720,
+   "h": 1080,
+   "webp": 144526
+  },
+  "Q03": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Édelin - Quasar 3.png",
+   "mtimeMs": 0,
+   "bytes": 2831287,
+   "sha1": "ff2327a9c9",
+   "w": 720,
+   "h": 1080,
+   "webp": 174532
+  },
+  "Q04": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Beatriz - Quasar 1.png",
+   "mtimeMs": 0,
+   "bytes": 2742236,
+   "sha1": "2f0e5f4c97",
+   "w": 720,
+   "h": 1080,
+   "webp": 204708
+  },
+  "Q05": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Beatriz - Quasar 2.png",
+   "mtimeMs": 0,
+   "bytes": 2694956,
+   "sha1": "d49d783d63",
+   "w": 720,
+   "h": 1080,
+   "webp": 190572
+  },
+  "Q06": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Beatriz - Quasar 3.png",
+   "mtimeMs": 0,
+   "bytes": 2936822,
+   "sha1": "b460b37fa8",
+   "w": 720,
+   "h": 1080,
+   "webp": 230408
+  },
+  "Q07": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Bruno - Quasar 1.png",
+   "mtimeMs": 0,
+   "bytes": 2974234,
+   "sha1": "f8f3bf082e",
+   "w": 720,
+   "h": 1080,
+   "webp": 218948
+  },
+  "Q08": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Bruno - Quasar 2.png",
+   "mtimeMs": 0,
+   "bytes": 3265144,
+   "sha1": "7fdfce3414",
+   "w": 720,
+   "h": 1080,
+   "webp": 237208
+  },
+  "Q09": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Breno - Quasar 1.png",
+   "mtimeMs": 0,
+   "bytes": 3159942,
+   "sha1": "926ded563b",
+   "w": 720,
+   "h": 1080,
+   "webp": 224510
+  },
+  "Q10": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Breno - Quasar 2.png",
+   "mtimeMs": 0,
+   "bytes": 2776192,
+   "sha1": "dc306bfd86",
+   "w": 720,
+   "h": 1080,
+   "webp": 195538
+  },
+  "Q11": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Banjo - Quasar 1.png",
+   "mtimeMs": 0,
+   "bytes": 2716524,
+   "sha1": "85f75c5931",
+   "w": 720,
+   "h": 1080,
+   "webp": 188238
+  },
+  "Q12": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Banjo - Quasar 2.png",
+   "mtimeMs": 0,
+   "bytes": 3396311,
+   "sha1": "1483681e37",
+   "w": 720,
+   "h": 1080,
+   "webp": 269082
+  },
+  "Q13": {
+   "src": "Viajantes Dimensionais/98 - Assets Gerais/Referências/Níveis Quasar/Korvo - Quasar 2.png",
+   "mtimeMs": 0,
+   "bytes": 3144742,
+   "sha1": "dfe55bfa31",
+   "w": 720,
+   "h": 1080,
+   "webp": 207790
   }
  }
 }
