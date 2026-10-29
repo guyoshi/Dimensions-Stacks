@@ -17,7 +17,8 @@
     try { if (SND.histPlay && D.musica) SND.histPlay(D.musica); } catch (e) { }
     function fecha(pulou) {
       if (fim) return; fim = true; if (!vars.nome) vars.nome = (D.cenas.find(c => c.pergunta) || { pergunta: {} }).pergunta.padrao || ''; clearInterval(digit); document.removeEventListener('keydown', key, true);
-      ov.classList.add('out'); setTimeout(() => { ov.remove(); done && done(pulou, vars); }, reduce() ? 30 : 700);
+      ov.classList.add('out'); try { done && done(pulou, vars); } catch (e) { console.error(e); }   // o destino já aparece por baixo enquanto o preto some (fade direto)
+      setTimeout(() => ov.remove(), reduce() ? 30 : 700);
     }
     const POS = [[3, 3, -4], [35, 5, 3], [67, 3, 5], [2, 25, 3], [34, 27, -4], [66, 26, -3], [18, 48, 4], [50, 49, -5]];   // cantos diferentes (x%, y%, giro)
     function fotos(c) {

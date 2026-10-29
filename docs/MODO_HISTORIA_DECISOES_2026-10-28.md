@@ -55,3 +55,10 @@ Complementa `MODO_HISTORIA_A_UNIAO_PROPOSTA_2026-10-28.md`. Onde há diferença,
 - **REGRA NOVA (autor): cada membro da União é libertado ao vencer um miniboss** (8 minibosses = 8 cartas da União: D06, M01, J03, B01, S01, M10, V15, V02). **O Boss só abre com os 4 guardiões vencidos E os 8 minibosses vencidos** (a União completa na equipe). Pendente de confirmação do autor: se os guardiões continuam obrigatórios além dos minibosses.
 - **Boss:** difícil, inteligente e estratégico, com boas cartas. Proposta: **A Besta + as 6 lendárias mais fortes**, bot no nível mais forte (Etapa 4). As cartas da União não aparecem em inimigos.
 - **Eventos:** um só ícone (raio); o painel do ponto mostra nome e regra do evento.
+
+## Aprovações de 29/10/2026 (noite)
+
+- **Aprovadas:** Etapa 2 (100 batalhas), Etapa 3 (eventos), quadro de temas, distribuição dos minigames (7 de série em ramos de miniboss, 10 base em becos) e loja na direita (`MODO_HISTORIA_TEMAS_E_COLOCACAO_PROPOSTA_2026-10-29.md`).
+- **Temas:** Édelin Lys e Mistério Oculto também podem ser temas de área. Não é um tema por direção: pode haver temas por diagonal (nordeste, noroeste etc.).
+- **Broches:** o minigame de cada série dá 1 broche (contador x/7 no mapa). Com os 7, abre o **final secreto** depois do Boss. Texto do final secreto: o autor escreve depois do jogo construído. Broches não são requisito para o Boss.
+- **Cinemática inicial:** ao terminar, fade direto para o mapa (sem passar pelo menu inicial).
