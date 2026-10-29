@@ -975,6 +975,7 @@
     }
     activate(combat, pid, card, forced, list) {
       const p = this.p(pid); const i = p.prepared.indexOf(card); if (i < 0) return null;
+      if (!forced) { this.s.espUsos = this.s.espUsos || {}; this.s.espUsos[pid] = (this.s.espUsos[pid] | 0) + 1; }   // conta os especiais usados (missões do modo história)
       p.prepared.splice(i, 1); const a = { pid, card, forced, cancelled: false, done: false }; (list || combat.activations).push(a); return a;
     }
     async forceActivate(combat, target, src) {

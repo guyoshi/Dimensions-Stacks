@@ -58,6 +58,8 @@
     M.raio = Math.max(M.raio, Math.ceil(Math.max(...NOS.map(n => Math.hypot(n.x, n.y)))) + 40);
   })();
   const R = M.raio;
+  const NPC = window.DSNpc;   // NPCs, missões, fragmentos e registros (historia_npcs.js)
+  let lastVis = null;
 
   let S = null;                                   // jornada salva (ou null)
   let P = Object.assign({ aberto: false, escuro: true }, rd(PKEY, {}));   // preferências (mapa aberto = modo teste, desligado por padrão: só se avança vencendo)
@@ -183,10 +185,10 @@
     mp.innerHTML = `<svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
+        <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
-      <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button></div>
+      <div class="hs-hud ctl"><button class="ibtn" data-a="zin" aria-label="Aproximar">+</button><button class="ibtn" data-a="zout" aria-label="Afastar">−</button><button class="ibtn" data-a="start" aria-label="Ir ao ponto de partida">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro">▣</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções">?</button><button class="ibtn" data-a="missoes" aria-label="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção">✦</button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
     paintAll(); bindMap(mp); heroPlace(posId(), false);
@@ -214,6 +216,7 @@
     const vis = new Set(NUCLEO); rev.forEach(i => { vis.add(i); BY[i].viz.forEach(v => vis.add(v)); });
     $$('.n', root).forEach(g => g.classList.toggle('fog', ocultar && !vis.has(g.dataset.id)));
     $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', ocultar && !(rev.has(a) || rev.has(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); });
+    lastVis = vis; if (NPC) NPC.paint(vis, ocultar);
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
@@ -246,7 +249,7 @@
       else if (ptrs.size === 2 && pinch0) { p.x = e.clientX; p.y = e.clientY; const [a, b] = [...ptrs.values()]; const d = Math.hypot(a.x - b.x, a.y - b.y), r = svg.getBoundingClientRect(); zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, (pinch0.k * d / pinch0.d) / cam.k, false); moved = 99; }
     });
     const up = e => { if (!ptrs.has(e.pointerId)) return; ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = null;
-      if (!ptrs.size && moved <= 8 && startPt) { const g = (startPt.t.closest && startPt.t.closest('.n')); if (g) toque(g.dataset.id); else closeSheet(); } };
+      if (!ptrs.size && moved <= 8 && startPt) { const g = (startPt.t.closest && startPt.t.closest('.n')), q = (startPt.t.closest && startPt.t.closest('.npcm')); if (q && NPC) NPC.toque(q.dataset.id); else if (g) toque(g.dataset.id); else closeSheet(); } };
     svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', e => { ptrs.delete(e.pointerId); pinch0 = null; });
     svg.addEventListener('wheel', e => { e.preventDefault(); const r = svg.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15, false); }, { passive: false });
     svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.seta')) { e.preventDefault(); passo(e.target.closest('.seta').dataset.to); } else if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.n')) { e.preventDefault(); toque(e.target.closest('.n').dataset.id); } });
@@ -260,6 +263,8 @@
       else if (a === 'fit') fit(true);
       else if (a === 'leg') legenda();
       else if (a === 'cartas') minhasCartas();
+      else if (a === 'missoes' && NPC) NPC.missoes();
+      else if (a === 'colecao' && NPC) NPC.colecao();
       else if (a === 'broches') toast(nBroches() ? 'Os broches brilham quando estão juntos. Para que será que servem?' : 'Algo guarda os broches de cada série. Para que será que servem?');
     });
     window.addEventListener('resize', () => { if (view === 'map' && svg && svg.isConnected) applyCam(false); });
@@ -337,10 +342,10 @@
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[setor(n)])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      <p>${esc(T.desc)}</p>${evLinha}${n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b> pêndulos${ok ? '' : ' na primeira vitória'}${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}
+      <p>${esc(T.desc)}</p>${evLinha}${n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b> pêndulos${ok ? '' : ' na primeira vitória'}${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
       <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'loja') loja(id); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;
@@ -447,11 +452,12 @@
       const hist = { musica, id, fundo: ({ miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null, aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         SND.histLock = null; try { SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
+        S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save();
         if (res.venceu && !cleared(id)) {
-          S.pend = (S.pend | 0) + premioDe(n); const cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
+          S.pend = (S.pend | 0) + premioDe(n); S.ganho = (S.ganho | 0) + premioDe(n); S.capt = (S.capt | 0) + res.capturadas.length; const cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
           if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Ei, {nome}! Você nos levou à batalha e venceu, mas estamos exaustas.', 'Cartas usadas numa vitória ficam cansadas, e as mais raras cansam mais. As bolinhas laranja mostram quanto falta para descansar.', 'Cada vitória sem nós descansa 1 ponto. Se tiver pressa, os pêndulos descansam na hora: é só tocar numa carta cansada na hora de escolher.', 'Se faltarem cartas descansadas, as menos cansadas completam seu time. Derrota não cansa ninguém.']); });
           else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
-          setTimeout(() => { toggleWin(id); const bp = premioBau(id); if (bp) setTimeout(() => abrirBau(bp), res.capturadas.length ? 2600 : 700); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } }, 450);
+          setTimeout(() => { toggleWin(id); if (NPC) NPC.vitoria(id); const bp = premioBau(id); if (bp) setTimeout(() => abrirBau(bp, () => { if (NPC) NPC.fragBau(id); }), res.capturadas.length ? 2600 : 700); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
         } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
       } };
       const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), simbolos: gd && gd.simbolos ? { val: 5 } : null, bhRefill: gd && gd.evTodas ? [1] : null, teams: gd && gd.regra === 'g_duo' ? [[0], [1, 2]] : null, teamPool: gd && gd.regra === 'g_duo' ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
@@ -486,9 +492,9 @@
   // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
   function npcFala(cid, linhas, done) {
     const reab = curId, mods = $$('.modal').filter(m => m.style.display !== 'none'); mods.forEach(m => { m.style.display = 'none'; });   // o diálogo tem prioridade: esconde menus e os devolve no fim
-    closeSheet(); const c = U.CARDS[cid]; let i = 0, tm = null, pronto = false;
-    const ov = el(`<div class="npc"><div class="npc-box"><div class="npc-p"></div><div class="npc-b"><b>${esc(c ? c.nome : 'Viajante')}</b><p></p><i class="cin-next on">▾</i></div></div></div>`);
-    if (c) $('.npc-p', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 84 }));
+    closeSheet(); const obj = cid && typeof cid === 'object', nomeN = obj ? cid.nome : null; if (obj) cid = cid.card; const c = cid ? U.CARDS[cid] : null; let i = 0, tm = null, pronto = false;
+    const ov = el(`<div class="npc"><div class="npc-box"><div class="npc-p"></div><div class="npc-b"><b>${esc(nomeN || (c ? c.nome : 'Viajante'))}</b><p></p><i class="cin-next on">▾</i></div></div></div>`);
+    if (c) $('.npc-p', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 84 })); else $('.npc-p', ov).append(el('<div class="npc-av2">' + esc((nomeN || '?')[0]) + '</div>'));
     document.body.appendChild(ov); const P_ = $('p', ov), red = document.body.classList.contains('reduce');
     const fala = () => { const t = linhas[i].replace(/\{nome\}/g, (S && S.nome) || 'viajante'); pronto = false; P_.textContent = ''; clearInterval(tm); let k = 0; const fim = () => { clearInterval(tm); P_.textContent = t; pronto = true; };
       if (red) return fim(); tm = setInterval(() => { k += 2; P_.textContent = t.slice(0, k); if (k >= t.length) fim(); }, 22); };
@@ -590,7 +596,7 @@
       }
       ok.hidden = false;
     }, 1700);
-    const fechar = () => { if (fim) return; fim = true; if (!premio.semDica) setTimeout(() => dica('bau'), 600); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (S) { S.pend = (S.pend | 0) + pend; cartas.forEach(id => { if (!S.owned.includes(id)) S.owned.push(id); }); save(); if (view === 'map' && svg && svg.isConnected) paintAll(); } done && done(); };
+    const fechar = () => { if (fim) return; fim = true; if (!premio.semDica) setTimeout(() => dica('bau'), 600); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); if (S) { S.pend = (S.pend | 0) + pend; S.ganho = (S.ganho | 0) + pend; cartas.forEach(id => { if (!S.owned.includes(id)) S.owned.push(id); }); save(); if (view === 'map' && svg && svg.isConnected) paintAll(); } done && done(); if (NPC) setTimeout(() => NPC.check(), 600); };
     ok.onclick = () => { SND.play('click'); fechar(); };
   }
   function sorteioBau() {   // teste: 60% pêndulos, 40% de 1 a 3 cartas novas (ainda não possuídas)
@@ -617,7 +623,7 @@
   }
   function descansar(id) {   // paga e descansa uma carta; devolve o custo ou 0 se faltar
     const custo = fad(id) * CUSTO_DESC; if (!custo || (S.pend | 0) < custo) return 0;
-    S.pend -= custo; delete S.fadiga[id]; save(); return custo;
+    S.pend -= custo; S.gasto = (S.gasto | 0) + custo; delete S.fadiga[id]; save(); return custo;
   }
   function minhasCartas(emLoja) {
     closeSheet(); const box = el('<div class="hs-esc hs-mc"><h3>Minhas cartas</h3><p class="hint hs-info"></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="todas">Descansar todas</button><button class="btn primary" data-a="x">Fechar</button></div></div>');
@@ -635,7 +641,7 @@
       if (c && fad(c.dataset.id)) { const id = c.dataset.id, custo = descansar(id); if (custo) { SND.play('capture'); msg = U.CARDS[id].nome + ' descansou (−' + custo + ' pêndulos).'; } else { SND.play('tick'); msg = 'Faltam pêndulos: descansar custa ' + fad(id) * CUSTO_DESC + '.'; } render(); return; }
       if (!b) return; SND.play('click');
       if (b.dataset.a === 'x') m.close();
-      else if (b.dataset.a === 'todas') { let t = 0; Object.keys(S.fadiga || {}).forEach(id => { const k = fad(id) * CUSTO_DESC; if ((S.pend | 0) >= k) { S.pend -= k; delete S.fadiga[id]; t += k; } }); save(); SND.play('capture'); msg = t ? 'Descansadas (−' + t + ' pêndulos).' : 'Faltam pêndulos.'; render(); }
+      else if (b.dataset.a === 'todas') { let t = 0; Object.keys(S.fadiga || {}).forEach(id => { const k = fad(id) * CUSTO_DESC; if ((S.pend | 0) >= k) { S.pend -= k; S.gasto = (S.gasto | 0) + k; delete S.fadiga[id]; t += k; } }); save(); SND.play('capture'); msg = t ? 'Descansadas (−' + t + ' pêndulos).' : 'Faltam pêndulos.'; render(); }
     };
   }
   // estoque fixo por loja (sorteado uma vez e guardado): 6 cartas que o jogador ainda não tem; raridade sobe com a região
@@ -646,10 +652,15 @@
     plano.forEach(r => { const pool = embaralha(U.D.CARTAS.filter(x => x.raridade === r && !x.uniao && x.id !== 'S11' && !em.has(x.id))); const x = pool[0]; if (x) { em.add(x.id); S.lojas[id].itens.push(x.id); } });
     save(); return S.lojas[id];
   }
+  const rnd0 = a => a[Math.floor(Math.random() * a.length)];
   function loja(id) {
     closeSheet(); const est = estoque(id), RAR = { comum: 'Comum', rara: 'Rara', epica: 'Épica', lendaria: 'Lendária' }; let aba = 'comprar', msg = '', saldo = S.pend | 0;
-    const ov = el(`<div class="hs-loja loja-ov"><div class="loja-top"><button class="ibtn" data-a="x" aria-label="Sair">←</button><div class="loja-tt"><small>LOJA</small><b>Bazar dos Viajantes</b></div><div class="loja-bal">${coinSvg(26)}<b id="lojaBal">${saldo}</b></div></div><div class="loja-tabs"><button class="on" data-a="t:comprar">Comprar</button><button data-a="t:descansar">Descansar</button></div><p class="loja-msg"></p><div class="loja-g"></div></div>`);
+    const ov = el(`<div class="hs-loja loja-ov"><div class="loja-top"><button class="ibtn" data-a="x" aria-label="Sair">←</button><div class="loja-tt"><small>LOJA</small><b>Bazar dos Viajantes</b></div><div class="loja-bal">${coinSvg(26)}<b id="lojaBal">${saldo}</b></div></div><div class="loja-tabs"><button class="on" data-a="t:comprar">Comprar</button><button data-a="t:descansar">Descansar</button></div><div class="loja-vend" hidden><div class="lv-p"></div><div class="lv-t"><b></b><span></span></div></div><p class="loja-msg"></p><div class="loja-g"></div></div>`);
     document.body.appendChild(ov); const g = $('.loja-g', ov), bal = $('#lojaBal', ov), ms = $('.loja-msg', ov);
+    const V = NPC ? NPC.vend(id) : null, vd = $('.loja-vend', ov);
+    const diz = t => { if (!V) return; $('.lv-t span', ov).textContent = t; vd.classList.remove('fala'); void vd.offsetWidth; vd.classList.add('fala'); };
+    if (V) { vd.hidden = false; $('.lv-p', ov).append(U.cardEl(V.card, { up: true, noanim: true, cw: 46 })); $('.lv-t b', ov).textContent = V.nome; diz(V.oi); }
+    const extras = () => NPC ? NPC.lojaExtras(id) : [];
     const conta = alvo => { const de = saldo; saldo = alvo; const t0 = performance.now(), dur = document.body.classList.contains('reduce') ? 0 : 600; const f = t => { const k = dur ? Math.min(1, (t - t0) / dur) : 1; bal.textContent = Math.round(de + (alvo - de) * k); if (k < 1) requestAnimationFrame(f); }; bal.parentNode.classList.remove('gasta'); void bal.offsetWidth; bal.parentNode.classList.add('gasta'); requestAnimationFrame(f); };
     const flutua = (el0, txt) => { const r = el0.getBoundingClientRect(), f = el(`<div class="loja-fl">−${txt}</div>`); f.style.left = r.left + r.width / 2 + 'px'; f.style.top = r.top + 'px'; document.body.appendChild(f); setTimeout(() => f.remove(), 1100); };
     if (est.promo === undefined) { const q = est.itens.filter(c => !est.comprados.includes(c)); est.promo = q.length ? q[[...id].reduce((a, ch) => a + ch.charCodeAt(0), 0) % q.length] : null; save(); }   // 1 item por loja com −30% fixo
@@ -666,19 +677,24 @@
       if (aba === 'comprar') est.itens.forEach(c => { const got = est.comprados.includes(c), p = preco(c), pobre = !got && p > saldo;
         const w = el(`<div class="loja-it hs-item${got ? ' got' : ''}${pobre ? ' pobre' : ''}" data-id="${c}"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 }));
         w.append(el(`<div class="loja-pr">${got ? '<span>Vendida</span>' : coinSvg(16) + '<b>' + p + '</b>' + (tag(c) && !got ? '<i class="loja-off">' + tag(c) + '</i>' : '')}</div>`)); w.append(el(`<small class="loja-rar r-${U.CARDS[c].raridade}">${RAR[U.CARDS[c].raridade] || ''}</small>`)); g.append(w); });
-      else { const L = (S.owned || []).filter(c => fad(c)); if (!fadigaOn() || !L.length) g.append(el('<p class="loja-vz">Nenhuma carta cansada.</p>'));
+      if (aba === 'comprar') extras().forEach(x => { const pobre = !x.got && x.p > saldo, w = el(`<div class="loja-it loja-x${x.got ? ' got' : ''}${pobre ? ' pobre' : ''}" data-x="${x.k}"></div>`);
+        if (x.tipo === 'frag') w.append(el(`<div class="lx-art">${NPC.cristal(true)}</div>`)); else { const a = el('<div class="lx-art reg"></div>'); a.append(U.cardEl(x.card, { up: true, noanim: true, cw: 92 })); w.append(a); }
+        w.append(el(`<div class="loja-pr">${x.got ? '<span>Comprado</span>' : coinSvg(16) + '<b>' + x.p + '</b>'}</div>`)); w.append(el(`<small class="loja-rar r-x">${x.tipo === 'frag' ? 'Fragmento dimensional' : 'Registro'}</small>`)); g.append(w); });
+      if (aba !== 'comprar') { const L = (S.owned || []).filter(c => fad(c)); if (!fadigaOn() || !L.length) g.append(el('<p class="loja-vz">Nenhuma carta cansada.</p>'));
         else L.forEach(c => { const p = fad(c) * CUSTO_DESC, w = el(`<div class="loja-it tired${p > saldo ? ' pobre' : ''}" data-id="${c}" data-rest="1"></div>`); w.append(U.cardEl(c, { up: true, noanim: true, cw: 92 })); w.append(el(`<div class="loja-pr">${coinSvg(16)}<b>${p}</b></div>`)); w.append(el(`<div class="hs-fadb">${pontosFad(c)}</div>`)); g.append(w); }); }
     };
-    const sai = () => { ov.classList.add('out'); setTimeout(() => ov.remove(), 250); if (view === 'map') paintAll(); };
+    const sai = () => { ov.classList.add('out'); setTimeout(() => ov.remove(), 250); if (view === 'map') paintAll(); if (NPC) NPC.check(); };
     ov.onclick = e => {
       const b = e.target.closest('[data-a]'), c = e.target.closest('.loja-it');
       if (b) { SND.play('click'); if (b.dataset.a === 'x') return sai(); if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); msg = ''; render(); } return; }
       if (!c) return; const k = c.dataset.id;
+      if (c.dataset.x) { const x = extras().find(q => q.k === c.dataset.x); if (!x || x.got) return; if (x.p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: custa ' + x.p + '.'; ms.textContent = msg; return; }
+        S.pend -= x.p; S.gasto = (S.gasto | 0) + x.p; NPC.compraExtra(x.k); save(); SND.play('legend'); flutua(c, x.p); conta(S.pend | 0); msg = x.tipo === 'frag' ? 'Fragmento dimensional (' + NPC.nFrag() + '/30)' : 'Registro de ' + U.CARDS[x.card].nome; if (V) diz(rnd0(V.obr)); render(); return; }
       if (c.dataset.rest) { const p = fad(k) * CUSTO_DESC; if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: descansar custa ' + p + '.'; ms.textContent = msg; return; }
-        S.pend -= p; delete S.fadiga[k]; save(); SND.play('capture'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' descansou.'; render(); return; }
+        S.pend -= p; S.gasto = (S.gasto | 0) + p; delete S.fadiga[k]; save(); SND.play('capture'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' descansou.'; render(); return; }
       if (est.comprados.includes(k)) return; const p = preco(k), usouAjuda = k === ajudaId();
       if (p > saldo) { SND.play('tick'); c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 400); msg = 'Faltam pêndulos: ' + U.CARDS[k].nome + ' custa ' + p + '.'; ms.textContent = msg; return; }
-      S.pend -= p; if (usouAjuda) est.ajuda = 1; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' é sua!'; render();
+      S.pend -= p; S.gasto = (S.gasto | 0) + p; S.compras = (S.compras | 0) + 1; if (usouAjuda) est.ajuda = 1; est.comprados.push(k); if (!S.owned.includes(k)) S.owned.push(k); save(); SND.play('legend'); flutua(c, p); conta(S.pend | 0); msg = U.CARDS[k].nome + ' é sua!'; if (V) diz(rnd0(V.obr)); render();
       const nw = $('.loja-it[data-id="' + k + '"]', g); if (nw) nw.classList.add('comprou');
     };
     render();
@@ -703,5 +719,6 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } });
   }
 
-  window.DSHistoria = { darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S };
+  if (NPC) NPC.init({ S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
+  window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S };
 })();

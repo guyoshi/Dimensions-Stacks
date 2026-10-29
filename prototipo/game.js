@@ -701,7 +701,7 @@
           <div class="stats"><div><b>${G.s.combats}</b>disputas</div><div><b>${G.s.round}</b>rodadas</div></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="go">Continuar</button></div></div></div></div>`);
         cap.forEach(c => $('.hcap', nn).append(cardEl(c, { up: true, noanim: true, cw: cap.length > 3 ? 76 : 96 })));
-        nn.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); nn.remove(); U.killRun(); H.aoFim({ venceu: !lost, capturadas: cap, disputas: G.s.combats }); };
+        nn.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); nn.remove(); U.killRun(); H.aoFim({ venceu: !lost, capturadas: cap, disputas: G.s.combats, espUsos: (G.s.espUsos || {})[V.viewer] | 0 }); };
         U.layer().appendChild(nn); return;
       }
       SND.play(lost ? 'defeat' : 'victory'); if (lost && SND.defeatMusic) SND.defeatMusic();
