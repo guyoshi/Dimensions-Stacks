@@ -344,7 +344,7 @@
     },
     // Mistério Oculto: olhos que se abrem no escuro; feche-os antes que ataquem (36 olhos, 3 corações)
     culpado(body, c, fim) {
-      const N = 36, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
+      const N = 48, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-olhos">${Array.from({ length: SPOTS }, (_, i) => `<button class="mg-olho" data-i="${i}" aria-label="olho"><i></i></button>`).join('')}</div>`; const q = $('#mq', body), g = $('.mg-olhos', body);
       const pinta = () => { q.innerHTML = `${'♥'.repeat(vidas)}<span style="opacity:.3">${'♥'.repeat(3 - vidas)}</span> · olhos ${Math.min(nasc, N)}/${N}`; };
       const ate = () => nasc / (N - 1);
@@ -353,7 +353,7 @@
       const fimJ = () => { if (acabou) return; acabou = true; clearInterval(tm); const morreu = vidas <= 0, pct = morreu ? Math.min(.7, fechados / N) : 1 - perdidos / N; fim(pct, morreu ? 'Os olhos venceram (' + fechados + ' fechados)' : fechados + ' de ' + N + ' olhos fechados'); };
       g.onclick = e => { const b = e.target.closest('.mg-olho'); if (!b || acabou) return; const i = +b.dataset.i; if (olhos[i]) fecha(i, false); };
       tm = setInterval(() => { if (acabou) return; const agora = Date.now() - t0;
-        if (nasc < N && agora >= prox) { const livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (livres.length) { const i = pick(livres); const life = (3000 - 1300 * ate()) / c.dif; olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; pinta(); prox = agora + (1250 - 650 * ate()) / c.dif; } else prox = agora + 150; }
+        if (nasc < N && agora >= prox) { const a = ate(), k = 1 + (Math.random() < a * 1.1 ? 1 : 0) + (a > .5 && Math.random() < .55 ? 1 : 0) + (a > .75 && Math.random() < .55 ? 1 : 0); let livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (livres.length) { for (let j = 0; j < k && livres.length && nasc < N; j++) { const i = pick(livres); livres = livres.filter(x => x !== i); const life = (3300 - 2500 * a) / c.dif; olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; } pinta(); prox = agora + (1700 - 1350 * a) / c.dif; } else prox = agora + 150; }
         olhos.forEach((o, i) => { if (!o) return; const f = (agora - o.ini) / o.life, b = g.children[i]; if (f >= 1) return fecha(i, true); b.classList.toggle('tre', f > .4); b.classList.toggle('red', f > .7); });
         if (nasc >= N && !olhos.some(Boolean)) fimJ(); }, 50);
       pinta(); return () => { acabou = true; clearInterval(tm); };
