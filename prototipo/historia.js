@@ -35,6 +35,7 @@
   const MG = { B082: ['elos', 'diario'], B088: ['culpado', 'misterio'], B089: ['luas', 'jesed'], B052: ['ritmo', 'belfex'], B077: ['poderes', 'viajantes'], B065: ['gancho', 'spacetheft'], B081: ['formacao', 'uniao'],
     B018: ['maiormenor'], B037: ['mineracao'], B061: ['raspadinha'], B076: ['caracoroa'], B074: ['cacapendulo'], B056: ['ordem'], B053: ['memoria'], B046: ['quemequem'], B054: ['asteroides'], B073: ['cofre'] };
   const MG_CUSTO = 10;
+  Object.values(M.starts).forEach(id => { if (BY[id]) { BY[id].tipo = 'normal'; const b = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (b) { b.t = 'normal'; delete b.e; } } });   // a primeira batalha de cada caminho é sempre normal, nunca um evento
   Object.keys(MG).forEach(id => { if (BY[id]) { BY[id].tipo = 'minigame'; BY[id].mg = MG[id][0]; BY[id].serieMg = MG[id][1] || null; } });
   const mgInfo = n => (window.DSMini && window.DSMini.LISTA.find(m => m.id === n.mg)) || { nome: 'Minigame', desc: '' };
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
@@ -162,13 +163,13 @@
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
     const c = S;
     h.innerHTML = `      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
-      <div class="hs-hubin"><div class="hs-seal"></div><h1>A União</h1><p class="hs-sub">Modo história</p>
+      <div class="hs-hubin"><div class="hs-seal"></div><h1>A União</h1>
         <div class="hs-btns"><button class="btn primary big" data-a="novo">Novo jogo</button>
-        <button class="btn big" data-a="cont" ${c ? '' : 'disabled'}>Continuar${c ? `<small>${nBat()} / ${BATALHAS.length} batalhas · partida em ${LADOS[c.start]}</small>` : ''}</button></div></div>`;
+        <button class="btn big" data-a="cont" ${c ? '' : 'disabled'}>Continuar${c ? `<small>${nBat()} / ${BATALHAS.length}</small>` : ''}</button></div></div>`;
     h.onclick = e => {
       const b = e.target.closest('[data-a]'); if (!b || b.disabled) return; SND.init(); SND.play('click');
       if (b.dataset.a === 'sair') U.show('menu');
-      else if (b.dataset.a === 'cont') openMap();
+      else if (b.dataset.a === 'cont') openMap(false, false, true);
       else if (b.dataset.a === 'novo') { if (S) confirmNovo(); else sortear(); }
     };
   }
@@ -190,7 +191,7 @@
   }
 
   // ---- mapa
-  function openMap(novo, intro) {
+  function openMap(novo, intro, comFade) {
     if (!S) return; view = 'map';
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
     mp.innerHTML = `<svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
@@ -203,11 +204,13 @@
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
     paintAll(); bindMap(mp); heroPlace(posId(), false);
-    try { SND.histPlay('mapa'); } catch (e) { }
+    let pm = null; try { pm = SND.histPlay('mapa'); } catch (e) { }
     mp.classList.toggle('intro', !!intro);
+    const abreComMusica = (ms) => { const dk = $('#hsDark', root); if (!dk) return; Promise.race([Promise.resolve(pm), new Promise(r => setTimeout(r, 4000))]).then(() => setTimeout(() => dk.classList.remove('on'), ms)); };   // a tela só abre quando a música começa
+    if (comFade && !intro && !document.body.classList.contains('reduce')) { const dk = $('#hsDark', root); dk.style.transition = 'none'; dk.classList.add('on'); void dk.offsetWidth; dk.style.transition = 'opacity 1.8s ease'; abreComMusica(250); }
     if (intro) {   // o mundo começa preto e vai clareando; o boneco aparece depois
       const dk = $('#hsDark', root), hr = $('#hsHero', root), red = document.body.classList.contains('reduce');
-      if (!red) { dk.style.transition = 'none'; dk.classList.add('on'); hr.style.opacity = 0; void dk.offsetWidth; dk.style.transition = ''; setTimeout(() => { dk.classList.remove('on'); }, 700); setTimeout(() => { hr.style.transition = 'opacity 2s ease'; hr.style.opacity = 1; SND.play('banner'); }, 3600); setTimeout(() => { mp.classList.remove('intro'); }, 4200); }
+      if (!red) { dk.style.transition = 'none'; dk.classList.add('on'); hr.style.opacity = 0; void dk.offsetWidth; dk.style.transition = 'opacity 2.4s ease'; abreComMusica(300); setTimeout(() => { hr.style.transition = 'opacity 2s ease'; hr.style.opacity = 1; SND.play('banner'); }, 3600); setTimeout(() => { mp.classList.remove('intro'); }, 4200); }
       else mp.classList.remove('intro');
     }
     requestAnimationFrame(() => { const st = BY[S.startId]; const ps = BY[posId()]; if (novo) { fit(false); setTimeout(() => centerOn(ps.x, ps.y, .8, true), 450); } else centerOn(ps.x, ps.y, .7, false); });
@@ -350,12 +353,12 @@
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
     const gdn = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null, inimL = NPC && NPC.tem('olho') && bat0 && !['loja', 'minigame', 'boss'].includes(n.tipo) ? (gdn ? [{ n: gdn.nome, c: gdn.av }] : bat0.i) : null;   // melhoria "Olho vivo"
-    const cartas = n.tipo === 'loja' || n.tipo === 'minigame' ? '' : inimL ? '<div class="hs-olho"></div>' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
+    const cartas = inimL ? '<div class="hs-olho"></div>' : '';
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : n.tipo === 'minigame' ? 'Minigame' + (n.serieMg ? ' · dá 1 broche' : '') : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
-      <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[setor(n)])}</small></div></div>
-      <p class="hs-st ${ok ? 'hs-ok' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : lockMg ? 'Bloqueado: você falhou' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      <p>${esc(n.tipo === 'minigame' ? mgInfo(n).desc : T.desc)}</p>${evLinha}${n.tipo === 'minigame' ? `<p class="hs-rec">${coinSvg(15)}<b>${mgPremios(n).join(' / ')}</b> pêndulos (Bom / Ótimo / Perfeito)</p>` : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b> pêndulos${ok ? '' : ' na primeira vitória'}${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
+      <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])}</small></div></div>
+      <p class="hs-st ${ok ? 'hs-ok' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : lockMg ? 'Bloqueado: vença a próxima batalha ou pague' : av ? 'Disponível' : 'Caminho fechado'}</p>
+      ${evLinha}${n.tipo === 'minigame' ? mgTiers(n) : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b>${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}${n.id === M.boss ? `<p class="hint">Besta +${bonusBoss()} em tudo (${guardVivos()} guardiões vivos)</p>` : ''}${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
       <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     if (inimL) { const ol = $('.hs-olho', sheet); if (ol) inimL.forEach(x => { const r = el('<div class="hs-orow"><small></small><div></div></div>'); $('small', r).textContent = x.n + (gdn ? ' · cartas principais' : ''); x.c.forEach(c => { if (U.CARDS[c]) $('div', r).append(U.cardEl(c, { up: true, noanim: true, cw: 44 })); }); ol.append(r); }); }
     sheet.hidden = false; ensureVisible(n);
@@ -366,6 +369,8 @@
     const want = Math.min(free / 2 + 30, free - 70);
     if (sy > free - 50 || sy < 60 || sx < 30 || sx > w - 30) { cam.y += want - sy; cam.x += Math.max(30, Math.min(w - 30, sx)) - sx; applyCam(true); }
   }
+  const mgTiers = n => { const c = window.DSMini ? window.DSMini.cfg(n.mg) : { cortes: [.34, .67, .95], premios: [0, 5, 10, 20] }, best = (S.mgBest && S.mgBest[n.id]) | 0;   // pontuação necessária e prêmio de cada nível; ✓ nos já conquistados
+    return '<div class="hs-tiers">' + ['Bom', 'Ótimo', 'Perfeito'].map((nm, i) => `<div class="${best > i ? 'on' : ''}"><i>${best > i ? '✓' : ''}</i><b>${nm}</b><span>${Math.round(c.cortes[i] * 100)}% ou mais</span><em>${coinSvg(13)}${c.premios[i + 1]}</em></div>`).join('') + '</div>'; };
   const mgPremios = n => { const c = window.DSMini ? window.DSMini.cfg(n.mg).premios : [0, 5, 10, 20]; return [c[1], c[2], c[3]]; };
   function desbloquearMini(id) {
     if (!S.mgLock || !S.mgLock[id]) return; S.mgGratis = S.mgGratis || {}; const g1 = NPC && NPC.tem('segunda') && !S.mgGratis[BY[id].mg]; if (g1) S.mgGratis[BY[id].mg] = 1;   // melhoria "Segunda tentativa": 1 desbloqueio grátis por minigame
@@ -384,7 +389,7 @@
     let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
     save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
     if (cartaMg) { await new Promise(r => revelarCarta([cartaMg], r)); try { SND.histPlay('mapa'); } catch (e) { } }
-    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado. Pague ' + MG_CUSTO + ' pêndulos para tentar de novo.'); openNode(id); } else openNode(id);
+    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado até vencer a próxima batalha, ou pague ' + MG_CUSTO + ' pêndulos.'); openNode(id); } else openNode(id);
   }
   function toggleWin(id) {
     const ok = cleared(id);
@@ -427,7 +432,7 @@
       if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
     const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
     const upd = () => { cnt.textContent = sel.size + ' / ' + N; go.disabled = opt.livre ? !sel.size : sel.size !== N; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
-      msg.textContent = forcadas.size ? 'Faltam cartas descansadas: ' + forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa carta cansada para descansá-la (' + CUSTO_DESC + ' pêndulos por ponto).' : ''; };
+      msg.textContent = forcadas.size ? forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa cansada para descansar (' + CUSTO_DESC + ' por ponto).' : ''; };
     auto(); montar();
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {
@@ -490,8 +495,9 @@
         voltarMapa = true; U.show('uniao');
         S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save();
         if (res.venceu && !cleared(id)) {
+          if (S.mgLock && Object.keys(S.mgLock).length) { S.mgLock = {}; setTimeout(() => toast('Minigames desbloqueados'), 1800); }   // vencer uma batalha destrava os minigames em que você falhou
           S.pend = (S.pend | 0) + premioDe(n); S.ganho = (S.ganho | 0) + premioDe(n); S.capt = (S.capt | 0) + res.capturadas.length; const cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0.filter(c => !alug0.has(c))); const primeira = cn && fadigaOn() && !S.tutCansaco; if (primeira) S.tutCansaco = 1; save();
-          if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Ei, {nome}! Você nos levou à batalha e venceu, mas estamos exaustas.', 'Cartas usadas numa vitória ficam cansadas, e as mais raras cansam mais. As bolinhas laranja mostram quanto falta para descansar.', 'Cada vitória sem nós descansa 1 ponto. Se tiver pressa, os pêndulos descansam na hora: é só tocar numa carta cansada na hora de escolher.', 'Se faltarem cartas descansadas, as menos cansadas completam seu time. Derrota não cansa ninguém.']); });
+          if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Vencemos, {nome}, mas estamos cansadas. As mais raras cansam mais.', 'Cada vitória sem nós descansa 1 ponto. Ou pague pêndulos ao escolher o time.']); });
           else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
           setTimeout(() => { toggleWin(id); if (NPC) NPC.vitoria(id); const bp = premioBau(id); if (bp) setTimeout(() => abrirBau(bp, () => { if (NPC) NPC.fragBau(id); }), res.capturadas.length ? 2600 : 700); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
         } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
@@ -539,11 +545,8 @@
   }
   function tutorial() {
     if (!S || S.tutorial || !S.npc) return; S.tutorial = 1; save();
-    npcFala(S.npc, ['Você venceu a primeira batalha. Eu estava na sua mão, lembra? Agora vou te mostrar como isso funciona.',
-      'Cada vitória ilumina os caminhos à frente. Toque numa bolinha ao lado do seu boneco para caminhar até ela.',
-      'Pêndulos compram cartas nas lojas e descansam as suas cartas. Baús e batalhas dão mais.',
-      'Cada arauto prende um membro da União. Liberte os oito e derrote os guardiões para enfraquecer a Besta.',
-      'Pelo caminho, alguns viajantes vendem atalhos. Boa sorte, {nome}.']);
+    npcFala(S.npc, ['Primeira vitória, {nome}! Cada vitória ilumina os caminhos à frente. Toque numa bolinha ao lado do seu boneco para caminhar.',
+      'Pêndulos compram e descansam cartas nas lojas. Liberte os oito arautos e derrote os guardiões para enfraquecer a Besta.']);
   }
   // miniboss vencido: o membro da União preso por ele é libertado e entra na equipe
   function libertar(cid, depois) {
@@ -581,18 +584,19 @@
   }
   // ---- diálogos de carta, uma única vez cada (S.dicas)
   const DICAS = {
-    evento: ['O raio marca um evento: uma regra especial que vale só naquela batalha.', 'Durante o duelo, toque no botão ⚡ Evento para rever a regra.'],
-    elite: ['Cuidado: este inimigo é mais forte que os comuns. Em troca, paga mais pêndulos.'],
-    miniboss: ['Este é um dos oito arautos. Ele prende uma carta da União: ao derrotá-lo, ela é libertada e entra para a sua equipe.', 'Cada arauto também guarda a entrada do minigame do setor dele. Há uma coisa que só a União completa vai poder fazer diante da Besta.'],
-    guardiao: ['Um dos quatro guardiões da Besta. Ele é muito mais forte que os outros.', 'Cada guardião derrotado tira 30 pontos de cada atributo das cartas dela. Derrote todos e ela fica no seu momento mais fraco.'],
-    boss: ['É aqui. A Besta.', 'Você pode enfrentá-la quando quiser, mas as cartas dela ganham 30 pontos em todos os atributos por cada guardião que ainda vive.', 'Se levar a União inteira para o duelo, algo especial acontece.'],
-    loja: ['Uma loja! Aqui os pêndulos compram cartas e descansam as cansadas.', 'Lojas não bloqueiam o caminho: o que vem depois delas já fica liberado.'],
-    derrota: ['Perdemos esta, mas calma. Derrota não custa nada: nem cartas, nem pêndulos.', 'Reorganize o time, descanse as cartas se precisar, e tente de novo.'],
-    captura: ['Viu? Capturamos uma carta do inimigo e agora ela é nossa.', 'Só vale a carta realmente capturada: a que o inimigo usou como especial, ou que você derrotou sem capturar, não vem para cá.'],
-    bau: ['Baús escondem pêndulos ou cartas novas.', 'Costumam ficar nos becos sem saída, então vale explorar os ramos que não levam a lugar nenhum.'],
-    minigame: ['Um desafio! Passe com ao menos "Bom" para abrir o caminho.', 'Se falhar, o ponto trava, mas por poucos pêndulos você tenta de novo. O prêmio máximo é para quem gosta de desafio.'],
-    broche: ['Um broche… Não sei para que serve.', 'Mas algo me diz que vale a pena juntá-los todos.'],
+    evento: ['Evento: regra especial só nesta batalha. Reveja no botão ⚡ durante o duelo.'],
+    elite: ['Elite: mais forte e paga mais.'],
+    miniboss: ['Arauto: vencer liberta uma carta da União e abre o minigame do setor.'],
+    guardiao: ['Guardião: cada um vencido tira 30 de cada atributo da Besta.'],
+    boss: ['A Besta ganha +30 por guardião vivo. Com a União inteira, algo especial acontece.'],
+    loja: ['Loja: compre e descanse cartas com pêndulos.'],
+    derrota: ['Derrota não custa nada. Reorganize e tente de novo.'],
+    captura: ['Carta capturada agora é sua.'],
+    bau: ['Baús guardam pêndulos ou cartas, em becos sem saída.'],
+    minigame: ['Passe com ao menos "Bom" para abrir o caminho. Falhou? Vença uma batalha ou pague para tentar de novo.'],
+    broche: ['Um broche. Vale juntar todos.'],
   };
+
   function dica(chave, quem) {
     if (!S || (S.dicas && S.dicas[chave]) || !DICAS[chave]) return; S.dicas = S.dicas || {}; S.dicas[chave] = 1; save();
     quandoLivre(() => npcFala(quem || S.npc || (S.owned || [])[0], DICAS[chave]));
@@ -715,7 +719,7 @@
     const lista = () => (S.owned || []).slice().sort((a, b) => (ORD[(U.CARDS[a] || {}).raridade] - ORD[(U.CARDS[b] || {}).raridade]) || FORCA(b) - FORCA(a));
     const render = () => {
       const L = lista(), cans = L.filter(id => fad(id)), total = cans.reduce((t, id) => t + fad(id) * CUSTO_DESC, 0);
-      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque numa para descansar (' + CUSTO_DESC + ' pêndulos por ponto). Cada vitória sem usá-las descansa 1 ponto.' : 'Todas as cartas estão descansadas.') : '') + ' Pêndulos: ' + (S.pend | 0);
+      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque para descansar (' + CUSTO_DESC + ' por ponto).' : 'Todas descansadas.') : '') + ' Pêndulos: ' + (S.pend | 0);
       g.innerHTML = ''; L.forEach(id => { const w = el('<div class="hs-escc on' + (fad(id) ? ' tired' : '') + '" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fad(id)) w.append(el('<div class="hs-fadb">' + pontosFad(id) + '</div>')); g.append(w); });
       bt.hidden = !cans.length; bt.textContent = 'Descansar todas (' + total + ')'; bt.disabled = total > (S.pend | 0); paintAll();
     };
@@ -788,12 +792,11 @@
     render();
   }
   function legenda() {
-    const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><span class="hs-dot" style="background:${TIPOS[k].cor}"></span><b>${TIPOS[k].nome}</b><span>${esc(TIPOS[k].desc)}</span></li>`).join('');
+    const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><span class="hs-dot" style="background:${TIPOS[k].cor}"></span><b>${TIPOS[k].nome}</b></li>`).join('');
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
-    const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b><span>A Besta, no núcleo da galáxia, protegida pelos 4 guardiões.</span></li></ul>
-      <p class="hint">${BATALHAS.length} batalhas (${['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'boss'].map(k => contagem[k] + ' ' + TIPOS[k].nome.toLowerCase()).join(', ')}) e ${contagem.loja} lojas.</p>
-      <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Esconder o que ainda não foi liberado</label>
-      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="fim">Ver final</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>
+    const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b></li></ul>
+      <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Esconder o não liberado</label>
+      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="fim">Ver final</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto</label>
       <div class="row"><button class="btn sm" data-a="reset">Zerar vitórias</button><button class="btn sm primary" data-a="ok">Fechar</button></div></div>`);
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {

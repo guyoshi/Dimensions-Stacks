@@ -21,9 +21,9 @@
   const LISTA = [
     { id: 'maiormenor', nome: 'Três Portais', desc: 'Escolha uma porta entre 3. Pêndulos, passagem livre ou nada; na última, talvez uma carta.', cortes: [.37, .63, .88] },
     { id: 'memoria', nome: 'Ecos Estelares', desc: 'Encontre os 6 pares de cartas antes que o tempo acabe, com poucas jogadas.', cortes: [.3, .6, .9] },
-    { id: 'quemequem', nome: 'Fragmentos de Rosto', desc: 'Só alguns trechos escuros da carta aparecem. Descubra quem é.', cortes: [.37, .63, .88] },
+    { id: 'quemequem', nome: 'Fragmentos de Rosto', desc: 'Só alguns trechos escuros da carta aparecem. Descubra quem é, com um tempo total para as 8 cartas.', cortes: [.37, .63, .88] },
     { id: 'ordem', nome: 'Dança das Cartas', desc: 'Uma carta é marcada, todas viram e trocam de lugar. Acerte onde ela foi parar.', cortes: [.4, .7, .95] },
-    { id: 'mineracao', nome: 'Maré Rubra', desc: 'As bolinhas vermelhas contagiam as azuis, que vagam pela tela. Afaste as vermelhas.', cortes: [.37, .63, .88] },
+    { id: 'mineracao', nome: 'Maré Rubra', desc: 'As bolinhas vermelhas contagiam as azuis, que vagam pela tela. Afaste as vermelhas: uma azul salva já vence, cinco é o máximo.', cortes: [.37, .63, .88] },
     { id: 'asteroides', nome: 'Rota dos Meteoros', desc: 'Arraste a nave, desvie das rochas e pegue os pêndulos.', cortes: [.33, .6, .87] },
     { id: 'cofre', nome: 'Fechadura de Jasmey', desc: 'Descubra o código de 4 símbolos em 6 tentativas, contra o relógio.', cortes: [.34, .5, .83] },
     { id: 'caracoroa', nome: 'Eco das Notas', desc: 'Ouça a sequência, que ganha um som a cada rodada, e repita.', cortes: [.3, .6, .95] },
@@ -32,7 +32,7 @@
     // um por série de livros
     { id: 'elos', nome: 'Sussurro dos Elos', serie: 'Diário Sobrenatural', desc: 'No escuro, segure o dedo e siga o som: quanto mais perto do Elo, mais alto. Toque 2 vezes para confirmar.', cortes: [.4, .7, 1] },
     { id: 'luas', nome: 'Resgate no Céu', serie: 'Ciclo de Jesed', desc: 'Pessoas caem do céu, algumas em planadores que quebram. Mova o cesto e salve o máximo.', cortes: [.35, .65, .9] },
-    { id: 'poderes', nome: 'Cores dos Irmãos', serie: 'Viajantes Dimensionais', desc: 'Leve cada irmão até um objeto da cor dele, o mais rápido possível.', cortes: [.4, .7, .9] },
+    { id: 'poderes', nome: 'Cores dos Irmãos', serie: 'Viajantes Dimensionais', desc: 'Leve cada irmão ao objeto da cor dele, o mais rápido possível. Encostar numa cor errada perde a rodada.', cortes: [.4, .7, .9] },
     { id: 'gancho', nome: 'Constelação Pirata', serie: 'Spacetheft', desc: 'Toque nos símbolos espaciais que aparecem. Cuidado com a caveira.', cortes: [.34, .67, .84] },
     { id: 'culpado', nome: 'Vigília Escura', serie: 'Mistério Oculto', desc: 'Feche os olhos que se abrem antes que ataquem. 3 corações.', cortes: [.5, .75, .96] },
     { id: 'ritmo', nome: 'Maré, Chama e Gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
@@ -50,10 +50,12 @@
   const TRILHA = { maiormenor: 'mgdiv', memoria: 'mgdiv', quemequem: 'mgdiv', cofre: 'mgdiv', poderes: 'mgdiv', ordem: 'mgmod', mineracao: 'mgmod', cacapendulo: 'mgmod', luas: 'mgmod', culpado: 'mgmod', raspadinha: 'mgfut', asteroides: 'mgfut', gancho: 'mgfut', formacao: 'mgfut' };
   const MUS = (() => { let ant = null, on = false;
     return {
-      start(id) { const k = TRILHA[id]; if (!k) return; try { ant = SND.histNow || null; SND.histPlay(k); on = true; } catch (e) { on = false; } },
+      prep(id) { try { ant = SND.histNow || null; SND.histStop(); const k = TRILHA[id]; if (k) SND.histLoad(k); on = true; } catch (e) { on = false; } },   // para a trilha do mapa e já carrega a do jogo; jogos sem trilha ficam em silêncio
+      start(id) { const k = TRILHA[id]; if (!k) return; try { SND.histPlay(k); } catch (e) { } },
       stop() { if (!on) return; on = false; try { if (ant) SND.histPlay(ant); else SND.histStop(); } catch (e) { } },
     };
   })();
+  const dor = () => { try { const ctx = SND.ctx; if (!ctx) return; const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gn = ctx.createGain(), t = ctx.currentTime; o.type = 'sawtooth'; o2.type = 'square'; o.frequency.setValueAtTime(760, t); o.frequency.exponentialRampToValueAtTime(240, t + .28); o2.frequency.setValueAtTime(790, t); o2.frequency.exponentialRampToValueAtTime(250, t + .28); gn.gain.setValueAtTime(.0001, t); gn.gain.exponentialRampToValueAtTime(.16, t + .02); gn.gain.exponentialRampToValueAtTime(.0001, t + .32); o.connect(gn); o2.connect(gn); gn.connect(SND.master || ctx.destination); o.start(t); o2.start(t); o.stop(t + .34); o2.stop(t + .34); } catch (e) { } };   // gritinho de dor
   const SEM_MUSICA = ['caracoroa', 'elos', 'ritmo'];
 
   // ---- casca comum: tela cheia, título, sair, resultado
@@ -61,9 +63,16 @@
     const ov = mk(`<div class="mg"><header><b>${m.nome}</b><span class="mg-hint">${m.desc}</span><button class="ibtn mg-x" aria-label="Sair">✕</button></header><div class="mg-body"></div></div>`);
     document.body.appendChild(ov); return ov;
   }
+  // abertura: nome do jogo entra e sai, contagem 3-2-1 e JÁ; o jogo e a música começam no JÁ
+  async function intro(ov, m, parar) {
+    const w = mk(`<div class="mg-intro"><small>${m.serie || 'Minigame'}</small><div class="mg-in-n">${m.nome}</div><div class="mg-in-c"></div></div>`); ov.append(w); const ic = $('.mg-in-c', w), sn = (k) => { try { SND.play(k); } catch (e) { } };
+    sn('bauShake'); await wait(1700); if (parar()) { w.remove(); return false; } w.classList.add('sai'); await wait(380);
+    for (const t of ['3', '2', '1']) { if (parar()) { w.remove(); return false; } ic.textContent = t; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop'); sn('tick'); await wait(720); }
+    if (parar()) { w.remove(); return false; } ic.textContent = 'JÁ!'; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop', 'ja'); sn('capture'); w.classList.add('fim'); setTimeout(() => w.remove(), 650); return true;
+  }
   async function play(id, opts) {
     opts = opts || {}; const m = BYID[id], c = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
-    const ov = shell(m), body = $('.mg-body', ov); let ended = false, stop = () => { }, res; const t0 = Date.now();
+    const ov = shell(m), body = $('.mg-body', ov); let ended = false, stop = () => { }, res; let t0 = Date.now();
     const out = await new Promise(resolve => {
       const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = tierOf(id, pct), reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
         body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + 1 carta' : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
@@ -72,7 +81,7 @@
         $('.mg-ok', ov).onclick = () => { try { SND.play('click'); } catch (e) { } resolve(res); };
       };
       $('.mg-x', ov).onclick = () => { if (ended) { resolve(res); return; } fim(0, 'Abandonado'); };
-      MUS.start(id); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); }
+      MUS.prep(id); intro(ov, m, () => ended).then(go => { if (!go) return; t0 = Date.now(); MUS.start(id); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); } });
     });
     ov.remove(); opts.onEnd && opts.onEnd(out); return out;
   }
@@ -87,17 +96,20 @@
     const W = 380, H = 480, NM = 8, R = 11, RE = 9, RANGE = 100, CD = .6, WAVES = 7, GAP = 4.3;
     const ms = Array.from({ length: NM }, (_, i) => ({ x: W / 2 + Math.cos(i / NM * 6.283) * 60, y: H / 2 + Math.sin(i / NM * 6.283) * 60, vivo: true, cd: rand() * CD }));
     const es = [], atk = []; let t = 0, wave = 0, prox = 1.2, kills = 0;
-    const spawn = n => { const lados = [Math.floor(rand() * 4), Math.floor(rand() * 4)]; for (let i = 0; i < n; i++) { const l = lados[i % 2], u = rand(); let x, y; if (l === 0) { x = u * W; y = -10 - rand() * 30; } else if (l === 1) { x = W + 10 + rand() * 30; y = u * H; } else if (l === 2) { x = u * W; y = H + 10 + rand() * 30; } else { x = -10 - rand() * 30; y = u * H; }
-      es.push({ x, y, hp: wave >= 3 && rand() < .18 ? 2 : 1, v: (46 + wave * 5) * dif * (.85 + rand() * .3) }); } };
+    const TP = { n: { r: RE, m: 1, hp: 1 }, f: { r: 7, m: 1.75, hp: 1 }, g: { r: 14, m: .72, hp: 2 }, h: { r: 19, m: .58, hp: 3 } };   // normal, rápido, grande (divide em 2 normais), enorme (divide em 2 grandes); maior = mais lento
+    const mk = (tp, x, y, vb) => { const k = TP[tp]; es.push({ x, y, tp, r: k.r, hp: tp === 'n' && wave >= 3 && rand() < .18 ? 2 : k.hp, vb, v: vb * k.m }); };
+    const spawn = n => { const lados = [Math.floor(rand() * 4), Math.floor(rand() * 4)]; let i = 0; while (n > 0) { i++; const l = lados[i % 2], u = rand(); let x, y; if (l === 0) { x = u * W; y = -10 - rand() * 30; } else if (l === 1) { x = W + 10 + rand() * 30; y = u * H; } else if (l === 2) { x = u * W; y = H + 10 + rand() * 30; } else { x = -10 - rand() * 30; y = u * H; }
+      const vb = (46 + wave * 5) * dif * (.85 + rand() * .3), q = rand(); let tp = 'n'; if (wave >= 3 && n >= 4 && q < .1) tp = 'h'; else if (wave >= 2 && n >= 2 && q < .26) tp = 'g'; else if (wave >= 1 && q < .5) tp = 'f';   // a massa de inimigos continua a mesma: grande vale 2, enorme vale 4
+      n -= tp === 'h' ? 4 : tp === 'g' ? 2 : 1; mk(tp, x, y, vb); } };
     const S = { W, H, R, RE, RANGE, ms, es, atk, get t() { return t; }, get wave() { return wave; }, WAVES, get kills() { return kills; }, done: false,
       vivos: () => ms.filter(m => m.vivo).length,
       move(i, x, y) { const m = ms[i]; if (m && m.vivo) { m.x = Math.max(R, Math.min(W - R, x)); m.y = Math.max(R, Math.min(H - R, y)); } },
       step(dt) { if (S.done) return; t += dt;
-        if (wave < WAVES && t >= prox) { spawn(7 + wave * 5); wave++; prox += GAP / Math.sqrt(dif); }
+        if (wave < WAVES && t >= prox) { spawn(Math.round((7 + wave * 5) * 1.2)); wave++; prox += GAP / Math.sqrt(dif); }
         const vivos = ms.filter(m => m.vivo);
         es.forEach(e => { let a = null, d = 1e9; vivos.forEach(m => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = m; } }); if (a) { e.x += (a.x - e.x) / d * e.v * dt; e.y += (a.y - e.y) / d * e.v * dt; } });
-        es.forEach(e => { vivos.forEach(m => { if (m.vivo && Math.hypot(m.x - e.x, m.y - e.y) < R + RE - 3) { m.vivo = false; S.morreu = (S.morreu || 0) + 1; S.ultimaMorte = m; } }); });
-        vivos.forEach(m => { if (!m.vivo) return; m.cd -= dt; if (m.cd > 0) return; let a = null, d = 1e9; es.forEach(e => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = e; } }); if (a && d <= RANGE) { m.cd = CD; a.hp--; atk.push({ x1: m.x, y1: m.y, x2: a.x, y2: a.y, l: .14 }); if (a.hp <= 0) { es.splice(es.indexOf(a), 1); kills++; } } });
+        es.forEach(e => { vivos.forEach(m => { if (m.vivo && Math.hypot(m.x - e.x, m.y - e.y) < R + e.r - 3) { m.vivo = false; S.morreu = (S.morreu || 0) + 1; S.ultimaMorte = m; } }); });
+        vivos.forEach(m => { if (!m.vivo) return; m.cd -= dt; if (m.cd > 0) return; let a = null, d = 1e9; es.forEach(e => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = e; } }); if (a && d <= RANGE) { m.cd = CD; a.hp--; atk.push({ x1: m.x, y1: m.y, x2: a.x, y2: a.y, l: .14 }); if (a.hp <= 0) { es.splice(es.indexOf(a), 1); kills++; if (a.tp === 'g' || a.tp === 'h') { const f = a.tp === 'h' ? 'g' : 'n'; mk(f, a.x - 8, a.y, a.vb); mk(f, a.x + 8, a.y, a.vb); } } } });
         for (let i = atk.length - 1; i >= 0; i--) { atk[i].l -= dt; if (atk[i].l <= 0) atk.splice(i, 1); }
         if (!ms.some(m => m.vivo) || (wave >= WAVES && !es.length) || t > 90) S.done = true; } };
     return S;
@@ -132,33 +144,35 @@
     },
     // 3. Silhuetas (quem é quem): só alguns trechos escuros da imagem da carta aparecem; 8 perguntas, 10 s cada
     quemequem(body, c, fim) {
-      const N = 8; let n = 0, ok = 0, tm = null, left = 0, done = false;
+      const N = 8; let n = 0, ok = 0, tm = null, left = Math.round(60 / c.dif), done = false, acabou = false;   // tempo total para as 8 cartas
       const trechos = id => { const src = (window.CARD_IMAGES || {})[id]; if (!src) return null; const W = 150, H = 200, k = 3 + (Math.random() < .5 ? 1 : 0), cs = [];
         for (let i = 0; i < k; i++) cs.push(`radial-gradient(circle ${34 + rnd(12)}px at ${22 + rnd(W - 44)}px ${22 + rnd(H - 44)}px, #000 55%, transparent 100%)`);
         const d = mk(`<div class="mg-frag" style="width:${W}px;height:${H}px;background-image:url(${src});-webkit-mask-image:${cs.join(',')};mask-image:${cs.join(',')}"></div>`); return d; };
-      const q = () => { const cs = randCards(4), alvo = cs[0], opts = shuffle(cs); left = Math.round(10 / c.dif);
-        body.innerHTML = `<p class="mg-q" id="mq">Pergunta ${n + 1}/${N} · <span id="tl">${left}</span>s</p><div class="mg-c" id="mA"></div><div class="mg-btns col">${opts.map(o => `<button class="btn" data-id="${o}">${U.CARDS[o].nome}</button>`).join('')}</div>`;
+      const q = () => { const cs = randCards(4), alvo = cs[0], opts = shuffle(cs);
+        body.innerHTML = `<p class="mg-q" id="mq">Carta ${n + 1}/${N} · tempo total <span id="tl">${left}</span>s</p><div class="mg-c" id="mA"></div><div class="mg-btns col">${opts.map(o => `<button class="btn" data-id="${o}">${U.CARDS[o].nome}</button>`).join('')}</div>`;
         const A = $('#mA', body), fr = trechos(alvo); A.classList.add('mg-fragbox'); if (fr) A.append(fr); else { const ce0 = card(alvo, 150); ce0.style.filter = 'brightness(0)'; A.append(ce0); } done = false;
-        const resp = async id => { if (done) return; done = true; clearInterval(tm); A.classList.remove('mg-fragbox'); A.replaceChildren(card(alvo, 150)); const certo = id === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose'); await wait(1100); n++; if (n >= N) fim(ok / N, ok + ' de ' + N + ' acertos'); else q(); };
+        const resp = async id => { if (done || acabou) return; done = true; A.classList.remove('mg-fragbox'); A.replaceChildren(card(alvo, 150)); const certo = id === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose'); await wait(1100); if (acabou) return; n++; if (n >= N) { acabou = true; clearInterval(tm); fim(ok / N, ok + ' de ' + N + ' acertos'); } else q(); };
         body.onclick = e => { const b = e.target.closest('[data-id]'); if (b) resp(b.dataset.id); };
-        clearInterval(tm); tm = setInterval(() => { left--; const t = $('#tl', body); if (t) t.textContent = left; if (left <= 0) resp(null); }, 1000); };
-      q(); return () => clearInterval(tm);
+      };
+      q(); tm = setInterval(() => { left--; const t = $('#tl', body); if (t) t.textContent = left; if (left <= 0) { acabou = true; clearInterval(tm); fim(ok / N, ok + ' de ' + N + ' acertos (tempo esgotado)'); } }, 1000); return () => { acabou = true; clearInterval(tm); };
     },
     // 4. Dança das Cartas: uma carta é marcada, todas viram e trocam de lugar à vista; acerte onde ela foi parar (6 rodadas)
     ordem(body, c, fim) {
-      const R = 6, CW = 78, GAP = 12, H = 118; let rodada = 0, ok = 0, acabou = false;
+      const R = 6, AV = Math.min(380, body.clientWidth || 360) - 12; let rodada = 0, ok = 0, acabou = false;
       const rod = async () => {
-        const n = rodada < 2 ? 3 : 4, trocas = 4 + rodada * 2, vel = Math.max(170, 520 - rodada * 60) / c.dif, ids = randCards(n), alvo = rnd(n);
-        body.innerHTML = `<p class="mg-q" id="mq">Rodada ${rodada + 1}/${R}<br>Memorize a carta marcada</p><div class="mg-dance" style="width:${n * (CW + GAP) - GAP}px;height:${H + 14}px"></div>`;
+        const n = 3 + rodada, GAP = 6, CW = Math.min(78, Math.floor((AV - (n - 1) * GAP) / n)), H = Math.round(CW * 1.5), trocas = 6 + rodada * 3, v0 = Math.max(260, 600 - rodada * 55) / c.dif, v1 = Math.max(60, 190 - rodada * 28) / c.dif, ids = randCards(n), alvo = rnd(n);
+        body.innerHTML = `<p class="mg-q" id="mq">Rodada ${rodada + 1}/${R} · ${n} cartas<br>Memorize a carta marcada</p><div class="mg-dance" style="width:${n * (CW + GAP) - GAP}px;height:${H + 56}px"></div>`;
         const area = $('.mg-dance', body), pos = Array.from({ length: n }, (_, i) => i), it = [], mq = $('#mq', body); let pronto = false;
-        const x = p => p * (CW + GAP);
-        ids.forEach((id, i) => { const d = mk('<button class="mg-dc"></button>'); d.style.cssText = `width:${CW}px;height:${H}px;transform:translate(${x(i)}px,7px);transition:transform ${vel}ms ease-in-out`; d.append(card(id, CW)); if (i === alvo) d.classList.add('mark'); d.dataset.i = i; area.append(d); it.push(d); });
+        const x = p => p * (CW + GAP), base = 28;
+        ids.forEach((id, i) => { const d = mk('<button class="mg-dc"></button>'); d.style.cssText = `width:${CW}px;height:${H}px;transform:translate(${x(i)}px,${base}px);transition:transform 300ms ease-in-out`; d.append(card(id, CW)); if (i === alvo) d.classList.add('mark'); d.dataset.i = i; area.append(d); it.push(d); });
         await wait(1700); if (acabou) return; it.forEach(d => { d.classList.remove('mark'); d.replaceChildren(hidden(CW)); }); SND.play('flip'); await wait(450);
         mq.innerHTML = 'Acompanhe com os olhos…';
-        for (let k = 0; k < trocas; k++) { if (acabou) return; let a = rnd(n), b; do { b = rnd(n); } while (b === a);
-          const ia = pos.indexOf(a), ib = pos.indexOf(b); pos[ia] = b; pos[ib] = a;
-          it.forEach((d, i) => { d.style.transform = `translate(${x(pos[i])}px,${(i === ia || i === ib) ? (k % 2 ? 24 : -8) : 7}px)`; }); SND.play('tick'); await wait(vel + 30);
-          it.forEach((d, i) => { d.style.transform = `translate(${x(pos[i])}px,7px)`; }); await wait(vel * .45); }
+        for (let k = 0; k < trocas; k++) { if (acabou) return;
+          const f = trocas > 1 ? k / (trocas - 1) : 1, vel = v0 + (v1 - v0) * f, pares = 1 + (n >= 5 && f > .35 ? 1 : 0) + (n >= 7 && f > .7 ? 1 : 0), slots = shuffle(pos.map((_, i) => i)), lift = new Map();   // começa lenta e acelera; nas últimas trocas vários pares dançam juntos
+          for (let q = 0; q < pares && q * 2 + 1 < n; q++) { const sa = slots[q * 2], sb = slots[q * 2 + 1], ia = pos.indexOf(sa), ib = pos.indexOf(sb); pos[ia] = sb; pos[ib] = sa; const alt = 12 + f * 16, ang = 5 + f * 11, sg = (k + q) % 2 ? 1 : -1; lift.set(ia, { y: -sg * alt, a: sg * ang }); lift.set(ib, { y: sg * alt, a: -sg * ang }); }
+          it.forEach((d, i) => { const l = lift.get(i); d.style.transition = `transform ${Math.round(vel)}ms cubic-bezier(.45,0,.25,1)`; d.style.transform = `translate(${x(pos[i])}px,${base + (l ? l.y : 0)}px) rotate(${l ? l.a : 0}deg)`; });
+          if (vel > 110) SND.play('tick'); await wait(vel + 12); }
+        it.forEach((d, i) => { d.style.transition = 'transform 260ms ease-out'; d.style.transform = `translate(${x(pos[i])}px,${base}px)`; }); await wait(300);
         if (acabou) return; mq.innerHTML = 'Onde está a carta marcada?'; pronto = true;
         area.onclick = async e => { const d = e.target.closest('.mg-dc'); if (!d || !pronto) return; pronto = false; const i = +d.dataset.i, certo = i === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose');
           it.forEach((z, j) => { z.replaceChildren(card(ids[j], CW)); if (j === alvo) z.classList.add('mark'); }); await wait(1100); if (acabou) return; rodada++; if (rodada >= R) { acabou = true; fim(ok / R, ok + ' de ' + R + ' rodadas'); } else rod(); };
@@ -177,7 +191,7 @@
       cv.onpointerdown = e => { const p = pos(e); let m = null, d = 1e9; bs.forEach(b => { const dd = Math.hypot(b.x - p.x, b.y - p.y); if (b.r && dd < 34 && dd < d) { d = dd; m = b; } }); if (m) { drag = m; cv.setPointerCapture(e.pointerId); } };
       cv.onpointermove = e => { if (!drag) return; const p = pos(e); drag.x = Math.max(R, Math.min(W - R, p.x)); drag.y = Math.max(R, Math.min(H - R, p.y)); };
       cv.onpointerup = cv.onpointercancel = () => { drag = null; };
-      const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); const az = bs.filter(b => !b.r).length; fim(az / NB, az + ' de ' + NB + ' azuis salvas'); };
+      const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); const az = bs.filter(b => !b.r).length; fim([0, .4, .55, .7, .8, 1][Math.min(5, az)], az + (az === 1 ? ' azul salva' : ' azuis salvas')); };   // 1 azul já vence; 5 ou mais é o máximo
       const loop = ts => { if (acabou) return; if (!t0) t0 = ts; const dt = Math.min(.05, (ts - (last || ts)) / 1000); last = ts;
         const azuis = bs.filter(b => !b.r);
         azuis.forEach(b => { b.a += (Math.random() - .5) * 5 * dt; b.x += Math.cos(b.a) * VB * dt; b.y += Math.sin(b.a) * VB * dt; if (b.x < R || b.x > W - R) { b.a = Math.PI - b.a; b.x = Math.max(R, Math.min(W - R, b.x)); } if (b.y < R + 22 || b.y > H - R) { b.a = -b.a; b.y = Math.max(R + 22, Math.min(H - R, b.y)); } });
@@ -224,7 +238,7 @@
       let ctx = null; const tom = (i, ms) => { try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(), gn = ctx.createGain(); o.type = ['triangle', 'sine', 'square', 'sawtooth'][i]; o.frequency.value = NOTA[i]; gn.gain.setValueAtTime(.0001, ctx.currentTime); gn.gain.exponentialRampToValueAtTime(.18, ctx.currentTime + .02); gn.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + ms / 1000); o.connect(gn); gn.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + ms / 1000 + .05); } catch (e) { } };
       let seq = [], pos = 0, vez = false, feitas = 0;
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3 sq" id="el"></div>`; const q = $('#mq', body), g = $('#el', body); g.style.gridTemplateColumns = 'repeat(2, 120px)';
-      NOME.forEach((n, i) => { g.append(mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]};height:110px;background:${COR[i]}26">${n}</button>`)); });
+      NOME.forEach((n, i) => { g.append(mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]};height:110px">${n}</button>`)); });
       const acende = async i => { const b = g.children[i]; b.classList.add('on'); tom(i, 380 / c.dif); await wait(400 / c.dif); b.classList.remove('on'); await wait(160 / c.dif); };
       const nova = async () => { vez = false; seq.push(rnd(4)); pos = 0; q.textContent = 'Rodada ' + seq.length + '/' + MAX + ': ouça'; await wait(700); for (const i of seq) await acende(i); q.textContent = 'Sua vez'; vez = true; };
       g.onclick = async e => { const b = e.target.closest('.elo'); if (!b || !vez) return; const i = +b.dataset.i; acende(i);
@@ -322,27 +336,35 @@
     poderes(body, c, fim) {
       const IR = [{ n: 'Breno', c: '#4aa3ff' }, { n: 'Bruno', c: '#b9bcc9' }, { n: 'Banjo', c: '#5dff9a' }, { n: 'Beatriz', c: '#ff4f5e' }];
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 440, g = cv.getContext('2d');
-      const RODS = 5, LIM = 22 / c.dif, FAST = 6.5, YS = [70, 150, 230, 310].map(y => y + 25);
+      const RODS = 5, LIM = 26 / c.dif, FAST = 8, OR = 22, BR = 15, CX = W / 2, CY = H / 2;
       let rod = 0, itens = [], bolas = [], drag = null, t0 = 0, raf = 0, acabou = false, soma = 0, pausa = 0, msg = '', feitas = 0; const tempos = [];
-      const nova = () => { itens = []; ['E', 'D'].forEach(lado => shuffle([0, 1, 2, 3]).forEach((ir, i) => itens.push({ x: lado === 'E' ? 38 : W - 38, y: YS[i], ir, ok: false })));
-        const pos = shuffle([[-34, -34], [34, -34], [-34, 34], [34, 34]]); bolas = IR.map((x, i) => ({ ir: i, hx: W / 2 + pos[i][0], hy: H / 2 + pos[i][1], x: W / 2 + pos[i][0], y: H / 2 + pos[i][1], feita: false })); drag = null; feitas = 0; t0 = performance.now(); };
+      // 2 cores por rodada, 2 irmãos e 2 objetos de cada cor; objetos em qualquer lugar (às vezes perto dos irmãos), nunca em cima deles
+      const nova = () => { const cores = shuffle([0, 1, 2, 3]).slice(0, 2); bolas = []; const ang0 = Math.random() * 6.283;
+        [cores[0], cores[0], cores[1], cores[1]].forEach((ir, i) => { const a = ang0 + i * 1.5708, x = CX + Math.cos(a) * 44, y = CY + Math.sin(a) * 44; bolas.push({ ir, hx: x, hy: y, x, y, feita: false }); });
+        itens = []; const perto = Math.random() < .6;
+        [cores[0], cores[0], cores[1], cores[1]].forEach((ir, i) => { let x, y, k = 0, ok = false;
+          while (!ok && k++ < 400) { if (perto && i === 0 && k < 300) { const a = Math.random() * 6.283, r = 80 + Math.random() * 40; x = CX + Math.cos(a) * r; y = CY + Math.sin(a) * r; } else { x = 34 + Math.random() * (W - 68); y = 50 + Math.random() * (H - 90); }
+            ok = x > OR + 4 && x < W - OR - 4 && y > OR + 30 && y < H - OR - 4 && bolas.every(b => Math.hypot(b.hx - x, b.hy - y) >= OR + BR + 26) && itens.every(o => Math.hypot(o.x - x, o.y - y) >= OR * 2 + 14); }
+          itens.push({ x, y, ir }); });
+        drag = null; feitas = 0; t0 = performance.now(); };
       const pos = e => { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; };
       cv.style.touchAction = 'none';
+      const perde = m => { tempos.push(LIM); pausa = .9; msg = m; drag = null; SND.play('lose'); };
+      const toca = b => { const it = itens.find(i => Math.hypot(i.x - b.x, i.y - b.y) < OR + BR - 2); if (!it) return; if (it.ir === b.ir) { b.feita = true; b.x = it.x + (Math.random() - .5) * 14; b.y = it.y + (Math.random() - .5) * 14; drag = null; feitas++; SND.play('tick'); if (feitas === bolas.length) fecha((performance.now() - t0) / 1000); } else perde('Cor errada!'); };
       cv.onpointerdown = e => { if (pausa > 0) return; const p = pos(e); let m = null, d = 1e9; bolas.forEach(b => { const dd = Math.hypot(b.x - p.x, b.y - p.y); if (!b.feita && dd < 30 && dd < d) { d = dd; m = b; } }); if (m) { drag = m; cv.setPointerCapture(e.pointerId); } };
-      cv.onpointermove = e => { if (!drag) return; const p = pos(e); drag.x = Math.max(14, Math.min(W - 14, p.x)); drag.y = Math.max(14, Math.min(H - 14, p.y)); };
-      cv.onpointerup = cv.onpointercancel = () => { if (!drag) return; const b = drag; drag = null; const it = itens.find(i => !i.ok && Math.hypot(i.x - b.x, i.y - b.y) < 34);
-        if (it && it.ir === b.ir) { it.ok = true; b.feita = true; b.x = it.x; b.y = it.y; feitas++; SND.play('tick'); } else { if (it) SND.play('lose'); b.x = b.hx; b.y = b.hy; }
-        if (feitas === 4) { const s = (performance.now() - t0) / 1000; fecha(s); } };
+      cv.onpointermove = e => { if (!drag || pausa > 0) return; const p = pos(e), b = drag, nx = Math.max(BR, Math.min(W - BR, p.x)), ny = Math.max(BR, Math.min(H - BR, p.y)), dx = nx - b.x, dy = ny - b.y, st = Math.max(1, Math.ceil(Math.hypot(dx, dy) / 6));
+        for (let k = 1; k <= st && drag === b; k++) { b.x += dx / st * 1; b.y += dy / st * 1; if (k === st) { b.x = nx; b.y = ny; } toca(b); if (pausa > 0 || b.feita) break; } };   // o caminho inteiro conta: encostar na cor errada no meio do arrasto também perde
+      cv.onpointerup = cv.onpointercancel = () => { if (!drag) return; const b = drag; drag = null; b.x = b.hx; b.y = b.hy; };
       const fecha = s => { tempos.push(s); soma += Math.max(0, Math.min(1, 1 - (s - FAST) / (LIM - FAST))); pausa = .8; msg = s.toFixed(1) + ' s'; SND.play('capture'); };
       const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); fim(soma / RODS, tempos.map(x => x.toFixed(1) + 's').join(' · ')); };
       let last = 0; const loop = ts => { if (acabou) return; const dt = Math.min(.05, (ts - (last || ts)) / 1000); last = ts;
         if (pausa > 0) { pausa -= dt; if (pausa <= 0) { rod++; if (rod >= RODS) return fimJogo(); nova(); } }
-        else if ((performance.now() - t0) / 1000 > LIM) { tempos.push(LIM); pausa = .8; msg = 'Tempo!'; SND.play('lose'); }
+        else if ((performance.now() - t0) / 1000 > LIM) perde('Tempo!');
         g.fillStyle = '#0a0820'; g.fillRect(0, 0, W, H);
-        itens.forEach(i => { g.beginPath(); g.arc(i.x, i.y, 22, 0, 7); g.fillStyle = IR[i.ir].c + (i.ok ? '55' : ''); g.fill(); g.strokeStyle = '#ffffff55'; g.lineWidth = 2; g.stroke(); });
-        bolas.forEach(b => { g.beginPath(); g.arc(b.x, b.y, 15, 0, 7); g.fillStyle = IR[b.ir].c; g.shadowColor = IR[b.ir].c; g.shadowBlur = b === drag ? 18 : 6; g.fill(); g.shadowBlur = 0; });
+        itens.forEach(i => { g.beginPath(); g.arc(i.x, i.y, OR, 0, 7); g.fillStyle = IR[i.ir].c + '33'; g.fill(); g.lineWidth = 3; g.strokeStyle = IR[i.ir].c; g.stroke(); });
+        bolas.forEach(b => { g.beginPath(); g.arc(b.x, b.y, BR, 0, 7); g.fillStyle = IR[b.ir].c; g.shadowColor = IR[b.ir].c; g.shadowBlur = b === drag ? 18 : 6; g.fill(); g.shadowBlur = 0; if (b.feita) { g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); } });
         g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Rodada ' + Math.min(rod + 1, RODS) + '/' + RODS + ' · ' + Math.max(0, LIM - (performance.now() - t0) / 1000).toFixed(0) + ' s', 10, 20);
-        if (pausa > 0) { g.font = '800 24px system-ui'; g.textAlign = 'center'; g.fillText(msg, W / 2, H / 2 + 6); g.textAlign = 'left'; }
+        if (pausa > 0) { g.font = '800 24px system-ui'; g.textAlign = 'center'; g.fillStyle = '#000a'; g.fillText(msg, W / 2 + 1, 37); g.fillStyle = '#fff'; g.fillText(msg, W / 2, 36); g.textAlign = 'left'; }
         raf = requestAnimationFrame(loop); };
       nova(); raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); };
     },
@@ -351,7 +373,8 @@
       const BOM = ['✦', '◍', '⬢', '✺'], T = 25, META = 24; let pts = 0, left = T, tm = null, sp = null, acabou = false;
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g4" id="sg"></div>`; const g = $('#sg', body), q = $('#mq', body);
       for (let i = 0; i < 8; i++) g.append(mk(`<button class="mg-cell sim" data-i="${i}" style="width:78px;height:78px"></button>`));
-      const mostra = () => { if (acabou) return; [...g.children].forEach(b => { b.textContent = ''; b.dataset.k = ''; b.style.color = ''; }); const cav = new Set(shuffle([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, 3 + rnd(3))); [0, 1, 2, 3, 4, 5, 6, 7].forEach(i => { const caveira = cav.has(i), b = g.children[i]; b.textContent = caveira ? '☠' : pick(BOM); b.dataset.k = caveira ? 'x' : 'o'; b.style.color = caveira ? '#ff5a4f' : '#ffd25f'; });
+      const mostra = () => { if (acabou) return; [...g.children].forEach(b => { b.textContent = ''; b.dataset.k = ''; b.style.color = ''; }); clearTimeout(sp); sp = setTimeout(mostra2, 280); };   // tudo apaga antes do próximo conjunto, para o toque não pegar o símbolo novo
+      const mostra2 = () => { if (acabou) return; const cav = new Set(shuffle([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, 3 + rnd(3))); [0, 1, 2, 3, 4, 5, 6, 7].forEach(i => { const caveira = cav.has(i), b = g.children[i]; b.textContent = caveira ? '☠' : pick(BOM); b.dataset.k = caveira ? 'x' : 'o'; b.style.color = caveira ? '#ff5a4f' : '#ffd25f'; });
         clearTimeout(sp); sp = setTimeout(mostra, 1100 / c.dif); };
       const pinta = () => { q.innerHTML = `Pontos <b>${pts}</b>/${META} · ${left}s<br><small>Toque nos símbolos; evite as caveiras</small>`; };
       g.onclick = e => { const b = e.target.closest('.sim'); if (!b || acabou || !b.dataset.k) return; if (b.dataset.k === 'o') { pts++; SND.play('tick'); } else { pts = Math.max(0, pts - 2); SND.play('lose'); } b.dataset.k = ''; b.textContent = ''; pinta(); };
@@ -361,33 +384,34 @@
     },
     // Mistério Oculto: olhos que se abrem no escuro; feche-os antes que ataquem (36 olhos, 3 corações)
     culpado(body, c, fim) {
-      const N = 48, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
+      const N = 48, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const pend = []; const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-olhos">${Array.from({ length: SPOTS }, (_, i) => `<button class="mg-olho" data-i="${i}" aria-label="olho"><i></i></button>`).join('')}</div>`; const q = $('#mq', body), g = $('.mg-olhos', body);
       const pinta = () => { q.innerHTML = `${'♥'.repeat(vidas)}<span style="opacity:.3">${'♥'.repeat(3 - vidas)}</span> · olhos ${Math.min(nasc, N)}/${N}`; };
       const ate = () => nasc / (N - 1);
-      const fecha = (i, ataque) => { const b = g.children[i]; b.className = 'mg-olho'; olhos[i] = null; if (ataque) { perdidos++; vidas--; SND.play('lose'); g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 250); } else { fechados++; SND.play('flip'); } pinta();
-        if (vidas <= 0) return fimJ(); if (nasc >= N && !olhos.some(Boolean)) fimJ(); };
+      const fecha = (i, ataque) => { const b = g.children[i]; b.className = 'mg-olho'; olhos[i] = null; if (ataque) { perdidos++; vidas--; SND.play('lose'); g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 250); } else { fechados++; dor(); } pinta();
+        if (vidas <= 0) return fimJ(); if (nasc >= N && !pend.length && !olhos.some(Boolean)) fimJ(); };
       const fimJ = () => { if (acabou) return; acabou = true; clearInterval(tm); const morreu = vidas <= 0, pct = morreu ? Math.min(.7, fechados / N) : 1 - perdidos / N; fim(pct, morreu ? 'Os olhos venceram (' + fechados + ' fechados)' : fechados + ' de ' + N + ' olhos fechados'); };
       g.onclick = e => { const b = e.target.closest('.mg-olho'); if (!b || acabou) return; const i = +b.dataset.i; if (olhos[i]) fecha(i, false); };
       tm = setInterval(() => { if (acabou) return; const agora = Date.now() - t0;
-        if (nasc < N && agora >= prox) { const a = ate(), k = 1 + (Math.random() < a * 1.1 ? 1 : 0) + (a > .5 && Math.random() < .55 ? 1 : 0) + (a > .75 && Math.random() < .55 ? 1 : 0); let livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (livres.length) { for (let j = 0; j < k && livres.length && nasc < N; j++) { const i = pick(livres); livres = livres.filter(x => x !== i); const life = (3300 - 2500 * a) / c.dif; olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; } pinta(); prox = agora + (1700 - 1350 * a) / c.dif; } else prox = agora + 150; }
+        if (nasc + pend.length < N && agora >= prox) { const a = ate(), k = 1 + (Math.random() < a * 1.1 ? 1 : 0) + (a > .5 && Math.random() < .55 ? 1 : 0) + (a > .75 && Math.random() < .55 ? 1 : 0); for (let j = 0; j < k && nasc + pend.length < N; j++) pend.push(agora + Math.random() * 1200 / (1 + a)); prox = agora + (1700 - 1350 * a) / c.dif; }   // cada olho nasce num instante próprio (dessincronizados)
+        for (let q = pend.length - 1; q >= 0; q--) { if (pend[q] > agora) continue; const livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (!livres.length) { pend[q] = agora + 150; continue; } pend.splice(q, 1); const i = pick(livres), a = ate(), life = (3300 - 2500 * a) / c.dif * (.78 + Math.random() * .5); olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; pinta(); }
         olhos.forEach((o, i) => { if (!o) return; const f = (agora - o.ini) / o.life, b = g.children[i]; if (f >= 1) return fecha(i, true); b.classList.toggle('tre', f > .4); b.classList.toggle('red', f > .7); });
-        if (nasc >= N && !olhos.some(Boolean)) fimJ(); }, 50);
+        if (nasc >= N && !pend.length && !olhos.some(Boolean)) fimJ(); }, 50);
       pinta(); return () => { acabou = true; clearInterval(tm); };
     },
     // Édelin Lys: ritmo de três elementos (20 notas)
     ritmo(body, c, fim) {
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 400, g = cv.getContext('2d');
-      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 56, GAP = .68 / Math.sqrt(c.dif), FALL = 1.25 / c.dif, LY = H - 70, JAN = .13 * (1.1 / c.dif);
+      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 56, GAP = .68 / Math.sqrt(c.dif), FALL = 1.25 / c.dif, LY = H - 70, VEL = (LY - 10) / FALL, JAN = 16 / VEL, JG = 38 / VEL;   // zona verde: ±38 px em volta da linha branca vale como acerto; ±16 px é perfeito
       const notas = []; { let tt = 1.5, i = 0; while (notas.length < N) { const a = i / 40, pr = Math.min(1, a); tt += GAP * (1 - .5 * pr) * (.85 + Math.random() * .3); const l = rnd(3); notas.push({ t: tt, l, est: 0 }); if (notas.length < N && i > 8 && Math.random() < .12 + .3 * pr) notas.push({ t: tt, l: (l + 1 + rnd(2)) % 3, est: 0 }); i++; } } let t0 = 0, raf = 0, hit = 0, msg = '', msgT = 0, acabou = false;
       const bar = mk('<div class="mg-btns">' + NOME.map((n, i) => `<button class="btn" data-l="${i}" style="border-color:${COR[i]}">${n}</button>`).join('') + '</div>'); body.append(bar);
-      const toque = l => { const now = (performance.now() - t0) / 1000; let best = null; notas.forEach(n => { if (n.est === 0 && n.l === l && Math.abs(n.t - now) < JAN * 2 && (!best || Math.abs(n.t - now) < Math.abs(best.t - now))) best = n; });
+      const toque = l => { const now = (performance.now() - t0) / 1000; let best = null; notas.forEach(n => { if (n.est === 0 && n.l === l && Math.abs(n.t - now) < JG && (!best || Math.abs(n.t - now) < Math.abs(best.t - now))) best = n; });
         if (best) { const ex = Math.abs(best.t - now) < JAN; best.est = ex ? 1 : 2; if (ex) hit++; else hit += .5; msg = ex ? 'Perfeito' : 'Bom'; SND.play('tick'); } else { msg = 'Errou'; SND.play('lose'); } msgT = .5; };
       bar.onclick = e => { const b = e.target.closest('[data-l]'); if (b) toque(+b.dataset.l); }; const key = e => { const k = { a: 0, s: 1, d: 2, 1: 0, 2: 1, 3: 2 }[e.key]; if (k != null) toque(k); }; document.addEventListener('keydown', key);
       const loop = () => { const now = (performance.now() - t0) / 1000; g.fillStyle = '#05030f'; g.fillRect(0, 0, W, H); const lw = W / 3;
         for (let l = 0; l < 3; l++) { g.fillStyle = COR[l] + '14'; g.fillRect(l * lw, 0, lw - 2, H); }
-        g.strokeStyle = '#fff'; g.beginPath(); g.moveTo(0, LY); g.lineTo(W, LY); g.stroke();
-        notas.forEach(n => { if (n.est) return; const y = LY - (n.t - now) / FALL * (LY - 10); if (y > H + 20 && now > n.t + JAN * 2) { n.est = 3; msg = 'Perdeu'; msgT = .4; return; } if (y < -20) return; g.fillStyle = COR[n.l]; g.beginPath(); g.arc(n.l * lw + lw / 2, y, 16, 0, 7); g.fill(); });
+        g.fillStyle = '#3ddc84' + '2e'; g.fillRect(0, LY - 38, W, 76); g.fillStyle = '#3ddc84' + '40'; g.fillRect(0, LY - 16, W, 32); g.strokeStyle = '#fff'; g.lineWidth = 2; g.beginPath(); g.moveTo(0, LY); g.lineTo(W, LY); g.stroke(); g.lineWidth = 1;
+        notas.forEach(n => { if (n.est) return; const y = LY - (n.t - now) / FALL * (LY - 10); if (y > H + 20 && now > n.t + JG) { n.est = 3; msg = 'Perdeu'; msgT = .4; return; } if (y < -20) return; g.fillStyle = COR[n.l]; g.beginPath(); g.arc(n.l * lw + lw / 2, y, 16, 0, 7); g.fill(); });
         g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Acertos ' + Math.floor(hit) + '/' + N, 10, 20); if (msgT > 0) { msgT -= .016; g.font = '800 22px system-ui'; g.textAlign = 'center'; g.fillText(msg, W / 2, 50); g.textAlign = 'left'; }
         if (now > notas[N - 1].t + 1 && !acabou) { acabou = true; fim(hit / N, Math.floor(hit) + ' de ' + N + ' notas'); } raf = requestAnimationFrame(loop); };
       t0 = performance.now(); raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); document.removeEventListener('keydown', key); };
@@ -408,7 +432,7 @@
         const n = S.ms.filter(m => !m.vivo).length; if (n > mortos) { mortos = n; SND.play('lose'); }
         g.fillStyle = '#07040f'; g.fillRect(0, 0, W, H);
         S.atk.forEach(a => { g.strokeStyle = '#ffd25f'; g.globalAlpha = Math.max(0, a.l / .14); g.lineWidth = 2; g.beginPath(); g.moveTo(a.x1, a.y1); g.lineTo(a.x2, a.y2); g.stroke(); g.globalAlpha = 1; });
-        S.es.forEach(e => { g.beginPath(); g.arc(e.x, e.y, S.RE, 0, 7); g.fillStyle = e.hp > 1 ? '#a01030' : '#ff3b4f'; g.fill(); if (e.hp > 1) { g.strokeStyle = '#ffd25f'; g.lineWidth = 2; g.stroke(); } });
+        S.es.forEach(e => { g.beginPath(); g.arc(e.x, e.y, e.r, 0, 7); g.fillStyle = e.tp === 'f' ? '#ff9a3b' : e.tp === 'g' ? '#c01838' : e.tp === 'h' ? '#7a0c2a' : e.hp > 1 ? '#a01030' : '#ff3b4f'; g.fill(); if (e.hp > 1 || e.tp === 'g' || e.tp === 'h') { g.strokeStyle = e.tp === 'h' ? '#ff6a5c' : '#ffd25f'; g.lineWidth = e.tp === 'h' ? 3 : 2; g.stroke(); } });
         S.ms.forEach((m, i) => { if (!m.vivo) { g.fillStyle = '#ffffff22'; g.font = '16px system-ui'; g.textAlign = 'center'; g.fillText('✕', m.x, m.y + 5); g.textAlign = 'left'; return; }
           const held = [...ptr.values()].includes(i); g.save(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.shadowColor = cor(UN[i]); g.shadowBlur = held ? 20 : 8; g.fillStyle = cor(UN[i]); g.fill(); g.shadowBlur = 0; g.clip();
           if (imgs[i].complete && imgs[i].naturalWidth) g.drawImage(imgs[i], m.x - S.R, m.y - S.R, S.R * 2, S.R * 2); g.restore(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); });
