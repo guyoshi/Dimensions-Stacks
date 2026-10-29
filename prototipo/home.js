@@ -57,7 +57,7 @@
     const app = $('#app');
     ['coll', 'uniao', 'chal', 'prof'].forEach(id => { if (!$('#' + id)) { const s = el(`<section id="${id}" class="screen tab" hidden></section>`); app.insertBefore(s, $('#layer')); } });
     $('#menu').classList.add('tab');
-    if (!$('#nav')) app.appendChild(el(`<nav id="nav" hidden aria-label="Navegação principal">${TABS.map(([k, t]) => `<button data-tab="${k}" aria-label="${t}">${NAVI[k]}<span>${t}</span></button>`).join('')}</nav>`));
+    if (!$('#nav')) app.appendChild(el(`<nav id="nav" hidden aria-label="Navegação principal">${TABS.map(([k, t]) => `<button data-tab="${k}" aria-label="${t}"><i class="nav-ico">${NAVI[k]}</i><span>${k === 'uniao' ? U.uniaoLogo('uniao-logo-nav') : t}</span></button>`).join('')}</nav>`));
     $('#nav').onclick = e => { const b = e.target.closest('[data-tab]'); if (!b) return; SND.init(); SND.play('click'); U.show(b.dataset.tab); };
   };
   const render = { menu: () => home(), coll: () => collTab(), uniao: () => uniaoTab(), chal: () => chalTab(), prof: () => profTab() };
@@ -147,7 +147,7 @@
     const chips = $('#cchips', s), grid = $('#cgrid', s), attr = $('#cattr', s), cnt = $('#ccount', s);
     let drawTok = 0, drawObs = null;
     function draw() {
-      chips.innerHTML = keys.map(k => `<button data-k="${k}" class="cch${k === 'todas' ? ' all' : ''}${filtState.k === k ? ' on' : ''}"${SERIES[k] ? ` style="--c:${SERIES[k].cor}"` : ''}>${SERIES[k] ? '<i></i>' : ''}${esc(label(k))}</button>`).join('');
+      chips.innerHTML = keys.map(k => `<button data-k="${k}" class="cch${k === 'todas' ? ' all' : ''}${filtState.k === k ? ' on' : ''}"${SERIES[k] ? ` style="--c:${SERIES[k].cor}"` : ''}${k === 'uniao' ? ' aria-label="A União"' : ''}>${SERIES[k] ? '<i></i>' : ''}${k === 'uniao' ? U.uniaoLogo('uniao-logo-chip') : esc(label(k))}</button>`).join('');
       attr.innerHTML = [['', 'Qualquer'], ...U.AIDS.map(a => [a, U.ATT[a].nome])].map(([a, t]) => `<button data-a="${a}" class="${filtState.att === a ? 'on' : ''}"${a ? ` aria-label="${esc(t)}" title="${esc(t)}"` : ''}>${a ? U.ICON[a] : 'Qualquer'}</button>`).join('');
       { const on = chips.querySelector('.on'); if (on && chips.scrollWidth > chips.clientWidth && !chips.__moved) { chips.__moved = 1; chips.scrollLeft = Math.max(0, on.offsetLeft - 16); } }
       const list = U.collFilter(CARTAS, filtState, fav);

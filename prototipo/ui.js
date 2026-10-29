@@ -18,6 +18,9 @@
   const el = html => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   Object.assign(U, { $, $$, el, esc });
+  // Marca oficial da série: um único asset mantém menus, filtros e história consistentes.
+  U.uniaoLogo = (cls, alt) => `<img class="uniao-logo${cls ? ' ' + cls : ''}" src="cena/logo-uniao.png" alt="${esc(alt || 'A União')}" decoding="async">`;
+  U.uniaoSeal = cls => `<svg class="uniao-seal${cls ? ' ' + cls : ''}" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 3a47 47 0 1 0 .01 0ZM44 20C28 20 20 34 20 50s8 30 24 30ZM56 20c16 0 24 14 24 30S72 80 56 80ZM50 3Q52.4 14 50 25Q47.6 14 50 3ZM50 97Q52.4 86 50 75Q47.6 86 50 97Z"/></svg>`;
   const store = {
     get(k, d) { try { const v = localStorage.getItem('dsstacks.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem('dsstacks.' + k, JSON.stringify(v)); } catch (e) { } },
@@ -175,7 +178,7 @@
       const c = CARDS[cid], s = SERIES[c.serie], sp = E.SPECIALS[c.especial], cs = (opts.stats && opts.stats[cid]) || c.stats, max = 100;
       const meta = el(`<div class="meta">
         <div class="nrow"><h2>${esc(c.nome)}</h2></div>
-        <div class="row"><span class="pill" style="background:${s.cor};color:${s.texto}">${esc(s.nome)}</span><span class="pill">${c.perfil ? 'Perfil: ' + esc(c.perfil) : RARIDADES[c.raridade].nome}</span>${c.uniao ? '<span class="pill">A União</span>' : ''}${c.provisorio ? '<span class="pill" style="background:#ff5a7a">proposta · não aprovada</span>' : ''}${IMG[cid] ? '' : '<span class="pill">sem foto</span>'}</div>
+        <div class="row"><span class="pill" style="background:${s.cor};color:${s.texto}">${esc(s.nome)}</span><span class="pill">${c.perfil ? 'Perfil: ' + esc(c.perfil) : RARIDADES[c.raridade].nome}</span>${c.uniao ? '<span class="pill uni-pill">' + U.uniaoSeal('uniao-seal-pill') + 'A União</span>' : ''}${c.provisorio ? '<span class="pill" style="background:#ff5a7a">proposta · não aprovada</span>' : ''}${IMG[cid] ? '' : '<span class="pill">sem foto</span>'}</div>
         <div class="spbox"><b>✦ ${esc(sp ? sp.nome : '—')}</b><br><span>${esc(sp ? sp.texto : '')}</span>${sp && sp.stub ? '<br><span class="hint">⚠ Efeito ainda não implementado neste protótipo.</span>' : ''}</div>
         ${c.descricao ? `<p class="cdesc">${esc(c.descricao)}</p>` : ''}
         <button class="btn sm morebtn" type="button" aria-expanded="false">Ver mais</button>
@@ -398,7 +401,7 @@
     const chips = $('.chips', wrap), grid = $('.cgrid', wrap);
     const keys = ['todas', ...Object.keys(SERIES), 'uniao'];
     function draw() {
-      chips.innerHTML = keys.map(k => `<button data-k="${k}" class="${filt === k ? 'on' : ''}">${k === 'todas' ? 'Todas' : k === 'uniao' ? 'A União' : SERIES[k].nome}</button>`).join('');
+      chips.innerHTML = keys.map(k => `<button data-k="${k}" class="${filt === k ? 'on' : ''}"${k === 'uniao' ? ' aria-label="A União"' : ''}>${k === 'todas' ? 'Todas' : k === 'uniao' ? U.uniaoLogo('uniao-logo-chip') : SERIES[k].nome}</button>`).join('');
       grid.replaceChildren(...CARTAS.filter(c => filt === 'todas' || (filt === 'uniao' ? c.uniao : c.serie === filt)).map(c => cardEl(c.id, { up: true, noanim: true, cw: 112, click: true })));
     }
     chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; filt = b.dataset.k; SND.play('tick'); draw(); };
