@@ -1737,12 +1737,9 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 
 /* ---- NPCs, missões, coleção (modo história) */
 .npc-av2 { width: 84px; height: 120px; border-radius: 12px; display: grid; place-items: center; font: 800 38px var(--f-disp); background: linear-gradient(160deg, #3a2f80, #17113f); border: 1px solid #ffffff33; }
-.npcm { cursor: pointer; } .npcm .np-h { fill: #b48cff22; } .npcm .np-b { fill: #6a45d6; stroke: #e7dcff; stroke-width: 2.4; } .npcm.cq .np-b { fill: #14a58f; stroke: #c9fff3; } .npcm.cq .np-h { fill: #5de0c822; }
-.npcm .np-art { pointer-events: none; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 5px #c58cff) drop-shadow(0 0 11px #7d5cffaa); animation: nodeFloat 4.6s ease-in-out infinite, npcGlow 3.4s ease-in-out infinite; } .npcm.cq .np-art { filter: hue-rotate(72deg) drop-shadow(0 0 5px #7dffb0) drop-shadow(0 0 11px #14a58faa); animation-name: nodeFloat, npcGlowCq; }
-@keyframes npcGlow { 50% { filter: drop-shadow(0 0 7px #fff) drop-shadow(0 0 18px #c58cff); } } @keyframes npcGlowCq { 50% { filter: hue-rotate(72deg) drop-shadow(0 0 7px #fff) drop-shadow(0 0 18px #7dffb0); } } body.reduce .npcm .np-art, body.mapfx-off .npcm .np-art { animation: none; }
-.npcm .np-t { fill: #fff; font: 800 15px var(--f-disp); text-anchor: middle; pointer-events: none; } .npcm .np-bang { display: none; pointer-events: none; } .npcm .np-bang circle { fill: #ffc46b; stroke: #1d1400; stroke-width: 1.6; } .npcm .np-bang text { fill: #1d1400; font: 800 11px var(--f-disp); text-anchor: middle; }
-.npcm.bang .np-bang { display: block; } .npcm.done { opacity: .5; } .npcm.fog { display: none; } .hs-svg.far .npcm .np-t { display: none; }
-.npcm.pulse .np-h { animation: npcpulse 1s ease 3; } @keyframes npcpulse { 50% { r: 36; fill: #ffc46b55; } }
+.n.t-casa .np-bang { display: none; pointer-events: none; } .n.t-casa .np-bang circle { fill: #ffc46b; stroke: #1d1400; stroke-width: 1.6; } .n.t-casa .np-bang text { fill: #1d1400; font: 800 13px var(--f-disp); text-anchor: middle; }
+.n.t-casa.bang .np-bang { display: block; } .n.t-casa.ndone { opacity: .55; } .n.t-casa .body { stroke-dasharray: 2 3; }
+.n.pulse .halo { animation: npcpulse 1s ease 3; } @keyframes npcpulse { 50% { r: 40; fill: #ffc46b55; } }
 .hs-hud .ibtn { position: relative; } .hs-hud .ibtn .dot { position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; border-radius: 50%; background: #ffc46b; box-shadow: 0 0 0 2px #0b0820; }
 .npc-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; background: #ffffff10; border: 1px solid var(--line); } .npc-row.done { opacity: .6; }
 .npc-av { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 800 16px var(--f-disp); background: #6a45d6; border: 2px solid #e7dcff; color: #fff; } .npc-av.cq { background: #14a58f; border-color: #c9fff3; }

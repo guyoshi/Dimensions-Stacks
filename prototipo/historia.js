@@ -18,6 +18,7 @@
     miniboss: { nome: 'Arauto',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores. Prende um membro da União: vencer liberta o herói para a sua equipe e abre o minigame do setor.' },
     guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões espalhados pelo mapa. Cada um vencido tira 30 pontos de cada atributo das cartas da Besta.' },
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
+    casa:     { nome: 'Casa de NPC', cor: '#b48cff', r: 19, desc: 'Moradia de um NPC: conversas e missões. Não tem duelo e não bloqueia o caminho.' },
     minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Um desafio. Passe com ao menos "Bom" para abrir o caminho; se falhar, pague um pouco para tentar de novo.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
@@ -37,6 +38,7 @@
     const g = Math.atan2(n.y, n.x) * 180 / Math.PI;
     return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
   }
+  const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; };
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const EX = 1.4, EYT = .62, EYB = .8, EY = EYB;   // o mapa gerado é quadrado; a arte de fundo é 2:1: pontos esticados na horizontal e mais comprimidos em cima do que embaixo (o Boss continua em 0,0, sobre o buraco negro)
   if (!M._lay) { M._lay = 1; NOS.forEach(n => { n.x = Math.round(n.x * EX); n.y = Math.round(n.y * (n.y < 0 ? EYT : EYB)); }); }
@@ -80,6 +82,18 @@
     });
     M.raio = Math.max(M.raio, Math.ceil(Math.max(...NOS.map(n => Math.hypot(n.x, n.y)))) + 40);
   })();
+  // Casas de NPC (autor, 29/10/2026): cada casa é um ponto de verdade do mapa, como a loja, entre dois pontos que antes se ligavam direto. Não bloqueia: passa-se por ela.
+  (function casas() {
+    if (M._casas) return; M._casas = 1; const DN = window.DS_NPCS; if (!DN) return;
+    DN.cadeia.concat(DN.quests).forEach(n => {
+      const a = BY[n.a], b = BY[n.b]; if (!a || !b || !a.viz.includes(b.id)) return;
+      let u = a, w = b; if (u.id > w.id) { u = b; w = a; }
+      const dx = w.x - u.x, dy = w.y - u.y, len = Math.hypot(dx, dy) || 1, off = len * .09 * ((hash(u.id + w.id) & 1) ? 1 : -1);
+      const cx = (u.x + w.x) / 2 - dy / len * off, cy = (u.y + w.y) / 2 + dx / len * off;
+      const h = { id: 'H_' + n.id, tipo: 'casa', npc: n.id, tier: b.tier, lado: b.lado, x: Math.round(.25 * u.x + .5 * cx + .25 * w.x), y: Math.round(.25 * u.y + .5 * cy + .25 * w.y), viz: [a.id, b.id] };
+      a.viz = a.viz.map(v => v === b.id ? h.id : v); b.viz = b.viz.map(v => v === a.id ? h.id : v); NOS.push(h); BY[h.id] = h;
+    });
+  })();
   const R = M.raio;
   const NPC = window.DSNpc;   // NPCs, missões, fragmentos e registros (historia_npcs.js)
   let lastVis = null;
@@ -101,11 +115,12 @@
   const pulado = id => !!(S && S.atalhos && S.atalhos[id]);   // batalha opcional após a ajuda por derrotas
   function liberados() {
     const key = Object.keys(S.cleared).sort().join() + '|' + Object.keys(S.atalhos || {}).sort().join() + '|' + S.startId; if (key === libKey) return libSet;
-    const A = new Set([S.startId]), pilha = Object.keys(S.cleared).concat(Object.keys(S.atalhos || {})), vistos = new Set();
-    while (pilha.length) { const id = pilha.pop(); if (vistos.has(id)) continue; vistos.add(id); BY[id].viz.forEach(v => { if (v === M.boss) return; A.add(v); if (BY[v].tipo === 'loja') pilha.push(v); }); }
+    const A = new Set([S.startId]); BY[S.startId].viz.forEach(v => { if (BY[v].tipo === 'casa') A.add(v); });   // casas coladas no ponto de partida já estão ao alcance
+    const pilha = Object.keys(S.cleared).concat(Object.keys(S.atalhos || {})), vistos = new Set();
+    while (pilha.length) { const id = pilha.pop(); if (vistos.has(id)) continue; vistos.add(id); BY[id].viz.forEach(v => { if (v === M.boss) return; A.add(v); if (BY[v].tipo === 'loja' || BY[v].tipo === 'casa') pilha.push(v); }); }
     libKey = key; libSet = A; return A;
   }
-  const aberto_ = id => cleared(id) || pulado(id) || (BY[id].tipo === 'loja' && liberados().has(id));   // ponto "aberto": venceu, foi liberado pela ajuda, ou é loja já alcançada
+  const aberto_ = id => cleared(id) || pulado(id) || ((BY[id].tipo === 'loja' || BY[id].tipo === 'casa') && liberados().has(id));   // ponto "aberto": venceu, foi liberado pela ajuda, ou é loja já alcançada
   function available(id) {
     if (!S) return false;
     if (P.aberto) return true;
@@ -134,7 +149,6 @@
   const coinSvg = sz => `<svg viewBox="-12 -12 24 24" width="${sz}" height="${sz}" aria-hidden="true"><defs><radialGradient id="hsCoinH" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient></defs>${coin(11).replace('url(#hsCoin)', 'url(#hsCoinH)')}</svg>`;
 
   // ---------------------------------------------------------------- desenho do mapa
-  const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; };
   function edgePath(a, b) {
     const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, sgn = (hash(a.id + b.id) & 1) ? 1 : -1, off = len * .09 * sgn;
     const mx = (a.x + b.x) / 2 - dy / len * off, my = (a.y + b.y) / 2 + dx / len * off;
@@ -143,18 +157,19 @@
   const EDGES = []; NOS.forEach(a => a.viz.forEach(v => { if (a.id < v) EDGES.push([a, BY[v]]); }));
   function nodeSvg(n) {
     const T = TIPOS[n.tipo], r = T.r, num = n.id[0] === 'B' ? String(+n.id.slice(1)) : n.id.slice(1);
-    const arquivo = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', minigame: 'minigame', boss: 'boss' }[n.tipo];
+    const arquivo = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', casa: 'npc', minigame: 'minigame', boss: 'boss' }[n.tipo];
     const tam = r * (n.tipo === 'boss' ? 2.7 : 2.55);
     const arte = `<image class="node-art" href="cena/icones-mapa/${arquivo}.png" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}" preserveAspectRatio="xMidYMid meet"/>`;
     let inner = '';
     if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle class="win-ring" r="${r + 9}"/><circle r="${r}" class="body"/>${arte}`;
-    else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}<text class="lbl" y="${r + 18}">${esc(num)}</text>`;
+    else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
     return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>`;
   }
   function nome(n) {
     if (n.tipo === 'boss') return 'Boss final: A Besta';
     if (n.tipo === 'guardiao') return 'Guardião: ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
+    if (n.tipo === 'casa') { const q = NPC && NPC.byId(n.npc); return q ? 'Casa: ' + q.nome : 'Casa de NPC'; }
     if (n.tipo === 'minigame') return mgInfo(n).nome;
     return 'Batalha ' + String(+n.id.slice(1)).padStart(3, '0');
   }
@@ -282,7 +297,7 @@
       else if (ptrs.size === 2 && pinch0) { p.x = e.clientX; p.y = e.clientY; const [a, b] = [...ptrs.values()]; const d = Math.hypot(a.x - b.x, a.y - b.y), r = svg.getBoundingClientRect(); zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, (pinch0.k * d / pinch0.d) / cam.k, false); moved = 99; }
     });
     const up = e => { if (!ptrs.has(e.pointerId)) return; ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = null;
-      if (!ptrs.size && moved <= 8 && startPt) { const g = (startPt.t.closest && startPt.t.closest('.n')), q = (startPt.t.closest && startPt.t.closest('.npcm')); if (q && NPC) NPC.toque(q.dataset.id); else if (g) toque(g.dataset.id); else closeSheet(); } };
+      if (!ptrs.size && moved <= 8 && startPt) { const g = (startPt.t.closest && startPt.t.closest('.n')); if (g) toque(g.dataset.id); else closeSheet(); } };
     svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', e => { ptrs.delete(e.pointerId); pinch0 = null; });
     svg.addEventListener('wheel', e => { e.preventDefault(); const r = svg.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15, false); }, { passive: false });
     svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.seta')) { e.preventDefault(); passo(e.target.closest('.seta').dataset.to); } else if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.n')) { e.preventDefault(); toque(e.target.closest('.n').dataset.id); } });
@@ -305,7 +320,7 @@
 
   // ---- o boneco anda casa por casa (como no mapa do modo história do Smash): nada de pular para um ponto distante
   const posId = () => (S && S.pos && BY[S.pos]) ? S.pos : S.startId;
-  const passa = id => P.aberto || cleared(id) || pulado(id) || BY[id].tipo === 'loja';   // pontos por onde se pode atravessar
+  const passa = id => P.aberto || cleared(id) || pulado(id) || BY[id].tipo === 'loja' || BY[id].tipo === 'casa';   // pontos por onde se pode atravessar
   // caminhos possíveis a partir da posição: atravessa só pontos já vencidos (ou lojas); o último passo pode ser um ponto novo (aí o boneco para e é preciso duelar)
   function alcance() {
     const from = posId(), prev = { [from]: null }, q = [from];
@@ -316,6 +331,7 @@
       for (const v of BY[u].viz) {
         if (v in prev) continue;
         if (v === M.boss && !bossOpen() && !P.aberto) continue;
+        if (!P.aberto && !available(v)) continue;
         if (u === from && !passa(u) && !P.aberto && !passa(v)) continue;
         prev[v] = u; q.push(v);
       }
@@ -332,7 +348,7 @@
   // (sem setas) parado numa casa, cada direção possível aparece como seta; clicar na seta dá UM passo (clicar na bolinha só mostra o painel)
   function passos() {
     const u = posId(), n = BY[u], pass = passa(u);
-    return n.viz.filter(v => !(v === M.boss && !bossOpen() && !P.aberto) && (pass || passa(v)));
+    return n.viz.filter(v => !(v === M.boss && !bossOpen() && !P.aberto) && (P.aberto || available(v)) && (pass || passa(v)));
   }
   function paintSetas() {
     const g = $('#hsArrows', root); if (!g) return; g.innerHTML = ''; return;   // setas removidas: toque direto na bolinha
@@ -351,24 +367,16 @@
   }
   function heroPlace(id, anim) {
     const h = $('#hsHero', root); if (!h) return; const n = BY[id], r = TIPOS[n.tipo].r;
-    casa = null; h.style.transition = anim ? 'transform .34s linear' : 'none'; h.style.transform = `translate(${n.x}px,${n.y - r - 10}px)`;
+    h.style.transition = anim ? 'transform .34s linear' : 'none'; h.style.transform = `translate(${n.x}px,${n.y - r - 10}px)`;
   }
-  let casa = null;   // NPC em cuja casa o boneco está parado (null = em um ponto)
-  async function andarNpc(to, pt, via, id) {   // anda até a casa do NPC (marcador sobre a ligação) e PARA ali; falar é um segundo toque
-    if (andando) return; let p = caminho(to) || [to]; if (p.length >= 2 && p[p.length - 2] === via) p = p.slice(0, -1);
-    andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
-    for (let i = 1; i < p.length; i++) { const n = BY[p[i]]; S.pos = n.id; heroPlace(n.id, !red); SND.play('tick'); paintLuz(); centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red); await new Promise(r => setTimeout(r, red ? 60 : 360)); }
-    const hh = $('#hsHero', root); if (hh) { hh.style.transition = red ? 'none' : 'transform .45s linear'; hh.style.transform = `translate(${pt.x}px,${pt.y - 22}px)`; }
-    SND.play('tick'); centerOn(pt.x, pt.y, cam.k < .6 ? .75 : null, !red); await new Promise(r => setTimeout(r, red ? 60 : 480));
-    save(); andando = false; paintAll(); casa = id; abrirCasa(id);
-  }
-  function abrirCasa(id) {   // a casa do NPC é um ponto como os outros: o boneco fica aqui e o painel oferece a conversa
-    const c = NPC && NPC.casaSheet(id); if (!c) return; curId = 'casa:' + id; SND.play('click'); $$('.n.sel', root).forEach(g => g.classList.remove('sel'));
-    sheet.innerHTML = c.html; sheet.hidden = false; ensureVisible(c.pt);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'conv') NPC.falar(id); };
+  function abrirCasa(id) {   // a casa do NPC é um ponto como os outros: o painel mostra o NPC e, se o boneco está aqui, oferece a conversa
+    const n = BY[id], c = NPC && NPC.casaSheet(n.npc, id === posId()); if (!c) return; curId = id; SND.play('click');
+    $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
+    sheet.innerHTML = c.html; sheet.hidden = false; ensureVisible(n);
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'conv') NPC.falar(n.npc); };
   }
   let refr = false;
-  const refrescaCasa = () => { if (refr || !casa || !sheet || sheet.hidden || curId !== 'casa:' + casa) return; refr = true; try { const c = NPC.casaSheet(casa); if (c) sheet.innerHTML = c.html; } finally { refr = false; } };   // só troca o conteúdo do painel (sem reabrir: evita laço com paint)
+  const refrescaCasa = () => { if (refr || !curId || !sheet || sheet.hidden || !BY[curId] || BY[curId].tipo !== 'casa') return; refr = true; try { const c = NPC.casaSheet(BY[curId].npc, curId === posId()); if (c) sheet.innerHTML = c.html; } finally { refr = false; } };   // só troca o conteúdo do painel (sem reabrir: evita laço com paint)
   async function andar(to) {
     if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
     andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
@@ -384,7 +392,7 @@
   let curId = null;
   function closeSheet() { if (sheet) { sheet.hidden = true; curId = null; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); } }
   function openNode(id) {
-    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; curId = id; SND.play('click'); if (id === posId()) chegada(id);
+    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; if (n.tipo === 'casa') return abrirCasa(id); curId = id; SND.play('click'); if (id === posId()) chegada(id);
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
@@ -852,7 +860,7 @@
     render();
   }
   function legenda() {
-    const icones = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', minigame: 'minigame', boss: 'boss' };
+    const icones = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', casa: 'npc', minigame: 'minigame', boss: 'boss' };
     const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><img class="hs-leg-ico" src="cena/icones-mapa/${icones[k]}.png" alt=""><b>${TIPOS[k].nome}</b></li>`).join('');
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
     const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><img class="hs-leg-ico boss" src="cena/icones-mapa/boss.png" alt=""><b>Boss final</b></li></ul>
@@ -872,6 +880,6 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } else if (e.target.dataset.a === 'numeros') { P.numeros = e.target.checked; if (svg) svg.classList.toggle('no-nums', !P.numeros); save(); } });
   }
 
-  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, andarNpc, avisoMissao, abrirCasa, refrescaCasa, casa: () => casa, casaAberta: id => curId === 'casa:' + id && !!sheet && !sheet.hidden, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
+  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, avisoMissao, abrirCasa, refrescaCasa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
   window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S, openNode };
 })();

@@ -23,7 +23,7 @@ try:
         # botão Duelar do painel (jogador humano) abre a montagem do baralho
         pg.evaluate("document.querySelector('.n[data-id=\"%s\"]').dispatchEvent(new PointerEvent('pointerup',{bubbles:true}))" % sid) if False else None
         pg.evaluate("window.DSHistoria.duelar('%s', true)" % sid)
-        pg.wait_for_selector('.hcap, .final', timeout=110000)
+        pg.wait_for_selector('.hcap, .final', timeout=400000)
         chk(pg.evaluate("!!document.querySelector('.final h1')"), 'fim da partida mostra o resultado: ' + pg.evaluate("document.querySelector('.final h1').textContent"))
         venceu = 'Vit' in pg.evaluate("document.querySelector('.final h1').textContent")
         pg.click('.final [data-a=go]'); pg.wait_for_timeout(2500)

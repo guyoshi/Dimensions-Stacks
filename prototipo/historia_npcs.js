@@ -136,71 +136,29 @@
   function fragMini(id, tier) { if (tier >= 3) fragEvento('J:' + id); }   // minigame: o prêmio máximo (Perfeito) dá 1 fragmento, uma vez por minigame
   function fragBau(id) { if (D.fragBaus.includes(id)) fragEvento('B:' + id); }
 
-  // ---- marcadores no mapa (sobre a ligação entre dois pontos)
-  const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; };
-  function pos(n) {   // ponto médio da curva da ligação (mesma fórmula de edgePath)
-    let a = A.BY[n.a], b = A.BY[n.b]; if (a.id > b.id) { const t = a; a = b; b = t; }
-    const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, off = len * .09 * ((hash(a.id + b.id) & 1) ? 1 : -1);
-    const cx = (a.x + b.x) / 2 - dy / len * off, cy = (a.y + b.y) / 2 + dx / len * off;
-    return { x: .25 * a.x + .5 * cx + .25 * b.x, y: .25 * a.y + .5 * cy + .25 * b.y };
-  }
   const curto = n => { const m = n.nome.match(/^(Sra\.|Dra\.|Dr\.|Capitão|Capitã|Professor|Tio|Agente)\s+(\S+)/); return m ? m[1] + ' ' + m[2] : n.nome.split(' ')[0]; };
   const ini1 = n => n.nome.replace(/^(Sra\.|Dra\.|Capitão|Capitã|Professor|Tio|Agente)\s+/, '')[0].toUpperCase();
-  // O marcador fica sobre uma ligação, mas o NPC mora no segundo ponto dela.
-  // Assim, uma missão não pode ser iniciada pelo lado anterior do caminho.
-  const destino = n => n.no || n.b;
-  const acessivel = n => !!A.available(destino(n));
-  function paint(vis, ocultar) {   // vis = pontos revelados (onde estou, vencidos, lojas): o NPC só aparece quando a ligação dele está visível
-    if (!A || !S()) return; const g = A.$('#hsNpcs', A.root()); if (!g) return;
-    if (!g.firstChild) {
-      g.innerHTML = ALL.map(n => { const p = pos(n); return `<g class="npcm ${isCh(n) ? 'ch' : 'cq'}" data-id="${n.id}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" role="button" tabindex="0" aria-label="${A.esc(n.nome)}"><circle class="np-h" r="23"/><circle class="np-b" r="15"/><image class="np-art" href="cena/icones-mapa/npc.png" x="-25" y="-25" width="50" height="50" preserveAspectRatio="xMidYMid meet"/><g class="np-bang"><circle cx="15" cy="-15" r="8"/><text x="15" y="-11.5">!</text></g></g>`; }).join('');
-    }
-    if (vis) paint.vis = vis, paint.oc = ocultar; vis = paint.vis; ocultar = paint.oc;
-    let aviso = false;
+  // A casa de cada NPC é um ponto do mapa (id 'H_<npc>'), como a loja. O NPC só pode ser visitado com a casa liberada.
+  const casaId = n => 'H_' + n.id;
+  const acessivel = n => !!A.available(casaId(n));
+  function paint() {   // selo "!" e casa concluída direto no ponto do mapa
+    if (!A || !S()) return; const root = A.root(); let aviso = false;
     ALL.forEach(n => {
-      const e = A.$('.npcm[data-id="' + n.id + '"]', g); if (!e) return;
+      const e = A.$('.n[data-id="' + casaId(n) + '"]', root); if (!e) return;
       const st = estado(n), pr = pronta(n), podeFalar = acessivel(n);
-      e.classList.toggle('fog', !!ocultar && vis && !(vis.has(n.a) || vis.has(n.b)));
-      e.classList.toggle('done', st === 'entregue');
+      e.classList.toggle('ndone', st === 'entregue');
       // A exclamação representa algo para entregar, nunca uma conversa ainda bloqueada.
-      e.classList.toggle('bang', podeFalar && pr);
+      e.classList.toggle('bang', podeFalar && (!st || pr));
       if (podeFalar && pr) aviso = true;
     });
-    const b = A.$('.hs-hud [data-a="missoes"] .dot', A.root()); if (b) b.hidden = !aviso;
+    const b = A.$('.hs-hud [data-a="missoes"] .dot', root); if (b) b.hidden = !aviso;
     if (A.refrescaCasa) A.refrescaCasa();
   }
-  function toque(id) {
-    const n = BYID[id]; if (!n || A.andando()) return;
-    const pick = destino(n);
-    if (!acessivel(n) || !A.caminho(pick)) return A.toast('Vença a batalha do caminho para falar com ' + curto(n) + '.');
-    // Tocar no NPC leva o jogador até a casa dele e ele PARA ali; tocar de novo (ou "Falar" no painel) abre a conversa.
-    if (A.casa() === id) return A.abrirCasa(id);
-    if (A.casaAberta(id)) return A.andarNpc(pick, pos(n), n.a === pick ? n.b : n.a, id);   // 2º toque: traça a rota até a casa
-    A.abrirCasa(id);   // 1º toque: só o painel (sem ação, o boneco está longe)
-  }
-
-  function casaSheet(id) {   // painel da casa do NPC: nome em cima, "!" se há algo novo
-    const n = BYID[id]; if (!n || !ini()) return null; const st = estado(n), pr = pronta(n), p1 = curto(n), alerta = !st || pr, aqui = A.casa() === id;
-    const linha = !st ? p1 + ' quer falar com você.' : st === 'entregue' ? 'Missão concluída.' : pr ? 'Missão cumprida: fale com ' + p1 + '.' : 'Missão em andamento.', pt = pos(n);
-    return { pt, html: `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div><h3>${A.esc(n.nome)}</h3><small>Casa de ${A.esc(p1)}</small></div></div><p class="hs-st ${alerta ? 'hs-av' : 'hs-ok'}">${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}${A.esc(linha)}</p><div class="row">${aqui ? `<button class="btn primary" data-a="conv">Conversar${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}</button>` : '<span class="hint hs-go">Toque de novo na casa para ir até lá.</span>'}</div>` };
-  }
-
-  // ---- bloco no painel do ponto (quem está nesse cruzamento, com barra de progresso)
-  function sheetHtml(nodeId, aqui) {
-    const s = ini(); if (!s) return '';
-    // Um NPC só entra no painel do seu próprio ponto, já desbloqueado.
-    const L = ALL.filter(n => destino(n) === nodeId && acessivel(n)); if (!L.length) return '';
-    return L.map(n => {
-      const st = estado(n), pr = prog(n), pron = pronta(n);
-      let linha;
-      if (!st) linha = 'Tem algo a dizer.';
-      else if (st === 'entregue') linha = 'Missão concluída.';
-      else if (isCh(n)) linha = pron ? 'Cumprida: fale com ' + curto(n) + '.' : (s.mis[n.id].first ? 'Vença 3 batalhas.' : 'Procura: ' + n.pede + '.');
-      else linha = n.d + (pron ? '. Cumprida: fale com ' + curto(n) + '.' : '');
-      const barra = st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : '';
-      const alerta = pron ? '<i class="npc-notice" aria-label="Missão pronta">!</i>' : '';
-      return `<div class="npc-row${st === 'entregue' ? ' done' : ''}"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div class="npc-tx"><b>${A.esc(n.nome)}</b><span>${A.esc(linha)}</span>${barra}</div>${aqui ? `<button class="btn sm primary npc-talk${pron ? ' has-notice' : ''}" data-a="npc:${n.id}">Falar${alerta}</button>` : ''}</div>`;
-    }).join('');
+  function casaSheet(id, aqui) {   // painel da casa do NPC: nome em cima, "!" se há algo novo
+    const n = BYID[id]; if (!n || !ini()) return null; const st = estado(n), pr = pronta(n), p1 = curto(n), alerta = !st || pr, ok = acessivel(n);
+    const linha = !st ? p1 + ' quer falar com você.' : st === 'entregue' ? 'Missão concluída.' : pr ? 'Missão cumprida: fale com ' + p1 + '.' : 'Missão em andamento.';
+    const acao = aqui ? `<button class="btn primary" data-a="conv">Conversar${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}</button>` : ok && A.caminho(casaId(n)) ? '<span class="hint hs-go">Toque de novo na casa para ir até lá.</span>' : '<span class="hint hs-go">Vença a batalha do caminho para chegar aqui.</span>';
+    return { html: `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div><h3>${A.esc(n.nome)}</h3><small>Casa de ${A.esc(p1)}</small></div></div><p class="hs-st ${alerta ? 'hs-av' : 'hs-ok'}">${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}${A.esc(linha)}</p><div class="row">${acao}</div>` };
   }
 
   // ---- menu de missões
@@ -233,7 +191,7 @@
     box.onclick = e => {
       const b = e.target.closest('[data-a]'), r = e.target.closest('.mis-row');
       if (b) { A.SND.play('click'); if (b.dataset.a === 'x') m.close(); else if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); render(); } return; }
-      if (r) { const n = BYID[r.dataset.id], p = pos(n); A.SND.play('click'); m.close(); A.closeSheet(); A.centerOn(p.x, p.y, .95, true); const g = A.$('.npcm[data-id="' + n.id + '"]', A.root()); if (g) { g.classList.remove('pulse'); void g.getBoundingClientRect(); g.classList.add('pulse'); } }
+      if (r) { const n = BYID[r.dataset.id], h = A.BY[casaId(n)]; A.SND.play('click'); m.close(); A.closeSheet(); A.centerOn(h.x, h.y, .95, true); const g = A.$('.n[data-id="' + h.id + '"]', A.root()); if (g) { g.classList.remove('pulse'); void g.getBoundingClientRect(); g.classList.add('pulse'); } }
     };
   }
 
@@ -284,5 +242,5 @@
     A.save(); return true;
   }
 
-  window.DSNpc = { init: a => { A = a; }, paint, toque, casaSheet, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
+  window.DSNpc = { init: a => { A = a; }, paint, casaSheet, falar, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
 })();

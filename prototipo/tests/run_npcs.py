@@ -18,7 +18,7 @@ try:
         pg.evaluate("(()=>{const k='dsstacks.historia',o=JSON.parse(localStorage.getItem(k));o.tutorial=1;o.pend=500;localStorage.setItem(k,JSON.stringify(o));})()")
         pg.reload(); pg.wait_for_timeout(900)
         pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1000)
-        chk(pg.evaluate("document.querySelectorAll('.npcm').length") == 31, '31 marcadores de NPC')
+        chk(pg.evaluate("document.querySelectorAll('.n.t-casa').length") == 31, '31 casas de NPC como pontos')
         prim = pg.evaluate("DSNpc.primeiro()"); print('primeiro:', prim)
         def conv():
             for _ in range(12):
@@ -32,7 +32,7 @@ try:
         chk(pg.evaluate("DSNpc.state().mis['%s'].st" % prim) == 'ativa', 'primeira conversa ativa a missão')
         pg.evaluate("DSNpc.falar('%s')" % prim); conv()
         chk(pg.evaluate("DSNpc.state().itens.length") == 0, 'sem vitórias: nada é entregue')
-        ids = pg.evaluate("DSHistoria.data.nos.filter(n=>n.tipo!='loja'&&n.tipo!='boss').slice(0,3).map(n=>n.id)")
+        ids = pg.evaluate("DSHistoria.data.nos.filter(n=>n.tipo!='loja'&&n.tipo!='boss'&&n.tipo!='casa').slice(0,3).map(n=>n.id)")
         pg.evaluate("(()=>{const s=DSHistoria.state();%s.forEach(i=>s.cleared[i]=1);})()" % ids)
         pg.evaluate("DSNpc.check()"); pg.wait_for_timeout(300)
         pg.evaluate("DSNpc.falar('%s')" % prim); conv(); popup()
@@ -95,8 +95,16 @@ try:
         # fragmento de minigame só no prêmio máximo
         f0 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("DSNpc.fragMini('x',2)"); f1 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("DSNpc.fragMini('x',3)"); pg.evaluate("DSNpc.fragMini('x',3)"); f2 = pg.evaluate("DSNpc.nFrag()")
         chk(f1 == f0 and f2 == f0 + 1, 'minigame: só o Perfeito dá 1 fragmento (uma vez)')
-        # nó com NPC
-        n = pg.evaluate("DSNpc.dados.quests[0].a"); pg.evaluate("DSHistoria.state().pos='%s'" % n)
+        # casa do NPC é um ponto: 1º toque painel sem ação, 2º toque anda, parado na casa aparece Conversar
+        pg.evaluate("(()=>{const k='dsstacks.historia.prefs',o=JSON.parse(localStorage.getItem(k)||'{}');o.aberto=false;localStorage.setItem(k,JSON.stringify(o));})()"); pg.reload(); pg.wait_for_timeout(900)
+        pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(900)
+        hid = pg.evaluate("(()=>{const S=DSHistoria.state(),M=DSHistoria.data,B={};M.nos.forEach(n=>B[n.id]=n);return M.nos.find(n=>n.tipo=='casa'&&B[S.startId].viz.includes(n.id))?.id||null})()")
+        print('casa ao lado do início:', hid)
+        if hid:
+            pg.evaluate("DSHistoria.state().pos=DSHistoria.state().startId"); pg.evaluate("DSHistoria.openNode('%s')" % hid); pg.wait_for_timeout(300)
+            chk(pg.evaluate("!document.querySelector('[data-a=conv]')") and pg.evaluate("document.querySelector('#hsSheet h3').textContent.length>0"), 'casa longe: painel sem Conversar')
+            pg.evaluate("DSHistoria.state().pos='%s'" % hid); pg.evaluate("DSHistoria.openNode('%s')" % hid); pg.wait_for_timeout(300)
+            chk(pg.evaluate("!!document.querySelector('#hsSheet [data-a=conv]')"), 'parado na casa: Conversar')
         chk(not errs, 'sem erros %s' % errs)
 finally:
     srv.terminate(); os.remove(proj + '/_page.html')

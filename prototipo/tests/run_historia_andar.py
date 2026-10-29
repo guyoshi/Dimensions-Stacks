@@ -18,7 +18,7 @@ try:
     pg.goto('http://localhost:8777/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500)
     chk(pg.evaluate("document.querySelector('#nav').hidden") is True, 'barra inferior oculta no modo história')
-    chk(pg.evaluate("document.querySelector('[data-a=cont]').disabled") is True, 'Continuar desativado sem jornada salva')
+    chk(pg.evaluate("!document.querySelector('[data-a=cont]')"), 'sem Continuar sem jornada salva')
     pg.screenshot(path=shots + '/hist_hub.png')
     pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1200)
     M = pg.evaluate("window.DSHistoria.data"); S = pg.evaluate("window.DSHistoria.state()")
@@ -38,8 +38,11 @@ try:
         u = q.popleft()
         for v in nodes[u]['viz']:
             if v not in prevn: prevn[v] = u; q.append(v)
-    far = [i for i, k in d.items() if k == 3 and nodes[i]['tipo'] != 'loja'][0]; path = []; x = far
-    while x is not None: path.insert(0, x); x = prevn[x]
+    def cam(f):
+        r = []; x = f
+        while x is not None: r.insert(0, x); x = prevn[x]
+        return r
+    far = [i for i, k in d.items() if k == 3 and nodes[i]['tipo'] not in ('loja', 'casa') and nodes[cam(i)[1]]['tipo'] != 'casa'][0]; path = cam(far)
     # sem o modo aberto, a casa de partida ainda não foi vencida: nenhuma seta para frente
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(400)
     chk(pg.evaluate("document.querySelectorAll('.seta').length") == 0, 'sem setas no mapa')
