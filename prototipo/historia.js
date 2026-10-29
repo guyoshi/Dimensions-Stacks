@@ -20,8 +20,8 @@
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
-  const LADOS = { esq: 'Esquerda', cima: 'Cima', dir: 'Direita', baixo: 'Baixo' };
-  const REGIAO = { 1: 'Região externa', 2: 'Região média', 3: 'Região interna', 4: 'Núcleo' };
+  const LADOS = { esq: 'Terras das Sombras', cima: 'Reino Polar', dir: 'Fronteira dos Portais', baixo: 'Mar de Gerbe' };   // PROPOSTA: nome de cada setor (série do lado)
+  const REGIAO = { 1: 'Orla', 2: 'Margem', 3: 'Umbral', 4: 'Núcleo' };   // PROPOSTA: nome de cada região
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
@@ -110,7 +110,7 @@
   }
   function nome(n) {
     if (n.tipo === 'boss') return 'Boss final: A Besta';
-    if (n.tipo === 'guardiao') return 'Guardião da ' + LADOS[n.lado];
+    if (n.tipo === 'guardiao') return 'Guardião: ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
     return 'Batalha ' + String(+n.id.slice(1)).padStart(3, '0');
   }
@@ -134,7 +134,7 @@
     h.innerHTML = `      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
       <div class="hs-hubin"><div class="hs-seal"></div><h1>A União</h1><p class="hs-sub">Modo história</p>
         <div class="hs-btns"><button class="btn primary big" data-a="novo">Novo jogo</button>
-        <button class="btn big" data-a="cont" ${c ? '' : 'disabled'}>Continuar${c ? `<small>${nBat()} / ${BATALHAS.length} batalhas · partida pela ${LADOS[c.start].toLowerCase()}</small>` : ''}</button></div></div>`;
+        <button class="btn big" data-a="cont" ${c ? '' : 'disabled'}>Continuar${c ? `<small>${nBat()} / ${BATALHAS.length} batalhas · partida em ${LADOS[c.start]}</small>` : ''}</button></div></div>`;
     h.onclick = e => {
       const b = e.target.closest('[data-a]'); if (!b || b.disabled) return; SND.init(); SND.play('click');
       if (b.dataset.a === 'sair') U.show('menu');
@@ -315,10 +315,10 @@
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id);
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
-    const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div><p class="hint">As cartas do inimigo aparecem depois do primeiro duelo.</p>`;
+    const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo de 3 jogadores' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
-      <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · lado ${esc(LADOS[n.lado].toLowerCase())}</small></div></div>
+      <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[n.lado])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
       <p>${esc(T.desc)}</p>${evLinha}<p class="hint">${esc(jog)}${n.id === M.boss ? ` · a Besta ganha +${bonusBoss()} em todos os atributos (${guardVivos()} guardiões vivos)` : ''}</p>${cartas}
       <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
