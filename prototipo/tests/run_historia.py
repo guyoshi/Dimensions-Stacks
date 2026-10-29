@@ -37,7 +37,9 @@ try:
     for gi, g in enumerate(M['guardioes'].values()):
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
-        bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
+        for _t in range(4):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
+            bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(1500)
+            if pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
         if 'Desfazer' not in pg.inner_text('#hsSheet [data-a=win]'): pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(3500)
         if gi == 0: chk('Besta' in pg.evaluate("document.querySelector('#hsToast').textContent"), 'ao derrotar guardião a Besta é atingida (aviso do bônus)')
         pg.evaluate("document.querySelectorAll('.npc,.bau-ov,.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(500)

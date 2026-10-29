@@ -443,19 +443,10 @@
   }
   // ---- duelo de verdade: mãos fixas (7 cartas por lado), captura, pêndulos e volta ao mapa
   const FORCA = id => { const c = U.CARDS[id]; return c ? Object.values(c.stats).reduce((a, b) => a + b, 0) : 0; };
-  const NIVEIS = ['facil', 'normal', 'dificil'];
-  // A rota mínima até os quatro Guardiões pede 30–32 vitórias; 31 é o marco de campanha.
-  // Normais sobem devagar antes dele e ficam exigentes só para quem decidiu explorar além do necessário.
-  const MARCO_GUARDIOES = 31;
-  function escalaNormal() {
-    const v = nBat();
-    if (v < 9) return { bot: 0, bonus: 0, faixa: 'início' };
-    if (v < 21) return { bot: 1, bonus: 2, faixa: 'jornada' };
-    if (v <= MARCO_GUARDIOES) return { bot: 1, bonus: 5, faixa: 'aproximação dos guardiões' };
-    if (v < 46) return { bot: 2, bonus: 9, faixa: 'exploração avançada' };
-    return { bot: 2, bonus: 12, faixa: 'zona perigosa' };
-  }
-  const nivelBot = n => n.tipo === 'normal' ? escalaNormal().bot : n.tipo === 'guardiao' ? 2 : Math.min(2, [0, 1, 1, 2][Math.max(0, (n.tier || 1) - 1)] + (['elite', 'miniboss', 'guardiao'].includes(n.tipo) && n.tier < 3 ? 1 : 0));
+  // DIFICULDADE DA CPU (autor, 29/10): sobe de forma contínua com as batalhas vencidas, em todos os tipos de ponto; as cartas de cada inimigo são fixas, só a atenção/erros da CPU mudam.
+  // 0 = Fácil (erra bastante), 0,5 = Normal, 1 = Difícil. A rota mínima até os quatro Guardiões pede 30–32 vitórias (31 = marco): ali a CPU já está em ~0,85; depois sobe até 1 por volta de 46.
+  const MARCO_GUARDIOES = 31, OFF_NIVEL = { normal: 0, evento: .04, elite: .1, miniboss: .18 };
+  const nivelBot = n => { if (n.tipo === 'boss') return 1; const v = nBat(), b = v <= MARCO_GUARDIOES ? .85 * Math.pow(v / MARCO_GUARDIOES, 1.2) : .85 + .15 * Math.min(1, (v - MARCO_GUARDIOES) / 15); return n.tipo === 'guardiao' ? Math.max(.9, b) : Math.min(1, b + (OFF_NIVEL[n.tipo] || 0)); };
   const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
   const premioBase = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
   const premioDe = n => Math.round(premioBase(n) * (NPC && NPC.tem('bolsa') ? 1.2 : 1));   // melhoria "Bolsa cheia": +20%
@@ -543,7 +534,7 @@
         else if (ev.id === 'aleatoria') { semMontar = true; mao = embaralha(mao); inims.forEach((l, k) => { inims[k] = embaralha(l); }); }
         else if (ev.id === 'reforcos') reg.pool = livres(x => x.raridade === 'comum', 8);
       }
-      const bots = bat.i.map(x => ({ name: x.n, bot: true, diff: ev && ev.id === 'clarividente' ? 'dificil' : NIVEIS[nivelBot(n)] }));
+      const bots = bat.i.map(x => ({ name: x.n, bot: true, diff: ev && ev.id === 'clarividente' ? 'dificil' : nivelBot(n) }));
       const players = [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }].concat(bots);
       const musica = n.tipo === 'boss' ? 'boss' : n.tipo === 'miniboss' ? 'arauto' : n.tipo === 'guardiao' ? 'guardiao' : 'batalha';
       try { SND.histStop(true); } catch (e) { }

@@ -453,8 +453,8 @@
     }
     botOrderHand(hand, p, start) { // fácil: melhores primeiro, com ruído; normal/difícil: planejam pela iniciativa e pelo valor dos especiais
       const L = this.lvl(p), nz = L.ord, n = this.s.players.length, r = () => this.rand() * nz;
-      const diff = (p && p.diff) || this.cfg.difficulty; p = p || {};
-      if (diff === 'facil' || (p && p.ordOld)) return hand.slice().sort((a, b) => (sum4(CARDS[b].stats) + r()) - (sum4(CARDS[a].stats) + r()));
+      p = p || {};
+      if (this.uNivel(p) < 0.25 || (p && p.ordOld)) return hand.slice().sort((a, b) => (sum4(CARDS[b].stats) + r()) - (sum4(CARDS[a].stats) + r()));
       const sv = id => { const s = SP[CARDS[id].especial]; return (s && !s.stub && !p.noSpecial ? (s.val || 0) : 0); };
       const mx = id => Math.max(...Object.values(CARDS[id].stats));
       if (start == null) return hand.map(id => ({ id, s: sum4(CARDS[id].stats) + 20 * sv(id) + r() })).sort((a, b) => b.s - a.s).map(x => x.id);   // compra da reserva: especiais já valem
@@ -1129,10 +1129,13 @@
     }
 
     // ---------------------------------------------------------------- IA
-    skill(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: 0.1, normal: 0.6, dificil: 1 }[d] ?? 0.6; }
+    // nível da CPU: 'facil' | 'normal' | 'dificil' ou um número 0–1 (0 = fácil, 0,5 = normal, 1 = difícil; entre eles interpola; o modo história sobe esse número com as batalhas travadas)
+    uNivel(p) { const d = p && p.diff != null ? p.diff : this.cfg.difficulty; return typeof d === 'number' ? Math.max(0, Math.min(1, d)) : ({ facil: 0, normal: 0.5, dificil: 1 }[d] ?? 0.5); }
+    mixN(a, b, t) { return a + (b - a) * t; }
+    skill(p) { const u = this.uNivel(p), T = [0.1, 0.6, 1]; return u <= 0.5 ? this.mixN(T[0], T[1], u / 0.5) : this.mixN(T[1], T[2], (u - 0.5) / 0.5); }
     // Nível do bot: blind = chance de NÃO ler o estado da mesa (escolhe sem olhar adversários/cartas); lapse = chance de errar a escolha do atributo; ord = ruído ao ordenar a mão.
     // cap = quantas cartas seguintes de um rival ele consegue guardar de uma espiada; forget = chance de esquecer o que viu a cada disputa; mist = chance de errar o custo ao decidir se sacrifica a carta como especial
-    lvl(p) { const d = (p && p.diff) || this.cfg.difficulty; return { facil: { blind: 0.25, lapse: 0.14, ord: 80, cap: 3, forget: 0.08, mist: 0.4 }, normal: { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }, dificil: { blind: 0, lapse: 0.01, ord: 30, cap: 10, forget: 0.002, mist: 0.01 } }[d] || { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }; }
+    lvl(p) { const u = this.uNivel(p), T = [{ blind: 0.25, lapse: 0.14, ord: 80, cap: 3, forget: 0.08, mist: 0.4 }, { blind: 0.12, lapse: 0.06, ord: 50, cap: 5, forget: 0.03, mist: 0.15 }, { blind: 0, lapse: 0.01, ord: 30, cap: 10, forget: 0.002, mist: 0.01 }], lo = u <= 0.5 ? T[0] : T[1], hi = u <= 0.5 ? T[1] : T[2], t = u <= 0.5 ? u / 0.5 : (u - 0.5) / 0.5, o = {}; Object.keys(lo).forEach(k => { o[k] = this.mixN(lo[k], hi[k], t); }); o.cap = Math.round(o.cap); return o; }
     // ---- memória do bot (modelo de fila). Para cada rival, a ordem do baralho que ele conhece; null = carta que não viu.
     // Cartas jogadas voltam ao fim do baralho de quem as ganha: depois de uma volta o bot já sabe a ordem, sem gastar especial.
     // Espiadas preenchem o início mais cedo. Níveis baixos guardam menos cartas (cap) e esquecem mais (forget).

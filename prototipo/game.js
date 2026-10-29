@@ -1004,7 +1004,7 @@
   U.plain = plain;
 
   // dificuldade registrada: a comum a todos os bots; se forem mistas, 'misto' (não conta para a conquista de nível Difícil)
-  const recDiff = (list, dflt) => { const d = [...new Set((list || []).filter(p => p.bot).map(p => p.diff || dflt || 'normal'))]; return d.length === 1 ? d[0] : d.length ? 'misto' : (dflt || 'normal'); };
+  const recDiff = (list, dflt) => { const d = [...new Set((list || []).filter(p => p.bot).map(p => { const d = p.diff != null ? p.diff : (dflt || 'normal'); return typeof d === 'number' ? (d < .25 ? 'facil' : d < .75 ? 'normal' : 'dificil') : d; }))]; return d.length === 1 ? d[0] : d.length ? 'misto' : (dflt || 'normal'); };
   U.startOnline = async function (ctl) {
     lastCfg = null; SND.init(); U.killRun(); U.newRun(); U.onlineOff && U.onlineOff(); $$('#layer > *').forEach(x => x.remove());
     if (!FX.cv) FX.init();
