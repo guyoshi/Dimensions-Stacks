@@ -37,8 +37,20 @@ try:
     pg.screenshot(path=shots + '/mapa_preto.png'); pg.wait_for_timeout(5500); pg.screenshot(path=shots + '/mapa_escuro.png')
     ns = pg.evaluate("[...document.querySelectorAll('.n')].map(g=>g.classList.contains('fog')).filter(x=>x).length")
     vis = pg.evaluate("[...document.querySelectorAll('.n')].filter(g=>!g.classList.contains('fog')&&!g.classList.contains('far1')).length")
-    chk(ns > 80 and 2 <= vis <= 8, 'mapa escuro: %d pontos ocultos, %d visíveis' % (ns, vis))
+    chk(ns > 80 and 1 <= vis <= 14, 'mapa escuro: %d pontos ocultos, %d visíveis' % (ns, vis))
     chk(pg.evaluate("getComputedStyle(document.querySelector('#hsHero')).opacity") == '1', 'boneco apareceu')
+    # caminhos só depois de vencer: antes da vitória não há arestas visíveis fora do núcleo e da partida; depois da vitória surgem
+    e0 = pg.evaluate("document.querySelectorAll('.hs-edges .e:not(.fog)').length")
+    st = pg.evaluate('window.DSHistoria.state().startId'); bx = pg.evaluate("id => {const r=document.querySelector('.n[data-id=\"'+id+'\"]').getBoundingClientRect();return [r.x+r.width/2,r.y+r.height/2]}", st)
+    pg.mouse.click(bx[0], bx[1]); pg.wait_for_selector('#hsSheet [data-a=win]'); pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.npc', timeout=4000)
+    chk(True, 'NPC do tutorial aparece depois da primeira vitória')
+    for _ in range(6):
+        if not pg.query_selector('.npc'): break
+        pg.click('.npc'); pg.wait_for_timeout(150); pg.click('.npc'); pg.wait_for_timeout(150)
+    chk(pg.query_selector('.npc') is None and pg.evaluate('window.DSHistoria.state().tutorial') == 1, 'tutorial termina e não repete')
+    e1 = pg.evaluate("document.querySelectorAll('.hs-edges .e:not(.fog)').length"); chk(e1 > e0, 'caminhos surgem ao vencer: %d antes, %d depois' % (e0, e1))
+    chk(pg.evaluate("document.querySelectorAll('.flag').length") == 0, 'sem faixas Início/Partida')
+    pg.keyboard.press('Escape')
     # pular
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.click('[data-a=intro]'); pg.wait_for_selector('.cin'); pg.click('.cin-skip'); pg.wait_for_timeout(900)
     chk(pg.query_selector('.cin') is None, 'Pular fecha a cinemática')

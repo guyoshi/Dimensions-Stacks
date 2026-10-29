@@ -2,7 +2,7 @@
    Cada cena tem uma imagem (opcional) e uma lista de falas; cada toque mostra a próxima fala (digitada letra por letra).
    Campos da cena:  img: caminho da imagem ou null (fica só o preto)
                     mov: 'zoom' | 'zoomout' | 'esq' | 'dir' | 'fixo'   (movimento lento da imagem)
-                    fotos: ['photos/X.webp', ...]  até 6 fotos que aparecem uma a uma em cantos diferentes da tela
+                    fotos: ['photos/X.webp', ...]  até 8 fotos que aparecem uma a uma em cantos diferentes da tela
                     cor: cor de fundo atrás da imagem (padrão preto) · pos: enquadramento da imagem
                     textos: ['fala 1', ...]  ({nome} vira o nome que o jogador digitou)
                     tom: 'narr' (padrão) | 'fala' | 'grito' (grande, tremendo)
@@ -22,7 +22,7 @@ window.DS_CINEMATICA = {
     { img: 'cena/besta.webp', mov: 'esq', pos: 'center', textos: [
       'A Besta engoliu estrelas. Depois, sistemas inteiros.',
       'E então começou a rasgar as paredes entre as dimensões.'] },
-    { img: null, fotos: ['photos/J03.webp', 'photos/V02.webp', 'photos/D06.webp', 'photos/M01.webp', 'photos/V15.webp', 'photos/B01.webp'], textos: [
+    { img: null, fotos: ['photos/J03.webp', 'photos/V02.webp', 'photos/D06.webp', 'photos/M01.webp', 'photos/V15.webp', 'photos/B01.webp', 'photos/M10.webp'], textos: [
       'Sem saída, Jasmey pediu ajuda à União: heróis de todos os cantos do universo, o único grupo que talvez pudesse deter a Besta.',
       'Eles atenderam ao chamado.'] },
     { img: 'cena/besta.webp', mov: 'dir', pos: 'center', textos: [
@@ -48,7 +48,7 @@ window.DS_CINEMATICA_FINAL = {
     { img: 'cena/besta.webp', mov: 'zoomout', pos: 'center', textos: [
       '{nome} enfrentou a Besta onde ninguém mais ousou chegar.',
       'Foi a batalha mais longa que a galáxia já viu. E, no fim, a Besta caiu.'] },
-    { img: null, fotos: ['photos/J03.webp', 'photos/V02.webp', 'photos/D06.webp', 'photos/M01.webp', 'photos/V15.webp', 'photos/B01.webp'], textos: [
+    { img: null, fotos: ['photos/J03.webp', 'photos/V02.webp', 'photos/D06.webp', 'photos/M01.webp', 'photos/V15.webp', 'photos/B01.webp', 'photos/M10.webp'], textos: [
       'Com ela, caíram as correntes que prendiam a União.',
       'Um a um, os heróis foram libertados, e todos voltaram a se erguer ao lado de {nome}.'] },
     { img: 'photos/S01.webp', mov: 'zoom', pos: 'top', textos: [

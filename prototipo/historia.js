@@ -134,10 +134,15 @@
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); if (b.dataset.a === 's') sortear(); };
   }
+  // cartas iniciais: 6 comuns + 1 épica (sem a Besta nem a União)
+  function iniciais() {
+    const pool = U.D.CARTAS.filter(c => !c.uniao && c.id !== 'S11'), sh = a => a.map(x => [Math.random(), x]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+    return sh(pool.filter(c => c.raridade === 'comum')).slice(0, 6).concat(sh(pool.filter(c => c.raridade === 'epica')).slice(0, 1)).map(c => c.id);
+  }
   // ---- ponto de partida: uma das 4 extremidades, sorteada em silêncio (sem tela de sorteio)
   function sortear() {
     const ladoSel = ['esq', 'cima', 'dir', 'baixo'][Math.floor(Math.random() * 4)];
-    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: [], created: Date.now() }; save();
+    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: iniciais(), created: Date.now() }; S.npc = S.owned[Math.floor(Math.random() * S.owned.length)]; save();
     if (window.DSCinema) window.DSCinema.play((pulou, v) => { if (v && v.nome) { S.nome = v.nome; save(); } openMap(true, true); }); else openMap(true);
   }
 
@@ -168,21 +173,19 @@
     $$('.hs-edges .e', root).forEach(p => { p.setAttribute('class', 'e ' + edgeState(p.dataset.a, p.dataset.b)); });
     $$('.n', root).forEach(g => paintNode(g));
     svg.classList.toggle('aberto', !!P.aberto); paintLuz(); paintSetas();
-    const mk = $('#hsMarks', root), st = BY[S.startId];
-    const flag = (n, txt, cls) => `<g class="flag ${cls}" transform="translate(${n.x} ${n.y - TIPOS[n.tipo].r - 30})"><path d="M0 22 V-6 L18 0 L0 6" fill="currentColor"/><text x="24" y="3">${txt}</text></g>`;
-    mk.innerHTML = flag(st, 'Início', 'on') + (P.aberto ? Object.values(M.starts).filter(i => i !== S.startId).map(i => flag(BY[i], 'Partida', 'off')).join('') : '');
+    const mk = $('#hsMarks', root); if (mk) mk.innerHTML = '';
     const pe = $('#hsPend', root), pc = $('#hsCards', root); if (pe) pe.textContent = S.pend; if (pc) pc.textContent = S.owned.length;
   }
-  // ---- escuridão: só o boneco, os pontos vencidos e os vizinhos deles aparecem; mais um anel apagado de silhuetas
+  // ---- o que aparece: só o que foi vencido ilumina. Caminhos e bifurcações surgem ao vencer uma fase; os vizinhos aparecem (abertos ou trancados) mesmo com o boneco longe. O núcleo está sempre visível.
+  const NUCLEO = new Set(NOS.filter(n => n.tier === 4).map(n => n.id));
   function paintLuz() {
     const esc_ = P.escuro !== false; svg.classList.toggle('escuro', esc_);
     const lg = $('#hsLights', root); if (lg) lg.innerHTML = '';
-    const luz = new Set([S.startId]); NOS.forEach(n => { if (cleared(n.id)) luz.add(n.id); });   // só o que foi vencido (e a partida) ilumina os vizinhos; andar não revela ramos novos
-    const perto = new Set(luz); luz.forEach(i => BY[i].viz.forEach(v => perto.add(v))); perto.add(posId());
-    const longe = new Set(perto); perto.forEach(i => BY[i].viz.forEach(v => longe.add(v)));
-    $$('.n', root).forEach(g => { const i = g.dataset.id; g.classList.toggle('fog', esc_ && !longe.has(i)); g.classList.toggle('far1', esc_ && longe.has(i) && !perto.has(i)); });
-    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', esc_ && !(luz.has(a) || luz.has(b) || (perto.has(a) && perto.has(b)))); p.classList.toggle('far1', esc_ && !(luz.has(a) || luz.has(b)) && (perto.has(a) && perto.has(b))); });
-    if (esc_ && lg) { const here = posId(); lg.innerHTML = [...new Set([...luz, here])].map(i => { const n = BY[i], hero = i === here, r = hero ? 330 : (cleared(i) ? 210 : 160); return `<circle class="hs-light" cx="${n.x}" cy="${n.y}" r="${r}" ${hero ? 'style="fill:url(#hsLightH)"' : ''}/>`; }).join(''); }
+    const luz = new Set(); NOS.forEach(n => { if (cleared(n.id)) luz.add(n.id); });   // só o vencido ilumina (inclusive a casa de partida: seus caminhos só surgem depois da primeira vitória)
+    const vis = new Set(luz); luz.forEach(i => BY[i].viz.forEach(v => vis.add(v))); vis.add(posId()); NUCLEO.forEach(i => vis.add(i));
+    $$('.n', root).forEach(g => { g.classList.toggle('fog', esc_ && !vis.has(g.dataset.id)); g.classList.remove('far1'); });
+    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', esc_ && !(luz.has(a) || luz.has(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); p.classList.remove('far1'); });
+    if (esc_ && lg) { const here = posId(); lg.innerHTML = [...new Set([...luz, here, ...NUCLEO])].map(i => { const n = BY[i], hero = i === here, nuc = NUCLEO.has(i), r = hero ? 330 : nuc ? (n.id === M.boss ? 300 : 170) : (cleared(i) ? 210 : 160); return `<circle class="hs-light" cx="${n.x}" cy="${n.y}" r="${r}" ${hero ? 'style="fill:url(#hsLightH)"' : ''}/>`; }).join(''); }
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
@@ -314,9 +317,29 @@
     const mem = LIBERTA[id]; if (mem) { S.owned = S.owned || []; if (ok) S.owned = S.owned.filter(x => x !== mem); else if (!S.owned.includes(mem)) S.owned.push(mem); }
     save(); SND.play(ok ? 'tick' : 'capture'); paintAll(); openNode(id);
     if (mem && !ok) setTimeout(() => libertar(mem), 500);
+    if (!ok && Object.keys(S.cleared).length === 1 && !mem) setTimeout(tutorial, 900);
     if (id === M.boss && !ok) setTimeout(finalCena, 900);
     const g = $('.n[data-id="' + id + '"]', root); if (g && !ok) { g.classList.remove('pop'); void g.getBoundingClientRect(); g.classList.add('pop'); }
     if (!wasOpen && bossOpen()) bossAbre();
+  }
+  // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
+  function npcFala(cid, linhas, done) {
+    const c = U.CARDS[cid]; let i = 0, tm = null, pronto = false;
+    const ov = el(`<div class="npc"><div class="npc-box"><div class="npc-p"></div><div class="npc-b"><b>${esc(c ? c.nome : 'Viajante')}</b><p></p><i class="cin-next on">▾</i></div></div></div>`);
+    if (c) $('.npc-p', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 84 }));
+    document.body.appendChild(ov); const P_ = $('p', ov), red = document.body.classList.contains('reduce');
+    const fala = () => { const t = linhas[i].replace(/\{nome\}/g, (S && S.nome) || 'viajante'); pronto = false; P_.textContent = ''; clearInterval(tm); let k = 0; const fim = () => { clearInterval(tm); P_.textContent = t; pronto = true; };
+      if (red) return fim(); tm = setInterval(() => { k += 2; P_.textContent = t.slice(0, k); if (k >= t.length) fim(); }, 22); };
+    ov.onclick = () => { SND.play('click'); if (!pronto) { clearInterval(tm); P_.textContent = linhas[i].replace(/\{nome\}/g, (S && S.nome) || 'viajante'); pronto = true; return; } i++; if (i >= linhas.length) { ov.remove(); done && done(); } else fala(); };
+    fala();
+  }
+  function tutorial() {
+    if (!S || S.tutorial || !S.npc) return; S.tutorial = 1; save();
+    npcFala(S.npc, ['Você venceu a primeira batalha. Eu estava na sua mão, lembra? Agora vou te mostrar como isso funciona.',
+      'Cada vitória ilumina os caminhos à frente. Use as setas ao lado do seu boneco para andar, um passo de cada vez.',
+      'Pêndulos compram cartas nas lojas e descansam as suas cartas. Baús e batalhas dão mais.',
+      'Cada miniboss prende um membro da União. Liberte os oito e derrote os quatro guardiões para chegar à Besta.',
+      'Pelo caminho, alguns viajantes vendem atalhos. Boa sorte, {nome}.']);
   }
   // miniboss vencido: o membro da União preso por ele é libertado e entra na equipe
   function libertar(cid) {

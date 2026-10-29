@@ -29,6 +29,14 @@
     { id: 'caracoroa', nome: 'Cara ou coroa', desc: 'Acerte até 3 vezes seguidas. Pare quando quiser e leve o prêmio.', cortes: [.3, .6, .95] },
     { id: 'raspadinha', nome: 'Raspadinha estelar', desc: 'Raspe 3 quadrados e torça por símbolos iguais.', cortes: [.3, .6, .95] },
     { id: 'cacapendulo', nome: 'Caça ao pêndulo', desc: 'No escuro, toque nos pêndulos que passam sob a luz.', cortes: [.33, .6, .87] },
+    // um por série de livros
+    { id: 'elos', nome: 'Elos das Sombras', serie: 'Diário Sobrenatural', desc: 'Os seis Elos acendem em sequência: repita a ordem.', cortes: [.4, .7, 1] },
+    { id: 'luas', nome: 'Duas luas', serie: 'Ciclo de Jesed', desc: 'Toque quando as duas luas de Jesed estiverem alinhadas.', cortes: [.35, .65, .9] },
+    { id: 'poderes', nome: 'Poderes dos Lins', serie: 'Viajantes Dimensionais', desc: 'Cada obstáculo pede o poder certo de um dos irmãos.', cortes: [.4, .7, .9] },
+    { id: 'gancho', nome: 'Gancho de abordagem', serie: 'Spacetheft', desc: 'Lance o gancho adiantado: a nave pirata não para.', cortes: [.34, .67, .84] },
+    { id: 'culpado', nome: 'Quem é o culpado?', serie: 'Mistério Oculto', desc: 'Use as pistas para descobrir o culpado. 3 casos.', cortes: [.34, .67, .99] },
+    { id: 'ritmo', nome: 'Mar, fogo e gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
+    { id: 'formacao', nome: 'Formação da União', serie: 'A União', desc: 'Escolha 3 heróis cujos atributos somados cubram o desafio.', cortes: [.34, .67, .99] },
   ];
   const BYID = {}; LISTA.forEach(m => { BYID[m.id] = m; });
   const cfgAll = () => rd(CFG_KEY, {});
@@ -184,6 +192,115 @@
       raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); };
     },
   };
+
+  // ---------------- minigames por série
+  Object.assign(GAMES, {
+    // Diário Sobrenatural: Simon com os seis sentidos (5 rodadas, 3 a 7 elos)
+    elos(body, c, fim) {
+      const NOMES = ['Visão', 'Audição', 'Olfato', 'Paladar', 'Tato', 'Intuição'], COR = ['#6cc6ff', '#ffd25f', '#7dffb0', '#ff8a5c', '#c58cff', '#ff7ab0'], SOM = ['click', 'tick', 'flip', 'deal', 'place', 'reveal'];
+      let rodada = 0, seq = [], pos = 0, vez = false, ok = 0; const R = 5;
+      body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3" id="el"></div>`; const q = $('#mq', body), g = $('#el', body);
+      NOMES.forEach((n, i) => { const b = mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]}">${n}</button>`); g.append(b); });
+      const acende = async i => { const b = g.children[i]; b.classList.add('on'); SND.play(SOM[i]); await wait(380 / c.dif); b.classList.remove('on'); await wait(150 / c.dif); };
+      const nova = async () => { vez = false; seq = Array.from({ length: 3 + rodada }, () => rnd(6)); pos = 0; q.textContent = 'Rodada ' + (rodada + 1) + '/' + R + ': observe'; await wait(700); for (const i of seq) await acende(i); q.textContent = 'Sua vez'; vez = true; };
+      g.onclick = async e => { const b = e.target.closest('.elo'); if (!b || !vez) return; const i = +b.dataset.i; acende(i);
+        if (i !== seq[pos]) { vez = false; SND.play('lose'); q.textContent = 'Errou!'; await wait(900); return fim(ok / R, ok + ' de ' + R + ' sequências'); }
+        pos++; if (pos === seq.length) { vez = false; ok++; rodada++; SND.play('capture'); await wait(700); if (rodada >= R) return fim(1, 'Todas as sequências'); nova(); } };
+      nova();
+    },
+    // Ciclo de Jesed: duas luas, alinhar (5 toques)
+    luas(body, c, fim) {
+      const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 380, g = cv.getContext('2d');
+      let a1 = 0, a2 = 2, last = 0, raf = 0, toques = 0, pts = 0, msg = '', msgT = 0, travado = false; const N = 5, tol = .3 / c.dif, w1 = 1.1 * c.dif, w2 = .62 * c.dif;
+      const dif = () => { let d = Math.abs(((a1 - a2) % (2 * Math.PI) + 3 * Math.PI) % (2 * Math.PI) - Math.PI); return Math.PI - d; };   // 0 = alinhadas
+      const loop = ts => { const dt = Math.min(.05, (ts - last) / 1000 || 0); last = ts; a1 += w1 * dt; a2 += w2 * dt; if (msgT > 0) msgT -= dt;
+        g.fillStyle = '#05030f'; g.fillRect(0, 0, W, H); const cx = W / 2, cy = H / 2 + 6; g.strokeStyle = '#ffffff22'; [[120], [70]].forEach(([r]) => { g.beginPath(); g.arc(cx, cy, r, 0, 7); g.stroke(); });
+        g.fillStyle = '#3a6ea5'; g.beginPath(); g.arc(cx, cy, 20, 0, 7); g.fill(); const d = dif(), al = d < tol;
+        const m = (a, r, rad, col) => { g.fillStyle = col; g.beginPath(); g.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, rad, 0, 7); g.fill(); }; m(a1, 70, 14, al ? '#fff6c9' : '#d7d2ee'); m(a2, 120, 9, al ? '#ffb3a0' : '#c7503a');
+        g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Toque ' + Math.min(toques + 1, N) + '/' + N, 10, 20); if (msgT > 0) { g.font = '800 22px system-ui'; g.textAlign = 'center'; g.fillText(msg, cx, 40); g.textAlign = 'left'; }
+        raf = requestAnimationFrame(loop); };
+      cv.style.touchAction = 'none';
+      const bt = mk('<button class="btn primary big">Alinhar!</button>'); body.append(bt);
+      bt.onclick = async () => { if (travado) return; const d = dif(); const v = d < tol ? 1 : d < tol * 2 ? .5 : 0; pts += v; toques++; msg = v === 1 ? 'Alinhadas!' : v ? 'Quase' : 'Errou'; msgT = 1; SND.play(v ? (v === 1 ? 'capture' : 'tick') : 'lose'); if (toques >= N) { travado = true; await wait(900); fim(pts / N, pts + ' de ' + N + ' pontos'); } };
+      raf = requestAnimationFrame(loop); return () => cancelAnimationFrame(raf);
+    },
+    // Viajantes: poder certo para cada obstáculo (10 obstáculos)
+    poderes(body, c, fim) {
+      const P = [{ n: 'Breno', d: 'atravessa' }, { n: 'Bruno', d: 'congela' }, { n: 'Beatriz', d: 'queima' }, { n: 'Banjo', d: 'move à distância' }];
+      const OB = [{ t: 'Parede de pedra', p: 0 }, { t: 'Fogueira', p: 1 }, { t: 'Bloco de gelo', p: 2 }, { t: 'Alavanca distante', p: 3 }, { t: 'Grade trancada', p: 0 }, { t: 'Lava no chão', p: 1 }, { t: 'Porta de gelo', p: 2 }, { t: 'Chave no alto', p: 3 }];
+      const N = 10, seq = Array.from({ length: N }, () => pick(OB)); let n = 0, ok = 0, tm = null, left = 0, done = false;
+      const q = () => { const o = seq[n]; left = 3 / c.dif; done = false;
+        body.innerHTML = `<p class="mg-q">Obstáculo ${n + 1}/${N} · <span id="tl">${left.toFixed(1)}</span>s</p><div class="mg-obs">${o.t}</div><div class="mg-btns col">${P.map((x, i) => `<button class="btn" data-p="${i}">${x.n} <small>${x.d}</small></button>`).join('')}</div>`;
+        const resp = async i => { if (done) return; done = true; clearInterval(tm); const certo = i === o.p; if (certo) ok++; SND.play(certo ? 'win' : 'lose'); await wait(500); n++; if (n >= N) fim(ok / N, ok + ' de ' + N + ' obstáculos'); else q(); };
+        body.onclick = e => { const b = e.target.closest('[data-p]'); if (b) resp(+b.dataset.p); }; clearInterval(tm);
+        tm = setInterval(() => { left -= .1; const t = $('#tl', body); if (t) t.textContent = Math.max(0, left).toFixed(1); if (left <= 0) resp(-1); }, 100); };
+      q(); return () => clearInterval(tm);
+    },
+    // Spacetheft: gancho de abordagem contra nave em movimento (6 lançamentos)
+    gancho(body, c, fim) {
+      const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 420, g = cv.getContext('2d');
+      let sx = 40, sv = 90 * c.dif, last = 0, raf = 0, ganchos = [], lanc = 0, acertos = 0, aim = W / 2, acabou = false; const N = 6, SY = 90, VG = 420;
+      const mover = e => { const r = cv.getBoundingClientRect(); aim = (e.clientX - r.left) * W / r.width; }; cv.style.touchAction = 'none'; cv.addEventListener('pointermove', mover);
+      const lanca = e => { mover(e); if (lanc >= N || ganchos.some(h => h.vivo)) return; lanc++; ganchos.push({ x: aim, y: H - 10, vivo: true }); SND.play('slash'); };
+      cv.addEventListener('pointerdown', lanca);
+      const loop = ts => { const dt = Math.min(.05, (ts - last) / 1000 || 0); last = ts; sx += sv * dt; if (sx > W - 30) { sx = W - 30; sv = -Math.abs(sv) * (.8 + Math.random() * .5); } if (sx < 30) { sx = 30; sv = Math.abs(sv) * (.8 + Math.random() * .5); } sv = Math.sign(sv) * Math.min(Math.abs(sv), 190 * c.dif);
+        g.fillStyle = '#05030f'; g.fillRect(0, 0, W, H); g.fillStyle = '#ffffff44'; for (let i = 0; i < 24; i++) g.fillRect((i * 83) % W, (i * 47) % H, 1.5, 1.5);
+        g.fillStyle = '#c7503a'; g.beginPath(); g.moveTo(sx + 26, SY); g.lineTo(sx - 18, SY - 13); g.lineTo(sx - 18, SY + 13); g.fill(); g.fillStyle = '#ffd25f'; g.fillRect(sx - 4, SY - 4, 8, 8);
+        ganchos.forEach(h => { if (!h.vivo) return; h.y -= VG * dt; if (Math.abs(h.x - sx) < 24 && Math.abs(h.y - SY) < 14) { h.vivo = false; h.ok = true; acertos++; SND.play('capture'); } else if (h.y < 20) { h.vivo = false; SND.play('lose'); } });
+        ganchos.forEach(h => { g.strokeStyle = h.ok ? '#7dffb0' : '#fff'; g.beginPath(); g.moveTo(h.x, H); g.lineTo(h.x, h.vivo ? h.y : (h.ok ? SY : 20)); g.stroke(); });
+        g.strokeStyle = '#7dffb066'; g.beginPath(); g.moveTo(aim, H); g.lineTo(aim, H - 40); g.stroke(); g.fillStyle = '#7dffb0'; g.beginPath(); g.moveTo(aim, H - 56); g.lineTo(aim - 9, H - 38); g.lineTo(aim + 9, H - 38); g.fill();
+        g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Ganchos ' + (N - lanc) + '   Abordagens ' + acertos, 10, 20);
+        if (lanc >= N && !ganchos.some(h => h.vivo) && !acabou) { acabou = true; setTimeout(() => fim(acertos / N, acertos + ' de ' + N + ' abordagens'), 600); }
+        raf = requestAnimationFrame(loop); };
+      raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); };
+    },
+    // Mistério Oculto: dedução por pistas (3 casos)
+    culpado(body, c, fim) {
+      const NOMES = ['Diana', 'Marta', 'Padre Tomas', 'Sete', 'Hyde', 'Lúcio', 'Vera', 'Caio'], COR = ['vermelho', 'azul', 'verde', 'preto'], LOC = ['Biblioteca', 'Cozinha', 'Jardim', 'Porão'], HEX = { vermelho: '#ff6a5c', azul: '#6cc6ff', verde: '#7dffb0', preto: '#8a84a8' };
+      let caso = 0, pts = 0; const N = 3;
+      const gera = () => { const nm = shuffle(NOMES).slice(0, 4), cs = shuffle(COR), ls = shuffle(LOC), S = nm.map((n, i) => ({ n, c: cs[i], l: ls[i] })), cul = rnd(4), pistas = [], vivos = new Set([0, 1, 2, 3]);
+        const cand = []; COR.forEach(x => { if (x !== S[cul].c) cand.push({ t: 'O culpado não usava casaco ' + x + '.', f: s => s.c !== x }); }); LOC.forEach(x => { if (x !== S[cul].l) cand.push({ t: 'O culpado não estava na ' + (x === 'Porão' ? 'o Porão' : x).replace('na o', 'no') + '.', f: s => s.l !== x }); });
+        cand.forEach(k => { if (k.t.includes('na o ')) k.t = k.t.replace('na o ', 'no '); }); LOC.forEach(x => { if (x !== S[cul].l) { const y = pick(LOC.filter(z => z !== x)); } });
+        while (vivos.size > 1 && cand.length) { let melhor = null, mi = -1; cand.forEach((k, i) => { const e = [...vivos].filter(v => v !== cul && !k.f(S[v])).length; if (e > (melhor === null ? 0 : melhor)) { melhor = e; mi = i; } }); if (mi < 0) break; const k = cand.splice(mi, 1)[0]; pistas.push(k.t); [...vivos].forEach(v => { if (v !== cul && !k.f(S[v])) vivos.delete(v); }); }
+        return { S, cul, pistas }; };
+      const tela = () => { const P = gera(); let tent = 0;
+        body.innerHTML = `<p class="mg-q">Caso ${caso + 1}/${N}</p><div class="mg-sus">${P.S.map((s, i) => `<button class="btn" data-i="${i}"><b>${s.n}</b><br><small style="color:${HEX[s.c]}">casaco ${s.c}</small><br><small>${s.l}</small></button>`).join('')}</div><ul class="mg-pistas">${P.pistas.map(t => `<li>${t}</li>`).join('')}</ul><p class="hint" id="mm">Quem é o culpado?</p>`;
+        body.onclick = async e => { const b = e.target.closest('[data-i]'); if (!b || b.disabled) return; const i = +b.dataset.i; tent++;
+          if (i === P.cul) { pts += tent === 1 ? 1 : .5; SND.play('win'); await wait(900); caso++; if (caso >= N) return fim(pts / N, pts + ' de ' + N + ' pontos'); tela(); } else { b.disabled = true; b.style.opacity = .4; SND.play('lose'); if (tent >= 2) { await wait(700); caso++; if (caso >= N) return fim(pts / N, pts + ' de ' + N + ' pontos'); tela(); } } }; };
+      tela();
+    },
+    // Édelin Lys: ritmo de três elementos (20 notas)
+    ritmo(body, c, fim) {
+      const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 400, g = cv.getContext('2d');
+      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 20, GAP = .62 / Math.sqrt(c.dif), FALL = 1.5 / c.dif, LY = H - 70, JAN = .13 * (1.1 / c.dif);
+      const notas = Array.from({ length: N }, (_, i) => ({ t: 1.5 + i * GAP + (i % 3 === 2 ? GAP * .3 : 0), l: rnd(3), est: 0 })); let t0 = 0, raf = 0, hit = 0, msg = '', msgT = 0, acabou = false;
+      const bar = mk('<div class="mg-btns">' + NOME.map((n, i) => `<button class="btn" data-l="${i}" style="border-color:${COR[i]}">${n}</button>`).join('') + '</div>'); body.append(bar);
+      const toque = l => { const now = (performance.now() - t0) / 1000; let best = null; notas.forEach(n => { if (n.est === 0 && n.l === l && Math.abs(n.t - now) < JAN * 2 && (!best || Math.abs(n.t - now) < Math.abs(best.t - now))) best = n; });
+        if (best) { const ex = Math.abs(best.t - now) < JAN; best.est = ex ? 1 : 2; if (ex) hit++; else hit += .5; msg = ex ? 'Perfeito' : 'Bom'; SND.play('tick'); } else { msg = 'Errou'; SND.play('lose'); } msgT = .5; };
+      bar.onclick = e => { const b = e.target.closest('[data-l]'); if (b) toque(+b.dataset.l); }; const key = e => { const k = { a: 0, s: 1, d: 2, 1: 0, 2: 1, 3: 2 }[e.key]; if (k != null) toque(k); }; document.addEventListener('keydown', key);
+      const loop = () => { const now = (performance.now() - t0) / 1000; g.fillStyle = '#05030f'; g.fillRect(0, 0, W, H); const lw = W / 3;
+        for (let l = 0; l < 3; l++) { g.fillStyle = COR[l] + '14'; g.fillRect(l * lw, 0, lw - 2, H); }
+        g.strokeStyle = '#fff'; g.beginPath(); g.moveTo(0, LY); g.lineTo(W, LY); g.stroke();
+        notas.forEach(n => { if (n.est) return; const y = LY - (n.t - now) / FALL * (LY - 10); if (y > H + 20 && now > n.t + JAN * 2) { n.est = 3; msg = 'Perdeu'; msgT = .4; return; } if (y < -20) return; g.fillStyle = COR[n.l]; g.beginPath(); g.arc(n.l * lw + lw / 2, y, 16, 0, 7); g.fill(); });
+        g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Acertos ' + Math.floor(hit) + '/' + N, 10, 20); if (msgT > 0) { msgT -= .016; g.font = '800 22px system-ui'; g.textAlign = 'center'; g.fillText(msg, W / 2, 50); g.textAlign = 'left'; }
+        if (now > notas[N - 1].t + 1 && !acabou) { acabou = true; fim(hit / N, Math.floor(hit) + ' de ' + N + ' notas'); } raf = requestAnimationFrame(loop); };
+      t0 = performance.now(); raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); document.removeEventListener('keydown', key); };
+    },
+    // A União: escolha 3 heróis para cobrir o desafio (3 casos)
+    formacao(body, c, fim) {
+      const UN = CARTAS().filter(x => x.uniao).map(x => x.id), AT = ['pod', 'def', 'int', 'vel']; let caso = 0, ok = 0, tm = null; const N = 3;
+      const tela = () => { const cand = shuffle(UN).slice(0, 6), combos = []; for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) for (let k = j + 1; k < 6; k++) combos.push([cand[i], cand[j], cand[k]]);
+        const sum = (cs, a) => cs.reduce((t, id) => t + U.CARDS[id].stats[a], 0), alvo = pick(combos), a1 = pick(AT), a2 = pick(AT.filter(x => x !== a1)), r1 = Math.round(sum(alvo, a1) * (.93 / Math.sqrt(c.dif))), r2 = Math.round(sum(alvo, a2) * (.93 / Math.sqrt(c.dif)));
+        let esc = [], left = Math.round(40 / c.dif);
+        const pinta = () => { body.innerHTML = `<p class="mg-q">Desafio ${caso + 1}/${N} · <span id="tl">${left}</span>s<br>Some <b>${NA(a1)} ≥ ${r1}</b> e <b>${NA(a2)} ≥ ${r2}</b> com 3 heróis</p><div class="mg-grid g3">${cand.map(id => `<button class="mg-cell ${esc.includes(id) ? 'ok' : ''}" data-id="${id}" style="padding:2px"></button>`).join('')}</div>
+          <p class="mg-q" id="so">${NA(a1)}: ${sum(esc, a1)} · ${NA(a2)}: ${sum(esc, a2)}</p><button class="btn primary" data-a="ok" ${esc.length === 3 ? '' : 'disabled'}>Confirmar</button>`; $$all('.mg-cell', body).forEach(b => b.append(card(b.dataset.id, 86))); };
+        const $$all = (s, r) => Array.from((r || document).querySelectorAll(s));
+        body.onclick = async e => { const b = e.target.closest('[data-id],[data-a]'); if (!b) return; if (b.dataset.id) { const id = b.dataset.id; esc = esc.includes(id) ? esc.filter(x => x !== id) : esc.length < 3 ? esc.concat(id) : esc; SND.play('tick'); pinta(); }
+          else if (b.dataset.a === 'ok' && esc.length === 3) { if (sum(esc, a1) >= r1 && sum(esc, a2) >= r2) { clearInterval(tm); ok++; SND.play('win'); await wait(800); caso++; if (caso >= N) return fim(ok / N, ok + ' de ' + N + ' desafios'); tela(); } else { SND.play('lose'); esc = []; pinta(); } } };
+        pinta(); clearInterval(tm); tm = setInterval(() => { left--; const t = $('#tl', body); if (t) t.textContent = left; if (left <= 0) { clearInterval(tm); caso++; if (caso >= N) fim(ok / N, ok + ' de ' + N + ' desafios'); else tela(); } }, 1000); };
+      tela(); return () => clearInterval(tm);
+    },
+  });
 
   function stats() {   // para o admin: por minigame
     const L = log(), o = {}; LISTA.forEach(m => { o[m.id] = { n: 0, pct: 0, t: [0, 0, 0, 0], rw: 0, ms: 0 }; });

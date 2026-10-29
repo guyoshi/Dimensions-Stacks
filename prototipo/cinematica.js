@@ -19,7 +19,7 @@
       if (fim) return; fim = true; if (!vars.nome) vars.nome = (D.cenas.find(c => c.pergunta) || { pergunta: {} }).pergunta.padrao || ''; clearInterval(digit); document.removeEventListener('keydown', key, true);
       ov.classList.add('out'); setTimeout(() => { ov.remove(); done && done(pulou, vars); }, reduce() ? 30 : 700);
     }
-    const POS = [[4, 4, -4], [58, 7, 5], [2, 25, 3], [61, 28, -5], [6, 46, -3], [57, 47, 4]];   // cantos diferentes (x%, y%, giro)
+    const POS = [[3, 3, -4], [35, 5, 3], [67, 3, 5], [2, 25, 3], [34, 27, -4], [66, 26, -3], [18, 48, 4], [50, 49, -5]];   // cantos diferentes (x%, y%, giro)
     function fotos(c) {
       const box = ov.querySelector('.cin-fotos'); box.innerHTML = ''; if (!c.fotos) return;
       c.fotos.slice(0, POS.length).forEach((src, i) => { const f = document.createElement('div'); f.className = 'cin-foto'; const [x, y, r] = POS[i];

@@ -23,7 +23,7 @@ try:
         chk(not pg.evaluate("document.querySelector('.bau-ok').hidden"), 'botão Continuar aparece (%s)' % nome)
         pg.click('.bau-ok'); pg.wait_for_timeout(600)
     S = pg.evaluate("window.DSHistoria.state()")
-    chk(S['pend'] == 12 and set(S['owned']) == {'J01', 'J02', 'J24'}, 'prêmios entram no estado: %s %s' % (S['pend'], S['owned']))
+    chk(S['pend'] == 12 and {'J01', 'J02', 'J24'} <= set(S['owned']), 'prêmios entram no estado: %s %s' % (S['pend'], S['owned']))
     # retomada da trilha do mapa
     r = pg.evaluate("""() => { const A = window.DSUI.SND; let t = 100; A.ctx = { get currentTime() { return t; } }; A.histPos = {};
       A.histNodes = { s: { stop() {} }, g: { gain: { cancelScheduledValues() {}, setValueAtTime() {}, linearRampToValueAtTime() {}, value: 1 } }, k: 'mapa', t0: 100, off: 5, dur: 60 };

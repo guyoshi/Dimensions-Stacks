@@ -16,13 +16,23 @@ try:
     pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));")
     pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text else None)
     pg.goto('http://localhost:8781/_page.html'); pg.wait_for_timeout(900)
-    ids = pg.evaluate("window.DSMini.LISTA.map(m=>m.id)"); chk(len(ids) == 10, '10 minigames')
+    ids = pg.evaluate("window.DSMini.LISTA.map(m=>m.id)"); chk(len(ids) == 17, '17 minigames (10 + 7 por série)')
     def start(i): pg.evaluate("id => { window.__r = null; window.DSMini.play(id, {teste:true}).then(r => window.__r = r); }", i); pg.wait_for_selector('.mg-body', timeout=3000); pg.wait_for_timeout(300)
     def fim(i, msg):
         pg.wait_for_selector('.mg-ok', timeout=4000); pg.click('.mg-ok'); pg.wait_for_function('window.__r', timeout=3000)
         r = pg.evaluate('window.__r'); chk(r['id'] == i and 0 <= r['pct'] <= 1 and r['tier'] in (0, 1, 2, 3), '%s: %s (pct %.2f tier %d +%d)' % (i, msg, r['pct'], r['tier'], r['reward'])); return r
     for i in ids:   # abandono
         start(i); pg.screenshot(path=shots + '/mg_%s.png' % i); pg.click('.mg-x'); fim(i, 'abandono')
+    start('elos'); chk(pg.evaluate("document.querySelectorAll('.mg-cell.elo').length") == 6, 'elos: 6 sentidos'); pg.click('.mg-x'); fim('elos', 'abandono')
+    start('culpado'); chk(pg.evaluate("document.querySelectorAll('.mg-sus [data-i]').length") == 4 and pg.evaluate("document.querySelectorAll('.mg-pistas li').length") >= 1, 'culpado: 4 suspeitos e pistas')
+    for _ in range(3):
+        pg.wait_for_selector('.mg-sus'); pg.evaluate("window.__acha = 1"); ok = False
+        for i in range(4):
+            if pg.query_selector('.mg-ok'): break
+            pg.click('.mg-sus [data-i="%d"]' % i, force=True); pg.wait_for_timeout(1000)
+            if not pg.query_selector('.mg-sus [data-i="%d"]:disabled' % i, ) : break
+        if pg.query_selector('.mg-ok'): break
+    pg.click('.mg-x') if not pg.query_selector('.mg-ok') else None; fim('culpado', 'jogado')
     # jogos de toque jogados de verdade
     start('maiormenor')
     for _ in range(8): pg.click('[data-v=m]'); pg.wait_for_timeout(1050)

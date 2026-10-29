@@ -171,7 +171,7 @@
   function miniHtml() {
     const M = window.DSMini, st = M.stats();
     const linhas = M.LISTA.map(m => { const c = M.cfg(m.id), s = st[m.id], n = s.n || 0;
-      return `<tr data-id="${m.id}"><td><b>${esc(m.nome)}</b><br><small>${esc(m.desc)}</small></td>
+      return `<tr data-id="${m.id}"><td><b>${esc(m.nome)}</b>${m.serie ? ' <small>(' + esc(m.serie) + ')</small>' : ''}<br><small>${esc(m.desc)}</small></td>
         <td><button class="btn primary sm" data-a="miniplay" data-id="${m.id}">Testar</button></td>
         <td><input type="number" step="0.1" min="0.5" max="2" value="${c.dif}" data-m="dif" style="width:56px"></td>
         <td><input type="text" value="${c.cortes.join(' ')}" data-m="cortes" style="width:96px" title="pct mínimo para o tier 1, 2 e 3"></td>
@@ -180,7 +180,7 @@
     const tot = M.LISTA.reduce((a, m) => a + (M.cfg(m.id).premios[3] | 0), 0);
     return `<div class="adm-in"><header class="adm-h"><h2>Minigames</h2><button class="ibtn" data-a="miniclose" aria-label="Fechar">✕</button></header>
       <section class="adm-box"><p class="hint">Teste cada minigame e ajuste: <b>dif</b> (dificuldade, 0,5 a 2), <b>cortes</b> (percentual mínimo para tier 1, 2 e 3) e <b>prêmios</b> (pêndulos nos tiers 0 a 3). As mudanças valem neste aparelho. Colunas à direita: partidas de teste, média, distribuição dos tiers (0/1/2/3), pêndulos médios e tempo médio. Se quase ninguém passa do tier 0 ou todo mundo faz tier 3, o minigame está mal calibrado.</p>
-      <p class="hint">Prêmio máximo somado dos 10 minigames: <b>${tot}</b> pêndulos.</p>
+      <p class="hint">Prêmio máximo somado dos minigames: <b>${tot}</b> pêndulos.</p>
       <div class="tblw"><table class="adm-t"><thead><tr><th>Minigame</th><th></th><th>Dif.</th><th>Cortes</th><th>Prêmios</th><th>Jogos</th><th>Média</th><th>Tiers</th><th>Pênd.</th><th>Tempo</th></tr></thead><tbody>${linhas}</tbody></table></div>
       <div class="adm-f"><button class="btn ghost sm" data-a="minireset">Zerar resultados</button><button class="btn ghost sm" data-a="minicfgreset">Voltar calibragem ao padrão</button></div></section></div>`;
   }
