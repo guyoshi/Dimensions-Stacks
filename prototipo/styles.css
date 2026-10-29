@@ -1859,3 +1859,13 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 body.reduce .frg-rays, body.reduce .frg-cr, body.reduce .frg-p { animation: none; } body.reduce .frg-p { display: none; }
 .hs-go { display: block; width: 100%; color: var(--ink2); font-size: 12.5px; }
 .hs-aviso.ok > i { background: #3ddc84; color: #04200f; } .hs-aviso.ok { border-color: #3ddc84aa; }
+
+/* ---- raridade QUASAR: acima de Lendária; moldura preta com violeta e brilho */
+.card.rar-quasar .face.front { background: #07030f; box-shadow: inset 0 0 0 .2em #e6d6ff, inset 0 0 0 .32em #3b1a7a, inset 0 0 0 .42em #a46bff, inset 0 0 .9em #a46bffaa, 0 0 1.4em #8f5cffcc; }
+.card.rar-quasar .face.front::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 4; mix-blend-mode: screen; background: radial-gradient(circle at 20% 15%, #c9a6ff55, transparent 38%), radial-gradient(circle at 85% 90%, #6a3dffaa, transparent 42%), linear-gradient(115deg, transparent 30%, #e6d6ff44 48%, transparent 64%); background-size: 100% 100%, 100% 100%, 250% 100%; animation: shine 7s ease-in-out infinite; }
+.card.rar-quasar .face.front::before { content: ""; position: absolute; inset: .55em; border-radius: .8em; pointer-events: none; z-index: 3; border: .09em solid #c9a6ffaa; box-shadow: 0 0 .6em #8f5cff88 inset; }
+.card.rar-quasar .art, .card.rar-quasar .ph { filter: saturate(1.1) contrast(1.05); }
+.card.rar-quasar .ph { background: radial-gradient(circle at 50% 40%, #3b1a7a, #07030f 70%); }
+.card.rar-quasar .bot .rar { color: #d9b8ff; text-shadow: 0 0 .5em #a46bff, 0 .06em .25em #000; }
+.card.rar-quasar .nome { color: #f1e6ff; text-shadow: 0 0 .5em #a46bffcc; }
+.qtag { position: absolute; z-index: 6; top: 2.1em; right: .7em; padding: .15em .5em; border-radius: 1em; background: linear-gradient(120deg, #1a0c3a, #5a2fc0); color: #f1e6ff; border: .08em solid #c9a6ff; font: 800 .52em var(--f-disp); letter-spacing: .12em; box-shadow: 0 0 .6em #8f5cff; }

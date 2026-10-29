@@ -3,7 +3,7 @@
   'use strict';
   const U = window.DSUI, ST = window.DSSTATS;
   const { $, $$, el, esc, CARDS, SERIES, IMG, SND, cardEl } = U;
-  const CARTAS = U.D.CARTAS;
+  const CARTAS = U.D.CARTAS, COLL = CARTAS.concat(U.D.QUASAR || []);   // coleção mostra também as Quasar
 
   // ---------------------------------------------------------------- logotipo: cartas sobrepostas dentro de um portal
   let lid = 0;
@@ -123,7 +123,7 @@
   const topAtt = c => U.AIDS.slice().sort((a, b) => c.stats[b] - c.stats[a])[0];
   U.collFilter = function (list, st, fav) {   // exposto para teste
     const q = norm(st.q).split(/\s+/).filter(Boolean);
-    let r = list.filter(c => (st.k === 'todas' || (st.k === 'fav' ? fav.has(c.id) : st.k === 'uniao' ? c.uniao : c.serie === st.k)) && (!st.att || topAtt(c) === st.att) && q.every(t => hay(c).includes(t)));
+    let r = list.filter(c => (st.k === 'todas' || (st.k === 'fav' ? fav.has(c.id) : st.k === 'uniao' ? c.uniao : st.k === 'quasar' ? c.raridade === 'quasar' : c.serie === st.k)) && (!st.att || topAtt(c) === st.att) && q.every(t => hay(c).includes(t)));
     const by = { soma: (a, b) => sumOf(b) - sumOf(a), nome: (a, b) => a.nome.localeCompare(b.nome, 'pt'), esp: (a, b) => (spOf(a).nome || '').localeCompare(spOf(b).nome || '', 'pt') };
     by.mast = (a, b) => { const x = U.mastery(a.id), y = U.mastery(b.id); return ((y && y.xp) || 0) - ((x && x.xp) || 0); };
     U.AIDS.forEach(a => { by[a] = (x, y) => y.stats[a] - x.stats[a] || sumOf(y) - sumOf(x); });
@@ -133,8 +133,8 @@
   };
   function collTab() {
     const s = $('#coll'); const fav = new Set(ST.profile().fav);
-    const keys = ['todas', 'fav', ...Object.keys(SERIES), 'uniao'];
-    const label = k => k === 'todas' ? 'Todas' : k === 'fav' ? '★ Favoritas' : k === 'uniao' ? 'A União' : SERIES[k].nome;
+    const keys = ['todas', 'fav', ...Object.keys(SERIES), 'uniao', 'quasar'];
+    const label = k => k === 'todas' ? 'Todas' : k === 'fav' ? '★ Favoritas' : k === 'uniao' ? 'A União' : k === 'quasar' ? 'Quasar' : SERIES[k].nome;
     const SHORT = { num: 'Padrão', soma: 'Soma', pod: 'Força', def: 'Resist.', int: 'Intel.', vel: 'Veloc.', nome: 'Nome', esp: 'Especial', mast: 'Maestria' };
     const SRCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>';
     const SORTI = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg>';
@@ -150,8 +150,8 @@
       chips.innerHTML = keys.map(k => `<button data-k="${k}" class="cch${k === 'todas' ? ' all' : ''}${filtState.k === k ? ' on' : ''}"${SERIES[k] ? ` style="--c:${SERIES[k].cor}"` : ''}${k === 'uniao' ? ' aria-label="A União"' : ''}>${SERIES[k] ? '<i></i>' : ''}${k === 'uniao' ? U.uniaoLogo('uniao-logo-chip') : esc(label(k))}</button>`).join('');
       attr.innerHTML = [['', 'Qualquer'], ...U.AIDS.map(a => [a, U.ATT[a].nome])].map(([a, t]) => `<button data-a="${a}" class="${filtState.att === a ? 'on' : ''}"${a ? ` aria-label="${esc(t)}" title="${esc(t)}"` : ''}>${a ? U.ICON[a] : 'Qualquer'}</button>`).join('');
       { const on = chips.querySelector('.on'); if (on && chips.scrollWidth > chips.clientWidth && !chips.__moved) { chips.__moved = 1; chips.scrollLeft = Math.max(0, on.offsetLeft - 16); } }
-      const list = U.collFilter(CARTAS, filtState, fav);
-      { const mc = ST.masteryCount(1); cnt.textContent = list.length === CARTAS.length ? `${CARTAS.length} cartas` : `${list.length} de ${CARTAS.length}`; cnt.title = mc ? `${mc} ${mc === 1 ? 'carta com emblema' : 'cartas com emblema'} de maestria` : ''; }
+      const list = U.collFilter(COLL, filtState, fav);
+      { const mc = ST.masteryCount(1); cnt.textContent = list.length === COLL.length ? `${COLL.length} cartas` : `${list.length} de ${COLL.length}`; cnt.title = mc ? `${mc} ${mc === 1 ? 'carta com emblema' : 'cartas com emblema'} de maestria` : ''; }
       // a tela abre na hora com todas as cartas de costas; cada uma vira a carta de verdade quando chega perto da tela (e as demais vão sendo montadas aos poucos)
       const tok = ++drawTok; if (drawObs) { drawObs.disconnect(); drawObs = null; }
       const build = c => { const n = cardEl(c.id, { up: false, noanim: true, cw: 104, click: true }); n.classList.add('flipin'); if (fav.has(c.id)) n.classList.add('isfav'); const m = U.mastery(c.id); if (m && m.lv) { n.append(el(`<span class="memb" title="Maestria: ${esc(m.nome)} (${m.xp} XP)">${U.emblem(m.lv, 26)}</span>`)); } const img = n.querySelector('img'); let done = false;   // a carta entra de costas (igual ao espaço reservado) e vira quando a foto chega

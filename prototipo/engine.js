@@ -7,7 +7,7 @@
   const ATTRS = D.ATRIBUTOS;
   const AID = ATTRS.map(a => a.id);
   const ATTR = Object.fromEntries(ATTRS.map(a => [a.id, a]));
-  const CARDS = Object.fromEntries(D.CARTAS.map(c => [c.id, c]));
+  const CARDS = Object.fromEntries(D.CARTAS.concat(D.QUASAR || []).map(c => [c.id, c]));   // Quasar só entra por id (luta final); nunca nos sorteios (D.CARTAS)
   // Cartas CLONE (especial "Clone"): cópia da carta vencedora, com id próprio "J08*1" (a mesma carta nunca existe duas vezes sob o mesmo id).
   // Ficam não enumeráveis em CARDS para não aparecerem em listas de coleção.
   const isClone = id => typeof id === 'string' && id.indexOf('*') > 0;

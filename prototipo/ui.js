@@ -3,7 +3,7 @@
   'use strict';
   const D = window.DS_DATA, E = window.DS_ENGINE;
   const { SERIES, ATRIBUTOS, RARIDADES, CARTAS } = D;
-  const CARDS_BASE = Object.fromEntries(CARTAS.map(c => [c.id, c]));
+  const CARDS_BASE = Object.fromEntries(CARTAS.concat(D.QUASAR || []).map(c => [c.id, c]));   // Quasar: fora de D.CARTAS (sorteios), mas válidas em U.CARDS
   // Cartas CLONE (id "J08*1"): cópia da carta original, criada na hora; não entram em listas (Object.keys não as vê)
   const CARDS = new Proxy(CARDS_BASE, { get(t, k) { if (typeof k === 'string' && k.indexOf('*') > 0 && !(k in t)) { const b = t[k.slice(0, k.indexOf('*'))]; if (b) Object.defineProperty(t, k, { value: Object.assign({}, b, { id: k, clone: true, orig: b.id }), enumerable: false, configurable: true }); } return t[k]; } });
   const ATT = Object.fromEntries(ATRIBUTOS.map(a => [a.id, a]));
@@ -104,7 +104,7 @@
     }
     const c = CARDS[id], s = SERIES[c.serie], st = o.stats || c.stats;
     const sp = E.SPECIALS[c.especial];
-    const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
+    const n = { comum: 1, rara: 2, epica: 3, lendaria: 4, quasar: 5 }[c.raridade] || 1;
     const bid = c.orig || id;
     const full = o.full || (o.cw || 0) > 170, src = IMG[bid] && (full ? IMG[bid] : IMG[bid].replace('photos/', 'photos/t/'));   // miniatura (300x450) por padrão; foto grande só em tela cheia
     const focoX = FOCO_X[bid] != null ? FOCO_X[bid] : 50, focoY = FOCO[bid] != null ? FOCO[bid] : 0;
@@ -114,13 +114,13 @@
     const node = el(`<div class="card rar-${c.raridade}${c.clone ? ' isclone' : ''}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
       <div class="face front"><div class="in">${art}<div class="shade"></div>
-        <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(bid.slice(1))}</span></div>${c.clone ? '<div class="clonetag">CLONE</div>' : ''}
+        <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(bid.slice(1))}</span></div>${c.clone ? '<div class="clonetag">CLONE</div>' : ''}${c.quasar ? '<div class="qtag">QUASAR ' + c.quasar + '</div>' : ''}
         ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
         <div class="stats">${statsHTML(c.stats, st, null, o.mark, o.hide)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
       </div></div></div></div>`);
     node.dataset.serie = c.serie; if (c.uniao) node.dataset.uni = '1';
-    if (c.uniao || c.raridade === 'lendaria') { node.dataset.aura = c.uniao ? 'rainbow' : 'gold'; node.append(uniSparks(id, c.uniao)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
+    if (c.raridade === 'quasar') node.dataset.aura = 'quasar'; if (c.uniao || c.raridade === 'lendaria') { node.dataset.aura = c.uniao ? 'rainbow' : 'gold'; node.append(uniSparks(id, c.uniao)); } node.style.setProperty('--c', s.cor); node.style.setProperty('--c2', s.cor2); node.style.setProperty('--cd', s.escuro); node.style.setProperty('--t', s.texto);
     if (o.cw) node.style.setProperty('--cw', o.cw + 'px');
     if (o.attr) node.dataset.attr = o.attr;
     if (o.click) { node.classList.add('click'); node.addEventListener('click', () => { const g = node.closest('.cgrid'); U.zoom(id, g ? { list: [...g.querySelectorAll('.card[data-id]')].map(x => x.dataset.id), mastery: g.dataset.mast === '1' } : null); }); }

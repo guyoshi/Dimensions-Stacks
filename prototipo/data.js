@@ -36,6 +36,7 @@
     rara:     { nome: 'Rara' },
     epica:    { nome: 'Épica' },
     lendaria: { nome: 'Lendária' },
+    quasar:   { nome: 'Quasar' },
   };
 
   // Elenco candidato (docs/ELENCO_CANDIDATO.md). nota = "referência narrativa" do seu próprio documento.
@@ -251,5 +252,23 @@
     return cartas;
   }
 
-  root.DS_DATA = { poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: raridadePorPosicao(montarCartas()), HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
+  const CARTAS_FINAIS = raridadePorPosicao(montarCartas());
+  // ---------- Cartas QUASAR (aprovadas pelo autor em 29/10/2026): acima de Lendária; só recompensa do pós-game, só usadas na luta final contra Korvo.
+  // Ficam FORA de D.CARTAS (não entram em sorteios, baús, lojas, decks inimigos nem contagens); entram na coleção e em U.CARDS.
+  // stats = base + 12 por nível (N1 +12, N2 +24, N3 +36); Korvo Quasar 2 = base +30. Foto: ainda não enviada (usa a moldura sem foto).
+  const QUASAR_DEF = [   // [id, base, nível, stats]
+    ['Q01', 'B01', 1, [94, 73, 92, 70]], ['Q02', 'B01', 2, [106, 85, 104, 82]], ['Q03', 'B01', 3, [118, 97, 116, 94]],
+    ['Q04', 'V04', 1, [104, 99, 79, 80]], ['Q05', 'V04', 2, [116, 111, 91, 92]], ['Q06', 'V04', 3, [128, 123, 103, 104]],
+    ['Q07', 'V02', 1, [79, 81, 76, 107]], ['Q08', 'V02', 2, [91, 93, 88, 119]],
+    ['Q09', 'V01', 1, [89, 102, 82, 77]], ['Q10', 'V01', 2, [101, 114, 94, 89]],
+    ['Q11', 'V03', 1, [81, 80, 101, 101]], ['Q12', 'V03', 2, [93, 92, 113, 113]],
+    ['Q13', 'V10', 2, [125, 115, 100, 98]],
+  ];
+  const AURA = { 1: 'Aura Quasar 1 (euforia): +10% em todos os atributos das suas outras cartas na mesma disputa.', 2: 'Aura Quasar 2 (aura sombria): quem enfrenta esta carta perde 10% no atributo escolhido.', 3: 'Aura Quasar 3 (flutuação): ignora modificadores negativos e ganha +15% em todos os atributos.' };
+  const QUASAR = QUASAR_DEF.map(function (r) {
+    const b = CARTAS_FINAIS.find(c => c.id === r[1]);
+    return { id: r[0], nome: b.nome, serie: b.serie, nota: 'Quasar ' + r[2], uniao: false, descricao: AURA[r[2]], perfil: null, proposta: false, aprovada: true,
+      stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'quasar', especial: b.especial, provisorio: false, quasar: r[2], base: b.id };
+  });
+  root.DS_DATA = { QUASAR: QUASAR, AURA_QUASAR: AURA, poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: CARTAS_FINAIS, HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
 })(typeof window !== 'undefined' ? window : globalThis);
