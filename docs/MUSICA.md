@@ -26,6 +26,7 @@ Continuam no código (`audio.js`: ambiente do menu, groove procedural da partida
 | Boss final | `historia_boss.mp3` (OpenMind Audio) |
 | Abertura da história (cinemática) | `historia_intro.mp3` (Alex Morgan) |
 | Miniboss | `historia_miniboss.mp3` (Nastelborn) |
+| Final (cinemática do Boss vencido) | `historia_final.mp3` (The Mountain) |
 | Loja | `historia_loja.mp3` (Echobrainz) |
 
 Trocas sempre com fade (cruzado ~1 s). A trilha do mapa guarda onde parou e continua dali ao voltar da loja ou de uma batalha.

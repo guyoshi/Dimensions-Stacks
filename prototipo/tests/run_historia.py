@@ -37,18 +37,26 @@ try:
         pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
         bx = pos(g); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
         pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(250)
+    pg.wait_for_timeout(600)
+    chk(not pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'boss continua fechado só com os guardiões')
+    for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
+        pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
+        pg.click('[data-a=fit]'); pg.wait_for_timeout(850)
+        bx = pos(n); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
+        pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.lib .bau-ok', timeout=4000); pg.click('.lib .bau-ok'); pg.wait_for_timeout(500)
     pg.wait_for_timeout(1800)
-    chk(pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'boss abre ao vencer os 4 guardiões')
+    chk(set(['D06','M01','J03','B01','S01','M10','V15','V02']) <= set(pg.evaluate("window.DSHistoria.state().owned")), 'os 8 membros da União foram libertados')
+    chk(pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'boss abre com os 4 guardiões e a União completa')
     pg.screenshot(path=shots + '/hist_boss_aberto.png')
     # mapa fechado: caminhos escuros
     pg.click('[data-a=leg]'); pg.wait_for_timeout(200); pg.uncheck('[data-a=aberto]'); pg.click('.hs-leg [data-a=ok]'); pg.wait_for_timeout(300)
-    dark = pg.evaluate("document.querySelectorAll('.hs-edges .e.dark').length"); chk(dark > 100, 'sem o modo aberto, a maioria dos caminhos fica escura: %d' % dark)
+    dark = pg.evaluate("document.querySelectorAll('.hs-edges .e.dark').length"); chk(dark > 60, 'sem o modo aberto, a maioria dos caminhos fica escura: %d' % dark)
     pg.click('[data-a=fit]'); pg.wait_for_timeout(900); pg.screenshot(path=shots + '/hist_mapa_fechado.png')
     # continuar após recarregar
     pg.reload(); pg.wait_for_timeout(900); pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(400)
     chk(pg.evaluate("!document.querySelector('[data-a=cont]').disabled"), 'Continuar disponível depois de recarregar')
     pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(500)
-    chk(pg.evaluate("document.querySelectorAll('.n.done').length") == 4, 'vitórias preservadas: %d' % pg.evaluate("document.querySelectorAll('.n.done').length"))
+    chk(pg.evaluate("document.querySelectorAll('.n.done').length") == 12, 'vitórias preservadas: %d' % pg.evaluate("document.querySelectorAll('.n.done').length"))
     pg.click('[data-a=back]'); pg.wait_for_timeout(300); pg.click('[data-a=sair]'); pg.wait_for_timeout(500)
     chk(pg.evaluate("document.querySelector('#nav').hidden") is False, 'barra inferior volta ao sair')
 finally:

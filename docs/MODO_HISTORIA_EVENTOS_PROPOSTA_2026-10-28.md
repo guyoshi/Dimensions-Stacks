@@ -15,7 +15,7 @@ O mapa tem **53 batalhas normais** e só **24 eventos**. Proponho **19 normais +
 
 (Contagens por região aproximadas; confirmo ao aplicar, sem mexer em ids nem ligações.)
 
-Um ícone por categoria no mapa, para o jogador reconhecer o tipo de evento antes de chegar: **relógio** (tempo), **olho** (informação), **balança** (regra de vitória), **cartas** (baralho), **raio** (ambiente), **moeda** (pêndulos).
+**Ícone (aprovado, simplificado):** todos os eventos usam o mesmo ícone de raio no mapa. O que muda é o painel do ponto, que mostra **o nome do evento e a regra em uma linha** (ex.: "Inversão: vence o menor valor"). Seis ícones por categoria deixariam o mapa confuso.
 
 ## Catálogo de eventos
 
@@ -98,7 +98,7 @@ Os eventos 3, 4 e 32 **encurtam** a batalha, então são seguros. Os que podem p
 
 ## Decisões que preciso de você
 
-1. Aprova **19 normais + 58 eventos** (e a ideia do ícone por categoria)?
+1. Aprova **19 normais + 58 eventos**? (ícone já decidido: um só, raio)
 2. Quais eventos cortar ou mudar? Marque os que não gostou.
 3. Os de dificuldade **G** (Dupla soma, Maioria vence) valem o trabalho, ou deixo para depois?
 4. Algum evento seu que ficou de fora?

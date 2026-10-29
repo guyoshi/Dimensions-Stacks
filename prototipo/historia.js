@@ -15,8 +15,8 @@
     normal:   { nome: 'Normal',    cor: '#6cc6ff', r: 19, desc: 'Duelo comum contra um inimigo.' },
     evento:   { nome: 'Evento',    cor: '#ffd25f', r: 19, desc: 'Duelo com uma regra especial (tempo, cartas, atributos...).' },
     elite:    { nome: 'Elite',     cor: '#c58cff', r: 23, desc: 'Inimigo mais forte, com cartas raras.' },
-    miniboss: { nome: 'Miniboss',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores, com mais cartas. Pode trancar uma região.' },
-    guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões do centro. Vencer os 4 abre o Boss.' },
+    miniboss: { nome: 'Miniboss',  cor: '#ff5a7a', r: 28, desc: 'Duelo de 3 ou 4 jogadores. Prende um membro da União: vencer liberta o herói para a sua equipe.' },
+    guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões do centro. Vencer os 4 e libertar toda a União abre o Boss.' },
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
@@ -25,6 +25,9 @@
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
+  // cada miniboss prende um membro da União; vencê-lo o liberta e ele entra na equipe (o Boss só abre com os 8)
+  const LIBERTA = { B059: 'D06', B088: 'M01', B062: 'J03', B086: 'B01', B064: 'S01', B072: 'M10', B081: 'V15', B078: 'V02' };
+  const MINIS = Object.keys(LIBERTA);
   // deixa o mapa menos redondo e mais orgânico: deformação suave por ângulo + pequeno desvio por ponto (determinístico; ids e ligações não mudam)
   (function organico() {
     if (M._org) return; M._org = 1;
@@ -46,7 +49,7 @@
 
   // ---------------------------------------------------------------- regras do mapa
   const cleared = id => !!(S && S.cleared[id]);
-  const bossOpen = () => GUARD.every(cleared);
+  const bossOpen = () => GUARD.every(cleared) && MINIS.every(cleared);
   function available(id) {
     if (!S) return false;
     if (P.aberto) return true;
@@ -279,7 +282,7 @@
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · lado ${esc(LADOS[n.lado].toLowerCase())}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      <p>${esc(T.desc)}</p><p class="hint">${esc(jog)}${n.id === M.boss && !bossOpen() ? ` · faltam ${GUARD.filter(x => !cleared(x)).length} guardiões` : ''}</p>${cartas}
+      <p>${esc(T.desc)}</p><p class="hint">${esc(jog)}${n.id === M.boss && !bossOpen() ? ` · faltam ${GUARD.filter(x => !cleared(x)).length} guardiões e ${MINIS.filter(x => !cleared(x)).length} da União` : ''}</p>${cartas}
       <div class="row">${aqui ? `<button class="btn primary" disabled>${n.tipo === 'loja' ? 'Entrar (em breve)' : ok ? 'Você está aqui' : 'Duelar (em breve)'}</button>` : cam_ ? `<button class="btn primary" data-a="go">Caminhar até aqui · ${cam_.length - 1} ${cam_.length === 2 ? 'passo' : 'passos'}</button>` : `<button class="btn" disabled>Fora de alcance</button>`}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'go') andar(id); };
@@ -292,14 +295,28 @@
   function toggleWin(id) {
     const wasOpen = bossOpen(), ok = cleared(id);
     if (ok) delete S.cleared[id]; else S.cleared[id] = 1;
+    const mem = LIBERTA[id]; if (mem) { S.owned = S.owned || []; if (ok) S.owned = S.owned.filter(x => x !== mem); else if (!S.owned.includes(mem)) S.owned.push(mem); }
     save(); SND.play(ok ? 'tick' : 'capture'); paintAll(); openNode(id);
+    if (mem && !ok) setTimeout(() => libertar(mem), 500);
+    if (id === M.boss && !ok) setTimeout(finalCena, 900);
     const g = $('.n[data-id="' + id + '"]', root); if (g && !ok) { g.classList.remove('pop'); void g.getBoundingClientRect(); g.classList.add('pop'); }
     if (!wasOpen && bossOpen()) bossAbre();
+  }
+  // miniboss vencido: o membro da União preso por ele é libertado e entra na equipe
+  function libertar(cid) {
+    const c = U.CARDS[cid]; if (!c) return;
+    const ov = el(`<div class="bau-ov lib"><div class="lib-t">Libertado!</div><div class="lib-c"></div><div class="lib-n">${esc(c.nome)} entrou para a sua equipe</div><div class="lib-k">${(S.owned || []).filter(x => Object.values(LIBERTA).includes(x)).length} / ${MINIS.length} da União</div><button class="btn primary bau-ok">Continuar</button></div>`);
+    $('.lib-c', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 150 })); document.body.appendChild(ov); SND.play('legend');
+    $('.bau-ok', ov).onclick = () => { SND.play('click'); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); };
+  }
+  function finalCena() {
+    if (!window.DSCinema || !window.DS_CINEMATICA_FINAL) return;
+    window.DSCinema.play(() => { try { SND.histPlay('mapa'); } catch (e) { } }, window.DS_CINEMATICA_FINAL, { nome: (S && S.nome) || 'Viajante' });
   }
   function bossAbre() {
     closeSheet(); const b = BY[M.boss]; const red = document.body.classList.contains('reduce');
     centerOn(b.x, b.y, .75, !red);
-    setTimeout(() => { SND.play('banner'); const bg = $('.n.t-boss', root); if (bg) { bg.classList.add('burst'); setTimeout(() => bg.classList.remove('burst'), 2600); } toast('Os 4 guardiões caíram. O núcleo da galáxia se abriu.'); }, red ? 50 : 800);
+    setTimeout(() => { SND.play('banner'); const bg = $('.n.t-boss', root); if (bg) { bg.classList.add('burst'); setTimeout(() => bg.classList.remove('burst'), 2600); } toast('Os guardiões caíram e a União está completa. O núcleo da galáxia se abriu.'); }, red ? 50 : 800);
   }
   function toast(t) { const x = $('#hsToast', root); if (!x) return; x.textContent = t; x.hidden = false; clearTimeout(x._t); x._t = setTimeout(() => { x.hidden = true; }, 3200); }
 
@@ -345,12 +362,13 @@
     const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b><span>A Besta, no núcleo da galáxia, protegida pelos 4 guardiões.</span></li></ul>
       <p class="hint">${BATALHAS.length} batalhas (${['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'boss'].map(k => contagem[k] + ' ' + TIPOS[k].nome.toLowerCase()).join(', ')}) e ${contagem.loja} lojas.</p>
       <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Mapa no escuro: só o que está perto do boneco aparece</label>
-      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>
+      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="fim">Ver final</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>
       <div class="row"><button class="btn sm" data-a="reset">Zerar vitórias</button><button class="btn sm primary" data-a="ok">Fechar</button></div></div>`);
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {
       const b = e.target.closest('[data-a]'); if (!b) return;
       if (b.dataset.a === 'ok') { SND.play('click'); m.close(); }
+      else if (b.dataset.a === 'fim') { SND.play('click'); m.close(); finalCena(); }
       else if (b.dataset.a === 'bau') { SND.play('click'); m.close(); abrirBau(sorteioBau()); }
       else if (b.dataset.a === 'intro') { SND.play('click'); m.close(); if (window.DSCinema) window.DSCinema.play(() => { if (view === 'map') { try { SND.histPlay('mapa'); } catch (e) { } } }); }
       else if (b.dataset.a === 'reset') { SND.play('click'); S.cleared = {}; save(); paintAll(); closeSheet(); toast('Vitórias zeradas.'); }

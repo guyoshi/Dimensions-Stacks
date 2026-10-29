@@ -51,7 +51,7 @@ for n in sorted(nos, key=lambda n: (-n['tier'], n['id'])):
         inims.append({'nome': C[lider]['nome'], 'avatar': lider, 'cartas': ordem(deck)})
     batalhas[n['id']] = {'id': n['id'], 'tipo': t, 'regiao': n['tier'], 'lado': n['lado'], 'tema': TEMA[n['lado']][1], 'inimigos': inims}
 # Boss: A Besta + 6 cartas da União (exclusivo)
-uni6 = sorted(UNIAO, key=lambda i: -poder(C[i]))[:6]
+uni6 = sorted([c['id'] for c in d['cartas'] if not c['uniao'] and c['id'] != BESTA and c['rar'] == 'lendaria'], key=lambda i: -poder(C[i]))[:6]   # a União agora é libertada nos minibosses e fica com o jogador: o Boss usa a Besta + as 6 lendárias mais fortes
 batalhas[d['boss']] = {'id': d['boss'], 'tipo': 'boss', 'regiao': 4, 'lado': 'centro', 'tema': 'A União', 'inimigos': [{'nome': 'A Besta', 'avatar': BESTA, 'cartas': ordem([BESTA] + uni6)}]}
 for i in [BESTA] + uni6: uso[i] += 1
 # reparo: toda carta que não é da União (nem a Besta) aparece em pelo menos MIN batalhas; troca por uma carta da mesma raridade que apareça demais
@@ -94,9 +94,9 @@ L = ['# Modo história: proposta das 100 batalhas (Etapa 2, 28/10/2026)', '',
      '## Regras propostas', '',
      '- **Tema por região:** esquerda = Diário Sobrenatural · cima = Ciclo de Jesed · direita = Viajantes Dimensionais · baixo = Spacetheft. Mistério Oculto e Édelin Lys aparecem como visitantes nas regiões média e interna; da região 3 em diante também entram cartas de outras séries.',
      '- **Receita de raridades por inimigo (7 cartas)** cresce da região 1 (quase só comuns) à 4 (épicas e lendárias): ver tabela abaixo. O jogador começa com 6 comuns e 1 épica.',
-     '- **Inimigo = um personagem das cartas**, o de maior poder do baralho dele; o avatar é a foto dessa carta. Miniboss: 2 ou 3 oponentes (duelo de 3 ou 4). Guardiões: 2 oponentes (duelo de 3). Boss: **A Besta + 6 cartas da União** (a Besta é exclusiva do Boss).',
+     '- **Inimigo = um personagem das cartas**, o de maior poder do baralho dele; o avatar é a foto dessa carta. Miniboss: 2 ou 3 oponentes (duelo de 3 ou 4). Guardiões: 2 oponentes (duelo de 3). Boss: **A Besta + as 6 lendárias mais fortes** (a Besta é exclusiva do Boss; as 8 cartas da União são libertadas nos minibosses e ficam com o jogador).',
      '- **Ordem de jogo do inimigo:** da mais fraca para a mais forte (a mais forte no fim). Proposta, ajustável.',
-     '- **Cartas da União (8) e a Besta** só aparecem no Boss (as 6 de maior poder). Sobram **V15 e S01**, sem lugar no Boss: ficam para recompensa de baú/loja (a decidir).',
+     '- **A Besta** só aparece no Boss. As **8 cartas da União** não aparecem em inimigos: cada uma é libertada em um miniboss (regra nova) e entra na equipe do jogador.',
      '- **Distribuição equilibrada:** cada escolha pega a carta menos usada da raridade pedida, e um passo de reparo garante que **toda carta fora da União apareça em pelo menos 3 batalhas** (sem isso, o jogador nunca veria a carta).',
      '- **Substituível:** batalha comum, evento ou elite em que **todas as cartas do inimigo aparecem em pelo menos 3 batalhas**; dá para trocar o baralho dela sem sumir nenhuma carta do mapa.', '']
 L += ['| Tipo | Região | Comum | Rara | Épica | Lendária |', '|---|---|---|---|---|---|']

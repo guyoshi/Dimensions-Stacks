@@ -47,3 +47,11 @@ Complementa `MODO_HISTORIA_A_UNIAO_PROPOSTA_2026-10-28.md`. Onde há diferença,
 - **Sem tela de sorteio:** o jogador começa em uma das 4 pontas, sorteada em silêncio.
 - **O boneco anda casa por casa** (como o mapa do modo história do Smash Ultimate), sem pular para um ponto distante. Feito: boneco no mapa, caminhada animada ponto a ponto, posição salva. Regras: atravessa só pontos já vencidos (e lojas); o último passo pode ser um ponto novo, onde o boneco para e precisa duelar; parado num duelo pendente, só pode recuar para pontos vencidos. No modo teste ("mapa aberto") anda por qualquer caminho. Teste: `tests/run_historia_andar.py`.
 - **Mapa sem a teia no fundo e menos redondo:** as posições passam por uma deformação suave por ângulo mais um pequeno desvio por ponto, aplicados ao carregar (`historia.js › organico`); ids e ligações não mudam. Folga mínima entre pontos: 52 unidades.
+
+## Atualização 29/10/2026 (final, União e Boss)
+
+- **Cinemática inicial:** história escrita em `prototipo/historia_cena.js` (Gerbe, Jasmey, Besta, União); no fim pergunta o **nome do jogador**. **Cinemática final** (`DS_CINEMATICA_FINAL`) toca ao vencer o Boss, com música própria (`historia_final.mp3`).
+- **Besta no núcleo da galáxia** (o Boss fica no centro do mapa).
+- **REGRA NOVA (autor): cada membro da União é libertado ao vencer um miniboss** (8 minibosses = 8 cartas da União: D06, M01, J03, B01, S01, M10, V15, V02). **O Boss só abre com os 4 guardiões vencidos E os 8 minibosses vencidos** (a União completa na equipe). Pendente de confirmação do autor: se os guardiões continuam obrigatórios além dos minibosses.
+- **Boss:** difícil, inteligente e estratégico, com boas cartas. Proposta: **A Besta + as 6 lendárias mais fortes**, bot no nível mais forte (Etapa 4). As cartas da União não aparecem em inimigos.
+- **Eventos:** um só ícone (raio); o painel do ponto mostra nome e regra do evento.

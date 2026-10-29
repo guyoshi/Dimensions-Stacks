@@ -187,7 +187,7 @@
     // ---------- trilhas do Modo História (A União): mapa, batalha normal, miniboss e boss final.
     // Coloque os arquivos em prototipo/musica/ com estes nomes; enquanto o arquivo não existir, tudo segue como antes (sem trilha própria).
     // Loop simples do arquivo inteiro (a/b opcionais, em segundos, como nas outras trilhas).
-    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, boss: { f: 'musica/historia_boss.mp3' }, intro: { f: 'musica/historia_intro.mp3' }, loja: { f: 'musica/historia_loja.mp3' } },
+    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, boss: { f: 'musica/historia_boss.mp3' }, intro: { f: 'musica/historia_intro.mp3' }, final: { f: 'musica/historia_final.mp3' }, loja: { f: 'musica/historia_loja.mp3' } },
     histPos: {}, HIST_RESUME: { mapa: 1 },   // o mapa sempre continua de onde parou depois de outra trilha (loja, batalha...)
     histBuf: {}, histNow: null, histNodes: null,
     async histLoad(k) {

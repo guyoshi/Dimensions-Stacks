@@ -5,14 +5,14 @@
   const U = window.DSUI; if (!U) return;
   const { SND } = U;
   const reduce = () => document.body.classList.contains('reduce');
-  function play(done, data) {
+  function play(done, data, extra) {
     const D = data || window.DS_CINEMATICA; if (!D || !D.cenas || !D.cenas.length) { done && done(); return; }
     const ov = document.createElement('div'); ov.className = 'cin'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'Introdução');
     ov.innerHTML = '<div class="cin-img a"></div><div class="cin-img b"></div><div class="cin-shade"></div><div class="cin-txt"><p></p><i class="cin-next" aria-hidden="true">▾</i></div><button class="cin-skip" type="button">Pular ›</button><div class="cin-bar"><b></b></div>';
     document.body.appendChild(ov);
     const layers = [ov.querySelector('.a'), ov.querySelector('.b')], P = ov.querySelector('.cin-txt p'), nx = ov.querySelector('.cin-next'), bar = ov.querySelector('.cin-bar b');
     const total = D.cenas.reduce((s, c) => s + (c.textos || ['']).length, 0);
-    const vars = { nome: '' }, subst = t => t.replace(/\{(\w+)\}/g, (m, k) => vars[k] || m);
+    const vars = Object.assign({ nome: '' }, extra || {}), subst = t => t.replace(/\{(\w+)\}/g, (m, k) => vars[k] || m);
     let perguntando = false, ci = -1, ti = 0, vez = 0, digit = null, pronto = false, fim = false, feitos = 0, imgAtual = undefined;
     try { if (SND.histPlay && D.musica) SND.histPlay(D.musica); } catch (e) { }
     function fecha(pulou) {

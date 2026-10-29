@@ -6,9 +6,9 @@
 
 - **Tema por região:** esquerda = Diário Sobrenatural · cima = Ciclo de Jesed · direita = Viajantes Dimensionais · baixo = Spacetheft. Mistério Oculto e Édelin Lys aparecem como visitantes nas regiões média e interna; da região 3 em diante também entram cartas de outras séries.
 - **Receita de raridades por inimigo (7 cartas)** cresce da região 1 (quase só comuns) à 4 (épicas e lendárias): ver tabela abaixo. O jogador começa com 6 comuns e 1 épica.
-- **Inimigo = um personagem das cartas**, o de maior poder do baralho dele; o avatar é a foto dessa carta. Miniboss: 2 ou 3 oponentes (duelo de 3 ou 4). Guardiões: 2 oponentes (duelo de 3). Boss: **A Besta + 6 cartas da União** (a Besta é exclusiva do Boss).
+- **Inimigo = um personagem das cartas**, o de maior poder do baralho dele; o avatar é a foto dessa carta. Miniboss: 2 ou 3 oponentes (duelo de 3 ou 4). Guardiões: 2 oponentes (duelo de 3). Boss: **A Besta + as 6 lendárias mais fortes** (a Besta é exclusiva do Boss; as 8 cartas da União são libertadas nos minibosses e ficam com o jogador).
 - **Ordem de jogo do inimigo:** da mais fraca para a mais forte (a mais forte no fim). Proposta, ajustável.
-- **Cartas da União (8) e a Besta** só aparecem no Boss (as 6 de maior poder). Sobram **V15 e S01**, sem lugar no Boss: ficam para recompensa de baú/loja (a decidir).
+- **A Besta** só aparece no Boss. As **8 cartas da União** não aparecem em inimigos: cada uma é libertada em um miniboss (regra nova) e entra na equipe do jogador.
 - **Distribuição equilibrada:** cada escolha pega a carta menos usada da raridade pedida, e um passo de reparo garante que **toda carta fora da União apareça em pelo menos 3 batalhas** (sem isso, o jogador nunca veria a carta).
 - **Substituível:** batalha comum, evento ou elite em que **todas as cartas do inimigo aparecem em pelo menos 3 batalhas**; dá para trocar o baralho dela sem sumir nenhuma carta do mapa.
 
@@ -32,8 +32,8 @@
 ## Resumo
 
 - Batalhas: **100** (Counter({'normal': 53, 'evento': 24, 'elite': 10, 'miniboss': 8, 'guardiao': 4, 'boss': 1})); substituíveis: **87**.
-- Cartas que aparecem em inimigos: **114 de 116** (a Besta só no Boss).
-- Cartas com menos aparições (mais exclusivas): Jasmey Badrock (S01, 0x), Brenda Koraveli (V15, 0x), Édelin Lys (B01, 1x), Jennifer de Morais (D06, 1x), Mark Polar (J03, 1x), Hyde (M01, 1x), Releuz (M10, 1x), A Besta (S11, 1x), Bruno Lins (V02, 1x), Peredun (B04, 3x), Daryon Polar (J10, 3x), Rendar (J12, 3x).
+- Cartas que aparecem em inimigos: **108 de 116** (a Besta só no Boss).
+- Cartas com menos aparições (mais exclusivas): Édelin Lys (B01, 0x), Jennifer de Morais (D06, 0x), Mark Polar (J03, 0x), Hyde (M01, 0x), Releuz (M10, 0x), Jasmey Badrock (S01, 0x), Bruno Lins (V02, 0x), Brenda Koraveli (V15, 0x), A Besta (S11, 1x), Peredun (B04, 3x), Rendar (J12, 3x), Alveris Polar (J25, 3x).
 - Cartas com mais aparições: Seti (V19, 13x), Shirley Ainsworth (V21, 13x), Vek (S12, 14x), Buni (S07, 15x), Jelles (S10, 15x), Genrir (S14, 15x), Luna Stellar (S17, 15x), Alekta (S18, 15x).
 
 ## Repetições por carta
@@ -42,14 +42,14 @@
 |---|---|---|---|---|---|
 | J01 | Jokara Amarëa | jesed | epica | 6 | B095, B099, B081, B086, B062, B062 |
 | J02 | Nestira Amarëa | jesed | comum | 7 | B044, B052, B070, B018, B019, B026, B037 |
-| J03 | Mark Polar | jesed | lendaria | 1 | B100 |
+| J03 | Mark Polar | jesed | lendaria | 0 |  |
 | J04 | Gabasteri | jesed | rara | 4 | B079, B088, B052, B004 |
 | J05 | Maletar | jesed | rara | 4 | B082, B051, B066, B003 |
 | J06 | Platisa | jesed | rara | 5 | B081, B092, B062, B017, B043 |
 | J07 | Mariv | jesed | rara | 5 | B080, B086, B051, B067, B021 |
 | J08 | Kaelina Polar | jesed | epica | 6 | B095, B099, B085, B086, B062, B066 |
 | J09 | Alyra Polar | jesed | epica | 6 | B094, B099, B082, B086, B089, B062 |
-| J10 | Daryon Polar | jesed | lendaria | 3 | B096, B097, B086 |
+| J10 | Daryon Polar | jesed | lendaria | 4 | B096, B097, B086, B100 |
 | J11 | Cal Edran | jesed | rara | 4 | B082, B044, B062, B003 |
 | J12 | Rendar | jesed | lendaria | 3 | B094, B078, B093 |
 | J13 | Nynestra | jesed | comum | 7 | B080, B066, B004, B005, B018, B020, B043 |
@@ -65,28 +65,28 @@
 | J23 | Kedran | jesed | comum | 7 | B044, B052, B003, B005, B020, B026, B043 |
 | J24 | Litara | jesed | comum | 7 | B086, B066, B003, B005, B019, B021, B026 |
 | J25 | Alveris Polar | jesed | lendaria | 3 | B097, B099, B086 |
-| J26 | Sumo Vigia | jesed | lendaria | 3 | B096, B078, B088 |
+| J26 | Sumo Vigia | jesed | lendaria | 3 | B096, B078, B100 |
 | J27 | Tair Nular | jesed | comum | 7 | B086, B062, B067, B005, B018, B021, B026 |
 | J28 | Kalan Nular | jesed | comum | 7 | B044, B051, B004, B018, B019, B020, B043 |
 | J29 | Orel Nular | jesed | comum | 7 | B089, B066, B004, B005, B020, B021, B037 |
 | J30 | Kharvok | jesed | rara | 5 | B080, B086, B062, B067, B037 |
-| J31 | Orionus Polar | jesed | lendaria | 3 | B096, B096, B098 |
-| J32 | Raukhar | jesed | lendaria | 3 | B096, B075, B086 |
+| J31 | Orionus Polar | jesed | lendaria | 3 | B096, B098, B100 |
+| J32 | Raukhar | jesed | lendaria | 4 | B096, B075, B086, B100 |
 | J33 | Tavra Vendrar | jesed | rara | 5 | B078, B087, B062, B003, B026 |
 | J34 | Efepar | jesed | rara | 4 | B085, B044, B051, B018 |
 | J35 | Liri | jesed | comum | 7 | B051, B052, B070, B017, B019, B020, B043 |
 | J36 | Professor Taliver | jesed | rara | 4 | B078, B086, B066, B005 |
 | J37 | Yndra | jesed | epica | 6 | B097, B079, B085, B086, B093, B062 |
 | V01 | Breno Lins | viajantes | epica | 6 | B097, B098, B078, B078, B090, B056 |
-| V02 | Bruno Lins | viajantes | lendaria | 1 | B100 |
+| V02 | Bruno Lins | viajantes | lendaria | 0 |  |
 | V03 | Banjo Lins | viajantes | epica | 7 | B094, B098, B078, B078, B091, B057, B077 |
-| V04 | Beatriz Lins | viajantes | lendaria | 4 | B094, B097, B098, B078 |
+| V04 | Beatriz Lins | viajantes | lendaria | 5 | B094, B097, B098, B078, B100 |
 | V05 | Velho-Sábio | viajantes | lendaria | 5 | B095, B097, B098, B098, B091 |
 | V06 | Erla | viajantes | epica | 7 | B094, B098, B078, B088, B093, B071, B006 |
 | V07 | Lucan Veline | viajantes | comum | 13 | B075, B046, B063, B068, B002, B007, B009, B010… |
 | V08 | Garmande Koraveli | viajantes | rara | 8 | B078, B086, B046, B068, B077, B008, B031, B034 |
 | V09 | Ricochet Bombergue | viajantes | epica | 6 | B097, B098, B078, B078, B091, B071 |
-| V10 | Korvo | viajantes | lendaria | 4 | B094, B097, B098, B098 |
+| V10 | Korvo | viajantes | lendaria | 5 | B094, B097, B098, B098, B100 |
 | V11 | Garien | viajantes | comum | 12 | B083, B053, B063, B001, B002, B006, B008, B027… |
 | V12 | Anasin | viajantes | rara | 8 | B098, B088, B090, B056, B068, B001, B010, B045 |
 | V13 | Saliens | viajantes | rara | 7 | B081, B088, B092, B056, B068, B006, B010 |
@@ -125,8 +125,8 @@
 | D03 | Pedro Souza | diario | rara | 8 | B083, B059, B060, B061, B076, B035, B036, B050 |
 | D04 | Kelly Fontenelle | diario | epica | 7 | B096, B078, B086, B086, B088, B088, B059 |
 | D05 | Vinícius Silva | diario | epica | 7 | B096, B075, B082, B087, B088, B088, B059 |
-| D06 | Jennifer de Morais | diario | lendaria | 1 | B100 |
-| D07 | Ingrid Marques | diario | lendaria | 6 | B095, B096, B082, B085, B088, B088 |
+| D06 | Jennifer de Morais | diario | lendaria | 0 |  |
+| D07 | Ingrid Marques | diario | lendaria | 8 | B095, B096, B096, B082, B085, B088, B088, B088 |
 | D08 | Glenda Mendes | diario | rara | 7 | B099, B088, B059, B069, B076, B025, B041 |
 | D09 | Diego Tavolieri | diario | rara | 7 | B078, B088, B059, B069, B016, B030, B050 |
 | D10 | Sra. Olívia | diario | rara | 7 | B086, B059, B060, B069, B015, B024, B040 |
@@ -139,7 +139,7 @@
 | D17 | A Avó | diario | comum | 12 | B082, B059, B061, B015, B016, B024, B025, B029… |
 | D18 | O Cão | diario | rara | 7 | B099, B088, B059, B074, B076, B029, B040 |
 | D19 | Manu | diario | comum | 13 | B075, B061, B069, B076, B015, B024, B025, B030… |
-| M01 | Hyde | misterio | epica | 1 | B100 |
+| M01 | Hyde | misterio | epica | 0 |  |
 | M02 | Agente Sete | misterio | epica | 8 | B097, B078, B085, B089, B093, B051, B062, B076 |
 | M03 | Diana | misterio | rara | 7 | B078, B090, B052, B060, B063, B070, B072 |
 | M04 | Matt Pontas | misterio | comum | 4 | B042, B055, B065, B072 |
@@ -148,10 +148,10 @@
 | M07 | Agente Seis | misterio | rara | 8 | B096, B089, B055, B057, B064, B072, B073, B077 |
 | M08 | Dra. Helena Valença | misterio | comum | 4 | B042, B054, B068, B069 |
 | M09 | Richard Falkner | misterio | comum | 4 | B042, B058, B067, B072 |
-| M10 | Releuz | misterio | lendaria | 1 | B100 |
+| M10 | Releuz | misterio | lendaria | 0 |  |
 | M11 | X | misterio | epica | 8 | B097, B080, B083, B090, B092, B051, B060, B064 |
 | M12 | James Harrow | misterio | rara | 7 | B075, B042, B052, B057, B063, B070, B072 |
-| B01 | Édelin Lys | belfex | epica | 1 | B100 |
+| B01 | Édelin Lys | belfex | epica | 0 |  |
 | B02 | Tack Ergson | belfex | comum | 4 | B092, B059, B065, B077 |
 | B03 | Jork Caravel | belfex | comum | 4 | B087, B047, B067, B069 |
 | B04 | Peredun | belfex | lendaria | 3 | B094, B097, B099 |
@@ -248,7 +248,7 @@
 | B085 | elite | 3 | esq | Ingrid Marques | D13 J34 B05 J37 M02 J08 D07 | 1606 | sim |
 | B086 | miniboss | 3 | cima | Alveris Polar / Raukhar / Daryon Polar | D16 D10 J36 J37 J08 D01 J25 · J27 V08 J07 J09 J01 D04 J32 · J24 V14 J30 J15 S15 D04 J10 | 1631 | não |
 | B087 | normal | 3 | baixo | Junior Quissama | J22 B03 S13 V20 J33 D01 D05 | 1533 | sim |
-| B088 | miniboss | 3 | esq | Sumo Vigia / Ingrid Marques / Ingrid Marques | D14 V13 D08 D05 D04 D12 J26 · D15 V12 D18 D01 D04 D12 D07 · D02 D09 J04 D05 D12 V06 D07 | 1628 | não |
+| B088 | miniboss | 3 | esq | Ingrid Marques / Ingrid Marques / Ingrid Marques | D14 V13 D08 D05 D04 D12 D07 · D15 V12 D18 D01 D04 D12 D07 · D02 D09 J04 D05 D12 V06 D07 | 1623 | não |
 | B089 | normal | 3 | cima | Agente Sete | J29 V21 V24 M07 J17 J09 M02 | 1483 | sim |
 | B090 | normal | 3 | dir | Breno Lins | M05 V25 V12 M03 V17 M11 V01 | 1519 | sim |
 | B091 | evento | 3 | dir | Velho-Sábio | V19 J19 V24 D11 V09 V03 V05 | 1567 | sim |
@@ -256,8 +256,8 @@
 | B093 | elite | 3 | baixo | Rendar | S17 S06 S03 J37 M02 V06 J12 | 1642 | sim |
 | B094 | guardiao | 4 | baixo | Beatriz Lins / Korvo | S08 S04 S09 B04 V06 S16 V04 · S05 J09 S15 S16 V03 J12 V10 | 1716 | não |
 | B095 | elite | 4 | baixo | Velho-Sábio | S13 S02 J08 J01 S16 D07 V05 | 1696 | sim |
-| B096 | guardiao | 4 | esq | Orionus Polar / Sumo Vigia | D11 D01 D04 D12 D07 J10 J31 · M07 D05 D01 D12 J31 J32 J26 | 1737 | não |
+| B096 | guardiao | 4 | esq | Orionus Polar / Sumo Vigia | D11 D01 D04 D12 D07 J10 J31 · M07 D05 D01 D12 D07 J32 J26 | 1733 | não |
 | B097 | guardiao | 4 | cima | Korvo / Beatriz Lins | J20 J37 J15 M02 B04 J25 V10 · J17 M11 V09 V01 V05 J10 V04 | 1718 | não |
 | B098 | guardiao | 4 | dir | Korvo / Korvo | V12 J15 S15 V01 V05 V04 V10 · V20 V06 V09 V03 V05 J31 V10 | 1724 | não |
 | B099 | evento | 4 | cima | Alveris Polar | D18 D08 J09 J01 J08 B04 J25 | 1676 | sim |
-| B100 | boss | 4 | centro | A Besta | B01 J03 M01 D06 M10 V02 S11 | 1747 | não |
+| B100 | boss | 4 | centro | A Besta | J10 V04 J31 J32 V10 J26 S11 | 1819 | não |

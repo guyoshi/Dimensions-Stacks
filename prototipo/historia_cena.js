@@ -38,3 +38,24 @@ window.DS_CINEMATICA = {
     { img: null, tom: 'grito', textos: ['Que a jornada comece.'] },
   ],
 };
+
+/* Cinemática final: aparece quando o Boss é vencido (mesmo formato; {nome} = nome do jogador). */
+window.DS_CINEMATICA_FINAL = {
+  musica: 'final',
+  cenas: [
+    { img: null, textos: ['No núcleo da galáxia, o silêncio voltou a ser só silêncio.'] },
+    { img: 'cena/besta.webp', mov: 'zoomout', pos: 'center', textos: [
+      '{nome} enfrentou a Besta onde ninguém mais ousou chegar.',
+      'Foi a batalha mais longa que a galáxia já viu. E, no fim, a Besta caiu.'] },
+    { img: 'photos/J03.webp', mov: 'zoomout', pos: 'top', textos: [
+      'Com ela, caíram as correntes que prendiam a União.',
+      'Um a um, os heróis foram libertados, e todos voltaram a se erguer ao lado de {nome}.'] },
+    { img: 'photos/S01.webp', mov: 'zoom', pos: 'top', textos: [
+      'Jasmey Badrock olhou para o planeta que um dia cavou e, desta vez, deixou o gerbe em paz.'] },
+    { img: 'cena/gerbe.webp', mov: 'zoomout', pos: 'center', textos: [
+      'As dimensões voltaram a se fechar. As estrelas que restaram voltaram a brilhar.',
+      'A galáxia inteira soube o nome de quem não desistiu.'] },
+    { img: null, tom: 'grito', textos: ['{nome} libertou a União.'] },
+    { img: 'selo.png', mov: 'zoom', pos: 'center', textos: ['Fim.'] },
+  ],
+};
