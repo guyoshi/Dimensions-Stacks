@@ -23,7 +23,7 @@ Todos usam a mesma casca: tela cheia, botão ✕ (sair = 0%), resultado em % →
 16. **Mar, fogo e gelo** (Édelin Lys) [40/70/90%]: jogo de ritmo, 20 notas em 3 pistas (um elemento por pista); toque quando a nota chega à linha. % = notas/20.
 17. **Formação da União** (A União) [34/67/99%]: 3 casos com tempo. Escolha 3 heróis cujos atributos somados cubram o desafio (dois atributos mínimos). % = casos vencidos/3.
 
-## Propostas que dependem de você (ainda não aplicadas)
+## Propostas aprovadas (29/10) — os minigames em si ainda estão em ajuste pelo autor
 - **Broche:** dar ao atingir **Ótimo ou melhor** (≥ faixa 2), com repetição liberada; abaixo disso só pêndulos.
 - **Base (10):** cada beco joga uma vez por ponto (o prêmio não se repete); depois fica "visitado".
 - **Série (7):** ficam no ramo do Arauto de cada setor; abrem ao vencer o Arauto; o contador de broches (x/7) já aparece no mapa, sem explicar o uso.
