@@ -523,16 +523,14 @@
     const montar = () => { g.innerHTML = ''; todas.filter(F.ok).forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
     const upd = () => { cnt.textContent = sel.size + ' / ' + (opt.livre ? 'até ' : '') + N; go.disabled = opt.livre ? !sel.size : sel.size !== NN;
       const dk = $('.hs-deck', box), cwD = N > 10 ? 34 : N > 8 ? 40 : 48; dk.innerHTML = ''; [...sel].forEach(id => { const w = el('<div class="hs-escc on" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cwD })); dk.append(w); }); for (let q = sel.size; q < Math.min(N, 40); q++) dk.append(el('<span class="hs-slot" style="width:' + cwD + 'px;height:' + Math.round(cwD * 1.5) + 'px"></span>')); $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
-      msg.textContent = forcadas.size ? forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa cansada para descansar (' + CUSTO_DESC + ' por ponto).' : ''; };
+      msg.textContent = forcadas.size ? forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa cansada para descansar (pede confirmação; ' + CUSTO_DESC + ' por ponto).' : ''; };
     auto(); montar();
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {
       const c = e.target.closest('.hs-escc'), b = e.target.closest('[data-a]');
       if (c) { const id = c.dataset.id;
-        if (fadigaOn() && fad(id) && !sel.has(id)) {   // carta cansada: pagar para descansar
-          const custo = fad(id) * CUSTO_DESC;
-          if ((S.pend | 0) < custo) { msg.textContent = 'Faltam pêndulos: descansar custa ' + custo + ' (você tem ' + (S.pend | 0) + ').'; SND.play('tick'); return; }
-          S.pend -= custo; delete S.fadiga[id]; save(); SND.play('capture'); if (sel.size < N) { sel.add(id); } montar(); upd(); msg.textContent = 'Carta descansada (−' + custo + ' pêndulos).'; return; }
+        if (fadigaOn() && fad(id) && !sel.has(id)) {   // carta cansada: pede confirmação antes de pagar
+          confirmaDescanso([id], t => { if (sel.size < N) { sel.add(id); } montar(); upd(); msg.textContent = 'Descansou (−' + t + ' pêndulos).'; flutuaBox(box, t); }); return; }
         SND.play('tick'); forcadas.delete(id); if (sel.has(id)) sel.delete(id); else if (sel.size < N) sel.add(id); upd(); return; }
       if (!b) return; SND.play('click');
       if (b.dataset.a === 'melhores') { auto(); upd(); }
@@ -804,6 +802,21 @@
       p = q.length >= 2 && b.opcoes ? { opcoes: embaralha(q).slice(0, 2).map(x => x.id) } : q.length ? { cartas: [q[Math.floor(Math.random() * q.length)].id] } : { pend: 60 }; }   // alguns baús oferecem 2 cartas: leva só a escolhida
     S.baus = S.baus || {}; S.baus[id] = 1; save(); return p;
   }
+  function pagarDescanso(ids) {   // paga e descansa as cartas; devolve o total gasto
+    let t = 0; ids.forEach(id => { const k = fad(id) * CUSTO_DESC; if (k && (S.pend | 0) >= k) { S.pend -= k; S.gasto = (S.gasto | 0) + k; delete S.fadiga[id]; t += k; } }); save(); return t;
+  }
+  function confirmaDescanso(ids, cb) {   // descansar custa pêndulos: sempre pede confirmação e mostra quanto sai e quanto sobra
+    const custo = ids.reduce((t, id) => t + fad(id) * CUSTO_DESC, 0), saldo = S.pend | 0, falta = custo - saldo;
+    const nome = ids.length === 1 ? U.CARDS[ids[0]].nome : ids.length + ' cartas';
+    const box = el(`<div class="hs-conf dsc-conf"><h3>Descansar ${esc(nome)}?</h3><p>${ids.length === 1 ? 'A carta volta a ficar descansada e pode jogar sem penalidade.' : 'Todas voltam a ficar descansadas.'}</p>
+      <div class="dsc-c">${coinSvg(22)}<b>−${custo}</b><span>pêndulos</span></div><p class="dsc-s">${falta > 0 ? 'Faltam ' + falta + ' pêndulos (você tem ' + saldo + ').' : 'Você tem ' + saldo + ' e ficará com ' + (saldo - custo) + '.'}</p>
+      <div class="row"><button class="btn" data-a="n">Cancelar</button><button class="btn primary" data-a="s"${falta > 0 ? ' disabled' : ''}>Pagar ${custo}</button></div></div>`);
+    const m = U.modal(box, { cls: 'hs-modal' });
+    box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b || b.disabled) return; SND.play('click'); m.close(); if (b.dataset.a === 's') { const t = pagarDescanso(ids); SND.play('capture'); cb && cb(t); } };
+  }
+  function flutuaBox(box, n) {   // "−N" sobe da janela e some: deixa claro que gastou pêndulos
+    const f = el(`<div class="dsc-fl">${coinSvg(20)}<b>−${n}</b></div>`); box.appendChild(f); setTimeout(() => f.remove(), 1500);
+  }
   function descansar(id) {   // paga e descansa uma carta; devolve o custo ou 0 se faltar
     const custo = fad(id) * CUSTO_DESC; if (!custo || (S.pend | 0) < custo) return 0;
     S.pend -= custo; S.gasto = (S.gasto | 0) + custo; delete S.fadiga[id]; save(); return custo;
@@ -814,17 +827,17 @@
     const lista = () => (S.owned || []).slice().sort((a, b) => (ORD[(U.CARDS[a] || {}).raridade] - ORD[(U.CARDS[b] || {}).raridade]) || FORCA(b) - FORCA(a));
     const render = () => {
       const L = lista(), cans = L.filter(id => fad(id)), total = cans.reduce((t, id) => t + fad(id) * CUSTO_DESC, 0);
-      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque para descansar (' + CUSTO_DESC + ' por ponto).' : 'Todas descansadas.') : '') + ' Pêndulos: ' + (S.pend | 0);
+      info.textContent = msg || (fadigaOn() ? (cans.length ? cans.length + ' cansada(s). Toque numa carta escura para descansar (pede confirmação; ' + CUSTO_DESC + ' por ponto).' : 'Todas descansadas.') : '') + ' Pêndulos: ' + (S.pend | 0);
       g.innerHTML = ''; L.filter(F.ok).forEach(id => { const w = el('<div class="hs-escc on' + (fad(id) ? ' tired' : '') + '" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fad(id)) w.append(el('<div class="hs-fadb">' + pontosFad(id) + '</div>')); g.append(w); });
       bt.hidden = !cans.length; bt.textContent = 'Descansar todas (' + total + ')'; bt.disabled = total > (S.pend | 0); paintAll();
     };
     const m = U.modal(box, { cls: 'hs-modal' }); render();
     box.onclick = e => {
       const c = e.target.closest('.hs-escc'), b = e.target.closest('[data-a]');
-      if (c && fad(c.dataset.id)) { const id = c.dataset.id, custo = descansar(id); if (custo) { SND.play('capture'); msg = U.CARDS[id].nome + ' descansou (−' + custo + ' pêndulos).'; } else { SND.play('tick'); msg = 'Faltam pêndulos: descansar custa ' + fad(id) * CUSTO_DESC + '.'; } render(); return; }
+      if (c && fad(c.dataset.id)) { const id = c.dataset.id; confirmaDescanso([id], t => { msg = U.CARDS[id].nome + ' descansou (−' + t + ' pêndulos).'; flutuaBox(box, t); render(); }); return; }
       if (!b) return; SND.play('click');
       if (b.dataset.a === 'x') m.close();
-      else if (b.dataset.a === 'todas') { let t = 0; Object.keys(S.fadiga || {}).forEach(id => { const k = fad(id) * CUSTO_DESC; if ((S.pend | 0) >= k) { S.pend -= k; S.gasto = (S.gasto | 0) + k; delete S.fadiga[id]; t += k; } }); save(); SND.play('capture'); msg = t ? 'Descansadas (−' + t + ' pêndulos).' : 'Faltam pêndulos.'; render(); }
+      else if (b.dataset.a === 'todas') { const ids = Object.keys(S.fadiga || {}).filter(id => fad(id)); if (ids.length) confirmaDescanso(ids, t => { msg = 'Descansadas (−' + t + ' pêndulos).'; flutuaBox(box, t); render(); }); }
     };
   }
   // estoque fixo por loja (sorteado uma vez e guardado): 6 cartas que o jogador ainda não tem; raridade sobe com a região

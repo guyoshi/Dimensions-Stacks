@@ -29,14 +29,17 @@ try:
         chk(tired >= 7 and on == 7 and onTired == 0, 'cansadas aparecem apagadas e não entram na seleção (cansadas %d, marcadas %d)' % (tired, on))
         # descansar uma carta cansada com pêndulos
         pg0 = pg.evaluate("window.DSHistoria.state().pend")
-        pg.click('.hs-escc.tired'); pg.wait_for_timeout(300)
+        pg.click('.hs-escc.tired'); pg.wait_for_selector('.dsc-conf'); pg.wait_for_timeout(200)
+        chk(pg.evaluate("window.DSHistoria.state().pend") == pg0, 'tocar na carta cansada só pede confirmação (nada é cobrado)')
+        pg.click('.dsc-conf [data-a=n]'); pg.wait_for_timeout(300); chk(pg.evaluate("window.DSHistoria.state().pend") == pg0, 'cancelar não cobra')
+        pg.click('.hs-escc.tired'); pg.wait_for_selector('.dsc-conf'); pg.click('.dsc-conf [data-a=s]'); pg.wait_for_timeout(400)
         pg1 = pg.evaluate("window.DSHistoria.state().pend")
         chk(pg1 < pg0, 'descansar custa pêndulos: %d → %d' % (pg0, pg1))
         pg.click('[data-a=go]'); pg.wait_for_timeout(300)
         sel = pg.evaluate("window.__sel"); chk(sel and len(sel) == 7, 'duelo recebe 7 cartas')
         # sem pêndulos não descansa
-        pg.evaluate("window.DSHistoria.state().pend = 0; window.DSHistoria.escolher7({}, m => {})"); pg.wait_for_selector('.hs-escg'); pg.click('.hs-escc.tired'); pg.wait_for_timeout(200)
-        chk('Faltam pêndulos' in pg.evaluate("document.querySelector('.hs-msg').textContent"), 'sem pêndulos avisa')
+        pg.evaluate("window.DSHistoria.state().pend = 0; window.DSHistoria.escolher7({}, m => {})"); pg.wait_for_selector('.hs-escg'); pg.click('.hs-escc.tired'); pg.wait_for_selector('.dsc-conf'); pg.wait_for_timeout(200)
+        chk('Faltam' in pg.evaluate("document.querySelector('.dsc-s').textContent") and pg.evaluate("document.querySelector('.dsc-conf [data-a=s]').disabled"), 'sem pêndulos avisa e bloqueia o pagamento')
         chk(not errs, 'erros de página: %s' % errs[:2])
         b.close()
 finally:
