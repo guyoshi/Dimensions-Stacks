@@ -212,6 +212,11 @@
 
   // ---- coleção: fragmentos, registros e selos de contenção
   const cristal = on => `<svg viewBox="-12 -14 24 28" class="cr ${on ? 'on' : ''}" aria-hidden="true"><polygon points="0,-12 8,-3 5,11 -5,11 -8,-3" /><polygon class="f" points="0,-12 8,-3 0,1 -8,-3"/></svg>`;
+  const icone = tipo => ({
+    item: '<svg class="col-ico item" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg>',
+    registro: '<svg class="col-ico registro" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 11h6M9 15h6"/></svg>',
+    selo: '<svg class="col-ico selo" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 8 4.7v10.6L12 22l-8-4.7V6.7z"/><path d="m8 12 2.5 2.5L16 9"/></svg>'
+  })[tipo] || '';
   function colecao(aba) {
     const U = A.U, s = ini(); aba = aba || 'frag';
     const box = U.el('<div class="hs-esc hs-col"><h3>Coleção</h3><div class="mis-tabs"><button data-a="t:frag">Fragmentos</button><button data-a="t:reg">Registros</button><button data-a="t:selo">Selos</button></div><div class="col-body"></div><div class="row"><button class="btn primary" data-a="x">Fechar</button></div></div>');
@@ -219,8 +224,8 @@
     const render = () => {
       U.$$('.mis-tabs button', box).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba));
       if (aba === 'frag') { const n = nFrag(), g = nGanho(); body.innerHTML = `<p class="col-n"><b>${n}</b> fragmentos dimensionais</p><p class="col-n"><small>${g} de ${FRAG_TOTAL} encontrados</small></p><div class="col-frag">${cristal(n > 0)}</div>`; }
-      else if (aba === 'reg') { const regs = Object.keys(s.reg).length; body.innerHTML = `<p class="col-n"><b>${regs}</b> / 8 registros</p><div class="col-reg">${REGS.map(c => s.reg[c] ? `<button class="reg-it" data-r="${c}"><b>${A.esc(U.CARDS[c].nome)}</b><small>Toque para ler</small></button>` : `<div class="reg-it lock"><b>?</b><small>Não encontrado</small></div>`).join('')}</div>`; }
-      else { const G = A.GUARD, v = G.filter(g => s.cleared[g]).length; body.innerHTML = `<p class="col-n"><b>${v}</b> / ${G.length} selos de contenção</p><div class="col-selo">${G.map(g => `<div class="selo ${s.cleared[g] ? 'on' : ''}"><svg viewBox="-20 -20 40 40"><polygon points="0,-18 16,-9 16,9 0,18 -16,9 -16,-9"/><path d="M-6 0 L-2 4 L7 -5"/></svg><small>${A.esc(A.LADOS[A.BY[g].lado])}</small></div>`).join('')}</div><p class="col-nota">Poder da Besta: +${A.bonusBoss()}</p>`; }
+      else if (aba === 'reg') { const regs = Object.keys(s.reg).length; body.innerHTML = `<p class="col-n"><b>${regs}</b> / 8 registros</p><div class="col-reg">${REGS.map(c => s.reg[c] ? `<button class="reg-it" data-r="${c}">${icone('registro')}<span><b>${A.esc(U.CARDS[c].nome)}</b><small>Toque para ler</small></span></button>` : `<div class="reg-it lock">${icone('registro')}<span><b>?</b><small>Não encontrado</small></span></div>`).join('')}</div>`; }
+      else { const G = A.GUARD, v = G.filter(g => s.cleared[g]).length; body.innerHTML = `<p class="col-n"><b>${v}</b> / ${G.length} selos de contenção</p><div class="col-selo">${G.map(g => `<div class="selo ${s.cleared[g] ? 'on' : ''}">${icone('selo')}<small>${A.esc(A.LADOS[A.BY[g].lado])}</small></div>`).join('')}</div><p class="col-nota">Poder da Besta: +${A.bonusBoss()}</p>`; }
     };
     render();
     box.onclick = e => {
