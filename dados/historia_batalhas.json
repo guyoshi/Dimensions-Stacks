@@ -5,35 +5,22 @@
  "batalhas": [
   {
    "id": "B094",
-   "tipo": "guardiao",
-   "regiao": 4,
+   "tipo": "elite",
+   "regiao": 3,
    "lado": "baixo",
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Beatriz Lins",
-     "avatar": "V04",
+     "nome": "A Engenheira",
+     "avatar": "S16",
      "cartas": [
+      "S07",
       "S08",
+      "S06",
       "S04",
+      "S02",
       "S09",
-      "B04",
-      "V06",
-      "S16",
-      "V04"
-     ]
-    },
-    {
-     "nome": "Korvo",
-     "avatar": "V10",
-     "cartas": [
-      "S05",
-      "J09",
-      "S15",
-      "S16",
-      "V03",
-      "J12",
-      "V10"
+      "S16"
      ]
     }
    ],
@@ -66,35 +53,22 @@
   },
   {
    "id": "B096",
-   "tipo": "guardiao",
-   "regiao": 4,
+   "tipo": "elite",
+   "regiao": 2,
    "lado": "esq",
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Orionus Polar",
-     "avatar": "J31",
+     "nome": "Junior Quissama",
+     "avatar": "D01",
      "cartas": [
-      "D11",
-      "D01",
-      "D04",
-      "D12",
-      "D07",
-      "J10",
-      "J31"
-     ]
-    },
-    {
-     "nome": "Sumo Vigia",
-     "avatar": "J26",
-     "cartas": [
-      "M07",
-      "D05",
-      "D01",
-      "D12",
-      "D07",
-      "J32",
-      "J26"
+      "D13",
+      "D14",
+      "M03",
+      "D03",
+      "D10",
+      "M11",
+      "D01"
      ]
     }
    ],
@@ -103,35 +77,22 @@
   },
   {
    "id": "B097",
-   "tipo": "guardiao",
-   "regiao": 4,
+   "tipo": "elite",
+   "regiao": 2,
    "lado": "cima",
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Korvo",
-     "avatar": "V10",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "J20",
-      "J37",
-      "J15",
+      "J35",
+      "J28",
+      "J34",
+      "J05",
+      "J07",
       "M02",
-      "B04",
-      "J25",
-      "V10"
-     ]
-    },
-    {
-     "nome": "Beatriz Lins",
-     "avatar": "V04",
-     "cartas": [
-      "J17",
-      "M11",
-      "V09",
-      "V01",
-      "V05",
-      "J10",
-      "V04"
+      "M11"
      ]
     }
    ],
@@ -140,35 +101,22 @@
   },
   {
    "id": "B098",
-   "tipo": "guardiao",
-   "regiao": 4,
+   "tipo": "elite",
+   "regiao": 2,
    "lado": "dir",
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Korvo",
-     "avatar": "V10",
+     "nome": "Ricochet Bombergue",
+     "avatar": "V09",
      "cartas": [
-      "V12",
-      "J15",
-      "S15",
-      "V01",
-      "V05",
-      "V04",
-      "V10"
-     ]
-    },
-    {
-     "nome": "Korvo",
-     "avatar": "V10",
-     "cartas": [
+      "V19",
+      "V21",
       "V20",
+      "V14",
+      "B05",
       "V06",
-      "V09",
-      "V03",
-      "V05",
-      "J31",
-      "V10"
+      "V09"
      ]
     }
    ],
@@ -408,22 +356,35 @@
   },
   {
    "id": "B084",
-   "tipo": "elite",
-   "regiao": 3,
+   "tipo": "guardiao",
+   "regiao": 4,
    "lado": "baixo",
    "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "A Engenheira",
-     "avatar": "S16",
+     "nome": "Beatriz Lins",
+     "avatar": "V04",
      "cartas": [
-      "S07",
       "S08",
-      "S06",
       "S04",
-      "S02",
       "S09",
-      "S16"
+      "B04",
+      "V06",
+      "S16",
+      "V04"
+     ]
+    },
+    {
+     "nome": "Korvo",
+     "avatar": "V10",
+     "cartas": [
+      "S05",
+      "J09",
+      "S15",
+      "S16",
+      "V03",
+      "J12",
+      "V10"
      ]
     }
    ],
@@ -796,22 +757,35 @@
   },
   {
    "id": "B051",
-   "tipo": "elite",
-   "regiao": 2,
+   "tipo": "guardiao",
+   "regiao": 4,
    "lado": "cima",
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "X",
-     "avatar": "M11",
+     "nome": "Korvo",
+     "avatar": "V10",
      "cartas": [
-      "J35",
-      "J28",
-      "J34",
-      "J05",
-      "J07",
+      "J20",
+      "J37",
+      "J15",
       "M02",
-      "M11"
+      "B04",
+      "J25",
+      "V10"
+     ]
+    },
+    {
+     "nome": "Beatriz Lins",
+     "avatar": "V04",
+     "cartas": [
+      "J17",
+      "M11",
+      "V09",
+      "V01",
+      "V05",
+      "J10",
+      "V04"
      ]
     }
    ],
@@ -1025,22 +999,35 @@
   },
   {
    "id": "B060",
-   "tipo": "elite",
-   "regiao": 2,
+   "tipo": "guardiao",
+   "regiao": 4,
    "lado": "esq",
    "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Junior Quissama",
-     "avatar": "D01",
+     "nome": "Orionus Polar",
+     "avatar": "J31",
      "cartas": [
-      "D13",
-      "D14",
-      "M03",
-      "D03",
-      "D10",
-      "M11",
-      "D01"
+      "D11",
+      "D01",
+      "D04",
+      "D12",
+      "D07",
+      "J10",
+      "J31"
+     ]
+    },
+    {
+     "nome": "Sumo Vigia",
+     "avatar": "J26",
+     "cartas": [
+      "M07",
+      "D05",
+      "D01",
+      "D12",
+      "D07",
+      "J32",
+      "J26"
      ]
     }
    ],
@@ -1341,22 +1328,35 @@
   },
   {
    "id": "B071",
-   "tipo": "elite",
-   "regiao": 2,
+   "tipo": "guardiao",
+   "regiao": 4,
    "lado": "dir",
    "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "Ricochet Bombergue",
-     "avatar": "V09",
+     "nome": "Korvo",
+     "avatar": "V10",
      "cartas": [
-      "V19",
-      "V21",
+      "V12",
+      "J15",
+      "S15",
+      "V01",
+      "V05",
+      "V04",
+      "V10"
+     ]
+    },
+    {
+     "nome": "Korvo",
+     "avatar": "V10",
+     "cartas": [
       "V20",
-      "V14",
-      "B05",
       "V06",
-      "V09"
+      "V09",
+      "V03",
+      "V05",
+      "J31",
+      "V10"
      ]
     }
    ],
