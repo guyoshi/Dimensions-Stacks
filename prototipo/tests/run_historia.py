@@ -13,7 +13,7 @@ shots = os.path.join(proj, 'tests', 'shots'); os.makedirs(shots, exist_ok=True)
 try:
   with sync_playwright() as p:
     b = p.chromium.launch(); ctx = b.new_context(viewport={'width': 400, 'height': 850}, has_touch=True); pg = ctx.new_page()
-    pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.historia.prefs', JSON.stringify({aberto:true,escuro:false}));")
+    pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.historia.prefs', JSON.stringify({aberto:true,v2:1,escuro:false}));")
     pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text else None)
     pg.goto('http://localhost:8777/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500)

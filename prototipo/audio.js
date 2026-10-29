@@ -219,6 +219,7 @@
     setMode(m) {
       this.mode = m;
       if (!this.ctx || !this.musicOn) return;
+      if (m === 'game' && this.histLock) { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.stopMatch(); this.histPlay(this.histLock); return; }   // modo história: trilha própria da batalha
       if (m === 'game') { if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; } this.startMatch(); }
       else { this.stopMatch(); this.stopDefeat(); this.startMenuMusic(); }
     },

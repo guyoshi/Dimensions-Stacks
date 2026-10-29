@@ -672,6 +672,18 @@
     async end({ winner }) {
       SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const sameT = (a, b) => a === b || !!(G.cfg && G.cfg.teams && G.cfg.teams.some(t => t.includes(a) && t.includes(b))); const human = winner != null && (V.online ? sameT(winner, V.viewer) : (G.cfg && G.cfg.teams ? G.cfg.teams.some(t => t.includes(winner) && t.some(x => !G.p(x).bot)) : !G.p(winner).bot)); const anyHuman = V.humans > 0;
       const lost = winner == null || !(human || !anyHuman);
+      if (G.cfg.historia) {   // modo história: resultado próprio, cartas capturadas e volta ao mapa
+        const H = G.cfg.historia, me = G.p(V.viewer), mine = [...me.deck, ...me.reserve, ...me.prepared], inim = new Set((G.cfg.maos || []).slice(1).flat());
+        const cap = lost ? [] : mine.filter(c => inim.has(c));
+        SND.play(lost ? 'defeat' : 'victory'); if (!lost) FX.confetti();
+        const nn = el(`<div class="modal"><div class="box"><div class="final"><h1>${lost ? 'Derrota' : 'Vitória!'}</h1>
+          <div class="hint">${lost ? 'Seu baralho acabou. Reorganize as cartas e tente de novo.' : cap.length ? 'Cartas capturadas:' : 'Nenhuma carta capturada.'}</div><div class="row hcap" style="justify-content:center;flex-wrap:wrap"></div>
+          <div class="stats"><div><b>${G.s.combats}</b>disputas</div><div><b>${G.s.round}</b>rodadas</div></div>
+          <div class="row" style="justify-content:center"><button class="btn primary" data-a="go">Continuar</button></div></div></div></div>`);
+        cap.forEach(c => $('.hcap', nn).append(cardEl(c, { up: true, noanim: true, cw: cap.length > 3 ? 76 : 96 })));
+        nn.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); nn.remove(); U.killRun(); H.aoFim({ venceu: !lost, capturadas: cap, disputas: G.s.combats }); };
+        U.layer().appendChild(nn); return;
+      }
       SND.play(lost ? 'defeat' : 'victory'); if (lost && SND.defeatMusic) SND.defeatMusic();
       if (winner != null && (human || !anyHuman)) FX.confetti();
       const w = winner != null ? G.p(winner) : null;
@@ -927,9 +939,9 @@
     lastCfg = cfg; SND.init(); U.killRun(); U.newRun(); $$('#layer > *').forEach(x => x.remove()); teamColors(cfg.teams);
     if (!FX.cv) FX.init();
     V = { n: cfg.players.length, humans: cfg.players.filter(p => !p.bot).length, viewer: Math.max(0, cfg.players.findIndex(p => !p.bot)), noPrep: {}, seats: {}, slots: {}, pos: {}, combat: null, logs: [], init: null, muted: false };
-    U.show('game'); shell();
+    SND.histLock = cfg.historia ? cfg.historia.musica : null; U.show('game'); shell();
     newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, duo: !!cfg.teams, ev: cfg.events !== false, shared: true });
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, maos: cfg.maos || null, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };

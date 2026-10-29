@@ -43,25 +43,34 @@
   const R = M.raio;
 
   let S = null;                                   // jornada salva (ou null)
-  let P = Object.assign({ aberto: true, escuro: true }, rd(PKEY, {}));   // preferências (ETAPA 1: mapa aberto para testes)
+  let P = Object.assign({ aberto: false, escuro: true }, rd(PKEY, {}));   // preferências (mapa aberto = modo teste, desligado por padrão: só se avança vencendo)
+  if (P.v2 !== 1) { P.aberto = false; P.v2 = 1; try { wr(PKEY, P); } catch (e) { } }   // migração: o mapa aberto (teste) passa a vir desligado
   const save = () => { if (S) wr(KEY, S); wr(PKEY, P); };
   const load = () => { const s = rd(KEY, null); S = s && s.v === 1 && BY[s.startId] ? s : null; return S; };
 
   // ---------------------------------------------------------------- regras do mapa
   const cleared = id => !!(S && S.cleared[id]);
   const bossOpen = () => GUARD.every(cleared) && MINIS.every(cleared);
+  // liberados: vizinhos de pontos vencidos, mais o ponto de partida. Loja não bloqueia: ao alcançá-la, o que vem depois também fica liberado.
+  let libKey = '', libSet = new Set();
+  function liberados() {
+    const key = Object.keys(S.cleared).sort().join() + '|' + S.startId; if (key === libKey) return libSet;
+    const A = new Set([S.startId]), pilha = Object.keys(S.cleared), vistos = new Set();
+    while (pilha.length) { const id = pilha.pop(); if (vistos.has(id)) continue; vistos.add(id); BY[id].viz.forEach(v => { if (v === M.boss) return; A.add(v); if (BY[v].tipo === 'loja') pilha.push(v); }); }
+    libKey = key; libSet = A; return A;
+  }
+  const aberto_ = id => cleared(id) || (BY[id].tipo === 'loja' && liberados().has(id));   // ponto "aberto": venceu, ou é loja já alcançada
   function available(id) {
     if (!S) return false;
     if (P.aberto) return true;
     if (cleared(id)) return true;
     if (id === M.boss) return bossOpen();
-    if (id === S.startId) return true;
-    return BY[id].viz.some(v => cleared(v) && v !== M.boss);
+    return liberados().has(id);
   }
   function edgeState(a, b) {
-    if (cleared(a) && cleared(b)) return 'lit';
-    if (cleared(a) || cleared(b) || a === S.startId || b === S.startId) return 'open';
-    return P.aberto ? 'open' : 'dark';
+    if (aberto_(a) && aberto_(b)) return 'lit';
+    if (aberto_(a) || aberto_(b)) return 'open';
+    return P.aberto ? 'open' : 'dark';   // cinza: ramo que sai de um ponto liberado, ainda por vencer
   }
   const nBat = () => BATALHAS.filter(n => cleared(n.id)).length;
 
@@ -114,7 +123,9 @@
   }
 
   // ---- tela inicial: só o selo, "Novo jogo" e "Continuar"
+  let voltarMapa = false;
   function hub() {
+    if (voltarMapa && S) { voltarMapa = false; openMap(); return; }
     view = 'hub'; load(); try { if (SND.histNow) SND.histStop(); } catch (e) { }   // tela inicial: volta a música normal do menu
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
     const c = S;
@@ -178,14 +189,12 @@
   }
   // ---- o que aparece: só o que foi vencido ilumina. Caminhos e bifurcações surgem ao vencer uma fase; os vizinhos aparecem (abertos ou trancados) mesmo com o boneco longe. O núcleo está sempre visível.
   const NUCLEO = new Set(NOS.filter(n => n.tier === 4).map(n => n.id));
-  function paintLuz() {
-    const esc_ = P.escuro !== false; svg.classList.toggle('escuro', esc_);
-    const lg = $('#hsLights', root); if (lg) lg.innerHTML = '';
-    const luz = new Set(); NOS.forEach(n => { if (cleared(n.id)) luz.add(n.id); });   // só o vencido ilumina (inclusive a casa de partida: seus caminhos só surgem depois da primeira vitória)
-    const vis = new Set(luz); luz.forEach(i => BY[i].viz.forEach(v => vis.add(v))); vis.add(posId()); NUCLEO.forEach(i => vis.add(i));
-    $$('.n', root).forEach(g => { g.classList.toggle('fog', esc_ && !vis.has(g.dataset.id)); g.classList.remove('far1'); });
-    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', esc_ && !(luz.has(a) || luz.has(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); p.classList.remove('far1'); });
-    if (esc_ && lg) { const here = posId(); lg.innerHTML = [...new Set([...luz, here, ...NUCLEO])].map(i => { const n = BY[i], hero = i === here, nuc = NUCLEO.has(i), r = hero ? 330 : nuc ? (n.id === M.boss ? 300 : 170) : (cleared(i) ? 210 : 160); return `<circle class="hs-light" cx="${n.x}" cy="${n.y}" r="${r}" ${hero ? 'style="fill:url(#hsLightH)"' : ''}/>`; }).join(''); }
+  function paintLuz() {   // visibilidade: ramos de pontos vencidos (coloridos) e de pontos liberados (cinza). O resto fica escondido; o núcleo é sempre visível.
+    const ocultar = P.escuro !== false; svg.classList.toggle('escuro', ocultar);
+    const lib = liberados(), vis = new Set(NUCLEO);
+    NOS.forEach(n => { if (cleared(n.id) || lib.has(n.id) || n.id === posId()) { vis.add(n.id); n.viz.forEach(v => vis.add(v)); } });
+    $$('.n', root).forEach(g => g.classList.toggle('fog', ocultar && !vis.has(g.dataset.id)));
+    $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', ocultar && !(aberto_(a) || aberto_(b) || lib.has(a) || lib.has(b) || cleared(a) || cleared(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); });
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);
@@ -195,11 +204,13 @@
 
   // ---- câmera: arrastar, pinça, roda do mouse
   const view$ = () => { const r = svg.getBoundingClientRect(); return { w: r.width, h: r.height }; };
+  let movT = null;
   function applyCam(anim) {
     const { w, h } = view$();
     const lim = (R + 260) * cam.k;   // não deixa o mapa sair da tela
     cam.x = Math.max(w / 2 - lim, Math.min(w / 2 + lim, cam.x)); cam.y = Math.max(h / 2 - lim, Math.min(h / 2 + lim, cam.y));
     camG.style.transition = anim ? 'transform .75s cubic-bezier(.3,.8,.3,1)' : 'none';
+    if (svg) { svg.classList.add('mov'); clearTimeout(movT); movT = setTimeout(() => svg && svg.classList.remove('mov'), anim ? 850 : 220); }   // em movimento: animações pausadas (mapa mais leve)
     camG.style.transform = `translate(${cam.x}px,${cam.y}px) scale(${cam.k})`;
     svg.classList.toggle('far', cam.k < .42);
   }
@@ -302,9 +313,9 @@
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · lado ${esc(LADOS[n.lado].toLowerCase())}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
       <p>${esc(T.desc)}</p><p class="hint">${esc(jog)}${n.id === M.boss && !bossOpen() ? ` · faltam ${GUARD.filter(x => !cleared(x)).length} guardiões e ${MINIS.filter(x => !cleared(x)).length} da União` : ''}</p>${cartas}
-      <div class="row">${aqui ? `<button class="btn primary" disabled>${n.tipo === 'loja' ? 'Entrar (em breve)' : ok ? 'Você está aqui' : 'Duelar (em breve)'}</button>` : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" disabled>Entrar (em breve)</button>' : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;
@@ -322,9 +333,56 @@
     const g = $('.n[data-id="' + id + '"]', root); if (g && !ok) { g.classList.remove('pop'); void g.getBoundingClientRect(); g.classList.add('pop'); }
     if (!wasOpen && bossOpen()) bossAbre();
   }
+  // ---- duelo de verdade: mãos fixas (7 cartas por lado), captura, pêndulos e volta ao mapa
+  const FORCA = id => { const c = U.CARDS[id]; return c ? Object.values(c.stats).reduce((a, b) => a + b, 0) : 0; };
+  const NIVEIS = ['facil', 'normal', 'dificil'];
+  const nivelBot = n => Math.min(2, [0, 1, 1, 2][Math.max(0, (n.tier || 1) - 1)] + (['elite', 'miniboss', 'guardiao'].includes(n.tipo) && n.tier < 3 ? 1 : 0));   // PROPOSTA: dificuldade dos bots por região e tipo (a calibrar)
+  const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
+  const premioDe = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tier || 1) - 1)));
+  function escolher7(bat, ok) {   // jogador com mais de 7 cartas escolhe as 7 do duelo
+    const todas = (S.owned || []).slice().sort((a, b) => FORCA(b) - FORCA(a));
+    if (todas.length <= 7) { ok(todas.slice(0, 7)); return; }
+    const sel = new Set(todas.slice(0, 7));
+    const box = el(`<div class="hs-esc"><h3>Escolha 7 cartas</h3><p class="hint">Toque para marcar ou desmarcar. <b class="hs-cnt"></b></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores 7</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
+    const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), go = $('[data-a=go]', box);
+    const upd = () => { cnt.textContent = sel.size + ' / 7'; go.disabled = sel.size !== 7; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id))); };
+    todas.forEach(id => { const w = el(`<div class="hs-escc" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); g.append(w); });
+    const m = U.modal(box, { cls: 'hs-modal' });
+    box.onclick = e => {
+      const c = e.target.closest('.hs-escc'), b = e.target.closest('[data-a]');
+      if (c) { SND.play('tick'); const id = c.dataset.id; if (sel.has(id)) sel.delete(id); else if (sel.size < 7) sel.add(id); upd(); return; }
+      if (!b) return; SND.play('click');
+      if (b.dataset.a === 'melhores') { sel.clear(); todas.slice(0, 7).forEach(x => sel.add(x)); upd(); }
+      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && sel.size === 7) { m.close(); ok(todas.filter(x => sel.has(x))); }
+    };
+    upd();
+  }
+  function duelar(id, auto) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
+    const n = BY[id], bat = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (!bat || n.tipo === 'loja') return;
+    (auto ? (b, f) => f((S.owned || []).slice(0, 7)) : escolher7)(bat, mao => {
+      const usadas = new Set(mao), inims = bat.i.map(x => x.c.slice()), conf = new Set(mao);
+      inims.forEach(l => l.forEach(c => conf.add(c)));
+      const mudou = new Set(mao);   // cartas do inimigo que o jogador já tem em mãos são trocadas por outras da mesma raridade
+      inims.forEach(l => l.forEach((c, k) => { if (mudou.has(c) || usadas.has(c)) {
+        const raridade = U.CARDS[c].raridade, pool = U.D.CARTAS.filter(x => x.raridade === raridade && !x.uniao && x.id !== 'S11' && !conf.has(x.id));
+        const novo = pool.length ? pool[Math.floor(Math.random() * pool.length)].id : c; l[k] = novo; conf.add(novo); } else mudou.add(c); }));
+      const players = [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }].concat(bat.i.map(x => ({ name: x.n, bot: true, diff: NIVEIS[nivelBot(n)] })));
+      const musica = n.tipo === 'boss' ? 'boss' : (n.tipo === 'miniboss' || n.tipo === 'guardiao') ? 'mini' : 'batalha';
+      try { SND.histStop(true); } catch (e) { }
+      const hist = { musica, id, aoFim: res => {
+        SND.histLock = null; try { SND.histStop(); } catch (e) { }
+        voltarMapa = true; U.show('uniao');
+        if (res.venceu && !cleared(id)) {
+          S.pend = (S.pend | 0) + premioDe(n); save();
+          setTimeout(() => { toggleWin(id); if (res.capturadas.length) setTimeout(() => abrirBau({ cartas: res.capturadas }), 700); }, 450);
+        } else { try { SND.histPlay('mapa'); } catch (e) { } }
+      } };
+      U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: false, maos: [mao].concat(inims), historia: hist });
+    });
+  }
   // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
   function npcFala(cid, linhas, done) {
-    const c = U.CARDS[cid]; let i = 0, tm = null, pronto = false;
+    closeSheet(); const c = U.CARDS[cid]; let i = 0, tm = null, pronto = false;
     const ov = el(`<div class="npc"><div class="npc-box"><div class="npc-p"></div><div class="npc-b"><b>${esc(c ? c.nome : 'Viajante')}</b><p></p><i class="cin-next on">▾</i></div></div></div>`);
     if (c) $('.npc-p', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 84 }));
     document.body.appendChild(ov); const P_ = $('p', ov), red = document.body.classList.contains('reduce');
@@ -343,7 +401,7 @@
   }
   // miniboss vencido: o membro da União preso por ele é libertado e entra na equipe
   function libertar(cid) {
-    const c = U.CARDS[cid]; if (!c) return;
+    closeSheet(); const c = U.CARDS[cid]; if (!c) return;
     const ov = el(`<div class="bau-ov lib"><div class="lib-t">Libertado!</div><div class="lib-c"></div><div class="lib-n">${esc(c.nome)} entrou para a sua equipe</div><div class="lib-k">${(S.owned || []).filter(x => Object.values(LIBERTA).includes(x)).length} / ${MINIS.length} da União</div><button class="btn primary bau-ok">Continuar</button></div>`);
     $('.lib-c', ov).append(U.cardEl(cid, { up: true, noanim: true, cw: 150 })); document.body.appendChild(ov); SND.play('legend');
     $('.bau-ok', ov).onclick = () => { SND.play('click'); ov.classList.add('out'); setTimeout(() => ov.remove(), 400); };
@@ -367,7 +425,7 @@
       <g class="bau-lid"><path d="M-40 -6 V-22 Q-40 -42 0 -42 Q40 -42 40 -22 V-6 Z" fill="url(#bWood)" stroke="#2a1608" stroke-width="2"/><path d="M-40 -16 H40" stroke="url(#bGold)" stroke-width="5"/></g></svg>`;
   }
   function abrirBau(premio, done) {
-    const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, cartas = premio.cartas || [];
+    closeSheet(); const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, cartas = premio.cartas || [];
     const ov = el(`<div class="bau-ov"><div class="bau-stage"><div class="bau-glow"></div><div class="bau-box">${bauSvg()}</div><div class="bau-prize"></div></div><button class="btn primary bau-ok" hidden>Continuar</button></div>`);
     document.body.appendChild(ov);
     const box = $('.bau-box', ov), prize = $('.bau-prize', ov), ok = $('.bau-ok', ov); let fim = false;
@@ -400,7 +458,7 @@
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
     const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b><span>A Besta, no núcleo da galáxia, protegida pelos 4 guardiões.</span></li></ul>
       <p class="hint">${BATALHAS.length} batalhas (${['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'boss'].map(k => contagem[k] + ' ' + TIPOS[k].nome.toLowerCase()).join(', ')}) e ${contagem.loja} lojas.</p>
-      <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Mapa no escuro: só o que está perto do boneco aparece</label>
+      <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Esconder o que ainda não foi liberado</label>
       <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="fim">Ver final</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste (etapa 1)</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto: todos os pontos liberados</label>
       <div class="row"><button class="btn sm" data-a="reset">Zerar vitórias</button><button class="btn sm primary" data-a="ok">Fechar</button></div></div>`);
     const m = U.modal(box, { cls: 'hs-modal' });
@@ -415,5 +473,5 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } });
   }
 
-  window.DSHistoria = { abrirBau, mount, show: hub, data: M, state: () => S };
+  window.DSHistoria = { duelar, abrirBau, mount, show: hub, data: M, state: () => S };
 })();

@@ -313,9 +313,12 @@
       const ids = shuffle(D.CARTAS.map(c => c.id), this.rand).slice(0, per * n);
       this.s.players = cfg.players.map((pc, i) => ({ pid: i, name: pc.name, bot: !!pc.bot, avatar: pc.avatar, diff: pc.diff, noSpecial: !!pc.noSpecial, pol: pc.pol, deck: [], reserve: [], prepared: [], alive: true }));
       const hands = []; let k = 0;
-      for (let i = 0; i < n; i++) hands.push(ids.slice(k, k += 7));
-      const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
-      for (let i = 0; i < n; i++) this.p(i).reserve = rest.slice(i * rs, (i + 1) * rs);
+      if (cfg.maos) { cfg.maos.forEach(m => hands.push(m.slice())); }   // modo história: mãos fixas (7 cartas por lado), sem reserva
+      else {
+        for (let i = 0; i < n; i++) hands.push(ids.slice(k, k += 7));
+        const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
+        for (let i = 0; i < n; i++) this.p(i).reserve = rest.slice(i * rs, (i + 1) * rs);
+      }
       await this.emit('setup', {});
       this.s.events = this.cfg.events === false ? {} : this.genEvents();
       this.s.initiator = Math.floor(this.rand() * n);   // sorteada antes da montagem: o jogador planeja a ordem sabendo quem inicia
