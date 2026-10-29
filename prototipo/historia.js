@@ -216,7 +216,7 @@
     const vis = new Set(NUCLEO); rev.forEach(i => { vis.add(i); BY[i].viz.forEach(v => vis.add(v)); });
     $$('.n', root).forEach(g => g.classList.toggle('fog', ocultar && !vis.has(g.dataset.id)));
     $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', ocultar && !(rev.has(a) || rev.has(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); });
-    lastVis = vis; if (NPC) NPC.paint(vis, ocultar);
+    lastVis = vis; if (NPC) NPC.paint(rev, ocultar);
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), av = available(n.id);

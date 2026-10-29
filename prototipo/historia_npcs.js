@@ -120,7 +120,7 @@
     return { x: .25 * a.x + .5 * cx + .25 * b.x, y: .25 * a.y + .5 * cy + .25 * b.y };
   }
   const ini1 = n => n.nome.replace(/^(Sra\.|Dra\.|Capitão|Capitã|Professor|Tio|Agente)\s+/, '')[0].toUpperCase();
-  function paint(vis, ocultar) {
+  function paint(vis, ocultar) {   // vis = pontos revelados (onde estou, vencidos, lojas): o NPC só aparece quando a ligação dele está visível
     if (!A || !S()) return; const g = A.$('#hsNpcs', A.root()); if (!g) return;
     if (!g.firstChild) {
       g.innerHTML = ALL.map(n => { const p = pos(n); return `<g class="npcm ${isCh(n) ? 'ch' : 'cq'}" data-id="${n.id}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" role="button" tabindex="0" aria-label="${A.esc(n.nome)}"><circle class="np-h" r="21"/><circle class="np-b" r="14"/><text class="np-t" y="5.5">${A.esc(ini1(n))}</text><g class="np-bang"><circle cx="12" cy="-12" r="8"/><text x="12" y="-8.5">!</text></g></g>`; }).join('');

@@ -149,7 +149,7 @@
         <div class="adm-f" style="margin-top:10px"><span class="hint" style="align-self:center">Trilhas:</span>
           <button class="btn sm" data-a="mus" data-v="menu">Ambiente do menu</button><button class="btn sm" data-a="mus" data-v="0">Partida · normal</button><button class="btn sm" data-a="mus" data-v="1">Partida · tensão</button><button class="btn sm" data-a="mus" data-v="2">Partida · clímax</button><button class="btn ghost sm" data-a="mus" data-v="stop">Parar</button></div>
         <div class="adm-f" style="margin-top:8px"><span class="hint" style="align-self:center">Modo História:</span>${[['mapa', 'Mapa'], ['batalha', 'Batalha'], ['arauto', 'Arauto'], ['guardiao', 'Guardião'], ['boss', 'Boss final'], ['intro', 'Abertura'], ['final', 'Final'], ['loja', 'Loja']].map(([k, n]) => `<button class="btn sm" data-a="mush" data-v="${k}">${n}</button>`).join('')}</div>
-        <p class="hint">Arauto e Guardião tocam a trilha de miniboss enquanto não houver o arquivo próprio (<code>musica/historia_arauto.mp3</code> e <code>musica/historia_guardiao.mp3</code>).</p>
+        <p class="hint">O Arauto tem trilha própria (<code>musica/historia_arauto.mp3</code>). O Guardião usa a trilha de miniboss até existir <code>musica/historia_guardiao.mp3</code>.</p>
         <p class="hint">A trilha da partida só toca com a música ligada nas opções. Na partida real, a tensão e o clímax duram um trecho e voltam ao normal.</p></section></div>`;
   }
   function openSounds() {

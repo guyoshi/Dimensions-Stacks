@@ -1,4 +1,15 @@
-# Boss final em 3 fases: PROPOSTA (aguarda aprovação)
+# Boss final em 3 fases: IMPLEMENTADO (atualizado em 29/10/2026)
+
+## Estado implementado (substitui as sugestões abaixo onde divergirem)
+- **Aprovado:** 3 fases, baralho novo da Besta a cada fase, o jogador recomeça cada fase com as mesmas 30 cartas (8 da União + 22), Chamados da União com 1 slot próprio (máx. 1 Chamado + 1 habilidade por rodada).
+- **Besta por fase:** 16 / 22 / 28 cartas (a Besta + as mais fortes, sorteadas) e bônus extra de 0 / 6 / 12 em todos os atributos, **além de +30 por guardião vivo** (regra intencional: obriga a vencer os 4 guardiões). A calibragem de 30/30/40 cartas foi substituída por esta, ajustada por simulação.
+- **Simulação (jogador CPU difícil, 20 partidas por cenário, motor real):** com os 4 guardiões derrotados, vitória de 40% (8 da União + 30 melhores) e 45% (4 da União + 20 melhores). Com os 4 guardiões vivos, 0% (a Besta ganha +120). Os 4 guardiões formam o "selo de contenção" do jogo.
+- **Fase 1 (Cerco):** Movimentos da Besta como descritos abaixo, anunciados com a rodada de antecedência. **Fase 2 (Agilidade)** e **Fase 3 (Buraco negro)** como descritas.
+- **Pendente:** o +5 da União completa (planejado com aura dourada) não está ligado na luta contra o Boss.
+- Cartas da Besta ganham aura de magia corrompida; fundo e trilha próprios do Boss.
+- Perguntas 1 a 3 abaixo ficaram respondidas assim: número de cartas por fase conforme acima; cartas da União capturadas podem ser perdidas (Jennifer recupera uma); Chamado vale também com a União incompleta.
+
+---
 
 Base: você entra com 30 cartas (as 8 da União + 22 melhores) e organiza a ordem. As cartas da Besta têm aura roxa-negra. Habilidades da União usam a mecânica de **preparar especial** que já existe (carta do topo vai para um slot, máx. 2), com regra própria aqui: ao usar o Chamado a carta **volta ao fundo do baralho** (não vai ao Buraco Negro). A Besta **anuncia o Movimento da rodada seguinte** (aviso na tela), então é preciso ter o Chamado certo preparado na hora certa.
 

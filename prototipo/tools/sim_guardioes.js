@@ -1,5 +1,5 @@
 // Simulação dos 4 guardiões (jogador = bot difícil com as melhores cartas disponíveis; guardiões = bots difíceis com baralhos épicos/lendários).
-// Uso: node tools/sim_guardioes.js [partidas] [N jogador] [M guardião]
+// Uso: node tools/sim_guardioes.js [partidas] [N jogador] [M guardião]  (env: RAR=comum WEAK=1 deck fraco; MM=2,1 tamanhos por guardião no G1)
 const E = require('../engine.js'); const D = global.DS_DATA || globalThis.DS_DATA || (require('../data.js'), globalThis.DS_DATA);
 const AT = ['pod', 'def', 'int', 'vel'], sum = c => AT.reduce((t, a) => t + c.stats[a], 0), pw = c => sum(c) + 16 * Math.max(...AT.map(a => c.stats[a]));
 const NU = D.CARTAS.filter(c => !c.uniao && c.id !== 'S11').sort((a, b) => pw(b) - pw(a)), UN = D.CARTAS.filter(c => c.uniao);
@@ -15,7 +15,7 @@ async function jogo(id, k, N, M, P) {
   const R = rngF(900 + k * 7), pick = (a, n) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b.slice(0, n); };
   const dono = P.nuniao != null ? pick(UN.map(c => c.id), P.nuniao) : P.uniao ? UN.map(c => c.id) : []; const mao = dono.concat(NU.slice(P.off || 0, (P.off || 0) + (P.pool || 30)).map(c => c.id)).sort((a, b) => pw(D.CARTAS.find(c => c.id === b)) - pw(D.CARTAS.find(c => c.id === a))).slice(0, N);
   const used = new Set(mao), RARO = r => D.CARTAS.filter(c => !c.uniao && c.id !== 'S11' && c.raridade === r && !used.has(c.id));
-  const deckG = (ix) => { const d = []; const av = (process.env.AVS || '').split(',')[ix || 0]; if (av) { d.push(av); used.add(av); } const rec = ['rara'].concat(Array(3).fill('epica'), Array(3).fill('lendaria')); for (let i = d.length; i < M; i++) { const r = process.env.RAR ? process.env.RAR : i < 1 ? 'rara' : i % 2 ? 'epica' : 'lendaria'; const c = process.env.WEAK ? RARO(r).filter(x => !d.includes(x.id)).sort((x, y) => sum(x) - sum(y))[Math.floor(R() * 6)] : pick(RARO(r).filter(x => !d.includes(x.id)), 1)[0]; if (c) { d.push(c.id); used.add(c.id); } } return d; };
+  const deckG = (ix) => { const d = []; const av = (process.env.AVS || '').split(',')[ix || 0]; if (av) { d.push(av); used.add(av); } const rec = ['rara'].concat(Array(3).fill('epica'), Array(3).fill('lendaria')); const MK = (process.env.MM || '').split(',')[ix || 0] ? +(process.env.MM || '').split(',')[ix || 0] : M; for (let i = d.length; i < MK; i++) { const r = process.env.RAR ? process.env.RAR : i < 1 ? 'rara' : i % 2 ? 'epica' : 'lendaria'; const c = process.env.WEAK ? RARO(r).filter(x => !d.includes(x.id)).sort((x, y) => sum(x) - sum(y))[Math.floor(R() * 6)] : pick(RARO(r).filter(x => !d.includes(x.id)), 1)[0]; if (c) { d.push(c.id); used.add(c.id); } } return d; };
   const g1 = deckG(0), g2 = id === 'G1' ? deckG(1) : null;
   const players = [{ name: 'Você', bot: true, diff: P.diff || 'dificil' }, { name: 'G1', bot: true, diff: 'dificil' }].concat(g2 ? [{ name: 'G2', bot: true, diff: 'dificil' }] : []);
   let exp = null, err = null;
