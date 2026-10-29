@@ -431,15 +431,16 @@
   function escolher7(bat, ok, opt) {   // o jogador escolhe as cartas do duelo (7, ou menos em alguns eventos)
     opt = opt || {}; if (opt.so && !(S.owned || []).some(c => (U.CARDS[c] || {}).raridade === opt.so)) opt = { n: opt.n }; const N = opt.n || 7;   // sem carta da raridade pedida: vale a melhor
     const todas = (S.owned || []).concat(alugadas().filter(c => !(S.owned || []).includes(c))).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
-    if (todas.length <= N && !fadigaOn()) { ok(todas.slice(0, N)); return; }
+    const NN = Math.min(N, todas.length);   // sem cartas suficientes, o time completo é o que há
     const livres = () => todas.filter(id => !fadigaOn() || !fad(id));
-    const box = el(`<div class="hs-esc"><h3>Escolha ${opt.livre ? 'até ' : ''}${N} ${N === 1 ? 'carta' : 'cartas'}${opt.so ? ' lendária' : ''}</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
+    const box = el(`<div class="hs-esc"><h3>Seu time${opt.so ? ' (lendária)' : ''}</h3><div class="hs-deck"></div><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Iniciar</button></div></div>`);
     const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), msg = $('.hs-msg', box), go = $('[data-a=go]', box);
     const sel = new Set(); let forcadas = new Set(); const F = filtros(() => { montar(); upd(); }); g.before(F.bar);
     const auto = () => { sel.clear(); forcadas = new Set(); (opt.prefer || []).filter(x => todas.includes(x) && (!fadigaOn() || !fad(x))).forEach(x => sel.add(x)); const L = livres(); L.slice(0, N).forEach(x => { if (sel.size < N) sel.add(x); });
       if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
     const montar = () => { g.innerHTML = ''; todas.filter(F.ok).forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
-    const upd = () => { cnt.textContent = sel.size + ' / ' + N; go.disabled = opt.livre ? !sel.size : sel.size !== N; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
+    const upd = () => { cnt.textContent = sel.size + ' / ' + (opt.livre ? 'até ' : '') + N; go.disabled = opt.livre ? !sel.size : sel.size !== NN;
+      const dk = $('.hs-deck', box), cwD = N > 10 ? 34 : N > 8 ? 40 : 48; dk.innerHTML = ''; [...sel].forEach(id => { const w = el('<div class="hs-escc on" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cwD })); dk.append(w); }); for (let q = sel.size; q < Math.min(N, 40); q++) dk.append(el('<span class="hs-slot" style="width:' + cwD + 'px;height:' + Math.round(cwD * 1.5) + 'px"></span>')); $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
       msg.textContent = forcadas.size ? forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa cansada para descansar (' + CUSTO_DESC + ' por ponto).' : ''; };
     auto(); montar();
     const m = U.modal(box, { cls: 'hs-modal' });
@@ -453,7 +454,7 @@
         SND.play('tick'); forcadas.delete(id); if (sel.has(id)) sel.delete(id); else if (sel.size < N) sel.add(id); upd(); return; }
       if (!b) return; SND.play('click');
       if (b.dataset.a === 'melhores') { auto(); upd(); }
-      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && (opt.livre ? sel.size > 0 : sel.size === N)) { m.close(); ok(todas.filter(x => sel.has(x))); }
+      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && (opt.livre ? sel.size > 0 : sel.size === NN)) { m.close(); ok(todas.filter(x => sel.has(x))); }
     };
     upd();
   }

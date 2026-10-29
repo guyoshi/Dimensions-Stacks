@@ -1770,3 +1770,5 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 .hs-fr button { flex: 0 0 auto; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: #ffffff0a; color: var(--ink2); font: 700 12.5px var(--f-body); cursor: pointer; }
 .hs-fr button.on { background: var(--prism); color: #fff; border-color: transparent; }
 .hs-fil select { background: #0a0820; color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font: inherit; font-size: 13px; }
+.hs-deck { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 6px; border-radius: 12px; background: #ffffff08; border: 1px dashed #ffffff22; max-height: 30vh; overflow-y: auto; }
+.hs-deck .hs-escc { padding: 1px; cursor: pointer; } .hs-slot { border-radius: 6px; border: 1px dashed #ffffff30; display: block; }
