@@ -35,9 +35,20 @@ try:
     pg.click('.mg-x') if not pg.query_selector('.mg-ok') else None; fim('culpado', 'jogado')
     # jogos de toque jogados de verdade
     start('maiormenor')
-    for _ in range(8): pg.click('[data-v=m]'); pg.wait_for_timeout(1050)
-    r = fim('maiormenor', 'jogado'); chk(r['detail'].endswith('acertos'), 'maior/menor contou 8 rodadas')
-    start('caracoroa'); pg.click('[data-l="0"]'); pg.wait_for_timeout(1900); fim('caracoroa', 'jogado') if pg.query_selector('.mg-ok') else (pg.click('[data-a=stop]'), fim('caracoroa', 'parou'))
+    for _ in range(3):
+        if pg.query_selector('.mg-ok'): break
+        pg.click('.mg-porta', force=True); pg.wait_for_timeout(1300)
+    fim('maiormenor', 'portas jogadas')
+    start('caracoroa'); pg.wait_for_function("document.querySelector('#mq') && document.querySelector('#mq').textContent === 'Sua vez'", timeout=6000)
+    chk(pg.evaluate("document.querySelectorAll('.mg-cell.elo').length") == 4, 'sons: 4 instrumentos'); pg.click('.mg-x'); fim('caracoroa', 'sequência')
+    start('ordem')
+    for _ in range(8):
+        if pg.query_selector('.mg-ok'): break
+        pg.click('.mg-grid .mg-cell', force=True); pg.wait_for_timeout(750)
+    fim('ordem', 'agilidade jogada')
+    start('gancho'); pg.wait_for_timeout(1500)
+    for _ in range(4): pg.evaluate("[...document.querySelectorAll('.sim')].forEach(b => b.dataset.k && b.click())"); pg.wait_for_timeout(300)
+    pg.click('.mg-x'); fim('gancho', 'símbolos')
     start('raspadinha')
     for k in range(3): pg.click('.mg-cell.scr:not(.open)'); pg.wait_for_timeout(120)
     fim('raspadinha', 'jogado')
@@ -48,12 +59,8 @@ try:
         if pg.query_selector('.mg-ok'): break
     fim('cofre', 'jogado')
     start('memoria'); cells = pg.query_selector_all('.mg-cell'); chk(len(cells) == 12, 'memória: 12 cartas'); pg.click('.mg-x'); fim('memoria', 'abandono')
-    # mineração: toca 8 vezes (pode acordar a Besta antes)
-    start('mineracao')
-    for _ in range(8):
-        if pg.query_selector('.mg-ok'): break
-        pg.click('.mg-hit', force=True); pg.wait_for_timeout(520)
-    fim('mineracao', 'jogado')
+    start('mineracao'); chk(pg.evaluate("!!document.querySelector('canvas.mg-cv')"), 'contágio: canvas'); pg.wait_for_timeout(1500)
+    bx = pg.query_selector('canvas.mg-cv').bounding_box(); pg.mouse.move(bx['x'] + 50, bx['y'] + 50); pg.mouse.down(); pg.mouse.move(bx['x'] + 150, bx['y'] + 150); pg.mouse.up(); pg.click('.mg-x'); fim('mineracao', 'contágio')
     # painel de calibragem
     pg.evaluate("window.DSMini.setCfg('cofre', {premios:[0,1,2,3], dif:1.5})"); c = pg.evaluate("window.DSMini.cfg('cofre')"); chk(c['premios'] == [0, 1, 2, 3] and c['dif'] == 1.5, 'calibragem salva')
     st = pg.evaluate("window.DSMini.stats()"); chk(st['cofre']['n'] >= 2, 'registro de resultados: %d' % st['cofre']['n'])
