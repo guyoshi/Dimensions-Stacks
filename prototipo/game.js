@@ -746,6 +746,11 @@
         $('.cardbox', node).append(cardEl(top, { up: true, noanim: true, cw: Math.min(96, V.cw || 96) }));
         const v = await ask(node, '[data-v]'); if (v === 'n') V.noPrep[p.pid] = true; return v === '1';
       },
+      async bet(p) {   // modo história, evento Aposta: 1 pêndulo antes de cada rodada
+        const A = G.cfg.historia && G.cfg.historia.aposta; if (!A || p.bot || A.saldo() < 1) return false;
+        const node = el(`<div class="sheet"><div class="txt"><h3>Aposta: 1 pêndulo?</h3><div class="hint">Vencer a rodada paga 2; perder custa 1; empate devolve. Você tem <b>${A.saldo()}</b>.</div><div class="row"><button class="btn primary sm" data-v="1">Apostar 1</button><button class="btn sm" data-v="0">Passar</button></div></div></div>`);
+        const v = await ask(node, '[data-v]'); if (v === '1') { A.paga(); return true; } return false;
+      },
       attr(p, entry, options, combat, canPrep) {   // modo história: Pressa cósmica (3 s) e Contagem final (5 s, −0,3 s por rodada)
         const rg = G.cfg.regra, sec = rg && rg.id === 'pressa' ? 3 : rg && rg.id === 'contagem' ? Math.max(1.5, 5 - 0.3 * (G.s.round - 1)) : 0;
         if (!sec || p.bot) return this.attr0(p, entry, options, combat, canPrep);
@@ -888,7 +893,7 @@
         let arr = hand.slice(), sel = -1, last = 0;
         const ov = el(`<div class="order"><div><h2 style="color:var(--gold2)">${esc(p.name)}: ${rf ? 'reordene as cartas da reserva' : 'monte seu baralho'}</h2>
           <div class="hint">${rf ? 'Seu baralho acabou: estas cartas vieram da reserva. ' : ''}<b>Arraste</b> as cartas para reordenar; toque numa carta para ver os detalhes. A carta <b>nº 1</b> é a primeira a entrar em disputa.${st != null ? `<br>Iniciativa: <b>${esc(seq)}</b>. <i class="ini">★</i> = disputa em que você inicia (declara o atributo).` : ''}</div></div>
-          ${(() => { const rg = G.cfg.regra, ab = rg && (rg.id === 'abertas' || rg.id === 'clarividente') && !rf && G.cfg.maos ? G.cfg.maos.slice(1).flat() : null; return ab ? `<div class="hint" style="margin-top:4px"><b>Cartas do inimigo</b> (na ordem em que entram)</div><div class="row abertas" style="justify-content:center;flex-wrap:wrap;gap:3px">${ab.map(c => `<span data-c="${c}"></span>`).join('')}</div>` : ''; })()}
+          ${(() => { const rg = G.cfg.regra, ab = rg && (rg.id === 'abertas' || rg.id === 'clarividente' || rg.id === 'espelho' || rg.id === 'memoria') && !rf && G.cfg.maos ? G.cfg.maos.slice(1).flat() : null; return ab ? `<div class="hint" style="margin-top:4px"><b>Cartas do inimigo</b> (na ordem em que entram)</div><div class="row abertas" style="justify-content:center;flex-wrap:wrap;gap:3px">${ab.map(c => `<span data-c="${c}"></span>`).join('')}</div>` : ''; })()}
           <div class="grid"></div><div class="info"></div>
           <div class="row" style="justify-content:center"><button class="btn sm" data-a="best">Melhores primeiro</button><button class="btn sm" data-a="mix">Embaralhar</button>${!rf && o && o.reserve && o.reserve.length ? `<button class="btn sm" data-a="res">Ver reserva (${o.reserve.length})</button>` : ''}</div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="ok">Confirmar ordem ▶</button></div></div>`);

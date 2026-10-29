@@ -260,6 +260,7 @@
       const bc = this.cfg.bonusCards; if (bc && pid === bc.pid && bc.cards.includes(card)) AID.forEach(k => chg(k, bc.val));   // União completa contra a Besta: +5 em tudo
       if (rg === 'invertidos') { const o = Object.assign({}, st); chg('pod', o.def - o.pod); chg('def', o.pod - o.def); chg('int', o.vel - o.int); chg('vel', o.int - o.vel); }   // ATQ↔DEF e INT↔VEL
       else if (rg === 'mare') chg('def', 15);
+      else if (rg === 'dupla') { const a = Math.round((st.pod + st.def) / 2), b = Math.round((st.int + st.vel) / 2); chg('pod', a - st.pod); chg('def', a - st.def); chg('int', b - st.int); chg('vel', b - st.vel); }   // Dupla soma: cada atributo vale a média do par
       else if (rg === 'sobrecarga' && this.s.fortes && this.s.fortes.has(card)) chg('vel', -20);
       else if (rg === 'solar' && this.s.round % 3 === 0) AID.forEach(k => chg(k, -10));
       if (!ev) return { st, mark: Object.keys(m).length ? m : null };
@@ -327,6 +328,7 @@
         const rest = ids.slice(k); const rs = n ? Math.floor(rest.length / n) : 0;
         for (let i = 0; i < n; i++) this.p(i).reserve = rest.slice(i * rs, (i + 1) * rs);
       }
+      hands.forEach((h, i) => h.forEach(c => { if (isClone(c)) { regClone(c); this.s.clones[c] = { owner: i }; } }));   // Espelho: o inimigo joga com cópias das suas cartas
       await this.emit('setup', {});
       this.s.events = this.cfg.events === false ? {} : this.genEvents();
       this.s.initiator = Math.floor(this.rand() * n);   // sorteada antes da montagem: o jogador planeja a ordem sabendo quem inicia
@@ -511,6 +513,12 @@
       const val = e => e.stats[e.attr] + e.bonus;
       const aw = es.find(e => e.autoWin); if (aw) return { winners: [aw], tie: false, none: false, top: val(aw) };
       if (this.rg === 'tregua' && this.s.round === 1) { if (!combat.treguaLog) { combat.treguaLog = 1; if (!quiet) this.log('Trégua: nada é capturado na primeira rodada.', 'rodada'); } return { winners: [], tie: false, none: true, top: 0 }; }
+      if (this.rg === 'maioria') {   // Maioria vence: comparam-se os quatro atributos; vence quem ganhar em mais deles (empate: soma dos quatro)
+        const v = (x, a) => x.stats[a] + (x.attr === a ? x.bonus : 0), cnt = x => AID.filter(a => es.every(o => o === x || v(x, a) > v(o, a))).length, sc = new Map(es.map(x => [x, cnt(x)])), best = Math.max(...sc.values());
+        let pool = es.filter(x => sc.get(x) === best), tie = false, tb = null;
+        if (pool.length > 1) { tb = { stage: 1, inv: false, top: best, list: pool.map(x => ({ pid: x.pid, v: sum4(x.stats) })), rows: pool.map(x => ({ pid: x.pid, card: x.card, stats: Object.assign({}, x.stats) })) }; const b2 = Math.max(...pool.map(x => sum4(x.stats))); pool = pool.filter(x => sum4(x.stats) === b2); if (pool.length > 1) tie = true; }
+        return { winners: pool, tie, none: false, top: val(pool[0]), tb };
+      }
       const alvo = this.rg === 'meio' ? 50 : this.rg === 'alvo' ? combat.alvo : null;
       if (alvo != null) {   // vence o valor mais próximo do alvo (50 no Meio-termo; sorteado no Alvo do dia)
         const dist = e => Math.abs(val(e) - alvo), best = Math.min(...es.map(dist)); let pool = es.filter(e => dist(e) === best), tie = false, tb = null;
@@ -655,9 +663,11 @@
         else if (this.rg === 'unico') combat.ctl.universal = this.rgp.attr;
         else if (this.rg === 'rodizio') combat.ctl.universal = AID[this.s.combats % AID.length];
         else if (this.rg === 'alvo') { combat.alvo = 30 + Math.floor(this.rand() * 41); this.log(`Alvo do dia: vence o valor mais próximo de ${combat.alvo}.`, 'rodada'); }
-        else if (this.rg === 'estelar') combat.ctl.fog = { pid: -1 };
+        else if (this.rg === 'estelar' || this.rg === 'memoria') combat.ctl.fog = { pid: -1 };
+        else if (this.rg === 'maioria') combat.ctl.universal = 'pod';
         combat.rgInfo = this.rg === 'alvo' ? { alvo: combat.alvo } : null;
       }
+      if (this.rg === 'aposta') { const p0 = this.p(0); combat.bet = false; if (p0 && !p0.bot && p0.alive && this.io.bet) combat.bet = !!(await this.io.bet(p0, { round: this.s.round })); }   // Aposta: 1 pêndulo por rodada
       await this.emit('combatStart', { initiator: init, round: this.s.round });
       if (blocked) { this.log(`Bloqueio Dimensional: ${ATTR[blocked].nome} está bloqueado nesta disputa.`, 'rodada'); await this.emit('eventFx', { id: 'bloqueio', attr: blocked }); }
       // 1) preparação dos bots [PROPOSTA]
@@ -929,6 +939,7 @@
       }
       combat.result = result; combat.moves = moves; this.memResolved(moves);
       let calc = null; try { calc = this.calcSummary(combat, ev, result); } catch (err) { calc = null; }
+      if (combat.bet) { const r = result.winnerPid === 0 ? 'win' : result.winnerPid == null ? 'tie' : 'lose', A = this.cfg.historia && this.cfg.historia.aposta; if (A && A.resolve) A.resolve(r); this.log(r === 'win' ? 'Aposta vencida: +2 pêndulos.' : r === 'tie' ? 'Empate: a aposta é devolvida.' : 'Aposta perdida: −1 pêndulo.', 'efeito'); }
       await this.emit('resolved', { combat, result, moves, calc });
     }
     // resumo público da disputa (para "Ver cálculo"): valores, bônus por origem, anulações e desempate

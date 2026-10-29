@@ -1602,3 +1602,4 @@ button.hs-pill { font: inherit; color: inherit; cursor: pointer; }
 .hs-preco { position: absolute; left: 0; right: 0; bottom: 3px; text-align: center; font-size: 12px; font-weight: 800; color: var(--gold2); text-shadow: 0 1px 3px #000; pointer-events: none; }
 .hs-item.got { opacity: .35; }
 .hs-mc .hs-escc, .hs-loja .hs-escc { opacity: 1; outline-color: transparent; } .hs-mc .hs-escc.tired { opacity: .45; }
+.hs-bro { color: var(--gold2); } .hs-bro .ci { color: var(--gold); }

@@ -247,22 +247,48 @@
   },
   {
    "id": "B080",
-   "tipo": "evento",
+   "tipo": "miniboss",
    "regiao": 3,
    "lado": "cima",
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "X",
-     "avatar": "M11",
+     "nome": "Alveris Polar",
+     "avatar": "J25",
      "cartas": [
-      "V18",
-      "J13",
-      "M06",
+      "D16",
+      "D10",
+      "J36",
+      "J37",
+      "J08",
+      "D01",
+      "J25"
+     ]
+    },
+    {
+     "nome": "Raukhar",
+     "avatar": "J32",
+     "cartas": [
+      "J27",
+      "V08",
       "J07",
+      "J09",
+      "J01",
+      "D04",
+      "J32"
+     ]
+    },
+    {
+     "nome": "Daryon Polar",
+     "avatar": "J10",
+     "cartas": [
+      "J24",
+      "V14",
       "J30",
-      "S04",
-      "M11"
+      "J15",
+      "S15",
+      "D04",
+      "J10"
      ]
     }
    ],
@@ -271,35 +297,22 @@
   },
   {
    "id": "B081",
-   "tipo": "miniboss",
-   "regiao": 3,
+   "tipo": "evento",
+   "regiao": 2,
    "lado": "baixo",
-   "tema": "Spacetheft",
+   "tema": "Viajantes Dimensionais",
    "inimigos": [
     {
-     "nome": "A Engenheira",
-     "avatar": "S16",
+     "nome": "Banjo Lins",
+     "avatar": "V03",
      "cartas": [
-      "S12",
-      "V13",
-      "S03",
-      "S15",
-      "S02",
-      "S09",
-      "S16"
-     ]
-    },
-    {
-     "nome": "A Engenheira",
-     "avatar": "S16",
-     "cartas": [
-      "S18",
-      "J06",
-      "S05",
-      "S04",
-      "J01",
-      "D12",
-      "S16"
+      "V19",
+      "V16",
+      "V23",
+      "M06",
+      "M07",
+      "M12",
+      "V03"
      ]
     }
    ],
@@ -417,48 +430,22 @@
   },
   {
    "id": "B086",
-   "tipo": "miniboss",
+   "tipo": "evento",
    "regiao": 3,
    "lado": "cima",
    "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Alveris Polar",
-     "avatar": "J25",
+     "nome": "X",
+     "avatar": "M11",
      "cartas": [
-      "D16",
-      "D10",
-      "J36",
-      "J37",
-      "J08",
-      "D01",
-      "J25"
-     ]
-    },
-    {
-     "nome": "Raukhar",
-     "avatar": "J32",
-     "cartas": [
-      "J27",
-      "V08",
+      "V18",
+      "J13",
+      "M06",
       "J07",
-      "J09",
-      "J01",
-      "D04",
-      "J32"
-     ]
-    },
-    {
-     "nome": "Daryon Polar",
-     "avatar": "J10",
-     "cartas": [
-      "J24",
-      "V14",
       "J30",
-      "J15",
-      "S15",
-      "D04",
-      "J10"
+      "S04",
+      "M11"
      ]
     }
    ],
@@ -491,48 +478,22 @@
   },
   {
    "id": "B088",
-   "tipo": "miniboss",
-   "regiao": 3,
+   "tipo": "evento",
+   "regiao": 2,
    "lado": "esq",
-   "tema": "Diário Sobrenatural",
+   "tema": "Ciclo de Jesed",
    "inimigos": [
     {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
+     "nome": "Kaelina Polar",
+     "avatar": "J08",
      "cartas": [
-      "D14",
-      "V13",
-      "D08",
-      "D05",
-      "D04",
-      "D12",
-      "D07"
-     ]
-    },
-    {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
-     "cartas": [
-      "D15",
-      "V12",
-      "D18",
-      "D01",
-      "D04",
-      "D12",
-      "D07"
-     ]
-    },
-    {
-     "nome": "Ingrid Marques",
-     "avatar": "D07",
-     "cartas": [
-      "D02",
-      "D09",
-      "J04",
-      "D05",
-      "D12",
-      "V06",
-      "D07"
+      "J29",
+      "J13",
+      "J24",
+      "M06",
+      "J05",
+      "J36",
+      "J08"
      ]
     }
    ],
@@ -914,22 +875,35 @@
   },
   {
    "id": "B057",
-   "tipo": "evento",
-   "regiao": 2,
+   "tipo": "miniboss",
+   "regiao": 3,
    "lado": "dir",
-   "tema": "Viajantes Dimensionais",
+   "tema": "Spacetheft",
    "inimigos": [
     {
-     "nome": "Banjo Lins",
-     "avatar": "V03",
+     "nome": "A Engenheira",
+     "avatar": "S16",
      "cartas": [
-      "V19",
-      "V16",
-      "V23",
-      "M06",
-      "M07",
-      "M12",
-      "V03"
+      "S12",
+      "V13",
+      "S03",
+      "S15",
+      "S02",
+      "S09",
+      "S16"
+     ]
+    },
+    {
+     "nome": "A Engenheira",
+     "avatar": "S16",
+     "cartas": [
+      "S18",
+      "J06",
+      "S05",
+      "S04",
+      "J01",
+      "D12",
+      "S16"
      ]
     }
    ],
@@ -1208,22 +1182,48 @@
   },
   {
    "id": "B066",
-   "tipo": "evento",
-   "regiao": 2,
+   "tipo": "miniboss",
+   "regiao": 3,
    "lado": "cima",
-   "tema": "Ciclo de Jesed",
+   "tema": "Diário Sobrenatural",
    "inimigos": [
     {
-     "nome": "Kaelina Polar",
-     "avatar": "J08",
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
      "cartas": [
-      "J29",
-      "J13",
-      "J24",
-      "M06",
-      "J05",
-      "J36",
-      "J08"
+      "D14",
+      "V13",
+      "D08",
+      "D05",
+      "D04",
+      "D12",
+      "D07"
+     ]
+    },
+    {
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
+     "cartas": [
+      "D15",
+      "V12",
+      "D18",
+      "D01",
+      "D04",
+      "D12",
+      "D07"
+     ]
+    },
+    {
+     "nome": "Ingrid Marques",
+     "avatar": "D07",
+     "cartas": [
+      "D02",
+      "D09",
+      "J04",
+      "D05",
+      "D12",
+      "V06",
+      "D07"
      ]
     }
    ],

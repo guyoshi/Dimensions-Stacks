@@ -1,6 +1,6 @@
 {
  "v": 1,
- "aviso": "Etapa 3 aplicada (tools/atribuir_eventos_historia.py). Só regras já implementadas no motor; as demais ficam para os próximos lotes.",
+ "aviso": "Lotes 1 e 2 aplicados (atribuir_eventos_historia.py + atribuir_eventos_lote2.py): 35 regras no motor.",
  "convertidos": [
   "B007",
   "B008",
@@ -38,188 +38,185 @@
   "B092"
  ],
  "eventos": {
-  "B080": {
-   "id": "davi"
+  "B099": {
+   "id": "maioria"
+  },
+  "B075": {
+   "id": "sobrecarga"
+  },
+  "B082": {
+   "id": "dupla"
+  },
+  "B083": {
+   "id": "alvo"
+  },
+  "B087": {
+   "id": "espelho"
   },
   "B089": {
    "id": "clarividente"
   },
-  "B066": {
-   "id": "contagem"
+  "B090": {
+   "id": "troca"
   },
-  "B057": {
-   "id": "alvo"
+  "B091": {
+   "id": "memoria"
   },
-  "B058": {
-   "id": "magnetico"
+  "B092": {
+   "id": "maioria"
   },
-  "B055": {
-   "id": "desvantagem"
-  },
-  "B052": {
-   "id": "sobrecarga"
+  "B042": {
+   "id": "curto"
   },
   "B044": {
    "id": "troca"
   },
-  "B070": {
-   "id": "solar"
+  "B047": {
+   "id": "memoria"
   },
-  "B048": {
-   "id": "pressa"
-  },
-  "B033": {
-   "id": "limite",
-   "n": 15
-  },
-  "B017": {
-   "id": "abertas"
-  },
-  "B045": {
-   "id": "unico",
-   "attr": "def"
-  },
-  "B049": {
-   "id": "horda"
-  },
-  "B008": {
-   "id": "tregua"
-  },
-  "B056": {
-   "id": "reforcos"
-  },
-  "B069": {
-   "id": "arsenal"
-  },
-  "B034": {
-   "id": "estelar"
-  },
-  "B011": {
-   "id": "avesso"
-  },
-  "B020": {
-   "id": "meio"
-  },
-  "B019": {
-   "id": "invertidos"
-  },
-  "B023": {
-   "id": "proibido",
-   "attr": "pod"
-  },
-  "B035": {
-   "id": "rodizio"
-  },
-  "B043": {
-   "id": "curto"
-  },
-  "B036": {
-   "id": "aleatoria"
-  },
-  "B025": {
-   "id": "mare"
-  },
-  "B007": {
-   "id": "morte",
-   "n": 3
-  },
-  "B022": {
-   "id": "silencio"
-  },
-  "B010": {
-   "id": "limite",
-   "n": 15
+  "B052": {
+   "id": "aposta"
   },
   "B053": {
    "id": "morte",
    "n": 3
   },
-  "B083": {
-   "id": "alvo"
+  "B054": {
+   "id": "desvantagem"
   },
-  "B099": {
+  "B055": {
+   "id": "desvantagem"
+  },
+  "B056": {
    "id": "reforcos"
   },
-  "B029": {
-   "id": "silencio"
+  "B058": {
+   "id": "magnetico"
+  },
+  "B061": {
+   "id": "dupla"
+  },
+  "B063": {
+   "id": "solar"
   },
   "B065": {
    "id": "unico",
    "attr": "int"
   },
-  "B091": {
-   "id": "magnetico"
-  },
-  "B013": {
-   "id": "pressa"
-  },
-  "B061": {
-   "id": "horda"
-  },
-  "B082": {
+  "B069": {
    "id": "arsenal"
   },
-  "B012": {
-   "id": "meio"
-  },
-  "B063": {
+  "B070": {
    "id": "solar"
-  },
-  "B090": {
-   "id": "troca"
-  },
-  "B024": {
-   "id": "estelar"
-  },
-  "B077": {
-   "id": "avesso"
-  },
-  "B087": {
-   "id": "aleatoria"
-  },
-  "B027": {
-   "id": "mare"
-  },
-  "B047": {
-   "id": "abertas"
-  },
-  "B075": {
-   "id": "sobrecarga"
-  },
-  "B037": {
-   "id": "invertidos"
-  },
-  "B042": {
-   "id": "curto"
-  },
-  "B092": {
-   "id": "proibido",
-   "attr": "vel"
-  },
-  "B031": {
-   "id": "rodizio"
-  },
-  "B054": {
-   "id": "desvantagem"
-  },
-  "B005": {
-   "id": "tregua"
   },
   "B076": {
    "id": "contagem"
   },
+  "B077": {
+   "id": "espelho"
+  },
   "B001": {
    "id": "aleatoria"
   },
-  "B050": {
+  "B005": {
+   "id": "tregua"
+  },
+  "B007": {
+   "id": "relogio"
+  },
+  "B008": {
+   "id": "tregua"
+  },
+  "B010": {
+   "id": "limite",
+   "n": 15
+  },
+  "B011": {
+   "id": "avesso"
+  },
+  "B012": {
+   "id": "meio"
+  },
+  "B013": {
    "id": "pressa"
   },
-  "B038": {
+  "B017": {
+   "id": "abertas"
+  },
+  "B019": {
+   "id": "invertidos"
+  },
+  "B020": {
+   "id": "meio"
+  },
+  "B022": {
    "id": "silencio"
+  },
+  "B023": {
+   "id": "proibido",
+   "attr": "pod"
+  },
+  "B024": {
+   "id": "estelar"
+  },
+  "B025": {
+   "id": "mare"
+  },
+  "B027": {
+   "id": "mare"
+  },
+  "B029": {
+   "id": "emprestado"
   },
   "B030": {
    "id": "morte",
    "n": 3
+  },
+  "B031": {
+   "id": "rodizio"
+  },
+  "B033": {
+   "id": "aposta"
+  },
+  "B034": {
+   "id": "estelar"
+  },
+  "B035": {
+   "id": "rodizio"
+  },
+  "B036": {
+   "id": "aleatoria"
+  },
+  "B037": {
+   "id": "invertidos"
+  },
+  "B038": {
+   "id": "silencio"
+  },
+  "B043": {
+   "id": "curto"
+  },
+  "B045": {
+   "id": "unico",
+   "attr": "def"
+  },
+  "B048": {
+   "id": "relogio"
+  },
+  "B049": {
+   "id": "horda"
+  },
+  "B050": {
+   "id": "pressa"
+  },
+  "B086": {
+   "id": "davi"
+  },
+  "B081": {
+   "id": "emprestado"
+  },
+  "B088": {
+   "id": "contagem"
   }
  }
 }
