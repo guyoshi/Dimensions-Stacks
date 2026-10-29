@@ -241,7 +241,8 @@
     genEvents() {
       // distância entre fenômenos: 2 (um sim, um não, um sim), 3 ou 4 rodadas, com chance igual (média 3 = 1/3 das rodadas); nunca em rodadas seguidas
       const rng = mkRng((this.cfg.seed ^ 0x5eed) >>> 0), out = {}; let last = null, usedBH = false, r = 2 + Math.floor(rng() * 3);
-      for (; r <= 80; r += 2 + Math.floor(rng() * 3)) {
+      const todas = !!this.cfg.evTodas; if (todas) r = 1;   // guardião G4: um fenômeno diferente em toda disputa
+      for (; r <= 80; r += todas ? 1 : 2 + Math.floor(rng() * 3)) {
         const ws = EV_PESOS.filter(([id]) => id !== last && !(id === 'buraco' && (usedBH || r < 3)));
         let t = ws.reduce((s, x) => s + x[1], 0) * rng(), id = ws[ws.length - 1][0];
         for (const [i, w] of ws) { t -= w; if (t < 0) { id = i; break; } }
@@ -563,6 +564,11 @@
             if (take.length > 1 && !this.cfg.semMontar) { let ord = p.bot ? this.botOrderHand(take, p) : (this.io.orderHand ? await this.io.orderHand(p, take.slice(), { refill: true }) : take); if (!ord || ord.length !== take.length || ord.slice().sort().join() !== take.slice().sort().join()) ord = take; take = ord.slice(); }
             p.deck.push(...take); this.log(`${p.name} compra ${take.length} cartas da reserva.`); await this.emit('refill', { pid, cards: take });
           }
+          else if (this.cfg.bhRefill && this.cfg.bhRefill.includes(pid) && !p.bhRefilled && this.s.bh.length) {   // guardião G4: puxa até 7 cartas do Buraco Negro, uma única vez
+            p.bhRefilled = true; const got = []; for (let i = 0; i < 7 && this.s.bh.length; i++) { const x = this.s.bh.splice(Math.floor(this.rand() * this.s.bh.length), 1)[0]; if (x && !String(x.id).includes('*')) got.push(x.id); }
+            p.deck.push(...got); this.memInit(); this.log(`${p.name} puxa ${got.length} cartas do Buraco Negro!`, 'efeito'); await this.emit('refill', { pid, cards: got });
+            if (!got.length) await this.eliminate(pid);
+          }
           else { await this.eliminate(pid); }
         }
       }
@@ -682,6 +688,7 @@
         const eb = this.evBase(c, pid);
         combat.entries.push({ pid, card: c, base: Object.assign({}, eb.st), stats: Object.assign({}, eb.st), evm: eb.mark, bonus: 0, extra: [], mods: [], attr: null, withdrawn: false, gone: false, noCaptureBy: new Set() });
       }
+      if (this.rg === 'g_duo') combat.entries.forEach(e => { const p = this.p(e.pid); if (p.deck.length) e.extra.push(p.deck.shift()); });   // guardião G1: cada um joga duas cartas e soma os atributos
       this.memCommit(combat);
       await this.emit('commit', { combat });
       // 2b) especiais de controle (antes de declarar atributos)
@@ -871,9 +878,37 @@
       }
     }
 
+    // guardião G3: blocos de 3 disputas. As cartas jogadas ficam retidas; ao fim do bloco, quem venceu mais disputas leva as cartas dos outros
+    // (se venceu mais atacando que defendendo, captura; senão elas vão ao Buraco Negro). Empate no bloco: tudo volta aos donos.
+    async resolveBloco(combat, ev) {
+      const es = combat.entries, B = this.s.blk = this.s.blk || { n: 0, w: {}, held: {} }; const moves = []; const cardsOf = e => [e.card, ...e.extra];
+      let result = { type: 'none', winners: [], winnerPid: null };
+      es.filter(e => e.withdrawn && !e.gone).forEach(e => { this.p(e.pid).deck.push(...cardsOf(e)); });
+      es.filter(e => !e.withdrawn).forEach(e => { (B.held[e.pid] = B.held[e.pid] || []).push(...cardsOf(e)); });
+      if (ev.none) this.log('Sem disputa: nada conta neste bloco.', 'res');
+      else if (ev.tie) { this.log('Empate: a disputa não conta no bloco.', 'res'); result = { type: 'tie', winners: ev.winners.map(e => e.pid), winnerPid: null, tb: ev.tb || null }; }
+      else { const w = ev.winners[0], attack = ATTR[w.attr].tipo === 'ataque', x = B.w[w.pid] = B.w[w.pid] || { a: 0, d: 0 }; if (attack) x.a++; else x.d++;
+        result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: w.stats[w.attr] + w.bonus, tb: ev.tb || null };
+        this.log(`${this.p(w.pid).name} vence a disputa ${B.n + 1} do bloco ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit'); }
+      B.n++;
+      const vazio = Object.keys(B.held).some(k => { const q = this.p(+k); return q.deck.length === 0 && q.reserve.length === 0; });
+      if (B.n >= 3 || vazio || this.s.combats + 1 >= (this.cfg.maxCombats || 400)) {
+        const tot = pid => { const x = B.w[pid]; return x ? x.a + x.d : 0; }, pids = Object.keys(B.held).map(Number), best = Math.max(...pids.map(tot)), top = pids.filter(p => tot(p) === best);
+        if (best > 0 && top.length === 1) { const wp = top[0], x = B.w[wp], cap = x.a >= x.d;
+          for (const pid of pids) { if (pid === wp) { this.p(pid).deck.push(...B.held[pid]); moves.push({ cards: B.held[pid].slice(), from: pid, to: pid }); continue; }
+            const cs = B.held[pid].slice(); if (cap) { this.p(wp).deck.push(...cs); this.s.caps[wp] = (this.s.caps[wp] || 0) + cs.length; moves.push({ cards: cs, from: pid, to: wp }); } else { cs.forEach(c => this.s.bh.push({ id: c, kind: 'normal' })); moves.push({ cards: cs, from: pid, to: 'bh' }); } }
+          this.log(`Fim do bloco: ${this.p(wp).name} venceu ${x.a + x.d} disputa(s) ${cap ? 'e captura as cartas dos outros' : '(mais em defesa) e as cartas dos outros vão ao Buraco Negro'}.`, 'efeito'); }
+        else { for (const pid of pids) { this.p(pid).deck.push(...B.held[pid]); moves.push({ cards: B.held[pid].slice(), from: pid, to: pid }); } this.log('Fim do bloco sem vencedor: as cartas voltam aos donos.', 'res'); }
+        this.s.blk = null;
+      }
+      combat.result = result; combat.moves = moves; this.memResolved(moves);
+      let calc = null; try { calc = this.calcSummary(combat, ev, result); } catch (err) { calc = null; }
+      await this.emit('resolved', { combat, result, moves, calc });
+    }
     async resolve(combat) {
       const ev = this.evaluate(combat);
       const es = combat.entries;
+      if (this.rg === 'g_bloco') return this.resolveBloco(combat, ev);
       const give = (pid, cards) => { this.p(pid).deck.push(...cards); };
       const cardsOf = e => [e.card, ...e.extra];
       const moves = []; // para animação
@@ -925,6 +960,11 @@
             if (w.defCapture && special === l) { if (blocked) toBH(l); else capture(l, w.pid); continue; }
             toBH(l);
           }
+        }
+        if (this.rg === 'g_roubo') {   // guardião G2: quem vence leva mais uma carta do topo de cada perdedor (ataque: captura; defesa: Buraco Negro)
+          for (const l of losers) { const lp = this.p(l.pid); if (!lp.deck.length || l.saveOnLoss) continue; const c = lp.deck.shift();
+            if (attack) { this.p(w.pid).deck.push(c); this.s.caps[w.pid] = (this.s.caps[w.pid] || 0) + 1; moves.push({ cards: [c], from: l.pid, to: w.pid }); this.log(`${this.p(w.pid).name} leva também a próxima carta de ${lp.name}.`, 'efeito'); }
+            else { this.s.bh.push({ id: c, kind: 'normal' }); moves.push({ cards: [c], from: l.pid, to: 'bh' }); this.log(`${lp.name} perde mais uma carta para o Buraco Negro.`, 'efeito'); } }
         }
         if (this.rg === 'magnetico' && es.length > 1 && es.every(e => e.attr === es[0].attr)) {   // Campo magnético: mesmo atributo → captura também a carta seguinte do topo
           for (const l of losers) { const lp = this.p(l.pid); if (lp.deck.length) { const c = lp.deck.shift(); this.p(w.pid).deck.push(c); this.s.caps[w.pid] = (this.s.caps[w.pid] || 0) + 1; moves.push({ cards: [c], from: l.pid, to: w.pid }); this.log(`Campo magnético: ${this.p(w.pid).name} captura também a próxima carta de ${lp.name}.`, 'efeito'); } }
