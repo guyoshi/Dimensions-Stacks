@@ -1555,7 +1555,7 @@ body.reduce .cin-foto { animation-duration: .01s; }
 .seta { cursor: pointer; outline: none; animation: hsseta 1.2s ease-in-out infinite; }
 .seta circle { fill: #1d1650; stroke: #ffd25f; stroke-width: 3; } .seta path { fill: #ffd25f; }
 @keyframes hsseta { 50% { opacity: .65; } }
-.npc { position: fixed; inset: 0; z-index: 9150; background: #05030fe0; display: flex; align-items: flex-end; justify-content: center; padding: 0 12px calc(16px + env(safe-area-inset-bottom, 0px)); cursor: pointer; animation: bauin .3s ease; }
+.npc { position: fixed; inset: 0; z-index: 9150; background: #05030f38; display: flex; align-items: flex-end; justify-content: center; padding: 0 12px calc(16px + env(safe-area-inset-bottom, 0px)); cursor: pointer; animation: bauin .3s ease; }
 .npc-box { display: flex; gap: 12px; align-items: flex-end; width: min(560px, 100%); background: linear-gradient(180deg, #1b1650f5, #0e0a2cf8); border: 1px solid #ffffff33; border-radius: 18px; padding: 12px; box-shadow: 0 14px 40px #000c; }
 .npc-p { flex: none; margin-top: -48px; filter: drop-shadow(0 6px 12px #000a); } .npc-b { position: relative; flex: 1; min-width: 0; padding-right: 18px; } .npc-b b { color: #ffd25f; } .npc-b p { margin: 4px 0 0; line-height: 1.5; min-height: 4.5em; }
 .npc .cin-next { position: absolute; right: 2px; bottom: 0; }
