@@ -47,6 +47,9 @@
   const MG_CUSTO = 10;
   Object.values(M.starts).forEach(id => { if (BY[id]) { BY[id].tipo = 'normal'; const b = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (b) { b.t = 'normal'; delete b.e; } } });   // a primeira batalha de cada caminho é sempre normal, nunca um evento
   Object.keys(MG).forEach(id => { if (BY[id]) { BY[id].tipo = 'minigame'; BY[id].mg = MG[id][0]; BY[id].serieMg = MG[id][1] || null; } });
+  if (!M._mgsp) { M._mgsp = 1;   // minigames mais afastados entre si, sem encostar nos outros pontos
+    const L = NOS.filter(n => n.tipo === 'minigame'), O = NOS.filter(n => n.tipo !== 'minigame'), D = 240;
+    for (let it = 0; it < 80; it++) { let mv = 0; L.forEach(a => { L.forEach(b => { if (a === b) return; const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1; if (d < D) { const f = (D - d) / 2 / d; a.x = Math.round(a.x - dx * f); a.y = Math.round(a.y - dy * f); b.x = Math.round(b.x + dx * f); b.y = Math.round(b.y + dy * f); mv++; } }); O.forEach(o => { const dx = a.x - o.x, dy = a.y - o.y, d = Math.hypot(dx, dy) || 1; if (d < 85) { a.x = Math.round(a.x + dx / d * (85 - d)); a.y = Math.round(a.y + dy / d * (85 - d)); mv++; } }); }); if (!mv) break; } }
   const mgInfo = n => (window.DSMini && window.DSMini.LISTA.find(m => m.id === n.mg)) || { nome: 'Minigame', desc: '' };
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
@@ -322,7 +325,10 @@
   function caminho(to) { const prev = alcance(); if (!(to in prev)) return null; const p = []; for (let x = to; x != null; x = prev[x]) p.unshift(x); return p; }
   let andando = false;
   // toque numa bolinha: se o caminho até ela está aberto, o boneco anda até lá; senão só mostra o painel
-  function toque(id) { if (andando) return; if (id !== posId()) { if (passos().includes(id)) return passo(id); } openNode(id); }
+  function toque(id) {   // ponto no alcance de nada: 1º toque abre o painel (sem ações, o boneco está longe); 2º toque traça a rota até lá
+    if (andando) return; if (id !== posId() && passos().includes(id)) return passo(id);
+    if (id !== posId() && curId === id && sheet && !sheet.hidden && caminho(id)) return andar(id); openNode(id);
+  }
   // (sem setas) parado numa casa, cada direção possível aparece como seta; clicar na seta dá UM passo (clicar na bolinha só mostra o painel)
   function passos() {
     const u = posId(), n = BY[u], pass = passa(u);
@@ -357,12 +363,12 @@
     save(); andando = false; paintAll(); casa = id; abrirCasa(id);
   }
   function abrirCasa(id) {   // a casa do NPC é um ponto como os outros: o boneco fica aqui e o painel oferece a conversa
-    const c = NPC && NPC.casaSheet(id); if (!c) return; curId = 'casa'; SND.play('click'); $$('.n.sel', root).forEach(g => g.classList.remove('sel'));
+    const c = NPC && NPC.casaSheet(id); if (!c) return; curId = 'casa:' + id; SND.play('click'); $$('.n.sel', root).forEach(g => g.classList.remove('sel'));
     sheet.innerHTML = c.html; sheet.hidden = false; ensureVisible(c.pt);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'conv') NPC.falar(id); };
   }
   let refr = false;
-  const refrescaCasa = () => { if (refr || !casa || !sheet || sheet.hidden || curId !== 'casa') return; refr = true; try { const c = NPC.casaSheet(casa); if (c) sheet.innerHTML = c.html; } finally { refr = false; } };   // só troca o conteúdo do painel (sem reabrir: evita laço com paint)
+  const refrescaCasa = () => { if (refr || !casa || !sheet || sheet.hidden || curId !== 'casa:' + casa) return; refr = true; try { const c = NPC.casaSheet(casa); if (c) sheet.innerHTML = c.html; } finally { refr = false; } };   // só troca o conteúdo do painel (sem reabrir: evita laço com paint)
   async function andar(to) {
     if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
     andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
@@ -390,7 +396,7 @@
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : pulado(id) ? 'hs-skip' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : pulado(id) ? 'Caminho liberado · duelo opcional' : lockMg ? 'Bloqueado: vença a próxima batalha ou pague' : av ? 'Disponível' : 'Caminho fechado'}</p>
       ${evLinha}${n.tipo === 'minigame' ? mgTiers(n) : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b>${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}${n.id === M.boss ? `<p class="hint">Besta +${bonusBoss()} em tudo (${guardVivos()} guardiões vivos)</p>` : ''}${cartas}${NPC ? '' : ''}
-      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${!aqui && cam_ ? '<span class="hint hs-go">Toque de novo no ponto para ir até lá.</span>' : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     if (inimL) { const ol = $('.hs-olho', sheet); if (ol) inimL.forEach(x => { const r = el('<div class="hs-orow"><small></small><div></div></div>'); $('small', r).textContent = x.n + (gdn ? ' · cartas principais' : ''); x.c.forEach(c => { if (!U.CARDS[c]) return; const w = el('<span class="hs-oc"></span>'); if (conhece) { w.append(U.cardEl(c, { up: true, noanim: true, cw: 44 })); if (!(S.owned || []).includes(c)) w.classList.add('nova'); } else w.innerHTML = '<i class="hs-q">?</i>'; $('div', r).append(w); }); ol.append(r); }); }
     sheet.hidden = false; ensureVisible(n);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
@@ -665,8 +671,8 @@
     centerOn(b.x, b.y, .75, !red);
     setTimeout(() => { SND.play('banner'); const bg = $('.n.t-boss', root); if (bg) { bg.classList.add('burst'); setTimeout(() => bg.classList.remove('burst'), 2600); } toast('Os guardiões caíram e a União está completa. O núcleo da galáxia se abriu.'); }, red ? 50 : 800);
   }
-  function avisoMissao(titulo, txt) {   // faixa na tela + som quando uma missão nova começa
-    const r = root; if (!r) return; const x = el(`<div class="hs-aviso" role="status"><i>!</i><div><b>${esc(titulo)}</b><span>${esc(txt)}</span></div></div>`); r.appendChild(x); try { SND.play('banner'); } catch (e) { }
+  function avisoMissao(titulo, txt, ok) {   // faixa na tela + som quando uma missão nova começa
+    const r = root; if (!r) return; const x = el(`<div class="hs-aviso${ok ? ' ok' : ''}" role="status"><i>${ok ? '✓' : '!'}</i><div><b>${esc(titulo)}</b><span>${esc(txt)}</span></div></div>`); r.appendChild(x); try { SND.play('banner'); } catch (e) { }
     requestAnimationFrame(() => x.classList.add('on')); setTimeout(() => { x.classList.remove('on'); setTimeout(() => x.remove(), 500); }, 4200);
   }
   function toast(t) { const x = $('#hsToast', root); if (!x) return; x.textContent = t; x.hidden = false; clearTimeout(x._t); x._t = setTimeout(() => { x.hidden = true; }, 3200); }
@@ -871,6 +877,6 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } else if (e.target.dataset.a === 'numeros') { P.numeros = e.target.checked; if (svg) svg.classList.toggle('no-nums', !P.numeros); save(); } });
   }
 
-  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, andarNpc, avisoMissao, abrirCasa, refrescaCasa, casa: () => casa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
+  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, andarNpc, avisoMissao, abrirCasa, refrescaCasa, casa: () => casa, casaAberta: id => curId === 'casa:' + id && !!sheet && !sheet.hidden, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
   window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S, openNode };
 })();

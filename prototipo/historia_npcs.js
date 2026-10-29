@@ -112,17 +112,26 @@
       if (n.id === ultimo()) { r.pend = (r.pend | 0) + FINAL.pend; r.carta = FINAL.carta; } else r.frag = 'C:' + n.id;
       recebe(r, 'Missão cumprida');
     } else recebe({ pend: n.pend, frag: 'Q:' + n.id, reg: n.reg }, 'Missão cumprida');
-    A.SND.play('capture');
+    A.SND.play('capture'); A.avisoMissao('Missão concluída', n.nome, true);
   }
   // avisa quando uma missão ativa fica pronta
   function check() {
     const s = ini(); if (!s) return;
-    ALL.forEach(n => { const m = s.mis[n.id]; if (m && m.st === 'ativa' && !isCh(n) && feita(n) && !m.avisou) { m.avisou = 1; A.save(); A.toast(n.nome + ' espera por você: missão cumprida.'); } else if (m && m.st === 'ativa' && isCh(n) && m.first && feita(n) && !m.avisou) { m.avisou = 1; A.save(); A.toast(n.nome + ' espera por você: missão cumprida.'); } });
+    ALL.forEach(n => { const m = s.mis[n.id]; if (m && m.st === 'ativa' && !isCh(n) && feita(n) && !m.avisou) { m.avisou = 1; A.save(); A.avisoMissao('Missão cumprida', n.nome + ' espera por você', true); } else if (m && m.st === 'ativa' && isCh(n) && m.first && feita(n) && !m.avisou) { m.avisou = 1; A.save(); A.avisoMissao('Missão cumprida', n.nome + ' espera por você', true); } });
     paint();
   }
 
   // ---- ganchos de fragmentos
-  function fragEvento(key) { if (darFrag(key)) A.quandoLivre(() => popup([`<b>+1</b> fragmento dimensional <b>(${nFrag()})</b>`], 'Fragmento encontrado')); }
+  function avisoFrag() {   // fragmento: cristal que cai, estoura em brilho e mostra o total; som próprio
+    const U = A.U, root = document.body, red = root.classList.contains('reduce'), tot = nFrag();
+    const ov = U.el(`<div class="frg-ov"><div class="frg-rays"></div><div class="frg-st"><div class="frg-cr">${cristal(true)}</div><div class="frg-t">Fragmento dimensional</div><div class="frg-n">+1</div><div class="frg-s">Total: <b>${tot}</b></div><button class="btn primary frg-ok">Continuar</button></div></div>`);
+    for (let i = 0; i < 18; i++) { const p = U.el('<i class="frg-p"></i>'), a = i / 18 * 6.283, d = 90 + (i % 3) * 36; p.style.setProperty('--dx', Math.cos(a) * d + 'px'); p.style.setProperty('--dy', Math.sin(a) * d + 'px'); p.style.animationDelay = (.55 + (i % 4) * .03) + 's'; $1('.frg-st', ov).append(p); }
+    function $1(s, e) { return e.querySelector(s); }
+    root.appendChild(ov); requestAnimationFrame(() => ov.classList.add('on'));
+    try { const c = A.SND.ctx; if (c) { const t0 = c.currentTime, nt = [880, 1175, 1568, 2093]; nt.forEach((f, k) => { const o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), t = t0 + .5 + k * .09; o.type = 'sine'; o2.type = 'triangle'; o.frequency.value = f; o2.frequency.value = f * 2.005; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.16, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .9); o.connect(g); o2.connect(g); g.connect(A.SND.master || c.destination); o.start(t); o2.start(t); o.stop(t + .95); o2.stop(t + .95); }); const w = c.createOscillator(), wg = c.createGain(); w.type = 'sine'; w.frequency.setValueAtTime(1800, t0); w.frequency.exponentialRampToValueAtTime(300, t0 + .5); wg.gain.setValueAtTime(.0001, t0); wg.gain.exponentialRampToValueAtTime(.08, t0 + .05); wg.gain.exponentialRampToValueAtTime(.0001, t0 + .55); w.connect(wg); wg.connect(A.SND.master || c.destination); w.start(t0); w.stop(t0 + .6); } } catch (e) { }
+    $1('.frg-ok', ov).onclick = () => { A.SND.play('click'); ov.classList.remove('on'); setTimeout(() => ov.remove(), 400); };
+  }
+  function fragEvento(key) { if (darFrag(key)) A.quandoLivre(() => avisoFrag()); }
   function vitoria(id) { ini(); if (A.MINIS.includes(id)) fragEvento('A:' + id); else if (A.GUARD.includes(id)) fragEvento('G:' + id); }
   function fragMini(id, tier) { if (tier >= 3) fragEvento('J:' + id); }   // minigame: o prêmio máximo (Perfeito) dá 1 fragmento, uma vez por minigame
   function fragBau(id) { if (D.fragBaus.includes(id)) fragEvento('B:' + id); }
@@ -166,13 +175,14 @@
     if (!acessivel(n) || !A.caminho(pick)) return A.toast('Vença a batalha do caminho para falar com ' + curto(n) + '.');
     // Tocar no NPC leva o jogador até a casa dele e ele PARA ali; tocar de novo (ou "Falar" no painel) abre a conversa.
     if (A.casa() === id) return A.abrirCasa(id);
-    A.andarNpc(pick, pos(n), n.a === pick ? n.b : n.a, id);
+    if (A.casaAberta(id)) return A.andarNpc(pick, pos(n), n.a === pick ? n.b : n.a, id);   // 2º toque: traça a rota até a casa
+    A.abrirCasa(id);   // 1º toque: só o painel (sem ação, o boneco está longe)
   }
 
   function casaSheet(id) {   // painel da casa do NPC: nome em cima, "!" se há algo novo
-    const n = BYID[id]; if (!n || !ini()) return null; const st = estado(n), pr = pronta(n), p1 = curto(n), alerta = !st || pr;
+    const n = BYID[id]; if (!n || !ini()) return null; const st = estado(n), pr = pronta(n), p1 = curto(n), alerta = !st || pr, aqui = A.casa() === id;
     const linha = !st ? p1 + ' quer falar com você.' : st === 'entregue' ? 'Missão concluída.' : pr ? 'Missão cumprida: fale com ' + p1 + '.' : 'Missão em andamento.', pt = pos(n);
-    return { pt, html: `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div><h3>${A.esc(n.nome)}</h3><small>Casa de ${A.esc(p1)}</small></div></div><p class="hs-st ${alerta ? 'hs-av' : 'hs-ok'}">${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}${A.esc(linha)}</p><div class="row"><button class="btn primary" data-a="conv">Conversar${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}</button></div>` };
+    return { pt, html: `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div><h3>${A.esc(n.nome)}</h3><small>Casa de ${A.esc(p1)}</small></div></div><p class="hs-st ${alerta ? 'hs-av' : 'hs-ok'}">${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}${A.esc(linha)}</p><div class="row">${aqui ? `<button class="btn primary" data-a="conv">Conversar${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}</button>` : '<span class="hint hs-go">Toque de novo na casa para ir até lá.</span>'}</div>` };
   }
 
   // ---- bloco no painel do ponto (quem está nesse cruzamento, com barra de progresso)

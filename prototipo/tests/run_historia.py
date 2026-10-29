@@ -45,7 +45,9 @@ try:
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
-        bx = pos(n); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(900)
+        for _t in range(4):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
+            bx = pos(n); pg.mouse.click(bx[0], bx[1]); pg.wait_for_timeout(1500)
+            if pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
         pg.click('#hsSheet [data-a=win]'); pg.wait_for_selector('.lib .bau-ok', timeout=4000); pg.click('.lib .bau-ok'); pg.wait_for_timeout(700)
         for _ in range(14):
             if not pg.query_selector('.npc'): break

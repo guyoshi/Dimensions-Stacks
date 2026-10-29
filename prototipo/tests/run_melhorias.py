@@ -48,7 +48,7 @@ try:
         pg.evaluate("document.querySelector('#hsAlug').click()"); pg.wait_for_selector('.hs-alug'); pg.wait_for_timeout(300); pg.screenshot(path='tests/shots/aluguel.png')
         ids = pg.evaluate("[...document.querySelectorAll('.al-buy')].map(x=>x.dataset.id)"); chk(len(ids) >= 5, 'estoque de aluguel: %d' % len(ids))
         raro = pg.evaluate("ids=>ids.filter(i=>DSUI.CARDS[i].raridade=='lendaria'||DSHistoria.state().owned.includes(i)).length", ids); chk(raro == 0, 'sem lendárias nem cartas que já tem')
-        pend0 = pg.evaluate("DSHistoria.state().pend"); pg.click('.al-buy'); pg.wait_for_timeout(300)
+        pend0 = pg.evaluate("DSHistoria.state().pend"); pg.evaluate("document.querySelectorAll('.frg-ok').forEach(b=>b.click())"); pg.wait_for_timeout(500); pg.click('.al-buy'); pg.wait_for_timeout(300)
         st = pg.evaluate("DSHistoria.state()"); chk(len(st['alugadas']) == 1 and st['pend'] < pend0, 'alugar cobra e guarda a carta')
         alug = st['alugadas'][0]
         pg.click('.hs-alug [data-a=x]'); pg.wait_for_timeout(300)
