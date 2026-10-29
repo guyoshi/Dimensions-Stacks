@@ -1841,3 +1841,10 @@ body.reduce .rv-rays, body.reduce .rv-glow, body.reduce .rv-card { animation: no
 .hs-slot .ibtn { padding: 8px 10px; }
 
 .hs-gal { opacity: .8; pointer-events: none; }   /* fundo preso ao mapa: o buraco negro fica exatamente no Boss (0,0) */
+.casa-bang { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 7px; border-radius: 50%; background: #ffc46b; color: #241638; font: 900 13px var(--f-disp); font-style: normal; line-height: 1; vertical-align: middle; }
+.row .btn .casa-bang { margin: 0 0 0 8px; }
+
+.hs-oc { position: relative; flex: none; display: inline-block; min-width: 44px; } .hs-oc .hs-q { display: grid; place-items: center; width: 44px; height: 66px; border-radius: 6px; background: #120d30; border: 1px dashed #6a5fb0; color: #8b82c9; font: 800 18px var(--f-disp); font-style: normal; }
+.hs-oc.nova > .card { box-shadow: 0 0 0 2px #ffc46b; border-radius: 6px; } .hs-oc.nova::after { content: "NOVA"; position: absolute; left: 50%; bottom: -3px; transform: translateX(-50%); padding: 0 4px; border-radius: 4px; background: #ffc46b; color: #241638; font: 900 8px var(--f-disp); letter-spacing: .04em; }
+.hs-aviso { position: absolute; z-index: 30; left: 50%; top: calc(64px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -20px); opacity: 0; display: flex; align-items: center; gap: 10px; max-width: min(360px, 92vw); padding: 10px 14px; border-radius: 14px; background: #1b1448f2; border: 1px solid #ffc46b99; box-shadow: 0 8px 24px #000a, 0 0 18px #ffc46b44; pointer-events: none; transition: opacity .35s, transform .35s; }
+.hs-aviso.on { opacity: 1; transform: translate(-50%, 0); } .hs-aviso i { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #ffc46b; color: #241638; font: 900 16px var(--f-disp); font-style: normal; } .hs-aviso div { display: flex; flex-direction: column; } .hs-aviso b { font-size: 13px; color: #ffd98f; text-transform: uppercase; letter-spacing: .08em; } .hs-aviso span { font-size: 13.5px; color: var(--ink); }

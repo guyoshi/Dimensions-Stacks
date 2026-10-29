@@ -97,7 +97,7 @@
     const m = s.mis[id], ch = isCh(n), quem = { nome: n.nome, card: n.card }, f = n.f;
     if (!m) {   // primeira conversa
       const first = ch && primeiro() === id && f.abrir;
-      A.npcFala(quem, first ? f.abrir : f.pedir, () => { s.mis[id] = { st: 'ativa', base: A.nBat(), first: !!first }; A.save(); check(); paint(); });
+      A.npcFala(quem, first ? f.abrir : f.pedir, () => { s.mis[id] = { st: 'ativa', base: A.nBat(), first: !!first }; A.save(); check(); paint(); A.avisoMissao('Nova missão', first ? 'Vença 3 batalhas' : isCh(n) ? 'Procura: ' + n.pede : n.d); });
     } else if (m.st === 'ativa') {
       if (pronta(n)) A.npcFala(quem, m.first ? f.abrirEntrega : f.entrega, () => entrega(n));
       else A.npcFala(quem, m.first ? f.abrirLembrar : f.lembrar);
@@ -135,6 +135,7 @@
     const cx = (a.x + b.x) / 2 - dy / len * off, cy = (a.y + b.y) / 2 + dx / len * off;
     return { x: .25 * a.x + .5 * cx + .25 * b.x, y: .25 * a.y + .5 * cy + .25 * b.y };
   }
+  const curto = n => { const m = n.nome.match(/^(Sra\.|Dra\.|Dr\.|Capitão|Capitã|Professor|Tio|Agente)\s+(\S+)/); return m ? m[1] + ' ' + m[2] : curto(n); };
   const ini1 = n => n.nome.replace(/^(Sra\.|Dra\.|Capitão|Capitã|Professor|Tio|Agente)\s+/, '')[0].toUpperCase();
   // O marcador fica sobre uma ligação, mas o NPC mora no segundo ponto dela.
   // Assim, uma missão não pode ser iniciada pelo lado anterior do caminho.
@@ -157,14 +158,21 @@
       if (podeFalar && pr) aviso = true;
     });
     const b = A.$('.hs-hud [data-a="missoes"] .dot', A.root()); if (b) b.hidden = !aviso;
+    if (A.refrescaCasa) A.refrescaCasa();
   }
   function toque(id) {
     const n = BYID[id]; if (!n || A.andando()) return;
     const pick = destino(n);
-    if (!acessivel(n) || !A.caminho(pick)) return A.toast('Vença a batalha do caminho para falar com ' + n.nome.split(' ')[0] + '.');
+    if (!acessivel(n) || !A.caminho(pick)) return A.toast('Vença a batalha do caminho para falar com ' + curto(n) + '.');
     // Tocar no NPC leva o jogador até a casa dele e ele PARA ali; tocar de novo (ou "Falar" no painel) abre a conversa.
-    if (A.casa() === id) return falar(id);
+    if (A.casa() === id) return A.abrirCasa(id);
     A.andarNpc(pick, pos(n), n.a === pick ? n.b : n.a, id);
+  }
+
+  function casaSheet(id) {   // painel da casa do NPC: nome em cima, "!" se há algo novo
+    const n = BYID[id]; if (!n || !ini()) return null; const st = estado(n), pr = pronta(n), p1 = curto(n), alerta = !st || pr;
+    const linha = !st ? p1 + ' quer falar com você.' : st === 'entregue' ? 'Missão concluída.' : pr ? 'Missão cumprida: fale com ' + p1 + '.' : 'Missão em andamento.', pt = pos(n);
+    return { pt, html: `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div><h3>${A.esc(n.nome)}</h3><small>Casa de ${A.esc(p1)}</small></div></div><p class="hs-st ${alerta ? 'hs-av' : 'hs-ok'}">${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}${A.esc(linha)}</p><div class="row"><button class="btn primary" data-a="conv">Conversar${alerta ? '<i class="casa-bang" aria-hidden="true">!</i>' : ''}</button></div>` };
   }
 
   // ---- bloco no painel do ponto (quem está nesse cruzamento, com barra de progresso)
@@ -177,8 +185,8 @@
       let linha;
       if (!st) linha = 'Tem algo a dizer.';
       else if (st === 'entregue') linha = 'Missão concluída.';
-      else if (isCh(n)) linha = pron ? 'Cumprida: fale com ' + n.nome.split(' ')[0] + '.' : (s.mis[n.id].first ? 'Vença 3 batalhas.' : 'Procura: ' + n.pede + '.');
-      else linha = n.d + (pron ? '. Cumprida: fale com ' + n.nome.split(' ')[0] + '.' : '');
+      else if (isCh(n)) linha = pron ? 'Cumprida: fale com ' + curto(n) + '.' : (s.mis[n.id].first ? 'Vença 3 batalhas.' : 'Procura: ' + n.pede + '.');
+      else linha = n.d + (pron ? '. Cumprida: fale com ' + curto(n) + '.' : '');
       const barra = st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : '';
       const alerta = pron ? '<i class="npc-notice" aria-label="Missão pronta">!</i>' : '';
       return `<div class="npc-row${st === 'entregue' ? ' done' : ''}"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div class="npc-tx"><b>${A.esc(n.nome)}</b><span>${A.esc(linha)}</span>${barra}</div>${aqui ? `<button class="btn sm primary npc-talk${pron ? ' has-notice' : ''}" data-a="npc:${n.id}">Falar${alerta}</button>` : ''}</div>`;
@@ -199,14 +207,14 @@
         const L = CH.filter(n => estado(n)).sort((a, b) => (estado(a) === 'entregue') - (estado(b) === 'entregue'));
         h = itens + (L.length ? L.map(n => {
           const st = estado(n), pr = prog(n), first = s.mis[n.id].first, pron = pronta(n);
-          const quer = first ? 'Vença 3 batalhas' : n.pede, tag = st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + n.nome.split(' ')[0] : 'Em andamento';
+          const quer = first ? 'Vença 3 batalhas' : n.pede, tag = st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + curto(n) : 'Em andamento';
           return row(n, `<span>${first ? 'Pede' : 'Procura'}: ${A.esc(quer)}</span><span>Em troca: ${A.esc(n.da)}</span>${st === 'ativa' && pr ? bar(pr.v, pr.m) : ''}<em>${A.esc(tag)}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
         }).join('') : '<p class="mis-vz">Nenhuma missão ainda.</p>');
       } else {
         const L = QS.filter(n => estado(n)).sort((a, b) => (estado(a) === 'entregue') - (estado(b) === 'entregue'));
         h = L.length ? L.map(n => {
           const st = estado(n), pr = prog(n), pron = pronta(n), ex = [n.pend + ' pêndulos'].concat(['fragmento'], n.reg ? ['registro'] : []).join(' + ');
-          return row(n, `<span>${A.esc(n.d)}</span>${st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : ''}<small>${ex}</small><em>${st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + A.esc(n.nome.split(' ')[0]) : 'Em andamento'}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
+          return row(n, `<span>${A.esc(n.d)}</span>${st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : ''}<small>${ex}</small><em>${st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + A.esc(curto(n)) : 'Em andamento'}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
         }).join('') : '<p class="mis-vz">Nenhuma missão ainda.</p>';
       }
       lista.innerHTML = h;
@@ -266,5 +274,5 @@
     A.save(); return true;
   }
 
-  window.DSNpc = { init: a => { A = a; }, paint, toque, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
+  window.DSNpc = { init: a => { A = a; }, paint, toque, casaSheet, falar, sheetHtml, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
 })();

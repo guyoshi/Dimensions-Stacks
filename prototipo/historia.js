@@ -38,6 +38,8 @@
     return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
   }
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
+  const EX = 1.4, EYT = .62, EYB = .8, EY = EYB;   // o mapa gerado é quadrado; a arte de fundo é 2:1: pontos esticados na horizontal e mais comprimidos em cima do que embaixo (o Boss continua em 0,0, sobre o buraco negro)
+  if (!M._lay) { M._lay = 1; NOS.forEach(n => { n.x = Math.round(n.x * EX); n.y = Math.round(n.y * (n.y < 0 ? EYT : EYB)); }); }
   // Minigames no mapa (autor, 29/10/2026): 7 de série (dão 1 broche) + 10 base, em pontos que fecham caminhos; é preciso passar (nível "Bom" ou mais) para abrir a área seguinte.
   // Ao falhar o ponto fica bloqueado até pagar MG_CUSTO pêndulos; o prêmio máximo é para quem quer desafio (pode rejogar depois de passar para melhorar o prêmio).
   const MG = { B082: ['elos', 'diario'], B088: ['culpado', 'misterio'], B089: ['luas', 'jesed'], B052: ['ritmo', 'belfex'], B077: ['poderes', 'viajantes'], B065: ['gancho', 'spacetheft'], B081: ['formacao', 'uniao'],
@@ -207,10 +209,10 @@
   function openMap(novo, intro, comFade) {
     if (!S) return; view = 'map';
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
-    mp.innerHTML = `<div class="hs-particles" aria-hidden="true">${particulasMapa()}</div><svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsGalG"><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="hsGalM" maskUnits="userSpaceOnUse" x="-3181" y="-1398" width="6400" height="3200"><rect x="-3181" y="-1398" width="6400" height="3200" fill="url(#hsGalG)"/></mask><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
+    mp.innerHTML = `<div class="hs-particles" aria-hidden="true">${particulasMapa()}</div><svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><filter id="hsGalB" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="90"/></filter><mask id="hsGalM" maskUnits="userSpaceOnUse" x="-1392" y="-612" width="2800" height="1400"><rect x="-1292" y="-512" width="2600" height="1200" fill="#fff" filter="url(#hsGalB)"/></mask><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-        <g id="hsCam"><image class="hs-gal" href="cena/mapa-galaxia.png" x="-3181" y="-1398" width="6400" height="3200" preserveAspectRatio="none" mask="url(#hsGalM)"/><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
+        <g id="hsCam"><image class="hs-gal" href="cena/mapa-galaxia.png" x="-1392" y="-612" width="2800" height="1400" preserveAspectRatio="none" mask="url(#hsGalM)"/><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">${U.uniaoLogo('uniao-logo-map')}</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral">▣</button><button class="ibtn" data-a="missoes" aria-label="Missões" title="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção" title="Coleção">✦</button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn" data-a="opts" aria-label="Configurações" title="Configurações">⚙</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda e opções" title="Ajuda">?</button></div>
@@ -257,15 +259,15 @@
   let movT = null;
   function applyCam(anim) {
     const { w, h } = view$();
-    const lim = (R + 260) * cam.k;   // não deixa o mapa sair da tela
-    cam.x = Math.max(w / 2 - lim, Math.min(w / 2 + lim, cam.x)); cam.y = Math.max(h / 2 - lim, Math.min(h / 2 + lim, cam.y));
+    const limX = (R * EX + 260) * cam.k, limY = (R * EY + 260) * cam.k;   // não deixa o mapa sair da tela
+    cam.x = Math.max(w / 2 - limX, Math.min(w / 2 + limX, cam.x)); cam.y = Math.max(h / 2 - limY, Math.min(h / 2 + limY, cam.y));
     camG.style.transition = anim ? 'transform .75s cubic-bezier(.3,.8,.3,1)' : 'none';
     if (svg) { svg.classList.add('mov'); clearTimeout(movT); movT = setTimeout(() => svg && svg.classList.remove('mov'), anim ? 850 : 220); }   // em movimento: animações pausadas (mapa mais leve)
     camG.style.transform = `translate(${cam.x}px,${cam.y}px) scale(${cam.k})`;
     svg.classList.toggle('far', cam.k < .42);
   }
   function centerOn(mx, my, k, anim) { const { w, h } = view$(); cam.k = k == null ? cam.k : k; cam.x = w / 2 - mx * cam.k; cam.y = h / 2 - my * cam.k; applyCam(anim); }
-  function fit(anim) { const { w, h } = view$(); const k = Math.min(w, h) / (2 * (R + 120)); cam.k = k; cam.x = w / 2; cam.y = h / 2; applyCam(anim); }
+  function fit(anim) { const { w, h } = view$(); const k = Math.min(w / (2 * (R * EX + 120)), h / (R * (EYT + EYB) + 240)); cam.k = k; cam.x = w / 2; cam.y = h / 2 - R * (EYB - EYT) / 2 * k; applyCam(anim); }
   function zoomAt(px, py, f, anim) { const k = Math.max(.25, Math.min(2.6, cam.k * f)); const r = k / cam.k; cam.x = px - (px - cam.x) * r; cam.y = py - (py - cam.y) * r; cam.k = k; applyCam(anim); }
   function bindMap(mp) {
     const ptrs = new Map(); let moved = 0, startPt = null, pinch0 = null;
@@ -352,8 +354,14 @@
     for (let i = 1; i < p.length; i++) { const n = BY[p[i]]; S.pos = n.id; heroPlace(n.id, !red); SND.play('tick'); paintLuz(); centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red); await new Promise(r => setTimeout(r, red ? 60 : 360)); }
     const hh = $('#hsHero', root); if (hh) { hh.style.transition = red ? 'none' : 'transform .45s linear'; hh.style.transform = `translate(${pt.x}px,${pt.y - 22}px)`; }
     SND.play('tick'); centerOn(pt.x, pt.y, cam.k < .6 ? .75 : null, !red); await new Promise(r => setTimeout(r, red ? 60 : 480));
-    save(); andando = false; paintAll(); casa = id;
+    save(); andando = false; paintAll(); casa = id; abrirCasa(id);
   }
+  function abrirCasa(id) {   // a casa do NPC é um ponto como os outros: o boneco fica aqui e o painel oferece a conversa
+    const c = NPC && NPC.casaSheet(id); if (!c) return; curId = 'casa'; SND.play('click'); $$('.n.sel', root).forEach(g => g.classList.remove('sel'));
+    sheet.innerHTML = c.html; sheet.hidden = false; ensureVisible(c.pt);
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'conv') NPC.falar(id); };
+  }
+  const refrescaCasa = () => { if (casa && sheet && !sheet.hidden && curId === 'casa') abrirCasa(casa); };
   async function andar(to) {
     if (andando) return; const p = caminho(to); if (!p || p.length < 2) return;
     andando = true; closeSheet(); const red = document.body.classList.contains('reduce');
@@ -373,15 +381,16 @@
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
-    const gdn = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null, inimL = NPC && NPC.tem('olho') && bat0 && !['loja', 'minigame', 'boss'].includes(n.tipo) ? (gdn ? [{ n: gdn.nome, c: gdn.av }] : bat0.i) : null;   // melhoria "Olho vivo"
+    const gdn = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null, inimL = bat0 && !['loja', 'minigame', 'boss'].includes(n.tipo) ? (gdn ? [{ n: gdn.nome, c: gdn.av }] : bat0.i) : null;   // melhoria "Olho vivo"
+    const conhece = !!(NPC && NPC.tem('olho')) || !!(S.vistos && S.vistos[id]);   // cartas do inimigo: "?" até duelar uma vez (ganhando ou perdendo) ou comprar o Olho vivo
     const cartas = inimL ? '<div class="hs-olho"></div>' : '';
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : n.tipo === 'minigame' ? 'Minigame' + (n.serieMg ? ' · dá 1 broche' : '') : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : pulado(id) ? 'hs-skip' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : pulado(id) ? 'Caminho liberado · duelo opcional' : lockMg ? 'Bloqueado: vença a próxima batalha ou pague' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      ${evLinha}${n.tipo === 'minigame' ? mgTiers(n) : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b>${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}${n.id === M.boss ? `<p class="hint">Besta +${bonusBoss()} em tudo (${guardVivos()} guardiões vivos)</p>` : ''}${cartas}${NPC ? NPC.sheetHtml(id, aqui) : ''}
+      ${evLinha}${n.tipo === 'minigame' ? mgTiers(n) : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b>${BAUS[n.id] && !(S.baus && S.baus[n.id]) ? ' · baú' : ''}</p>` : ''}${n.id === M.boss ? `<p class="hint">Besta +${bonusBoss()} em tudo (${guardVivos()} guardiões vivos)</p>` : ''}${cartas}${NPC ? '' : ''}
       <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : ok ? '<button class="btn primary" disabled>Você está aqui</button>' : '<button class="btn primary" data-a="duelar">Duelar</button>') : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
-    if (inimL) { const ol = $('.hs-olho', sheet); if (ol) inimL.forEach(x => { const r = el('<div class="hs-orow"><small></small><div></div></div>'); $('small', r).textContent = x.n + (gdn ? ' · cartas principais' : ''); x.c.forEach(c => { if (U.CARDS[c]) $('div', r).append(U.cardEl(c, { up: true, noanim: true, cw: 44 })); }); ol.append(r); }); }
+    if (inimL) { const ol = $('.hs-olho', sheet); if (ol) inimL.forEach(x => { const r = el('<div class="hs-orow"><small></small><div></div></div>'); $('small', r).textContent = x.n + (gdn ? ' · cartas principais' : ''); x.c.forEach(c => { if (!U.CARDS[c]) return; const w = el('<span class="hs-oc"></span>'); if (conhece) { w.append(U.cardEl(c, { up: true, noanim: true, cw: 44 })); if (!(S.owned || []).includes(c)) w.classList.add('nova'); } else w.innerHTML = '<i class="hs-q">?</i>'; $('div', r).append(w); }); ol.append(r); }); }
     sheet.hidden = false; ensureVisible(n);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') duelar(id); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
   }
@@ -536,6 +545,7 @@
       const hist = { musica, id, fundo: ({ normal: 'normal', miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null, aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         SND.histLock = null; const ganhou = res.venceu && !cleared(id); try { if (ganhou) { SND.histStop(true); SND.histPlay('vitoria'); setTimeout(() => quandoLivre(() => { try { SND.histPlay('mapa'); } catch (e) { } }), 6000); } else SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
+        S.vistos = S.vistos || {}; S.vistos[id] = 1;
         S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save();
         if (res.venceu && !cleared(id)) {
           if (S.mgLock && Object.keys(S.mgLock).length) { S.mgLock = {}; setTimeout(() => toast('Minigames desbloqueados'), 1800); }   // vencer uma batalha destrava os minigames em que você falhou
@@ -653,6 +663,10 @@
     closeSheet(); const b = BY[M.boss]; const red = document.body.classList.contains('reduce');
     centerOn(b.x, b.y, .75, !red);
     setTimeout(() => { SND.play('banner'); const bg = $('.n.t-boss', root); if (bg) { bg.classList.add('burst'); setTimeout(() => bg.classList.remove('burst'), 2600); } toast('Os guardiões caíram e a União está completa. O núcleo da galáxia se abriu.'); }, red ? 50 : 800);
+  }
+  function avisoMissao(titulo, txt) {   // faixa na tela + som quando uma missão nova começa
+    const r = root; if (!r) return; const x = el(`<div class="hs-aviso" role="status"><i>!</i><div><b>${esc(titulo)}</b><span>${esc(txt)}</span></div></div>`); r.appendChild(x); try { SND.play('banner'); } catch (e) { }
+    requestAnimationFrame(() => x.classList.add('on')); setTimeout(() => { x.classList.remove('on'); setTimeout(() => x.remove(), 500); }, 4200);
   }
   function toast(t) { const x = $('#hsToast', root); if (!x) return; x.textContent = t; x.hidden = false; clearTimeout(x._t); x._t = setTimeout(() => { x.hidden = true; }, 3200); }
 
@@ -856,6 +870,6 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } else if (e.target.dataset.a === 'numeros') { P.numeros = e.target.checked; if (svg) svg.classList.toggle('no-nums', !P.numeros); save(); } });
   }
 
-  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, andarNpc, casa: () => casa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
+  if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, andarNpc, avisoMissao, abrirCasa, refrescaCasa, casa: () => casa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
   window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S, openNode };
 })();
