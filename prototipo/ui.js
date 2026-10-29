@@ -25,11 +25,12 @@
   U.store = store;
 
   // ---------------------------------------------------------------- opções
-  const S = Object.assign({ master: .8, sfx: 1, music: .35, musicOn: true, speed: 'normal', reduce: false }, store.get('opts', {}));
+  const S = Object.assign({ master: .8, sfx: 1, music: .35, musicOn: true, speed: 'normal', reduce: false, mapFx: true }, store.get('opts', {}));
   U.S = S;
   Object.defineProperty(S, 'k', { enumerable: false, get() { return { lento: 1.5, normal: 1, rapido: .55 }[S.speed] || 1; } });
   function applyOpts() {
     document.body.classList.toggle('reduce', !!S.reduce);
+    document.body.classList.toggle('mapfx-off', S.mapFx === false);
     SND.vol.master = S.master; SND.vol.sfx = S.sfx; SND.vol.music = S.music; SND.musicOn = S.musicOn; const tr = S.trilha === 'classica' ? 'classica' : 'nova', trChanged = SND.trilha !== tr; SND.trilha = tr;
     if (SND.ctx) { SND.setVol('master', S.master); SND.setVol('sfx', S.sfx); SND.setVol('music', S.music); SND.setMusic(S.musicOn); if (trChanged) SND.refreshMusic(); }
     store.set('opts', S);
@@ -78,6 +79,9 @@
   // brilhinhos dourados ao redor das cartas de A União (posições fixas por carta; o CSS os mostra só com a carta virada)
   // enquadramento vertical da arte (0 = topo da foto, 100 = base): cartas cujo personagem fica baixo na foto
   const FOCO = { V16: 100, V19: 100, D01: 100, D06: 65 };
+  // Algumas artes horizontais têm o rosto deslocado. A posição padrão é o centro;
+  // Raukhar olha para a direita, portanto a carta preserva esse lado do retrato.
+  const FOCO_X = { J32: 100 };
   const SOBE = { D01: 3.4 };   // sobe a arte além do limite da foto (em em), o fundo fica sob o painel escuro
   function uniSparks(id, rainbow) {
     const r = DS_DATA.rng(DS_DATA.hash('uni' + id)), box = el('<div class="usp" aria-hidden="true"></div>');
@@ -100,7 +104,9 @@
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
     const bid = c.orig || id;
     const full = o.full || (o.cw || 0) > 170, src = IMG[bid] && (full ? IMG[bid] : IMG[bid].replace('photos/', 'photos/t/'));   // miniatura (300x450) por padrão; foto grande só em tela cheia
-    const art = IMG[bid] ? `<div class="art" style="--im:url('${src}')"><img alt="${esc(c.nome)}" src="${src}" onerror="this.onerror=null;this.src='${IMG[bid]}'" loading="lazy" decoding="async" draggable="false"${FOCO[bid] != null ? ' style="object-position:50% ' + FOCO[bid] + '%' + (SOBE[bid] ? ';transform:translateY(-' + SOBE[bid] + 'em)' : '') + '"' : ''}></div>`
+    const focoX = FOCO_X[bid] != null ? FOCO_X[bid] : 50, focoY = FOCO[bid] != null ? FOCO[bid] : 0;
+    const temFoco = FOCO_X[bid] != null || FOCO[bid] != null || SOBE[bid];
+    const art = IMG[bid] ? `<div class="art" style="--im:url('${src}')"><img alt="${esc(c.nome)}" src="${src}" onerror="this.onerror=null;this.src='${IMG[bid]}'" loading="lazy" decoding="async" draggable="false"${temFoco ? ' style="object-position:' + focoX + '% ' + focoY + '%' + (SOBE[bid] ? ';transform:translateY(-' + SOBE[bid] + 'em)' : '') + '"' : ''}></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${c.clone ? ' isclone' : ''}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
@@ -410,6 +416,7 @@
       <div class="optrow"><span>Dicas durante a partida</span><div class="seg" data-o="help"><button data-v="1" class="${S.help !== false ? 'on' : ''}">Ligadas</button><button data-v="0" class="${S.help === false ? 'on' : ''}">Desligadas</button></div></div>
       <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
       <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
+      <div class="optrow"><span>Efeitos visuais do mapa</span><div class="seg" data-o="mapFx"><button data-v="1" class="${S.mapFx !== false ? 'on' : ''}">Ligados</button><button data-v="0" class="${S.mapFx === false ? 'on' : ''}">Desligados</button></div></div>
       <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div></div>`);
     n.addEventListener('input', e => { const o = e.target.dataset.o; if (!o) return; S[o] = +e.target.value; applyOpts(); });
     n.addEventListener('click', e => {

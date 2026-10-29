@@ -24,6 +24,14 @@
   const LADOS = { esq: 'Vila Velha', cima: 'Kaeliran', dir: 'Belfex', baixo: 'Braço de Origem', nw: 'Cidade Crepúsculo', ne: 'Promessas do Mar' };   // setores: lugares dos livros (Diário Sobrenatural, Ciclo de Jesed, Viajantes, Spacetheft, Mistério Oculto, Édelin Lys)
   const REGIAO = { 1: 'Orla', 2: 'Margem', 3: 'Umbral', 4: 'Núcleo' };
   const STARTS = new Set(Object.values(M.starts || {}));
+  // Poeira cósmica leve e determinística: é ambiente, não participa dos toques no mapa.
+  function particulasMapa() {
+    return Array.from({ length: 22 }, (_, i) => {
+      const x = (i * 37 + 11) % 100, y = (i * 61 + 17) % 100, s = 1 + (i % 3), d = 10 + (i % 6) * 2, dl = -(i % 7) * 1.7;
+      const dx = (i % 2 ? 1 : -1) * (12 + (i % 4) * 7), dy = -18 - (i % 5) * 8;
+      return `<i style="--x:${x}%;--y:${y}%;--s:${s}px;--d:${d}s;--dl:${dl}s;--dx:${dx}px;--dy:${dy}px"></i>`;
+    }).join('');
+  }
   function setor(n) {   // cunhas diagonais: NW = Mistério Oculto, NE = Édelin Lys (mesmas faixas de tools/regioes_diagonais.py)
     if (!['normal', 'evento', 'elite', 'miniboss'].includes(n.tipo) || STARTS.has(n.id)) return n.lado;
     const g = Math.atan2(n.y, n.x) * 180 / Math.PI;
@@ -200,13 +208,13 @@
   function openMap(novo, intro, comFade) {
     if (!S) return; view = 'map';
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
-    mp.innerHTML = `<svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
+    mp.innerHTML = `<div class="hs-particles" aria-hidden="true">${particulasMapa()}</div><svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
         <g id="hsCam"><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">A União</div>
         <div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
-      <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral">▣</button><button class="ibtn" data-a="missoes" aria-label="Missões" title="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção" title="Coleção">✦</button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn" data-a="leg" aria-label="Legenda e opções" title="Ajuda">?</button></div>
+      <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral">▣</button><button class="ibtn" data-a="missoes" aria-label="Missões" title="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção" title="Coleção">✦</button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn" data-a="opts" aria-label="Configurações" title="Configurações">⚙</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda e opções" title="Ajuda">?</button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root);
     paintAll(); bindMap(mp); heroPlace(posId(), false);
@@ -281,6 +289,7 @@
       else if (a === 'start') { const st = BY[posId()]; centerOn(st.x, st.y, .8, true); }
       else if (a === 'fit') fit(true);
       else if (a === 'leg') legenda();
+      else if (a === 'opts') U.options();
       else if (a === 'cartas') minhasCartas(); else if (a === 'aluguel') aluguel();
       else if (a === 'missoes' && NPC) NPC.missoes();
       else if (a === 'colecao' && NPC) NPC.colecao();

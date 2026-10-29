@@ -1390,6 +1390,11 @@ body.reduce .wipseal { animation: none; }
 .hs-btns .btn:disabled { opacity: .4; }
 @keyframes hsseal { 50% { transform: translateY(-6px); filter: drop-shadow(0 0 36px #d4c0ffcc); } }
 .hs-map { background: linear-gradient(#07051499, #070514bb), url(cena/mapa-galaxia.png) center / cover no-repeat, radial-gradient(circle at 50% 50%, #251c5c 0%, #120d30 45%, #070514 100%); overflow: hidden; touch-action: none; }
+.hs-particles { position: absolute; inset: -8%; z-index: 0; overflow: hidden; pointer-events: none; }
+.hs-particles i { position: absolute; left: var(--x); top: var(--y); width: var(--s); height: var(--s); border-radius: 50%; opacity: .38; background: #d9f7ff; box-shadow: 0 0 5px 1px #77cfff, 0 0 16px 3px #6a45d655; animation: hsdust var(--d) ease-in-out var(--dl) infinite alternate; }
+.hs-particles i:nth-child(3n) { background: #d9c8ff; box-shadow: 0 0 5px 1px #d9c8ff, 0 0 16px 3px #8f6cff66; opacity: .3; }
+@keyframes hsdust { from { transform: translate3d(0, 0, 0) scale(.7); opacity: .12; } to { transform: translate3d(var(--dx), var(--dy), 0) scale(1.35); opacity: .55; } }
+body.reduce .hs-particles, body.mapfx-off .hs-particles { display: none; }
 .hs-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; user-select: none; -webkit-user-select: none; cursor: grab; }
 .hs-svg:active { cursor: grabbing; }
 #hsCam { transform-origin: 0 0; will-change: transform; }
@@ -1441,7 +1446,7 @@ body.reduce .wipseal { animation: none; }
   .hs-pill small { display: none; }
   .hs-hud.ctl { left: 50%; right: auto; top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); flex-direction: row; width: max-content; max-width: calc(100vw - 16px); padding: 6px; gap: 5px; border: 1px solid #ffffff24; border-radius: 16px; background: #090617cc; backdrop-filter: blur(10px); }
   .hs-hud .ibtn { width: 40px; height: 40px; min-height: 40px; border-radius: 11px; }
-  .hs-hud.ctl .ibtn:nth-last-child(1) { display: none; }
+  .hs-hud.ctl .map-help { display: none; }
   .hs-sheet { max-height: 58%; padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
 }
 .hs-sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 8; max-height: 52%; overflow: auto; padding: 18px 18px calc(20px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(180deg, #1d1745, #110a28); border-top: 1px solid var(--line); border-radius: 20px 20px 0 0; box-shadow: 0 -18px 50px #000a; animation: zsheetin .22s cubic-bezier(.2, .8, .3, 1); display: flex; flex-direction: column; gap: 8px; }
