@@ -148,13 +148,15 @@
           <div class="adm-f" style="margin-top:8px"><button class="btn primary sm" data-a="svsave">Gravar escolhas</button><button class="btn ghost sm" data-a="svreset">Tudo no original</button><button class="btn ghost sm" data-a="svcopy">Copiar escolhas</button><span class="hint" id="svmsg" style="align-self:center"></span></div>`; })()}
         <div class="adm-f" style="margin-top:10px"><span class="hint" style="align-self:center">Trilhas:</span>
           <button class="btn sm" data-a="mus" data-v="menu">Ambiente do menu</button><button class="btn sm" data-a="mus" data-v="0">Partida · normal</button><button class="btn sm" data-a="mus" data-v="1">Partida · tensão</button><button class="btn sm" data-a="mus" data-v="2">Partida · clímax</button><button class="btn ghost sm" data-a="mus" data-v="stop">Parar</button></div>
+        <div class="adm-f" style="margin-top:8px"><span class="hint" style="align-self:center">Modo História:</span>${[['mapa', 'Mapa'], ['batalha', 'Batalha'], ['arauto', 'Arauto'], ['guardiao', 'Guardião'], ['boss', 'Boss final'], ['intro', 'Abertura'], ['final', 'Final'], ['loja', 'Loja']].map(([k, n]) => `<button class="btn sm" data-a="mush" data-v="${k}">${n}</button>`).join('')}</div>
+        <p class="hint">Arauto e Guardião tocam a trilha de miniboss enquanto não houver o arquivo próprio (<code>musica/historia_arauto.mp3</code> e <code>musica/historia_guardiao.mp3</code>).</p>
         <p class="hint">A trilha da partida só toca com a música ligada nas opções. Na partida real, a tensão e o clímax duram um trecho e voltam ao normal.</p></section></div>`;
   }
   function openSounds() {
     if (sov) return; U.SND.init(); U.SND.stopMusic(); SVok = false;
     sov = el('<div class="adm sov" role="dialog" aria-label="Sons do jogo"></div>'); sov.innerHTML = sounds(); sov.onclick = root.onclick; U.layer().appendChild(sov);
   }
-  function closeSounds() { if (!sov) return; sov.remove(); sov = null; if (U.SND) U.SND.setMode('menu'); }
+  function closeSounds() { if (!sov) return; sov.remove(); sov = null; try { U.SND.histStop(); } catch (e) { } if (U.SND) U.SND.setMode('menu'); }
 
   function digest(A) {
     const top = (arr) => arr.map(r => ({ carta: r.nome, serie: r.serie, especial: r.esp, disputas: r.k, vitoria: Math.round(r.wr * 100), z: +r.z.toFixed(1) }));
@@ -208,6 +210,7 @@
       else if (a === 'svsave') { const o = {}; Object.keys(SV).forEach(k => { if (SV[k]) o[k] = SV[k]; }); U.store.set('sfx', o); U.SND.escolha = o; const m = $('#svmsg'); if (m) m.textContent = 'Gravado ✓ (' + Object.keys(o).length + ' diferentes do original)'; }
       else if (a === 'svreset') { SV = {}; $$('.sfxrow', sov).forEach(r => $$('.sfxv', r).forEach((x, i) => x.classList.toggle('on', i === 0))); const m = $('#svmsg'); if (m) m.textContent = 'Tudo no original — toque em Gravar para confirmar'; }
       else if (a === 'svcopy') { const txt = Object.entries(U.SND.SLOTS).filter(([k]) => k !== 'menu' && U.SND.variants && U.SND.variants[k]).map(([k]) => k + '=' + ((SV[k] | 0) + 1)).join(', '); const m = $('#svmsg'); const done = () => { if (m) m.textContent = 'Copiado'; }; try { navigator.clipboard.writeText(txt).then(done, () => { if (m) m.textContent = txt; }); } catch (e) { if (m) m.textContent = txt; } }
+      else if (a === 'mush') { const SND = U.SND; SND.init(); if (!SND.ctx) return; SND.stopMusic(); SND.histStop(); SND.histNow = null; SND.musicOn = true; SND.histPlay(b.dataset.v); }
       else if (a === 'mus') {
         const SND = U.SND, v = b.dataset.v; SND.init(); if (!SND.ctx) return;
         if (v === 'stop') { SND.stopMusic(); return; }

@@ -187,7 +187,7 @@
     // ---------- trilhas do Modo História (A União): mapa, batalha normal, miniboss e boss final.
     // Coloque os arquivos em prototipo/musica/ com estes nomes; enquanto o arquivo não existir, tudo segue como antes (sem trilha própria).
     // Loop simples do arquivo inteiro (a/b opcionais, em segundos, como nas outras trilhas).
-    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, boss: { f: 'musica/historia_boss.mp3' }, intro: { f: 'musica/historia_intro.mp3' }, final: { f: 'musica/historia_final.mp3' }, loja: { f: 'musica/historia_loja.mp3' } },
+    HIST: { mapa: { f: 'musica/historia_mapa.mp3' }, batalha: { f: 'musica/historia_batalha.mp3' }, mini: { f: 'musica/historia_miniboss.mp3' }, arauto: { f: 'musica/historia_arauto.mp3' }, guardiao: { f: 'musica/historia_guardiao.mp3' }, boss: { f: 'musica/historia_boss.mp3' }, intro: { f: 'musica/historia_intro.mp3' }, final: { f: 'musica/historia_final.mp3' }, loja: { f: 'musica/historia_loja.mp3' } },
     histPos: {}, HIST_RESUME: { mapa: 1 },   // o mapa sempre continua de onde parou depois de outra trilha (loja, batalha...)
     histBuf: {}, histNow: null, histNodes: null,
     async histLoad(k) {
@@ -199,12 +199,12 @@
     // toca a trilha do modo história (troca com crossfade); sem arquivo, não faz nada e a música do menu segue normalmente
     async histPlay(k) {
       if (!this.ctx || !this.musicOn || this.histNow === k) return;
-      this.histNow = k; const m = await this.histLoad(k);
+      this.histNow = k; let m = await this.histLoad(k); if (!m && (k === 'arauto' || k === 'guardiao')) m = await this.histLoad('mini');   // sem arquivo próprio, arauto e guardião usam a trilha de miniboss
       if (this.histNow !== k || !m) { if (this.histNow === k && !m) this.histNow = null; return; }
       const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), now = c.currentTime;
       s.buffer = m.buf; s.loop = true; s.loopStart = m.a || 0; s.loopEnd = m.b || m.buf.duration; s.connect(g); g.connect(this.musicGain);
       const off = this.HIST_RESUME[k] ? (this.histPos[k] || 0) % m.buf.duration : 0;
-      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(({ batalha: 0.5, mini: 0.55, boss: 0.6 })[k] || 1, now + 1.2); s.start(now, off);   // trilhas de batalha mais baixas
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(({ batalha: 0.5, mini: 0.55, arauto: 0.55, guardiao: 0.55, boss: 0.6 })[k] || 1, now + 1.2); s.start(now, off);   // trilhas de batalha mais baixas
       if (this.musicNodes) { this.musicNodes.stop(); this.musicNodes = null; }
       this.histStop(true); this.histNodes = { s, g, k, t0: now, off, dur: m.buf.duration };
     },

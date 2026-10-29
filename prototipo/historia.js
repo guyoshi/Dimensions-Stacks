@@ -32,11 +32,11 @@
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
   // Guardiões (autor, 29/10): cada ponto sorteia um dos 4 no começo da partida. Cartas por guardião calibradas por simulação (jogador médio: 4 da União + boas cartas ≈ 55–60%).
-  const GUARDAS = {
-    G1: { nome: 'Dupla somada', nomes: ['Sumo Vigia', 'Orionus Polar'], av: ['J26', 'J31'], regra: 'g_duo', m: 9, txt: 'Cada um joga duas cartas e soma os atributos. Os guardiões são uma equipe; se um cair, o outro segue sozinho.' },
-    G2: { nome: 'Roubo duplo', nomes: ['Korvo', 'Beatriz Lins'], av: ['V10', 'V04'], regra: 'g_roubo', m: 8, txt: 'Quem vence leva mais uma carta do topo de cada perdedor: captura se atacou, Buraco Negro se defendeu.' },
-    G3: { nome: 'Blocos de três', nomes: ['Breno Lins', 'Banjo Lins'], av: ['V01', 'V03'], regra: 'g_bloco', m: 18, txt: 'As disputas valem em blocos de 3. Quem vencer mais leva as cartas dos outros: captura se atacou mais, Buraco Negro se defendeu mais.' },
-    G4: { nome: 'Fenômeno a cada disputa', nomes: ['Raukhar', 'Alveris Polar'], av: ['J32', 'J25'], evTodas: true, m: 4, txt: 'Um fenômeno diferente em toda disputa. Cada guardião que ficar sem cartas puxa até 7 do Buraco Negro, uma vez.' },
+  const GUARDAS = {   // nomes de constelação (cada um ligado ao personagem da carta): Órion/Cassiopeia (Orionus Polar, Sumo Vigia), Corvus (Korvo), Lince (Breno Lins), Escorpião (Raukhar)
+    G1: { nome: 'Dupla somada', nomes: ['Cassiopeia', 'Órion'], av: ['J26', 'J31'], regra: 'g_duo', m: [2, 1], fraco: true, txt: 'Dois guardiões: cada um joga uma carta e o poder das duas se soma contra a sua. Se vencerem, a carta vai para quem tinha o maior atributo; se um cair, o outro segue sozinho.' },
+    G2: { nome: 'Roubo duplo', nomes: ['Corvus'], av: ['V10'], regra: 'g_roubo', simbolos: true, m: 9, txt: 'Quem vence leva mais uma carta do topo do perdedor: captura se atacou, Buraco Negro se defendeu. Em toda disputa surgem símbolos de atributo: toque nos verdes (+5 na próxima disputa) e evite os vermelhos (−5).' },
+    G3: { nome: 'Blocos de três', nomes: ['Lince'], av: ['V01'], regra: 'g_bloco', m: 12, txt: 'As disputas valem em blocos de 3. Quem vencer mais leva as cartas do outro: captura se atacou mais, Buraco Negro se defendeu mais.' },
+    G4: { nome: 'Fenômeno a cada disputa', nomes: ['Escorpião'], av: ['J32'], evTodas: true, m: 6, txt: 'Um fenômeno diferente em toda disputa. Ao ficar sem cartas, o guardião puxa até 7 do Buraco Negro, uma vez.' },
   };
   function guardaDe(id) {   // sorteio guardado no save: a posição é fixa, o guardião varia
     S.guardas = S.guardas || {}; if (!Object.keys(S.guardas).length || GUARD.some(x => !S.guardas[x])) { const ids = ['G1', 'G2', 'G3', 'G4']; for (let i = ids.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [ids[i], ids[j]] = [ids[j], ids[i]]; } GUARD.forEach((x, k) => { S.guardas[x] = ids[k]; }); save(); }
@@ -333,7 +333,7 @@
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id);
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
     const cartas = n.tipo === 'loja' ? '' : `<div class="hs-cards">${Array.from({ length: 7 }, () => '<span class="hs-cb"><b>?</b></span>').join('')}</div>`;
-    const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo de 3 jogadores' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
+    const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : 'Você contra 1 inimigo';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])} · ${esc(LADOS[setor(n)])}</small></div></div>
       <p class="hs-st ${ok ? 'hs-ok' : av ? 'hs-av' : 'hs-lk'}">${ok ? '✓ Vencida' : av ? 'Disponível' : 'Caminho fechado'}</p>
@@ -383,7 +383,7 @@
     const box = el(`<div class="hs-esc"><h3>Escolha ${opt.livre ? 'até ' : ''}${N} ${N === 1 ? 'carta' : 'cartas'}${opt.so ? ' lendária' : ''}</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
     const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), msg = $('.hs-msg', box), go = $('[data-a=go]', box);
     const sel = new Set(); let forcadas = new Set();
-    const auto = () => { sel.clear(); forcadas = new Set(); const L = livres(); L.slice(0, N).forEach(x => sel.add(x));
+    const auto = () => { sel.clear(); forcadas = new Set(); (opt.prefer || []).filter(x => todas.includes(x) && (!fadigaOn() || !fad(x))).forEach(x => sel.add(x)); const L = livres(); L.slice(0, N).forEach(x => { if (sel.size < N) sel.add(x); });
       if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
     const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); g.append(w); }); };
     const upd = () => { cnt.textContent = sel.size + ' / ' + N; go.disabled = opt.livre ? !sel.size : sel.size !== N; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
@@ -408,9 +408,10 @@
   const textoEvento = ev => { const c = (window.DS_EVENTOS_H || {})[ev.id]; if (!c) return null; return { nome: c.nome, regra: c.regra.replace('{A}', ev.attr && U.ATT[ev.attr] ? U.ATT[ev.attr].nome : '') }; };
   function duelar(id, auto) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
     const n = BY[id], bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (!bat0 || n.tipo === 'loja') return;
+    if (n.tipo === 'boss') return duelarBoss(id, auto);
     const gd = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null;
     const bat = gd ? Object.assign({}, bat0, { i: gd.nomes.map((nm, k) => { const R = (() => { let a = (id.charCodeAt(3) * 131 + k * 977 + gd.m * 31) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
-      const deck = [gd.av[k]], used = new Set(gd.av); for (let q = 1; q < gd.m; q++) { const r = q === 1 ? 'rara' : q % 2 ? 'epica' : 'lendaria', pool = U.D.CARTAS.filter(c => !c.uniao && c.id !== 'S11' && c.raridade === r && !used.has(c.id)); if (!pool.length) break; const c = pool[Math.floor(R() * pool.length)]; deck.push(c.id); used.add(c.id); }
+      const m = Array.isArray(gd.m) ? gd.m[k] : gd.m, deck = gd.fraco ? [] : [gd.av[k]], used = new Set(gd.av); for (let q = gd.fraco ? 0 : 1; q < m; q++) { const r = gd.fraco ? 'comum' : q === 1 ? 'rara' : q % 2 ? 'epica' : 'lendaria', pool = U.D.CARTAS.filter(c => !c.uniao && c.id !== 'S11' && c.raridade === r && !used.has(c.id)); if (gd.fraco) pool.sort((x, y) => FORCA(x.id) - FORCA(y.id)); if (!pool.length) break; const c = gd.fraco ? pool[Math.floor(R() * Math.min(6, pool.length))] : pool[Math.floor(R() * pool.length)]; deck.push(c.id); used.add(c.id); }
       return { n: nm, a: gd.av[k], c: deck.sort((x, y) => FORCA(x) - FORCA(y)) }; }) }) : bat0;
     const ev = bat.e || null, opt0 = n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : n.tipo === 'miniboss' ? { n: Math.max(7, ...bat.i.map(x => x.c.length)), livre: true } : gd ? { n: 14, livre: true } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
     const autoMao = () => { const o = (S.owned || []).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so); return (o.length ? o : (S.owned || [])).slice(0, opt.n || 7); };
@@ -439,7 +440,7 @@
       }
       const bots = bat.i.map(x => ({ name: x.n, bot: true, diff: ev && ev.id === 'clarividente' ? 'dificil' : NIVEIS[nivelBot(n)] }));
       const players = [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }].concat(bots);
-      const musica = n.tipo === 'boss' ? 'boss' : (n.tipo === 'miniboss' || n.tipo === 'guardiao') ? 'mini' : 'batalha';
+      const musica = n.tipo === 'boss' ? 'boss' : n.tipo === 'miniboss' ? 'arauto' : n.tipo === 'guardiao' ? 'guardiao' : 'batalha';
       try { SND.histStop(true); } catch (e) { }
       const besta = n.tipo === 'boss' ? bonusBoss() : 0, bonusPids = bat.i.map((_, k) => k + 1);
       const uni = n.tipo === 'boss' ? mao.filter(c => UNIAO.includes(c)) : [], uniTodas = uni.length === UNIAO.length;
@@ -453,8 +454,32 @@
           setTimeout(() => { toggleWin(id); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } }, 450);
         } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
       } };
-      const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), bhRefill: gd && gd.evTodas ? [1, 2] : null, teams: gd ? [[0], [1, 2]] : null, teamPool: gd ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
+      const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), simbolos: gd && gd.simbolos ? { val: 5 } : null, bhRefill: gd && gd.evTodas ? [1] : null, teams: gd && gd.regra === 'g_duo' ? [[0], [1, 2]] : null, teamPool: gd && gd.regra === 'g_duo' ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
       if (uni.length && !auto) entradaUniao(uni, uniTodas, lanca); else lanca();
+    });
+  }
+  // ---- Boss final: 3 fases seguidas contra a Besta (calibrado por simulação com CPUs). Você recomeça cada fase com as mesmas 30 cartas (8 da União + 22); a Besta recomeça com um baralho novo.
+  const BOSS_N = [16, 22, 28], BOSS_B = [0, 6, 12];   // cartas da Besta por fase e bônus extra por fase (além de +30 por guardião vivo)
+  const BOSS_FASES = [['Cerco', 'A Besta usa Movimentos a cada duas rodadas. Os Chamados da União (cartas preparadas) respondem.'], ['Agilidade', 'Antes de cada disputa há um desafio relâmpago: acertar dá +10 nas suas cartas, errar tira 10.'], ['Buraco negro', 'O buraco negro puxa cartas do fundo de cada baralho a cada rodada. Salve as da União nos desafios.']];
+  function duelarBoss(id, auto) {
+    const n = BY[id], opt = { n: 30, livre: true, prefer: UNIAO.filter(c => (S.owned || []).includes(c)) };
+    const autoMao = () => { const o = S.owned || []; return UNIAO.filter(c => o.includes(c)).concat(o.filter(c => !UNIAO.includes(c)).sort((a, b) => FORCA(b) - FORCA(a))).slice(0, 30); };
+    (auto ? (b, f) => f(autoMao()) : (b, f) => escolher7(b, f, opt))(null, mao0 => {
+      try { SND.histStop(true); } catch (e) { }
+      const vivos = guardVivos(), pids = [1];
+      const lanca = F => {
+        const mao = mao0.slice(), usadas = new Set(mao), pool = embaralha(U.D.CARTAS.filter(c => !c.uniao && c.id !== 'S11' && !usadas.has(c.id)).sort((a, b) => FORCA(b.id) - FORCA(a.id)).slice(0, 40)).slice(0, BOSS_N[F - 1] - 1);
+        const besta = ['S11'].concat(pool.map(c => c.id)), bonus = 30 * vivos + BOSS_B[F - 1];
+        const hist = { musica: 'boss', id, fundo: 'boss', evento: { nome: 'Fase ' + F + ' · ' + BOSS_FASES[F - 1][0], regra: BOSS_FASES[F - 1][1] + (bonus ? ' As cartas da Besta ganham +' + bonus + ' em todos os atributos' + (vivos ? ' (' + vivos + ' guardiões vivos).' : '.') : '') }, notaVit: F < 3 ? 'Fase ' + F + ' vencida. A próxima fase começa com um novo baralho da Besta e as suas 30 cartas de volta.' : null,
+          aoFim: res => {
+            if (res.venceu && F < 3) { setTimeout(() => lanca(F + 1), 200); return; }
+            SND.histLock = null; try { SND.histStop(); } catch (e) { }
+            voltarMapa = true; U.show('uniao');
+            if (res.venceu && !cleared(id)) { setTimeout(() => toggleWin(id), 450); } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
+          } };
+        U.startGame({ players: [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }, { name: 'A Besta', bot: true, diff: 'dificil' }], perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: false, maxCombats: 400, maos: [mao, besta], bonusPids: pids, bonusVal: bonus, boss: { fase: F, bestaPid: 1 }, historia: hist });
+      };
+      if (!auto && UNIAO.some(c => mao0.includes(c))) entradaUniao(mao0.filter(c => UNIAO.includes(c)), mao0.filter(c => UNIAO.includes(c)).length === UNIAO.length, () => lanca(1)); else lanca(1);
     });
   }
   function quandoLivre(fn, n) { n = n || 0; if (n > 40) return; if ($('.bau-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1), 700); return; } fn(); }   // espera baús e outros diálogos fecharem
@@ -488,7 +513,7 @@
   // cartas da União entram no duelo contra a Besta: aparecem na tela; com as oito, a entrada é maior e elas ficam douradas (+5 em tudo)
   function entradaUniao(cartas, todas, depois) {
     closeSheet(); const red = document.body.classList.contains('reduce');
-    const ov = el(`<div class="uni-ov${todas ? ' gold' : ''}"><div class="uni-t">${todas ? 'A União completa!' : 'A União entra no duelo'}</div><div class="uni-r"></div><div class="uni-s">${todas ? '+5 em todos os atributos de cada carta da União' : cartas.length + ' / ' + UNIAO.length + ' da União. Com as oito, algo especial acontece.'}</div></div>`);
+    const ov = el(`<div class="uni-ov${todas ? ' gold' : ''}"><div class="uni-t">${todas ? 'A União completa!' : 'A União entra no duelo'}</div><div class="uni-r"></div><div class="uni-s">${todas ? 'Os oito Chamados estão prontos: prepare as cartas da União para responder à Besta' : cartas.length + ' / ' + UNIAO.length + ' da União. Cada carta da União vira um Chamado quando preparada.'}</div></div>`);
     const r = $('.uni-r', ov); cartas.forEach((c, i) => { const w = el('<div class="uni-c" style="--i:' + i + '"></div>'); w.append(U.cardEl(c, { up: true, noanim: true, cw: todas ? 78 : 92 })); r.append(w); });
     document.body.appendChild(ov); SND.play(todas ? 'legend' : 'capture'); let fim = false;
     const sai = () => { if (fim) return; fim = true; ov.classList.add('out'); setTimeout(() => { ov.remove(); depois(); }, 350); };

@@ -291,15 +291,32 @@
     const cw = Math.max(26, Math.floor(Math.min(W / need.w, H / need.h, 150)));
     V.cw = cw; $('.arena', w).style.setProperty('--cw', cw + 'px');
   }
+  const UNI8 = ['V02', 'J03', 'M10', 'S01', 'B01', 'M01', 'D06', 'V15'];
+  function bossHud() {   // Boss final: barra com os 8 Chamados e aviso da fase / do Movimento
+    const B = G && G.cfg.boss, host = $('#game'); if (!B || !host) return; $$('.bossbar, .bossmov', host).forEach(x => x.remove());
+    const bar = el('<div class="bossbar" aria-label="Chamados da União"></div>'); UNI8.forEach(id => { const sp = E.SPECIALS[CARDS[id].especial]; bar.append(el(`<span class="bb" data-id="${id}" title="${esc(CARDS[id].nome)}: ${esc(sp ? sp.nome + ' — ' + sp.texto : '')}">${esc(sp ? sp.nome.slice(0, 3) : '?')}</span>`)); });
+    const ar = $('.arena', host), mv = el('<div class="bossmov"></div>'); if (ar && ar.parentNode) { ar.parentNode.insertBefore(mv, ar); ar.parentNode.insertBefore(bar, ar); } bossMov(null, null);
+  }
+  const FASES = { 1: 'Fase 1 · Cerco', 2: 'Fase 2 · Agilidade', 3: 'Fase 3 · Buraco negro' };
+  function bossMov(now, next, info) {
+    const mv = $('#game .bossmov'), B = G && G.cfg.boss; if (!mv || !B) return; let t = `<b>${FASES[B.fase]}</b>`;
+    if (B.fase === 1) t += now ? ` · Movimento: <b>${esc(info[now].nome)}</b>` : ' · sem Movimento'; if (B.fase === 1 && next) t += ` · próximo: ${esc(info[next].nome)}`;
+    mv.innerHTML = t;
+  }
+  function bossBarPaint() {
+    if (!G || !G.cfg.boss) return; const p0 = G.p(0), others = new Set(); G.s.players.forEach(q => { if (q.pid !== 0) [...q.deck, ...q.reserve, ...q.prepared].forEach(c => others.add(c)); }); const bh = new Set(G.s.bh.map(x => x.id));
+    $$('#game .bossbar .bb').forEach(b => { const id = b.dataset.id; b.className = 'bb ' + (p0.prepared.includes(id) ? 'prep' : bh.has(id) || others.has(id) ? 'lost' : 'deck'); });
+  }
   function refresh() {
     if (!G || !V.seats[0] && !Object.keys(V.seats).length) return;
     const s = G.s; renderTrack();
     { const al = s.players.filter(p => p.alive), mc = al.length ? Math.min(...al.map(p => p.deck.length + p.reserve.length)) : 99;   // trilha: acelera perto do fim
       SND.matchLevel && SND.matchLevel(al.length <= 2 && mc <= 2 ? 2 : (al.length <= 2 && mc <= 5) || mc <= 2 ? 1 : 0); }
+    bossBarPaint();
     s.players.forEach(p => {
       const seat = V.seats[p.pid]; if (!seat) return;
       $('.cd', seat).textContent = p.deck.length; $('.cr', seat).textContent = p.reserve.length;
-      $$('.prepslot', seat).forEach((x, i) => x.classList.toggle('on', i < p.prepared.length));
+      $$('.prepslot', seat).forEach((x, i) => { x.classList.toggle('on', i < p.prepared.length); x.classList.toggle('ch', i < p.prepared.length && !!((E.SPECIALS[(CARDS[p.prepared[i]] || {}).especial] || {}).chamado)); });
       seat.classList.toggle('dead', !p.alive); { const st = $('.stt', seat), away = !p.bot && (s.away || []).includes(p.pid), k = p.bot ? 'cpu' : away ? 'warn' : 'on'; if (st && st.dataset.k !== k) { st.dataset.k = k; st.className = 'stt ' + k; st.title = p.bot ? 'CPU' : away ? 'Sem conexão' : 'Conectado'; st.textContent = p.bot ? '⚙' : ''; } }
       const turn = V.init === p.pid && p.alive && !s.over;
       seat.classList.toggle('turn', turn); $('.turnflag', seat).hidden = !turn;
@@ -454,7 +471,7 @@
   // ---------------------------------------------------------------- manipuladores de eventos do motor
   const H = {
     async setup() {
-      buildBoard(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
+      buildBoard(); bossHud(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
     },
     async initiative({ initiator }) {
       V.init = initiator; const n = V.n, seats = G.s.players.map(p => V.seats[p.pid]).filter(Boolean);
@@ -669,16 +686,18 @@
     async eliminated({ pid }) {
       refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700); if (U.tip) U.tip('elim');
     },
+    async movimento({ now, next, info }) { bossMov(now, next, info); if (now) { SND.play('banner'); banner(info[now].nome, info[now].txt, '#b04bff', 2400); caption('Movimento da Besta: ' + info[now].nome + '. ' + info[now].txt, true); await sleep(1500); } },
+    async bossPull({ round, k, pulled }) { refresh(); SND.play('elim'); const salvas = (pulled[0] || []).filter(x => x.saved).length, perdidas = (pulled[0] || []).filter(x => !x.saved && CARDS[x.c] && UNI8.includes(x.c)).length; banner('Buraco negro', `puxa ${k} do fundo de cada baralho` + (salvas ? ` · ${salvas} salva` : '') + (perdidas ? ` · ${perdidas} da União perdida` : ''), '#8f5cff', 1800); await sleep(1200); },
     async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
       SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const sameT = (a, b) => a === b || !!(G.cfg && G.cfg.teams && G.cfg.teams.some(t => t.includes(a) && t.includes(b))); const human = winner != null && (V.online ? sameT(winner, V.viewer) : (G.cfg && G.cfg.teams ? G.cfg.teams.some(t => t.includes(winner) && t.some(x => !G.p(x).bot)) : !G.p(winner).bot)); const anyHuman = V.humans > 0;
       const lost = winner == null || !(human || !anyHuman);
       if (G.cfg.historia) {   // modo história: resultado próprio, cartas capturadas e volta ao mapa
         const H = G.cfg.historia, me = G.p(V.viewer), mine = [...me.deck, ...me.reserve, ...me.prepared], inim = new Set((G.cfg.maos || []).slice(1).flat());
-        const cap = lost ? [] : mine.filter(c => inim.has(c));
+        const cap = lost || G.cfg.boss ? [] : mine.filter(c => inim.has(c));
         SND.play(lost ? 'defeat' : 'victory'); if (!lost) FX.confetti();
         const nn = el(`<div class="modal"><div class="box"><div class="final"><h1>${lost ? 'Derrota' : 'Vitória!'}</h1>
-          <div class="hint">${lost ? 'Seu baralho acabou. Reorganize as cartas e tente de novo.' : cap.length ? 'Cartas capturadas:' : 'Nenhuma carta capturada.'}</div><div class="row hcap" style="justify-content:center;flex-wrap:wrap"></div>
+          <div class="hint">${lost ? 'Seu baralho acabou. Reorganize as cartas e tente de novo.' : H.notaVit ? esc(H.notaVit) : cap.length ? 'Cartas capturadas:' : 'Nenhuma carta capturada.'}</div><div class="row hcap" style="justify-content:center;flex-wrap:wrap"></div>
           <div class="stats"><div><b>${G.s.combats}</b>disputas</div><div><b>${G.s.round}</b>rodadas</div></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="go">Continuar</button></div></div></div></div>`);
         cap.forEach(c => $('.hcap', nn).append(cardEl(c, { up: true, noanim: true, cw: cap.length > 3 ? 76 : 96 })));
@@ -746,6 +765,20 @@
         $('.cardbox', node).append(cardEl(top, { up: true, noanim: true, cw: Math.min(96, V.cw || 96) }));
         const v = await ask(node, '[data-v]'); if (v === 'n') V.noPrep[p.pid] = true; return v === '1';
       },
+      async simbolos(p, o) {   // Guardião G2: toque rápido nos símbolos de atributo (bons somam, vermelhos subtraem) na próxima disputa
+        await cover(p);
+        return new Promise(res => {
+          const val = o.val, seg = 4.6, tally = {}; const ov = el('<div class="sy-ov"><div class="sy-t">Símbolos! Toque nos bons</div><div class="sy-area"></div><div class="sy-tally"></div><div class="bm-bar"><i style="transition-duration:' + seg + 's"></i></div></div>');
+          document.body.appendChild(ov); requestAnimationFrame(() => requestAnimationFrame(() => { const i = $('.bm-bar i', ov); if (i) i.style.width = '0%'; }));
+          const area = $('.sy-area', ov), tl = $('.sy-tally', ov); const paint = () => { tl.innerHTML = AIDS.map(a => `<span class="sy-c${tally[a] ? (tally[a] > 0 ? ' pos' : ' neg') : ''}" data-a="${a}" style="--ac:var(--c-${a},#fff)">${ICON[a]}<b>${tally[a] ? (tally[a] > 0 ? '+' : '') + tally[a] : '0'}</b></span>`).join(''); }; paint();
+          const n = o.symbols.length; let done = false;
+          o.symbols.forEach((sy, i) => { const b = el(`<button class="sy-s${sy.neg ? ' neg' : ''}" data-a="${sy.a}" style="left:${8 + Math.random() * 78}%;top:${6 + Math.random() * 78}%;--d:${(i * (seg - 1.8) / n).toFixed(2)}s">${ICON[sy.a]}</button>`);
+            b.onpointerdown = () => { if (b.classList.contains('got') || done) return; b.classList.add('got'); tally[sy.a] = (tally[sy.a] || 0) + (sy.neg ? -val : val); SND.play(sy.neg ? 'tick' : 'capture'); paint(); }; area.append(b); });
+          setTimeout(() => { done = true; ov.remove(); res(tally); }, seg * 1000 + 100);
+        });
+      },
+      async bossMini() { return window.DSBossMini ? window.DSBossMini.play() : true; },
+      async bossSave(p, card) { return window.DSBossMini ? window.DSBossMini.salvar(card) : true; },
       async bet(p) {   // modo história, evento Aposta: 1 pêndulo antes de cada rodada
         const A = G.cfg.historia && G.cfg.historia.aposta; if (!A || p.bot || A.saldo() < 1) return false;
         const node = el(`<div class="sheet"><div class="txt"><h3>Aposta: 1 pêndulo?</h3><div class="hint">Vencer a rodada paga 2; perder custa 1; empate devolve. Você tem <b>${A.saldo()}</b>.</div><div class="row"><button class="btn primary sm" data-v="1">Apostar 1</button><button class="btn sm" data-v="0">Passar</button></div></div></div>`);
@@ -955,7 +988,7 @@
     SND.histLock = cfg.historia ? cfg.historia.musica : null; U.show('game'); shell(); { const gh = $('#game'); if (gh) { if (cfg.historia && cfg.historia.fundo) gh.dataset.fundo = cfg.historia.fundo; else delete gh.dataset.fundo; } }
     if (cfg.historia && cfg.historia.evento) { const ev = cfg.historia.evento, host = $('#game'); const chip = el(`<button class="evchip" type="button" aria-label="Evento: ${esc(ev.nome)}">⚡ Evento</button>`); chip.onclick = () => { SND.play('click'); U.modal(el(`<div class="evbox"><h2 style="color:var(--gold2)">⚡ ${esc(ev.nome)}</h2><p>${esc(ev.regra)}</p></div>`)); }; if (host) host.append(chip); setTimeout(() => banner(ev.nome, ev.regra, '#ffd25f', 3600), 500); }
     newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, duo: !!cfg.teams, ev: cfg.events !== false, shared: true });
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, teamPool: cfg.teamPool, evTodas: !!cfg.evTodas, bhRefill: cfg.bhRefill || null, maos: cfg.maos || null, regra: cfg.regra || null, bonusPids: cfg.bonusPids || null, bonusVal: cfg.bonusVal || 0, bonusCards: cfg.bonusCards || null, semMontar: !!cfg.semMontar, maxCombats: cfg.maxCombats || 400, historia: cfg.historia || null, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, teamPool: cfg.teamPool, evTodas: !!cfg.evTodas, bhRefill: cfg.bhRefill || null, maos: cfg.maos || null, regra: cfg.regra || null, bonusPids: cfg.bonusPids || null, bonusVal: cfg.bonusVal || 0, bonusCards: cfg.bonusCards || null, boss: cfg.boss || null, simbolos: cfg.simbolos || null, semMontar: !!cfg.semMontar, maxCombats: cfg.maxCombats || 400, historia: cfg.historia || null, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };

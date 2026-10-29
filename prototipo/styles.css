@@ -1638,3 +1638,45 @@ body.reduce .loja-ov, body.reduce .loja-it, body.reduce .loja-bal, body.reduce .
 .mini-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; } .mini-top > div { min-width: 0; line-height: 1.4; } .mini-top small { color: var(--ink2); }
 .mini-f { display: grid; grid-template-columns: 60px 1.2fr 1fr; gap: 6px; } .mini-f label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--ink2); font-weight: 800; min-width: 0; } .mini-f input { width: 100%; box-sizing: border-box; background: #0a0820; color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 7px 6px; font: inherit; font-size: 13px; min-width: 0; }
 .mini-s { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--ink2); }
+
+/* ---- Modo História: fundos por tipo de batalha, aura da Besta, barra de Chamados e desafios do Boss */
+#game[data-fundo="arauto"] { background: radial-gradient(520px 380px at 12% 8%, #ff5a7a38, transparent 70%), radial-gradient(480px 360px at 92% 86%, #ffb36a2e, transparent 70%), radial-gradient(60px 60px at 20% 30%, #ffffff18, transparent 70%), linear-gradient(180deg, #2a0f2e, #120a22 70%); }
+#game[data-fundo="guardiao"] { background: radial-gradient(600px 420px at 50% 0%, #5a8cff3d, transparent 70%), radial-gradient(420px 320px at 8% 90%, #8f5cff30, transparent 70%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg stroke='%238fb4ff' stroke-opacity='.28' fill='none'%3E%3Cpath d='M20 40 L70 70 L120 50 L170 100 L150 170'/%3E%3C/g%3E%3Cg fill='%23dbe7ff'%3E%3Ccircle cx='20' cy='40' r='2.4'/%3E%3Ccircle cx='70' cy='70' r='1.8'/%3E%3Ccircle cx='120' cy='50' r='2.6'/%3E%3Ccircle cx='170' cy='100' r='2'/%3E%3Ccircle cx='150' cy='170' r='2.4'/%3E%3C/g%3E%3C/svg%3E"), linear-gradient(180deg, #0b1236, #0a0820 75%); background-size: auto, auto, 220px 220px, auto; }
+#game[data-fundo="boss"] { background: radial-gradient(380px 380px at 50% 46%, #000 0 22%, #5b1aa855 38%, transparent 70%), conic-gradient(from 0deg at 50% 46%, #1a0630, #3a0d5c, #0a0414, #4a0f3a, #1a0630); background-size: auto, 220% 220%; animation: bossbg 26s linear infinite; }
+@keyframes bossbg { to { background-position: 0 0, 100% 60%; } }
+body.reduce #game[data-fundo="boss"] { animation: none; }
+#game[data-fundo="boss"] .slot[data-pid="1"] .card { box-shadow: 0 0 14px 3px #8a2be2cc, 0 0 34px 8px #2a0a4acc; filter: saturate(.8) contrast(1.06); }
+#game[data-fundo="boss"] .slot[data-pid="1"] .card::after { content: ''; position: absolute; inset: -6%; border-radius: inherit; pointer-events: none; background: radial-gradient(circle at 30% 20%, #b04bff55, transparent 55%), radial-gradient(circle at 75% 85%, #000000aa, transparent 60%); mix-blend-mode: multiply; animation: auraB 3.2s ease-in-out infinite; }
+@keyframes auraB { 50% { opacity: .55; transform: scale(1.04); } }
+.prepslot.on.ch { border-color: #ffe29a; background: radial-gradient(circle at 50% 40%, #fff6d8, #d9962a 70%); box-shadow: 0 0 10px #ffc46b; }
+.bossbar { display: flex; gap: 5px; justify-content: center; align-items: center; padding: 4px 8px; flex-wrap: wrap; }
+.bossbar .bb { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 700 9px var(--f-disp); color: #cfc7f5; border: 1.5px solid #ffffff33; background: #1a1540; position: relative; }
+.bossbar .bb.deck { border-color: #f4f1ff77; }
+.bossbar .bb.prep { border-color: #ffe29a; color: #2a1608; background: radial-gradient(circle at 50% 40%, #fff6d8, #d9962a 75%); box-shadow: 0 0 10px #ffc46b; }
+.bossbar .bb.lost { opacity: .3; filter: grayscale(1); text-decoration: line-through; }
+.bossmov { align-self: center; background: #14082acc; border: 1px solid #b04bff88; border-radius: 12px; padding: 3px 10px; margin: 2px 8px; font: 600 11px var(--f-body); color: #e9ddff; text-align: center; pointer-events: none; max-width: 94%; }
+.bossmov b { color: #ffd25f; }
+.bm-ov { position: fixed; inset: 0; z-index: 400; display: grid; place-items: center; background: #05030fcc; backdrop-filter: blur(3px); }
+.bm-box { width: min(92vw, 340px); background: linear-gradient(180deg, #1a1040, #0c0824); border: 1px solid #b04bff88; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 40px #7a2bff55; }
+.bm-t { font: 700 16px var(--f-disp); color: var(--gold2); text-align: center; } .bm-s { color: var(--ink2); text-align: center; }
+.bm-bar { height: 6px; border-radius: 3px; background: #ffffff1c; overflow: hidden; } .bm-bar i { display: block; height: 100%; width: 100%; background: var(--prism); transition: width linear; }
+.bm-res { text-align: center; min-height: 20px; font: 700 14px var(--f-disp); } .bm-res.ok { color: #7dffb0; } .bm-res.no { color: #ff7a8a; }
+.bm-ast { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid #ffffff22; border-radius: 10px; overflow: hidden; background: #0a0620; touch-action: none; }
+.bm-lane { border-right: 1px dashed #ffffff18; } .bm-lane:last-child { border: 0; }
+.bm-ship, .bm-rock { position: absolute; transform: translateX(-50%); font-size: 18px; line-height: 18px; } .bm-ship { bottom: 4px; color: #7dd3ff; } .bm-rock { color: #ff9a6a; display: none; }
+.bm-elos { display: flex; flex-direction: column; gap: 10px; align-items: center; } .bm-show { height: 52px; font: 700 40px/52px var(--f-disp); color: #ffd25f; opacity: .6; } .bm-show.on { opacity: 1; text-shadow: 0 0 16px #ffd25f; }
+.bm-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; } .bm-k { height: 46px; border-radius: 10px; border: 1px solid #ffffff33; background: #231c52; color: #f4f1ff; font-size: 22px; } .bm-k:disabled { opacity: .45; }
+.bm-luas { position: relative; height: 110px; } .bm-moon { position: absolute; top: 18px; width: 36px; height: 36px; border-radius: 50%; } .bm-moon.a { background: radial-gradient(circle at 35% 35%, #fff, #8fb4ff); } .bm-moon.b { background: radial-gradient(circle at 35% 35%, #fff, #ff9ec7); mix-blend-mode: screen; }
+.bm-go { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); padding: 10px 26px; border-radius: 12px; border: 1px solid #ffffff44; background: #3a2a7a; color: #fff; font: 700 14px var(--f-disp); }
+.bm-orb { margin: 6px auto; width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; font: 700 22px var(--f-disp); color: #fff; background: radial-gradient(circle, #000 0 25%, #7a2bff 60%, #2a0a4a); box-shadow: 0 0 30px #7a2bff; touch-action: manipulation; user-select: none; } .bm-orb.hit { transform: scale(1.12); }
+
+.sy-ov { position: fixed; inset: 0; z-index: 400; background: #05030fd9; backdrop-filter: blur(3px); display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+.sy-t { text-align: center; font: 700 17px var(--f-disp); color: var(--gold2); } .sy-area { position: relative; flex: 1; border: 1px solid #ffffff22; border-radius: 14px; overflow: hidden; background: radial-gradient(circle at 50% 40%, #1c1250, #0a0620); }
+.sy-s { position: absolute; width: 54px; height: 54px; border-radius: 50%; border: 2px solid #7dffb0; background: #123a2a; color: #fff; display: grid; place-items: center; opacity: 0; transform: scale(.4); animation: syin 1.5s var(--d) both; touch-action: manipulation; }
+.sy-s.neg { border-color: #ff5a6a; background: #4a1020; box-shadow: 0 0 14px #ff5a6a88; } .sy-s.got { animation: none; opacity: .15; transform: scale(.7); pointer-events: none; }
+@keyframes syin { 0% { opacity: 0; transform: scale(.4); } 15%, 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.7); pointer-events: none; } }
+.sy-s svg { width: 28px; height: 28px; }
+.sy-tally { display: flex; gap: 8px; justify-content: center; } .sy-c { display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 10px; border: 1px solid #ffffff2a; background: #1a1540; color: #cfc7f5; font: 700 13px var(--f-disp); } .sy-c.pos { color: #7dffb0; border-color: #7dffb066; } .sy-c.neg { color: #ff7a8a; border-color: #ff7a8a66; } .sy-c svg { width: 18px; height: 18px; }
+.sy-s svg { filter: invert(1) brightness(1.4); }
+.sy-s.neg::after { content: '−'; position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: #ff3b52; color: #fff; font: 800 15px/20px var(--f-disp); text-align: center; }

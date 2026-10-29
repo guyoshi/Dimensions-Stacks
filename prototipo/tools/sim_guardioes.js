@@ -6,20 +6,20 @@ const NU = D.CARTAS.filter(c => !c.uniao && c.id !== 'S11').sort((a, b) => pw(b)
 const rngF = s => { let a = s >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
 const CFGS = {
   G1: { regra: { id: 'g_duo' }, teams: [[0], [1, 2]], teamPool: false },
-  G2: { regra: { id: 'g_roubo' }, teams: [[0], [1, 2]], teamPool: false },
-  G3: { regra: { id: 'g_bloco' }, teams: [[0], [1, 2]], teamPool: false },
-  G4: { events: true, evTodas: true, bhRefill: [1, 2], teams: [[0], [1, 2]], teamPool: false },
+  G2: { regra: { id: 'g_roubo' }, simbolos: { val: 5 } },
+  G3: { regra: { id: 'g_bloco' } },
+  G4: { events: true, evTodas: true, bhRefill: [1] },
 };
 const total = g => { let n = g.s.bh.length; g.s.players.forEach(p => { n += p.deck.length + p.reserve.length + p.prepared.length; }); if (g.s.blk) Object.values(g.s.blk.held).forEach(h => { n += h.length; }); return n; };
 async function jogo(id, k, N, M, P) {
   const R = rngF(900 + k * 7), pick = (a, n) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b.slice(0, n); };
   const dono = P.nuniao != null ? pick(UN.map(c => c.id), P.nuniao) : P.uniao ? UN.map(c => c.id) : []; const mao = dono.concat(NU.slice(P.off || 0, (P.off || 0) + (P.pool || 30)).map(c => c.id)).sort((a, b) => pw(D.CARTAS.find(c => c.id === b)) - pw(D.CARTAS.find(c => c.id === a))).slice(0, N);
   const used = new Set(mao), RARO = r => D.CARTAS.filter(c => !c.uniao && c.id !== 'S11' && c.raridade === r && !used.has(c.id));
-  const deckG = () => { const d = []; const rec = ['rara'].concat(Array(3).fill('epica'), Array(3).fill('lendaria')); for (let i = 0; i < M; i++) { const r = i < 1 ? 'rara' : i % 2 ? 'epica' : 'lendaria'; const c = pick(RARO(r).filter(x => !d.includes(x.id)), 1)[0]; if (c) { d.push(c.id); used.add(c.id); } } return d; };
-  const g1 = deckG(), g2 = deckG();
-  const players = [{ name: 'Você', bot: true, diff: P.diff || 'dificil' }, { name: 'G1', bot: true, diff: 'dificil' }, { name: 'G2', bot: true, diff: 'dificil' }];
+  const deckG = (ix) => { const d = []; const av = (process.env.AVS || '').split(',')[ix || 0]; if (av) { d.push(av); used.add(av); } const rec = ['rara'].concat(Array(3).fill('epica'), Array(3).fill('lendaria')); for (let i = d.length; i < M; i++) { const r = process.env.RAR ? process.env.RAR : i < 1 ? 'rara' : i % 2 ? 'epica' : 'lendaria'; const c = process.env.WEAK ? RARO(r).filter(x => !d.includes(x.id)).sort((x, y) => sum(x) - sum(y))[Math.floor(R() * 6)] : pick(RARO(r).filter(x => !d.includes(x.id)), 1)[0]; if (c) { d.push(c.id); used.add(c.id); } } return d; };
+  const g1 = deckG(0), g2 = id === 'G1' ? deckG(1) : null;
+  const players = [{ name: 'Você', bot: true, diff: P.diff || 'dificil' }, { name: 'G1', bot: true, diff: 'dificil' }].concat(g2 ? [{ name: 'G2', bot: true, diff: 'dificil' }] : []);
   let exp = null, err = null;
-  const g = new E.Game(Object.assign({ players, perPlayer: N, difficulty: 'dificil', specialsFrom: 2, events: false, maxCombats: 100, seed: 3000 + k * 17, maos: [mao, g1, g2], io: { notify: async (t) => {
+  const g = new E.Game(Object.assign({ players, perPlayer: N, difficulty: 'dificil', specialsFrom: 2, events: false, maxCombats: 100, seed: 3000 + k * 17, maos: g2 ? [mao, g1, g2] : [mao, g1], io: { notify: async (t) => {
     if (t === 'ready') exp = total(g); if (exp != null && ['combatEnd', 'end'].includes(t) && total(g) !== exp) err = err || ('conservação ' + t + ' ' + total(g) + '!=' + exp); } } }, CFGS[id]));
   const w = await g.run(); return { w, rounds: g.s.round, combats: g.s.combats, lim: !!g.s.byLimit, err, mine: g.totalCards(g.p(0)) };
 }
