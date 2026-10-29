@@ -164,7 +164,7 @@
     },
 
     // ---------- música ambiente
-    startMusic() { if (!this.ctx) return; if (this.mode === 'game') return this.startMatch(); this.startMenuMusic(); },
+    startMusic() { if (!this.ctx) return; if (this.histNow) return;   /* trilha do modo história já toca: não sobrepor a do menu */ if (this.mode === 'game') return this.startMatch(); this.startMenuMusic(); },
     startMenuMusic() {
       if (!this.ctx || this.musicNodes) return;
       const c = this.ctx;
