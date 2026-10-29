@@ -137,14 +137,12 @@
   const EDGES = []; NOS.forEach(a => a.viz.forEach(v => { if (a.id < v) EDGES.push([a, BY[v]]); }));
   function nodeSvg(n) {
     const T = TIPOS[n.tipo], r = T.r, num = n.id[0] === 'B' ? String(+n.id.slice(1)) : n.id.slice(1);
+    const arquivo = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', minigame: 'minigame', boss: 'boss' }[n.tipo];
+    const tam = r * (n.tipo === 'boss' ? 2.7 : 2.55);
+    const arte = `<image class="node-art" href="cena/icones-mapa/${arquivo}.png" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}" preserveAspectRatio="xMidYMid meet"/>`;
     let inner = '';
-    if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle r="${r}" class="body"/><image href="selo.png" x="${-r * .78}" y="${-r * 1.0}" width="${r * 1.56}" height="${r * 2.0}" preserveAspectRatio="xMidYMid meet"/>`;
-    else if (n.tipo === 'loja') inner = `<circle class="halo" r="${r + 7}"/>${coin(r)}<text class="lbl" y="${r + 16}">${esc(num)}</text>`;
-    else {
-      const g = { evento: 'bolt', elite: 'star', miniboss: 'swords', guardiao: 'crown', minigame: 'dice' }[n.tipo];
-      inner = `<circle class="halo" r="${r + 8}"/><circle class="body" r="${r}"/>` +
-        (g ? `<g class="glyph" transform="scale(${(r / 14).toFixed(2)})">${ICON[g]}</g><text class="lbl" y="${r + 16}">${esc(num)}</text>` : `<text class="num" y="5">${esc(num)}</text>`);
-    }
+    if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle r="${r}" class="body"/>${arte}`;
+    else inner = `<circle class="halo" r="${r + 10}"/><circle class="body" r="${r}"/>${arte}<text class="lbl" y="${r + 18}">${esc(num)}</text>`;
     return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>`;
   }
   function nome(n) {
@@ -814,11 +812,12 @@
     render();
   }
   function legenda() {
-    const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><span class="hs-dot" style="background:${TIPOS[k].cor}"></span><b>${TIPOS[k].nome}</b></li>`).join('');
+    const icones = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', minigame: 'minigame', boss: 'boss' };
+    const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li><img class="hs-leg-ico" src="cena/icones-mapa/${icones[k]}.png" alt=""><b>${TIPOS[k].nome}</b></li>`).join('');
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
-    const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><span class="hs-dot" style="background:#fbf9ff"></span><b>Boss final</b></li></ul>
-      <h3>Opções</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Esconder o não liberado</label>
-      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="fim">Ver final</button><button class="btn sm" data-a="bau">Testar baú</button></div><h3>Teste</h3><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto</label>
+    const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><img class="hs-leg-ico boss" src="cena/icones-mapa/boss.png" alt=""><b>Boss final</b></li></ul>
+      <h3>Teste</h3><label class="hs-sw"><input type="checkbox" ${P.escuro !== false ? 'checked' : ''} data-a="escuro"> Esconder o não liberado</label>
+      <div class="row"><button class="btn sm" data-a="intro">Rever introdução</button><button class="btn sm" data-a="fim">Ver final</button><button class="btn sm" data-a="bau">Testar baú</button></div><label class="hs-sw"><input type="checkbox" ${P.aberto ? 'checked' : ''} data-a="aberto"> Mapa aberto</label>
       <div class="row"><button class="btn sm" data-a="reset">Zerar vitórias</button><button class="btn sm primary" data-a="ok">Fechar</button></div></div>`);
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {

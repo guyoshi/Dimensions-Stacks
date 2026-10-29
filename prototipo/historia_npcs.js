@@ -143,7 +143,7 @@
   function paint(vis, ocultar) {   // vis = pontos revelados (onde estou, vencidos, lojas): o NPC só aparece quando a ligação dele está visível
     if (!A || !S()) return; const g = A.$('#hsNpcs', A.root()); if (!g) return;
     if (!g.firstChild) {
-      g.innerHTML = ALL.map(n => { const p = pos(n); return `<g class="npcm ${isCh(n) ? 'ch' : 'cq'}" data-id="${n.id}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" role="button" tabindex="0" aria-label="${A.esc(n.nome)}"><circle class="np-h" r="21"/><circle class="np-b" r="14"/><text class="np-t" y="5.5">${A.esc(ini1(n))}</text><g class="np-bang"><circle cx="12" cy="-12" r="8"/><text x="12" y="-8.5">!</text></g></g>`; }).join('');
+      g.innerHTML = ALL.map(n => { const p = pos(n); return `<g class="npcm ${isCh(n) ? 'ch' : 'cq'}" data-id="${n.id}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" role="button" tabindex="0" aria-label="${A.esc(n.nome)}"><circle class="np-h" r="23"/><circle class="np-b" r="15"/><image class="np-art" href="cena/icones-mapa/npc.png" x="-25" y="-25" width="50" height="50" preserveAspectRatio="xMidYMid meet"/><g class="np-bang"><circle cx="15" cy="-15" r="8"/><text x="15" y="-11.5">!</text></g></g>`; }).join('');
     }
     if (vis) paint.vis = vis, paint.oc = ocultar; vis = paint.vis; ocultar = paint.oc;
     let aviso = false;
