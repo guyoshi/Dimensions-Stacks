@@ -199,7 +199,7 @@
   // ---------------------------------------------------------------- perfil (aba)
   function avatarHTML(a, name, size) {
     const init = esc((name || '?')[0].toUpperCase());
-    if (a && a.t === 'card' && IMG[a.id]) return `<span class="av" style="--s:${size}px"><img alt="" src="${IMG[a.id]}"></span>`;
+    if (a && a.t === 'card' && IMG[a.id]) return `<span class="av" style="--s:${size}px"><img alt="" src="${IMG[a.id].replace('photos/', 'photos/t/')}"></span>`;
     const col = a && a.t === 'serie' && SERIES[a.k] ? SERIES[a.k].cor : null;
     return `<span class="av ini" style="--s:${size}px${col ? `;--ac:${col}` : ''}">${init}</span>`;
   }

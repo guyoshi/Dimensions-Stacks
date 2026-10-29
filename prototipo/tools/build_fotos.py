@@ -26,6 +26,7 @@ for cid, v in mp.items():
     im = Image.open(p).convert('RGB')
     if im.width > W: im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)
     dst = os.path.join(out, cid + '.webp'); im.save(dst, 'WEBP', quality=Q, method=6)
+    os.makedirs(os.path.join(out, 't'), exist_ok=True); im.resize((300, 450), Image.LANCZOS).save(os.path.join(out, 't', cid + '.webp'), 'WEBP', quality=74, method=6)   # miniatura usada nas cartas pequenas
     man[cid] = {'src': v['src'], 'mtimeMs': v['mtimeMs'], 'bytes': len(raw), 'sha1': h, 'w': im.width, 'h': im.height, 'webp': os.path.getsize(dst)}
     imgs[cid] = f'photos/{cid}.webp?v={h}'
 json.dump({'raiz': mp['_raiz'], 'fotos': man}, open(os.path.join(out, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

@@ -99,7 +99,8 @@
     const sp = E.SPECIALS[c.especial];
     const n = { comum: 1, rara: 2, epica: 3, lendaria: 4 }[c.raridade] || 1;
     const bid = c.orig || id;
-    const art = IMG[bid] ? `<div class="art" style="--im:url('${IMG[bid]}')"><img alt="${esc(c.nome)}" src="${IMG[bid]}" loading="lazy" decoding="async" draggable="false"${FOCO[bid] != null ? ' style="object-position:50% ' + FOCO[bid] + '%' + (SOBE[bid] ? ';transform:translateY(-' + SOBE[bid] + 'em)' : '') + '"' : ''}></div>`
+    const full = o.full || (o.cw || 0) > 170, src = IMG[bid] && (full ? IMG[bid] : IMG[bid].replace('photos/', 'photos/t/'));   // miniatura (300x450) por padrão; foto grande só em tela cheia
+    const art = IMG[bid] ? `<div class="art" style="--im:url('${src}')"><img alt="${esc(c.nome)}" src="${src}" onerror="this.onerror=null;this.src='${IMG[bid]}'" loading="lazy" decoding="async" draggable="false"${FOCO[bid] != null ? ' style="object-position:50% ' + FOCO[bid] + '%' + (SOBE[bid] ? ';transform:translateY(-' + SOBE[bid] + 'em)' : '') + '"' : ''}></div>`
       : `<div class="ph">${SIL}<i>sem foto</i></div>`;
     const node = el(`<div class="card rar-${c.raridade}${c.clone ? ' isclone' : ''}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
@@ -195,7 +196,7 @@
     }
     function build(cid) {
       const wrap = el('<div class="zoomwrap"></div>');
-      const card = cardEl(cid, { up: true, cw: cw(), stats: (opts.stats && opts.stats[cid]) || CARDS[cid].stats });
+      const card = cardEl(cid, { up: true, full: true, cw: cw(), stats: (opts.stats && opts.stats[cid]) || CARDS[cid].stats });
       card.classList.add('zfcard'); card.addEventListener('click', () => { SND.play('click'); toggleSheet(); });
       wrap.append(card); return wrap;
     }
