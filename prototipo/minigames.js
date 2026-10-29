@@ -46,16 +46,12 @@
   const tierOf = (id, pct) => { const c = cfg(id).cortes; return pct >= c[2] ? 3 : pct >= c[1] ? 2 : pct >= c[0] ? 1 : 0; };
 
 
-  // ---- música dos minigames: tema curto e animado, gerado pelo próprio navegador (sem arquivo)
-  const MUS = (() => {
-    const MEL = [72, 76, 79, 76, 74, 77, 81, 77, 72, 76, 79, 84, 83, 79, 76, null, 69, 72, 76, 72, 71, 74, 77, 74, 67, 71, 74, 79, 76, 74, 72, null], BAS = [48, 45, 41, 43], SP = 60 / 132 / 2;
-    let ctx = null, out = null, timer = 0, step = 0, next = 0, on = false;
-    const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-    const nota = (m, t, dur, tipo, vol) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = tipo; o.frequency.value = hz(m); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g); g.connect(out); o.start(t); o.stop(t + dur + .05); };
-    const agenda = () => { if (!on) return; while (next < ctx.currentTime + .35) { const i = step % 32, m = MEL[i]; if (m != null) nota(m, next, SP * 1.6, 'triangle', .05); if (i % 4 === 0) nota(BAS[Math.floor(i / 8)] , next, SP * 3.4, 'sine', .08); if (i % 2 === 1) nota(96, next, .03, 'square', .012); next += SP; step++; } };
+  // ---- música dos minigames: 3 trilhas (divertida e tranquila, moderna, futurista e rápida) distribuídas entre os jogos; voltam à trilha anterior ao sair
+  const TRILHA = { maiormenor: 'mgdiv', memoria: 'mgdiv', quemequem: 'mgdiv', cofre: 'mgdiv', poderes: 'mgdiv', ordem: 'mgmod', mineracao: 'mgmod', cacapendulo: 'mgmod', luas: 'mgmod', culpado: 'mgmod', raspadinha: 'mgfut', asteroides: 'mgfut', gancho: 'mgfut', formacao: 'mgfut' };
+  const MUS = (() => { let ant = null, on = false;
     return {
-      start() { try { SND.init(); ctx = SND.ctx || new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === 'suspended') ctx.resume(); out = ctx.createGain(); out.gain.value = .0001; out.connect(SND.master || ctx.destination); out.gain.linearRampToValueAtTime(1, ctx.currentTime + .6); on = true; step = 0; next = ctx.currentTime + .1; timer = setInterval(agenda, 90); try { SND.duckMusic && SND.duckMusic(.12, 7200, .8); } catch (e) { } } catch (e) { on = false; } },
-      stop() { if (!on) return; on = false; clearInterval(timer); try { const o = out, t = ctx.currentTime; o.gain.setTargetAtTime(0, t, .15); setTimeout(() => { try { o.disconnect(); } catch (e) { } }, 900); SND.duckMusic && SND.duckMusic(1, 0, .6); } catch (e) { } },
+      start(id) { const k = TRILHA[id]; if (!k) return; try { ant = SND.histNow || null; SND.histPlay(k); on = true; } catch (e) { on = false; } },
+      stop() { if (!on) return; on = false; try { if (ant) SND.histPlay(ant); else SND.histStop(); } catch (e) { } },
     };
   })();
   const SEM_MUSICA = ['caracoroa', 'elos', 'ritmo'];
@@ -76,7 +72,7 @@
         $('.mg-ok', ov).onclick = () => { try { SND.play('click'); } catch (e) { } resolve(res); };
       };
       $('.mg-x', ov).onclick = () => { if (ended) { resolve(res); return; } fim(0, 'Abandonado'); };
-      if (!SEM_MUSICA.includes(id)) MUS.start(); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); }
+      MUS.start(id); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); }
     });
     ov.remove(); opts.onEnd && opts.onEnd(out); return out;
   }
