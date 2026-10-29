@@ -1569,3 +1569,5 @@ body.reduce .cin-foto { animation-duration: .01s; }
 .hs-escg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-height: 52vh; overflow: auto; justify-items: center; padding: 4px; }
 .hs-escc { border-radius: 10px; padding: 2px; cursor: pointer; opacity: .55; outline: 2px solid transparent; transition: opacity .15s, outline-color .15s; } .hs-escc.on { opacity: 1; outline-color: var(--gold); }
 .hs-esc .row { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.hs-escc { position: relative; } .hs-escc.tired { opacity: .35; filter: grayscale(.7); } .hs-escc.tired.on { opacity: .8; }
+.hs-fadb { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; pointer-events: none; } .hs-fad { color: #ff8a5c; font-size: 11px; letter-spacing: 1px; text-shadow: 0 1px 3px #000; }

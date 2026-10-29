@@ -339,20 +339,41 @@
   const nivelBot = n => Math.min(2, [0, 1, 1, 2][Math.max(0, (n.tier || 1) - 1)] + (['elite', 'miniboss', 'guardiao'].includes(n.tipo) && n.tier < 3 ? 1 : 0));   // PROPOSTA: dificuldade dos bots por região e tipo (a calibrar)
   const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
   const premioDe = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tier || 1) - 1)));
-  function escolher7(bat, ok) {   // jogador com mais de 7 cartas escolhe as 7 do duelo
+  // ---- cansaço das cartas (PROPOSTA, a calibrar): só vale com 21 ou mais cartas. Carta usada numa vitória cansa conforme a raridade; as não usadas descansam 1 ponto por vitória; derrota não cansa. Carta cansada não entra no duelo; pêndulos descansam.
+  const CANSA = { comum: 1, rara: 2, epica: 3, lendaria: 4 }, CUSTO_DESC = 6;
+  const fadigaOn = () => (S.owned || []).length >= 21;
+  const fad = id => (S.fadiga && S.fadiga[id]) | 0;
+  const pesoCansa = id => CANSA[(U.CARDS[id] || {}).raridade] || 1;
+  function aplicaCansaco(usadas) {   // chamado depois de uma vitória
+    if (!fadigaOn()) return 0; S.fadiga = S.fadiga || {}; const us = new Set(usadas); let n = 0;
+    Object.keys(S.fadiga).forEach(id => { if (!us.has(id)) { S.fadiga[id] = Math.max(0, S.fadiga[id] - 1); if (!S.fadiga[id]) delete S.fadiga[id]; } });
+    usadas.forEach(id => { S.fadiga[id] = (S.fadiga[id] | 0) + pesoCansa(id); n++; }); return n;
+  }
+  const pontosFad = id => '<span class="hs-fad">' + '●'.repeat(Math.min(6, fad(id))) + '</span>';
+  function escolher7(bat, ok) {   // o jogador escolhe as 7 cartas do duelo
     const todas = (S.owned || []).slice().sort((a, b) => FORCA(b) - FORCA(a));
-    if (todas.length <= 7) { ok(todas.slice(0, 7)); return; }
-    const sel = new Set(todas.slice(0, 7));
-    const box = el(`<div class="hs-esc"><h3>Escolha 7 cartas</h3><p class="hint">Toque para marcar ou desmarcar. <b class="hs-cnt"></b></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores 7</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
-    const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), go = $('[data-a=go]', box);
-    const upd = () => { cnt.textContent = sel.size + ' / 7'; go.disabled = sel.size !== 7; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id))); };
-    todas.forEach(id => { const w = el(`<div class="hs-escc" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); g.append(w); });
+    if (todas.length <= 7 && !fadigaOn()) { ok(todas.slice(0, 7)); return; }
+    const livres = () => todas.filter(id => !fadigaOn() || !fad(id));
+    const box = el(`<div class="hs-esc"><h3>Escolha 7 cartas</h3><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores 7</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Lutar</button></div></div>`);
+    const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), msg = $('.hs-msg', box), go = $('[data-a=go]', box);
+    const sel = new Set(); let forcadas = new Set();
+    const auto = () => { sel.clear(); forcadas = new Set(); const L = livres(); L.slice(0, 7).forEach(x => sel.add(x));
+      if (sel.size < 7) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < 7) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
+    const montar = () => { g.innerHTML = ''; todas.forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); g.append(w); }); };
+    const upd = () => { cnt.textContent = sel.size + ' / 7'; go.disabled = sel.size !== 7; $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
+      msg.textContent = forcadas.size ? 'Faltam cartas descansadas: ' + forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa carta cansada para descansá-la (' + CUSTO_DESC + ' pêndulos por ponto).' : ''; };
+    auto(); montar();
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {
       const c = e.target.closest('.hs-escc'), b = e.target.closest('[data-a]');
-      if (c) { SND.play('tick'); const id = c.dataset.id; if (sel.has(id)) sel.delete(id); else if (sel.size < 7) sel.add(id); upd(); return; }
+      if (c) { const id = c.dataset.id;
+        if (fadigaOn() && fad(id) && !sel.has(id)) {   // carta cansada: pagar para descansar
+          const custo = fad(id) * CUSTO_DESC;
+          if ((S.pend | 0) < custo) { msg.textContent = 'Faltam pêndulos: descansar custa ' + custo + ' (você tem ' + (S.pend | 0) + ').'; SND.play('tick'); return; }
+          S.pend -= custo; delete S.fadiga[id]; save(); SND.play('capture'); if (sel.size < 7) { sel.add(id); } montar(); upd(); msg.textContent = 'Carta descansada (−' + custo + ' pêndulos).'; return; }
+        SND.play('tick'); forcadas.delete(id); if (sel.has(id)) sel.delete(id); else if (sel.size < 7) sel.add(id); upd(); return; }
       if (!b) return; SND.play('click');
-      if (b.dataset.a === 'melhores') { sel.clear(); todas.slice(0, 7).forEach(x => sel.add(x)); upd(); }
+      if (b.dataset.a === 'melhores') { auto(); upd(); }
       else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && sel.size === 7) { m.close(); ok(todas.filter(x => sel.has(x))); }
     };
     upd();
@@ -373,7 +394,7 @@
         SND.histLock = null; try { SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
         if (res.venceu && !cleared(id)) {
-          S.pend = (S.pend | 0) + premioDe(n); save();
+          S.pend = (S.pend | 0) + premioDe(n); const cn = aplicaCansaco(mao); save(); if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
           setTimeout(() => { toggleWin(id); if (res.capturadas.length) setTimeout(() => abrirBau({ cartas: res.capturadas }), 700); }, 450);
         } else { try { SND.histPlay('mapa'); } catch (e) { } }
       } };
@@ -473,5 +494,5 @@
     box.addEventListener('change', e => { if (e.target.dataset.a === 'aberto') { P.aberto = e.target.checked; save(); paintAll(); closeSheet(); } else if (e.target.dataset.a === 'escuro') { P.escuro = e.target.checked; save(); paintAll(); } });
   }
 
-  window.DSHistoria = { duelar, abrirBau, mount, show: hub, data: M, state: () => S };
+  window.DSHistoria = { escolher7, aplicaCansaco, duelar, abrirBau, mount, show: hub, data: M, state: () => S };
 })();
