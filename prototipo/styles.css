@@ -1825,6 +1825,13 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 /* minigames: Fragmentos de Rosto, Dança das Cartas, Relâmpago */
 .mg-fragbox { width: 150px; height: 200px; margin: 0 auto; background: #05030f; border: 2px solid #ffffff33; border-radius: 12px; overflow: hidden; display: block; position: relative; }
 .mg-frag { background-size: cover; background-position: center top; filter: brightness(.38) contrast(1.15); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; position: absolute; inset: 0; margin: auto; }
+.mg-cell.sim { display:grid; place-items:center; overflow:hidden; background:radial-gradient(circle, #273465, #100d2a); border-color:#7dc8ff55; transition:transform .14s, opacity .14s; }
+.mg-cell.sim .sg-icon { color:#82eaff; font:900 36px/1 var(--f-disp); text-shadow:0 0 12px #3fceff; }
+.mg-cell.sim svg { width:51px; height:51px; filter:drop-shadow(0 0 8px #ff405f); }
+.mg-cell.sim.in { animation:sgin .2s cubic-bezier(.2,1.4,.4,1) both; }.mg-cell.sim.out { animation:sgout .16s ease-in both; }
+.mg-cell.sim.skull { border-color:#ff5a4f; background:radial-gradient(circle, #5b1932, #160713); box-shadow:inset 0 0 20px #ff274944; }
+@keyframes sgin { from { opacity:0; transform:scale(.45) rotate(-12deg); } to { opacity:1; transform:none; } } @keyframes sgout { to { opacity:0; transform:scale(.55); } }
+body.reduce .mg-cell.sim.in, body.reduce .mg-cell.sim.out { animation:none; }
 .mg-dance { position: relative; margin: 14px auto; }
 .mg-dc { position: absolute; left: 0; top: 0; padding: 0; border: 2px solid transparent; border-radius: 10px; background: none; cursor: pointer; }
 .mg-dc.mark { border-color: #ffd25f; box-shadow: 0 0 18px #ffd25f; }
