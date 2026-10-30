@@ -18,7 +18,7 @@ try:
         pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip'); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
         pg.evaluate("(()=>{const k='dsstacks.historia',o=JSON.parse(localStorage.getItem(k));o.tutorial=1;localStorage.setItem(k,JSON.stringify(o));})()"); pg.reload(); pg.wait_for_timeout(900)
         pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(300); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1000)
-        sid = pg.evaluate("window.DSHistoria.state().pos")
+        sid = pg.evaluate("window.DSHistoria.state().startId")
         pg.mouse.click(1, 1)
         # botão Duelar do painel (jogador humano) abre a montagem do baralho
         pg.evaluate("document.querySelector('.n[data-id=\"%s\"]').dispatchEvent(new PointerEvent('pointerup',{bubbles:true}))" % sid) if False else None

@@ -101,7 +101,8 @@ try:
         hid = pg.evaluate("(()=>{const S=DSHistoria.state(),M=DSHistoria.data,B={};M.nos.forEach(n=>B[n.id]=n);return M.nos.find(n=>n.tipo=='casa'&&B[S.startId].viz.includes(n.id))?.id||null})()")
         print('casa ao lado do início:', hid)
         if hid:
-            pg.evaluate("DSHistoria.state().pos=DSHistoria.state().startId"); pg.evaluate("DSHistoria.openNode('%s')" % hid); pg.wait_for_timeout(300)
+            pg.evaluate("DSHistoria.state().pos='I_'+DSHistoria.state().startId"); pg.evaluate("DSHistoria.openNode('%s')" % hid); pg.wait_for_timeout(300)
+            chk('Vença a batalha' in pg.evaluate("document.querySelector('#hsSheet').textContent"), 'casa de NPC ao lado do início fica fechada até vencer a 1ª batalha')
             chk(pg.evaluate("!document.querySelector('[data-a=conv]')") and pg.evaluate("document.querySelector('#hsSheet h3').textContent.length>0"), 'casa longe: painel sem Conversar')
             pg.evaluate("DSHistoria.state().pos='%s'" % hid); pg.evaluate("DSHistoria.openNode('%s')" % hid); pg.wait_for_timeout(300)
             chk(pg.evaluate("!!document.querySelector('#hsSheet [data-a=conv]')"), 'parado na casa: Conversar')

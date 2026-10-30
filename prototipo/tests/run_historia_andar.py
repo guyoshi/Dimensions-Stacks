@@ -22,7 +22,8 @@ try:
     pg.screenshot(path=shots + '/hist_hub.png')
     pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1200)
     M = pg.evaluate("window.DSHistoria.data"); S = pg.evaluate("window.DSHistoria.state()")
-    chk(S['pos'] == S['startId'] and pg.evaluate("!!document.querySelector('#hsHero')"), 'boneco começa no ponto de partida')
+    chk(S['pos'] == 'I_' + S['startId'] and pg.evaluate("!!document.querySelector('#hsHero')"), 'boneco começa na casa inicial vazia')
+    pg.evaluate("(()=>{const s=DSHistoria.state();s.pos=s.startId;})()")
     pos = lambda i: pg.evaluate("id => {const r=document.querySelector('.n[data-id=\"'+id+'\"]').getBoundingClientRect();return [r.x+r.width/2,r.y+r.height/2]}", i)
     # distância em passos até o boss
     nodes = {x['id']: x for x in M['nos']}

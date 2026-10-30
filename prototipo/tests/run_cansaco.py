@@ -40,6 +40,13 @@ try:
         # sem pêndulos não descansa
         pg.evaluate("window.DSHistoria.state().pend = 0; window.DSHistoria.escolher7({}, m => {})"); pg.wait_for_selector('.hs-escg'); pg.click('.hs-escc.tired'); pg.wait_for_selector('.dsc-conf'); pg.wait_for_timeout(200)
         chk('Faltam' in pg.evaluate("document.querySelector('.dsc-s').textContent") and pg.evaluate("document.querySelector('.dsc-conf [data-a=s]').disabled"), 'sem pêndulos avisa e bloqueia o pagamento')
+        pg.evaluate("document.querySelectorAll('.modal').forEach(e=>e.remove())")
+        # time da última batalha é mantido; "Melhores 7" monta os melhores
+        pg.evaluate("(()=>{const s=window.DSHistoria.state();s.pend=500;s.fadiga={};s.owned=window.DSUI.D.CARTAS.filter(c=>!c.uniao).slice(0,15).map(c=>c.id);s.ultimoTime=s.owned.slice(8,15);window.__ant=s.ultimoTime.slice();window.DSHistoria.escolher7({}, m => {});})()")
+        pg.wait_for_selector('.hs-deck'); pg.wait_for_timeout(300)
+        got = pg.evaluate("[...document.querySelectorAll('.hs-deck .hs-escc')].map(e=>e.dataset.id).sort().join()"); chk(got == pg.evaluate("window.__ant.slice().sort().join()"), 'o time da batalha anterior vem montado')
+        pg.click('[data-a=melhores]'); pg.wait_for_timeout(200)
+        got2 = pg.evaluate("[...document.querySelectorAll('.hs-deck .hs-escc')].map(e=>e.dataset.id).sort().join()"); chk(got2 != got, 'Melhores 7 troca para os melhores')
         chk(not errs, 'erros de página: %s' % errs[:2])
         b.close()
 finally:

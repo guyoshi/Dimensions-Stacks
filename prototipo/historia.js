@@ -19,6 +19,7 @@
     guardiao: { nome: 'Guardião',  cor: '#ff9a3c', r: 36, desc: 'Um dos 4 guardiões espalhados pelo mapa. Cada um vencido tira 30 pontos de cada atributo das cartas da Besta.' },
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     bau:      { nome: 'Baú', cor: '#ffd25f', r: 17, desc: 'Um baú no caminho, com pêndulos, cartas ou uma escolha entre duas cartas. Não bloqueia e abre uma vez só.' },
+    inicio:   { nome: 'Início', cor: '#9fd0ff', r: 16, desc: 'Casa inicial, vazia: a jornada começa aqui e a primeira batalha está logo à frente.' },
     casa:     { nome: 'Casa de NPC', cor: '#b48cff', r: 19, desc: 'Moradia de um NPC: conversas e missões. Não tem duelo e não bloqueia o caminho.' },
     minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Casa de minigame, no meio do caminho. Passe com ao menos "Bom" para seguir; se falhar, pague um pouco para tentar de novo.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
@@ -40,8 +41,8 @@
     return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
   }
   const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; };
-  const ehCasa = n => n.tipo === 'casa' || n.tipo === 'bau' || n.tipo === 'minigame';   // pontos entre dois pontos
-  const livre = n => n.tipo === 'casa' || n.tipo === 'bau';   // os que não bloqueiam (o minigame bloqueia até passar com "Bom")   // pontos como a loja: não bloqueiam, ficam entre dois pontos
+  const ehCasa = n => n.tipo === 'casa' || n.tipo === 'bau' || n.tipo === 'minigame' || n.tipo === 'inicio';   // pontos entre dois pontos
+  const livre = n => n.tipo === 'casa' || n.tipo === 'bau' || n.tipo === 'inicio';   // os que não bloqueiam (o minigame bloqueia até passar com "Bom")   // pontos como a loja: não bloqueiam, ficam entre dois pontos
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const EX = 1.4, EYT = .62, EYB = .8, EY = EYB;   // o mapa gerado é quadrado; a arte de fundo é 2:1: pontos esticados na horizontal e mais comprimidos em cima do que embaixo (o Boss continua em 0,0, sobre o buraco negro)
   if (!M._lay) { M._lay = 1; NOS.forEach(n => { n.x = Math.round(n.x * EX); n.y = Math.round(n.y * (n.y < 0 ? EYT : EYB)); }); }
@@ -122,6 +123,11 @@
       a.viz = a.viz.map(v => v === best.id ? id : v); best.viz = best.viz.map(v => v === a.id ? id : v); NOS.push(h); BY[id] = h; ocupa.push({ x: h.x, y: h.y });
     });
   })();
+  (function inicios() {   // casa inicial vazia, para fora do mapa, antes de cada ponto de partida
+    if (M._ini) return; M._ini = 1;
+    Object.values(M.starts).forEach(sid => { const a = BY[sid]; if (!a) return; const d = Math.hypot(a.x, a.y) || 1, id = 'I_' + sid, h = { id, tipo: 'inicio', tier: a.tier, lado: a.lado, x: Math.round(a.x + a.x / d * 120), y: Math.round(a.y + a.y / d * 120 * .8), viz: [sid] }; a.viz.push(id); NOS.push(h); BY[id] = h; });
+    M.raio = Math.max(M.raio, Math.ceil(Math.max(...NOS.map(n => Math.hypot(n.x / EX, n.y / EY)))) + 40);
+  })();
   const R = M.raio;
   const NPC = window.DSNpc;   // NPCs, missões, fragmentos e registros (historia_npcs.js)
   let lastVis = null;
@@ -143,7 +149,7 @@
   const pulado = id => !!(S && S.atalhos && S.atalhos[id]);   // batalha opcional após a ajuda por derrotas
   function liberados() {
     const key = Object.keys(S.cleared).sort().join() + '|' + Object.keys(S.atalhos || {}).sort().join() + '|' + S.startId; if (key === libKey) return libSet;
-    const A = new Set([S.startId]); BY[S.startId].viz.forEach(v => { if (livre(BY[v])) A.add(v); });   // casas coladas no ponto de partida já estão ao alcance
+    const A = new Set([S.startId, 'I_' + S.startId]);   // a casa inicial (vazia) e a 1ª batalha; tudo o mais só abre vencendo o caminho
     const pilha = Object.keys(S.cleared).concat(Object.keys(S.atalhos || {})), vistos = new Set();
     while (pilha.length) { const id = pilha.pop(); if (vistos.has(id)) continue; vistos.add(id); BY[id].viz.forEach(v => { if (v === M.boss) return; A.add(v); if (BY[v].tipo === 'loja' || livre(BY[v])) pilha.push(v); }); }
     libKey = key; libSet = A; return A;
@@ -187,10 +193,10 @@
     const T = TIPOS[n.tipo], r = T.r, num = n.id[0] === 'B' ? String(+n.id.slice(1)) : n.id.slice(1);
     const arquivo = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', casa: 'npc', minigame: 'minigame', boss: 'boss' }[n.tipo];
     const tam = r * (n.tipo === 'boss' ? 2.7 : 2.55);
-    const arte = n.tipo === 'bau' ? bauSvg().replace('<svg class="bau-svg"', `<svg class="node-art bau-n" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}"`) : `<image class="node-art" href="cena/icones-mapa/${arquivo}.png" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}" preserveAspectRatio="xMidYMid meet"/>`;
+    const arte = n.tipo === 'inicio' ? `<g class="node-art" style="color:#cfe8ff" transform="scale(1.5)">${ICON.star}</g>` : n.tipo === 'bau' ? bauSvg().replace('<svg class="bau-svg"', `<svg class="node-art bau-n" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}"`) : `<image class="node-art" href="cena/icones-mapa/${arquivo}.png" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}" preserveAspectRatio="xMidYMid meet"/>`;
     let inner = '';
     if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle class="win-ring" r="${r + 9}"/><circle r="${r}" class="body"/>${arte}`;
-    else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'bau' || n.tipo === 'minigame' ? '' : n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
+    else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'bau' || n.tipo === 'minigame' || n.tipo === 'inicio' ? '' : n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
     return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>`;
   }
   function nome(n) {
@@ -198,6 +204,7 @@
     if (n.tipo === 'guardiao') return 'Guardião: ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
     if (n.tipo === 'bau') return 'Baú';
+    if (n.tipo === 'inicio') return 'Ponto de partida';
     if (n.tipo === 'casa') { const q = NPC && NPC.byId(n.npc); return q ? 'Casa: ' + q.nome : 'Casa de NPC'; }
     if (n.tipo === 'minigame') return mgInfo(n).nome;
     return 'Batalha ' + String(+n.id.slice(1)).padStart(3, '0');
@@ -243,12 +250,16 @@
   // cartas iniciais: 6 comuns + 1 épica (sem a Besta nem a União)
   function iniciais() {
     const pool = U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id)), sh = a => a.map(x => [Math.random(), x]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
-    return sh(pool.filter(c => c.raridade === 'comum')).slice(0, 6).concat(sh(pool.filter(c => c.raridade === 'epica')).slice(0, 1)).map(c => c.id);
+    const com = sh(pool.filter(c => c.raridade === 'comum')), mao = com.slice(0, 6), ep = sh(pool.filter(c => c.raridade === 'epica'))[0];
+    // garantia (autor, 30/10): ao menos uma carta boa de Poder e uma de Inteligência, senão não dá para capturar no começo (nada apelão: comuns com 65+ em Poder e 60+ em Inteligência)
+    const tem = (a, v) => mao.concat([ep]).some(c => c.stats[a] >= v);
+    [['pod', 65], ['int', 60]].forEach(([a, v]) => { if (tem(a, v)) return; const outra = a === 'pod' ? 'int' : 'pod', ok = com.filter(c => !mao.includes(c) && c.stats[a] >= v); const i = mao.findIndex(c => c.stats[outra] < (outra === 'pod' ? 65 : 60) || !(c.stats[outra] >= (outra === 'pod' ? 65 : 60))); if (ok.length) mao[i >= 0 ? i : 5] = ok[0]; });
+    return mao.concat([ep]).map(c => c.id);
   }
   // ---- ponto de partida: uma das 4 extremidades, sorteada em silêncio (sem tela de sorteio)
   function sortear() {
     const ladoSel = ['esq', 'cima', 'dir', 'baixo'][Math.floor(Math.random() * 4)];
-    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: M.starts[ladoSel], cleared: {}, pend: 0, owned: iniciais(), created: Date.now() }; S.npc = S.owned[Math.floor(Math.random() * S.owned.length)]; save();
+    S = { v: 1, start: ladoSel, startId: M.starts[ladoSel], pos: 'I_' + M.starts[ladoSel], cleared: {}, pend: 0, owned: iniciais(), created: Date.now() }; S.npc = S.owned[Math.floor(Math.random() * S.owned.length)]; save();
     if (window.DSCinema) window.DSCinema.play((pulou, v) => { if (v && v.nome) { S.nome = v.nome; save(); } openMap(true, true); }); else openMap(true);
   }
 
@@ -431,7 +442,7 @@
   let curId = null;
   function closeSheet() { if (sheet) { sheet.hidden = true; curId = null; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); } }
   function openNode(id) {
-    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; if (n.tipo === 'casa') return abrirCasa(id); if (n.tipo === 'bau') return abrirBauNo(id); curId = id; SND.play('click'); if (id === posId()) chegada(id);
+    if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; if (n.tipo === 'casa') return abrirCasa(id); if (n.tipo === 'bau') return abrirBauNo(id); if (n.tipo === 'inicio') { curId = id; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>Ponto de partida</h3><small>${esc(REGIAO[n.tier] || '')}</small></div></div><p class="hs-st hs-ok">Casa inicial, vazia.</p><p class="hint">Toque na batalha à frente para começar a jornada.</p>`; sheet.hidden = false; sheet.onclick = e => { if (e.target.closest('[data-a=x]')) closeSheet(); }; return; } curId = id; SND.play('click'); if (id === posId()) chegada(id);
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
@@ -544,13 +555,15 @@
     const box = el(`<div class="hs-esc"><h3>Seu time${opt.so ? ' (lendária)' : ''}</h3><div class="hs-deck"></div><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Iniciar</button></div></div>`);
     const g = $('.hs-escg', box), cnt = $('.hs-cnt', box), msg = $('.hs-msg', box), go = $('[data-a=go]', box);
     const sel = new Set(); let forcadas = new Set(); const F = filtros(() => { montar(); upd(); }); g.before(F.bar);
+    const guardavel = !opt.so && !opt.livre && !opt.prefer, ant = guardavel ? (S.ultimoTime || []).filter(id => todas.includes(id) && (!fadigaOn() || !fad(id))) : [];
+    const manter = () => { sel.clear(); forcadas = new Set(); ant.slice(0, N).forEach(x => sel.add(x)); if (sel.size < N) livres().forEach(x => { if (sel.size < N && !sel.has(x)) sel.add(x); }); if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // começa com o time da última batalha; "Melhores N" monta os melhores
     const auto = () => { sel.clear(); forcadas = new Set(); (opt.prefer || []).filter(x => todas.includes(x) && (!fadigaOn() || !fad(x))).forEach(x => sel.add(x)); const L = livres(); L.slice(0, N).forEach(x => { if (sel.size < N) sel.add(x); });
       if (sel.size < N) todas.filter(x => !sel.has(x)).sort((a, b) => fad(a) - fad(b)).forEach(x => { if (sel.size < N) { sel.add(x); forcadas.add(x); } }); };   // sem 7 descansadas, completa com as menos cansadas (nunca trava)
     const montar = () => { g.innerHTML = ''; todas.filter(F.ok).forEach(id => { const w = el(`<div class="hs-escc${fadigaOn() && fad(id) ? ' tired' : ''}" data-id="${id}"></div>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 72 })); if (fadigaOn() && fad(id)) w.append(el(`<div class="hs-fadb">${pontosFad(id)}</div>`)); if (alugadas().includes(id)) w.append(el('<div class="hs-alugsel">ALUGADA</div>')); g.append(w); }); };
     const upd = () => { cnt.textContent = sel.size + ' / ' + (opt.livre ? 'até ' : '') + N; go.disabled = opt.livre ? !sel.size : sel.size !== NN;
       const dk = $('.hs-deck', box), cwD = N > 10 ? 34 : N > 8 ? 40 : 48; dk.innerHTML = ''; [...sel].forEach(id => { const w = el('<div class="hs-escc on" data-id="' + id + '"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cwD })); dk.append(w); }); for (let q = sel.size; q < Math.min(N, 40); q++) dk.append(el('<span class="hs-slot" style="width:' + cwD + 'px;height:' + Math.round(cwD * 1.5) + 'px"></span>')); $$('.hs-escc', g).forEach(w => w.classList.toggle('on', sel.has(w.dataset.id)));
       msg.textContent = forcadas.size ? forcadas.size + ' cansada(s) entraram.' : fadigaOn() && todas.some(x => fad(x)) ? 'Toque numa cansada para descansar (pede confirmação; ' + CUSTO_DESC + ' por ponto).' : ''; };
-    auto(); montar();
+    if (ant.length) manter(); else auto(); montar();
     const m = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => {
       const c = e.target.closest('.hs-escc'), b = e.target.closest('[data-a]');
@@ -560,7 +573,7 @@
         SND.play('tick'); forcadas.delete(id); if (sel.has(id)) sel.delete(id); else if (sel.size < N) sel.add(id); upd(); return; }
       if (!b) return; SND.play('click');
       if (b.dataset.a === 'melhores') { auto(); upd(); }
-      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && (opt.livre ? sel.size > 0 : sel.size === NN)) { m.close(); ok(todas.filter(x => sel.has(x))); }
+      else if (b.dataset.a === 'x') m.close(); else if (b.dataset.a === 'go' && (opt.livre ? sel.size > 0 : sel.size === NN)) { m.close(); const time = todas.filter(x => sel.has(x)); if (guardavel) { S.ultimoTime = time.slice(); save(); } ok(time); }
     };
     upd();
   }
@@ -930,7 +943,7 @@
   }
   function legenda() {
     const icones = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', casa: 'npc', minigame: 'minigame', boss: 'boss' };
-    const L = Object.keys(TIPOS).filter(k => k !== 'boss').map(k => `<li>${k === 'bau' ? `<span class="hs-leg-ico">${bauSvg()}</span>` : `<img class="hs-leg-ico" src="cena/icones-mapa/${icones[k]}.png" alt="">`}<b>${TIPOS[k].nome}</b></li>`).join('');
+    const L = Object.keys(TIPOS).filter(k => k !== 'boss' && k !== 'inicio').map(k => `<li>${k === 'bau' ? `<span class="hs-leg-ico">${bauSvg()}</span>` : `<img class="hs-leg-ico" src="cena/icones-mapa/${icones[k]}.png" alt="">`}<b>${TIPOS[k].nome}</b></li>`).join('');
     const contagem = {}; NOS.forEach(n => { contagem[n.tipo] = (contagem[n.tipo] || 0) + 1; });
     const box = el(`<div class="hs-leg"><h3>Legenda</h3><ul>${L}<li><img class="hs-leg-ico boss" src="cena/icones-mapa/boss.png" alt=""><b>Boss final</b></li></ul>
       <label class="hs-sw"><input type="checkbox" ${P.numeros !== false ? 'checked' : ''} data-a="numeros"> Exibir números das fases</label>
