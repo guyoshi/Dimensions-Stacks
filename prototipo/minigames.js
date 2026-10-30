@@ -428,7 +428,7 @@
     // A União: Chamado da União — controle cada herói com o dedo (arraste) para longe das hordas; eles atacam sozinhos à distância. Tocado, o herói morre
     formacao(body, c, fim) {
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = 380, H = cv.height = 480, g = cv.getContext('2d'); cv.style.width = '100%'; cv.style.maxWidth = '380px'; cv.style.touchAction = 'none';
-      const S = uniaoSim(c.dif, Math.random), UN = ['D06', 'M01', 'J03', 'B01', 'S01', 'M10', 'V15', 'V02'], imgs = UN.map(id => { const im = new Image(); const src = (window.CARD_IMAGES || {})[id]; if (src) im.src = src.replace('photos/', 'photos/t/'); return im; });
+      const S = uniaoSim(c.dif, Math.random), UN = ['D06', 'M01', 'J03', 'B01', 'S01', 'M10', 'V15', 'V02'], imgs = UN.map(id => { const im = new Image(); const src = (window.CARD_IMAGES || {})[id]; if (src) im.src = src.replace('photos/', 'photos/t/'); return im; }), horda = new Image(); horda.src = 'cena/minigames/horda-uniao.png';
       const cor = id => { const k = U.CARDS[id], sr = (U.SERIES || {})[k && k.serie]; return sr ? sr.cor : '#8f5cff'; };
       const ptr = new Map(); let raf = 0, last = 0, acabou = false, msgMorte = 0;
       const pos = e => { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; };
@@ -441,9 +441,9 @@
         const n = S.ms.filter(m => !m.vivo).length; if (n > mortos) { mortos = n; SND.play('lose'); }
         g.fillStyle = '#07040f'; g.fillRect(0, 0, W, H);
         S.atk.forEach(a => { g.strokeStyle = '#ffd25f'; g.globalAlpha = Math.max(0, a.l / .14); g.lineWidth = 2; g.beginPath(); g.moveTo(a.x1, a.y1); g.lineTo(a.x2, a.y2); g.stroke(); g.globalAlpha = 1; });
-        S.es.forEach(e => { g.beginPath(); g.arc(e.x, e.y, e.r, 0, 7); g.fillStyle = e.tp === 'f' ? '#ff9a3b' : e.tp === 'g' ? '#c01838' : e.tp === 'h' ? '#7a0c2a' : e.hp > 1 ? '#a01030' : '#ff3b4f'; g.fill(); if (e.hp > 1 || e.tp === 'g' || e.tp === 'h') { g.strokeStyle = e.tp === 'h' ? '#ff6a5c' : '#ffd25f'; g.lineWidth = e.tp === 'h' ? 3 : 2; g.stroke(); } });
+        S.es.forEach(e => { const r = Math.max(22, e.r * 3); if (horda.complete && horda.naturalWidth) { g.save(); g.globalAlpha = e.tp === 'h' ? 1 : .84; g.drawImage(horda, e.x - r, e.y - r, r * 2, r * 2); g.restore(); } else { g.beginPath(); g.arc(e.x, e.y, e.r, 0, 7); g.fillStyle = e.tp === 'f' ? '#ff9a3b' : e.tp === 'g' ? '#c01838' : e.tp === 'h' ? '#7a0c2a' : e.hp > 1 ? '#a01030' : '#ff3b4f'; g.fill(); } if (e.hp > 1 || e.tp === 'g' || e.tp === 'h') { g.strokeStyle = e.tp === 'h' ? '#ff6a5c' : '#ffd25f'; g.lineWidth = e.tp === 'h' ? 3 : 2; g.beginPath(); g.arc(e.x, e.y, r * .54, 0, 7); g.stroke(); } });
         S.ms.forEach((m, i) => { if (!m.vivo) { g.fillStyle = '#ffffff22'; g.font = '16px system-ui'; g.textAlign = 'center'; g.fillText('✕', m.x, m.y + 5); g.textAlign = 'left'; return; }
-          const held = [...ptr.values()].includes(i); g.save(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.shadowColor = cor(UN[i]); g.shadowBlur = held ? 20 : 8; g.fillStyle = cor(UN[i]); g.fill(); g.shadowBlur = 0; g.clip();
+          const held = [...ptr.values()].includes(i); if (held) { g.beginPath(); g.arc(m.x, m.y, S.R + 10, 0, 7); g.strokeStyle = cor(UN[i]) + 'aa'; g.lineWidth = 2; g.stroke(); } g.save(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.shadowColor = cor(UN[i]); g.shadowBlur = held ? 20 : 8; g.fillStyle = cor(UN[i]); g.fill(); g.shadowBlur = 0; g.clip();
           if (imgs[i].complete && imgs[i].naturalWidth) g.drawImage(imgs[i], m.x - S.R, m.y - S.R, S.R * 2, S.R * 2); g.restore(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); });
         g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Heróis ' + S.vivos() + ' / 8', 10, 20); g.fillText('Onda ' + Math.min(S.wave, S.WAVES) + '/' + S.WAVES, W - 80, 20);
         if (S.done) return fimJogo(); raf = requestAnimationFrame(loop); };
