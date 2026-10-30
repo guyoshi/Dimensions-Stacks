@@ -1870,3 +1870,5 @@ body.reduce .frg-rays, body.reduce .frg-cr, body.reduce .frg-p { animation: none
 
 .dsc-conf { text-align: center; } .dsc-c { display: flex; align-items: center; justify-content: center; gap: 8px; font: 800 28px var(--f-disp); color: var(--gold2); } .dsc-c span { font: 600 14px var(--f-body, inherit); color: var(--ink2); } .dsc-s { color: var(--ink2); font-size: 13px; }
 .hs-esc { position: relative; } .dsc-fl { position: absolute; right: 18px; top: 8px; display: flex; align-items: center; gap: 4px; font: 800 20px var(--f-disp); color: #ff8d80; pointer-events: none; animation: dscUp 1.4s ease-out forwards; } @keyframes dscUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-40px); } }
+.mg-vd { color: #ff5a6e; letter-spacing: 2px; margin-right: 6px; } .mg-vd i { color: #ffffff30; font-style: normal; } .mg-acerto { color: #7dffb0; } .mg-erro { color: #ff6b7e; }
+.mg-dc.right { border-color: #7dffb0; box-shadow: 0 0 20px #7dffb0; } .mg-dc.wrong { border-color: #ff3b4f; box-shadow: 0 0 22px #ff3b4f; animation: dcWrong .5s; } @keyframes dcWrong { 20%, 60% { margin-left: -6px; } 40%, 80% { margin-left: 6px; } }

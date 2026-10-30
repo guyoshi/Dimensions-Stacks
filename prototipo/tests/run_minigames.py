@@ -39,11 +39,13 @@ try:
     fim('maiormenor', 'portas jogadas')
     start('caracoroa'); pg.wait_for_function("document.querySelector('#mq') && document.querySelector('#mq').textContent === 'Sua vez'", timeout=6000)
     chk(pg.evaluate("document.querySelectorAll('.mg-cell.elo').length") == 4, 'sons: 4 instrumentos'); pg.click('.mg-x'); fim('caracoroa', 'sequência')
-    start('ordem')
-    for _ in range(8):
+    start('ordem')   # Dança das Cartas: errar tira vida; 3 erros encerram o jogo
+    for _ in range(6):
+        pg.wait_for_function("(document.querySelector('#mq')||{textContent:''}).textContent.includes('Onde')", timeout=40000)
+        pg.evaluate("document.querySelector('.mg-dc').click()"); pg.wait_for_timeout(2300)
         if pg.query_selector('.mg-ok'): break
-        pg.click('.mg-grid .mg-cell', force=True); pg.wait_for_timeout(750)
-    fim('ordem', 'agilidade jogada')
+    pg.wait_for_timeout(300); chk(pg.query_selector('.mg-ok') is not None, 'Dança das Cartas termina após 3 vidas perdidas (cliques na 1ª carta)')
+    fim('ordem', 'dança jogada')
     start('gancho'); pg.wait_for_timeout(1500)
     for _ in range(4): pg.evaluate("[...document.querySelectorAll('.sim')].forEach(b => b.dataset.k && b.click())"); pg.wait_for_timeout(300)
     pg.click('.mg-x'); fim('gancho', 'símbolos')

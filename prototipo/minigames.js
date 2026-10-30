@@ -22,7 +22,7 @@
     { id: 'maiormenor', nome: 'Três Portais', desc: 'Escolha uma porta entre 3. Pêndulos, passagem livre ou nada; na última, talvez uma carta.', cortes: [.37, .63, .88] },
     { id: 'memoria', nome: 'Ecos Estelares', desc: 'Encontre os 6 pares de cartas antes que o tempo acabe, com poucas jogadas.', cortes: [.3, .6, .9] },
     { id: 'quemequem', nome: 'Fragmentos de Rosto', desc: 'Só alguns trechos escuros da carta aparecem. Descubra quem é, com um tempo total para as 8 cartas.', cortes: [.37, .63, .88] },
-    { id: 'ordem', nome: 'Dança das Cartas', desc: 'Uma carta é marcada, todas viram e trocam de lugar. Acerte onde ela foi parar.', cortes: [.4, .7, .95] },
+    { id: 'ordem', nome: 'Dança das Cartas', desc: 'Uma carta é marcada, todas viram e trocam de lugar. Acerte onde ela foi parar. Você tem 3 vidas.', cortes: [.4, .7, .95] },
     { id: 'mineracao', nome: 'Maré Rubra', desc: 'As bolinhas vermelhas contagiam as azuis, que vagam pela tela. Afaste as vermelhas: uma azul salva já vence, cinco é o máximo.', cortes: [.37, .63, .88] },
     { id: 'asteroides', nome: 'Rota dos Meteoros', desc: 'Arraste a nave, desvie das rochas e pegue os pêndulos.', cortes: [.33, .6, .87] },
     { id: 'cofre', nome: 'Fechadura de Jasmey', desc: 'Descubra o código de 4 símbolos em 6 tentativas, contra o relógio.', cortes: [.34, .5, .83] },
@@ -159,24 +159,25 @@
     },
     // 4. Dança das Cartas: uma carta é marcada, todas viram e trocam de lugar à vista; acerte onde ela foi parar (6 rodadas)
     ordem(body, c, fim) {
-      const R = 6, AV = Math.min(380, body.clientWidth || 360) - 12; let rodada = 0, ok = 0, acabou = false;
+      const R = 6, AV = Math.min(380, body.clientWidth || 360) - 12; let rodada = 0, ok = 0, acabou = false, vidas = 3;   // 3 vidas: errar a carta tira uma; sem vidas o jogo termina
+      const cor = () => '<span class="mg-vd">' + '♥'.repeat(vidas) + '<i>' + '♥'.repeat(3 - vidas) + '</i></span>';
       const rod = async () => {
         const n = 3 + rodada, GAP = 6, CW = Math.min(78, Math.floor((AV - (n - 1) * GAP) / n)), H = Math.round(CW * 1.5), trocas = 6 + rodada * 3, v0 = Math.max(260, 600 - rodada * 55) / c.dif, v1 = Math.max(60, 190 - rodada * 28) / c.dif, ids = randCards(n), alvo = rnd(n);
-        body.innerHTML = `<p class="mg-q" id="mq">Rodada ${rodada + 1}/${R} · ${n} cartas<br>Memorize a carta marcada</p><div class="mg-dance" style="width:${n * (CW + GAP) - GAP}px;height:${H + 56}px"></div>`;
+        body.innerHTML = `<p class="mg-q" id="mq">${cor()} Rodada ${rodada + 1}/${R} · ${n} cartas<br>Memorize a carta marcada</p><div class="mg-dance" style="width:${n * (CW + GAP) - GAP}px;height:${H + 56}px"></div>`;
         const area = $('.mg-dance', body), pos = Array.from({ length: n }, (_, i) => i), it = [], mq = $('#mq', body); let pronto = false;
         const x = p => p * (CW + GAP), base = 28;
         ids.forEach((id, i) => { const d = mk('<button class="mg-dc"></button>'); d.style.cssText = `width:${CW}px;height:${H}px;transform:translate(${x(i)}px,${base}px);transition:transform 300ms ease-in-out`; d.append(card(id, CW)); if (i === alvo) d.classList.add('mark'); d.dataset.i = i; area.append(d); it.push(d); });
         await wait(1700); if (acabou) return; it.forEach(d => { d.classList.remove('mark'); d.replaceChildren(hidden(CW)); }); SND.play('flip'); await wait(450);
-        mq.innerHTML = 'Acompanhe com os olhos…';
+        mq.innerHTML = cor() + ' Acompanhe com os olhos…';
         for (let k = 0; k < trocas; k++) { if (acabou) return;
           const f = trocas > 1 ? k / (trocas - 1) : 1, vel = v0 + (v1 - v0) * f, pares = 1 + (n >= 5 && f > .35 ? 1 : 0) + (n >= 7 && f > .7 ? 1 : 0), slots = shuffle(pos.map((_, i) => i)), lift = new Map();   // começa lenta e acelera; nas últimas trocas vários pares dançam juntos
           for (let q = 0; q < pares && q * 2 + 1 < n; q++) { const sa = slots[q * 2], sb = slots[q * 2 + 1], ia = pos.indexOf(sa), ib = pos.indexOf(sb); pos[ia] = sb; pos[ib] = sa; const alt = 12 + f * 16, ang = 5 + f * 11, sg = (k + q) % 2 ? 1 : -1; lift.set(ia, { y: -sg * alt, a: sg * ang }); lift.set(ib, { y: sg * alt, a: -sg * ang }); }
           it.forEach((d, i) => { const l = lift.get(i); d.style.transition = `transform ${Math.round(vel)}ms cubic-bezier(.45,0,.25,1)`; d.style.transform = `translate(${x(pos[i])}px,${base + (l ? l.y : 0)}px) rotate(${l ? l.a : 0}deg)`; });
           if (vel > 110) SND.play('tick'); await wait(vel + 12); }
         it.forEach((d, i) => { d.style.transition = 'transform 260ms ease-out'; d.style.transform = `translate(${x(pos[i])}px,${base}px)`; }); await wait(300);
-        if (acabou) return; mq.innerHTML = 'Onde está a carta marcada?'; pronto = true;
-        area.onclick = async e => { const d = e.target.closest('.mg-dc'); if (!d || !pronto) return; pronto = false; const i = +d.dataset.i, certo = i === alvo; if (certo) ok++; SND.play(certo ? 'win' : 'lose');
-          it.forEach((z, j) => { z.replaceChildren(card(ids[j], CW)); if (j === alvo) z.classList.add('mark'); }); await wait(1100); if (acabou) return; rodada++; if (rodada >= R) { acabou = true; fim(ok / R, ok + ' de ' + R + ' rodadas'); } else rod(); };
+        if (acabou) return; mq.innerHTML = cor() + ' Onde está a carta marcada?'; pronto = true;
+        area.onclick = async e => { const d = e.target.closest('.mg-dc'); if (!d || !pronto) return; pronto = false; const i = +d.dataset.i, certo = i === alvo; if (certo) ok++; else vidas--; SND.play(certo ? 'win' : 'lose');
+          it.forEach((z, j) => { z.replaceChildren(card(ids[j], CW)); if (j === alvo) z.classList.add('mark'); }); d.classList.add(certo ? 'right' : 'wrong'); mq.innerHTML = cor() + (certo ? ' <b class="mg-acerto">Acertou!</b>' : ' <b class="mg-erro">Errou! Perdeu uma vida</b>'); await wait(1500); if (acabou) return; rodada++; if (vidas <= 0) { acabou = true; fim(ok / R, ok + ' de ' + R + ' rodadas (sem vidas)'); } else if (rodada >= R) { acabou = true; fim(ok / R, ok + ' de ' + R + ' rodadas'); } else rod(); };
       };
       rod(); return () => { acabou = true; };
     },
