@@ -21,16 +21,20 @@ try:
         pg.evaluate("(()=>{const s=DSHistoria.state();s.tutorial=1;s.pend=100;s.pos='J_B018';s.dicas={minigame:1,evento:1,elite:1,miniboss:1,loja:1,guardiao:1,captura:1,derrota:1}})()")
         pg.evaluate("DSHistoria.openNode('J_B018')"); pg.wait_for_timeout(500)
         chk(pg.query_selector('[data-a=mini]') is not None, 'botão Jogar aparece na casa')
-        # perder: não bloqueia nada, dá para jogar de novo
+        # perder: bloqueia a casa; pagar destrava
         pg.evaluate("window.__play=DSMini.play;DSMini.play=async()=>({id:'maiormenor',pct:0,tier:0,reward:0})")
         pg.click('[data-a=mini]'); pg.wait_for_timeout(600)
-        st = pg.evaluate("DSHistoria.state()"); chk(not (st.get('mgLock') or {}).get('J_B018') and 'J_B018' not in st['cleared'], 'falhar não bloqueia e não conta como passado')
+        st = pg.evaluate("DSHistoria.state()"); chk(st['mgLock'].get('J_B018') == 1 and 'J_B018' not in st['cleared'], 'falhar bloqueia a casa')
         pg.evaluate("DSHistoria.openNode('J_B018')"); pg.wait_for_timeout(400)
-        chk(pg.query_selector('[data-a=mini]') is not None and pg.query_selector('[data-a=desbloq]') is None, 'depois de falhar continua podendo Jogar')
-        # passar com Ótimo
+        chk(pg.query_selector('[data-a=desbloq]') is not None and pg.query_selector('[data-a=mini]') is None, 'bloqueado mostra Desbloquear e não Jogar')
+        pg.click('[data-a=desbloq]'); pg.wait_for_timeout(400)
+        st = pg.evaluate("DSHistoria.state()"); chk(not st['mgLock'].get('J_B018') and st['pend'] == 90, 'desbloquear custa 10 pêndulos: %s' % st['pend'])
         pg.evaluate("DSMini.play=async()=>({id:'maiormenor',pct:.7,tier:2,reward:10})")
+        pg.evaluate("DSHistoria.openNode('J_B018')"); pg.wait_for_timeout(400)
         pg.click('[data-a=mini]'); pg.wait_for_timeout(900)
-        st = pg.evaluate("DSHistoria.state()"); chk('J_B018' in st['cleared'] and st['pend'] == 110 and st['mgBest']['J_B018'] == 2, 'passar marca a casa e paga o prêmio: %s' % st['pend'])
+        st = pg.evaluate("DSHistoria.state()"); chk('J_B018' in st['cleared'] and st['pend'] == 100 and st['mgBest']['J_B018'] == 2, 'passar abre a casa e paga o prêmio: %s' % st['pend'])
+        # bloqueio de passagem: a casa só deixa passar depois de passar
+        r = pg.evaluate("(()=>{const B=DSHistoria.data.nos,by={};B.forEach(n=>by[n.id]=n);const h=by['J_B018'];return h.viz.length})()"); chk(r == 2, 'casa de minigame liga dois pontos')
         # série dá broche
         pg.evaluate("(()=>{const s=DSHistoria.state();s.pos='J_B082'})()")
         pg.evaluate("DSHistoria.openNode('J_B082')"); pg.wait_for_timeout(400)

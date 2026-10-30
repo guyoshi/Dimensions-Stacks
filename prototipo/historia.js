@@ -20,7 +20,7 @@
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     bau:      { nome: 'Baú', cor: '#ffd25f', r: 17, desc: 'Um baú no caminho, com pêndulos, cartas ou uma escolha entre duas cartas. Não bloqueia e abre uma vez só.' },
     casa:     { nome: 'Casa de NPC', cor: '#b48cff', r: 19, desc: 'Moradia de um NPC: conversas e missões. Não tem duelo e não bloqueia o caminho.' },
-    minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Casa de minigame, no meio do caminho. Passe com ao menos "Bom" para ganhar o prêmio (e o broche, nos de série); pode jogar de novo quando quiser.' },
+    minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Casa de minigame, no meio do caminho. Passe com ao menos "Bom" para seguir; se falhar, pague um pouco para tentar de novo.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
   const LADOS = { esq: 'Vila Velha', cima: 'Kaeliran', dir: 'Belfex', baixo: 'Braço de Origem', nw: 'Cidade Crepúsculo', ne: 'Promessas do Mar' };   // setores: lugares dos livros (Diário Sobrenatural, Ciclo de Jesed, Viajantes, Spacetheft, Mistério Oculto, Édelin Lys)
@@ -40,11 +40,13 @@
     return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
   }
   const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; };
-  const ehCasa = n => n.tipo === 'casa' || n.tipo === 'bau' || n.tipo === 'minigame';   // pontos como a loja: não bloqueiam, ficam entre dois pontos
+  const ehCasa = n => n.tipo === 'casa' || n.tipo === 'bau' || n.tipo === 'minigame';   // pontos entre dois pontos
+  const livre = n => n.tipo === 'casa' || n.tipo === 'bau';   // os que não bloqueiam (o minigame bloqueia até passar com "Bom")   // pontos como a loja: não bloqueiam, ficam entre dois pontos
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const EX = 1.4, EYT = .62, EYB = .8, EY = EYB;   // o mapa gerado é quadrado; a arte de fundo é 2:1: pontos esticados na horizontal e mais comprimidos em cima do que embaixo (o Boss continua em 0,0, sobre o buraco negro)
   if (!M._lay) { M._lay = 1; NOS.forEach(n => { n.x = Math.round(n.x * EX); n.y = Math.round(n.y * (n.y < 0 ? EYT : EYB)); }); }
-  // Minigames no mapa (autor, 29/10 e 30/10/2026): 7 de série (dão 1 broche) + 10 base. São CASAS entre dois pontos (como lojas, NPCs e baús): não bloqueiam o caminho e podem ser rejogados para melhorar o prêmio.
+  // Minigames no mapa (autor, 29/10 e 30/10/2026): 7 de série (dão 1 broche) + 10 base. São CASAS entre dois pontos (como lojas, NPCs e baús), mas BLOQUEIAM: é preciso passar (nível "Bom" ou mais) para seguir.
+  // Ao falhar a casa fica trancada até pagar MG_CUSTO pêndulos (ou vencer a próxima batalha); pode rejogar depois de passar para melhorar o prêmio.
   // A chave é o ponto de batalha ao lado de onde a casa fica (esse ponto volta a ser uma batalha normal).
   const MG = { B082: ['elos', 'diario'], B088: ['culpado', 'misterio'], B089: ['luas', 'jesed'], B052: ['ritmo', 'belfex'], B077: ['poderes', 'viajantes'], B065: ['gancho', 'spacetheft'], B081: ['formacao', 'uniao'],
     B018: ['maiormenor'], B037: ['mineracao'], B061: ['raspadinha'], B076: ['caracoroa'], B074: ['cacapendulo'], B056: ['ordem'], B053: ['memoria'], B046: ['quemequem'], B054: ['asteroides'], B073: ['cofre'] };
@@ -141,12 +143,12 @@
   const pulado = id => !!(S && S.atalhos && S.atalhos[id]);   // batalha opcional após a ajuda por derrotas
   function liberados() {
     const key = Object.keys(S.cleared).sort().join() + '|' + Object.keys(S.atalhos || {}).sort().join() + '|' + S.startId; if (key === libKey) return libSet;
-    const A = new Set([S.startId]); BY[S.startId].viz.forEach(v => { if (ehCasa(BY[v])) A.add(v); });   // casas coladas no ponto de partida já estão ao alcance
+    const A = new Set([S.startId]); BY[S.startId].viz.forEach(v => { if (livre(BY[v])) A.add(v); });   // casas coladas no ponto de partida já estão ao alcance
     const pilha = Object.keys(S.cleared).concat(Object.keys(S.atalhos || {})), vistos = new Set();
-    while (pilha.length) { const id = pilha.pop(); if (vistos.has(id)) continue; vistos.add(id); BY[id].viz.forEach(v => { if (v === M.boss) return; A.add(v); if (BY[v].tipo === 'loja' || ehCasa(BY[v])) pilha.push(v); }); }
+    while (pilha.length) { const id = pilha.pop(); if (vistos.has(id)) continue; vistos.add(id); BY[id].viz.forEach(v => { if (v === M.boss) return; A.add(v); if (BY[v].tipo === 'loja' || livre(BY[v])) pilha.push(v); }); }
     libKey = key; libSet = A; return A;
   }
-  const aberto_ = id => cleared(id) || pulado(id) || ((BY[id].tipo === 'loja' || ehCasa(BY[id])) && liberados().has(id));   // ponto "aberto": venceu, foi liberado pela ajuda, ou é loja já alcançada
+  const aberto_ = id => cleared(id) || pulado(id) || ((BY[id].tipo === 'loja' || livre(BY[id])) && liberados().has(id));   // ponto "aberto": venceu, foi liberado pela ajuda, ou é loja já alcançada
   function available(id) {
     if (!S) return false;
     if (P.aberto) return true;
@@ -348,7 +350,7 @@
 
   // ---- o boneco anda casa por casa (como no mapa do modo história do Smash): nada de pular para um ponto distante
   const posId = () => (S && S.pos && BY[S.pos]) ? S.pos : S.startId;
-  const passa = id => P.aberto || cleared(id) || pulado(id) || BY[id].tipo === 'loja' || ehCasa(BY[id]);   // pontos por onde se pode atravessar
+  const passa = id => P.aberto || cleared(id) || pulado(id) || BY[id].tipo === 'loja' || livre(BY[id]);   // pontos por onde se pode atravessar
   // caminhos possíveis a partir da posição: atravessa só pontos já vencidos (ou lojas); o último passo pode ser um ponto novo (aí o boneco para e é preciso duelar)
   function alcance() {
     const from = posId(), prev = { [from]: null }, q = [from];
@@ -467,11 +469,11 @@
       const pr = window.DSMini.cfg(n.mg).premios, antR = ant ? pr[ant] | 0 : 0; ganho = Math.max(0, (pr[res.tier] | 0) - antR); S.mgBest[id] = Math.max(ant, res.tier); S.pend = (S.pend | 0) + ganho; S.ganho = (S.ganho | 0) + ganho;
       if (primeira && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
       if (NPC) NPC.fragMini(n.mg, res.tier);
-    }
+    } else if (primeira) S.mgLock[id] = 1;
     let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && x.raridade !== 'lendaria' && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
     save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
     if (cartaMg) { await new Promise(r => revelarCarta([cartaMg], r)); try { SND.histPlay('mapa'); } catch (e) { } }
-    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1) { toast('Não foi dessa vez. Dá para tentar de novo quando quiser.'); openNode(id); } else openNode(id);
+    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado até vencer a próxima batalha, ou pague ' + MG_CUSTO + ' pêndulos.'); openNode(id); } else openNode(id);
   }
   function toggleWin(id) {
     const ok = cleared(id);
@@ -712,7 +714,7 @@
     derrota: ['Derrota não custa nada. Reorganize e tente de novo.'],
     captura: ['Carta capturada agora é sua.'],
     bau: ['Baús guardam pêndulos ou cartas, em becos sem saída.'],
-    minigame: ['Casa de minigame: passe com ao menos "Bom" para ganhar o prêmio. Não bloqueia o caminho e dá para tentar de novo.'],
+    minigame: ['Casa de minigame: passe com ao menos "Bom" para seguir. Falhou? Vença uma batalha ou pague para tentar de novo.'],
     broche: ['Um broche. Vale juntar todos.'],
   };
 
