@@ -123,16 +123,18 @@
       let rod = 0, acum = 0, busy = false; const R = 3;
       const flash = () => { const el = mk('<div class="mg-portal-flash" aria-hidden="true"></div>'); body.append(el); setTimeout(() => el.remove(), 480); };
       const pendulos = () => { const el = mk('<div class="mg-portal-pendulos" aria-hidden="true">' + Array.from({ length: 7 }, (_, i) => `<i style="--i:${i}">◈</i>`).join('') + '</div>'); body.append(el); setTimeout(() => el.remove(), 1050); };
+      const tier = a => c.cortes.filter(x => a >= x - 1e-9).length, prem = a => c.premios[tier(a)] | 0;
+      const painel = () => `<div class="mg-prog"><div class="mg-bar"><i style="width:${Math.round(acum * 100)}%"></i>${c.cortes.map((x, i) => `<u style="left:${Math.round(x * 100)}%"><b>${['Bom', 'Ótimo', 'Perfeito'][i]}</b></u>`).join('')}</div><p>Prêmio atual: <b>${prem(acum)} ◈</b> · próximo nível: ${tier(acum) < 3 ? c.premios[tier(acum) + 1] + ' ◈ aos ' + Math.round(c.cortes[tier(acum)] * 100) + '%' : 'máximo'}</p></div>`;
       const tela = () => { const ult = rod === R - 1, res = shuffle(ult ? ['pend', 'carta', 'perde'] : ['pend', 'perde', 'passa']);
         const portais = ['ciano', 'violeta', 'dourado'];
-        body.innerHTML = `<p class="mg-q mg-porta-q">${ult ? 'Última porta' : 'Porta ' + (rod + 1) + '/' + R}<br><small>Escolha um portal</small></p><div class="mg-portas">${portais.map((p, i) => `<button class="mg-porta" data-i="${i}" data-portal="${p}" style="--d:${i * 85}ms"><span>${i + 1}</span></button>`).join('')}</div>`; busy = false;
+        body.innerHTML = `<p class="mg-q mg-porta-q">${ult ? 'Última porta' : 'Porta ' + (rod + 1) + '/' + R}<br><small>Escolha um portal</small></p>${painel()}<div class="mg-portas">${portais.map((p, i) => `<button class="mg-porta" data-i="${i}" data-portal="${p}" style="--d:${i * 85}ms"><span>${i + 1}</span></button>`).join('')}</div>`; busy = false;
         body.onclick = async e => { const b = e.target.closest('.mg-porta'); if (!b || busy) return; busy = true; const r = res[+b.dataset.i]; b.classList.add('open'); SND.play('flip');
           body.querySelectorAll('.mg-porta').forEach(x => x !== b && x.classList.add('recuo'));
-          b.innerHTML = r === 'pend' ? '<span>+ pêndulos</span>' : r === 'carta' ? '<span>Uma carta!</span>' : r === 'passa' ? '<span>Passagem livre</span>' : '<span>Nada</span>';
+          b.innerHTML = r === 'pend' ? '<span>+' + (ult ? 50 : 25) + '% do prêmio</span>' : r === 'carta' ? '<span>Uma carta! Prêmio máximo</span>' : r === 'passa' ? '<span>Passagem livre (nada muda)</span>' : '<span>Vazia! Fim</span>';
           if (r === 'pend') pendulos();
           await wait(920);
           if (r === 'perde') { SND.play('lose'); return fim(0, 'A porta estava vazia'); }
-          if (r === 'pend') { acum += ult ? .5 : .25; SND.play('capture'); }
+          if (r === 'pend') { const a0 = prem(acum); acum += ult ? .5 : .25; SND.play('capture'); const gan = prem(acum) - a0; const bn = mk('<div class="mg-ganho">' + (gan > 0 ? '+' + gan + ' ◈ no prêmio!' : 'Prêmio sobe: ' + Math.round(acum * 100) + '%') + '</div>'); body.append(bn); setTimeout(() => bn.remove(), 900); await wait(700); }
           else if (r === 'carta') { SND.play('bauOpen'); flash(); await wait(520); return fim(1, 'Ganhou uma carta', { carta: pick(CARTAS().filter(x => !x.uniao && x.id !== 'S11')).id }); }
           flash(); await wait(520); rod++; if (rod >= R) return fim(Math.min(1, acum), 'Terminou as portas'); tela(); }; };
       tela();

@@ -20,7 +20,7 @@
     loja:     { nome: 'Loja',      cor: '#7dffb0', r: 21, desc: 'Compre cartas com pêndulos.' },
     bau:      { nome: 'Baú', cor: '#ffd25f', r: 17, desc: 'Um baú no caminho, com pêndulos, cartas ou uma escolha entre duas cartas. Não bloqueia e abre uma vez só.' },
     casa:     { nome: 'Casa de NPC', cor: '#b48cff', r: 19, desc: 'Moradia de um NPC: conversas e missões. Não tem duelo e não bloqueia o caminho.' },
-    minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Um desafio. Passe com ao menos "Bom" para abrir o caminho; se falhar, pague um pouco para tentar de novo.' },
+    minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Casa de minigame, no meio do caminho. Passe com ao menos "Bom" para ganhar o prêmio (e o broche, nos de série); pode jogar de novo quando quiser.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
   const LADOS = { esq: 'Vila Velha', cima: 'Kaeliran', dir: 'Belfex', baixo: 'Braço de Origem', nw: 'Cidade Crepúsculo', ne: 'Promessas do Mar' };   // setores: lugares dos livros (Diário Sobrenatural, Ciclo de Jesed, Viajantes, Spacetheft, Mistério Oculto, Édelin Lys)
@@ -40,20 +40,16 @@
     return g >= -65 && g <= -25 ? 'ne' : g >= -155 && g <= -115 ? 'nw' : n.lado;
   }
   const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; };
-  const ehCasa = n => n.tipo === 'casa' || n.tipo === 'bau';   // pontos como a loja: não bloqueiam, ficam entre dois pontos
+  const ehCasa = n => n.tipo === 'casa' || n.tipo === 'bau' || n.tipo === 'minigame';   // pontos como a loja: não bloqueiam, ficam entre dois pontos
   const NOS = M.nos, BY = {}; NOS.forEach(n => { BY[n.id] = n; });
   const EX = 1.4, EYT = .62, EYB = .8, EY = EYB;   // o mapa gerado é quadrado; a arte de fundo é 2:1: pontos esticados na horizontal e mais comprimidos em cima do que embaixo (o Boss continua em 0,0, sobre o buraco negro)
   if (!M._lay) { M._lay = 1; NOS.forEach(n => { n.x = Math.round(n.x * EX); n.y = Math.round(n.y * (n.y < 0 ? EYT : EYB)); }); }
-  // Minigames no mapa (autor, 29/10/2026): 7 de série (dão 1 broche) + 10 base, em pontos que fecham caminhos; é preciso passar (nível "Bom" ou mais) para abrir a área seguinte.
-  // Ao falhar o ponto fica bloqueado até pagar MG_CUSTO pêndulos; o prêmio máximo é para quem quer desafio (pode rejogar depois de passar para melhorar o prêmio).
+  // Minigames no mapa (autor, 29/10 e 30/10/2026): 7 de série (dão 1 broche) + 10 base. São CASAS entre dois pontos (como lojas, NPCs e baús): não bloqueiam o caminho e podem ser rejogados para melhorar o prêmio.
+  // A chave é o ponto de batalha ao lado de onde a casa fica (esse ponto volta a ser uma batalha normal).
   const MG = { B082: ['elos', 'diario'], B088: ['culpado', 'misterio'], B089: ['luas', 'jesed'], B052: ['ritmo', 'belfex'], B077: ['poderes', 'viajantes'], B065: ['gancho', 'spacetheft'], B081: ['formacao', 'uniao'],
     B018: ['maiormenor'], B037: ['mineracao'], B061: ['raspadinha'], B076: ['caracoroa'], B074: ['cacapendulo'], B056: ['ordem'], B053: ['memoria'], B046: ['quemequem'], B054: ['asteroides'], B073: ['cofre'] };
   const MG_CUSTO = 10;
   Object.values(M.starts).forEach(id => { if (BY[id]) { BY[id].tipo = 'normal'; const b = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (b) { b.t = 'normal'; delete b.e; } } });   // a primeira batalha de cada caminho é sempre normal, nunca um evento
-  Object.keys(MG).forEach(id => { if (BY[id]) { BY[id].tipo = 'minigame'; BY[id].mg = MG[id][0]; BY[id].serieMg = MG[id][1] || null; } });
-  if (!M._mgsp) { M._mgsp = 1;   // minigames mais afastados entre si, sem encostar nos outros pontos
-    const L = NOS.filter(n => n.tipo === 'minigame'), O = NOS.filter(n => n.tipo !== 'minigame'), D = 240;
-    for (let it = 0; it < 80; it++) { let mv = 0; L.forEach(a => { L.forEach(b => { if (a === b) return; const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1; if (d < D) { const f = (D - d) / 2 / d; a.x = Math.round(a.x - dx * f); a.y = Math.round(a.y - dy * f); b.x = Math.round(b.x + dx * f); b.y = Math.round(b.y + dy * f); mv++; } }); O.forEach(o => { const dx = a.x - o.x, dy = a.y - o.y, d = Math.hypot(dx, dy) || 1; if (d < 85) { a.x = Math.round(a.x + dx / d * (85 - d)); a.y = Math.round(a.y + dy / d * (85 - d)); mv++; } }); }); if (!mv) break; } }
   const mgInfo = n => (window.DSMini && window.DSMini.LISTA.find(m => m.id === n.mg)) || { nome: 'Minigame', desc: '' };
   const BATALHAS = NOS.filter(n => n.tipo !== 'loja');
   const GUARD = Object.values(M.guardioes);
@@ -111,6 +107,17 @@
     REC.forEach(([t, pr]) => {   // ponto mais afastado de tudo que já existe, dentro da região (tier) pedida
       let best = null, bd = -1; cand.forEach(c => { if (c[2] !== t) return; const m = mid(c[0], c[1]), d = Math.min(...ocupa.map(o => Math.hypot(o.x - m.x, o.y - m.y))); if (d > bd) { bd = d; best = c; } });
       if (!best) return; const id = 'C_' + best[0].id + '_' + best[1].id; BAUS[id] = pr; const h = poe(best[0], best[1], id, t); ocupa.push({ x: h.x, y: h.y });
+    });
+  })();
+  (function minis() {   // casas de minigame: na ligação do ponto-chave que mais se afasta do que já existe
+    if (M._minis) return; M._minis = 1;
+    const mid = (a, b) => { let u = a, w = b; if (u.id > w.id) { u = b; w = a; } const dx = w.x - u.x, dy = w.y - u.y, len = Math.hypot(dx, dy) || 1, off = len * .09 * ((hash(u.id + w.id) & 1) ? 1 : -1), cx = (u.x + w.x) / 2 - dy / len * off, cy = (u.y + w.y) / 2 + dx / len * off; return { x: Math.round(.25 * u.x + .5 * cx + .25 * w.x), y: Math.round(.25 * u.y + .5 * cy + .25 * w.y) }; };
+    const ocupa = NOS.filter(n => ehCasa(n) || n.tipo === 'loja').map(n => ({ x: n.x, y: n.y }));
+    Object.keys(MG).forEach(k => {
+      const a = BY[k]; if (!a) return; let best = null, bd = -1;
+      a.viz.forEach(v => { const b = BY[v]; if (!b || ehCasa(b) || b.id === M.boss) return; const m = mid(a, b), d = Math.min(...ocupa.map(o => Math.hypot(o.x - m.x, o.y - m.y))); if (d > bd) { bd = d; best = b; } });
+      if (!best) return; const id = 'J_' + k, h = Object.assign({ id, tipo: 'minigame', mg: MG[k][0], serieMg: MG[k][1] || null, tier: a.tier, lado: a.lado, viz: [a.id, best.id] }, mid(a, best));
+      a.viz = a.viz.map(v => v === best.id ? id : v); best.viz = best.viz.map(v => v === a.id ? id : v); NOS.push(h); BY[id] = h; ocupa.push({ x: h.x, y: h.y });
     });
   })();
   const R = M.raio;
@@ -181,7 +188,7 @@
     const arte = n.tipo === 'bau' ? bauSvg().replace('<svg class="bau-svg"', `<svg class="node-art bau-n" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}"`) : `<image class="node-art" href="cena/icones-mapa/${arquivo}.png" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}" preserveAspectRatio="xMidYMid meet"/>`;
     let inner = '';
     if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle class="win-ring" r="${r + 9}"/><circle r="${r}" class="body"/>${arte}`;
-    else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'bau' ? '' : n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
+    else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'bau' || n.tipo === 'minigame' ? '' : n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
     return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>`;
   }
   function nome(n) {
@@ -460,11 +467,11 @@
       const pr = window.DSMini.cfg(n.mg).premios, antR = ant ? pr[ant] | 0 : 0; ganho = Math.max(0, (pr[res.tier] | 0) - antR); S.mgBest[id] = Math.max(ant, res.tier); S.pend = (S.pend | 0) + ganho; S.ganho = (S.ganho | 0) + ganho;
       if (primeira && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
       if (NPC) NPC.fragMini(n.mg, res.tier);
-    } else if (primeira) S.mgLock[id] = 1;
+    }
     let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && x.raridade !== 'lendaria' && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
     save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
     if (cartaMg) { await new Promise(r => revelarCarta([cartaMg], r)); try { SND.histPlay('mapa'); } catch (e) { } }
-    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado até vencer a próxima batalha, ou pague ' + MG_CUSTO + ' pêndulos.'); openNode(id); } else openNode(id);
+    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1) { toast('Não foi dessa vez. Dá para tentar de novo quando quiser.'); openNode(id); } else openNode(id);
   }
   function toggleWin(id) {
     const ok = cleared(id);
@@ -705,7 +712,7 @@
     derrota: ['Derrota não custa nada. Reorganize e tente de novo.'],
     captura: ['Carta capturada agora é sua.'],
     bau: ['Baús guardam pêndulos ou cartas, em becos sem saída.'],
-    minigame: ['Passe com ao menos "Bom" para abrir o caminho. Falhou? Vença uma batalha ou pague para tentar de novo.'],
+    minigame: ['Casa de minigame: passe com ao menos "Bom" para ganhar o prêmio. Não bloqueia o caminho e dá para tentar de novo.'],
     broche: ['Um broche. Vale juntar todos.'],
   };
 
