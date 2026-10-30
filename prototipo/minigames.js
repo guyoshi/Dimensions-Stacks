@@ -380,8 +380,8 @@
       nova(); raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); };
     },
     // Spacetheft: símbolos espaciais em 8 quadrados; caveira tira ponto (25 s)
-    gancho(body, c, fim) {
-      const BOM = ['⌖', '✥', '☾', '◆', '✦'], T = 25, META = 80;   // META 80: Bom ≈ 27 pontos, Ótimo ≈ 54, Perfeito ≈ 67 (um jogador que fez 63 não chega ao Perfeito) let pts = 0, left = T, tm = null, sp = null, acabou = false;
+    gancho(body, c, fim) {   // META 80: Bom ≈ 27 pontos, Ótimo ≈ 54, Perfeito ≈ 67 (quem fez 63 não chega ao Perfeito)
+      const BOM = ['⌖', '✥', '☾', '◆', '✦'], T = 25, META = 80; let pts = 0, left = T, tm = null, sp = null, acabou = false;
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g4" id="sg"></div>`; const g = $('#sg', body), q = $('#mq', body);
       for (let i = 0; i < 8; i++) g.append(mk(`<button class="mg-cell sim" data-i="${i}" style="width:78px;height:78px"></button>`));
       const skull = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6c-15 0-24 11-21 25 1 6 5 10 9 12v8h24v-8c4-2 8-6 9-12C56 17 47 6 32 6Z" fill="#f3e7d2" stroke="#ff5a4f" stroke-width="3"/><path d="M18 25 8 18m38 7 10-7M24 30h4m8 0h4M26 43v10m6-10v10m6-10v10" stroke="#25142d" stroke-width="4" stroke-linecap="round"/><circle cx="26" cy="29" r="5" fill="#14091a"/><circle cx="38" cy="29" r="5" fill="#14091a"/></svg>';
