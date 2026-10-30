@@ -1435,6 +1435,7 @@ body.reduce .hs-particles, body.mapfx-off .hs-particles { display: none; }
 .n.avail .halo { opacity: .28; }
 .hs-svg:not(.aberto) .n.avail .halo { animation: hspulse 2.6s ease-in-out infinite; }
 .n.done .body { fill: var(--c); fill-opacity: .88; } .n.done .node-art { opacity: .68; filter: saturate(.55) brightness(.8); animation: none; } .n.done .num { fill: #130d30; } .n.done .glyph { color: #130d30; }
+.n.skip .body { fill: #8f6cff; fill-opacity: .38; stroke: #d9c8ff; stroke-dasharray: 4 4; } .n.skip .node-art { opacity: .78; filter: saturate(.7) brightness(1.08); } .n.skip .halo { stroke: #bfa4ff; animation: hspulse 2.8s ease-in-out infinite; }
 .n .win-ring { display: none; fill: none; stroke: #ffd25f; stroke-width: 3.5; stroke-opacity: .92; filter: drop-shadow(0 0 5px #ffd25f); } .n.done .win-ring { display: block; }
 .n .chk { display: none; } .n.done .chk { display: block; } .chk circle { fill: #ffd25f; stroke: #130d30; stroke-width: 2; filter: drop-shadow(0 0 4px #ffd25f); }
 .n.winflash .win-ring { display: block; animation: winRing .9s ease-out both; } .n.winflash .node-art { animation: winIcon .85s ease-out both; }
@@ -1477,7 +1478,7 @@ body.reduce .hs-particles, body.mapfx-off .hs-particles { display: none; }
 .hs-sheet[hidden] { display: none; } .hs-sheet .x { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; min-height: 36px; border-radius: 11px; }
 .hs-sheet p { margin: 0; } .hs-sh-h { display: flex; align-items: center; gap: 12px; padding-right: 44px; } .hs-sh-h h3 { margin: 0; font-size: 1.15em; } .hs-sh-h small { color: var(--ink2); }
 .hs-dot { flex: none; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px currentColor; }
-.hs-st { font-weight: 800; font-size: 13px; } .hs-st.hs-ok { color: #7dffb0; } .hs-st.hs-av { color: #ffd25f; } .hs-st.hs-lk { color: #8a82c8; }
+.hs-st { font-weight: 800; font-size: 13px; } .hs-st.hs-ok { color: #7dffb0; } .hs-st.hs-av { color: #ffd25f; } .hs-st.hs-lk { color: #8a82c8; } .hs-st.hs-skip { color: #d9c8ff; }
 .hs-cards { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
 .hs-cb { width: 40px; height: 56px; border-radius: 7px; background: linear-gradient(160deg, #241c5a, #130e33); border: 1px solid var(--line); display: grid; place-items: center; color: #6f66b5; }
 .hs-sheet .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }

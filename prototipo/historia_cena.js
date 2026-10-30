@@ -15,7 +15,7 @@ window.DS_CINEMATICA = {
     { img: 'cena/gerbe.webp', mov: 'zoom', pos: 'center', textos: [
       'Há muito tempo, a Besta foi aprisionada em um planeta conhecido como Aurora, feito de gerbe, um dos materiais mais valiosos de todo o universo.',
       'O metal a cobriu como uma tumba. Ninguém soube o que dormia lá dentro. Ninguém quis saber.'] },
-    { img: 'cena/chegada-aurora.png', mov: 'zoomout', pos: 'center', textos: [
+    { img: 'cena/chegada-aurora.png', mov: 'zoomout', pos: 'center', fotos: ['photos/S01.webp'], textos: [
       'Até que Jasmey Badrock e sua equipe, caçadores de tesouros em busca do próximo grande achado, pousaram na Aurora.',
       'Eles viram riqueza. Cavaram fundo. E cavaram demais.'] },
     { img: 'cena/besta.webp', mov: 'zoom', pos: 'center', tom: 'grito', textos: ['Ela acordou.'] },

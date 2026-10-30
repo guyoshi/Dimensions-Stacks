@@ -481,13 +481,30 @@
   }
   // ---- duelo de verdade: mãos fixas (7 cartas por lado), captura, pêndulos e volta ao mapa
   const FORCA = id => { const c = U.CARDS[id]; return c ? Object.values(c.stats).reduce((a, b) => a + b, 0) : 0; };
-  // DIFICULDADE DA CPU (autor, 29/10): sobe de forma contínua com as batalhas vencidas, em todos os tipos de ponto; as cartas de cada inimigo são fixas, só a atenção/erros da CPU mudam.
-  // 0 = Fácil (erra bastante), 0,5 = Normal, 1 = Difícil. A rota mínima até os quatro Guardiões pede 30–32 vitórias (31 = marco): ali a CPU já está em ~0,85; depois sobe até 1 por volta de 46.
-  const MARCO_GUARDIOES = 31, OFF_NIVEL = { normal: 0, evento: .04, elite: .1, miniboss: .18 };
-  // AJUSTE PELA SUA FASE (autor, 29/10): quem perde muito recebe uma CPU mais branda. Guarda o resultado das últimas 8 batalhas (S.rec); a ajuda cresce com as derrotas na janela (acima de 2) e com a sequência de derrotas atual, até no máximo 0,45, e some sozinha conforme voltam as vitórias. Guardiões e Boss recebem só metade.
+  // Só batalhas normais escalam. A rota mínima até os quatro Guardiões pede 30–32 vitórias;
+  // 31 é o marco em que a exploração adicional passa a ficar realmente perigosa.
+  const MARCO_GUARDIOES = 31;
+  // A ajuda por derrotas afeta exclusivamente as normais, sem alterar o desafio próprio de Arautos, Guardiões e Boss.
   const ajudaDerrota = () => { const r = (S && S.rec) || []; if (r.length < 3) return 0; const L = r.filter(x => !x).length; let seq = 0; for (let k = r.length - 1; k >= 0 && !r[k]; k--) seq++; return Math.min(.45, .05 * Math.max(0, L - 2) + .06 * Math.max(0, seq - 1)); };
   const regResultado = venceu => { S.rec = ((S.rec || []).concat(venceu ? 1 : 0)).slice(-8); };
-  const nivelBot = n => { const ajuda = ajudaDerrota() * (n.tipo === 'guardiao' || n.tipo === 'boss' ? .5 : 1); if (n.tipo === 'boss') return Math.max(0, 1 - ajuda); const v = nBat(), b = v <= MARCO_GUARDIOES ? .85 * Math.pow(v / MARCO_GUARDIOES, 1.2) : .85 + .15 * Math.min(1, (v - MARCO_GUARDIOES) / 15); return Math.max(0, (n.tipo === 'guardiao' ? Math.max(.9, b) : Math.min(1, b + (OFF_NIVEL[n.tipo] || 0))) - ajuda); };
+  const NIVEL_PADRAO = { evento: .55, elite: .68, miniboss: .82, guardiao: .9, boss: 1 };
+  const nivelBot = n => {
+    if (n.tipo !== 'normal') return NIVEL_PADRAO[n.tipo] == null ? .55 : NIVEL_PADRAO[n.tipo];
+    const v = nBat(), base = v <= MARCO_GUARDIOES ? .18 + .52 * Math.pow(v / MARCO_GUARDIOES, 1.15) : .70 + .30 * Math.min(1, (v - MARCO_GUARDIOES) / 15);
+    return Math.max(.08, base - ajudaDerrota());
+  };
+  const PULO_APOS_DERROTAS = 4;
+  function podeLiberarCaminho(id) {
+    const n = BY[id], perdas = (S && S.derrotas && S.derrotas[id]) | 0;
+    return !!(n && ['normal', 'evento', 'elite'].includes(n.tipo) && !cleared(id) && !pulado(id) && perdas >= PULO_APOS_DERROTAS && n.viz.some(v => v !== M.boss && !passa(v)));
+  }
+  function oferecerLiberacao(id) {
+    if (!podeLiberarCaminho(id)) return;
+    const proximos = BY[id].viz.filter(v => v !== M.boss && !passa(v)).map(v => nome(BY[v]));
+    const box = el(`<div class="hs-conf hs-ajuda"><h3>Precisa de ajuda?</h3><p>Você tentou esta batalha ${PULO_APOS_DERROTAS} vezes. Podemos liberar o caminho adiante sem marcar esta fase como vencida.</p>${proximos.length ? `<small>Abre acesso a: ${esc(proximos.slice(0, 2).join(' · '))}${proximos.length > 2 ? '…' : ''}</small>` : ''}<div class="row"><button class="btn" data-a="nao">Continuar tentando</button><button class="btn primary" data-a="sim">Liberar caminho</button></div></div>`);
+    const modal = U.modal(box, { cls: 'hs-modal' });
+    box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); modal.close(); if (b.dataset.a !== 'sim') return; S.atalhos = S.atalhos || {}; S.atalhos[id] = 1; save(); paintAll(); openNode(id); toast('Caminho liberado. Esta batalha continua disponível quando quiser tentar de novo.'); };
+  }
   const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
   const premioBase = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
   const premioDe = n => Math.round(premioBase(n) * (NPC && NPC.tem('bolsa') ? 1.2 : 1));   // melhoria "Bolsa cheia": +20%
@@ -583,6 +600,8 @@
         SND.histLock = null; const ganhou = res.venceu && !cleared(id); try { if (ganhou) { SND.histStop(true); SND.histPlay('vitoria'); setTimeout(() => quandoLivre(() => { try { SND.histPlay('mapa'); } catch (e) { } }), 6000); } else SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
         S.vistos = S.vistos || {}; S.vistos[id] = 1; regResultado(res.venceu);
+        S.derrotas = S.derrotas || {}; let ofertaLiberacao = false;
+        if (res.venceu) delete S.derrotas[id]; else { S.derrotas[id] = (S.derrotas[id] | 0) + 1; ofertaLiberacao = S.derrotas[id] === PULO_APOS_DERROTAS && podeLiberarCaminho(id); }
         S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save();
         if (res.venceu && !cleared(id)) {
           if (S.mgLock && Object.keys(S.mgLock).length) { S.mgLock = {}; setTimeout(() => toast('Minigames desbloqueados'), 1800); }   // vencer uma batalha destrava os minigames em que você falhou
@@ -590,7 +609,7 @@
           if (primeira) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Vencemos, {nome}, mas estamos cansadas. As mais raras cansam mais.', 'Cada vitória sem nós descansa 1 ponto. Ou pague pêndulos ao escolher o time.']); });
           else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
           setTimeout(() => { toggleWin(id); if (NPC) NPC.vitoria(id); if (res.capturadas.length) { setTimeout(() => abrirBau({ cartas: res.capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
-        } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
+        } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) { if (ofertaLiberacao) setTimeout(() => quandoLivre(() => oferecerLiberacao(id)), 600); else dica('derrota'); } }
       } };
       const lanca = () => U.startGame({ players, perPlayer: 7, difficulty: 'normal', specialsFrom: 2, escolheSempre: NPC && NPC.tem('atr') && n.tipo !== 'boss' && !gd ? 0 : null, sorte: NPC && NPC.tem('sorte') && n.tipo !== 'boss' && !gd ? { pid: 0, p: NPC.val.sorteP, v: NPC.val.sorteV } : null, events: !!(gd && gd.evTodas), evTodas: !!(gd && gd.evTodas), simbolos: gd && gd.simbolos ? { val: 5 } : null, bhRefill: gd && gd.evTodas ? [1] : null, teams: gd && gd.regra === 'g_duo' ? [[0], [1, 2]] : null, teamPool: gd && gd.regra === 'g_duo' ? false : undefined, maxCombats: 100, maos: [mao].concat(inims), regra: reg, semMontar, bonusPids: besta ? bonusPids : null, bonusVal: besta, bonusCards: uniTodas ? { pid: 0, cards: uni, val: 5 } : null, historia: hist });
       if (uni.length && !auto) entradaUniao(uni, uniTodas, lanca); else lanca();
