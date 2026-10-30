@@ -557,6 +557,7 @@
   }
   const embaralha = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const textoEvento = ev => { const c = (window.DS_EVENTOS_H || {})[ev.id]; if (!c) return null; return { nome: c.nome, regra: c.regra.replace('{A}', ev.attr && U.ATT[ev.attr] ? U.ATT[ev.attr].nome : '') }; };
+  const fundoBatalha = n => ['normal', 'evento', 'elite'].includes(n.tipo) ? 'setor-' + setor(n) : ({ miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null;
   function duelar(id, auto) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
     const n = BY[id], bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (!bat0 || n.tipo === 'loja') return;
     if (n.tipo === 'boss') return duelarBoss(id, auto);
@@ -596,7 +597,7 @@
       try { SND.histStop(true); } catch (e) { }
       const besta = n.tipo === 'boss' ? bonusBoss() : 0, bonusPids = bat.i.map((_, k) => k + 1);
       const uni = n.tipo === 'boss' ? mao.filter(c => UNIAO.includes(c)) : [], uniTodas = uni.length === UNIAO.length;
-      const hist = { musica, id, fundo: ({ normal: 'normal', miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null, aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
+      const hist = { musica, id, fundo: fundoBatalha(n), aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         SND.histLock = null; const ganhou = res.venceu && !cleared(id); try { if (ganhou) { SND.histStop(true); SND.histPlay('vitoria'); setTimeout(() => quandoLivre(() => { try { SND.histPlay('mapa'); } catch (e) { } }), 6000); } else SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
         S.vistos = S.vistos || {}; S.vistos[id] = 1; regResultado(res.venceu);

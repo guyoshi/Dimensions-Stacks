@@ -61,7 +61,8 @@
 
   // ---- casca comum: tela cheia, título, sair, resultado
   function shell(m) {
-    const ov = mk(`<div class="mg"><header><b>${m.nome}</b><span class="mg-hint">${m.desc}</span><button class="ibtn mg-x" aria-label="Sair">✕</button></header><div class="mg-body"></div></div>`);
+    const fundos = { cofre: 'jasmey', gancho: 'jasmey', elos: 'diario', luas: 'jesed', poderes: 'viajantes', culpado: 'misterio', ritmo: 'edelin', formacao: 'uniao' };
+    const ov = mk(`<div class="mg" data-fundo="${fundos[m.id] || 'geral'}"><header><b>${m.nome}</b><span class="mg-hint">${m.desc}</span><button class="ibtn mg-x" aria-label="Sair">✕</button></header><div class="mg-body"></div></div>`);
     document.body.appendChild(ov); return ov;
   }
   // abertura: nome do jogo entra e sai, contagem 3-2-1 e JÁ; o jogo e a música começam no JÁ
@@ -120,13 +121,20 @@
     // 1. portas: 3 rodadas, 3 portas cada; última porta pode dar uma carta
     maiormenor(body, c, fim) {
       let rod = 0, acum = 0, busy = false; const R = 3;
+      const flash = () => { const el = mk('<div class="mg-portal-flash" aria-hidden="true"></div>'); body.append(el); setTimeout(() => el.remove(), 480); };
+      const pendulos = () => { const el = mk('<div class="mg-portal-pendulos" aria-hidden="true">' + Array.from({ length: 7 }, (_, i) => `<i style="--i:${i}">◈</i>`).join('') + '</div>'); body.append(el); setTimeout(() => el.remove(), 1050); };
       const tela = () => { const ult = rod === R - 1, res = shuffle(ult ? ['pend', 'carta', 'perde'] : ['pend', 'perde', 'passa']);
-        body.innerHTML = `<p class="mg-q">${ult ? 'Última porta' : 'Porta ' + (rod + 1) + '/' + R}<br>Escolha uma</p><div class="mg-portas">${[0, 1, 2].map(i => `<button class="mg-porta" data-i="${i}"><span>${i + 1}</span></button>`).join('')}</div>`; busy = false;
+        const portais = ['ciano', 'violeta', 'dourado'];
+        body.innerHTML = `<p class="mg-q mg-porta-q">${ult ? 'Última porta' : 'Porta ' + (rod + 1) + '/' + R}<br><small>Escolha um portal</small></p><div class="mg-portas">${portais.map((p, i) => `<button class="mg-porta" data-i="${i}" data-portal="${p}" style="--d:${i * 85}ms"><span>${i + 1}</span></button>`).join('')}</div>`; busy = false;
         body.onclick = async e => { const b = e.target.closest('.mg-porta'); if (!b || busy) return; busy = true; const r = res[+b.dataset.i]; b.classList.add('open'); SND.play('flip');
-          b.innerHTML = r === 'pend' ? '<span>+ pêndulos</span>' : r === 'carta' ? '<span>Uma carta!</span>' : r === 'passa' ? '<span>Passagem livre</span>' : '<span>Nada</span>'; await wait(1100);
+          body.querySelectorAll('.mg-porta').forEach(x => x !== b && x.classList.add('recuo'));
+          b.innerHTML = r === 'pend' ? '<span>+ pêndulos</span>' : r === 'carta' ? '<span>Uma carta!</span>' : r === 'passa' ? '<span>Passagem livre</span>' : '<span>Nada</span>';
+          if (r === 'pend') pendulos();
+          await wait(920);
           if (r === 'perde') { SND.play('lose'); return fim(0, 'A porta estava vazia'); }
-          if (r === 'pend') { acum += ult ? .5 : .25; SND.play('capture'); } else if (r === 'carta') { SND.play('bauOpen'); return fim(1, 'Ganhou uma carta', { carta: pick(CARTAS().filter(x => !x.uniao && x.id !== 'S11')).id }); }
-          rod++; if (rod >= R) return fim(Math.min(1, acum), 'Terminou as portas'); tela(); }; };
+          if (r === 'pend') { acum += ult ? .5 : .25; SND.play('capture'); }
+          else if (r === 'carta') { SND.play('bauOpen'); flash(); await wait(520); return fim(1, 'Ganhou uma carta', { carta: pick(CARTAS().filter(x => !x.uniao && x.id !== 'S11')).id }); }
+          flash(); await wait(520); rod++; if (rod >= R) return fim(Math.min(1, acum), 'Terminou as portas'); tela(); }; };
       tela();
     },
     // 2. Ecos Estelares (memória): 6 pares, com tempo limite; a nota máxima é possível com ~10 jogadas
@@ -224,10 +232,8 @@
     },
     // 8. cofre: mastermind 4 de 6, 6 tentativas
     cofre(body, c, fim) {
-      const SYM = ['●', '▲', '■', '◆', '★', '✚'], COR = ['#ff8a5c', '#6cc6ff', '#c58cff', '#7dffb0', '#ffd25f', '#ff7ab0'], codigo = Array.from({ length: 4 }, () => rnd(6)); let tent = [], atual = [null, null, null, null], fixo = [false, false, false, false], left = Math.round(110 / c.dif), acabou = false; const tmC = setInterval(() => { if (acabou) return; left--; const t = $('#cft', body); if (t) t.textContent = left; if (left <= 0) { acabou = true; clearInterval(tmC); fim(0, 'Tempo esgotado: o código era ' + codigo.map(s => SYM[s]).join(' ')); } }, 1000);
-      const pinta = () => { body.innerHTML = `<p class="mg-q">Tentativa ${tent.length + 1}/6 · <span id="cft">${left}</span> s</p><div class="mg-hist">${tent.map(t => `<div class="mg-linha">${t.g.map(s => `<i style="color:${COR[s]}">${SYM[s]}</i>`).join('')}<span>${'●'.repeat(t.p)}<em>${'○'.repeat(t.q)}</em></span></div>`).join('')}</div>
-        <div class="mg-linha cur">${[0, 1, 2, 3].map(i => `<i data-i="${i}" style="color:${atual[i] != null ? COR[atual[i]] : '#888'}${fixo[i] ? ';text-shadow:0 0 10px currentColor' : ''}">${atual[i] != null ? SYM[atual[i]] : '_'}</i>`).join('')}</div>
-        <div class="mg-btns">${SYM.map((s, i) => `<button class="btn" data-s="${i}" style="color:${COR[i]}">${s}</button>`).join('')}</div><div class="mg-btns"><button class="btn" data-a="del">Apagar</button><button class="btn primary" data-a="ok" ${atual.every(x => x != null) ? '' : 'disabled'}>Testar</button></div><p class="hint">● lugar certo · ○ símbolo certo no lugar errado</p>`; };
+      const SYM = ['✦', '☾', '◇', '≈', '✚', '☄'], NOME = ['Estrela', 'Lua', 'Cristal', 'Maré', 'Chave', 'Cometa'], COR = ['#ffd25f', '#9dbaff', '#c58cff', '#56dcff', '#7dffb0', '#ff8a5c'], codigo = Array.from({ length: 4 }, () => rnd(6)); let tent = [], atual = [null, null, null, null], fixo = [false, false, false, false], left = Math.round(110 / c.dif), acabou = false; const tmC = setInterval(() => { if (acabou) return; left--; const t = $('#cft', body); if (t) t.textContent = left; if (left <= 0) { acabou = true; clearInterval(tmC); fim(0, 'Tempo esgotado: o código era ' + codigo.map(s => SYM[s]).join(' ')); } }, 1000);
+      const pinta = () => { body.innerHTML = `<div class="cf-top"><b>COFRE DE BORDO</b><span>Tentativa ${tent.length + 1}/6 · <i id="cft">${left}</i> s</span></div><div class="mg-cofre"><div class="cf-disc">${[0, 1, 2, 3].map(i => `<i class="cf-slot ${fixo[i] ? 'fixo' : ''}" data-i="${i}" style="--cor:${atual[i] != null ? COR[atual[i]] : '#9a865f'}">${atual[i] != null ? SYM[atual[i]] : '·'}</i>`).join('')}<b class="cf-core">JASMEY</b></div></div><div class="mg-hist cf-hist">${tent.map(t => `<div class="mg-linha cf-tent">${t.g.map(s => `<i class="cf-mini" style="--cor:${COR[s]}">${SYM[s]}</i>`).join('')}<span class="cf-ret"><b>◆ ${t.p}</b><em>◇ ${t.q}</em></span></div>`).join('')}</div><div class="cf-runas">${SYM.map((s, i) => `<button class="cf-runa" data-s="${i}" style="--cor:${COR[i]}" aria-label="${NOME[i]}"><b>${s}</b><small>${NOME[i]}</small></button>`).join('')}</div><div class="mg-btns cf-acoes"><button class="btn" data-a="del">Apagar</button><button class="btn primary" data-a="ok" ${atual.every(x => x != null) ? '' : 'disabled'}>Testar código</button></div><p class="hint cf-hint"><b>◆</b> símbolo e posição certos · <b>◇</b> símbolo certo em outro encaixe</p>`; };
       body.onclick = e => { const b = e.target.closest('button'); if (!b || acabou) return; if (b.dataset.s != null) { const k = atual.findIndex((x, i) => x == null && !fixo[i]); if (k >= 0) atual[k] = +b.dataset.s; } else if (b.dataset.a === 'del') { for (let i = 3; i >= 0; i--) if (atual[i] != null && !fixo[i]) { atual[i] = null; break; } } else if (b.dataset.a === 'ok' && atual.every(x => x != null)) {
           const p = atual.filter((s, i) => s === codigo[i]).length; const rest = codigo.filter((s, i) => s !== atual[i]), usadas = atual.filter((s, i) => s !== codigo[i]); let q = 0; usadas.forEach(s => { const k = rest.indexOf(s); if (k >= 0) { q++; rest.splice(k, 1); } });
           tent.push({ g: atual.slice(), p, q }); SND.play(p === 4 ? 'win' : 'tick'); if (p === 4) { acabou = true; clearInterval(tmC); return fim((7 - tent.length) / 6, 'Aberto na tentativa ' + tent.length); } if (tent.length >= 6) { acabou = true; clearInterval(tmC); return fim(0, 'O código era ' + codigo.map(s => SYM[s]).join(' ')); }
@@ -404,16 +410,17 @@
     // Édelin Lys: ritmo de três elementos (20 notas)
     ritmo(body, c, fim) {
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = Math.min(380, body.clientWidth || 360), H = cv.height = 400, g = cv.getContext('2d');
-      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 56, GAP = .68 / Math.sqrt(c.dif), FALL = 1.25 / c.dif, LY = H - 70, VEL = (LY - 10) / FALL, JAN = 16 / VEL, JG = 38 / VEL;   // zona verde: ±38 px em volta da linha branca vale como acerto; ±16 px é perfeito
-      const notas = []; { let tt = 1.5, i = 0; while (notas.length < N) { const a = i / 40, pr = Math.min(1, a); tt += GAP * (1 - .5 * pr) * (.85 + Math.random() * .3); const l = rnd(3); notas.push({ t: tt, l, est: 0 }); if (notas.length < N && i > 8 && Math.random() < .12 + .3 * pr) notas.push({ t: tt, l: (l + 1 + rnd(2)) % 3, est: 0 }); i++; } } let t0 = 0, raf = 0, hit = 0, msg = '', msgT = 0, acabou = false;
+      const COR = ['#5fb0ff', '#ff6a5c', '#e8f4ff'], NOME = ['Mar', 'Fogo', 'Gelo'], N = 42, GAP = .86 / Math.sqrt(c.dif), FALL = 1.55 / c.dif, LY = H - 70, VEL = (LY - 10) / FALL, RAIO_PERF = 24, RAIO_ACERTO = 68, JAN = RAIO_PERF / VEL, JG = RAIO_ACERTO / VEL;
+      const artes = ['cena/notas-elementais/nota-mar.png', 'cena/notas-elementais/nota-fogo.png', 'cena/notas-elementais/nota-gelo.png'].map(src => { const im = new Image(); im.src = src; return im; });
+      const notas = []; { let tt = 1.7, i = 0; while (notas.length < N) { const a = i / 34, pr = Math.min(1, a); tt += GAP * (1 - .32 * pr) * (.9 + Math.random() * .26); const l = rnd(3); notas.push({ t: tt, l, est: 0 }); if (notas.length < N && i > 10 && Math.random() < .06 + .20 * pr) notas.push({ t: tt, l: (l + 1 + rnd(2)) % 3, est: 0 }); i++; } } let t0 = 0, raf = 0, hit = 0, msg = '', msgT = 0, acabou = false;
       const bar = mk('<div class="mg-btns">' + NOME.map((n, i) => `<button class="btn" data-l="${i}" style="border-color:${COR[i]}">${n}</button>`).join('') + '</div>'); body.append(bar);
       const toque = l => { const now = (performance.now() - t0) / 1000; let best = null; notas.forEach(n => { if (n.est === 0 && n.l === l && Math.abs(n.t - now) < JG && (!best || Math.abs(n.t - now) < Math.abs(best.t - now))) best = n; });
         if (best) { const ex = Math.abs(best.t - now) < JAN; best.est = ex ? 1 : 2; if (ex) hit++; else hit += .5; msg = ex ? 'Perfeito' : 'Bom'; SND.play('tick'); } else { msg = 'Errou'; SND.play('lose'); } msgT = .5; };
       bar.onclick = e => { const b = e.target.closest('[data-l]'); if (b) toque(+b.dataset.l); }; const key = e => { const k = { a: 0, s: 1, d: 2, 1: 0, 2: 1, 3: 2 }[e.key]; if (k != null) toque(k); }; document.addEventListener('keydown', key);
       const loop = () => { const now = (performance.now() - t0) / 1000; g.fillStyle = '#05030f'; g.fillRect(0, 0, W, H); const lw = W / 3;
         for (let l = 0; l < 3; l++) { g.fillStyle = COR[l] + '14'; g.fillRect(l * lw, 0, lw - 2, H); }
-        g.fillStyle = '#3ddc84' + '2e'; g.fillRect(0, LY - 38, W, 76); g.fillStyle = '#3ddc84' + '40'; g.fillRect(0, LY - 16, W, 32); g.strokeStyle = '#fff'; g.lineWidth = 2; g.beginPath(); g.moveTo(0, LY); g.lineTo(W, LY); g.stroke(); g.lineWidth = 1;
-        notas.forEach(n => { if (n.est) return; const y = LY - (n.t - now) / FALL * (LY - 10); if (y > H + 20 && now > n.t + JG) { n.est = 3; msg = 'Perdeu'; msgT = .4; return; } if (y < -20) return; g.fillStyle = COR[n.l]; g.beginPath(); g.arc(n.l * lw + lw / 2, y, 16, 0, 7); g.fill(); });
+        g.fillStyle = '#3ddc84' + '2e'; g.fillRect(0, LY - RAIO_ACERTO, W, RAIO_ACERTO * 2); g.fillStyle = '#3ddc84' + '40'; g.fillRect(0, LY - RAIO_PERF, W, RAIO_PERF * 2); g.strokeStyle = '#fff'; g.lineWidth = 2; g.beginPath(); g.moveTo(0, LY); g.lineTo(W, LY); g.stroke(); g.lineWidth = 1;
+        notas.forEach(n => { if (n.est) return; const y = LY - (n.t - now) / FALL * (LY - 10), x = n.l * lw + lw / 2; if (y > H + 20 && now > n.t + JG) { n.est = 3; msg = 'Perdeu'; msgT = .4; return; } if (y < -28) return; const im = artes[n.l]; if (im.complete && im.naturalWidth) g.drawImage(im, x - 25, y - 25, 50, 50); else { g.fillStyle = COR[n.l]; g.beginPath(); g.arc(x, y, 16, 0, 7); g.fill(); } });
         g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Acertos ' + Math.floor(hit) + '/' + N, 10, 20); if (msgT > 0) { msgT -= .016; g.font = '800 22px system-ui'; g.textAlign = 'center'; g.fillText(msg, W / 2, 50); g.textAlign = 'left'; }
         if (now > notas[N - 1].t + 1 && !acabou) { acabou = true; fim(hit / N, Math.floor(hit) + ' de ' + N + ' notas'); } raf = requestAnimationFrame(loop); };
       t0 = performance.now(); raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); document.removeEventListener('keydown', key); };
