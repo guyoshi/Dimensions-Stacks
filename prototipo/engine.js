@@ -827,7 +827,7 @@
         e.attr = await this.chooseAttr(combat, e, opts);
         if (!opts.includes(e.attr)) e.attr = opts[0];
       }
-      const ft = this.cfg.fortuna; if (ft && ft.n >= 3 && this.rand() < .04) { const alvos = combat.entries.filter(e => e.pid !== ft.pid && !this.sameTeam(e.pid, ft.pid)); if (alvos.length) { const e = alvos[Math.floor(this.rand() * alvos.length)]; e.withdrawn = true; e.gone = true; this.p(ft.pid).deck.push(e.card); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Fortuna: ${this.p(e.pid).name} deixa ${CARDS[e.card].nome} cair sem lutar.`, 'efeito'); await this.emit('steal', { from: e.pid, to: ft.pid, card: e.card, fortune: 'queda' }); } }
+      const ft = this.cfg.fortuna; if (ft && ft.n >= 3 && this.rand() < (ft.p3 == null ? .018 : ft.p3)) { const alvos = combat.entries.filter(e => e.pid !== ft.pid && !this.sameTeam(e.pid, ft.pid)); if (alvos.length) { const e = alvos[Math.floor(this.rand() * alvos.length)]; e.withdrawn = true; e.gone = true; this.p(ft.pid).deck.push(e.card); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Fortuna: ${this.p(e.pid).name} deixa ${CARDS[e.card].nome} cair sem lutar.`, 'efeito'); await this.emit('steal', { from: e.pid, to: ft.pid, card: e.card, fortune: 'queda' }); } }
       combat.entries.forEach(e => this.recalc(e));
       if (this.cfg.boss && this.s.movNow === 'mare') { const be = combat.entries.find(e => e.pid === this.cfg.boss.bestaPid); if (be && be.attr) { const a = be.attr; this.addMod(be, be.pid, 'Maré Sombria', x => { x.stats[a] += 25; }); } }
       // 4) revelação
@@ -837,8 +837,8 @@
       // 6) resolução
       await this.resolve(combat);
       if (combat.result && combat.result.winnerPid != null && (combat.result.winnerPid === 0 || this.sameTeam(combat.result.winnerPid, 0))) this.s.playerWins = (this.s.playerWins | 0) + 1;
-      if (ft && ft.n >= 4 && this.rand() < .03) { const bh = this.s.bh.map((x, i) => ({ x, i })).filter(o => o.x.kind === 'normal'); if (bh.length) { const o = bh[Math.floor(this.rand() * bh.length)], c = this.s.bh.splice(o.i, 1)[0].id; this.p(ft.pid).deck.push(c); this.s.fortunaCards = (this.s.fortunaCards || []).concat(c); this.log(`Fortuna: ${CARDS[c].nome} escapa do Buraco Negro para ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('rescue', { pid: ft.pid, cards: [c], fortune: 'buraco' }); } }
-      if (ft && ft.n >= 5 && this.rand() < .02) { const inim = this.foesOf(ft.pid).map(pid => this.p(pid)).filter(p => p.deck.length); if (inim.length) { const p = inim[Math.floor(this.rand() * inim.length)], c = p.deck.shift(); this.p(ft.pid).deck.push(c); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Terremoto: ${CARDS[c].nome} cai no baralho de ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('steal', { from: p.pid, to: ft.pid, card: c, fortune: 'terremoto' }); } }
+      if (ft && ft.n >= 4 && this.rand() < (ft.p4 == null ? .012 : ft.p4)) { const bh = this.s.bh.map((x, i) => ({ x, i })).filter(o => o.x.kind === 'normal'); if (bh.length) { const o = bh[Math.floor(this.rand() * bh.length)], c = this.s.bh.splice(o.i, 1)[0].id; this.p(ft.pid).deck.push(c); this.s.fortunaCards = (this.s.fortunaCards || []).concat(c); this.log(`Fortuna: ${CARDS[c].nome} escapa do Buraco Negro para ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('rescue', { pid: ft.pid, cards: [c], fortune: 'buraco' }); } }
+      if (ft && ft.n >= 5 && this.rand() < (ft.p5 == null ? .008 : ft.p5)) { const inim = this.foesOf(ft.pid).map(pid => this.p(pid)).filter(p => p.deck.length); if (inim.length) { const p = inim[Math.floor(this.rand() * inim.length)], c = p.deck.shift(); this.p(ft.pid).deck.push(c); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Terremoto: ${CARDS[c].nome} cai no baralho de ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('steal', { from: p.pid, to: ft.pid, card: c, fortune: 'terremoto' }); } }
       await this.runHooks(combat);
       this.purgeClones();
       await this.emit('combatEnd', { combat });
@@ -1200,7 +1200,7 @@
     blindNow(p) { return !!(p && p.bot) && this.rand() < this.lvl(p).blind; }
     async bot_attr(p, entry, options, combat) {
       if (this.fogged(combat, p.pid)) return options[Math.floor(this.rand() * options.length)];   // Névoa de Dados: sem ver a carta, escolhe ao acaso
-      const ft = this.cfg.fortuna; if (ft && ft.n >= 2 && p.pid !== ft.pid && this.rand() < .05) { let pior = options[0], pv = 2; options.forEach(a => { const w = this.pWin(p, entry, a, combat).P; if (w < pv) { pv = w; pior = a; } }); this.log(`Fortuna confunde ${p.name}: ele escolhe o atributo menos favorável.`, 'efeito'); return pior; }
+      const ft = this.cfg.fortuna; if (ft && ft.n >= 2 && p.pid !== ft.pid && this.rand() < (ft.p2 == null ? .025 : ft.p2)) { let pior = options[0], pv = 2; options.forEach(a => { const w = this.pWin(p, entry, a, combat).P; if (w < pv) { pv = w; pior = a; } }); this.log(`Fortuna confunde ${p.name}: ele escolhe o atributo menos favorável.`, 'efeito'); return pior; }
       const sk = this.skill(p); let best = null, bs = -1;
       if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
       options.forEach(a => {

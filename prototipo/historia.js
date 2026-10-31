@@ -482,7 +482,7 @@
   function closeSheet() { if (sheet) { sheet.hidden = true; curId = null; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); } }
   const TAL_DESC = {
     vigor: ['Resistência +2', 'Força +2', 'Velocidade +2', 'Inteligência +2', 'Todos os atributos inimigos −1'],
-    fortuna: ['10% de dobrar pêndulos', '5%: inimigo escolhe pior atributo', '4%: inimigo deixa a carta cair', '3%: carta do Buraco Negro vem para você', '2%: Terremoto captura carta inimiga'],
+    fortuna: ['10% de dobrar pêndulos', '2,5%: inimigo escolhe pior atributo', '1,8%: inimigo deixa a carta cair', '1,2%: carta do Buraco Negro vem para você', '0,8%: Terremoto captura carta inimiga'],
     estrategia: ['10% de desconto nas lojas comuns', 'Cartas paradas descansam 2 pontos', '1 pêndulo a cada 2 disputas vencidas', 'Começa com 1 carta a mais', 'Arautos e Guardiões começam com 1 a menos'],
   };
   function pausaHistoria(aba, ctrl) {
@@ -977,7 +977,7 @@
     const V = NPC ? NPC.vend(id) : null, vd = $('.loja-vend', ov);
     const diz = t => { if (!V) return; $('.lv-t span', ov).textContent = t; vd.classList.remove('fala'); void vd.offsetWidth; vd.classList.add('fala'); };
     if (V) { vd.hidden = false; $('.lv-p', ov).append(U.cardEl(V.card, { up: true, noanim: true, cw: 46 })); $('.lv-t b', ov).textContent = V.nome; diz(V.oi); }
-    const fixoTema = TEMAS[Math.max(1, Math.min(5, +(id.match(/\d+/) || [1])[0]))], rarosTema = TEMAS.slice(6), raroTema = Math.random() < .25 ? rarosTema.filter(t => !S.temas[t.id])[Math.floor(Math.random() * Math.max(1, rarosTema.filter(t => !S.temas[t.id]).length))] : null;
+    const fixoTema = TEMAS[Math.max(1, Math.min(5, +(id.match(/\d+/) || [1])[0]))], rarosTema = TEMAS.slice(6), rarosNaoComprados = rarosTema.filter(t => !S.temas[t.id]), raroTema = rarosNaoComprados.length && Math.random() < .25 ? rnd0(rarosNaoComprados) : null;
     const temaExtra = t => t ? { k: 'T:' + t.id, tipo: 'tema', nome: t.nome, arq: t.arq, p: t.preco, got: !!S.temas[t.id], txt: 'Traseira de carta' } : null;
     const extras = () => (NPC ? NPC.lojaExtras(id).map(x => x.tipo === 'reg' ? Object.assign({}, x, { p: dsc(x.p) }) : x) : []).concat([temaExtra(fixoTema), temaExtra(raroTema)].filter(Boolean));
     const conta = alvo => { const de = saldo; saldo = alvo; const t0 = performance.now(), dur = document.body.classList.contains('reduce') ? 0 : 600; const f = t => { const k = dur ? Math.min(1, (t - t0) / dur) : 1; bal.textContent = Math.round(de + (alvo - de) * k); if (k < 1) requestAnimationFrame(f); }; bal.parentNode.classList.remove('gasta'); void bal.offsetWidth; bal.parentNode.classList.add('gasta'); requestAnimationFrame(f); };
