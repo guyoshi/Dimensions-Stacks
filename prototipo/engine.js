@@ -358,10 +358,11 @@
     curEv() { if (this.rg === 'avesso') return { id: 'avesso' }; return (this.s.events && this.s.events[this.s.round]) || null; }
     // atributos da carta já com o efeito do fenômeno da rodada; "mark" diz à interface o que mudou
     evBase(card, pid) {
-      const st = Object.assign({}, CARDS[card].stats), ev = this.curEv(), rg = this.rg; if (!ev && !rg && !this.cfg.bonusVal && !this.cfg.bonusCards) return { st, mark: null };
+      const st = Object.assign({}, CARDS[card].stats), ev = this.curEv(), rg = this.rg; if (!ev && !rg && !this.cfg.bonusVal && !this.cfg.bonusCards && !this.cfg.attrMods) return { st, mark: null };
       const m = {}, chg = (k, d) => { const v = Math.max(0, st[k] + d); m[k] = (m[k] || 0) + v - st[k]; st[k] = v; };
       if (pid != null && this.cfg.bonusVal && (this.cfg.bonusPids || []).includes(pid)) AID.forEach(k => chg(k, this.cfg.bonusVal));   // Besta: +30 por miniboss vivo (só enquanto a carta está com ela)
       const bc = this.cfg.bonusCards; if (bc && pid === bc.pid && bc.cards.includes(card)) AID.forEach(k => chg(k, bc.val));   // União completa contra a Besta: +5 em tudo
+      const am = this.cfg.attrMods && this.cfg.attrMods[pid]; if (am) AID.forEach(k => { if (am[k]) { const d = am[k] > 0 ? Math.min(99, st[k] + am[k]) - st[k] : am[k]; chg(k, d); } });
       if (rg === 'invertidos') { const o = Object.assign({}, st); chg('pod', o.def - o.pod); chg('def', o.pod - o.def); chg('int', o.vel - o.int); chg('vel', o.int - o.vel); }   // ATQ↔DEF e INT↔VEL
       else if (rg === 'mare') chg('def', 15);
       else if (rg === 'dupla') { const a = Math.round((st.pod + st.def) / 2), b = Math.round((st.int + st.vel) / 2); chg('pod', a - st.pod); chg('def', a - st.def); chg('int', b - st.int); chg('vel', b - st.vel); }   // Dupla soma: cada atributo vale a média do par
@@ -784,6 +785,7 @@
       if (this.cfg.boss && this.s.movNow === 'veu') combat.ctl.fog = { pid: this.cfg.boss.bestaPid, boss: true };   // Véu Negro: só a Besta vê os números
       if (this.rg === 'aposta') { const p0 = this.p(0); combat.bet = false; if (p0 && !p0.bot && p0.alive && this.io.bet) combat.bet = !!(await this.io.bet(p0, { round: this.s.round })); }   // Aposta: 1 pêndulo por rodada
       await this.emit('combatStart', { initiator: init, round: this.s.round });
+      if (this.cfg.skipOnce && !this.s.skipUsed) { const p0 = this.p(this.cfg.skipOnce.pid == null ? 0 : this.cfg.skipOnce.pid); if (p0 && !p0.bot && p0.deck.length > 1 && this.io.skipTop && await this.io.skipTop(p0, p0.deck[0])) { const c = p0.deck.shift(); p0.deck.push(c); this.s.skipUsed = true; this.memInit(); this.log(`${p0.name} envia ${CARDS[c].nome} para o fim do baralho.`, 'efeito'); await this.emit('reorder', { pid: p0.pid, cards: p0.deck.slice(), skip: true }); } }
       if (blocked) { this.log(`Bloqueio Dimensional: ${ATTR[blocked].nome} está bloqueado nesta disputa.`, 'rodada'); await this.emit('eventFx', { id: 'bloqueio', attr: blocked }); }
       // 1) preparação dos bots [PROPOSTA]
       if (combat.specialsAllowed) {
@@ -825,6 +827,7 @@
         e.attr = await this.chooseAttr(combat, e, opts);
         if (!opts.includes(e.attr)) e.attr = opts[0];
       }
+      const ft = this.cfg.fortuna; if (ft && ft.n >= 3 && this.rand() < .04) { const alvos = combat.entries.filter(e => e.pid !== ft.pid && !this.sameTeam(e.pid, ft.pid)); if (alvos.length) { const e = alvos[Math.floor(this.rand() * alvos.length)]; e.withdrawn = true; e.gone = true; this.p(ft.pid).deck.push(e.card); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Fortuna: ${this.p(e.pid).name} deixa ${CARDS[e.card].nome} cair sem lutar.`, 'efeito'); await this.emit('steal', { from: e.pid, to: ft.pid, card: e.card, fortune: 'queda' }); } }
       combat.entries.forEach(e => this.recalc(e));
       if (this.cfg.boss && this.s.movNow === 'mare') { const be = combat.entries.find(e => e.pid === this.cfg.boss.bestaPid); if (be && be.attr) { const a = be.attr; this.addMod(be, be.pid, 'Maré Sombria', x => { x.stats[a] += 25; }); } }
       // 4) revelação
@@ -833,6 +836,9 @@
       if (combat.specialsAllowed) await this.mainWindow(combat);
       // 6) resolução
       await this.resolve(combat);
+      if (combat.result && combat.result.winnerPid != null && (combat.result.winnerPid === 0 || this.sameTeam(combat.result.winnerPid, 0))) this.s.playerWins = (this.s.playerWins | 0) + 1;
+      if (ft && ft.n >= 4 && this.rand() < .03) { const bh = this.s.bh.map((x, i) => ({ x, i })).filter(o => o.x.kind === 'normal'); if (bh.length) { const o = bh[Math.floor(this.rand() * bh.length)], c = this.s.bh.splice(o.i, 1)[0].id; this.p(ft.pid).deck.push(c); this.log(`Fortuna: ${CARDS[c].nome} escapa do Buraco Negro para ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('steal', { from: 'bh', to: ft.pid, card: c, fortune: 'buraco' }); } }
+      if (ft && ft.n >= 5 && this.rand() < .02) { const inim = this.foesOf(ft.pid).map(pid => this.p(pid)).filter(p => p.deck.length); if (inim.length) { const p = inim[Math.floor(this.rand() * inim.length)], c = p.deck.shift(); this.p(ft.pid).deck.push(c); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Terremoto: ${CARDS[c].nome} cai no baralho de ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('steal', { from: p.pid, to: ft.pid, card: c, fortune: 'terremoto' }); } }
       await this.runHooks(combat);
       this.purgeClones();
       await this.emit('combatEnd', { combat });
@@ -1194,6 +1200,7 @@
     blindNow(p) { return !!(p && p.bot) && this.rand() < this.lvl(p).blind; }
     async bot_attr(p, entry, options, combat) {
       if (this.fogged(combat, p.pid)) return options[Math.floor(this.rand() * options.length)];   // Névoa de Dados: sem ver a carta, escolhe ao acaso
+      const ft = this.cfg.fortuna; if (ft && ft.n >= 2 && p.pid !== ft.pid && this.rand() < .05) { let pior = options[0], pv = 2; options.forEach(a => { const w = this.pWin(p, entry, a, combat).P; if (w < pv) { pv = w; pior = a; } }); this.log(`Fortuna confunde ${p.name}: ele escolhe o atributo menos favorável.`, 'efeito'); return pior; }
       const sk = this.skill(p); let best = null, bs = -1;
       if (options.length > 1 && this.rand() < this.lvl(p).lapse) return options[Math.floor(this.rand() * options.length)];   // deslize
       options.forEach(a => {

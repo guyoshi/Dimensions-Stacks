@@ -13,9 +13,9 @@
   const MELH = {
     L1: [{ id: 'preco', nome: 'Preços menores', txt: 'Lojas cobram 15% menos.', preco: 6 }, { id: 'bolsa', nome: 'Bolsa cheia', txt: 'Batalhas vencidas pagam 20% mais pêndulos.', preco: 4 }],
     L2: [{ id: 'mapa', nome: 'Mapa revelado', txt: 'Todos os caminhos ficam visíveis.', preco: 4 }, { id: 'olho', nome: 'Olho vivo', txt: 'Veja as cartas de qualquer inimigo antes de entrar na batalha.', preco: 3 }],
-    L3: [{ id: 'atr', nome: 'Iniciativa', txt: 'Você sempre escolhe o atributo primeiro.', preco: 8 }, { id: 'descanso', nome: 'Descanso veloz', txt: 'Cartas paradas descansam 2 pontos por vitória, em vez de 1.', preco: 4 }],
+    L3: [{ id: 'atr', nome: 'Iniciativa', txt: 'Você sempre escolhe o atributo primeiro.', preco: 8 }, { id: 'pulo', nome: 'Carta de reserva', txt: 'Uma vez por partida, pule a carta do topo: ela vai para o fim do baralho.', preco: 8 }],
     L4: [{ id: 'sorte', nome: 'Sorte de combate', txt: 'Chance de a carta ganhar atributos na disputa.', preco: 10 }, { id: 'segunda', nome: 'Segunda tentativa', txt: 'Uma vez por minigame, desbloqueie de graça depois de falhar.', preco: 3 }],
-    L5: [{ id: 'maos', nome: 'Mão ampliada', txt: 'Comece as batalhas com 2 cartas a mais.', preco: 12 }, { id: 'aluguel', nome: 'Aluguel de cartas', txt: 'Um mercador surge no mapa e aluga cartas por pêndulos. Valem uma batalha só.', preco: 8 }],
+    L5: [{ id: 'hardmini', nome: 'Modo Hard dos minigames', txt: 'Libera a aba Hard: desafios mais exigentes e prêmios 50% maiores.', preco: 8 }, { id: 'aluguel', nome: 'Aluguel de cartas', txt: 'Um mercador surge no mapa e aluga cartas por pêndulos. Valem uma batalha só.', preco: 8 }],
   };
   const MELH_ID = {}; Object.values(MELH).forEach(l => l.forEach(m => { if (m) MELH_ID[m.id] = m; }));
   // valores calibrados por simulação (ver docs): desconto de loja e sorte de combate

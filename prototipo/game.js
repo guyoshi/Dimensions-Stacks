@@ -244,6 +244,7 @@
   }
   function gameMenu() {
     SND.play('click');
+    if (G && G.cfg && G.cfg.historia && window.DSHistoria && window.DSHistoria.pausa) { window.DSHistoria.pausa('status', true); return; }
     const n = el(`<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px"><h2 style="color:var(--gold2)">Pausa</h2>${V.online && V.ctl && V.ctl.link ? `<div class="hint">Sala <b style="color:var(--gold2);letter-spacing:.2em">${esc(V.ctl.link.code)}</b> · se a conexão cair, abra Multiplayer e toque em "Voltar à sala" para retomar do ponto onde parou.</div>` : ''}
       <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button>${V.online ? '' : '<button class="btn" data-a="n">↻ Reiniciar partida</button>'}<button class="btn" data-a="q">${V.online ? 'Sair da partida' : 'Abandonar partida'}</button></div>`);
     const m = U.modal(n); let sure = false, sureN = false;
@@ -470,6 +471,13 @@
 
   // ---------------------------------------------------------------- manipuladores de eventos do motor
   const H = {
+    async skipTop(p, card) {
+      return await new Promise(resolve => {
+        const n = el('<div class="skip-card"><div class="skip-preview"></div><div><small>CARTA DE RESERVA · 1× POR PARTIDA</small><h2>Pular esta carta?</h2><p>Ela irá para o fim do baralho. Se guardar o Dom, você poderá decidir novamente na próxima disputa.</p><div class="row"><button class="btn" data-a="no">Agora não</button><button class="btn primary" data-a="yes">Enviar ao fim</button></div></div></div>');
+        $('.skip-preview', n).append(cardEl(card, { up: true, noanim: true, cw: 92 })); const m = U.modal(n);
+        n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); resolve(b.dataset.a === 'yes'); };
+      });
+    },
     async setup() {
       buildBoard(); bossHud(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
     },
@@ -695,13 +703,15 @@
       if (G.cfg.historia) {   // modo história: resultado próprio, cartas capturadas e volta ao mapa
         const H = G.cfg.historia, me = G.p(V.viewer), mine = [...me.deck, ...me.reserve, ...me.prepared], inim = new Set((G.cfg.maos || []).slice(1).flat());
         const cap = lost || G.cfg.boss ? [] : mine.filter(c => inim.has(c));
+        const xp = H.progresso ? H.progresso({ venceu: !lost, disputas: G.s.combats }) : null;
         SND.play(lost ? 'defeat' : 'victory'); if (!lost) FX.confetti();
+        const xpHtml = xp ? `<div class="result-xp"><b>+${xp.ganho} XP</b><span>Nível ${xp.nivelDepois}</span><i><u style="--xp0:${xp.pctAntes}%;--xp1:${xp.pctDepois}%"></u></i>${xp.nivelDepois > xp.nivelAntes ? `<strong>Nível ${xp.nivelDepois}!</strong>` : ''}</div>` : '';
         const nn = el(`<div class="modal"><div class="box"><div class="final"><h1>${lost ? 'Derrota' : 'Vitória!'}</h1>
           <div class="hint">${lost ? 'Seu baralho acabou. Reorganize as cartas e tente de novo.' : H.notaVit ? esc(H.notaVit) : cap.length ? 'Cartas capturadas:' : 'Nenhuma carta capturada.'}</div><div class="row hcap" style="justify-content:center;flex-wrap:wrap"></div>
-          <div class="stats"><div><b>${G.s.combats}</b>disputas</div><div><b>${G.s.round}</b>rodadas</div></div>
+          ${xpHtml}<div class="stats"><div><b>${G.s.combats}</b>disputas</div><div><b>${G.s.round}</b>rodadas</div></div>
           <div class="row" style="justify-content:center"><button class="btn primary" data-a="go">Continuar</button></div></div></div></div>`);
         cap.forEach(c => $('.hcap', nn).append(cardEl(c, { up: true, noanim: true, cw: cap.length > 3 ? 76 : 96 })));
-        nn.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); nn.remove(); U.killRun(); H.aoFim({ venceu: !lost, capturadas: cap, disputas: G.s.combats, espUsos: (G.s.espUsos || {})[V.viewer] | 0 }); };
+        nn.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); nn.remove(); U.killRun(); H.aoFim({ venceu: !lost, capturadas: cap, disputas: G.s.combats, disputasVencidas: G.s.playerWins | 0, espUsos: (G.s.espUsos || {})[V.viewer] | 0, xp }); };
         U.layer().appendChild(nn); return;
       }
       SND.play(lost ? 'defeat' : 'victory'); if (lost && SND.defeatMusic) SND.defeatMusic();

@@ -60,9 +60,10 @@
   const SEM_MUSICA = ['caracoroa', 'elos', 'ritmo'];
 
   // ---- casca comum: tela cheia, título, sair, resultado
-  function shell(m) {
+  function shell(m, opts) {
     const fundos = { cofre: 'jasmey', gancho: 'jasmey', elos: 'diario', luas: 'jesed', poderes: 'viajantes', culpado: 'misterio', ritmo: 'edelin', formacao: 'uniao' };
-    const ov = mk(`<div class="mg" data-fundo="${fundos[m.id] || 'geral'}"><header><b>${m.nome}</b><span class="mg-hint">${m.desc}</span><button class="ibtn mg-x" aria-label="Sair">✕</button></header><div class="mg-body"></div></div>`);
+    const modos = opts && opts.hardUnlocked && m.id !== 'quemequem' ? '<div class="mg-modes" aria-label="Dificuldade"><button class="on" data-mode="normal">Normal</button><button data-mode="hard">Hard</button></div>' : '';
+    const ov = mk(`<div class="mg" data-fundo="${fundos[m.id] || 'geral'}"><header><b>${m.nome}</b><span class="mg-hint">${m.desc}</span>${modos}<button class="ibtn mg-x" aria-label="Sair">✕</button></header><div class="mg-body"></div></div>`);
     document.body.appendChild(ov); return ov;
   }
   // abertura: nome do jogo entra e sai, contagem 3-2-1 e JÁ; o jogo e a música começam no JÁ
@@ -73,13 +74,14 @@
     if (parar()) { w.remove(); return false; } ic.textContent = 'JÁ!'; ic.classList.remove('pop'); void ic.offsetWidth; ic.classList.add('pop', 'ja'); bip(1050, .5, .26); w.classList.add('fim'); setTimeout(() => w.remove(), 650); return true;
   }
   async function play(id, opts) {
-    opts = opts || {}; const m = BYID[id], c = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
-    const ov = shell(m), body = $('.mg-body', ov); let ended = false, stop = () => { }, res; let t0 = Date.now();
+    opts = opts || {}; const m = BYID[id], c0 = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
+    const ov = shell(m, opts), body = $('.mg-body', ov); let ended = false, stop = () => { }, res, hard = false, c = c0; let t0 = Date.now();
+    const modeBtns = ov.querySelectorAll('[data-mode]'); modeBtns.forEach(b => b.onclick = () => { if (t0 && Date.now() - t0 > 2200) return; hard = b.dataset.mode === 'hard'; c = hard ? { dif: c0.dif * 1.28, cortes: c0.cortes.map((x, i) => Math.min(.99, x + [.04, .05, .04][i])), premios: c0.premios.map((x, i) => i ? Math.round(x * 1.5) : 0) } : c0; modeBtns.forEach(x => x.classList.toggle('on', x === b)); ov.classList.toggle('hard', hard); });
     const out = await new Promise(resolve => {
-      const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = tierOf(id, pct), reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
+      const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = c.cortes.filter(x => pct >= x).length, reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, hard, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
         body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + 1 carta' : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
         try { SND.play(tier ? (tier === 3 ? 'bauOpen' : 'bauCoin') : 'lose'); } catch (e) { }
-        const L = log(); L.push({ id, pct: res.pct, tier, reward, ms: res.ms, t: Date.now(), teste: !!opts.teste }); wr(LOG_KEY, L.slice(-500));
+        const L = log(); L.push({ id, pct: res.pct, tier, reward, hard, ms: res.ms, t: Date.now(), teste: !!opts.teste }); wr(LOG_KEY, L.slice(-500));
         $('.mg-ok', ov).onclick = () => { try { SND.play('click'); } catch (e) { } resolve(res); };
       };
       $('.mg-x', ov).onclick = () => { if (ended) { resolve(res); return; } fim(0, 'Abandonado'); };
