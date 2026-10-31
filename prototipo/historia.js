@@ -203,6 +203,7 @@
   const custoRedistribuir = () => Math.min(150, 30 + 5 * pontosGastos());
   function migraProgresso(s) {
     const semXp = s.xp == null; s.talentos = normalizaTalentos(s.talentos); s.temas = s.temas || { classico: 1 }; s.tema = s.tema || 'classico'; s.avisosNivel = s.avisosNivel || {};
+    s.tutJornada = s.tutJornada | 0;
     if (semXp) { let x = 0; Object.keys(s.cleared || {}).forEach(id => { const n = BY[id]; if (n && ['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'boss'].includes(n.tipo)) { const lv = nivelRecomendado(n), m = n.tipo === 'boss' ? 3 : n.tipo === 'guardiao' ? 2 : (n.tipo === 'elite' || n.tipo === 'miniboss') ? 1.5 : 1; x += Math.round((20 + 2 * lv) * m); } }); s.xp = x; }
     s.xp = Math.max(0, s.xp | 0); save();
   }
@@ -311,7 +312,7 @@
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
         <g id="hsCam"><image class="hs-gal" href="cena/mapa-galaxia.png" x="-1392" y="-612" width="2800" height="1400" preserveAspectRatio="none" mask="url(#hsGalM)"/><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">${U.uniaoLogo('uniao-logo-map')}</div>
-        <button class="hs-pill hs-level" data-a="pausa" title="Abrir menu de pausa" aria-label="Abrir menu de pausa, nível ${nivel(S.xp)}"><span>Nv</span><b id="hsNivel">${nivel(S.xp)}</b><i><u id="hsXpBar"></u></i><em class="mission-dot" hidden aria-label="Há uma missão pronta"></em></button><div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
+        <div class="hs-pill hs-level" title="Nível ${nivel(S.xp)}" aria-label="Nível ${nivel(S.xp)}"><span>Nv</span><b id="hsNivel">${nivel(S.xp)}</b><i><u id="hsXpBar"></u></i></div><div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button><button class="ibtn hs-pause" data-a="pausa" aria-label="Abrir Jornada" title="Jornada"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5 14 10l6.5 2-6.5 2-2 6.5-2-6.5-6.5-2 6.5-2Z"/><path class="fill" d="M12 8.2 13.2 12 12 15.8 10.8 12Z"/></svg><em class="mission-dot" hidden aria-label="Há uma missão pronta"></em></button></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-25 12 12)"/><circle cx="20" cy="8" r="1.5" class="fill"/></svg></button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda do mapa" title="Legenda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.8 5.8 4.2 9.2 10 10-5.8.8-9.2 4.2-10 10-.8-5.8-4.2-9.2-10-10 5.8-.8 9.2-4.2 10-10Z"/></svg></button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root); svg.classList.toggle('no-nums', P.numeros === false);
@@ -501,7 +502,7 @@
     missoes: '<svg viewBox="0 0 24 24"><path d="M6 22V3M6 4h11l-2 4 2 4H6"/></svg>'
   };
   function pausaHistoria(aba, ctrl) {
-    aba = aba || 'status'; ctrl = ctrl || {}; let confirmaSair = false, talSel = 'vigor'; const box = el('<div class="hs-pausa"><header><div><small>JORNADA</small><h2>Menu de pausa</h2></div></header><nav></nav><main></main></div>'), modal = U.modal(box, { cls: 'hs-modal hs-pausa-modal' });
+    aba = aba || 'status'; ctrl = ctrl || {}; let confirmaSair = false, talSel = 'vigor', tour = null; const box = el('<div class="hs-pausa"><header><h2>Jornada</h2></header><nav></nav><main></main></div>'), modal = U.modal(box, { cls: 'hs-modal hs-pausa-modal' });
     const nav = $('nav', box), main = $('main', box), ABAS = [['status', 'Status'], ['talentos', 'Talentos'], ['temas', 'Temas'], ['config', 'Configurações'], ['registros', 'Registros'], ['missoes', 'Missões']];
     nav.innerHTML = ABAS.map(([k, t]) => `<button data-a="t:${k}"><i>${TAB_ICON[k]}</i><span>${t}</span></button>`).join('');
     const render = () => {
@@ -521,8 +522,26 @@
       else if (aba === 'registros') { main.innerHTML = ''; if (NPC) NPC.colecao('frag', main); }
       else { main.innerHTML = ''; if (NPC) NPC.missoes('cad', main, () => modal.close()); }
     };
+    const iniciaTour = () => {
+      if (S.tutJornada) return; S.tutJornada = 1; save();
+      const passos = [
+        ['status', 'Status', 'Aqui você acompanha seu nível, XP, pêndulos, cartas, vitórias e broches.'],
+        ['talentos', 'Talentos', 'Use os pontos de nível nos Dons de Vigor, Fortuna ou Estratégia.'],
+        ['temas', 'Temas', 'Escolha um dos fundos de carta que você já desbloqueou nas lojas.'],
+        ['config', 'Configurações', 'Ajuste som, animações, velocidade e acessibilidade aqui mesmo.'],
+        ['registros', 'Registros', 'Consulte fragmentos, registros encontrados e selos de contenção.'],
+        ['missoes', 'Missões', 'Veja a jornada principal, conquistas e objetivos prontos para entregar.']
+      ];
+      let i = 0; const c = U.CARDS[S.npc], guia = el(`<aside class="jornada-tour" role="dialog" aria-label="Apresentação da Jornada"><div class="jt-npc"></div><div class="jt-copy"><small></small><b></b><p aria-live="polite"></p><div class="jt-actions"><button class="btn ghost sm" data-tour="skip">Pular</button><button class="btn primary sm" data-tour="next">Próxima</button></div></div></aside>`);
+      if (c) $('.jt-npc', guia).append(U.cardEl(S.npc, { up: true, noanim: true, cw: 58 })); else $('.jt-npc', guia).innerHTML = '<i>✦</i>';
+      box.append(guia);
+      const fecha = () => { $$('nav button', box).forEach(b => b.classList.remove('tour')); tour = null; guia.classList.add('out'); setTimeout(() => guia.remove(), 180); };
+      const mostra = n => { i = n; aba = passos[i][0]; render(); $$('nav button', box).forEach(b => b.classList.toggle('tour', b.dataset.a === 't:' + aba)); $('.jt-copy>small', guia).textContent = (c ? c.nome : 'Guia da Jornada') + '  ·  ' + (i + 1) + '/' + passos.length; $('.jt-copy>b', guia).textContent = passos[i][1]; $('.jt-copy>p', guia).textContent = passos[i][2]; $('[data-tour="next"]', guia).textContent = i === passos.length - 1 ? 'Entendi' : 'Próxima'; };
+      guia.onclick = e => { const b = e.target.closest('[data-tour]'); if (!b) return; e.stopPropagation(); SND.play('click'); if (b.dataset.tour === 'skip' || i === passos.length - 1) fecha(); else mostra(i + 1); };
+      tour = { sync: k => { const n = passos.findIndex(x => x[0] === k); if (n >= 0) mostra(n); } }; mostra(0);
+    };
     box.onclick = e => { const z = e.target.closest('[data-a]'); if (!z) return; const a0 = z.dataset.a;
-      if (a0.startsWith('t:')) { if (!z.closest('nav')) return; SND.play('click'); aba = a0.slice(2); render(); }
+      if (a0.startsWith('t:')) { if (!z.closest('nav')) return; SND.play('click'); aba = a0.slice(2); render(); if (tour) tour.sync(aba); }
       else if (a0.startsWith('branch:')) { SND.play('click'); talSel = a0.slice(7); render(); }
       else if (a0.startsWith('tal:')) { SND.play('click'); const k = a0.slice(4), t = S.talentos[k], c = TAL_CUSTOS[t.n]; if (t.n < 5 && pontosLivres() >= c) { t.n++; save(); render(); } }
       else if (a0.startsWith('tema:')) { SND.play('click'); const k = a0.slice(5); if (S.temas[k]) { S.tema = k; save(); aplicaTema(); render(); } }
@@ -530,7 +549,7 @@
       else if (a0 === 'abandon') { SND.play('click'); if (!confirmaSair) { confirmaSair = true; z.textContent = 'Toque novamente para confirmar'; } else { modal.close(); ctrl.abandon(); } }
     };
     box.onchange = e => { const a0 = e.target.dataset.a || ''; if (a0.startsWith('ativo:')) { S.talentos[a0.slice(6)].ativo = e.target.checked; save(); render(); } };
-    render();
+    render(); iniciaTour();
   }
   function openNode(id) {
     if (andando) return; const n = BY[id], T = TIPOS[n.tipo]; if (n.tipo === 'casa') return abrirCasa(id); if (n.tipo === 'bau') return abrirBauNo(id); if (n.tipo === 'inicio') { curId = id; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button><div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>Ponto de partida</h3><small>${esc(REGIAO[n.tier] || '')}</small></div></div><p class="hs-st hs-ok">Casa inicial, vazia.</p><p class="hint">Toque na batalha à frente para começar a jornada.</p>`; sheet.hidden = false; sheet.onclick = e => { if (e.target.closest('[data-a=x]')) closeSheet(); }; return; } curId = id; SND.play('click'); if (id === posId()) chegada(id);
