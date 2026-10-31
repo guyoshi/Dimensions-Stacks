@@ -281,7 +281,7 @@
     ai: (ctx, pid) => { const w = ctx.g.evaluate(ctx.combat, true); const me = ctx.entry(pid); const fe = foeEntry(ctx, pid); return (fe && me && ctx.value(me) < ctx.value(fe) - 6) ? 0.15 : ctx.isLosing(pid) ? 0.02 : 0.02; },
   });
   chdef('CH-elo', 'Elo', 'Devolve ao topo do seu baralho uma carta sua que a Besta capturou.', {
-    can: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.some(c => ctx.g.s.own[c] === pid)),
+    can: (ctx, pid) => !!ctx.g.s.own && ctx.opps(pid).some(o => ctx.player(o).deck.some(c => ctx.g.s.own[c] === pid)),
     async apply(ctx, act) {
       const o = ctx.opps(act.pid)[0], me = act.pid, list = ctx.player(o).deck;
       const got = await ctx.take(me, o, 'deck', l => { let bi = -1, bv = -1; l.forEach((c, i) => { if (ctx.g.s.own[c] === me) { const v = (CHAMADO[c] ? 1000 : 0) + sum4(CARDS[c].stats); if (v > bv) { bv = v; bi = i; } } }); return bi < 0 ? [] : [bi]; });
@@ -837,7 +837,7 @@
       // 6) resolução
       await this.resolve(combat);
       if (combat.result && combat.result.winnerPid != null && (combat.result.winnerPid === 0 || this.sameTeam(combat.result.winnerPid, 0))) this.s.playerWins = (this.s.playerWins | 0) + 1;
-      if (ft && ft.n >= 4 && this.rand() < .03) { const bh = this.s.bh.map((x, i) => ({ x, i })).filter(o => o.x.kind === 'normal'); if (bh.length) { const o = bh[Math.floor(this.rand() * bh.length)], c = this.s.bh.splice(o.i, 1)[0].id; this.p(ft.pid).deck.push(c); this.log(`Fortuna: ${CARDS[c].nome} escapa do Buraco Negro para ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('steal', { from: 'bh', to: ft.pid, card: c, fortune: 'buraco' }); } }
+      if (ft && ft.n >= 4 && this.rand() < .03) { const bh = this.s.bh.map((x, i) => ({ x, i })).filter(o => o.x.kind === 'normal'); if (bh.length) { const o = bh[Math.floor(this.rand() * bh.length)], c = this.s.bh.splice(o.i, 1)[0].id; this.p(ft.pid).deck.push(c); this.s.fortunaCards = (this.s.fortunaCards || []).concat(c); this.log(`Fortuna: ${CARDS[c].nome} escapa do Buraco Negro para ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('rescue', { pid: ft.pid, cards: [c], fortune: 'buraco' }); } }
       if (ft && ft.n >= 5 && this.rand() < .02) { const inim = this.foesOf(ft.pid).map(pid => this.p(pid)).filter(p => p.deck.length); if (inim.length) { const p = inim[Math.floor(this.rand() * inim.length)], c = p.deck.shift(); this.p(ft.pid).deck.push(c); this.s.caps[ft.pid] = (this.s.caps[ft.pid] || 0) + 1; this.log(`Terremoto: ${CARDS[c].nome} cai no baralho de ${this.p(ft.pid).name}.`, 'efeito'); await this.emit('steal', { from: p.pid, to: ft.pid, card: c, fortune: 'terremoto' }); } }
       await this.runHooks(combat);
       this.purgeClones();

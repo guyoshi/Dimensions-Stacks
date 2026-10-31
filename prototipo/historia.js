@@ -175,7 +175,7 @@
   function nivelRecomendado(n) {
     if (!n) return 1;
     if (n.tipo === 'boss') return 30; // este Boss é a Besta; bosses comuns da campanha usam 28
-    if (n.tipo === 'guardiao') return 9 + Math.max(0, GUARD.slice().sort().indexOf(n.id));
+    if (n.tipo === 'guardiao') return 10 + Math.max(0, GUARD.slice().sort().indexOf(n.id));
     if (n.tipo === 'miniboss') return 4 + Math.floor(Math.max(0, MINIS.slice().sort().indexOf(n.id)) / 2);
     const rank = RANKS[n.id] == null ? Math.max(0, (n.tier - 1) * 10) : RANKS[n.id];
     return Math.max(1, Math.round(1 + .29 * rank) + (n.tipo === 'elite' ? 1 : 0));
@@ -485,13 +485,13 @@
     fortuna: ['10% de dobrar pêndulos', '5%: inimigo escolhe pior atributo', '4%: inimigo deixa a carta cair', '3%: carta do Buraco Negro vem para você', '2%: Terremoto captura carta inimiga'],
     estrategia: ['10% de desconto nas lojas comuns', 'Cartas paradas descansam 2 pontos', '1 pêndulo a cada 2 disputas vencidas', 'Começa com 1 carta a mais', 'Arautos e Guardiões começam com 1 a menos'],
   };
-  function pausaHistoria(aba) {
-    aba = aba || 'status'; const box = el('<div class="hs-pausa"><header><div><small>JORNADA</small><h2>Menu de pausa</h2></div><button class="ibtn" data-a="x" aria-label="Fechar">✕</button></header><nav></nav><main></main></div>'), modal = U.modal(box, { cls: 'hs-modal hs-pausa-modal' });
+  function pausaHistoria(aba, ctrl) {
+    aba = aba || 'status'; ctrl = ctrl || {}; let confirmaSair = false; const box = el('<div class="hs-pausa"><header><div><small>JORNADA</small><h2>Menu de pausa</h2></div><button class="ibtn" data-a="x" aria-label="Fechar">✕</button></header><nav></nav><main></main></div>'), modal = U.modal(box, { cls: 'hs-modal hs-pausa-modal' });
     const nav = $('nav', box), main = $('main', box), ABAS = [['status', 'Status'], ['talentos', 'Talentos'], ['temas', 'Temas'], ['config', 'Configurações'], ['registros', 'Registros'], ['missoes', 'Missões']];
     nav.innerHTML = ABAS.map(([k, t]) => `<button data-a="t:${k}">${t}</button>`).join('');
     const render = () => {
       $$('nav button', box).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba)); const lv = nivel(S.xp), a = xpParaNivel(lv), b = lv < 30 ? xpParaNivel(lv + 1) : S.xp, p = lv >= 30 ? 100 : Math.round(100 * (S.xp - a) / Math.max(1, b - a));
-      if (aba === 'status') main.innerHTML = `<section class="pause-status"><div class="pause-level"><b>Nível ${lv}</b><span>${lv >= 30 ? (S.xp - a) + ' XP acumulado após o teto' : (S.xp - a) + ' / ' + (b - a) + ' XP'}</span><i><u style="width:${p}%"></u></i></div><div class="pause-stats"><div><b>${S.pend | 0}</b><span>Pêndulos</span></div><div><b>${(S.owned || []).length}</b><span>Cartas</span></div><div><b>${nBat()}</b><span>Vitórias</span></div><div><b>${nBroches()}</b><span>Broches</span></div></div><p>Próximo nível concede 1 ponto de talento. No nível 30, o XP continua sendo acumulado.</p></section>`;
+      if (aba === 'status') main.innerHTML = `<section class="pause-status"><div class="pause-level"><b>Nível ${lv}</b><span>${lv >= 30 ? (S.xp - a) + ' XP acumulado após o teto' : (S.xp - a) + ' / ' + (b - a) + ' XP'}</span><i><u style="width:${p}%"></u></i></div><div class="pause-stats"><div><b>${S.pend | 0}</b><span>Pêndulos</span></div><div><b>${(S.owned || []).length}</b><span>Cartas</span></div><div><b>${nBat()}</b><span>Vitórias</span></div><div><b>${nBroches()}</b><span>Broches</span></div></div><p>Próximo nível concede 1 ponto de talento. No nível 30, o XP continua sendo acumulado.</p>${ctrl.abandon ? '<div class="row"><button class="btn" data-a="abandon">Abandonar partida</button></div>' : ''}</section>`;
       else if (aba === 'talentos') { const livre = pontosLivres(); main.innerHTML = `<div class="tal-head"><div><b>${livre}</b><span>ponto${livre === 1 ? '' : 's'} livre${livre === 1 ? '' : 's'}</span></div><button class="btn" data-a="respec" ${pontosGastos() ? '' : 'disabled'}>Redistribuir · ${custoRedistribuir()} ◈</button></div><div class="tal-grid">${Object.keys(TAL_NOMES).map(k => { const t = S.talentos[k], prox = TAL_CUSTOS[t.n], pode = t.n < 5 && livre >= prox; return `<section class="tal-track ${t.ativo === false ? 'off' : ''}" data-tal="${k}"><header><div><small>Barra</small><h3>${TAL_NOMES[k]}</h3></div><label><input type="checkbox" data-a="ativo:${k}" ${t.ativo !== false ? 'checked' : ''}> Ativa</label></header><ol>${TAL_DESC[k].map((d, i) => `<li class="${i < t.n ? 'on' : ''}"><i>${i < t.n ? '✓' : i + 1}</i><span>${d}<small>Custo ${TAL_CUSTOS[i]}</small></span></li>`).join('')}</ol><button class="btn primary" data-a="tal:${k}" ${pode ? '' : 'disabled'}>${t.n >= 5 ? 'Completa' : 'Ativar próximo Dom · ' + prox}</button></section>`; }).join('')}</div>`; }
       else if (aba === 'temas') { const atual = TEMAS.find(t => t.id === S.tema) || TEMAS[0]; main.innerHTML = `<div class="tema-preview"><div class="face back" style="width:120px;height:168px"><i class="seal"></i></div><div><small>TEMA ATUAL</small><h3>${esc(atual.nome)}</h3><p>As traseiras mudam em todas as cartas viradas para baixo.</p></div></div><div class="tema-grid">${TEMAS.map(t => `<button class="tema-item ${S.tema === t.id ? 'on' : ''} ${S.temas[t.id] ? '' : 'lock'}" data-a="tema:${t.id}" ${S.temas[t.id] ? '' : 'disabled'}><span style="${t.arq ? `background-image:url('cena/traseiras/${t.arq}')` : ''}"></span><b>${esc(t.nome)}</b><small>${S.temas[t.id] ? (S.tema === t.id ? 'Em uso' : 'Usar') : 'Nas lojas'}</small></button>`).join('')}</div>`; }
       else if (aba === 'config') main.innerHTML = '<section class="pause-empty"><h3>Configurações</h3><p>Som, animações e acessibilidade continuam reunidos no painel geral.</p><button class="btn primary" data-a="opcoes">Abrir configurações</button></section>';
@@ -503,6 +503,7 @@
       else if (a0.startsWith('tal:')) { const k = a0.slice(4), t = S.talentos[k], c = TAL_CUSTOS[t.n]; if (t.n < 5 && pontosLivres() >= c) { t.n++; save(); render(); } }
       else if (a0.startsWith('tema:')) { const k = a0.slice(5); if (S.temas[k]) { S.tema = k; save(); aplicaTema(); render(); } }
       else if (a0 === 'respec') { const c = custoRedistribuir(); if ((S.pend | 0) < c) { toast('São necessários ' + c + ' pêndulos.'); return; } S.pend -= c; S.gasto = (S.gasto | 0) + c; S.talentos = normalizaTalentos(); save(); paintAll(); render(); }
+      else if (a0 === 'abandon') { if (!confirmaSair) { confirmaSair = true; z.textContent = 'Toque novamente para confirmar'; } else { modal.close(); ctrl.abandon(); } }
       else if (a0 === 'opcoes') { modal.close(); U.options(); } else if (a0 === 'colecao' && NPC) { modal.close(); NPC.colecao(); } else if (a0 === 'missoes' && NPC) { modal.close(); NPC.missoes(); }
     };
     box.onchange = e => { const a0 = e.target.dataset.a || ''; if (a0.startsWith('ativo:')) { S.talentos[a0.slice(6)].ativo = e.target.checked; save(); render(); } };
@@ -585,7 +586,7 @@
   const NIVEL_PADRAO = { evento: .55, elite: .68, miniboss: .82, guardiao: .9, boss: 1 };
   const nivelBot = n => {
     if (n.tipo !== 'normal') return NIVEL_PADRAO[n.tipo] == null ? .55 : NIVEL_PADRAO[n.tipo];
-    const v = nBat(), base = v <= MARCO_GUARDIOES ? .18 + .52 * Math.pow(v / MARCO_GUARDIOES, 1.15) : .70 + .30 * Math.min(1, (v - MARCO_GUARDIOES) / 15);
+    const v = RANKS[n.id] == null ? Math.max(0, (n.tier - 1) * 10) : RANKS[n.id], base = v <= MARCO_GUARDIOES ? .18 + .52 * Math.pow(v / MARCO_GUARDIOES, 1.15) : .70 + .30 * Math.min(1, (v - MARCO_GUARDIOES) / 15);
     return Math.max(.08, base - ajudaDerrota());
   };
   const PULO_APOS_DERROTAS = 4;
@@ -814,6 +815,7 @@
   }
   function chegada(id) {   // o boneco está neste ponto: diálogo da primeira vez
     const n = BY[id]; if (!n || !S.tutorial) return;   // antes do tutorial, a primeira vitória tem a vez
+    if (['elite', 'miniboss', 'guardiao', 'boss'].includes(n.tipo) && nivel(S.xp) < nivelRecomendado(n) - 2 && !S.avisosNivel[id]) { quandoLivre(() => confirmarNivel(id)); return; }
     if (n.tipo === 'evento') dica('evento'); else if (n.tipo === 'elite') dica('elite'); else if (n.tipo === 'miniboss') dica('miniboss'); else if (n.tipo === 'guardiao') dica('guardiao'); else if (n.tipo === 'boss') dica('boss'); else if (n.tipo === 'loja') dica('loja'); else if (n.tipo === 'minigame') dica('minigame');
   }
   function bossAbre() {

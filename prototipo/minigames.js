@@ -75,8 +75,8 @@
   }
   async function play(id, opts) {
     opts = opts || {}; const m = BYID[id], c0 = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
-    const ov = shell(m, opts), body = $('.mg-body', ov); let ended = false, stop = () => { }, res, hard = false, c = c0; let t0 = Date.now();
-    const modeBtns = ov.querySelectorAll('[data-mode]'); modeBtns.forEach(b => b.onclick = () => { if (t0 && Date.now() - t0 > 2200) return; hard = b.dataset.mode === 'hard'; c = hard ? { dif: c0.dif * 1.28, cortes: c0.cortes.map((x, i) => Math.min(.99, x + [.04, .05, .04][i])), premios: c0.premios.map((x, i) => i ? Math.round(x * 1.5) : 0) } : c0; modeBtns.forEach(x => x.classList.toggle('on', x === b)); ov.classList.toggle('hard', hard); });
+    const ov = shell(m, opts), body = $('.mg-body', ov); let ended = false, started = false, stop = () => { }, res, hard = false, c = c0; let t0 = Date.now();
+    const modeBtns = ov.querySelectorAll('[data-mode]'); modeBtns.forEach(b => b.onclick = () => { if (started) return; hard = b.dataset.mode === 'hard'; c = hard ? { dif: c0.dif * 1.28, cortes: c0.cortes.map((x, i) => Math.min(.99, x + [.04, .05, .04][i])), premios: c0.premios.map((x, i) => i ? Math.round(x * 1.5) : 0) } : c0; modeBtns.forEach(x => x.classList.toggle('on', x === b)); ov.classList.toggle('hard', hard); });
     const out = await new Promise(resolve => {
       const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = c.cortes.filter(x => pct >= x).length, reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, hard, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
         body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + 1 carta' : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
@@ -85,7 +85,8 @@
         $('.mg-ok', ov).onclick = () => { try { SND.play('click'); } catch (e) { } resolve(res); };
       };
       $('.mg-x', ov).onclick = () => { if (ended) { resolve(res); return; } fim(0, 'Abandonado'); };
-      MUS.prep(id); intro(ov, m, () => ended).then(go => { if (!go) return; t0 = Date.now(); MUS.start(id); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); } });
+      const comecar = () => { if (started || ended) return; started = true; body.innerHTML = ''; MUS.prep(id); intro(ov, m, () => ended).then(go => { if (!go) return; t0 = Date.now(); MUS.start(id); try { stop = GAMES[id](body, c, fim) || (() => { }); } catch (e) { console.error(e); fim(0, 'Erro'); } }); };
+      if (modeBtns.length) { body.innerHTML = '<div class="mg-modepick"><small>MODO DE JOGO</small><h2>Escolha a dificuldade</h2><p>Hard aumenta a pressão e os cortes de pontuação, mas paga 50% mais pêndulos.</p><button class="btn primary mg-begin">Iniciar</button></div>'; $('.mg-begin', body).onclick = comecar; } else comecar();
     });
     ov.remove(); opts.onEnd && opts.onEnd(out); return out;
   }

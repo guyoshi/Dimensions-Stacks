@@ -244,7 +244,7 @@
   }
   function gameMenu() {
     SND.play('click');
-    if (G && G.cfg && G.cfg.historia && window.DSHistoria && window.DSHistoria.pausa) { window.DSHistoria.pausa('status', true); return; }
+    if (G && G.cfg && G.cfg.historia && window.DSHistoria && window.DSHistoria.pausa) { const HH = G.cfg.historia; window.DSHistoria.pausa('status', { abandon: () => { U.killRun(); $$('#layer > *').forEach(x => x.remove()); HH.aoFim({ venceu: false, capturadas: [], disputas: G.s.combats, disputasVencidas: G.s.playerWins | 0, espUsos: 0, abandonou: true }); } }); return; }
     const n = el(`<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px"><h2 style="color:var(--gold2)">Pausa</h2>${V.online && V.ctl && V.ctl.link ? `<div class="hint">Sala <b style="color:var(--gold2);letter-spacing:.2em">${esc(V.ctl.link.code)}</b> · se a conexão cair, abra Multiplayer e toque em "Voltar à sala" para retomar do ponto onde parou.</div>` : ''}
       <button class="btn primary" data-a="c">Continuar</button><button class="btn" data-a="r">📖 Como jogar</button><button class="btn" data-a="o">⚙ Opções e sons</button>${V.online ? '' : '<button class="btn" data-a="n">↻ Reiniciar partida</button>'}<button class="btn" data-a="q">${V.online ? 'Sair da partida' : 'Abandonar partida'}</button></div>`);
     const m = U.modal(n); let sure = false, sureN = false;
@@ -702,7 +702,7 @@
       const lost = winner == null || !(human || !anyHuman);
       if (G.cfg.historia) {   // modo história: resultado próprio, cartas capturadas e volta ao mapa
         const H = G.cfg.historia, me = G.p(V.viewer), mine = [...me.deck, ...me.reserve, ...me.prepared], inim = new Set((G.cfg.maos || []).slice(1).flat());
-        const cap = lost || G.cfg.boss ? [] : mine.filter(c => inim.has(c));
+        const cap = lost || G.cfg.boss ? [] : mine.filter(c => inim.has(c) || (G.s.fortunaCards || []).includes(c));
         const xp = H.progresso ? H.progresso({ venceu: !lost, disputas: G.s.combats }) : null;
         SND.play(lost ? 'defeat' : 'victory'); if (!lost) FX.confetti();
         const xpHtml = xp ? `<div class="result-xp"><b>+${xp.ganho} XP</b><span>Nível ${xp.nivelDepois}</span><i><u style="--xp0:${xp.pctAntes}%;--xp1:${xp.pctDepois}%"></u></i>${xp.nivelDepois > xp.nivelAntes ? `<strong>Nível ${xp.nivelDepois}!</strong>` : ''}</div>` : '';
