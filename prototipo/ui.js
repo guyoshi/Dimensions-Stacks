@@ -409,19 +409,25 @@
   }
 
   // ---- opções
-  function options() {
-    const n = el(`<div><h2 style="color:var(--gold2);margin-bottom:6px">Opções</h2>
-      <div class="optrow"><span>Volume geral</span><input type="range" min="0" max="1" step=".05" value="${S.master}" data-o="master"></div>
-      <div class="optrow"><span>Efeitos</span><input type="range" min="0" max="1" step=".05" value="${S.sfx}" data-o="sfx"></div>
-      <div class="optrow"><span>Música</span><input type="range" min="0" max="1" step=".05" value="${S.music}" data-o="music"></div>
-      <div class="optrow"><span>Música ambiente</span><div class="seg" data-o="musicOn"><button data-v="1" class="${S.musicOn ? 'on' : ''}">Ligada</button><button data-v="0" class="${!S.musicOn ? 'on' : ''}">Desligada</button></div></div>
-      <div class="optrow"><span>Trilha sonora</span><div class="seg" data-o="trilha"><button data-v="nova" class="${S.trilha !== 'classica' ? 'on' : ''}">Nova</button><button data-v="classica" class="${S.trilha === 'classica' ? 'on' : ''}">Clássica</button></div></div>
-      <div class="optrow"><span>Dicas durante a partida</span><div class="seg" data-o="help"><button data-v="1" class="${S.help !== false ? 'on' : ''}">Ligadas</button><button data-v="0" class="${S.help === false ? 'on' : ''}">Desligadas</button></div></div>
-      <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
-      <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
-      <div class="optrow"><span>Efeitos visuais do mapa</span><div class="seg" data-o="mapFx"><button data-v="1" class="${S.mapFx !== false ? 'on' : ''}">Ligados</button><button data-v="0" class="${S.mapFx === false ? 'on' : ''}">Desligados</button></div></div>
-      <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div></div>`);
-    n.addEventListener('input', e => { const o = e.target.dataset.o; if (!o) return; S[o] = +e.target.value; applyOpts(); });
+  function options(host) {
+    const inline = !!host;
+    const range = (nome, o, valor) => `<div class="optrow"><span>${nome}</span><div class="rangebox"><input type="range" min="0" max="1" step=".05" value="${valor}" data-o="${o}"><output>${Math.round(valor * 100)}%</output></div></div>`;
+    const n = el(`<div class="${inline ? 'pause-options' : ''}"><h2>Configurações</h2>
+      <section class="opt-group"><h3><i>▥</i> Áudio</h3>
+        ${range('Volume geral', 'master', S.master)}${range('Efeitos', 'sfx', S.sfx)}${range('Música', 'music', S.music)}
+      </section>
+      <section class="opt-group"><h3><i>✦</i> Jogo</h3>
+        <div class="optrow"><span>Música ambiente</span><div class="seg" data-o="musicOn"><button data-v="1" class="${S.musicOn ? 'on' : ''}">Ligada</button><button data-v="0" class="${!S.musicOn ? 'on' : ''}">Desligada</button></div></div>
+        <div class="optrow"><span>Trilha sonora</span><div class="seg" data-o="trilha"><button data-v="nova" class="${S.trilha !== 'classica' ? 'on' : ''}">Nova</button><button data-v="classica" class="${S.trilha === 'classica' ? 'on' : ''}">Clássica</button></div></div>
+        <div class="optrow"><span>Dicas durante a partida</span><div class="seg" data-o="help"><button data-v="1" class="${S.help !== false ? 'on' : ''}">Ligadas</button><button data-v="0" class="${S.help === false ? 'on' : ''}">Desligadas</button></div></div>
+        <div class="optrow"><span>Ver todas as dicas de novo</span><button class="btn sm" data-tipsreset>Reiniciar dicas</button></div>
+      </section>
+      <section class="opt-group"><h3><i>◎</i> Acessibilidade</h3>
+        <div class="optrow"><span>Velocidade</span><div class="seg" data-o="speed">${[['lento', 'Lenta'], ['normal', 'Normal'], ['rapido', 'Rápida']].map(([v, t]) => `<button data-v="${v}" class="${S.speed === v ? 'on' : ''}">${t}</button>`).join('')}</div></div>
+        <div class="optrow"><span>Efeitos visuais do mapa</span><div class="seg" data-o="mapFx"><button data-v="1" class="${S.mapFx !== false ? 'on' : ''}">Ligados</button><button data-v="0" class="${S.mapFx === false ? 'on' : ''}">Desligados</button></div></div>
+        <div class="optrow"><span>Menos movimento</span><div class="seg" data-o="reduce"><button data-v="0" class="${!S.reduce ? 'on' : ''}">Não</button><button data-v="1" class="${S.reduce ? 'on' : ''}">Sim</button></div></div>
+      </section></div>`);
+    n.addEventListener('input', e => { const o = e.target.dataset.o; if (!o) return; S[o] = +e.target.value; const out = e.target.closest('.rangebox') && e.target.closest('.rangebox').querySelector('output'); if (out) out.textContent = Math.round(S[o] * 100) + '%'; applyOpts(); });
     n.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return; SND.init();
       if (b.dataset.snd) return SND.play(b.dataset.snd);
@@ -429,6 +435,7 @@
       const seg = b.closest('.seg'); if (!seg) return; const o = seg.dataset.o, v = b.dataset.v;
       S[o] = (o === 'speed' || o === 'trilha') ? v : v === '1'; applyOpts(); $$('button', seg).forEach(x => x.classList.toggle('on', x === b)); SND.play('click');
     });
+    if (inline) { host.replaceChildren(n); return n; }
     SND.play('click'); U.modal(n);
   }
   U.options = options; U.rules = rules; U.collection = collection;

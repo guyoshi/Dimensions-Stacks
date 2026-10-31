@@ -184,16 +184,16 @@
   const TAL_CUSTOS = [1, 2, 2, 3, 4], TAL_NOMES = { vigor: 'Vigor', fortuna: 'Fortuna', estrategia: 'Estratégia' };
   const TEMAS = [
     { id: 'classico', nome: 'Dimensões Infinitas', arq: '', preco: 0 },
-    { id: 'jesed', nome: 'Ruínas Celestes', arq: 'traseira-jesed.png', preco: 55 },
-    { id: 'viajantes', nome: 'Contracanto Dimensional', arq: 'traseira-viajantes.png', preco: 50 },
-    { id: 'spacetheft', nome: 'Aurora Pirata', arq: 'traseira-spacetheft.png', preco: 65 },
-    { id: 'diario', nome: 'Elos das Sombras', arq: 'traseira-diario.png', preco: 45 },
-    { id: 'misterio', nome: 'Órbita Oráculo', arq: 'traseira-misterio.png', preco: 60 },
-    { id: 'uniao', nome: 'A União', arq: 'traseira-uniao.png', preco: 95 },
-    { id: 'edelin', nome: 'Maré, Chama e Gelo', arq: 'traseira-edelin.png', preco: 90 },
-    { id: 'jasmey', nome: 'Astrolábio de Jasmey', arq: 'traseira-jasmey.png', preco: 110 },
-    { id: 'besta', nome: 'Vazio da Besta', arq: 'traseira-besta.png', preco: 150 },
-    { id: 'quasar', nome: 'Quasar Prismático', arq: 'traseira-quasar.png', preco: 130 },
+    { id: 'jesed', nome: 'Ruínas Celestes', arq: 'traseira-jesed.jpg', preco: 55 },
+    { id: 'viajantes', nome: 'Contracanto Dimensional', arq: 'traseira-viajantes.jpg', preco: 50 },
+    { id: 'spacetheft', nome: 'Aurora Pirata', arq: 'traseira-spacetheft.jpg', preco: 65 },
+    { id: 'diario', nome: 'Elos das Sombras', arq: 'traseira-diario.jpg', preco: 45 },
+    { id: 'misterio', nome: 'Órbita Oráculo', arq: 'traseira-misterio.jpg', preco: 60 },
+    { id: 'uniao', nome: 'A União', arq: 'traseira-uniao.jpg', preco: 95 },
+    { id: 'edelin', nome: 'Maré, Chama e Gelo', arq: 'traseira-edelin.jpg', preco: 90 },
+    { id: 'jasmey', nome: 'Astrolábio de Jasmey', arq: 'traseira-jasmey.jpg', preco: 110 },
+    { id: 'besta', nome: 'Vazio da Besta', arq: 'traseira-besta.jpg', preco: 150 },
+    { id: 'quasar', nome: 'Quasar Prismático', arq: 'traseira-quasar.jpg', preco: 130 },
   ];
   function aplicaTema() { const t = TEMAS.find(x => S && x.id === S.tema) || TEMAS[0]; document.documentElement.style.setProperty('--card-back-image', t.arq ? `url("cena/traseiras/${t.arq}")` : 'none'); document.documentElement.classList.toggle('custom-back', !!t.arq); }
   function normalizaTalentos(t) { const out = {}; Object.keys(TAL_NOMES).forEach(k => { const v = t && t[k]; out[k] = typeof v === 'number' ? { n: Math.max(0, Math.min(5, v | 0)), ativo: true } : { n: Math.max(0, Math.min(5, (v && v.n) | 0)), ativo: !v || v.ativo !== false }; }); return out; }
@@ -311,8 +311,8 @@
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
         <g id="hsCam"><image class="hs-gal" href="cena/mapa-galaxia.png" x="-1392" y="-612" width="2800" height="1400" preserveAspectRatio="none" mask="url(#hsGalM)"/><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">${U.uniaoLogo('uniao-logo-map')}</div>
-        <button class="hs-pill hs-level" data-a="pausa" title="Nível e menu"><span>Nv</span><b id="hsNivel">${nivel(S.xp)}</b><i><u id="hsXpBar"></u></i></button><div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
-      <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição">⌖</button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral">▣</button><button class="ibtn" data-a="missoes" aria-label="Missões" title="Missões">☰<i class="dot" hidden></i></button><button class="ibtn" data-a="colecao" aria-label="Coleção" title="Coleção">✦</button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn" data-a="pausa" aria-label="Menu de pausa" title="Menu">Ⅱ</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda e opções" title="Ajuda">?</button></div>
+        <button class="hs-pill hs-level" data-a="pausa" title="Abrir menu de pausa" aria-label="Abrir menu de pausa, nível ${nivel(S.xp)}"><span>Nv</span><b id="hsNivel">${nivel(S.xp)}</b><i><u id="hsXpBar"></u></i><em class="mission-dot" hidden aria-label="Há uma missão pronta"></em></button><div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button></div>
+      <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-25 12 12)"/><circle cx="20" cy="8" r="1.5" class="fill"/></svg></button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda do mapa" title="Legenda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.8 5.8 4.2 9.2 10 10-5.8.8-9.2 4.2-10 10-.8-5.8-4.2-9.2-10-10 5.8-.8 9.2-4.2 10-10Z"/></svg></button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root); svg.classList.toggle('no-nums', P.numeros === false);
     paintAll(); bindMap(mp); heroPlace(posId(), false);
@@ -485,26 +485,49 @@
     fortuna: ['10% de dobrar pêndulos', '2,5%: inimigo escolhe pior atributo', '1,8%: inimigo deixa a carta cair', '1,2%: carta do Buraco Negro vem para você', '0,8%: Terremoto captura carta inimiga'],
     estrategia: ['10% de desconto nas lojas comuns', 'Cartas paradas descansam 2 pontos', '1 pêndulo a cada 2 disputas vencidas', 'Começa com 1 carta a mais', 'Arautos e Guardiões começam com 1 a menos'],
   };
+  const TAL_RESUMO = { vigor: 'Fortalece suas cartas e enfraquece os rivais.', fortuna: 'Cria oportunidades raras durante as disputas.', estrategia: 'Melhora preparo, economia e vantagem inicial.' };
+  const TAL_SIGILO = {
+    vigor: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 39 11v11c0 10-6.2 17.4-15 21-8.8-3.6-15-11-15-21V11Z"/><path d="m17 24 5 5 10-11"/></svg>',
+    fortuna: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m24 5 4.8 13.7L43 24l-14.2 5.3L24 43l-4.8-13.7L5 24l14.2-5.3Z"/><circle cx="24" cy="24" r="5"/></svg>',
+    estrategia: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="16"/><path d="m28 20-4 12-4-8 8-4Z"/><path d="M24 4v5M24 39v5M4 24h5M39 24h5"/></svg>'
+  };
+  const TAL_GLYPH = { vigor: ['♥', '✦', '➤', '⌘', '▼'], fortuna: ['×2', '?', '↘', '◎', '↯'], estrategia: ['%', '☾', '½', '+1', '−1'] };
+  const TAB_ICON = {
+    status: '<svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21c.5-5 2.8-8 7-8s6.5 3 7 8Z"/></svg>',
+    talentos: '<svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="17" r="2"/><path d="m7 16 4-8M13 7l5 8M8 18h9"/></svg>',
+    temas: '<svg viewBox="0 0 24 24"><path d="M7 4h11v15H7z"/><path d="M4 7v14h11"/></svg>',
+    config: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m12 2 2 2.5 3.2-.3.6 3.1 2.7 1.7-1.3 3 1.3 3-2.7 1.7-.6 3.1-3.2-.3L12 22l-2-2.5-3.2.3-.6-3.1L3.5 15l1.3-3-1.3-3 2.7-1.7.6-3.1 3.2.3Z"/></svg>',
+    registros: '<svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 11h6M9 15h6"/></svg>',
+    missoes: '<svg viewBox="0 0 24 24"><path d="M6 22V3M6 4h11l-2 4 2 4H6"/></svg>'
+  };
   function pausaHistoria(aba, ctrl) {
-    aba = aba || 'status'; ctrl = ctrl || {}; let confirmaSair = false; const box = el('<div class="hs-pausa"><header><div><small>JORNADA</small><h2>Menu de pausa</h2></div><button class="ibtn" data-a="x" aria-label="Fechar">✕</button></header><nav></nav><main></main></div>'), modal = U.modal(box, { cls: 'hs-modal hs-pausa-modal' });
+    aba = aba || 'status'; ctrl = ctrl || {}; let confirmaSair = false, talSel = 'vigor'; const box = el('<div class="hs-pausa"><header><div><small>JORNADA</small><h2>Menu de pausa</h2></div></header><nav></nav><main></main></div>'), modal = U.modal(box, { cls: 'hs-modal hs-pausa-modal' });
     const nav = $('nav', box), main = $('main', box), ABAS = [['status', 'Status'], ['talentos', 'Talentos'], ['temas', 'Temas'], ['config', 'Configurações'], ['registros', 'Registros'], ['missoes', 'Missões']];
-    nav.innerHTML = ABAS.map(([k, t]) => `<button data-a="t:${k}">${t}</button>`).join('');
+    nav.innerHTML = ABAS.map(([k, t]) => `<button data-a="t:${k}"><i>${TAB_ICON[k]}</i><span>${t}</span></button>`).join('');
     const render = () => {
       $$('nav button', box).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba)); const lv = nivel(S.xp), a = xpParaNivel(lv), b = lv < 30 ? xpParaNivel(lv + 1) : S.xp, p = lv >= 30 ? 100 : Math.round(100 * (S.xp - a) / Math.max(1, b - a));
-      if (aba === 'status') main.innerHTML = `<section class="pause-status"><div class="pause-level"><b>Nível ${lv}</b><span>${lv >= 30 ? (S.xp - a) + ' XP acumulado após o teto' : (S.xp - a) + ' / ' + (b - a) + ' XP'}</span><i><u style="width:${p}%"></u></i></div><div class="pause-stats"><div><b>${S.pend | 0}</b><span>Pêndulos</span></div><div><b>${(S.owned || []).length}</b><span>Cartas</span></div><div><b>${nBat()}</b><span>Vitórias</span></div><div><b>${nBroches()}</b><span>Broches</span></div></div><p>Próximo nível concede 1 ponto de talento. No nível 30, o XP continua sendo acumulado.</p>${ctrl.abandon ? '<div class="row"><button class="btn" data-a="abandon">Abandonar partida</button></div>' : ''}</section>`;
-      else if (aba === 'talentos') { const livre = pontosLivres(); main.innerHTML = `<div class="tal-head"><div><b>${livre}</b><span>ponto${livre === 1 ? '' : 's'} livre${livre === 1 ? '' : 's'}</span></div><button class="btn" data-a="respec" ${pontosGastos() ? '' : 'disabled'}>Redistribuir · ${custoRedistribuir()} ◈</button></div><div class="tal-grid">${Object.keys(TAL_NOMES).map(k => { const t = S.talentos[k], prox = TAL_CUSTOS[t.n], pode = t.n < 5 && livre >= prox; return `<section class="tal-track ${t.ativo === false ? 'off' : ''}" data-tal="${k}"><header><div><small>Barra</small><h3>${TAL_NOMES[k]}</h3></div><label><input type="checkbox" data-a="ativo:${k}" ${t.ativo !== false ? 'checked' : ''}> Ativa</label></header><ol>${TAL_DESC[k].map((d, i) => `<li class="${i < t.n ? 'on' : ''}"><i>${i < t.n ? '✓' : i + 1}</i><span>${d}<small>Custo ${TAL_CUSTOS[i]}</small></span></li>`).join('')}</ol><button class="btn primary" data-a="tal:${k}" ${pode ? '' : 'disabled'}>${t.n >= 5 ? 'Completa' : 'Ativar próximo Dom · ' + prox}</button></section>`; }).join('')}</div>`; }
-      else if (aba === 'temas') { const atual = TEMAS.find(t => t.id === S.tema) || TEMAS[0]; main.innerHTML = `<div class="tema-preview"><div class="face back" style="width:120px;height:168px"><i class="seal"></i></div><div><small>TEMA ATUAL</small><h3>${esc(atual.nome)}</h3><p>As traseiras mudam em todas as cartas viradas para baixo.</p></div></div><div class="tema-grid">${TEMAS.map(t => `<button class="tema-item ${S.tema === t.id ? 'on' : ''} ${S.temas[t.id] ? '' : 'lock'}" data-a="tema:${t.id}" ${S.temas[t.id] ? '' : 'disabled'}><span style="${t.arq ? `background-image:url('cena/traseiras/${t.arq}')` : ''}"></span><b>${esc(t.nome)}</b><small>${S.temas[t.id] ? (S.tema === t.id ? 'Em uso' : 'Usar') : 'Nas lojas'}</small></button>`).join('')}</div>`; }
-      else if (aba === 'config') main.innerHTML = '<section class="pause-empty"><h3>Configurações</h3><p>Som, animações e acessibilidade continuam reunidos no painel geral.</p><button class="btn primary" data-a="opcoes">Abrir configurações</button></section>';
-      else if (aba === 'registros') main.innerHTML = '<section class="pause-empty"><h3>Registros</h3><p>Consulte fragmentos, registros encontrados e selos de contenção.</p><button class="btn primary" data-a="colecao">Abrir registros</button></section>';
-      else main.innerHTML = '<section class="pause-empty"><h3>Missões</h3><p>Veja a cadeia principal, conquistas e objetivos prontos para entregar.</p><button class="btn primary" data-a="missoes">Abrir missões</button></section>';
+      if (aba === 'status') main.innerHTML = `<section class="pause-status"><div class="pause-level"><div><small>PROGRESSÃO</small><b>Nível ${lv}</b></div><span>${lv >= 30 ? (S.xp - a) + ' XP após o teto' : (S.xp - a) + ' / ' + (b - a) + ' XP'}</span><i><u style="width:${p}%"></u></i></div><div class="pause-stats"><div class="pend"><i>${coinSvg(48)}</i><b>${S.pend | 0}</b><span>Pêndulos</span></div><div class="cards"><i><svg viewBox="0 0 48 48"><rect x="14" y="9" width="25" height="32" rx="4"/><path d="M9 14v27h24"/></svg></i><b>${(S.owned || []).length}</b><span>Cartas</span></div><div class="wins"><i><svg viewBox="0 0 48 48"><path d="m10 8 27 27M38 8 11 35M8 39l7-7M40 39l-7-7"/></svg></i><b>${nBat()}</b><span>Vitórias</span></div><div class="brooch"><i><svg viewBox="0 0 48 48"><path d="m24 5 5 13 14 6-14 6-5 13-5-13-14-6 14-6Z"/><circle cx="24" cy="24" r="5"/></svg></i><b>${nBroches()}</b><span>Broches</span></div></div><p class="status-note"><i>i</i><span>Próximo nível concede 1 ponto de talento. No nível 30, o XP continua sendo acumulado.</span></p>${ctrl.abandon ? '<div class="row"><button class="btn" data-a="abandon">Abandonar partida</button></div>' : ''}</section>`;
+      else if (aba === 'talentos') {
+        const livre = pontosLivres(), k = talSel, t = S.talentos[k], prox = TAL_CUSTOS[t.n], pode = t.n < 5 && livre >= prox;
+        main.innerHTML = `<div class="tal-head"><div><b>${livre}</b><span>ponto${livre === 1 ? '' : 's'} livre${livre === 1 ? '' : 's'}</span></div><button class="btn tal-respec" data-a="respec" ${pontosGastos() ? '' : 'disabled'}>Redistribuir <span>${custoRedistribuir()} ${coinSvg(18)}</span></button></div>
+          <div class="tal-branches">${Object.keys(TAL_NOMES).map(q => { const tq = S.talentos[q]; return `<button class="tal-branch ${q === k ? 'on' : ''}" data-a="branch:${q}"><i>${TAL_SIGILO[q]}</i><b>${TAL_NOMES[q]}</b><small>${tq.n}/5 Dons</small></button>`; }).join('')}</div>
+          <section class="tal-panel ${t.ativo === false ? 'off' : ''}" data-tal="${k}"><header><div><small>BARRA SELECIONADA</small><h3>${TAL_NOMES[k]}</h3><p>${TAL_RESUMO[k]}</p></div><label class="tal-toggle">Ativa <input type="checkbox" data-a="ativo:${k}" ${t.ativo !== false ? 'checked' : ''}><i></i></label></header>
+            <ol class="tal-path">${TAL_DESC[k].map((d, i) => { const st = i < t.n ? 'on' : i === t.n ? 'next' : 'lock'; return `<li class="${st}"><i class="tal-orb"><b>${TAL_GLYPH[k][i]}</b><em>${st === 'on' ? '✓' : st === 'lock' ? '·' : ''}</em></i><span><small>DOM ${i + 1}</small><b>${d}</b></span><strong title="Custo em pontos de talento">${TAL_CUSTOS[i]}</strong></li>`; }).join('')}</ol>
+            <button class="btn primary tal-buy" data-a="tal:${k}" ${pode ? '' : 'disabled'}>${t.n >= 5 ? 'Barra completa' : 'Ativar próximo Dom · ' + prox + ' ponto' + (prox === 1 ? '' : 's')}</button>
+          </section>`;
+      }
+      else if (aba === 'temas') { const atual = TEMAS.find(t => t.id === S.tema) || TEMAS[0], liberados = TEMAS.filter(t => S.temas[t.id]), comprados = TEMAS.slice(1).filter(t => S.temas[t.id]).length; main.innerHTML = `<div class="tema-preview"><div class="face back" style="width:120px;height:168px"><i class="seal"></i></div><div><small>TEMA ATUAL</small><h3>${esc(atual.nome)}</h3><p>As traseiras mudam em todas as cartas viradas para baixo.</p></div></div><div class="tema-head"><div><h3>Fundos desbloqueados</h3><small>Novos fundos aparecem nas lojas.</small></div><b>${comprados}/10</b></div><div class="tema-grid">${liberados.map(t => `<button class="tema-item ${S.tema === t.id ? 'on' : ''}" data-a="tema:${t.id}"><span style="${t.arq ? `background-image:url('cena/traseiras/${t.arq}')` : ''}"></span><b>${esc(t.nome)}</b><small>${S.tema === t.id ? '✓ Em uso' : 'Usar'}</small></button>`).join('')}</div>`; }
+      else if (aba === 'config') { main.innerHTML = ''; U.options(main); }
+      else if (aba === 'registros') { main.innerHTML = ''; if (NPC) NPC.colecao('frag', main); }
+      else { main.innerHTML = ''; if (NPC) NPC.missoes('cad', main, () => modal.close()); }
     };
-    box.onclick = e => { const z = e.target.closest('[data-a]'); if (!z) return; const a0 = z.dataset.a; SND.play('click');
-      if (a0 === 'x') modal.close(); else if (a0.startsWith('t:')) { aba = a0.slice(2); render(); }
-      else if (a0.startsWith('tal:')) { const k = a0.slice(4), t = S.talentos[k], c = TAL_CUSTOS[t.n]; if (t.n < 5 && pontosLivres() >= c) { t.n++; save(); render(); } }
-      else if (a0.startsWith('tema:')) { const k = a0.slice(5); if (S.temas[k]) { S.tema = k; save(); aplicaTema(); render(); } }
-      else if (a0 === 'respec') { const c = custoRedistribuir(); if ((S.pend | 0) < c) { toast('São necessários ' + c + ' pêndulos.'); return; } S.pend -= c; S.gasto = (S.gasto | 0) + c; S.talentos = normalizaTalentos(); save(); paintAll(); render(); }
-      else if (a0 === 'abandon') { if (!confirmaSair) { confirmaSair = true; z.textContent = 'Toque novamente para confirmar'; } else { modal.close(); ctrl.abandon(); } }
-      else if (a0 === 'opcoes') { modal.close(); U.options(); } else if (a0 === 'colecao' && NPC) { modal.close(); NPC.colecao(); } else if (a0 === 'missoes' && NPC) { modal.close(); NPC.missoes(); }
+    box.onclick = e => { const z = e.target.closest('[data-a]'); if (!z) return; const a0 = z.dataset.a;
+      if (a0.startsWith('t:')) { if (!z.closest('nav')) return; SND.play('click'); aba = a0.slice(2); render(); }
+      else if (a0.startsWith('branch:')) { SND.play('click'); talSel = a0.slice(7); render(); }
+      else if (a0.startsWith('tal:')) { SND.play('click'); const k = a0.slice(4), t = S.talentos[k], c = TAL_CUSTOS[t.n]; if (t.n < 5 && pontosLivres() >= c) { t.n++; save(); render(); } }
+      else if (a0.startsWith('tema:')) { SND.play('click'); const k = a0.slice(5); if (S.temas[k]) { S.tema = k; save(); aplicaTema(); render(); } }
+      else if (a0 === 'respec') { SND.play('click'); const c = custoRedistribuir(); if ((S.pend | 0) < c) { toast('São necessários ' + c + ' pêndulos.'); return; } S.pend -= c; S.gasto = (S.gasto | 0) + c; S.talentos = normalizaTalentos(); save(); paintAll(); render(); }
+      else if (a0 === 'abandon') { SND.play('click'); if (!confirmaSair) { confirmaSair = true; z.textContent = 'Toque novamente para confirmar'; } else { modal.close(); ctrl.abandon(); } }
     };
     box.onchange = e => { const a0 = e.target.dataset.a || ''; if (a0.startsWith('ativo:')) { S.talentos[a0.slice(6)].ativo = e.target.checked; save(); render(); } };
     render();

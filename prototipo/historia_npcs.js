@@ -151,7 +151,7 @@
       e.classList.toggle('bang', podeFalar && (!st || pr));
       if (podeFalar && pr) aviso = true;
     });
-    const b = A.$('.hs-hud [data-a="missoes"] .dot', root); if (b) b.hidden = !aviso;
+    const b = A.$('.hs-hud [data-a="pausa"] .mission-dot', root); if (b) b.hidden = !aviso;
     if (A.refrescaCasa) A.refrescaCasa();
   }
   function casaSheet(id, aqui) {   // painel da casa do NPC: nome em cima, "!" se há algo novo
@@ -162,10 +162,11 @@
   }
 
   // ---- menu de missões
-  function missoes(aba) {
-    const U = A.U, s = ini(); aba = aba || 'cad';
-    const box = U.el('<div class="hs-esc hs-mis"><h3>Missões</h3><div class="mis-tabs"><button data-a="t:cad">Cadeia</button><button data-a="t:con">Conquistas</button></div><div class="mis-list"></div><div class="row"><button class="btn primary" data-a="x">Fechar</button></div></div>');
-    const lista = U.$('.mis-list', box), m = U.modal(box, { cls: 'hs-modal' });
+  function missoes(aba, host, onNavigate) {
+    const U = A.U, s = ini(), inline = !!host; aba = aba || 'cad';
+    const box = U.el('<div class="hs-esc hs-mis"><h3>Missões</h3><div class="mis-tabs"><button data-a="t:cad"><i>⌁</i>Cadeia</button><button data-a="t:con"><i>♜</i>Conquistas</button></div><div class="mis-list"></div>' + (inline ? '' : '<div class="row"><button class="btn primary" data-a="x">Fechar</button></div>') + '</div>');
+    if (inline) host.replaceChildren(box);
+    const lista = U.$('.mis-list', box), m = inline ? null : U.modal(box, { cls: 'hs-modal' });
     const row = (n, corpo, extra) => `<div class="mis-row ${extra || ''}" data-id="${n.id}"><span class="npc-av ${isCh(n) ? 'ch' : 'cq'}">${A.esc(ini1(n))}</span><div class="npc-tx"><b>${A.esc(n.nome)}</b>${corpo}</div></div>`;
     const render = () => {
       U.$$('.mis-tabs button', box).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba));
@@ -176,13 +177,14 @@
         h = itens + (L.length ? L.map(n => {
           const st = estado(n), pr = prog(n), first = s.mis[n.id].first, pron = pronta(n);
           const quer = first ? 'Vença 3 batalhas' : n.pede, tag = st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + curto(n) : 'Em andamento';
-          return row(n, `<span>${first ? 'Pede' : 'Procura'}: ${A.esc(quer)}</span><span>Em troca: ${A.esc(n.da)}</span>${st === 'ativa' && pr ? bar(pr.v, pr.m) : ''}<em>${A.esc(tag)}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
+          const premio = `<span class="mis-reward">${/fragment/i.test(n.da) ? cristal(true) : ''}<span>Em troca: ${A.esc(n.da)}</span></span>`;
+          return row(n, `<span><b>${first ? 'Pede' : 'Procura'}:</b> ${A.esc(quer)}</span>${premio}${st === 'ativa' && pr ? bar(pr.v, pr.m) : ''}<em>${A.esc(tag)}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
         }).join('') : '<p class="mis-vz">Nenhuma missão ainda.</p>');
       } else {
         const L = QS.filter(n => estado(n)).sort((a, b) => (estado(a) === 'entregue') - (estado(b) === 'entregue'));
         h = L.length ? L.map(n => {
           const st = estado(n), pr = prog(n), pron = pronta(n), ex = [n.pend + ' pêndulos'].concat(['fragmento'], n.reg ? ['registro'] : []).join(' + ');
-          return row(n, `<span>${A.esc(n.d)}</span>${st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : ''}<small>${ex}</small><em>${st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + A.esc(curto(n)) : 'Em andamento'}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
+          return row(n, `<span>${A.esc(n.d)}</span>${st === 'ativa' && pr && pr.m > 1 ? bar(pr.v, pr.m) : ''}<small class="mis-reward">${cristal(true)}<span>${ex}</span></small><em>${st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + A.esc(curto(n)) : 'Em andamento'}</em>`, st === 'entregue' ? 'done' : pron ? 'ok' : '');
         }).join('') : '<p class="mis-vz">Nenhuma missão ainda.</p>';
       }
       lista.innerHTML = h;
@@ -190,8 +192,8 @@
     render();
     box.onclick = e => {
       const b = e.target.closest('[data-a]'), r = e.target.closest('.mis-row');
-      if (b) { A.SND.play('click'); if (b.dataset.a === 'x') m.close(); else if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); render(); } return; }
-      if (r) { const n = BYID[r.dataset.id], h = A.BY[casaId(n)]; A.SND.play('click'); m.close(); A.closeSheet(); A.centerOn(h.x, h.y, .95, true); const g = A.$('.n[data-id="' + h.id + '"]', A.root()); if (g) { g.classList.remove('pulse'); void g.getBoundingClientRect(); g.classList.add('pulse'); } }
+      if (b) { A.SND.play('click'); if (b.dataset.a === 'x' && m) m.close(); else if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); render(); } return; }
+      if (r) { const n = BYID[r.dataset.id], h = A.BY[casaId(n)]; A.SND.play('click'); if (m) m.close(); if (onNavigate) onNavigate(); A.closeSheet(); A.centerOn(h.x, h.y, .95, true); const g = A.$('.n[data-id="' + h.id + '"]', A.root()); if (g) { g.classList.remove('pulse'); void g.getBoundingClientRect(); g.classList.add('pulse'); } }
     };
   }
 
@@ -202,20 +204,21 @@
     registro: '<svg class="col-ico registro" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 11h6M9 15h6"/></svg>',
     selo: '<svg class="col-ico selo" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 8 4.7v10.6L12 22l-8-4.7V6.7z"/><path d="m8 12 2.5 2.5L16 9"/></svg>'
   })[tipo] || '';
-  function colecao(aba) {
-    const U = A.U, s = ini(); aba = aba || 'frag';
-    const box = U.el('<div class="hs-esc hs-col"><h3>Coleção</h3><div class="mis-tabs"><button data-a="t:frag">Fragmentos</button><button data-a="t:reg">Registros</button><button data-a="t:selo">Selos</button></div><div class="col-body"></div><div class="row"><button class="btn primary" data-a="x">Fechar</button></div></div>');
-    const body = U.$('.col-body', box), m = U.modal(box, { cls: 'hs-modal' });
+  function colecao(aba, host) {
+    const U = A.U, s = ini(), inline = !!host; aba = aba || 'frag';
+    const box = U.el('<div class="hs-esc hs-col"><h3>Registros</h3><div class="mis-tabs"><button data-a="t:frag">' + cristal(true) + '<span>Fragmentos</span></button><button data-a="t:reg">' + icone('registro') + '<span>Registros</span></button><button data-a="t:selo">' + icone('selo') + '<span>Selos</span></button></div><div class="col-body"></div>' + (inline ? '' : '<div class="row"><button class="btn primary" data-a="x">Fechar</button></div>') + '</div>');
+    if (inline) host.replaceChildren(box);
+    const body = U.$('.col-body', box), m = inline ? null : U.modal(box, { cls: 'hs-modal' });
     const render = () => {
       U.$$('.mis-tabs button', box).forEach(b => b.classList.toggle('on', b.dataset.a === 't:' + aba));
-      if (aba === 'frag') { const n = nFrag(), g = nGanho(); body.innerHTML = `<p class="col-n"><b>${n}</b> fragmentos dimensionais</p><p class="col-n"><small>${g} de ${FRAG_TOTAL} encontrados</small></p><div class="col-frag">${cristal(n > 0)}</div>`; }
+      if (aba === 'frag') { const n = nFrag(), g = nGanho(); body.innerHTML = `<div class="col-frag-head"><p class="col-n"><b>${n}</b> fragmentos dimensionais</p><p class="col-n"><small>${g} de ${FRAG_TOTAL} encontrados</small></p></div><div class="col-frag">${Array.from({ length: 5 }, (_, i) => `<i style="--i:${i}">${cristal(n > 0)}</i>`).join('')}</div>`; }
       else if (aba === 'reg') { const regs = Object.keys(s.reg).length; body.innerHTML = `<p class="col-n"><b>${regs}</b> / 8 registros</p><div class="col-reg">${REGS.map(c => s.reg[c] ? `<button class="reg-it" data-r="${c}">${icone('registro')}<span><b>${A.esc(U.CARDS[c].nome)}</b><small>Toque para ler</small></span></button>` : `<div class="reg-it lock">${icone('registro')}<span><b>?</b><small>Não encontrado</small></span></div>`).join('')}</div>`; }
       else { const G = A.GUARD, v = G.filter(g => s.cleared[g]).length; body.innerHTML = `<p class="col-n"><b>${v}</b> / ${G.length} selos de contenção</p><div class="col-selo">${G.map(g => `<div class="selo ${s.cleared[g] ? 'on' : ''}">${icone('selo')}<small>${A.esc(A.LADOS[A.BY[g].lado])}</small></div>`).join('')}</div><p class="col-nota">Poder da Besta: +${A.bonusBoss()}</p>`; }
     };
     render();
     box.onclick = e => {
       const b = e.target.closest('[data-a]'), r = e.target.closest('[data-r]');
-      if (b) { A.SND.play('click'); if (b.dataset.a === 'x') m.close(); else if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); render(); } return; }
+      if (b) { A.SND.play('click'); if (b.dataset.a === 'x' && m) m.close(); else if (b.dataset.a.startsWith('t:')) { aba = b.dataset.a.slice(2); render(); } return; }
       if (r) { A.SND.play('click'); lerReg(r.dataset.r); }
     };
   }
