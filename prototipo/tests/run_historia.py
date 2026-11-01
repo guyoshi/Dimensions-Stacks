@@ -9,6 +9,23 @@ errs = []; bad = 0
 def chk(c, m):
     global bad
     print(('ok  ' if c else 'FALHA '), m); bad += 0 if c else 1
+def drain_story(pg, timeout=7000):
+    """Consome a fila real pós-batalha (baú -> pausa -> NPC), sem apagar o diálogo atrasado."""
+    end = time.time() + timeout / 1000; quiet = None
+    while time.time() < end:
+        acted = False
+        npc = pg.query_selector('.npc')
+        if npc:
+            npc.click(); pg.wait_for_timeout(60); npc = pg.query_selector('.npc')
+            if npc: npc.click()
+            acted = True
+        ok = pg.query_selector('.bau-ov .bau-ok:not([hidden])')
+        if ok: ok.click(); acted = True
+        if acted: quiet = None
+        elif not pg.query_selector('.npc,.bau-ov'):
+            quiet = quiet or time.time()
+            if time.time() - quiet >= 1.0: return
+        pg.wait_for_timeout(120)
 shots = os.path.join(proj, 'tests', 'shots'); os.makedirs(shots, exist_ok=True)
 try:
   with sync_playwright() as p:
@@ -42,7 +59,7 @@ try:
             if pg.evaluate("(document.querySelector('.n.sel')||{dataset:{}}).dataset.id") == g and pg.evaluate("!document.querySelector('#hsSheet').hidden"): break
         if 'Desfazer' not in pg.inner_text('#hsSheet [data-a=win]'): pg.click('#hsSheet [data-a=win]'); pg.wait_for_timeout(3500)
         if gi == 0: chk('Besta' in pg.evaluate("document.querySelector('#hsToast').textContent"), 'ao derrotar guardião a Besta é atingida (aviso do bônus)')
-        pg.evaluate("document.querySelectorAll('.npc,.bau-ov,.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(500)
+        drain_story(pg); pg.evaluate("document.querySelectorAll('.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(250)
     pg.wait_for_timeout(600)
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None

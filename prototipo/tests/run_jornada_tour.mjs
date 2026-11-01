@@ -62,6 +62,23 @@ try {
   const shot = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
   writeFileSync(screenshot, Buffer.from(shot.result.data, 'base64'));
   const ending = await evaluate(`(async()=>{document.querySelector('[data-tour=next]').click();await new Promise(r=>setTimeout(r,220));const terminou=!document.querySelector('.jornada-tour');document.querySelector('.hs-pausa-modal .x').click();document.querySelector('.hs-pause').click();await new Promise(r=>setTimeout(r,120));return{terminou,naoRepete:!document.querySelector('.jornada-tour'),salvou:window.DSHistoria.state().tutJornada===1}})()`);
+  const review = await evaluate(`(async()=>{
+    const wait=async s=>{for(let i=0;i<160;i++){const e=document.querySelector(s);if(e)return e;await new Promise(r=>setTimeout(r,50))}throw Error('Não apareceu: '+s)};
+    document.querySelector('.hs-pausa-modal .x').click();await new Promise(r=>setTimeout(r,120));
+    const s=DSHistoria.state();s.tutorial=1;s.xp=0;s.pos='B100';s.avisosNivel={};DSHistoria.openNode('B100');const aviso=await wait('.hs-levelwarn');const bestaChegada=aviso.textContent.includes('Besta')&&aviso.textContent.includes('Nv 30');aviso.querySelector('[data-a=back]').click();await new Promise(r=>setTimeout(r,120));
+    s.cleared[s.startId]=1;s.pos=s.startId;DSHistoria.openNode(s.startId);const rebatalhar=(await wait('#hsSheet [data-a=duelar]')).textContent.trim()==='Rebatalhar';
+    DSHistoria.openNode('B051');const guardiao=(await wait('#hsSheet .hs-nvrec span')).textContent.includes('Nv 14');DSHistoria.openNode('B080');const arauto=(await wait('#hsSheet .hs-nvrec span')).textContent.includes('Nv 11');
+    s.talentos={vigor:{n:2,ativo:true},fortuna:{n:1,ativo:true},estrategia:{n:1,ativo:true}};s.pend=500;DSHistoria.pausa('talentos');await wait('.hs-pausa');document.querySelector('[data-a=respec]').click();(await wait('[data-r=sim]')).click();await new Promise(r=>setTimeout(r,100));const respec=s.talentos.vigor.n===0&&s.talentos.fortuna.n===1&&s.talentos.estrategia.n===1&&s.pend===465;document.querySelector('.hs-pausa-modal .x').click();
+    s.temas={classico:1,uniao:1,edelin:1,jasmey:1,besta:1};delete s.cleared.B100;const rnd=Math.random;Math.random=()=>0;DSHistoria.loja('L1');await wait('.hs-loja');const quasarAntes=document.querySelector('.hs-loja').textContent.includes('Quasar Prismático');document.querySelector('.hs-loja [data-a=x]').click();await new Promise(r=>setTimeout(r,300));s.cleared.B100=1;DSHistoria.loja('L1');await wait('.hs-loja');const quasarDepois=document.querySelector('.hs-loja').textContent.includes('Quasar Prismático');document.querySelector('.hs-loja [data-a=x]').click();Math.random=rnd;
+    return{bestaChegada,rebatalhar,guardiao,arauto,respec,quasarOculto:!quasarAntes&&quasarDepois};
+  })()`);
+  const dupla = await evaluate(`(async()=>{
+    const wait=async s=>{for(let i=0;i<320;i++){const e=document.querySelector(s);if(e)return e;await new Promise(r=>setTimeout(r,50))}throw Error('Não apareceu: '+s)};
+    const ids=DS_DATA.CARTAS.filter(c=>!c.uniao&&c.raridade!=='quasar').slice(0,13).map(c=>c.id);
+    DSUI.startGame({players:[{name:'Você',bot:false},{name:'Cassiopeia',bot:true,diff:.9},{name:'Órion',bot:true,diff:.9}],perPlayer:7,maos:[ids.slice(0,7),ids.slice(7,10),ids.slice(10,13)],teams:[[0],[1,2]],teamPool:false,regra:{id:'g_duo'},events:false,specialsFrom:99,semMontar:true,maxCombats:30});
+    const tela=await wait('.sheet.guard-pair'),cards=tela.querySelectorAll('.cardbox .card').length,txt=tela.textContent.includes('Dupla somada'),vals=[...tela.querySelectorAll('.attrbtn:not(.blocked) .v')].every(x=>/^\\d+$/.test(x.textContent.trim())),r=tela.getBoundingClientRect(),mobile=r.left>=-1&&r.right<=innerWidth+1;
+    DSUI.killRun();return{cards,txt,vals,mobile};
+  })()`);
   const checks = {
     'o painel se chama somente Jornada': result.titulo === 'Jornada',
     'o nome antigo não aparece': !result.antigo,
@@ -69,7 +86,14 @@ try {
     'o NPC abre as seis guias': result.guias.every(Boolean),
     'a apresentação termina em Entendi': ending.terminou,
     'a apresentação não se repete': ending.naoRepete,
-    'o save registra a apresentação': ending.salvou
+    'o save registra a apresentação': ending.salvou,
+    'a Besta avisa ao chegar abaixo do Nv 30': review.bestaChegada,
+    'batalhas vencidas mostram Rebatalhar': review.rebatalhar,
+    'Guardião e Arauto usam os novos níveis': review.guardiao && review.arauto,
+    'redistribuição zera somente a barra escolhida': review.respec,
+    'Quasar só aparece nas lojas após a Besta': review.quasarOculto,
+    'Dupla somada mostra as duas cartas do jogador': dupla.cards === 2 && dupla.txt && dupla.vals,
+    'a escolha somada cabe na largura mobile': dupla.mobile
   };
   let failed = false; for (const [name, ok] of Object.entries(checks)) { console.log((ok ? 'ok    ' : 'FALHA ') + name); failed ||= !ok; }
   console.log('captura:', screenshot); if (failed) process.exitCode = 1;

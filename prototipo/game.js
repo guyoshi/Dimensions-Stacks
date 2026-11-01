@@ -51,13 +51,14 @@
   // dicas completas só nas primeiras 5 partidas do perfil; depois o texto fica reduzido
   function novice() { try { return !window.DSSTATS || window.DSSTATS.profile().t.g < 5; } catch (e) { return true; } }
   function caption(t, flash) { const c = $('#caption'); if (!c) return; c.textContent = t || ''; c.classList.toggle('flash', !!flash); }
-  function spLine(cardId, combat, canPrep) {
-    const c = CARDS[cardId], sp = E.SPECIALS[c.especial]; if (!sp) return '';
+  function spLine(cardId, combat, canPrep, canSkip) {
+    const c = CARDS[cardId], sp = E.SPECIALS[c.especial];
     const from = (G && G.cfg && G.cfg.specialsFrom) || 2;
-    let act = '';
-    if (combat && combat.specialsAllowed === false) act = !novice() ? '' : `<span class="splnote">Especiais a partir da rodada ${from}.</span>`;
-    else if (canPrep) act = `<button class="btn sm prepbtn" data-v="@prep">✦ ${esc(sp.nome)} · usar como especial</button>`;
-    return act ? `<div class="splact">${act}</div>` : '';
+    const acts = [];
+    if (sp && combat && combat.specialsAllowed === false) { if (novice()) acts.push(`<span class="splnote">Especiais a partir da rodada ${from}.</span>`); }
+    else if (sp && canPrep) acts.push(`<button class="btn sm prepbtn" data-v="@prep">✦ ${esc(sp.nome)} · usar como especial</button>`);
+    if (canSkip) acts.push('<button class="btn sm reservebtn" data-v="@skip"><b>↷ Carta de reserva</b><small>Enviar esta ao fim · 1×</small></button>');
+    return acts.length ? `<div class="splact">${acts.join('')}</div>` : '';
   }
   // ---- apresentação de um especial em ação: quem usou, qual, e o que aconteceu
   let FXB = null;
@@ -361,13 +362,16 @@
     if (!e.attr || !card.classList.contains('up')) { return; }
     updateCard(card, e.stats, e.attr, e.evm);
     let b = $('.badge', slot); const val = e.stats[e.attr] + e.bonus;
+    const gd = G && G.cfg && G.cfg.regra && G.cfg.regra.id === 'g_duo', guardas = gd && V.combat ? V.combat.entries.filter(x => x.pid >= 1 && !x.withdrawn && x.attr) : [];
+    const teamVal = gd && e.pid >= 1 && guardas.length > 1 ? guardas.reduce((t, x) => t + x.stats[x.attr] + (x.bonus || 0), 0) : null;
     if (!b) { b = el('<div class="badge"></div>'); slot.append(b); }
-    const prev = b.dataset.v; b.dataset.v = val; b.dataset.a = e.attr;
-    b.innerHTML = `${ICON[e.attr]}<span>${val}</span>${e.bonus ? `<em>${e.bonus > 0 ? '+' : ''}${e.bonus}</em>` : ''}`;
-    if (prev != null && +prev !== val) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); SND.play('bonus'); }
+    const shown = teamVal == null ? val : teamVal, prev = b.dataset.v; b.dataset.v = shown; b.dataset.a = e.attr;
+    b.innerHTML = `${ICON[e.attr]}<span>${val}</span>${teamVal != null ? `<em>Σ ${teamVal}</em>` : e.bonus ? `<em>${e.bonus > 0 ? '+' : ''}${e.bonus}</em>` : ''}`;
+    if (prev != null && +prev !== shown) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); SND.play('bonus'); }
     slot.classList.toggle('withdrawn', !!e.withdrawn);
     let x = $('.xtra', slot);
     if (e.extra && e.extra.length) { if (!x) { x = el('<div class="xtra"></div>'); slot.append(x); } x.textContent = '+' + e.extra.length + (e.extra.length > 1 ? ' cartas' : ' carta'); }
+    if (e.extra && e.extra.length && !$('.duo-support', slot)) { const s = el('<div class="duo-support" aria-label="Segunda carta somada"></div>'); s.append(cardEl(e.extra[0], { up: true, noanim: true, cw: 48, stats: (e.extraStats || {})[e.extra[0]] })); slot.append(s); }
   }
   // nome sempre inteiro e em uma linha nas caixas dos rivais: reduz a fonte até caber
   function fitNames() {
@@ -471,13 +475,6 @@
 
   // ---------------------------------------------------------------- manipuladores de eventos do motor
   const H = {
-    async skipTop(p, card) {
-      return await new Promise(resolve => {
-        const n = el('<div class="skip-card"><div class="skip-preview"></div><div><small>CARTA DE RESERVA · 1× POR PARTIDA</small><h2>Pular esta carta?</h2><p>Ela irá para o fim do baralho. Se guardar o Dom, você poderá decidir novamente na próxima disputa.</p><div class="row"><button class="btn" data-a="no">Agora não</button><button class="btn primary" data-a="yes">Enviar ao fim</button></div></div></div>');
-        $('.skip-preview', n).append(cardEl(card, { up: true, noanim: true, cw: 92 })); const m = U.modal(n);
-        n.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); resolve(b.dataset.a === 'yes'); };
-      });
-    },
     async setup() {
       buildBoard(); bossHud(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
     },
@@ -536,15 +533,15 @@
       const to = seatPrep(pid); const from = seatDeck(pid);
       SND.play('special'); await fly(from, to, { ms: 500, cw: 60 }); refresh(); caption(`${nameOf(pid)} prepara um especial…`); await sleep(250);
     },
-    async swapCard({ pid, old, card, combat }) {
+    async swapCard({ pid, old, card, combat, skip }) {
       const slot = V.slots[pid]; const oldEl = $('.card', slot);
-      SND.play('special');
-      if (oldEl) { oldEl.style.visibility = 'hidden'; await fly(slot, seatPrep(pid), { ms: 480, cw: V.cw }); oldEl.remove(); }
+      SND.play(skip ? 'refill' : 'special');
+      if (oldEl) { oldEl.style.visibility = 'hidden'; await fly(slot, skip ? seatDeck(pid) : seatPrep(pid), { ms: 480, cw: V.cw }); oldEl.remove(); }
       refresh();
       const e = combat.entries.find(x => x.pid === pid);
       const c = cardEl(card, { stats: e.stats }); c.style.visibility = 'hidden'; slot.append(c);
       await fly(seatDeck(pid), slot, { ms: 420, ease: 'cubic-bezier(.2,.8,.3,1)' });
-      c.style.visibility = ''; SND.play('place'); refresh(); caption(`${nameOf(pid)} preparou um especial e colocou outra carta.`); await sleep(250);
+      c.style.visibility = ''; SND.play('place'); refresh(); caption(skip ? `${nameOf(pid)} enviou a carta ao fim e comprou outra.` : `${nameOf(pid)} preparou um especial e colocou outra carta.`); await sleep(250);
     },
     async commit({ combat }) {
       V.combat = combat;
@@ -794,12 +791,12 @@
         const node = el(`<div class="sheet"><div class="txt"><h3>Aposta: 1 pêndulo?</h3><div class="hint">Vencer a rodada paga 2; perder custa 1; empate devolve. Você tem <b>${A.saldo()}</b>.</div><div class="row"><button class="btn primary sm" data-v="1">Apostar 1</button><button class="btn sm" data-v="0">Passar</button></div></div></div>`);
         const v = await ask(node, '[data-v]'); if (v === '1') { A.paga(); return true; } return false;
       },
-      attr(p, entry, options, combat, canPrep) {   // modo história: Pressa cósmica (3 s) e Contagem final (5 s, −0,3 s por rodada)
+      attr(p, entry, options, combat, canPrep, canSkip) {   // modo história: Pressa cósmica (3 s) e Contagem final (5 s, −0,3 s por rodada)
         const rg = G.cfg.regra, sec = rg && rg.id === 'pressa' ? 3 : rg && rg.id === 'contagem' ? Math.max(1.5, 5 - 0.3 * (G.s.round - 1)) : 0;
-        if (!sec || p.bot) return this.attr0(p, entry, options, combat, canPrep);
-        return timed(sec, () => this.attr0(p, entry, options, combat, canPrep), () => options[Math.floor(Math.random() * options.length)]);
+        if (!sec || p.bot) return this.attr0(p, entry, options, combat, canPrep, canSkip);
+        return timed(sec, () => this.attr0(p, entry, options, combat, canPrep, canSkip), () => options[Math.floor(Math.random() * options.length)]);
       },
-      async attr0(p, entry, options, combat, canPrep) {
+      async attr0(p, entry, options, combat, canPrep, canSkip) {
         await cover(p);
         const init = combat.initiator === p.pid; const ia = combat.entries.find(e => e.pid === combat.initiator).attr;
         if (U.tip) await U.tip(init ? 'attr_init' : 'attr_follow');
@@ -817,14 +814,19 @@
         const evn = combat.ev ? `<div class="evnote" style="--ec:${EVUI[combat.ev.id].cor}">${EVUI[combat.ev.id].sim} <b>${esc(evName(combat.ev))}</b>: ${esc(E.EVENTOS[combat.ev.id].curto)}${evsum}</div>` : '';
         const em = entry.evm || {};
         const fogTxt = fog ? (combat.ctl.fog.pid < 0 ? `<div class="evnote" style="--ec:#c58cff">☁ <b>Névoa estelar</b>: os números estão ocultos. Escolha às cegas.</div>` : `<div class="evnote" style="--ec:#c58cff">☁ <b>Névoa de Dados</b>: ${esc(nameOf(combat.ctl.fog.pid))} é o único que vê os números. Escolha às cegas.</div>`) : '';
-        const mk = () => { const node = el(`<div class="sheet pick1"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${txt}</div>${evn}${fogTxt}</div>
-          <div class="attrs">${AIDS.filter(a => options.includes(a) || a === blkShow).map(a => a === blkShow ? `<button class="attrbtn blocked" data-a="${a}" disabled>${ICON[a]}<span><b>${ATT[a].nome}</b><small>bloqueado</small></span><span class="v">✕</span></button>` : `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span><span class="v">${fog ? '?' : entry.stats[a]}</span></button>`).join('')}</div>
-          ${spLine(entry.card, combat, canPrep)}</div>`);
+        const dupla = G && G.cfg && G.cfg.regra && G.cfg.regra.id === 'g_duo' && entry.pid === 0 && entry.extra && entry.extra.length;
+        const extraStats = dupla ? ((entry.extraStats || {})[entry.extra[0]] || CARDS[entry.extra[0]].stats) : null;
+        const mk = () => { const node = el(`<div class="sheet pick1${dupla ? ' guard-pair' : ''}"><div class="cardbox"></div><div class="txt"><h3>${esc(p.name)}</h3><div class="hint">${dupla ? '<b>Dupla somada:</b> escolha usando a soma das suas duas cartas.<br>' : ''}${txt}</div>${evn}${fogTxt}</div>
+          <div class="attrs">${AIDS.filter(a => options.includes(a) || a === blkShow).map(a => a === blkShow ? `<button class="attrbtn blocked" data-a="${a}" disabled>${ICON[a]}<span><b>${ATT[a].nome}</b><small>bloqueado</small></span><span class="v">✕</span></button>` : `<button class="attrbtn${em.zero === a ? ' ecl' : ''}${em.swap && em.swap.includes(a) ? ' swp' : ''}${em[a] ? (em[a] > 0 ? ' evup' : ' evdn') : ''}" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}${dupla && !fog ? ` · ${entry.stats[a]} + ${extraStats[a]}` : ''}</small></span><span class="v">${fog ? '?' : entry.stats[a] + (dupla ? extraStats[a] : 0)}</span></button>`).join('')}</div>
+          ${spLine(entry.card, combat, canPrep, canSkip)}</div>`);
           const big = window.matchMedia && window.matchMedia('(min-width: 900px) and (min-height: 640px)').matches;
-          $('.cardbox', node).append(cardEl(entry.card, { up: true, noanim: true, cw: big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96), stats: entry.stats, mark: entry.evm, hide: fog }));
+          const cb = $('.cardbox', node), cw = big ? Math.round(Math.min(200, Math.max(130, window.innerHeight * .24))) : Math.min(96, V.cw || 96);
+          cb.append(cardEl(entry.card, { up: true, noanim: true, cw: dupla ? Math.min(cw, 82) : cw, stats: entry.stats, mark: entry.evm, hide: fog }));
+          if (dupla) cb.append(cardEl(entry.extra[0], { up: true, noanim: true, cw: Math.min(cw, 82), stats: extraStats, hide: fog }));
           return node; };
         for (;;) {
-          const v = await ask(mk(), '.attrbtn, .prepbtn');
+          const v = await ask(mk(), '.attrbtn, .prepbtn, .reservebtn');
+          if (v === '@skip') return v;
           if (v !== '@prep') return v;
           // mostra o que o especial faz e só então confirma
           const sp = E.SPECIALS[CARDS[entry.card].especial];
@@ -998,7 +1000,7 @@
     SND.histLock = cfg.historia ? cfg.historia.musica : null; U.show('game'); shell(); { const gh = $('#game'); if (gh) { if (cfg.historia && cfg.historia.fundo) gh.dataset.fundo = cfg.historia.fundo; else delete gh.dataset.fundo; } }
     if (cfg.historia && cfg.historia.evento) { const ev = cfg.historia.evento, host = $('#game'); const chip = el(`<button class="evchip" type="button" aria-label="Evento: ${esc(ev.nome)}">⚡ Evento</button>`); chip.onclick = () => { SND.play('click'); U.modal(el(`<div class="evbox"><h2 style="color:var(--gold2)">⚡ ${esc(ev.nome)}</h2><p>${esc(ev.regra)}</p></div>`)); }; if (host) host.append(chip); setTimeout(() => banner(ev.nome, ev.regra, '#ffd25f', 3600), 500); }
     newRec({ viewer: V.humans ? V.viewer : -1, online: false, humans: V.humans, n: V.n, diff: recDiff(cfg.players, cfg.difficulty), per: cfg.perPlayer, sf: cfg.specialsFrom, duo: !!cfg.teams, ev: cfg.events !== false, shared: true });
-    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, teamPool: cfg.teamPool, evTodas: !!cfg.evTodas, bhRefill: cfg.bhRefill || null, maos: cfg.maos || null, regra: cfg.regra || null, bonusPids: cfg.bonusPids || null, bonusVal: cfg.bonusVal || 0, bonusCards: cfg.bonusCards || null, boss: cfg.boss || null, simbolos: cfg.simbolos || null, escolheSempre: cfg.escolheSempre == null ? null : cfg.escolheSempre, sorte: cfg.sorte || null, semMontar: !!cfg.semMontar, maxCombats: cfg.maxCombats || 400, historia: cfg.historia || null, io: makeIO() });
+    G = new E.Game({ players: cfg.players, perPlayer: cfg.perPlayer, difficulty: cfg.difficulty, specialsFrom: cfg.specialsFrom, events: cfg.events !== false, teams: cfg.teams || null, teamPool: cfg.teamPool, evTodas: !!cfg.evTodas, bhRefill: cfg.bhRefill || null, maos: cfg.maos || null, regra: cfg.regra || null, bonusPids: cfg.bonusPids || null, bonusVal: cfg.bonusVal || 0, bonusCards: cfg.bonusCards || null, attrMods: cfg.attrMods || null, fortuna: cfg.fortuna || null, skipOnce: cfg.skipOnce || null, boss: cfg.boss || null, simbolos: cfg.simbolos || null, escolheSempre: cfg.escolheSempre == null ? null : cfg.escolheSempre, sorte: cfg.sorte || null, semMontar: !!cfg.semMontar, maxCombats: cfg.maxCombats || 400, historia: cfg.historia || null, io: makeIO() });
     U.game = G;
     try { await G.run(); } catch (e) { if (e !== 'abort') { console.error(e); caption('Erro: ' + (e && e.message || e)); } }
   };
@@ -1061,7 +1063,7 @@
         log: (text, cls) => { local.log(text, cls); logq.push([text, cls || '']); if (!flushing) { flushing = true; queueMicrotask(() => { flushing = false; send({ n: ++seq, t: 'log', lg: logq.splice(0) }); }); } },
         orderHand: wrap('orderHand', (p, hand, o) => [hand, o]),
         prepare: wrap('prepare', (p, top) => [top]),
-        attr: wrap('attr', (p, entry, options, combat, canPrep) => [{ card: entry.card, stats: entry.stats }, options, P.cb(combat, p.pid), canPrep]),
+        attr: wrap('attr', (p, entry, options, combat, canPrep, canSkip) => [{ card: entry.card, stats: entry.stats }, options, P.cb(combat, p.pid), canPrep, canSkip]),
         special: wrap('special', (p, usable, combat, ctx, stage) => [usable, Object.assign({}, P.cb(combat, p.pid), { acts: (combat.ctrlActs || []).concat(combat.activations || []).map(x => ({ pid: x.pid, card: x.card })) }), null, stage]),   // acts: especiais já virados (públicos), para a janela de reação
         pickCards: async (p, spec) => {
           const peer = seats[p.pid].peer, w = wrap('pickCards', (q, sp) => [plain(sp)]);

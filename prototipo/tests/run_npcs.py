@@ -51,10 +51,11 @@ try:
         pg.evaluate("DSNpc.falar('banjo')"); conv(); popup()
         chk(pg.evaluate("DSNpc.state().mis.banjo.st") == 'entregue', 'Banjo: 20 cartas cumpre')
         # menus
-        pg.click('.hs-hud [data-a=missoes]'); pg.wait_for_selector('.hs-mis'); chk(pg.evaluate("document.querySelectorAll('.hs-mis .mis-row').length") >= 1, 'menu cadeia lista missões')
+        pg.click('.hs-hud [data-a=pausa]'); pg.wait_for_selector('.hs-pausa')
+        if pg.query_selector('.jornada-tour'): pg.click('[data-tour=skip]')
+        pg.click('.hs-pausa>nav [data-a="t:missoes"]'); pg.wait_for_selector('.hs-pausa .hs-mis'); chk(pg.evaluate("document.querySelectorAll('.hs-pausa .hs-mis .mis-row').length") >= 1, 'Jornada > Missões lista a cadeia')
         pg.screenshot(path='/tmp/m1.png'); pg.click('.hs-mis [data-a="t:con"]'); chk(pg.evaluate("document.querySelectorAll('.hs-mis .mis-row').length") == 1, 'aba conquistas')
-        pg.click('.hs-mis [data-a=x]'); pg.wait_for_timeout(200)
-        pg.click('.hs-hud [data-a=colecao]'); pg.wait_for_selector('.hs-col'); pg.click('.hs-col [data-a="t:reg"]'); pg.click('.hs-col [data-a="t:selo"]'); pg.screenshot(path='/tmp/m2.png'); pg.click('.hs-col [data-a=x]')
+        pg.click('.hs-pausa>nav [data-a="t:registros"]'); pg.wait_for_selector('.hs-pausa .hs-col'); pg.click('.hs-col [data-a="t:reg"]'); pg.click('.hs-col [data-a="t:selo"]'); pg.screenshot(path='/tmp/m2.png'); pg.click('.hs-pausa-modal .x'); pg.wait_for_timeout(200)
         # loja com vendedor e extras
         pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") == 3, 'loja 5: registro + 2 melhorias')
         chk('Maria' in pg.evaluate("document.querySelector('.loja-vend').textContent"), 'vendedor aparece')
