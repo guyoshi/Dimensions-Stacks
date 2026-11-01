@@ -1,8 +1,8 @@
 // Regra do Guardião Dupla somada: 2 Guardiões × 1 jogador, mas duas cartas por lado.
 const E = require('../engine.js');
 const D = globalThis.DS_DATA.CARTAS.filter(c => c.raridade !== 'quasar');
-const ids = D.filter(c => !c.uniao).slice(0, 13).map(c => c.id);
-const mao = [ids.slice(0, 7), ids.slice(7, 10), ids.slice(10, 13)];
+const ids = D.filter(c => !c.uniao).slice(0, 30).map(c => c.id);
+const mao = [ids.slice(0, 12), ids.slice(12, 21), ids.slice(21, 30)];
 let g, commits = 0, reveals = 0, failures = [];
 const io = {
   log() {},
@@ -29,12 +29,12 @@ const io = {
     }
   }
 };
-g = new E.Game({ players: [{ name: 'Você', bot: true, diff: 1 }, { name: 'Cassiopeia', bot: true, diff: .9 }, { name: 'Órion', bot: true, diff: .9 }], maos: mao, perPlayer: 7, teams: [[0], [1, 2]], teamPool: false, regra: { id: 'g_duo' }, events: false, maxCombats: 100, seed: 41027, io });
+g = new E.Game({ players: [{ name: 'Você', bot: true, diff: 1 }, { name: 'Cassiopeia', bot: true, diff: .9 }, { name: 'Órion', bot: true, diff: .9 }], maos: mao, perPlayer: 12, teams: [[0], [1, 2]], teamPool: false, regra: { id: 'g_duo' }, events: false, maxCombats: 100, seed: 41027, io });
 (async () => {
   await g.run();
   if (!commits || !reveals) failures.push('a batalha não chegou às disputas');
   const total = g.s.players.reduce((n, p) => n + p.deck.length + p.reserve.length + p.prepared.length, 0) + g.s.bh.length;
-  if (total !== 13) failures.push(`conservação de cartas falhou: ${total}/13`);
+  if (total !== 30) failures.push(`conservação de cartas falhou: ${total}/30`);
   if (failures.length) { console.error([...new Set(failures)].join('\n')); process.exit(1); }
   console.log('Dupla somada: 2×1, duas cartas por lado, retorno ao 1×1 e totais verificados.');
 })();

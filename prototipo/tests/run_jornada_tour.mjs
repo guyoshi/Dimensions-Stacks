@@ -74,8 +74,8 @@ try {
   })()`);
   const dupla = await evaluate(`(async()=>{
     const wait=async s=>{for(let i=0;i<320;i++){const e=document.querySelector(s);if(e)return e;await new Promise(r=>setTimeout(r,50))}throw Error('Não apareceu: '+s)};
-    const ids=DS_DATA.CARTAS.filter(c=>!c.uniao&&c.raridade!=='quasar').slice(0,13).map(c=>c.id);
-    DSUI.startGame({players:[{name:'Você',bot:false},{name:'Cassiopeia',bot:true,diff:.9},{name:'Órion',bot:true,diff:.9}],perPlayer:7,maos:[ids.slice(0,7),ids.slice(7,10),ids.slice(10,13)],teams:[[0],[1,2]],teamPool:false,regra:{id:'g_duo'},events:false,specialsFrom:99,semMontar:true,maxCombats:30});
+    const ids=DS_DATA.CARTAS.filter(c=>!c.uniao&&c.raridade!=='quasar').slice(0,30).map(c=>c.id);
+    DSUI.startGame({players:[{name:'Você',bot:false},{name:'Cassiopeia',bot:true,diff:.9},{name:'Órion',bot:true,diff:.9}],perPlayer:12,maos:[ids.slice(0,12),ids.slice(12,21),ids.slice(21,30)],teams:[[0],[1,2]],teamPool:false,regra:{id:'g_duo'},events:false,specialsFrom:99,semMontar:true,maxCombats:60});
     const tela=await wait('.sheet.guard-pair'),cards=tela.querySelectorAll('.cardbox .card').length,txt=tela.textContent.includes('Dupla somada'),vals=[...tela.querySelectorAll('.attrbtn:not(.blocked) .v')].every(x=>/^\\d+$/.test(x.textContent.trim())),r=tela.getBoundingClientRect(),mobile=r.left>=-1&&r.right<=innerWidth+1;
     DSUI.killRun();return{cards,txt,vals,mobile};
   })()`);
