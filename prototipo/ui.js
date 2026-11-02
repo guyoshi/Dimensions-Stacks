@@ -443,7 +443,7 @@
   U.boot = function () {
     screens(); U.tabsInit(); applyOpts(); U.show('menu');
     const PRESS = 'button,[data-act],[data-go],[data-tab],[data-top],.playbig,.daily';
-    const prs = e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled || b.matches('input')) return; b.classList.add('pressing'); const rel = () => { b.classList.remove('pressing'); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.removeEventListener(t, rel)); }; ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.addEventListener(t, rel)); };
+    const prs = e => { const b = e.target.closest && e.target.closest(PRESS); if (!b || b.disabled || b.matches('input') || b.closest('.mg-dance')) return; b.classList.add('pressing'); const rel = () => { b.classList.remove('pressing'); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.removeEventListener(t, rel)); }; ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.addEventListener(t, rel)); };
     window.addEventListener('pointerdown', prs, true);
     // toque na mesa durante as animações da partida (sem decisão ou janela aberta): pula o passo, para o jogador com pressa
     window.addEventListener('pointerdown', e => {
