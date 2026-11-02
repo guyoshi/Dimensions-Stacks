@@ -57,3 +57,14 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 - Disco da Fechadura com 5 encaixes (hoje os 5 encaixes ficam num pentágono sobre a imagem de 4).
 - Sprite do personagem gordo (Resgate) e nota do Vento (Maré, Chama e Gelo): hoje temporários.
 - Sprite do inimigo veloz (Chamado): hoje usa a mesma imagem da horda.
+
+
+## Ajustes 02/11 (lote 11:32)
+- **Todos os minigames**: ao terminar aparece "FIM!" (1,7 s, gongo) e só depois a pontuação. Abandonar pula o FIM.
+- **Sons oficiais de resultado** (sintetizados): perdeu (descendente triste), Bom (2 notas), Ótimo (arpejo + brilho), Perfeito (fanfarra com brilho). Substituem os sons antigos do baú.
+- **Dança** (ambos os modos): fim menos veloz (piso de velocidade 55 -> 105 ms; Hard 42 -> 81 ms).
+- **Eco das Notas Hard**: 6 notas (grade 3x2); escolhe as menos usadas, sem repetir nota, par de notas já ouvido ou escadinha.
+- **Relâmpago**: Hard com 6 cartas (1 +1, 1 -1, 1 -2, 3 vazias). **Normal mais lento no final** (abertura piso 300 -> 430 ms, intervalo piso 160 -> 230 ms) — mudança de balanceamento no Normal.
+- **Vigília** (ambos): olhos nascem sem intervalo (sempre que faltam abertos); simultâneos Normal 2 a 4, Hard 3 a 5; tempo final dos olhos maior (Normal ~1,7 s, Hard ~1,6 s) — mudança de balanceamento nos dois modos.
+- **Maré Rubra Hard**: amarelas nascem nas pontas laterais, dormem 3 s (sem mover nem converter) e as azuis nascem a >=115 px delas.
+- **Rota**: dano da nave (som, flash vermelho, tremor, faíscas, piscada com 1,3 s de invulnerabilidade) e explosão ao perder (1,4 s) antes do FIM. **Hard**: meteoros grandes (16% das rochas, mais lentos) que, ao atingirem a nave, soltam 2 fragmentos diagonais; o vão mínimo (54 px) continua garantido e a invulnerabilidade cobre os fragmentos.

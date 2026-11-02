@@ -29,8 +29,8 @@ try:
     abre('memoria', True); pg.wait_for_selector('.mg-cell', timeout=9000); chk(pg.evaluate("document.querySelectorAll('.mg-cell').length") == 16, 'ecos: 16 cartas'); sai()
     abre('quemequem', True); pg.wait_for_selector('#tl', timeout=9000); chk('/12' in pg.inner_text('#mq'), 'fragmentos: 12 cartas, tempo total'); sai()
     abre('ordem', True); pg.wait_for_selector('.mg-dc', timeout=9000); chk(pg.evaluate("document.querySelectorAll('.mg-dc').length") == 5, 'dança: 5 cartas na 1ª rodada do Hard'); sai()
-    abre('raspadinha', True); pg.wait_for_selector('.mg-cell.scr', timeout=9000); chk(pg.evaluate("document.querySelectorAll('.mg-cell.scr').length") == 5, 'relâmpago: 5 cartas'); sai()
-    abre('caracoroa', True); pg.wait_for_selector('#tmb', timeout=9000); chk(True, 'eco das notas: barra de tempo no Hard')
+    abre('raspadinha', True); pg.wait_for_selector('.mg-cell.scr', timeout=9000); chk(pg.evaluate("document.querySelectorAll('.mg-cell.scr').length") == 6, 'relâmpago: 6 cartas'); sai()
+    abre('caracoroa', True); pg.wait_for_selector('#tmb', timeout=9000); chk(True, 'eco das notas: barra de tempo no Hard'); chk(pg.evaluate("document.querySelectorAll('#el .elo').length") == 6, 'eco das notas: 6 notas no Hard')
     pg.wait_for_function("document.querySelector('#mq').textContent.includes('Sua vez')", timeout=20000); chk(True, 'eco das notas: sequência de 3 tocou'); sai()
     abre('culpado', True); pg.wait_for_selector('.mg-olho', timeout=9000); pg.wait_for_timeout(2300)
     chk(pg.evaluate("document.querySelectorAll('.mg-olho.on,.mg-olho.tre,.mg-olho.red').length") >= 3, 'vigília: 3 ou mais olhos abertos no início do Hard'); sai()
@@ -39,6 +39,10 @@ try:
     # música do menu para
     pg.evaluate("window.DSUI.SND.init(); window.DSUI.SND.musicOn = true; try{window.DSUI.SND.startMenuMusic()}catch(e){}")
     abre('memoria', False); chk(pg.evaluate("!window.DSUI.SND.musicNodes"), 'menu: música do menu parada antes do 3-2-1'); sai()
+    # FIM! antes do resultado (jogo termina sozinho: Relâmpago zerado por tempo é longo; usa Fechadura Normal sem tentativas = tempo -> força via fim por vitória em Maior/Menor não é trivial; usa Rota com 3 colisões não; então dispara pelo Vigília: deixa os olhos vencerem)
+    abre('culpado', False); pg.wait_for_selector('.mg-olho', timeout=9000)
+    pg.wait_for_selector('.mg-fim', timeout=40000); chk(pg.evaluate("!document.querySelector('.mg-res')"), 'FIM aparece antes da pontuação')
+    pg.wait_for_selector('.mg-ok', timeout=6000); chk(True, 'pontuação aparece depois do FIM'); pg.click('.mg-ok'); pg.wait_for_function('window.__r', timeout=3000)
     chk(not errs, 'sem erros de página %s' % errs[:2])
 finally:
   srv.kill()
