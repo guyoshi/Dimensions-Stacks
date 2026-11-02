@@ -140,6 +140,11 @@ button.rerollbot:active { transform: scale(.96); }
 .bh .n small { display: block; font-size: .32em; letter-spacing: .15em; font-family: var(--f-body); font-weight: 800; opacity: .8; }
 .bh.pulse { animation: bhp .6s; }
 @keyframes bhp { 40% { transform: scale(1.2); filter: brightness(1.8); } }
+.bh-shatter { position:fixed; z-index:120; width:1px; height:1px; pointer-events:none; }
+.bh-shatter i { position:absolute; width:7px; height:11px; margin:-4px; border-radius:2px; background:linear-gradient(135deg,#fff,#9f78ff 55%,#23103f); box-shadow:0 0 8px #7b4dff; animation:bhShard .58s cubic-bezier(.12,.7,.22,1) forwards; }
+.bh-shatter i:nth-child(3n) { background:linear-gradient(135deg,#dfffff,#5cd8ff 58%,#2f327d); }
+@keyframes bhShard { 0% { opacity:1; transform:translate(0,0) rotate(0) scale(var(--s)); } 100% { opacity:0; transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.1); } }
+body.reduce .bh-shatter { display:none; }
 .arena.n2 .bh { width: calc(var(--cw) * .7); height: calc(var(--cw) * .7); }
 
 /* assentos */

@@ -275,7 +275,7 @@
       const slot = el(`<div class="slot pos-${ps}" data-pid="${p.pid}" data-name="${esc(p.name)}" style="--pc:${PCOL[p.pid]}"></div>`);
       V.slots[p.pid] = slot; arena.append(slot);
     });
-    arena.append(el(`<div class="bh" id="bh" title="Buraco Negro"><div class="vortex"></div><div class="n"><span id="bhn">0</span><small>BURACO NEGRO</small></div></div>`));
+    arena.append(el(`<div class="bh" id="bh" title="Buraco Negro"><div class="vortex"></div><div class="n"><span id="bhn">0</span></div></div>`));
     $('#bh').onclick = showBH;
     if (V.humans === 1) {
       V.seats[V.viewer].onclick = () => showMyDeck();
@@ -343,6 +343,13 @@
     const sub = $('#hSub'); if (sub) sub.textContent = `${s.events && Object.keys(s.events).length ? '' : 'Rodada ' + s.round + ' · '}Disputa ${Math.min(s.combats + 1, 9999)}${V.online && V.ctl && V.ctl.link ? ' · Sala ' + V.ctl.link.code : ''}`;
   }
   function pulseBH() { const b = $('#bh'); if (!b) return; b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse'); refresh(); }
+  function shatterBH(n) {   // impacto leve: toda carta que entra no Buraco Negro se parte em fragmentos visuais
+    const b = $('#bh'); if (!b || U.S.reduce) return; const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    FX.burst(x, y, { n: 24 * (n || 1), speed: 7, life: 38, size: 3.5, sq: true, g: .04, colors: ['#efe8ff', '#9f78ff', '#5cd8ff', '#24103f'] });
+    const host = el('<div class="bh-shatter" aria-hidden="true"></div>'); host.style.left = x + 'px'; host.style.top = y + 'px';
+    for (let i = 0; i < 10 * (n || 1); i++) { const q = el('<i></i>'), a = Math.random() * Math.PI * 2, d = 24 + Math.random() * 48; q.style.setProperty('--x', Math.cos(a) * d + 'px'); q.style.setProperty('--y', Math.sin(a) * d + 'px'); q.style.setProperty('--r', Math.round(Math.random() * 280 - 140) + 'deg'); q.style.setProperty('--s', (.55 + Math.random() * .75).toFixed(2)); host.append(q); }
+    document.body.append(host); setTimeout(() => host.remove(), 620);
+  }
 
   function showBH() {
     const list = G.s.bh; SND.play('click');
@@ -618,7 +625,7 @@
       SND.play('steal'); await fly(zone === 'reserve' ? seatRes(from) : seatDeck(from), dzone === 'reserve' ? seatRes(to) : seatDeck(to), { ms: 600, cw: 60, arc: 40 }); refresh(); await sleep(150);
     },
     async discard({ pid }) {
-      SND.play('blackhole'); await fly(seatDeck(pid), $('#bh'), { ms: 800, cw: 60, r1: 540, s1: .05, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); pulseBH(); await sleep(100);
+      SND.play('blackhole'); await fly(seatDeck(pid), $('#bh'), { ms: 800, cw: 60, r1: 540, s1: .05, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); shatterBH(); pulseBH(); await sleep(100);
     },
     async rescue({ pid, dzone }) {
       SND.play('steal'); await fly($('#bh'), dzone === 'reserve' ? seatRes(pid) : seatDeck(pid), { ms: 700, cw: 60, r0: 360, s0: .1, arc: 30 }); pulseBH(); await sleep(150);
@@ -639,7 +646,7 @@
     },
     async banish({ pid, cards }) {
       const slot = V.slots[pid], card = $('.card', slot); SND.play('blackhole');
-      if (card) { card.style.visibility = 'hidden'; await fly(slot, $('#bh'), { id: cards[0], stats: (entryOf(pid) || {}).stats, cw: V.cw, ms: 900, r1: 540, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); }
+      if (card) { card.style.visibility = 'hidden'; await fly(slot, $('#bh'), { id: cards[0], stats: (entryOf(pid) || {}).stats, cw: V.cw, ms: 900, r1: 540, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); shatterBH(); }
       const x = $('.xtra', slot); if (x) x.remove(); const b = $('.badge', slot); if (b) b.remove(); pulseBH(); await sleep(150);
     },
     async reorder({ pid }) { SND.play('deal'); const s = V.seats[pid]; if (s) { s.classList.add('pulse'); setTimeout(() => s.classList.remove('pulse'), 600); } await sleep(450); },
@@ -659,7 +666,7 @@
     async specialsDone({ claimed }) {
       const cl = {}; (claimed || []).forEach(x => { cl[x.card] = x.pid; });
       const strip = $('.strip'); if (strip) { const chips = $$('.chip', strip); SND.play('blackhole');
-        await Promise.all(chips.map((c, i) => sleep(i * 150).then(() => cl[c.dataset.card] != null ? fly(c, seatDeck(cl[c.dataset.card]), { ms: 800, id: c.dataset.card, cw: 70, arc: 40 }) : fly(c, $('#bh'), { ms: 700, id: c.dataset.card, cw: 70, s1: .05, r1: 420, fade: true })))); strip.remove(); }
+        await Promise.all(chips.map((c, i) => sleep(i * 150).then(async () => { if (cl[c.dataset.card] != null) return fly(c, seatDeck(cl[c.dataset.card]), { ms: 800, id: c.dataset.card, cw: 70, arc: 40 }); await fly(c, $('#bh'), { ms: 700, id: c.dataset.card, cw: 70, s1: .05, r1: 420, fade: true }); shatterBH(); }))); strip.remove(); }
       pulseBH(); await sleep(150);
     },
     async resolved({ combat, result, moves, calc }) {
@@ -689,7 +696,7 @@
         const src = V.slots[m.from], card = $('.card', src); if (!card) return;
         const e = entryOf(m.from); const dest = m.to === 'bh' ? $('#bh') : m.zone === 'reserve' ? seatRes(m.to) : seatDeck(m.to);
         card.style.visibility = 'hidden'; const ids = m.cards && m.cards.length ? m.cards : [card.dataset.id];
-        if (m.to === 'bh') { SND.play('blackhole'); await Promise.all(ids.map((id, j) => sleep(j * 90).then(() => fly(src, dest, { id, stats: j ? null : e && e.stats, cw: Math.max(42, V.cw - j * 3), ms: 1000, r1: 500 + j * 35, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' })))); pulseBH(); }
+        if (m.to === 'bh') { SND.play('blackhole'); await Promise.all(ids.map((id, j) => sleep(j * 90).then(async () => { await fly(src, dest, { id, stats: j ? null : e && e.stats, cw: Math.max(42, V.cw - j * 3), ms: 1000, r1: 500 + j * 35, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); shatterBH(); }))); pulseBH(); }
         else { if (m.from !== m.to) SND.play('capture'); await Promise.all(ids.map((id, j) => sleep(j * 90).then(() => fly(src, dest, { id, stats: j ? null : e && e.stats, cw: Math.max(42, V.cw - j * 3), ms: 800, arc: 24 + j * 9 })))); }
       }));
       await Promise.all(jobs); refresh(); await sleep(250);
