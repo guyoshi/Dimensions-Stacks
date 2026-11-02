@@ -1136,6 +1136,20 @@
       apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, 'Permuta', x => { const o = Object.assign({}, x.stats); x.stats.pod = o.int; x.stats.int = o.pod; x.stats.def = o.vel; x.stats.vel = o.def; }); ctx.say(`${nm(ctx, act.pid)} vira o tipo da carta.`); },
       ai(ctx, pid) { const e = ctx.entry(pid); const o = { pod: 'int', int: 'pod', def: 'vel', vel: 'def' }[e.attr]; const d = e.stats[o] - e.stats[e.attr]; return d <= 0 ? 0.02 : ctx.flipChance(pid, d); },
     });
+    N('AE-199', 'Troca de reservas', 'Troque cartas da sua reserva pelas da reserva de outro jogador: a quantidade é a da menor reserva dos dois e as cartas que vão e vêm são aleatórias.', 'Troca', {
+      can: (ctx, pid) => ctx.player(pid).reserve.length > 0 && ctx.opps(pid).some(o => ctx.player(o).reserve.length > 0),
+      async apply(ctx, act) {
+        const cand = ctx.opps(act.pid).filter(o => ctx.player(o).reserve.length > 0); if (!cand.length || !ctx.player(act.pid).reserve.length) return ctx.say('Sem reserva para trocar.');
+        const t = await ctx.target(act.pid, cand, 'Trocar a reserva com quem?', c => c.slice().sort((a, b) => avgSum(ctx.player(b).reserve) - avgSum(ctx.player(a).reserve))[0]); if (t == null) return;
+        if (await ctx.blocked(act.pid, t, 'reserve', 1, 'steal')) return;
+        const mine = ctx.player(act.pid).reserve, theirs = ctx.player(t).reserve, n = Math.min(mine.length, theirs.length); if (!n) return;
+        const pick = (l, k) => { const out = []; for (let i = 0; i < k; i++) out.push(l.splice(Math.floor(ctx.rand() * l.length), 1)[0]); return out; };
+        const give = pick(mine, n), get = pick(theirs, n); mine.push(...get); theirs.push(...give);
+        ctx.say(`${nm(ctx, act.pid)} troca ${n} carta${n > 1 ? 's' : ''} da reserva com ${nm(ctx, t)}.`);
+        for (const c of get) await ctx.emit('steal', { from: t, to: act.pid, card: c, zone: 'reserve', dzone: 'reserve' }); for (const c of give) await ctx.emit('steal', { from: act.pid, to: t, card: c, zone: 'reserve', dzone: 'reserve' });
+      },
+      ai(ctx, pid) { const mine = ctx.player(pid).reserve; return ctx.opps(pid).some(o => ctx.player(o).reserve.length && avgSum(ctx.player(o).reserve) > avgSum(mine) + 5) ? 0.45 : 0.1; }, val: 0.4,
+    });
   }
   if (typeof module !== 'undefined' && module.exports) module.exports = install; else root.DS_ESPECIAIS = install;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -2965,6 +2965,20 @@
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
    "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta."
+  },
+  {
+   "id": "AE-199",
+   "nome": "Troca de reservas",
+   "texto_efeito": "Troque cartas da sua reserva pelas da reserva de outro jogador: a quantidade é a da menor reserva dos dois e as cartas que vão e vêm são aleatórias.",
+   "categoria": "Troca",
+   "origem_ideia": "pedido do autor (02/11/2026)",
+   "avaliacao_de_risco": "Teste",
+   "cartas_atribuidas": [],
+   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
+   "validacao_balanceamento": "PENDENTE_DE_TESTES",
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: criada a pedido do autor."
   }
  ]
 }
