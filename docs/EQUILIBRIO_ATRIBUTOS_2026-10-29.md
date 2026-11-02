@@ -85,3 +85,4 @@ As 133 cartas base têm especiais únicos (149 definidos, 16 livres). As 13 cart
 - Sobra uma diferença na Resistência em valores 85+ (68% contra ~75%): vem da regra de defesa, não da distribuição de números; não foi mexida.
 - 133 somas continuam diferentes. Três cartas fora da União já passavam do limite do par fraco antes (Sumo Vigia, Orionus Polar, Tavra Vendrar); não foram tocadas.
 - Fontes alteradas: `prototipo/propostas.js`, `dados/oficial/cartas_87.json`; Quasar Q07–Q10 recalculadas a partir das bases V02/V01.
+- **Par fraco corrigido (02/11):** Sumo Vigia 52/99/75/29 → 57/99/70/29 · Orionus Polar 67/73/95/53 → 70/70/95/53 · Tavra Vendrar 78/46/50/84 → 70/54/50/84. Soma, pico e raridade iguais; nenhuma carta fora da União passa de 70 no par fraco.

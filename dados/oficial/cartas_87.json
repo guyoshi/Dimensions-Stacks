@@ -662,9 +662,9 @@
    },
    "descricao_curta": "Autoridade máxima da Raiz, muito velho e lúcido; o rosto coberto pela tinta ritual da Permanência.",
    "atributos": {
-    "FOR": 52,
+    "FOR": 57,
     "RES": 99,
-    "INT": 75,
+    "INT": 70,
     "VEL": 29
    },
    "soma_atributos": 255,
@@ -782,8 +782,8 @@
    },
    "descricao_curta": "Pai das soberanas; reformou o Conselho e manteve quarenta ciclos sem guerra aberta até ser assassinado.",
    "atributos": {
-    "FOR": 67,
-    "RES": 73,
+    "FOR": 70,
+    "RES": 70,
     "INT": 95,
     "VEL": 53
    },
@@ -830,8 +830,8 @@
    },
    "descricao_curta": "Jovem Vendrar provocadora que transforma jogos de dor em perigo real e acha prudência uma forma de medo.",
    "atributos": {
-    "FOR": 78,
-    "RES": 46,
+    "FOR": 70,
+    "RES": 54,
     "INT": 50,
     "VEL": 84
    },
