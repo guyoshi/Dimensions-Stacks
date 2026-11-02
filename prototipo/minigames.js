@@ -25,7 +25,7 @@
     { id: 'ordem', nome: 'Dança das Cartas', desc: 'Uma carta é marcada, todas viram e trocam de lugar. Acerte onde ela foi parar. Você tem 3 vidas.', cortes: [.4, .7, .95] },
     { id: 'mineracao', nome: 'Maré Rubra', desc: 'As bolinhas vermelhas contagiam as azuis, que vagam pela tela. Afaste as vermelhas: uma azul salva já vence, cinco é o máximo.', cortes: [.37, .63, .88] },
     { id: 'asteroides', nome: 'Rota dos Meteoros', desc: 'Arraste a nave, desvie das rochas e pegue os pêndulos.', cortes: [.33, .6, .87] },
-    { id: 'cofre', nome: 'Fechadura de Jasmey', desc: 'Descubra o código de símbolos nas tentativas, contra o relógio.', cortes: [.34, .5, .83] },
+    { id: 'cofre', nome: 'Fechadura de Jasmey', desc: 'Descubra o código de símbolos nas tentativas, contra o relógio.', cortes: [.30, .45, .62] },
     { id: 'caracoroa', nome: 'Eco das Notas', desc: 'Ouça a sequência, que ganha um som a cada rodada, e repita.', cortes: [.3, .6, .95] },
     { id: 'raspadinha', nome: 'Relâmpago Dimensional', desc: 'Cartas viram num piscar: uma dá +1, outras tiram pontos. Toque no +1 o máximo que puder.', cortes: [.3, .6, .95] },
     { id: 'cacapendulo', nome: 'Pêndulos Fugitivos', desc: 'No escuro, toque nos pêndulos que cruzam sob a luz em todas as direções.', cortes: [.33, .6, .87] },

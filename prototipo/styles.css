@@ -1432,7 +1432,8 @@ body.reduce .hs-particles, body.mapfx-off .hs-particles { display: none; }
 .n { cursor: pointer; outline: none; }
 .n .halo { fill: var(--c); opacity: 0; }
 .n .body { fill: #16113d; stroke: var(--c); stroke-width: 3.5; }
-.n .node-art { pointer-events: none; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 5px var(--c)) drop-shadow(0 0 12px color-mix(in srgb, var(--c) 62%, transparent)); animation: nodeFloat 4.8s ease-in-out infinite, nodeGlow 3.6s ease-in-out infinite; }
+.n .node-art { pointer-events: none; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 7px var(--c)); }   /* 1 sombra estática: o brilho animado por nó pesava com ~190 nós */
+.n.avail .node-art, .n.sel .node-art { animation: nodeFloat 4.8s ease-in-out infinite; }
 @keyframes nodeFloat { 50% { transform: translateY(-4px) scale(1.035); } }
 @keyframes nodeGlow { 50% { filter: drop-shadow(0 0 9px #fff) drop-shadow(0 0 20px var(--c)) drop-shadow(0 0 34px color-mix(in srgb, var(--c) 70%, transparent)); } }
 .n .num { fill: #fff; font: 800 15px system-ui, sans-serif; text-anchor: middle; pointer-events: none; }
@@ -1449,7 +1450,7 @@ body.reduce .hs-particles, body.mapfx-off .hs-particles { display: none; }
 .n .chk { display: none; } .n.done .chk { display: block; } .chk circle { fill: #ffd25f; stroke: #130d30; stroke-width: 2; filter: drop-shadow(0 0 4px #ffd25f); }
 .n.winflash .win-ring { display: block; animation: winRing .9s ease-out both; } .n.winflash .node-art { animation: winIcon .85s ease-out both; }
 @keyframes winRing { 0% { stroke-width: 9; stroke-opacity: 1; transform: scale(.72); transform-box: fill-box; transform-origin: center; } 100% { stroke-width: 3.5; stroke-opacity: .92; transform: scale(1); } } @keyframes winIcon { 35% { filter: brightness(1.5) saturate(1.2) drop-shadow(0 0 18px #ffd25f); transform: scale(1.12); } 100% { opacity: .68; filter: saturate(.55) brightness(.8); transform: scale(1); } }
-.n.sel .body { stroke-width: 7; filter: drop-shadow(0 0 16px var(--c)); } .n.sel .node-art { animation-duration: 3.5s, 2.2s; }
+.n.sel .body { stroke-width: 7; filter: drop-shadow(0 0 16px var(--c)); } .n.sel .node-art { animation-duration: 3.5s; }
 .n.pop .body { animation: hspop .55s cubic-bezier(.3, 1.6, .4, 1); transform-box: fill-box; transform-origin: center; }
 @keyframes hspop { 0% { transform: scale(.7); } 100% { transform: scale(1); } }
 @keyframes hspulse { 50% { opacity: .42; } }
