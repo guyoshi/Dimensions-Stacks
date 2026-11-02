@@ -713,11 +713,11 @@
       await sleep(450); refresh();
       if (U.tip && pid === V.viewer) { if (V.online) U.tip('refill'); else await U.tip('refill'); }
     },
-    async eliminated({ pid }) {
-      refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700); if (U.tip) U.tip('elim');
+    async eliminated({ pid, cards }) {
+      refresh(); (cards || []).forEach((_, i) => setTimeout(() => shatterBH(), i * 110)); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700); if (U.tip) U.tip('elim');
     },
     async movimento({ now, next, info }) { bossMov(now, next, info); if (now) { SND.play('banner'); banner(info[now].nome, info[now].txt, '#b04bff', 2400); caption('Movimento da Besta: ' + info[now].nome + '. ' + info[now].txt, true); await sleep(1500); } },
-    async bossPull({ round, k, pulled }) { refresh(); bossMov(null, null); SND.play('elim'); const salvas = (pulled[0] || []).filter(x => x.saved).length, perdidas = (pulled[0] || []).filter(x => !x.saved && CARDS[x.c] && UNI8.includes(x.c)).length; banner('Buraco negro', `puxa ${k} do fundo de cada baralho` + (salvas ? ` · ${salvas} salva` : '') + (perdidas ? ` · ${perdidas} da União perdida` : ''), '#8f5cff', 1800); await sleep(1200); },
+    async bossPull({ round, k, pulled }) { refresh(); bossMov(null, null); const somem = Object.values(pulled || {}).reduce((n, a) => n + (a || []).filter(x => !x.saved).length, 0); for (let i = 0; i < somem; i++) setTimeout(() => shatterBH(), i * 100); SND.play('elim'); const salvas = (pulled[0] || []).filter(x => x.saved).length, perdidas = (pulled[0] || []).filter(x => !x.saved && CARDS[x.c] && UNI8.includes(x.c)).length; banner('Buraco negro', `puxa ${k} do fundo de cada baralho` + (salvas ? ` · ${salvas} salva` : '') + (perdidas ? ` · ${perdidas} da União perdida` : ''), '#8f5cff', 1800); await sleep(1200); },
     async round({ round }) { refresh(); if (G.cfg && G.cfg.boss) bossMov(null, null); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
       SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const sameT = (a, b) => a === b || !!(G.cfg && G.cfg.teams && G.cfg.teams.some(t => t.includes(a) && t.includes(b))); const human = winner != null && (V.online ? sameT(winner, V.viewer) : (G.cfg && G.cfg.teams ? G.cfg.teams.some(t => t.includes(winner) && t.some(x => !G.p(x).bot)) : !G.p(winner).bot)); const anyHuman = V.humans > 0;

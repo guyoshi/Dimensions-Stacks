@@ -745,8 +745,8 @@
     async eliminate(pid) {
       const p = this.p(pid); if (this.s.crisis == null) this.s.crisis = this.teamOf(pid);
       p.alive = false;
-      p.prepared.forEach(c => this.s.bh.push({ id: c, kind: 'especial' })); p.prepared = [];
-      this.log(`${p.name} foi eliminado!`, 'elim'); await this.emit('eliminated', { pid });
+      const perdidas = p.prepared.slice(); perdidas.forEach(c => this.s.bh.push({ id: c, kind: 'especial' })); p.prepared = [];
+      this.log(`${p.name} foi eliminado!`, 'elim'); await this.emit('eliminated', { pid, cards: perdidas });
     }
     // fim por regra da batalha (modo história): Morte súbita, Limite de rodadas, Relógio de Gerbe
     endRule(al) {
