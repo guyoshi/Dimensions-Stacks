@@ -1566,6 +1566,9 @@ body.reduce .cin-img, body.reduce .cin-img.in { animation: none !important; tran
 .bau-glow { pointer-events: none; position: absolute; left: 50%; bottom: 60px; width: 40px; height: 40px; margin-left: -20px; border-radius: 50%; background: radial-gradient(#fff6c9, #ffd25f88 40%, #0000 70%); opacity: 0; transform: scale(.3); transition: opacity .5s, transform 1.2s; }
 .bau-ov.lit .bau-glow { opacity: 1; transform: scale(9); }
 .bau-box { position: relative; width: 180px; z-index: 2; margin-bottom: 20px; }
+.bau-art { width: 100%; height: auto; display: block; object-fit: contain; filter: drop-shadow(0 10px 16px #000c); user-select: none; -webkit-user-drag: none; }
+.bau-box.opening .bau-art { animation: bauLift .34s ease both; }.bau-box.open .bau-art { animation: bauOpenPop .46s cubic-bezier(.2,1.25,.35,1) both; }
+@keyframes bauLift { 50% { transform: translateY(-4px) scale(1.025); filter: drop-shadow(0 12px 18px #000c) brightness(1.08); } } @keyframes bauOpenPop { from { transform: scale(.96); filter: drop-shadow(0 10px 16px #000c) brightness(1.2); } to { transform: none; filter: drop-shadow(0 10px 16px #000c); } }
 .bau-svg { width: 100%; display: block; overflow: visible; filter: drop-shadow(0 6px 14px #000a); }
 .bau-lid { transform-box: fill-box; transform-origin: 0% 100%; transition: transform .6s cubic-bezier(.3, 1.5, .5, 1); }
 .bau-box.open .bau-lid { transform: rotate(-62deg) translate(-4px, -6px); }
@@ -1808,7 +1811,7 @@ body.reduce #game[data-fundo="boss"] { animation: none; }
 .quest-bang { display: none; pointer-events: none; }.quest-bang circle { fill: #ff4f69; stroke: #fff3bd; stroke-width: 2; filter: drop-shadow(0 0 7px #ff365d); }.quest-bang text { text-anchor: middle; fill: #fff; font: 900 16px var(--f-disp); }
 .n.mission-guard:not(.done) .quest-bang { display: block; animation: questBang 1.25s ease-in-out infinite; }.n.quest-pulse:not(.done) .halo { animation: questHalo .8s ease-in-out 4; }
 .hs-svg.escuro .n.mission-guard:not(.done) { opacity: 1; pointer-events: auto; }
-@keyframes questBang { 50% { transform: translate(var(--qb-x, 0), var(--qb-y, 0)) scale(1.16); filter: brightness(1.25); } } @keyframes questHalo { 50% { opacity: 1; stroke-width: 10px; } }
+@keyframes questBang { 50% { opacity: .62; filter: brightness(1.35) drop-shadow(0 0 8px #ff365d); } } @keyframes questHalo { 50% { opacity: 1; stroke-width: 10px; } }
 .mis-story { display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: center; padding: 12px; margin-bottom: 10px; border: 1px solid #ffb14a66; border-radius: 14px; background: linear-gradient(135deg, #3d190d99, #18102f); }.mis-story.done { opacity: .62; border-color: #7dffb066; }.mis-story-ico { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #ff9a3c22; color: #ffd25f; font-size: 22px; box-shadow: inset 0 0 0 1px #ffd25f55; }.mis-story > div { display: flex; flex-direction: column; gap: 4px; }.mis-story b { color: #fff6c9; }.mis-story em { color: #c8c0e8; font-size: 11px; font-style: normal; }
 
 @media (max-width: 560px) { .boss-top-card .card { --cw: 64px !important; }.boss-top5 { justify-content: flex-start; }.blockhud { gap: 5px; padding-inline: 7px; }.bh-score { min-width: 36px; } }

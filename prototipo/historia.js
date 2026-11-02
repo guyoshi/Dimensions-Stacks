@@ -965,12 +965,13 @@
   }
   function abrirBau(premio, done) {
     closeSheet(); const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, pick = !!premio.opcoes, cartas = premio.opcoes || premio.cartas || []; let escolhida = null;
-    const ov = el(`<div class="bau-ov"><div class="bau-stage"><div class="bau-glow"></div><div class="bau-box">${bauSvg()}</div><div class="bau-prize"></div></div><button class="btn primary bau-ok" hidden>Continuar</button></div>`);
+    const ov = el(`<div class="bau-ov"><div class="bau-stage"><div class="bau-glow"></div><div class="bau-box"><img class="bau-art" src="cena/baus/bau-fechado.png" alt="Baú dimensional fechado"></div><div class="bau-prize"></div></div><button class="btn primary bau-ok" hidden>Continuar</button></div>`);
     document.body.appendChild(ov);
     const box = $('.bau-box', ov), prize = $('.bau-prize', ov), ok = $('.bau-ok', ov); let fim = false;
     const T = (f, ms) => setTimeout(() => { if (!fim) f(); }, red ? Math.min(ms, 60) : ms);
     box.classList.add('shake'); SND.play('bauShake');
-    T(() => { box.classList.remove('shake'); box.classList.add('open'); ov.classList.add('lit'); SND.play('bauOpen'); }, 1000);
+    T(() => { box.classList.remove('shake'); box.classList.add('opening'); const a = $('.bau-art', box); a.src = 'cena/baus/bau-abrindo.png'; a.alt = 'Baú dimensional abrindo'; SND.play('bauOpen'); }, 820);
+    T(() => { box.classList.remove('opening'); box.classList.add('open'); const a = $('.bau-art', box); a.src = 'cena/baus/bau-aberto.png'; a.alt = 'Baú dimensional aberto'; ov.classList.add('lit'); }, 1160);
     T(() => {
       if (pend > 0) {
         prize.innerHTML = Array.from({ length: Math.min(14, 4 + pend) }, (_, i) => `<span class="bau-coin" style="--dx:${(Math.random() * 220 - 110).toFixed(0)}px;--dy:${(-70 - Math.random() * 120).toFixed(0)}px;--d:${(i * 60)}ms">${coinSvg(30)}</span>`).join('') + `<div class="bau-amt">+${pend}</div>`; SND.play('bauCoin');
