@@ -172,3 +172,7 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 
 ## 4. Como chegar ao 190
 141 em uso + reforma das 27 (mantém o número) + **49 novas** escolhidas das 63. As 13 cartas que hoje repetem habilidade receberiam 13 delas; as 8 príncipes Quasar trocariam as provisórias (AE-018, 020, 053, 054, 125-128) por habilidades próprias. Quando você escolher, implemento em lotes de 10 com teste de segurança (`sim_esp.js`) e calibração de uso (`tests/uso_especiais.js`).
+
+
+## Decisão 02/11 (13:21)
+Aprovadas: AE-009, 024, 025, 026, 029, 051, 063, 064, 065, 070, 091, 092, 094, 100. Modificadas pelo autor: AE-098 (reorganiza a reserva toda e escolhe 1 para o topo), AE-099 (vê as 2 primeiras, escolhe 1), AE-107 ("Pior pelo melhor"), AE-111 (obriga todos os adversários). Não aprovadas (inalteradas): AE-057, 058, 102, 108. Já implementadas no jogo.

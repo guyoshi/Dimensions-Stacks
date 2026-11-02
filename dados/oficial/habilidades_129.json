@@ -149,7 +149,7 @@
    "id": "AE-009",
    "nome": "Superação",
    "categoria": "Bônus, penalidades e soma",
-   "texto_efeito": "Se o valor original escolhido da sua carta de combate for 40 ou menos, adicione +25 a esse atributo nesta disputa.",
+   "texto_efeito": "Se o valor original escolhido da sua carta de combate for 55 ou menos, adicione +30 a esse atributo nesta disputa.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -159,7 +159,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-13: saiu da carta V23 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a J07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-13: saiu da carta V23 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a J07 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-010",
@@ -379,7 +379,7 @@
    "id": "AE-024",
    "nome": "Ataque obrigatório",
    "categoria": "Controle do confronto e do atributo",
-   "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você.",
+   "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de ataque correspondente, inclusive você; sua carta ganha +12 nos atributos de ataque nesta disputa.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -388,13 +388,14 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-025",
    "nome": "Defesa obrigatória",
    "categoria": "Controle do confronto e do atributo",
-   "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você.",
+   "texto_efeito": "Dentro do par vigente, todos devem usar o atributo de defesa correspondente, inclusive você; sua carta ganha +12 nos atributos de defesa nesta disputa.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -404,13 +405,13 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: atribuída a J21 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: atribuída a J21 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-026",
    "nome": "Forçar ataque rival",
    "categoria": "Controle do confronto e do atributo",
-   "texto_efeito": "Escolha um adversário: ele deve usar o atributo de ataque do par vigente.",
+   "texto_efeito": "Escolha um adversário: ele deve usar o atributo de ataque do par vigente e a carta dele perde 8 nos atributos de ataque nesta disputa.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -419,7 +420,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-027",
@@ -457,7 +459,7 @@
    "id": "AE-029",
    "nome": "Proibir a defesa rival",
    "categoria": "Controle do confronto e do atributo",
-   "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa.",
+   "texto_efeito": "Escolha um adversário: ele não pode usar o atributo de defesa do par vigente nesta disputa e a carta dele perde 8 nos atributos de ataque.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -467,7 +469,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: atribuída a S12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: atribuída a S12 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de D07 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-030",
@@ -800,7 +802,7 @@
    "id": "AE-051",
    "nome": "Troca escolhida",
    "categoria": "Trocas diretas e circulação de cartas",
-   "texto_efeito": "Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta aleatória do baralho ativo de um adversário.",
+   "texto_efeito": "Troque 1 carta de seu baralho ativo, escolhida por você, por 1 carta do baralho ativo de um adversário, escolhida por você entre 2 sorteadas.",
    "origem_ideia": "#01/#30",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -809,7 +811,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-052",
@@ -986,7 +989,7 @@
    "id": "AE-063",
    "nome": "Troca entre vizinhos",
    "categoria": "Redistribuição coletiva e sacrifício",
-   "texto_efeito": "Escolha, às cegas (pela posição no baralho ativo), 1 carta do jogador à esquerda e 1 do jogador à direita: elas trocam de dono. Em duelo são a mesma pessoa: a troca não produz ganho líquido, mas o especial ainda pode ser gasto.",
+   "texto_efeito": "Escolha, às cegas (pela posição no baralho ativo), 1 carta do jogador à esquerda e 1 do jogador à direita: elas trocam de dono, exceto uma delas, à sua escolha, que vai para a sua reserva. Em duelo, você escolhe 2 cartas do rival e fica com uma na reserva.",
    "origem_ideia": "#40",
    "avaliacao_de_risco": "Sem ganho em duelos",
    "cartas_atribuidas": [
@@ -996,13 +999,13 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-13: redesenho autorizado pelo autor (AE-106) / interpretação de \"escolhida\" (AE-063); texto anterior em dados/historico"
+   "revisao": "2026-10-13: redesenho autorizado pelo autor (AE-106) / interpretação de \"escolhida\" (AE-063); texto anterior em dados/historico 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-064",
    "nome": "Transferência de reserva",
    "categoria": "Redistribuição coletiva e sacrifício",
-   "texto_efeito": "Transfira 1 carta aleatória da reserva do rival à esquerda para a reserva do rival à direita, sem ficar com ela. Em duelo, ela volta ao mesmo rival e não há vantagem.",
+   "texto_efeito": "Pegue 1 carta aleatória da reserva do rival à esquerda e coloque-a na sua reserva.",
    "origem_ideia": "#43 (var.)",
    "avaliacao_de_risco": "Sem ganho em duelos",
    "cartas_atribuidas": [
@@ -1012,13 +1015,13 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: atribuída a B03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: atribuída a B03 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-065",
    "nome": "Tríplice transferência",
    "categoria": "Redistribuição coletiva e sacrifício",
-   "texto_efeito": "Transfira até 3 cartas aleatórias do baralho ativo do rival à esquerda ao do rival à direita. Em duelo, origem e destino são o mesmo rival, de modo que a transferência não gera ganho líquido.",
+   "texto_efeito": "Pegue até 3 cartas aleatórias do baralho ativo do rival à esquerda: a primeira vai para a sua reserva e as outras ao baralho ativo do rival à direita (em duelo, voltam ao mesmo rival).",
    "origem_ideia": "#43",
    "avaliacao_de_risco": "Sem ganho em duelos",
    "cartas_atribuidas": [
@@ -1028,7 +1031,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: atribuída a J19 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: atribuída a J19 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-066",
@@ -1097,7 +1100,7 @@
    "id": "AE-070",
    "nome": "Conquista compensada",
    "categoria": "Redistribuição coletiva e sacrifício",
-   "texto_efeito": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de seu baralho ativo a cada adversário ativo envolvido.",
+   "texto_efeito": "Capture as cartas normais em combate, mas entregue 1 carta escolhida de sua reserva a cada adversário ativo envolvido.",
    "origem_ideia": "#23",
    "avaliacao_de_risco": "Experimental",
    "cartas_atribuidas": [
@@ -1107,7 +1110,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-13: saiu da carta S16 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a V07 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-13: saiu da carta S16 (o bot nunca a usava: 0 usos/disputa); volta à reserva. 2026-10-14: atribuída a V07 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-071",
@@ -1413,7 +1416,7 @@
    "id": "AE-091",
    "nome": "Revelar a mão",
    "categoria": "Informação e manipulação de ordem",
-   "texto_efeito": "Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa.",
+   "texto_efeito": "Um adversário revela a ordem de todas as cartas de seu baralho ativo para você até o fim desta disputa, e a carta de combate dele perde 10 em todos os atributos.",
    "origem_ideia": "#41",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -1422,13 +1425,14 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-092",
    "nome": "Próximas três",
    "categoria": "Informação e manipulação de ordem",
-   "texto_efeito": "Veja as 3 próximas cartas de seu baralho ativo e coloque-as no topo na ordem que preferir.",
+   "texto_efeito": "Veja as 5 próximas cartas de seu baralho ativo; escolha 3 e coloque-as no topo na ordem que preferir. As outras 2 vêm em seguida.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -1438,7 +1442,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: atribuída a S14 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de B03 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: atribuída a S14 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: saiu de B03 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-093",
@@ -1459,7 +1463,7 @@
    "id": "AE-094",
    "nome": "Inversão de fila",
    "categoria": "Informação e manipulação de ordem",
-   "texto_efeito": "Inverta apenas a ordem das 3 próximas cartas de seu baralho ativo.",
+   "texto_efeito": "Inverta a ordem das 5 próximas cartas de seu baralho ativo e veja-as.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -1469,7 +1473,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: saiu de D09 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-29: atribuída a V27 (proposta, aguardando aprovação)."
+   "revisao": "2026-10-14: saiu de D09 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-29: atribuída a V27 (proposta, aguardando aprovação). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-096",
@@ -1505,7 +1509,7 @@
    "id": "AE-098",
    "nome": "Organizar reserva",
    "categoria": "Informação e manipulação de ordem",
-   "texto_efeito": "Veja as 4 primeiras cartas de sua reserva e reorganize-as na ordem desejada.",
+   "texto_efeito": "Reorganize toda a sua reserva e escolha 1 carta dela para o topo do seu baralho ativo.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -1514,13 +1518,14 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-099",
    "nome": "Reforçar o fim",
    "categoria": "Informação e manipulação de ordem",
-   "texto_efeito": "Mova a primeira carta de sua reserva para o fim do seu baralho ativo, sem ver seu conteúdo.",
+   "texto_efeito": "Veja as 2 primeiras cartas de sua reserva e mande uma delas, à sua escolha, para o fim do seu baralho ativo.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
    "cartas_atribuidas": [
@@ -1530,13 +1535,13 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: saiu de D01 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a V23 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: saiu de D01 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-14: atribuída a V23 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-100",
    "nome": "Confundir próximo turno",
    "categoria": "Informação e manipulação de ordem",
-   "texto_efeito": "Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais.",
+   "texto_efeito": "Veja até 3 cartas seguintes do baralho ativo de um adversário; escolha qual ficará no topo, preservando a ordem relativa das demais. Essa carta entra em disputa perdendo 10 em todos os atributos.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Atenção",
    "cartas_atribuidas": [
@@ -1545,7 +1550,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-101",
@@ -1628,9 +1634,9 @@
   },
   {
    "id": "AE-107",
-   "nome": "Iniciativa contra fracos",
-   "categoria": "Capturas condicionais e efeitos decisivos",
-   "texto_efeito": "Se a carta de combate de um rival tiver 30 ou menos no atributo escolhido, ela não poderá se proteger contra o seu próximo efeito de roubo nesta disputa.",
+   "nome": "Pior pelo melhor",
+   "categoria": "Conversões faltantes e permutas completas",
+   "texto_efeito": "Substitua o valor do seu pior atributo pelo valor do seu melhor atributo nesta disputa.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Atenção",
    "cartas_atribuidas": [
@@ -1640,7 +1646,7 @@
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-29: atribuída a V37 (proposta, aguardando aprovação)."
+   "revisao": "2026-10-29: atribuída a V37 (proposta, aguardando aprovação). 2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-108",
@@ -1707,7 +1713,7 @@
    "id": "AE-111",
    "nome": "Ativação forçada",
    "categoria": "Interações entre habilidades especiais",
-   "texto_efeito": "Escolha um adversário: ele é obrigado a ativar todas as suas cartas especiais já preparadas, até duas, nesta disputa, mesmo que a regra geral permita somente uma ativação voluntária.",
+   "texto_efeito": "Todos os adversários são obrigados a ativar todas as suas cartas especiais já preparadas (até 2) nesta disputa.",
    "origem_ideia": "#59",
    "avaliacao_de_risco": "Regra-base",
    "cartas_atribuidas": [
@@ -1716,7 +1722,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": "2026-11-02: efeito alterado e aprovado pelo autor."
   },
   {
    "id": "AE-113",

@@ -90,3 +90,11 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 
 ## Lote 13:10 (02/11)
 - **BALANÇO Equilíbrio de atributos aplicado** (ver `EQUILIBRIO_ATRIBUTOS_2026-10-29.md`): 106 movimentos de pontos INT→FOR em cartas em que INT não é o pico. Médias FOR 60,0 · RES 60,7 · INT 61,1 · VEL 59,8. Soma, pico e raridade das cartas não mudam.
+
+## Lote 13:21 (02/11) — reforma das habilidades de uso zero (BALANÇO/REGRAS)
+- **Aprovadas como na proposta:** AE-009 (agora ≤55 → +30), 024, 025, 026, 029, 051, 063, 064, 065, 070, 091, 092, 094, 100. 
+- **AE-098** reorganiza a reserva inteira e manda 1 carta ao topo do baralho. **AE-099** vê as 2 primeiras da reserva e manda 1 ao fim do baralho. **AE-107** "Pior pelo melhor": troca o valor do pior atributo pelo do melhor. **AE-111** obriga todos os adversários a ativar seus especiais preparados na disputa.
+- **Não alteradas:** AE-057, 058, 102, 108 (não aprovadas); 096, 118, 119, 121, 122 (sem decisão).
+- **REGRA — a vitória prevalece:** capturas marcadas (AE-101 Capturar atacante, AE-102 Capturar defensor, AE-109 Duelo condicionado) só valem se quem as usou VENCEU a disputa; caso contrário o vencedor leva as cartas normalmente. Antes, o marcador podia capturar mesmo perdendo.
+- **Bots:** valores de preparo recalibrados (MIRROR/BOT_VAL/TUNE). Uso zero caiu de 14 para 8 (restam só os não aprovados/sem decisão).
+- **Atenção:** AE-065 (Tríplice transferência) com 85% de vitória do portador — forte demais; AE-092/094/098/099 ficam entre 35–43% (úteis, mas custam uma carta).

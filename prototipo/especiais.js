@@ -75,7 +75,7 @@
     }));
     [['AE-024', 'ataque'], ['AE-025', 'defesa']].forEach(([id, tipo]) => D(id, 'Controle', {
       phase: 'ctrl',
-      apply(ctx, act) { const ctl = ctx.combat.ctl; if (ctl.typeAll) return ctx.say('O tipo de atributo já foi imposto: este efeito é ignorado.'); ctl.typeAll = tipo; ctx.say(`Todos devem usar atributo de ${tipo}.`); },
+      apply(ctx, act) { const ctl = ctx.combat.ctl; if (ctl.typeAll) return ctx.say('O tipo de atributo já foi imposto: este efeito é ignorado.'); ctl.typeAll = tipo; ctx.say(`Todos devem usar atributo de ${tipo}.`); const me = ctx.entry(act.pid); if (me) { ctx.addMod(me, act.pid, 'Imposição', x => { for (const k of AID) if (ATTR[k].tipo === tipo) x.stats[k] += 12; }); ctx.say(`${nm(ctx, act.pid)} ganha +12 nos atributos de ${tipo}.`); } },
       ai(ctx, pid) { const mine = AID.filter(a => ATTR[a].tipo === tipo), oth = AID.filter(a => ATTR[a].tipo !== tipo); const m = bestVs(ctx, pid, mine).p; return m > bestVs(ctx, pid, oth).p ? ctrlU(m) : 0.03; },
     }));
     [['AE-026', 'force', 'ataque'], ['AE-027', 'force', 'defesa'], ['AE-028', 'ban', 'ataque'], ['AE-029', 'ban', 'defesa']].forEach(([id, k, tipo]) => D(id, 'Controle', {
@@ -83,6 +83,7 @@
       async apply(ctx, act) {
         const t = await ctx.target(act.pid, ctx.opps(act.pid), k === 'force' ? `Quem será obrigado a usar ${tipo}?` : `Quem fica proibido de usar ${tipo}?`, c => forceGain(ctx, act.pid, k, tipo).t ?? c[0]); if (t == null) return;
         const per = ctx.combat.ctl.per[t] || (ctx.combat.ctl.per[t] = {}); per[k] = tipo;
+        if (id === 'AE-026' || id === 'AE-029') { const te = ctx.entry(t); if (te) { ctx.addMod(te, act.pid, 'Pressão', x => { for (const q of AID) if (ATTR[q].tipo === 'ataque') x.stats[q] = Math.max(0, x.stats[q] - 8); }); ctx.say(`${nm(ctx, t)} perde 8 nos atributos de ataque.`); } }
         ctx.say(k === 'force' ? `${nm(ctx, t)} deve usar atributo de ${tipo}.` : `${nm(ctx, t)} não pode usar atributo de ${tipo}.`);
       },
       // só vale com a carta do rival na memória: força o tipo em que ele é mais fraco
@@ -214,10 +215,12 @@
       async apply(ctx, act) {
         const cand = ctx.opps(act.pid).filter(o => hasDeck(ctx, o)); const t = await ctx.target(act.pid, cand, 'Trocar com o baralho de quem?', c => c.slice().sort((a, b) => avgSum(ctx.player(b).deck) - avgSum(ctx.player(a).deck))[0]); if (t == null) return;
         const mine = ctx.player(act.pid).deck; if (!mine.length) return;
-        const [give] = await ctx.askCards(act.pid, { title: `Troca escolhida: qual carta sua vai para ${nm(ctx, t)}?`, hint: 'Você recebe uma carta aleatória do baralho dele.', cards: mine.slice(), min: 1, max: 1 }, () => lowest(mine, 1));
+        const [give] = await ctx.askCards(act.pid, { title: `Troca escolhida: qual carta sua vai para ${nm(ctx, t)}?`, hint: 'Depois você escolhe entre 2 cartas sorteadas do baralho dele.', cards: mine.slice(), min: 1, max: 1 }, () => lowest(mine, 1));
         if (await ctx.blocked(act.pid, t, 'deck', 1, 'swap')) return;
         const tl = ctx.player(t).deck; if (!tl.length) return;
-        const got = tl.splice(Math.floor(ctx.rand() * tl.length), 1)[0]; mine.splice(mine.indexOf(give), 1);
+        const pool = tl.slice(), duas = []; for (let n = 0; n < 2 && pool.length; n++) duas.push(pool.splice(Math.floor(ctx.rand() * pool.length), 1)[0]);
+        const [got] = duas.length > 1 ? await ctx.askCards(act.pid, { title: `Troca escolhida: qual carta de ${nm(ctx, t)} você recebe?`, hint: 'Duas cartas sorteadas do baralho dele.', cards: duas, min: 1, max: 1 }, () => highest(duas, 1)) : duas;
+        tl.splice(tl.indexOf(got), 1); mine.splice(mine.indexOf(give), 1);
         tl.push(give); mine.push(got);
         ctx.say(`${nm(ctx, act.pid)} troca cartas com ${nm(ctx, t)}.`);
         await ctx.emit('steal', { from: t, to: act.pid, card: got }); await ctx.emit('steal', { from: act.pid, to: t, card: give });
@@ -319,15 +322,19 @@
       // Quem lembra o que há nos baralhos (memória do bot) tira uma carta forte do líder e entrega uma fraca; sem memória, a escolha é ao acaso.
       async apply(ctx, act) {
         const L = ctx.left(act.pid), R = ctx.right(act.pid);
-        if (L == null || R == null || L === R) return ctx.say('Em duelo a troca não produz ganho líquido: o especial é gasto.');
-        const dl = ctx.player(L).deck, dr = ctx.player(R).deck; if (!dl.length || !dr.length) return ctx.say('Um dos vizinhos não tem cartas ativas.');
+        if (L == null || R == null) return ctx.say('Sem vizinhos para a troca: o especial é gasto.');
+        const dl = ctx.player(L).deck, dr = ctx.player(R).deck; if (!dl.length || !dr.length || (L === R && dl.length < 2)) return ctx.say('Um dos vizinhos não tem cartas ativas.');
         const tot = q => ctx.g.totalCards(ctx.player(q)); const strongL = tot(L) >= tot(R);
         const kL = ctx.mem(act.pid, L).slice(), kR = ctx.mem(act.pid, R).slice();
         const choose = (k, deck, strong) => () => { const kn = k.filter(c => deck.includes(c)); if (kn.length) return [strong ? highest(kn, 1)[0] : lowest(kn, 1)[0]]; return [deck[Math.floor(ctx.rand() * deck.length)]]; };
         const [cl] = await ctx.askCards(act.pid, { title: `Troca entre vizinhos: escolha 1 carta do baralho de ${nm(ctx, L)}`, hint: 'Estão viradas para baixo: escolha pela posição.', cards: dl.slice(), blind: true, min: 1, max: 1 }, choose(kL, dl, strongL));
-        const [cr] = await ctx.askCards(act.pid, { title: `Troca entre vizinhos: escolha 1 carta do baralho de ${nm(ctx, R)}`, hint: 'Estão viradas para baixo: escolha pela posição.', cards: dr.slice(), blind: true, min: 1, max: 1 }, choose(kR, dr, !strongL));
-        dl.splice(dl.indexOf(cl), 1); dr.splice(dr.indexOf(cr), 1); dr.push(cl); dl.push(cr);
-        ctx.say(`${nm(ctx, act.pid)} faz ${nm(ctx, L)} e ${nm(ctx, R)} trocarem cartas.`); await ctx.emit('steal', { from: L, to: R, card: cl }); await ctx.emit('steal', { from: R, to: L, card: cr });
+        const drc = L === R ? dr.filter(c => c !== cl) : dr.slice();
+        const [cr] = await ctx.askCards(act.pid, { title: `Troca entre vizinhos: escolha 1 carta do baralho de ${nm(ctx, R)}`, hint: 'Estão viradas para baixo: escolha pela posição.', cards: drc, blind: true, min: 1, max: 1 }, choose(kR.filter(c => drc.includes(c)), drc, !strongL));
+        const [fica] = await ctx.askCards(act.pid, { title: 'Troca entre vizinhos: qual das duas cartas fica na SUA reserva?', hint: 'A outra segue para o vizinho oposto.', cards: [cl, cr], min: 1, max: 1 }, () => highest([cl, cr], 1));
+        dl.splice(dl.indexOf(cl), 1); dr.splice(dr.indexOf(cr), 1); const mr = ctx.player(act.pid).reserve;
+        if (fica === cl) { mr.push(cl); dl.push(cr); await ctx.emit('steal', { from: L, to: act.pid, card: cl, zone: 'deck', dzone: 'reserve' }); await ctx.emit('steal', { from: R, to: L, card: cr }); }
+        else { mr.push(cr); dr.push(cl); await ctx.emit('steal', { from: R, to: act.pid, card: cr, zone: 'deck', dzone: 'reserve' }); await ctx.emit('steal', { from: L, to: R, card: cl }); }
+        ctx.say(`${nm(ctx, act.pid)} faz ${nm(ctx, L)} e ${nm(ctx, R)} trocarem cartas e fica com uma delas na reserva.`);
         ctx.learn(act.pid, L, kL.filter(c => c !== cl)); ctx.learn(act.pid, R, kR.filter(c => c !== cr));   // quem escolheu sabe o que mudou de lugar
       },
       ai(ctx, pid) {
@@ -342,23 +349,23 @@
     });
     D('AE-064', 'Redistribuição', {
       async apply(ctx, act) {
-        const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null || L === R) return ctx.say('Em duelo a carta volta ao mesmo rival: sem vantagem. O especial é gasto.');
+        const L = ctx.left(act.pid); if (L == null) return ctx.say('Sem rival à esquerda: o especial é gasto.');
         const t = await ctx.hit(act.pid, L); if (t == null) return; if (await ctx.blocked(act.pid, t, 'reserve', 1, 'swap')) return;
         const rl = ctx.player(t).reserve; if (!rl.length) return ctx.say('Reserva vazia.');
-        const c = rl.splice(Math.floor(ctx.rand() * rl.length), 1)[0]; ctx.player(R).reserve.push(c);
-        ctx.say(`${nm(ctx, act.pid)} move uma carta da reserva de ${nm(ctx, t)} para a de ${nm(ctx, R)}.`); await ctx.emit('steal', { from: t, to: R, card: c, zone: 'reserve', dzone: 'reserve' });
+        const c = rl.splice(Math.floor(ctx.rand() * rl.length), 1)[0]; ctx.player(act.pid).reserve.push(c);
+        ctx.say(`${nm(ctx, act.pid)} pega uma carta da reserva de ${nm(ctx, t)} para a própria reserva.`); await ctx.emit('steal', { from: t, to: act.pid, card: c, zone: 'reserve', dzone: 'reserve' });
       },
       // só em 3+: tira da reserva do líder (à esquerda) e dá a quem está atrás de mim (à direita)
-      ai(ctx, pid) { if (ctx.g.cfg && ctx.g.cfg.teams) return 0; const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 2 && tot(R) < tot(pid) && ctx.player(L).reserve.length ? 0.5 : 0.03; }, prep: 0.25, val: 0.4,
+      ai(ctx, pid) { const L = ctx.left(pid); if (L == null) return 0.02; return ctx.player(L).reserve.length ? 0.55 : 0.03; }, prep: 0.5, val: 0.6,
     });
     D('AE-065', 'Redistribuição', {
       async apply(ctx, act) {
-        const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null || L === R) return ctx.say('Em duelo a transferência não gera ganho líquido. O especial é gasto.');
+        const L = ctx.left(act.pid), R = ctx.right(act.pid); if (L == null || R == null) return ctx.say('Sem rival à esquerda: o especial é gasto.');
         const t = await ctx.hit(act.pid, L); if (t == null) return; if (await ctx.blocked(act.pid, t, 'deck', 3, 'swap')) return;
-        const dl = ctx.player(t).deck; for (let n = 0; n < 3 && dl.length; n++) { const c = dl.splice(Math.floor(ctx.rand() * dl.length), 1)[0]; ctx.player(R).deck.push(c); await ctx.emit('steal', { from: t, to: R, card: c }); }
-        ctx.say(`${nm(ctx, act.pid)} transfere cartas de ${nm(ctx, t)} para ${nm(ctx, R)}.`);
+        const dl = ctx.player(t).deck; for (let n = 0; n < 3 && dl.length; n++) { const c = dl.splice(Math.floor(ctx.rand() * dl.length), 1)[0]; if (n === 0) { ctx.player(act.pid).reserve.push(c); await ctx.emit('steal', { from: t, to: act.pid, card: c, zone: 'deck', dzone: 'reserve' }); } else { ctx.player(R).deck.push(c); await ctx.emit('steal', { from: t, to: R, card: c }); } }
+        ctx.say(`${nm(ctx, act.pid)} tira cartas de ${nm(ctx, t)}: 1 vai para a sua reserva e as outras para ${nm(ctx, R)}.`);
       },
-      ai(ctx, pid) { if (ctx.g.cfg && ctx.g.cfg.teams) return 0; const L = ctx.left(pid), R = ctx.right(pid); if (L == null || R == null || L === R) return 0.02; const tot = q => ctx.g.totalCards(ctx.player(q)); return tot(L) >= tot(pid) + 3 && tot(R) < tot(pid) ? 0.6 : 0.03; }, prep: 0.25, val: 0.5,
+      ai(ctx, pid) { const L = ctx.left(pid); if (L == null) return 0.02; return ctx.player(L).deck.length >= 2 ? 0.55 : 0.05; }, prep: 0.5, val: 0.6,
     });
     D('AE-067', 'Redistribuição', {
       can(ctx, pid) { return ctx.opps(pid).some(o => hasDeck(ctx, o)); },
@@ -396,9 +403,9 @@
         ctx.combat.onWin.push({ pid: act.pid, when: 'any', async run(c2) {
           const inv = c2.combat.entries.filter(x => x.pid !== act.pid && !x.gone && !c2.sameTeam(x.pid, act.pid)).map(x => x.pid);
           for (const o of inv) {
-            const d = c2.player(act.pid).deck; if (!d.length) break;
-            const [c] = await c2.askCards(act.pid, { title: `Conquista compensada: entregue 1 carta a ${nm(c2, o)}`, cards: d.slice(), min: 1, max: 1 }, () => lowest(d, 1));
-            d.splice(d.indexOf(c), 1); c2.player(o).deck.push(c); await c2.emit('steal', { from: act.pid, to: o, card: c });
+            const d = c2.player(act.pid).reserve; if (!d.length) break;
+            const [c] = await c2.askCards(act.pid, { title: `Conquista compensada: entregue 1 carta da reserva a ${nm(c2, o)}`, cards: d.slice(), min: 1, max: 1 }, () => lowest(d, 1));
+            d.splice(d.indexOf(c), 1); c2.player(o).reserve.push(c); await c2.emit('steal', { from: act.pid, to: o, card: c, zone: 'reserve', dzone: 'reserve' });
           }
           c2.say(`${nm(c2, act.pid)} paga a compensação.`);
         } });
@@ -499,22 +506,23 @@
       async apply(ctx, act) {
         const cand = ctx.opps(act.pid).filter(o => hasDeck(ctx, o)); const t = await ctx.target(act.pid, cand, 'Quem revela a ordem do baralho?', c => c.find(o => ctx.mem(act.pid, o).length < 2) ?? c[0]); if (t == null) return;
         await ctx.emit('peek', { pid: act.pid, target: t, cards: ctx.player(t).deck.slice(), title: 'Mão revelada', hint: `Ordem do baralho de ${nm(ctx, t)} (topo → fundo).` }); ctx.learn(act.pid, t, ctx.player(t).deck.slice()); ctx.say(`${nm(ctx, t)} revela a ordem do baralho a ${nm(ctx, act.pid)}.`);
+        const te = ctx.entry(t); if (te) { ctx.addMod(te, act.pid, 'Mão revelada', x => { for (const k of AID) x.stats[k] = Math.max(0, x.stats[k] - 10); }); ctx.say(`${nm(ctx, t)} perde 10 em todos os atributos.`); }
       },
       ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length > 0 && ctx.mem(pid, o).length < 2) ? 0.55 : 0.05, prep: 0.4, val: 1.0, want: needMem,
     });
     D('AE-092', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 2; },
       async apply(ctx, act) {
-        const p = ctx.player(act.pid); const n = Math.min(3, p.deck.length); const v = p.deck.slice(0, n);
-        const o = await ctx.askCards(act.pid, { title: 'Ordene as próximas cartas (1ª = topo)', hint: 'Toque nas cartas na ordem em que quer que entrem em disputa.', cards: v, min: n, max: n, ordered: true }, () => orderVs(ctx, act.pid, v));
-        p.deck.splice(0, n, ...o); ctx.say(`${nm(ctx, act.pid)} reordena as próximas cartas.`); await ctx.emit('reorder', { pid: act.pid });
+        const p = ctx.player(act.pid); const m5 = Math.min(5, p.deck.length), n = Math.min(3, m5); const v = p.deck.slice(0, m5);
+        const o = await ctx.askCards(act.pid, { title: 'Escolha e ordene 3 das próximas 5 cartas (1ª = topo)', hint: 'Toque nas cartas na ordem em que quer que entrem em disputa. As outras ficam depois, na ordem original.', cards: v, min: n, max: n, ordered: true }, () => orderVs(ctx, act.pid, v.slice().sort((a, b) => sum(b) - sum(a)).slice(0, n)));
+        p.deck.splice(0, m5, ...o, ...v.filter(c => !o.includes(c))); ctx.say(`${nm(ctx, act.pid)} reordena as próximas cartas.`); await ctx.emit('reorder', { pid: act.pid });
       },
       ai(ctx, pid) { const v = ctx.player(pid).deck.slice(0, 3); if (v.length < 2) return 0; if (foeSeqs(ctx, pid).some(q => q.length)) return 0.6; const sp = Math.max(...v.map(sum)) - Math.min(...v.map(sum)); return sp >= 60 ? 0.3 : 0.1; }, prep: 0.5, val: 0.8,
     });
     D('AE-094', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).deck.length >= 2; },
-      async apply(ctx, act) { const p = ctx.player(act.pid); const n = Math.min(3, p.deck.length); p.deck.splice(0, n, ...p.deck.slice(0, n).reverse()); ctx.say(`${nm(ctx, act.pid)} inverte a fila das próximas ${n} cartas.`); await ctx.emit('reorder', { pid: act.pid }); },
-      ai(ctx, pid) { const v = ctx.player(pid).deck.slice(0, 3); if (v.length < 2) return 0; const g = orderScore(ctx, pid, v.slice().reverse()) - orderScore(ctx, pid, v); return g >= 40 ? 0.7 : g >= 20 ? 0.4 : 0.04; }, prep: 0.4, val: 0.5,
+      async apply(ctx, act) { const p = ctx.player(act.pid); const n = Math.min(5, p.deck.length); p.deck.splice(0, n, ...p.deck.slice(0, n).reverse()); ctx.say(`${nm(ctx, act.pid)} inverte a fila das próximas ${n} cartas.`); await ctx.emit('peek', { pid: act.pid, target: act.pid, cards: p.deck.slice(0, n), title: 'Fila invertida', hint: 'Novas próximas cartas (topo → fundo).' }); await ctx.emit('reorder', { pid: act.pid }); },
+      ai(ctx, pid) { const v = ctx.player(pid).deck.slice(0, 5); if (v.length < 2) return 0; const g = orderScore(ctx, pid, v.slice().reverse()) - orderScore(ctx, pid, v); return g >= 40 ? 0.7 : g >= 20 ? 0.4 : 0.04; }, prep: 0.4, val: 0.5,
     });
     D('AE-096', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length + ctx.player(o).reserve.length > 0); },
@@ -537,18 +545,24 @@
       ai(ctx, pid) { const p = ctx.player(pid); if (p.deck.length <= 2) return 0.6; const top = highest(p.reserve, 7); return avgSum(top) > avgSum(p.deck) + 20 ? 0.4 : 0.06; }, prep: 0.5, val: 0.5,
     });
     D('AE-098', 'Informação', {
-      can(ctx, pid) { return ctx.player(pid).reserve.length >= 2; },
+      can(ctx, pid) { return ctx.player(pid).reserve.length >= 1; },
       async apply(ctx, act) {
-        const p = ctx.player(act.pid); const n = Math.min(4, p.reserve.length); const v = p.reserve.slice(0, n);
-        const o = await ctx.askCards(act.pid, { title: 'Reorganize as primeiras cartas da reserva', hint: 'A 1ª será a primeira a entrar no baralho.', cards: v, min: n, max: n, ordered: true }, () => highest(v, n));
-        p.reserve.splice(0, n, ...o); ctx.say(`${nm(ctx, act.pid)} organiza a reserva.`); await ctx.emit('reorder', { pid: act.pid });
+        const p = ctx.player(act.pid); const n = p.reserve.length, v = p.reserve.slice();
+        if (n > 1) { const o = await ctx.askCards(act.pid, { title: 'Reorganize a reserva', hint: 'A 1ª será a primeira a entrar no baralho.', cards: v, min: n, max: n, ordered: true }, () => highest(v, n)); p.reserve.splice(0, n, ...o); }
+        const [top] = await ctx.askCards(act.pid, { title: 'Qual carta da reserva vai para o topo do baralho?', hint: 'Ela será a próxima a entrar em disputa.', cards: p.reserve.slice(), min: 1, max: 1 }, () => highest(p.reserve, 1));
+        p.reserve.splice(p.reserve.indexOf(top), 1); p.deck.unshift(top);
+        ctx.say(`${nm(ctx, act.pid)} organiza a reserva e coloca uma carta no topo do baralho.`); await ctx.emit('reorder', { pid: act.pid });
       },
-      ai(ctx, pid) { const p = ctx.player(pid); return p.reserve.length >= 4 && p.deck.length <= 3 ? 0.3 : 0.04; }, prep: 0.4, val: 0.15,
+      ai(ctx, pid) { const p = ctx.player(pid); return p.reserve.length >= 1 && (p.deck.length <= 3 || avgSum(highest(p.reserve, 1)) > avgSum(p.deck) + 20) ? 0.4 : 0.06; }, prep: 0.4, val: 0.3,
     });
     D('AE-099', 'Informação', {
       can(ctx, pid) { return ctx.player(pid).reserve.length > 0; },
-      async apply(ctx, act) { const p = ctx.player(act.pid); if (!p.reserve.length) return; p.deck.push(p.reserve.shift()); ctx.say(`${nm(ctx, act.pid)} reforça o fim do baralho.`); await ctx.emit('reorder', { pid: act.pid }); },
-      ai(ctx, pid) { const p = ctx.player(pid); return p.deck.length <= 3 && p.reserve.length && sum(p.reserve[0]) > avgSum(p.deck) + 15 ? 0.4 : 0.05; }, prep: 0.5, val: 0.15,
+      async apply(ctx, act) {
+        const p = ctx.player(act.pid); if (!p.reserve.length) return; const duas = p.reserve.slice(0, 2);
+        const [c] = duas.length > 1 ? await ctx.askCards(act.pid, { title: 'Reforçar o fim: qual das duas vai para o fim do baralho?', hint: 'São as duas primeiras cartas da reserva.', cards: duas, min: 1, max: 1 }, () => highest(duas, 1)) : duas;
+        p.reserve.splice(p.reserve.indexOf(c), 1); p.deck.push(c); ctx.say(`${nm(ctx, act.pid)} reforça o fim do baralho.`); await ctx.emit('reorder', { pid: act.pid });
+      },
+      ai(ctx, pid) { const p = ctx.player(pid); return p.deck.length <= 3 && p.reserve.length && sum(highest(p.reserve.slice(0, 2), 1)[0]) > avgSum(p.deck) + 15 ? 0.4 : 0.05; }, prep: 0.5, val: 0.3,
     });
     D('AE-100', 'Informação', {
       can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length >= 2); },
@@ -557,7 +571,7 @@
         const t = await ctx.target(act.pid, cand, 'Confundir o próximo turno de quem?'); if (t == null) return;
         const d = ctx.player(t).deck; const v = d.slice(0, 3); if (!v.length) return;
         const [c] = await ctx.askCards(act.pid, { title: `Qual carta de ${nm(ctx, t)} ficará no topo?`, hint: 'As demais mantêm a ordem relativa.', cards: v, min: 1, max: 1 }, () => lowest(v, 1));
-        d.splice(d.indexOf(c), 1); d.unshift(c); ctx.say(`${nm(ctx, act.pid)} confunde o próximo turno de ${nm(ctx, t)}.`); await ctx.emit('reorder', { pid: t }); ctx.learn(act.pid, t, d.slice());
+        d.splice(d.indexOf(c), 1); d.unshift(c); (ctx.g.s.marks || (ctx.g.s.marks = [])).push({ card: c, v: -10, src: act.pid }); ctx.say(`${nm(ctx, act.pid)} confunde o próximo turno de ${nm(ctx, t)}: a carta de cima entra marcada (−10).`); await ctx.emit('reorder', { pid: t }); ctx.learn(act.pid, t, d.slice());
       },
       // vejo as 3 próximas dele e deixo a pior no topo: depois sei exatamente o que ele joga
       ai: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length >= 3) ? 0.65 : 0.25, val: 1.0, want: needMem,
@@ -592,14 +606,10 @@
       },
       ai(ctx, pid) { return ctx.isLosing(pid) ? 0.85 : 0.04; },
     });
-    D('AE-107', 'Captura', {
-      companion: true, prep: 0.2,
-      can(ctx, pid) { return ctx.player(pid).prepared.length >= 2 || ctx.activations.some(a => a.pid === pid); },
-      apply(ctx, act) {
-        const set = new Set(); ctx.entries().forEach(e => { if (e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid) && e.stats[e.attr] <= 30) set.add(e.pid); });
-        ctx.combat.pierce[act.pid] = set; ctx.say(set.size ? 'Rivais fracos não poderão se proteger do próximo roubo.' : 'Nenhum rival com 30 ou menos no atributo escolhido.');
-      },
-      ai: () => 0.2,
+    D('AE-107', 'Conversão', {
+      fx: st => { const ks = Object.keys(st).sort((x, y) => st[x] - st[y]); return Object.assign({}, st, { [ks[0]]: st[ks[ks.length - 1]] }); },
+      apply(ctx, act) { const e = ctx.entry(act.pid); ctx.addMod(e, act.pid, 'Conversão', x => { const ks = AID.slice().sort((p, q) => x.stats[p] - x.stats[q]); x.stats[ks[0]] = x.stats[ks[3]]; }); ctx.say(`${nm(ctx, act.pid)} troca o pior atributo pelo melhor.`); },
+      ai(ctx, pid) { const e = ctx.entry(pid); const ks = AID.slice().sort((p, q) => e.stats[p] - e.stats[q]); const d = e.stats[ks[3]] - e.stats[ks[0]]; return e.attr === ks[0] ? ctx.flipChance(pid, d) : 0.03; },
     });
     D('AE-109', 'Captura', {
       can(ctx, pid) { return ctx.entries().some(e => e.pid !== pid); },
