@@ -218,3 +218,6 @@ Interpretações que mudam o texto original (confirmar):
 - **Pausa (182):** o rival que pula tem a carta devolvida ao fim do baralho; com 2 jogadores a disputa fica sem vencedor.
 - **Fortaleza (165):** reduções vindas de outros jogadores são descartadas por inteiro; **até 3 cartas** podem ter esta habilidade e **até 2** a Escolher fenômeno (185) quando forem atribuídas.
 - **Retirada (169)** pede, depois da troca, se vale o ataque ou a defesa do par do atributo.
+
+## Decisão 02/11 (16:17)
+Todas as interpretações da seção "Implementação" foram **confirmadas** pelo autor: Aposta (perde o topo do baralho), Embaralhar reservas (4 cartas ativas), Dividir o butim, Pausa, Fortaleza, Eco protetor e Retirada.
