@@ -1,6 +1,6 @@
 # Equilíbrio entre atributos — medição e proposta (29/10/2026)
 
-Status: **proposta, nada aplicado**. Script: `prototipo/tests/balanco/atributos.js`.
+Status: **APLICADO em 02/11/2026** (1ª passagem = tabela abaixo, 54 cartas; 2ª passagem = +52 cartas com até 12 pontos no total por carta, também INT→FOR; soma e pico de cada carta não mudaram, então raridade, totais únicos e Quasar de base +12/+24 seguem válidos). Script: `prototipo/tests/balanco/atributos.js`.
 
 ## Medição (CPU difícil, 2/3/4 jogadores, 60 partidas de cada)
 A regra da disputa é simétrica: vence o maior valor do atributo escolhido, qualquer que seja o atributo. Taxa de vitória de quem escolhe cada atributo, por faixa de valor:
@@ -77,3 +77,11 @@ Mover até 8 pontos de INT para FOR em 54 cartas em que INT não é o pico (soma
 
 ## Especiais
 As 133 cartas base têm especiais únicos (149 definidos, 16 livres). As 13 cartas Quasar usam o especial da carta base (6 especiais compartilhados); os 8 príncipes lendários precisarão de 8 especiais novos e só sobram 16 livres, que são conversões fracas.
+
+
+## Resultado da aplicação (02/11/2026)
+- Médias nas 133 cartas: FOR 55,2→60,0 · RES 60,7 · INT 65,8→61,1 · VEL 59,8.
+- Taxa de vitória (CPU, 150 partidas × 2/3/4 jogadores), faixa 70–84: FOR 34% · RES 36% · INT 36% · VEL 38% (antes: 35/39/32/38). Faixa 85+: FOR 76% · RES 68% · INT 75% · VEL 75%.
+- Sobra uma diferença na Resistência em valores 85+ (68% contra ~75%): vem da regra de defesa, não da distribuição de números; não foi mexida.
+- 133 somas continuam diferentes. Três cartas fora da União já passavam do limite do par fraco antes (Sumo Vigia, Orionus Polar, Tavra Vendrar); não foram tocadas.
+- Fontes alteradas: `prototipo/propostas.js`, `dados/oficial/cartas_87.json`; Quasar Q07–Q10 recalculadas a partir das bases V02/V01.

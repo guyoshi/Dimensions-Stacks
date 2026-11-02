@@ -62,9 +62,9 @@
    },
    "descricao_curta": "Eterí inquieta e observadora, Jokara transforma perdas e dificuldades em caminhos de sobrevivência.",
    "atributos": {
-    "FOR": 54,
+    "FOR": 66,
     "RES": 92,
-    "INT": 67,
+    "INT": 55,
     "VEL": 24
    },
    "soma_atributos": 237,
@@ -86,9 +86,9 @@
    },
    "descricao_curta": "Irmã de Jokara, mantém o cuidado e a esperança enquanto adapta o grupo à vida na superfície.",
    "atributos": {
-    "FOR": 23,
+    "FOR": 35,
     "RES": 70,
-    "INT": 61,
+    "INT": 49,
     "VEL": 59
    },
    "soma_atributos": 213,
@@ -134,9 +134,9 @@
    },
    "descricao_curta": "Sobrevivente experiente de Nadirion, conduz os outros pelo medo e pelo próprio desejo de controle.",
    "atributos": {
-    "FOR": 65,
+    "FOR": 70,
     "RES": 68,
-    "INT": 69,
+    "INT": 64,
     "VEL": 81
    },
    "soma_atributos": 283,
@@ -182,9 +182,9 @@
    },
    "descricao_curta": "Ecoante conhecedora de plantas e remédios, enfrenta o desconhecido sem deixar de cuidar dos outros.",
    "atributos": {
-    "FOR": 8,
+    "FOR": 20,
     "RES": 70,
-    "INT": 34,
+    "INT": 22,
     "VEL": 80
    },
    "soma_atributos": 192,
@@ -206,9 +206,9 @@
    },
    "descricao_curta": "Jovem sobrevivente, encontra coragem no cuidado mútuo e aprende a seguir mesmo diante da perda.",
    "atributos": {
-    "FOR": 38,
+    "FOR": 50,
     "RES": 65,
-    "INT": 59,
+    "INT": 47,
     "VEL": 83
    },
    "soma_atributos": 245,
@@ -422,9 +422,9 @@
    },
    "descricao_curta": "Jovem Nular curiosa e veloz, memoriza passagens e descobre os segredos esquecidos de Kaeliran.",
    "atributos": {
-    "FOR": 21,
+    "FOR": 26,
     "RES": 42,
-    "INT": 23,
+    "INT": 18,
     "VEL": 74
    },
    "soma_atributos": 160,
@@ -542,9 +542,9 @@
    },
    "descricao_curta": "Jovem sem um braço, busca nas lembranças respostas para a origem e a perda de sua família.",
    "atributos": {
-    "FOR": 48,
+    "FOR": 60,
     "RES": 67,
-    "INT": 69,
+    "INT": 57,
     "VEL": 76
    },
    "soma_atributos": 260,
@@ -566,9 +566,9 @@
    },
    "descricao_curta": "Jovem ágil e leal, sonha reconstruir o futuro e não aceita perder quem ama.",
    "atributos": {
-    "FOR": 58,
+    "FOR": 68,
     "RES": 41,
-    "INT": 54,
+    "INT": 44,
     "VEL": 69
    },
    "soma_atributos": 222,
@@ -590,9 +590,9 @@
    },
    "descricao_curta": "Irmão forte e protetor, prefere defender a vida presente a reabrir feridas do passado.",
    "atributos": {
-    "FOR": 33,
+    "FOR": 45,
     "RES": 22,
-    "INT": 54,
+    "INT": 42,
     "VEL": 72
    },
    "soma_atributos": 181,
@@ -614,9 +614,9 @@
    },
    "descricao_curta": "Jovem de mecha branca criada entre os Sem-Nome; une a geração de Sefter e Nefestra à seguinte.",
    "atributos": {
-    "FOR": 34,
+    "FOR": 46,
     "RES": 58,
-    "INT": 62,
+    "INT": 50,
     "VEL": 71
    },
    "soma_atributos": 225,
@@ -662,9 +662,9 @@
    },
    "descricao_curta": "Autoridade máxima da Raiz, muito velho e lúcido; o rosto coberto pela tinta ritual da Permanência.",
    "atributos": {
-    "FOR": 40,
+    "FOR": 52,
     "RES": 99,
-    "INT": 87,
+    "INT": 75,
     "VEL": 29
    },
    "soma_atributos": 255,
@@ -710,9 +710,9 @@
    },
    "descricao_curta": "Irmão mais velho de Elis; trabalha na Balança Azul, protege os seus e decide sozinho o que devem saber.",
    "atributos": {
-    "FOR": 52,
+    "FOR": 64,
     "RES": 86,
-    "INT": 56,
+    "INT": 44,
     "VEL": 62
    },
    "soma_atributos": 256,
@@ -734,9 +734,9 @@
    },
    "descricao_curta": "Morador da casa com grande dificuldade de fala; a agressão que sofre inicia o conflito de Kalan.",
    "atributos": {
-    "FOR": 30,
+    "FOR": 40,
     "RES": 44,
-    "INT": 28,
+    "INT": 18,
     "VEL": 52
    },
    "soma_atributos": 154,
@@ -854,9 +854,9 @@
    },
    "descricao_curta": "Amigo irônico de Jokara e Nestira; salva Jokara no Primeiro Voo e morre na queda de Etérea.",
    "atributos": {
-    "FOR": 40,
+    "FOR": 52,
     "RES": 48,
-    "INT": 60,
+    "INT": 48,
     "VEL": 79
    },
    "soma_atributos": 227,
@@ -878,9 +878,9 @@
    },
    "descricao_curta": "Criança de seis ciclos ligada a Nestira no cataclisma; imagina Telura, a guardiã dos sonhos de quatro asas.",
    "atributos": {
-    "FOR": 12,
+    "FOR": 24,
     "RES": 30,
-    "INT": 52,
+    "INT": 40,
     "VEL": 61
    },
    "soma_atributos": 155,
@@ -926,9 +926,9 @@
    },
    "descricao_curta": "Mulher de um olho julgada por heresia e invasão de áreas sagradas; voz profética ligada ao exílio de Etérea.",
    "atributos": {
-    "FOR": 34,
+    "FOR": 46,
     "RES": 92,
-    "INT": 64,
+    "INT": 52,
     "VEL": 39
    },
    "soma_atributos": 229,
@@ -950,9 +950,9 @@
    },
    "descricao_curta": "Irmão mais velho dos Lins, controla a própria densidade e assume riscos para proteger os irmãos.",
    "atributos": {
-    "FOR": 77,
+    "FOR": 89,
     "RES": 90,
-    "INT": 70,
+    "INT": 58,
     "VEL": 65
    },
    "soma_atributos": 302,
@@ -974,9 +974,9 @@
    },
    "descricao_curta": "Competitivo e sarcástico, Bruno usa gelo e frio com ousadia, mesmo quando o orgulho o atrapalha.",
    "atributos": {
-    "FOR": 67,
+    "FOR": 70,
     "RES": 69,
-    "INT": 64,
+    "INT": 61,
     "VEL": 95
    },
    "soma_atributos": 295,
@@ -1094,9 +1094,9 @@
    },
    "descricao_curta": "Governante de Tayo, lida com os interesses e responsabilidades de uma cidade ameaçada.",
    "atributos": {
-    "FOR": 29,
+    "FOR": 41,
     "RES": 38,
-    "INT": 71,
+    "INT": 59,
     "VEL": 72
    },
    "soma_atributos": 210,
@@ -1118,9 +1118,9 @@
    },
    "descricao_curta": "Mentor e integrante de Tayo, acompanha os primeiros passos de novos aprendizes.",
    "atributos": {
-    "FOR": 72,
+    "FOR": 80,
     "RES": 80,
-    "INT": 70,
+    "INT": 62,
     "VEL": 47
    },
    "soma_atributos": 269,
@@ -1142,9 +1142,9 @@
    },
    "descricao_curta": "Aliado da Sociedade de Tayo, participa das ações contra as ameaças que cercam Belfex.",
    "atributos": {
-    "FOR": 67,
+    "FOR": 70,
     "RES": 57,
-    "INT": 76,
+    "INT": 73,
     "VEL": 90
    },
    "soma_atributos": 290,
@@ -1190,9 +1190,9 @@
    },
    "descricao_curta": "Ligado à Vigilância, serve secretamente aos interesses do mago Korvo.",
    "atributos": {
-    "FOR": 64,
+    "FOR": 70,
     "RES": 70,
-    "INT": 63,
+    "INT": 57,
     "VEL": 65
    },
    "soma_atributos": 262,
@@ -1262,9 +1262,9 @@
    },
    "descricao_curta": "Tio responsável pelos irmãos órfãos, representa a vida comum que eles deixam para trás.",
    "atributos": {
-    "FOR": 12,
+    "FOR": 24,
     "RES": 35,
-    "INT": 35,
+    "INT": 23,
     "VEL": 84
    },
    "soma_atributos": 166,
@@ -1310,9 +1310,9 @@
    },
    "descricao_curta": "Jovem Aracna curiosa e falante, guia os irmãos Lins pelos túneis subterrâneos de Belfex.",
    "atributos": {
-    "FOR": 22,
+    "FOR": 34,
     "RES": 36,
-    "INT": 35,
+    "INT": 23,
     "VEL": 72
    },
    "soma_atributos": 165,
@@ -1430,9 +1430,9 @@
    },
    "descricao_curta": "Aliada de Jasmey, questiona as ordens de Jelles e ajuda a desafiar o domínio da Lebargan.",
    "atributos": {
-    "FOR": 50,
+    "FOR": 62,
     "RES": 70,
-    "INT": 73,
+    "INT": 61,
     "VEL": 89
    },
    "soma_atributos": 282,
@@ -1454,9 +1454,9 @@
    },
    "descricao_curta": "Irmão de Amanda, sarcástico e curioso, arrisca tudo ao disputar o Olho de Domongo.",
    "atributos": {
-    "FOR": 27,
+    "FOR": 39,
     "RES": 22,
-    "INT": 74,
+    "INT": 62,
     "VEL": 88
    },
    "soma_atributos": 211,
@@ -1502,9 +1502,9 @@
    },
    "descricao_curta": "Companheiro vigoroso da tripulação de Jasmey, oferece proteção quando a força é necessária.",
    "atributos": {
-    "FOR": 77,
+    "FOR": 82,
     "RES": 82,
-    "INT": 54,
+    "INT": 49,
     "VEL": 52
    },
    "soma_atributos": 265,
@@ -1550,9 +1550,9 @@
    },
    "descricao_curta": "Integrante da equipe de Jasmey, enfrenta o cativeiro e a fuga com seus aliados.",
    "atributos": {
-    "FOR": 53,
+    "FOR": 65,
     "RES": 73,
-    "INT": 50,
+    "INT": 38,
     "VEL": 21
    },
    "soma_atributos": 197,
@@ -1574,9 +1574,9 @@
    },
    "descricao_curta": "Aliada com capacidades ligadas à manipulação atômica e genética, desafia os limites do corpo.",
    "atributos": {
-    "FOR": 8,
+    "FOR": 20,
     "RES": 35,
-    "INT": 83,
+    "INT": 71,
     "VEL": 86
    },
    "soma_atributos": 212,
@@ -1598,9 +1598,9 @@
    },
    "descricao_curta": "Capitã lendária da Lebargan, comanda com discrição uma das naves mais temidas do espaço.",
    "atributos": {
-    "FOR": 69,
+    "FOR": 81,
     "RES": 89,
-    "INT": 70,
+    "INT": 58,
     "VEL": 63
    },
    "soma_atributos": 291,
@@ -1670,9 +1670,9 @@
    },
    "descricao_curta": "Dale leal ao antigo código, deixa o ressentimento transformar sua relação com Jasmey.",
    "atributos": {
-    "FOR": 58,
+    "FOR": 70,
     "RES": 71,
-    "INT": 65,
+    "INT": 53,
     "VEL": 25
    },
    "soma_atributos": 219,
@@ -1694,9 +1694,9 @@
    },
    "descricao_curta": "Capitão pirata rival, negocia sob pressão e disputa vantagens nos perigos do espaço.",
    "atributos": {
-    "FOR": 66,
+    "FOR": 77,
     "RES": 78,
-    "INT": 69,
+    "INT": 58,
     "VEL": 37
    },
    "soma_atributos": 250,
@@ -1767,9 +1767,9 @@
    },
    "descricao_curta": "Irmã mais velha de Kelly, enfrenta perdas e conflitos ao seguir os rastros do sobrenatural.",
    "atributos": {
-    "FOR": 65,
+    "FOR": 69,
     "RES": 69,
-    "INT": 68,
+    "INT": 64,
     "VEL": 31
    },
    "soma_atributos": 233,
@@ -1792,9 +1792,9 @@
    },
    "descricao_curta": "Amigo impulsivo de Junior, desafia o medo e o luto enquanto busca proteger quem ama.",
    "atributos": {
-    "FOR": 53,
+    "FOR": 65,
     "RES": 79,
-    "INT": 70,
+    "INT": 58,
     "VEL": 34
    },
    "soma_atributos": 236,
@@ -1842,9 +1842,9 @@
    },
    "descricao_curta": "Jovem manco e marcado pela violência, tenta escapar do peso do passado e da reputação familiar.",
    "atributos": {
-    "FOR": 68,
+    "FOR": 70,
     "RES": 52,
-    "INT": 63,
+    "INT": 61,
     "VEL": 90
    },
    "soma_atributos": 273,
@@ -1892,9 +1892,9 @@
    },
    "descricao_curta": "Espírito da família Carnam, carrega uma história de sofrimento e manipulação sobrenatural.",
    "atributos": {
-    "FOR": 73,
+    "FOR": 85,
     "RES": 92,
-    "INT": 67,
+    "INT": 55,
     "VEL": 43
    },
    "soma_atributos": 275,
@@ -1917,9 +1917,9 @@
    },
    "descricao_curta": "Jovem que deseja ser jornalista, investiga acontecimentos estranhos para encontrar respostas.",
    "atributos": {
-    "FOR": 58,
+    "FOR": 70,
     "RES": 64,
-    "INT": 76,
+    "INT": 64,
     "VEL": 86
    },
    "soma_atributos": 284,
@@ -1942,9 +1942,9 @@
    },
    "descricao_curta": "Empresário rico e pai de Jason, recebe Glenda em sua mansão. Educado e sorridente, sempre no papel certo, faz a casa inteira girar à sua volta.",
    "atributos": {
-    "FOR": 67,
+    "FOR": 70,
     "RES": 44,
-    "INT": 46,
+    "INT": 43,
     "VEL": 81
    },
    "soma_atributos": 238,
@@ -1967,9 +1967,9 @@
    },
    "descricao_curta": "Senhora que vive na casa da serra; conhece acontecimentos antigos e mistérios ligados à proteção de Alvorada Alegre.",
    "atributos": {
-    "FOR": 60,
+    "FOR": 72,
     "RES": 80,
-    "INT": 67,
+    "INT": 55,
     "VEL": 25
    },
    "soma_atributos": 232,
@@ -2190,9 +2190,9 @@
    },
    "descricao_curta": "Detetive observador e obstinado, conecta pistas improváveis enquanto enfrenta suas próprias sombras.",
    "atributos": {
-    "FOR": 65,
+    "FOR": 77,
     "RES": 88,
-    "INT": 86,
+    "INT": 74,
     "VEL": 65
    },
    "soma_atributos": 304,
@@ -2214,9 +2214,9 @@
    },
    "descricao_curta": "Agente altamente treinada da SPAGE, combina disciplina, estratégia e convicções morais.",
    "atributos": {
-    "FOR": 78,
+    "FOR": 87,
     "RES": 88,
-    "INT": 66,
+    "INT": 57,
     "VEL": 68
    },
    "soma_atributos": 300,
@@ -2286,9 +2286,9 @@
    },
    "descricao_curta": "Mentor moral de Hyde, ensina a fazer perguntas difíceis antes de condenar os outros.",
    "atributos": {
-    "FOR": 27,
+    "FOR": 39,
     "RES": 71,
-    "INT": 53,
+    "INT": 41,
     "VEL": 26
    },
    "soma_atributos": 177,
@@ -2358,9 +2358,9 @@
    },
    "descricao_curta": "Cientista da SPAGE, desenvolveu uma interface para acompanhar a saúde cerebral de astronautas.",
    "atributos": {
-    "FOR": 7,
+    "FOR": 19,
     "RES": 23,
-    "INT": 36,
+    "INT": 24,
     "VEL": 73
    },
    "soma_atributos": 139,
@@ -2454,9 +2454,9 @@
    },
    "descricao_curta": "Sobrevivente de uma missão secreta a Marte, sustenta uma visão radical de organização humana.",
    "atributos": {
-    "FOR": 68,
+    "FOR": 80,
     "RES": 81,
-    "INT": 65,
+    "INT": 53,
     "VEL": 49
    },
    "soma_atributos": 263,
@@ -2503,9 +2503,9 @@
    },
    "descricao_curta": "Mago tutor severo e cínico, dimensal de Belfex; acusado injustamente por Garien e depois inocentado.",
    "atributos": {
-    "FOR": 75,
+    "FOR": 76,
     "RES": 77,
-    "INT": 70,
+    "INT": 69,
     "VEL": 55
    },
    "soma_atributos": 277,
@@ -2528,9 +2528,9 @@
    },
    "descricao_curta": "Dançarina ágil e senavelita de luz: sente o perigo e invoca bandos de pássaros. Grande amiga de Banjo.",
    "atributos": {
-    "FOR": 58,
+    "FOR": 70,
     "RES": 47,
-    "INT": 68,
+    "INT": 56,
     "VEL": 71
    },
    "soma_atributos": 244,
@@ -2553,9 +2553,9 @@
    },
    "descricao_curta": "Gêmeo de Erick e aprendiz de McCroys; debochado, lança lâminas de gelo e recusa o recrutamento de Korvo.",
    "atributos": {
-    "FOR": 48,
+    "FOR": 60,
     "RES": 69,
-    "INT": 65,
+    "INT": 53,
     "VEL": 60
    },
    "soma_atributos": 242,
@@ -2603,9 +2603,9 @@
    },
    "descricao_curta": "Aprendiz tímida e gentil vinda da 3ª dimensão; ergue barreiras de vento. Melhor amiga de Eshley, deixa o treino cedo.",
    "atributos": {
-    "FOR": 25,
+    "FOR": 37,
     "RES": 53,
-    "INT": 61,
+    "INT": 49,
     "VEL": 81
    },
    "soma_atributos": 220,
@@ -2628,9 +2628,9 @@
    },
    "descricao_curta": "Dimensal órfã criada pela avó, sonhava treinar com Tayo; veloz e curiosa, faz passes certeiros no Fulgor Dourado.",
    "atributos": {
-    "FOR": 43,
+    "FOR": 55,
     "RES": 69,
-    "INT": 68,
+    "INT": 56,
     "VEL": 54
    },
    "soma_atributos": 234,
@@ -2653,9 +2653,9 @@
    },
    "descricao_curta": "Cão do Velho-Sábio, brincalhão e leal. Onde há um chinelo fora do lugar, ele aparece.",
    "atributos": {
-    "FOR": 44,
+    "FOR": 56,
     "RES": 66,
-    "INT": 88,
+    "INT": 76,
     "VEL": 95
    },
    "soma_atributos": 293,
@@ -2678,9 +2678,9 @@
    },
    "descricao_curta": "Predador cósmico de tentáculos que faz ninho em superfícies quentes; congelado a bordo, é solto na doca da Lebargan.",
    "atributos": {
-    "FOR": 69,
+    "FOR": 81,
     "RES": 90,
-    "INT": 52,
+    "INT": 40,
     "VEL": 53
    },
    "soma_atributos": 264,
@@ -2728,9 +2728,9 @@
    },
    "descricao_curta": "Sedutora e ambígua: droga Jasmey e rouba sua nave. Aliada ou vilã, conforme for mais lucrativo.",
    "atributos": {
-    "FOR": 66,
+    "FOR": 69,
     "RES": 69,
-    "INT": 55,
+    "INT": 52,
     "VEL": 53
    },
    "soma_atributos": 243,
@@ -2753,9 +2753,9 @@
    },
    "descricao_curta": "Pirata feroz e sarcástica da Fera Sideral; ajuda Jasmey a fugir, mas a lealdade ao capitão fala mais alto.",
    "atributos": {
-    "FOR": 65,
+    "FOR": 70,
     "RES": 37,
-    "INT": 54,
+    "INT": 49,
     "VEL": 70
    },
    "soma_atributos": 226,
@@ -2778,9 +2778,9 @@
    },
    "descricao_curta": "Jovem sem memória, encontrada por Junior; teme dormir e escuta o que ninguém mais ouve.",
    "atributos": {
-    "FOR": 34,
+    "FOR": 46,
     "RES": 67,
-    "INT": 57,
+    "INT": 45,
     "VEL": 48
    },
    "soma_atributos": 206,
@@ -2803,9 +2803,9 @@
    },
    "descricao_curta": "Amigo de infância de Édelin, capturado ainda criança por senantes; reaparece revelando magia e um amor antigo.",
    "atributos": {
-    "FOR": 19,
+    "FOR": 31,
     "RES": 36,
-    "INT": 54,
+    "INT": 42,
     "VEL": 71
    },
    "soma_atributos": 180,
@@ -2828,9 +2828,9 @@
    },
    "descricao_curta": "Dono da casa à beira-mar e dos barcos onde Édelin é acolhida; carrega um passado que prefere não contar.",
    "atributos": {
-    "FOR": 30,
+    "FOR": 42,
     "RES": 62,
-    "INT": 54,
+    "INT": 42,
     "VEL": 72
    },
    "soma_atributos": 218,
@@ -2878,9 +2878,9 @@
    },
    "descricao_curta": "Líder dos senantes e irmão de Peredun; governa um povo marcado pela guerra com os velitas.",
    "atributos": {
-    "FOR": 62,
+    "FOR": 74,
     "RES": 82,
-    "INT": 66,
+    "INT": 54,
     "VEL": 25
    },
    "soma_atributos": 235,
@@ -2903,9 +2903,9 @@
    },
    "descricao_curta": "Petrisco luminoso que Banjo ganha no Bazar do Oeste: entra em frestas e ilumina o escuro.",
    "atributos": {
-    "FOR": 12,
+    "FOR": 24,
     "RES": 30,
-    "INT": 55,
+    "INT": 43,
     "VEL": 78
    },
    "soma_atributos": 175,
@@ -2928,9 +2928,9 @@
    },
    "descricao_curta": "Aprendiz de Tayo que nunca perdeu uma corrida de dassi; filho do senavelita mais forte vivo.",
    "atributos": {
-    "FOR": 55,
+    "FOR": 67,
     "RES": 66,
-    "INT": 82,
+    "INT": 70,
     "VEL": 93
    },
    "soma_atributos": 296,
@@ -2978,9 +2978,9 @@
    },
    "descricao_curta": "Pai dos irmãos Lins, ligado a Belfex como Gabrielle; já falecido.",
    "atributos": {
-    "FOR": 55,
+    "FOR": 58,
     "RES": 58,
-    "INT": 47,
+    "INT": 44,
     "VEL": 44
    },
    "soma_atributos": 204,
@@ -3103,9 +3103,9 @@
    },
    "descricao_curta": "Montaria voadora da prova de corrida dos aprendizes de Tayo, que cruza as nuvens até o rio.",
    "atributos": {
-    "FOR": 20,
+    "FOR": 32,
     "RES": 38,
-    "INT": 30,
+    "INT": 18,
     "VEL": 80
    },
    "soma_atributos": 168,
@@ -3128,9 +3128,9 @@
    },
    "descricao_curta": "Tutora de Brenda e da Sociedade de Tayo: postura impecável, olhar afiado e voz que mesmo dura encoraja.",
    "atributos": {
-    "FOR": 82,
+    "FOR": 94,
     "RES": 95,
-    "INT": 62,
+    "INT": 50,
     "VEL": 60
    },
    "soma_atributos": 299,
@@ -3278,9 +3278,9 @@
    },
    "descricao_curta": "Aliada de Tayo de pele escamosa e olhos âmbar; as escamas mudam de cor com a emoção.",
    "atributos": {
-    "FOR": 58,
+    "FOR": 70,
     "RES": 85,
-    "INT": 66,
+    "INT": 54,
     "VEL": 48
    },
    "soma_atributos": 257,

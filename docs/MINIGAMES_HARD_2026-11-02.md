@@ -87,3 +87,6 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 ## Lote 12:50 (02/11)
 - **BALANÇO Dupla somada (Cassiopeia e Orion):** a 2ª carta do jogador agora é escolhida entre as 3 do topo do baralho (pode pular a do meio); as demais voltam ao topo na mesma ordem. CPU escolhe a de maior soma. A tela avisa que o especial é só da primeira carta.
 - **Textos reduzidos (aprovados):** Home H3; Desafios D1–D3; Perfil P1–P7. H1/H4 mantidos; H2 não aprovado (mantido).
+
+## Lote 13:10 (02/11)
+- **BALANÇO Equilíbrio de atributos aplicado** (ver `EQUILIBRIO_ATRIBUTOS_2026-10-29.md`): 106 movimentos de pontos INT→FOR em cartas em que INT não é o pico. Médias FOR 60,0 · RES 60,7 · INT 61,1 · VEL 59,8. Soma, pico e raridade das cartas não mudam.
