@@ -39,130 +39,125 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 
 (Todas são mudança de balanceamento; só aplico com sua aprovação.)
 
-## 2. 63 ideias novas (cada uma usa mecânicas que o motor já tem: atributos, reserva, preparar, Buraco Negro, captura, fenômenos)
+## 2. Ideias novas — decisão de 02/11 (13:47): só as aprovadas e as sem decisão permanecem; as não aprovadas foram removidas
+ (cada uma usa mecânicas que o motor já tem: atributos, reserva, preparar, Buraco Negro, captura, fenômenos)
 
 ### Bônus (7)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 1 | Maré alta | +15 no atributo mais fraco da sua carta nesta disputa. |
-| 2 | Segundo fôlego | +20 no atributo escolhido se você perdeu a disputa anterior. |
-| 3 | Foco duplo | +12 em dois atributos à sua escolha. |
-| 4 | Último suspiro | +25 no atributo escolhido se seu baralho tem 3 cartas ou menos. |
-| 5 | Veterano | +2 no atributo escolhido por carta que você já capturou (máx. +20). |
-| 6 | Aposta | +25 no atributo escolhido; se perder a disputa, a carta vai ao Buraco Negro. |
-| 7 | Fúria | +30 em Força e −15 em Resistência nesta disputa. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 1 | Maré alta | +15 no atributo mais fraco da sua carta nesta disputa. | Aprovada |
+| 2 | Segundo fôlego | +20 no atributo escolhido se você perdeu a disputa anterior. | Aprovada |
+| 3 | Foco duplo | +12 em dois atributos à sua escolha. | Aprovada |
+| 4 | Último suspiro | +25 no atributo escolhido se seu baralho tem 3 cartas ou menos. | Aprovada |
+| 5 | Veterano | +2 no atributo escolhido por carta que você já capturou (máx. +20). | Aprovada |
+| 6 | Aposta | +25 no atributo escolhido; se perder a disputa, a carta vai ao Buraco Negro. | Aprovada |
+| 7 | Fúria | +30 em Força e −15 em Resistência nesta disputa. | Sem decisão |
 
 ### Conversão (6)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 8 | Espelho | Copia o maior atributo da carta do rival para um atributo seu. |
-| 9 | Média nivelada | Todos os atributos da sua carta viram a média deles. |
-| 10 | Escudo mental | Resistência passa a valer a Inteligência, se esta for maior. |
-| 11 | Inversão do rival | Na carta do rival, o maior e o menor atributo trocam de valor. |
-| 12 | Ouro do tolo | Soma dois atributos da sua carta em um só; o outro vira 0. |
-| 13 | Reciclagem | O maior atributo da sua carta perde 10 e os outros três ganham 6. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 11 | Inversão do rival | Na carta do rival, o maior e o menor atributo trocam de valor. | Aprovada |
+| 13 | Reciclagem | O maior atributo da sua carta perde 10 e os outros três ganham 6. | Aprovada |
 
 ### Controle (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 14 | Atributo vetado | O melhor atributo da carta do rival não pode ser escolhido. |
-| 15 | Duelo de mãos | Você escolhe o atributo; se empatar, você vence. |
-| 16 | Sorteio viciado | Um atributo é sorteado e sua carta ganha +15 nele. |
-| 17 | Silêncio de Força | A Força de todas as cartas perde 10 nesta disputa. |
-| 18 | Mesa dos vizinhos | Só você e o jogador à direita disputam; os demais ficam de fora. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 14 | Atributo vetado | O melhor atributo da carta do rival não pode ser escolhido. | Aprovada |
+| 16 | Sorteio viciado | Um atributo é sorteado e sua carta ganha +15 nele. | Aprovada |
+| 17 | Silêncio de Força | A Força de todas as cartas perde 10 nesta disputa. | Aprovada |
+| 18 | Mesa dos vizinhos | Só você e o jogador à direita disputam; os demais ficam de fora. **Versão espelho:** também existe para o jogador à esquerda. **Nova "Pular rodada":** você não participa desta rodada (só com 3+ jogadores; com 2, o rival apenas passa a carta ao fim do baralho, como se tivesse jogado sozinho e empatado). | Aprovada (alterada) |
 
 ### Roubo (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 19 | Furto do líder | Pega a carta do topo do jogador que tem mais cartas. |
-| 20 | Taxa do vencedor | Pega 1 carta de quem venceu a última disputa. |
-| 21 | Mão leve | Pega 1 carta da reserva de um rival, sem ver qual. |
-| 22 | Saque em cadeia | Pega 1 carta; se ela for maior que a sua, pega outra. |
-| 23 | Troca justa | Troca 1 carta sua por 1 do jogador que tem mais cartas. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 19 | Furto do líder | Pega a carta do topo do jogador que tem mais cartas. | Aprovada |
+| 20 | Taxa do vencedor | Pega 1 carta de quem venceu a última disputa. | Aprovada |
+| 21 | Mão leve | Pega 1 carta da reserva de um rival, sem ver qual. | Aprovada |
+| 23 | Troca justa | Você escolhe 1 carta sua; a do jogador com mais cartas é aleatória, e as duas trocam. | Aprovada (alterada) |
 
 ### Defesa (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 24 | Fortaleza | Sua carta fica imune a reduções nesta disputa. |
-| 25 | Armadilha | Quem capturar sua carta perde a carta do topo do baralho. |
-| 26 | Eco protetor | Se sua carta for capturada, ela volta ao fundo do seu baralho. |
-| 27 | Casca grossa | +15 em Resistência quando o rival ataca. |
-| 28 | Retirada | Devolve sua carta ao topo e joga a próxima no lugar. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 24 | Fortaleza | Sua carta fica imune a reduções nesta disputa. **Até 3 cartas podem ter essa habilidade.** | Aprovada (alterada) |
+| 25 | Armadilha | Quem capturar sua carta perde a carta do topo do baralho. | Aprovada |
+| 26 | Eco protetor | Se sua carta for capturada, ela volta ao fundo do seu baralho. | Aprovada |
+| 27 | Casca grossa | +15 em Resistência quando o rival ataca. | Aprovada |
+| 28 | Retirada | Devolve sua carta ao topo e joga a próxima no lugar. Você escolhe se a nova joga ataque ou defesa do atributo escolhido. | Aprovada (alterada) |
 
 ### Buraco Negro (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 29 | Ressonância | Traz do Buraco Negro as 2 cartas de maior valor no atributo da disputa. |
-| 30 | Oferenda | Manda uma carta da reserva ao Buraco Negro e traz 2 de lá. |
-| 31 | Colapso | Manda a carta do topo do rival ao Buraco Negro, sem disputa. |
-| 32 | Maré do vazio | Troca uma carta da sua reserva por qualquer uma do Buraco Negro. |
-| 33 | Eco do vazio | Quando algo cai no Buraco Negro, sua próxima carta ganha +5 em tudo. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 29 | Ressonância | Traz do Buraco Negro as 2 cartas de maior valor no atributo da disputa. | Aprovada |
+| 30 | Oferenda | Manda uma carta da reserva ao Buraco Negro e traz 2 de lá. | Aprovada |
+| 31 | Colapso | Manda a carta do topo do rival ao Buraco Negro, sem disputa. | Aprovada |
 
 ### Informação (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 34 | Previsão | Mostra qual atributo o rival escolherá. |
-| 35 | Marca | A próxima carta do rival perde 10 em tudo. |
-| 36 | Rastreio | Mostra a reserva de um rival. |
-| 37 | Contagem | Mostra quantos especiais o rival tem preparados. |
-| 38 | Memória | Mostra os 3 últimos pares de cartas jogados. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 35 | Marca | A próxima carta do rival perde 10 em tudo. | Aprovada |
+| 36 | Rastreio | Mostra a reserva de um rival. | Aprovada |
+| 37 | Espiar especiais | Mostra qual é o especial preparado de todos os rivais. (substitui "Contagem") | Aprovada (alterada) |
 
 ### Interação (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 39 | Contra-feitiço | Copia o especial do rival se a carta dele for mais fraca que a sua. |
-| 40 | Roubo de preparo | Pega uma carta preparada do rival. |
-| 41 | Preparação dupla | Prepara 2 cartas de uma vez. |
-| 42 | Atraso | A carta preparada do rival fica travada por 1 rodada. |
-| 43 | Espelho reativo | Quem usar especial contra você sofre metade do efeito. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 40 | Roubo de preparo | Pega uma carta preparada (com especial) do rival. | Aprovada (alterada) |
+| 42 | Atraso | Impede qualquer jogador de usar habilidade nesta rodada. | Aprovada (alterada) |
 
 ### Captura (4)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 44 | Dividir o butim | Captura 2 cartas e entrega 1 ao jogador mais fraco. |
-| 45 | Caça ao líder | A captura vale em dobro contra quem tem mais cartas. |
-| 46 | Contragolpe | Se sua carta for capturada, você recaptura outra. |
-| 47 | Margem larga | Se vencer por 30 ou mais, captura 1 carta a mais. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 44 | Dividir o butim | Dá 3 cartas do jogador mais forte ao mais fraco (podendo ser você). Forte/fraco = quem tem mais/menos cartas; em empate numérico as 3 se dividem, com a maioria para você. (substitui a versão antiga) | Aprovada (alterada) |
+| 45 | Caça ao líder | A captura vale em dobro contra quem tem mais cartas. | Sem decisão |
+| 46 | Contragolpe | Se sua carta for capturada, você recaptura outra. | Sem decisão |
+| 47 | Margem larga | Se vencer por 30 ou mais, captura 1 carta a mais. | Aprovada |
 
 ### Troca e redistribuição (4)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 48 | Embaralhar reservas | As reservas de todos os jogadores são embaralhadas. |
-| 49 | Equalizar | Todos terminam com a mesma quantidade de cartas na reserva. |
-| 50 | Passe coletivo | Cada jogador passa 1 carta da reserva ao vizinho. |
-| 51 | Rotação do baralho | Todos passam a carta do topo ao jogador à direita. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 48 | Embaralhar reservas | Todos ficam com 4 cartas na reserva; as excedentes (de quem tem mais de 4) são embaralhadas de volta ao baralho/reserva. | Aprovada (alterada) |
 
 ### Tempo e fenômenos (5)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 52 | Relógio | Você inicia a próxima rodada. |
-| 53 | Pausa | Um rival pula a vez na próxima disputa. |
-| 54 | Convocar fenômeno | Faz um fenômeno aleatório acontecer na próxima rodada. |
-| 55 | Cancelar fenômeno | Anula o fenômeno da rodada atual. |
-| 56 | Escolher fenômeno | Você escolhe entre 2 fenômenos sorteados para a próxima rodada. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 52 | Relógio | Você inicia a próxima rodada. | Sem decisão |
+| 53 | Pausa | Um rival pula a vez na próxima disputa. | Aprovada |
+| 54 | Convocar fenômeno | Faz um fenômeno aleatório acontecer na próxima rodada. | Aprovada |
+| 55 | Cancelar fenômeno | Anula os efeitos do fenômeno nesta disputa. | Aprovada (alterada) |
+| 56 | Escolher fenômeno | Você escolhe entre 2 fenômenos sorteados para a próxima rodada. **Até 2 cartas podem ter essa habilidade.** | Aprovada (alterada) |
 
 ### Misto (7)
 
-| # | Nome | O que faz |
-|---|---|---|
-| 57 | Aliança | Por 1 rodada, soma o menor atributo da carta do jogador à direita à sua. |
-| 58 | Carta fantasma | Cria um clone da carta do rival com −10 em tudo. |
-| 59 | Sacrifício heroico | Descarte 1 carta da reserva: +30 no atributo escolhido. |
-| 60 | Dívida | O rival entrega 1 carta da reserva agora e devolve 2 em 3 rodadas. |
-| 61 | Contagem regressiva | +5 em tudo por rodada em que a carta ficou preparada. |
-| 62 | Oráculo | Você escolhe qual carta do seu baralho vira o topo. |
-| 63 | Reflexo | Devolve ao rival a primeira redução que você receber. |
+| # | Nome | O que faz | Situação |
+|---|---|---|---|
+| 57 | Aliança | Por 1 rodada, soma o menor atributo da carta do jogador à direita à sua. | Sem decisão |
+| 58 | Carta fantasma | Cria um clone da carta do rival com −10 em tudo; o clone vai ao fim do seu baralho. | Aprovada (alterada) |
+| 59 | Sacrifício heroico | Descarte 1 carta da reserva: +30 no atributo escolhido. | Aprovada |
+| 63 | Reflexo | Devolve ao rival a primeira redução que você receber. | Aprovada |
+
+
+### Pedidos novos (a desenhar e propor antes de implementar)
+- 2 habilidades que embaralham todas as cartas em uso de um jogador; uma delas embaralha entre todos os jogadores (você incluído) e permite que todos reorganizem.
+- +3 habilidades que impedem roubos.
+- 2 habilidades que invertem o ataque contra a pessoa (se for possível).
+- 1 habilidade que embaralha todos os atributos das cartas de cada jogador (usável antes de a rodada começar).
+- 1 habilidade que troca os atributos de duas cartas aleatórias no fim da rodada, antes do vencedor (podendo incluir a sua).
+- 1 habilidade que troca o tipo ATQ/DEF por INT/VEL (ou INT/VEL por ATQ/DEF).
+- Se ainda faltar para 190: variantes baratas (seção 3).
+
+### Removidas (não aprovadas)
+8, 9, 10, 12, 15, 22, 32, 33, 34, 38, 39, 41, 43, 49, 50, 51, 60, 61, 62. Sem decisão: 7, 45, 46, 52, 57.
 
 ## 3. Variantes baratas de habilidades que já existem (se faltar)
 - **Versão "Mestre"** (mesma habilidade com valor ×1,5 e custo de preparar maior): Impulso, Muralha, Arrancada, Clarividência, Vigor, Golpe pesado.
@@ -171,8 +166,14 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 - **Direita/esquerda**: toda habilidade com lado ganha o espelho (já feito em Roubo/Troca; falta em Informação e Defesa).
 
 ## 4. Como chegar ao 190
-141 em uso + reforma das 27 (mantém o número) + **49 novas** escolhidas das 63. As 13 cartas que hoje repetem habilidade receberiam 13 delas; as 8 príncipes Quasar trocariam as provisórias (AE-018, 020, 053, 054, 125-128) por habilidades próprias. Quando você escolher, implemento em lotes de 10 com teste de segurança (`sim_esp.js`) e calibração de uso (`tests/uso_especiais.js`).
+141 em uso + reforma das 27 (mantém o número) + as novas aprovadas (hoje 36 das 63, mais as alteradas 37/40/44 e os pedidos novos acima). As 13 cartas que hoje repetem habilidade receberiam 13 delas; as 8 príncipes Quasar trocariam as provisórias (AE-018, 020, 053, 054, 125-128) por habilidades próprias. Quando você escolher, implemento em lotes de 10 com teste de segurança (`sim_esp.js`) e calibração de uso (`tests/uso_especiais.js`).
 
 
 ## Decisão 02/11 (13:21)
 Aprovadas: AE-009, 024, 025, 026, 029, 051, 063, 064, 065, 070, 091, 092, 094, 100. Modificadas pelo autor: AE-098 (reorganiza a reserva toda e escolhe 1 para o topo), AE-099 (vê as 2 primeiras, escolhe 1), AE-107 ("Pior pelo melhor"), AE-111 (obriga todos os adversários). Não aprovadas (inalteradas): AE-057, 058, 102, 108. Já implementadas no jogo.
+
+## Decisão 02/11 (13:47)
+- Aprovadas as reformas AE-118, AE-121 e AE-122 (mantêm o texto atual).
+- **AE-119** (não aprovada como estava) muda para: *embaralhe a ordem das cartas de todos os jogadores, menos você.* (ainda não implementada)
+- Novas mecânicas: aprovadas as marcadas "Aprovada" acima, com as alterações indicadas. Interpretações a confirmar: 37 e 44 tratadas como substituídas pela nova versão (aprovadas); 40 só vale se roubar de cartas com especial preparado.
+- Nada foi implementado nesta etapa; só a documentação.
