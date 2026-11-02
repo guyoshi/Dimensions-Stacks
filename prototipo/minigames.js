@@ -20,14 +20,14 @@
   const DEF = { dif: 1, cortes: [.34, .67, .95], premios: [0, 5, 10, 20] };
   const LISTA = [
     { id: 'maiormenor', nome: 'Três Portais', desc: 'Escolha uma porta entre 3. Pêndulos, passagem livre ou nada; na última, talvez uma carta.', cortes: [.37, .63, .88] },
-    { id: 'memoria', nome: 'Ecos Estelares', desc: 'Encontre os 6 pares de cartas antes que o tempo acabe, com poucas jogadas.', cortes: [.3, .6, .9] },
+    { id: 'memoria', nome: 'Ecos Estelares', desc: 'Encontre os pares de cartas antes que o tempo acabe, com poucas jogadas.', cortes: [.3, .6, .9] },
     { id: 'quemequem', nome: 'Fragmentos de Rosto', desc: 'Só alguns trechos escuros da carta aparecem. Descubra quem é, com um tempo total para as 8 cartas.', cortes: [.37, .63, .88] },
     { id: 'ordem', nome: 'Dança das Cartas', desc: 'Uma carta é marcada, todas viram e trocam de lugar. Acerte onde ela foi parar. Você tem 3 vidas.', cortes: [.4, .7, .95] },
     { id: 'mineracao', nome: 'Maré Rubra', desc: 'As bolinhas vermelhas contagiam as azuis, que vagam pela tela. Afaste as vermelhas: uma azul salva já vence, cinco é o máximo.', cortes: [.37, .63, .88] },
     { id: 'asteroides', nome: 'Rota dos Meteoros', desc: 'Arraste a nave, desvie das rochas e pegue os pêndulos.', cortes: [.33, .6, .87] },
     { id: 'cofre', nome: 'Fechadura de Jasmey', desc: 'Descubra o código de 4 símbolos em 6 tentativas, contra o relógio.', cortes: [.34, .5, .83] },
     { id: 'caracoroa', nome: 'Eco das Notas', desc: 'Ouça a sequência, que ganha um som a cada rodada, e repita.', cortes: [.3, .6, .95] },
-    { id: 'raspadinha', nome: 'Relâmpago Dimensional', desc: 'Três cartas viram num piscar: uma dá +1, uma tira 1. Toque no +1 o máximo que puder.', cortes: [.3, .6, .95] },
+    { id: 'raspadinha', nome: 'Relâmpago Dimensional', desc: 'Cartas viram num piscar: uma dá +1, outras tiram pontos. Toque no +1 o máximo que puder.', cortes: [.3, .6, .95] },
     { id: 'cacapendulo', nome: 'Pêndulos Fugitivos', desc: 'No escuro, toque nos pêndulos que cruzam sob a luz em todas as direções.', cortes: [.33, .6, .87] },
     // um por série de livros
     { id: 'elos', nome: 'Sussurro dos Elos', serie: 'Diário Sobrenatural', desc: 'No escuro, segure o dedo e siga o som: quanto mais perto do Elo, mais alto. Toque 2 vezes para confirmar.', cortes: [.4, .7, 1] },
@@ -50,19 +50,21 @@
   const TRILHA = { maiormenor: 'mgdiv', memoria: 'mgdiv', quemequem: 'mgdiv', cofre: 'mgdiv', poderes: 'mgdiv', ordem: 'mgmod', mineracao: 'mgmod', cacapendulo: 'mgmod', luas: 'mgmod', culpado: 'mgmod', raspadinha: 'mgfut', asteroides: 'mgfut', gancho: 'mgfut', formacao: 'mgfut' };
   const MUS = (() => { let ant = null, on = false;
     return {
-      prep(id) { try { ant = SND.histNow || null; SND.histStop(true); SND.histNow = null; const k = TRILHA[id]; if (k) SND.histLoad(k); on = true; } catch (e) { on = false; } },   // para a trilha do mapa e já carrega a do jogo; jogos sem trilha ficam em silêncio
+      prep(id) { try { ant = SND.histNow || null; SND.histStop(true); SND.histNow = null; if (SND.musicNodes) { SND.musicNodes.stop(); SND.musicNodes = null; } const k = TRILHA[id]; if (k) SND.histLoad(k); on = true; } catch (e) { on = false; } },   // para a trilha do mapa e já carrega a do jogo; jogos sem trilha ficam em silêncio
       start(id) { const k = TRILHA[id]; if (!k) return; try { SND.histPlay(k); } catch (e) { } },
       stop() { if (!on) return; on = false; try { if (ant) SND.histPlay(ant); else SND.histStop(); } catch (e) { } },
     };
   })();
   const dor = () => { try { const ctx = SND.ctx; if (!ctx) return; const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gn = ctx.createGain(), t = ctx.currentTime; o.type = 'sawtooth'; o2.type = 'square'; o.frequency.setValueAtTime(760, t); o.frequency.exponentialRampToValueAtTime(240, t + .28); o2.frequency.setValueAtTime(790, t); o2.frequency.exponentialRampToValueAtTime(250, t + .28); gn.gain.setValueAtTime(.0001, t); gn.gain.exponentialRampToValueAtTime(.16, t + .02); gn.gain.exponentialRampToValueAtTime(.0001, t + .32); o.connect(gn); o2.connect(gn); gn.connect(SND.master || ctx.destination); o.start(t); o2.start(t); o.stop(t + .34); o2.stop(t + .34); } catch (e) { } };   // gritinho de dor
   const bip = (f, d, v) => { try { const ctx = SND.ctx; if (!ctx) return; const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gn = ctx.createGain(), t = ctx.currentTime; o.type = 'triangle'; o2.type = 'sine'; o.frequency.setValueAtTime(f, t); o2.frequency.setValueAtTime(f * 2, t); gn.gain.setValueAtTime(.0001, t); gn.gain.exponentialRampToValueAtTime(v || .2, t + .015); gn.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(gn); o2.connect(gn); gn.connect(SND.master || ctx.destination); o.start(t); o2.start(t); o.stop(t + d + .02); o2.stop(t + d + .02); } catch (e) { } };   // bip da contagem 3-2-1
+  const HARD_PROPRIO = new Set(['maiormenor', 'memoria', 'quemequem', 'ordem', 'caracoroa', 'raspadinha', 'culpado']);   // jogos com Hard desenhado; os demais usam o escalonamento genérico até a vez deles
+  const hardCfg = (id, c0) => HARD_PROPRIO.has(id) ? { dif: c0.dif, cortes: c0.cortes, premios: c0.premios.map((x, i) => i ? Math.round(x * 1.5) : 0), hard: true } : { dif: c0.dif * 1.28, cortes: c0.cortes.map((x, i) => Math.min(.99, x + [.04, .05, .04][i])), premios: c0.premios.map((x, i) => i ? Math.round(x * 1.5) : 0), hard: true };
   const SEM_MUSICA = ['caracoroa', 'elos', 'ritmo'];
 
   // ---- casca comum: tela cheia, título, sair, resultado
   function shell(m, opts) {
     const fundos = { cofre: 'jasmey', gancho: 'jasmey', elos: 'diario', luas: 'jesed', poderes: 'viajantes', culpado: 'misterio', ritmo: 'edelin', formacao: 'uniao' };
-    const modos = opts && opts.hardUnlocked && m.id !== 'quemequem' ? '<div class="mg-modes" aria-label="Dificuldade"><button class="on" data-mode="normal">Normal</button><button data-mode="hard">Hard</button></div>' : '';
+    const modos = opts && opts.hardUnlocked ? '<div class="mg-modes" aria-label="Dificuldade"><button class="on" data-mode="normal">Normal</button><button data-mode="hard">Hard</button></div>' : '';
     const ov = mk(`<div class="mg" data-fundo="${fundos[m.id] || 'geral'}"><header><b>${m.nome}</b><span class="mg-hint">${m.desc}</span>${modos}<button class="ibtn mg-x" aria-label="Sair">✕</button></header><div class="mg-body"></div></div>`);
     document.body.appendChild(ov); return ov;
   }
@@ -76,7 +78,7 @@
   async function play(id, opts) {
     opts = opts || {}; const m = BYID[id], c0 = cfg(id); if (!m) return null; try { SND.init(); } catch (e) { }
     const ov = shell(m, opts), body = $('.mg-body', ov); let ended = false, started = false, stop = () => { }, res, hard = false, c = c0; let t0 = Date.now();
-    const modeBtns = ov.querySelectorAll('[data-mode]'); modeBtns.forEach(b => b.onclick = () => { if (started) return; hard = b.dataset.mode === 'hard'; c = hard ? { dif: c0.dif * 1.28, cortes: c0.cortes.map((x, i) => Math.min(.99, x + [.04, .05, .04][i])), premios: c0.premios.map((x, i) => i ? Math.round(x * 1.5) : 0) } : c0; modeBtns.forEach(x => x.classList.toggle('on', x === b)); ov.classList.toggle('hard', hard); });
+    const modeBtns = ov.querySelectorAll('[data-mode]'); modeBtns.forEach(b => b.onclick = () => { if (started) return; hard = b.dataset.mode === 'hard'; c = hard ? hardCfg(id, c0) : c0; modeBtns.forEach(x => x.classList.toggle('on', x === b)); ov.classList.toggle('hard', hard); });
     const out = await new Promise(resolve => {
       const fim = (pct, detail, extra) => { if (ended) return; ended = true; stop(); MUS.stop(); pct = Math.max(0, Math.min(1, pct)); const tier = c.cortes.filter(x => pct >= x).length, reward = c.premios[tier] | 0; res = { id, pct: +pct.toFixed(3), tier, reward, hard, detail: detail || '', ms: Date.now() - t0 }; if (extra) Object.assign(res, extra);
         body.innerHTML = `<div class="mg-res t${tier}"><div class="mg-tier">${['Sem prêmio', 'Bom', 'Ótimo', 'Perfeito'][tier]}</div><div class="mg-pct">${Math.round(pct * 100)}%</div><div class="mg-det">${detail || ''}</div><div class="mg-rw">${reward > 0 ? '+' + reward + ' pêndulos' : 'Nenhum pêndulo'}${res.carta ? ' + 1 carta' : ''}</div><button class="btn primary mg-ok">Continuar</button></div>`;
@@ -128,9 +130,9 @@
       const pendulos = () => { const el = mk('<div class="mg-portal-pendulos" aria-hidden="true">' + Array.from({ length: 7 }, (_, i) => `<i style="--i:${i}">◈</i>`).join('') + '</div>'); body.append(el); setTimeout(() => el.remove(), 1050); };
       const tier = a => c.cortes.filter(x => a >= x - 1e-9).length, prem = a => c.premios[tier(a)] | 0;
       const painel = () => `<div class="mg-prog"><div class="mg-bar"><i style="width:${Math.round(acum * 100)}%"></i>${c.cortes.map((x, i) => `<u style="left:${Math.round(x * 100)}%"><b>${['Bom', 'Ótimo', 'Perfeito'][i]}</b></u>`).join('')}</div><p>Prêmio atual: <b>${prem(acum)} ◈</b> · próximo nível: ${tier(acum) < 3 ? c.premios[tier(acum) + 1] + ' ◈ aos ' + Math.round(c.cortes[tier(acum)] * 100) + '%' : 'máximo'}</p></div>`;
-      const tela = () => { const ult = rod === R - 1, res = shuffle(ult ? ['pend', 'carta', 'perde'] : ['pend', 'perde', 'passa']);
-        const portais = ['ciano', 'violeta', 'dourado'];
-        body.innerHTML = `<p class="mg-q mg-porta-q">${ult ? 'Última porta' : 'Porta ' + (rod + 1) + '/' + R}<br><small>Escolha um portal</small></p>${painel()}<div class="mg-portas">${portais.map((p, i) => `<button class="mg-porta" data-i="${i}" data-portal="${p}" style="--d:${i * 85}ms"><span>${i + 1}</span></button>`).join('')}</div>`; busy = false;
+      const tela = () => { const ult = rod === R - 1, res = shuffle(ult ? (c.hard ? ['pend', 'carta', 'perde', 'perde'] : ['pend', 'carta', 'perde']) : (c.hard ? ['pend', 'passa', 'perde', 'perde'] : ['pend', 'perde', 'passa']));
+        const portais = c.hard ? ['ciano', 'violeta', 'dourado', 'verde'] : ['ciano', 'violeta', 'dourado'];
+        body.innerHTML = `<p class="mg-q mg-porta-q">${ult ? 'Última porta' : 'Porta ' + (rod + 1) + '/' + R}<br><small>Escolha um portal${c.hard ? ' · 2 estão vazios' : ''}</small></p>${painel()}<div class="mg-portas${c.hard ? ' q4' : ''}">${portais.map((p, i) => `<button class="mg-porta" data-i="${i}" data-portal="${p}" style="--d:${i * 85}ms"><span>${i + 1}</span></button>`).join('')}</div>`; busy = false;
         body.onclick = async e => { const b = e.target.closest('.mg-porta'); if (!b || busy) return; busy = true; const r = res[+b.dataset.i]; b.classList.add('open'); SND.play('flip');
           body.querySelectorAll('.mg-porta').forEach(x => x !== b && x.classList.add('recuo'));
           b.innerHTML = r === 'pend' ? '<span>+' + (ult ? 50 : 25) + '% do prêmio</span>' : r === 'carta' ? '<span>Uma carta! Prêmio máximo</span>' : r === 'passa' ? '<span>Passagem livre (nada muda)</span>' : '<span>Vazia! Fim</span>';
@@ -144,7 +146,7 @@
     },
     // 2. Ecos Estelares (memória): 6 pares, com tempo limite; a nota máxima é possível com ~10 jogadas
     memoria(body, c, fim) {
-      const P = 6, ids = randCards(P), deck = shuffle(ids.concat(ids)); let open = [], moves = 0, found = 0, lock = false, acabou = false, left = Math.round(75 / c.dif);
+      const P = c.hard ? 8 : 6, T0 = Math.round((c.hard ? 100 : 75) / c.dif), FOLGA = c.hard ? 24 : 18, ids = randCards(P), deck = shuffle(ids.concat(ids)); let open = [], moves = 0, found = 0, lock = false, acabou = false, left = T0;
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g4"></div>`; const g = $('.mg-grid', body), mq = $('#mq', body);
       const txt = () => { mq.innerHTML = 'Jogadas: ' + moves + ' · <b>' + left + ' s</b>'; }; txt();
       const tm = setInterval(() => { if (acabou) return; left--; txt(); if (left <= 0) { acabou = true; clearInterval(tm); fim(found / P * .45, found + ' de ' + P + ' pares (tempo esgotado)'); } }, 1000);
@@ -153,14 +155,14 @@
         b.classList.add('on'); b.replaceChildren(card(deck[i], 66)); SND.play('flip'); open.push(i);
         if (open.length === 2) { lock = true; moves++; txt(); const [x, y] = open; const cx = g.children[x], cy = g.children[y];
           await wait(750); if (acabou) return; if (deck[x] === deck[y]) { cx.classList.add('ok'); cy.classList.add('ok'); found++; SND.play('capture'); } else { [cx, cy].forEach(z => { z.classList.remove('on'); z.replaceChildren(hidden(66)); }); }
-          open = []; lock = false; if (found === P) { acabou = true; clearInterval(tm); fim(1 - (moves - P - 4) / (18 / c.dif), moves + ' jogadas em ' + (Math.round(75 / c.dif) - left) + ' s'); } } };
+          open = []; lock = false; if (found === P) { acabou = true; clearInterval(tm); fim(1 - (moves - P - (c.hard ? 6 : 4)) / (FOLGA / c.dif), moves + ' jogadas em ' + (T0 - left) + ' s'); } } };
       return () => { acabou = true; clearInterval(tm); };
     },
     // 3. Silhuetas (quem é quem): só alguns trechos escuros da imagem da carta aparecem; 8 perguntas, 10 s cada
     quemequem(body, c, fim) {
-      const N = 8; let n = 0, ok = 0, tm = null, left = Math.round(60 / c.dif), done = false, acabou = false;   // tempo total para as 8 cartas
-      const trechos = id => { const src = (window.CARD_IMAGES || {})[id]; if (!src) return null; const W = 150, H = 200, k = 3 + (Math.random() < .5 ? 1 : 0), cs = [];
-        for (let i = 0; i < k; i++) cs.push(`radial-gradient(circle ${34 + rnd(12)}px at ${22 + rnd(W - 44)}px ${22 + rnd(H - 44)}px, #000 55%, transparent 100%)`);
+      const N = c.hard ? 12 : 8; let n = 0, ok = 0, tm = null, left = Math.round((c.hard ? 84 : 60) / c.dif), done = false, acabou = false;   // tempo total para as 8 cartas
+      const trechos = id => { const src = (window.CARD_IMAGES || {})[id]; if (!src) return null; const W = 150, H = 200, k = c.hard ? 3 : 3 + (Math.random() < .5 ? 1 : 0), cs = [];
+        for (let i = 0; i < k; i++) cs.push(`radial-gradient(circle ${c.hard ? 28 + rnd(10) : 34 + rnd(12)}px at ${22 + rnd(W - 44)}px ${22 + rnd(H - 44)}px, #000 55%, transparent 100%)`);
         const d = mk(`<div class="mg-frag" style="width:${W}px;height:${H}px;background-image:url(${src});-webkit-mask-image:${cs.join(',')};mask-image:${cs.join(',')}"></div>`); return d; };
       const q = () => { const cs = randCards(4), alvo = cs[0], opts = shuffle(cs);
         body.innerHTML = `<p class="mg-q" id="mq">Carta ${n + 1}/${N} · tempo total <span id="tl">${left}</span>s</p><div class="mg-c" id="mA"></div><div class="mg-btns col">${opts.map(o => `<button class="btn" data-id="${o}">${U.CARDS[o].nome}</button>`).join('')}</div>`;
@@ -175,7 +177,7 @@
       const R = 6, AV = Math.min(380, body.clientWidth || 360) - 12; let rodada = 0, ok = 0, acabou = false, vidas = 3;   // 3 vidas: errar a carta tira uma; sem vidas o jogo termina
       const cor = () => '<span class="mg-vd">' + '♥'.repeat(vidas) + '<i>' + '♥'.repeat(3 - vidas) + '</i></span>';
       const rod = async () => {
-        const n = 3 + rodada, GAP = 6, CW = Math.min(78, Math.floor((AV - (n - 1) * GAP) / n)), H = Math.round(CW * 1.5), trocas = 6 + rodada * 3, v0 = Math.max(260, 600 - rodada * 55) / c.dif, v1 = Math.max(60, 190 - rodada * 28) / c.dif, ids = randCards(n), alvo = rnd(n);
+        const n = c.hard ? [5, 5, 6, 6, 7, 8][rodada] : [3, 3, 4, 4, 5, 5][rodada], GAP = 6, CW = Math.min(78, Math.floor((AV - (n - 1) * GAP) / n)), H = Math.round(CW * 1.5), trocas = 6 + rodada * 3, vh = c.hard ? 1.3 : 1, v0 = Math.max(220, 600 - rodada * 55) / c.dif / vh, v1 = Math.max(55, 190 - rodada * 28) / c.dif / vh, ids = randCards(n), alvo = rnd(n);
         body.innerHTML = `<p class="mg-q" id="mq">${cor()} Rodada ${rodada + 1}/${R} · ${n} cartas<br>Memorize a carta marcada</p><div class="mg-dance" style="width:${n * (CW + GAP) - GAP}px;height:${H + 56}px"></div>`;
         const area = $('.mg-dance', body), pos = Array.from({ length: n }, (_, i) => i), it = [], mq = $('#mq', body); let pronto = false;
         const x = p => p * (CW + GAP), base = 28;
@@ -183,7 +185,7 @@
         await wait(1700); if (acabou) return; it.forEach(d => { d.classList.remove('mark'); d.replaceChildren(hidden(CW)); }); SND.play('flip'); await wait(450);
         mq.innerHTML = cor() + ' Acompanhe com os olhos…';
         for (let k = 0; k < trocas; k++) { if (acabou) return;
-          const f = trocas > 1 ? k / (trocas - 1) : 1, vel = v0 + (v1 - v0) * f, pares = 1 + (n >= 5 && f > .35 ? 1 : 0) + (n >= 7 && f > .7 ? 1 : 0), slots = shuffle(pos.map((_, i) => i)), lift = new Map();   // começa lenta e acelera; nas últimas trocas vários pares dançam juntos
+          const f = trocas > 1 ? k / (trocas - 1) : 1, vel = v0 + (v1 - v0) * f, pares = 1 + (n >= 5 && f > .35 ? 1 : 0) + (n >= 7 && f > .7 ? 1 : 0) + (c.hard && n >= 6 && f > .5 ? 1 : 0), slots = shuffle(pos.map((_, i) => i)), lift = new Map();   // começa lenta e acelera; nas últimas trocas vários pares dançam juntos
           for (let q = 0; q < pares && q * 2 + 1 < n; q++) { const sa = slots[q * 2], sb = slots[q * 2 + 1], ia = pos.indexOf(sa), ib = pos.indexOf(sb); pos[ia] = sb; pos[ib] = sa; const alt = 12 + f * 16, ang = 5 + f * 11, sg = (k + q) % 2 ? 1 : -1; lift.set(ia, { y: -sg * alt, a: sg * ang }); lift.set(ib, { y: sg * alt, a: -sg * ang }); }
           it.forEach((d, i) => { const l = lift.get(i); d.style.transition = `transform ${Math.round(vel)}ms cubic-bezier(.45,0,.25,1)`; d.style.transform = `translate(${x(pos[i])}px,${base + (l ? l.y : 0)}px) rotate(${l ? l.a : 0}deg)`; });
           if (vel > 110) SND.play('tick'); await wait(vel + 12); }
@@ -247,32 +249,35 @@
     },
     // 9. sequência de sons: 4 instrumentos, cada rodada soma um som
     caracoroa(body, c, fim) {
-      const COR = ['#ff8a5c', '#6cc6ff', '#7dffb0', '#ffd25f'], NOTA = [261.6, 329.6, 392, 523.3], NOME = ['', '', '', '']; const MAX = 8;
+      const COR = ['#ff8a5c', '#6cc6ff', '#7dffb0', '#ffd25f'], NOTA = [261.6, 329.6, 392, 523.3], NOME = ['', '', '', '']; const MAX = 8, H = c.hard, SP = H ? 1.45 : 1;
       let ctx = null; const tom = (i, ms) => { try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(), gn = ctx.createGain(); o.type = ['triangle', 'sine', 'square', 'sawtooth'][i]; o.frequency.value = NOTA[i]; gn.gain.setValueAtTime(.0001, ctx.currentTime); gn.gain.exponentialRampToValueAtTime(.18, ctx.currentTime + .02); gn.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + ms / 1000); o.connect(gn); gn.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + ms / 1000 + .05); } catch (e) { } };
-      let seq = [], pos = 0, vez = false, feitas = 0;
-      body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3 sq" id="el"></div>`; const q = $('#mq', body), g = $('#el', body); g.style.gridTemplateColumns = 'repeat(2, 120px)';
+      let seq = [], pos = 0, vez = false, feitas = 0, tmo = null, esg = 0;
+      const prox = () => { let n; for (let k = 0; k < 20; k++) { n = rnd(4); if (!H || !seq.length) break; const a = seq[seq.length - 1], b = seq[seq.length - 2]; if (n === a) continue; if (b != null && Math.abs(a - b) === 1 && n - a === a - b) continue; if (Math.abs(n - a) === 1 && k < 12) continue; break; } return n; };   // Hard: sem repetição, sem escadinha e com saltos
+      body.innerHTML = `<p class="mg-q" id="mq"></p>${H ? '<div class="mg-tmo"><i id="tmb" style="width:100%"></i></div>' : ''}<div class="mg-grid g3 sq" id="el"></div>`; const q = $('#mq', body), g = $('#el', body); g.style.gridTemplateColumns = 'repeat(2, 120px)';
       NOME.forEach((n, i) => { g.append(mk(`<button class="mg-cell elo" data-i="${i}" style="--c:${COR[i]};height:110px">${n}</button>`)); });
-      const acende = async i => { const b = g.children[i]; b.classList.add('on'); tom(i, 380 / c.dif); await wait(400 / c.dif); b.classList.remove('on'); await wait(160 / c.dif); };
-      const nova = async () => { vez = false; seq.push(rnd(4)); pos = 0; q.textContent = 'Rodada ' + seq.length + '/' + MAX + ': ouça'; await wait(700); for (const i of seq) await acende(i); q.textContent = 'Sua vez'; vez = true; };
+      const acende = async i => { const b = g.children[i]; b.classList.add('on'); tom(i, 380 / c.dif / SP); await wait(400 / c.dif / SP); b.classList.remove('on'); await wait(160 / c.dif / SP); };
+      const barra = $('#tmb', body), pare = () => { clearInterval(tmo); if (barra) barra.style.width = '0'; };
+      const nova = async () => { vez = false; pare(); if (H && !seq.length) { while (seq.length < 3) seq.push(prox()); } else seq.push(prox()); pos = 0; q.textContent = 'Rodada ' + (feitas + 1) + '/' + MAX + ': ouça'; await wait(700); for (const i of seq) await acende(i); q.textContent = 'Sua vez'; vez = true;
+        if (H) { const tot = (seq.length * .85 + 2.2) * 1000, t0 = Date.now(); if (barra) barra.style.width = '100%'; tmo = setInterval(async () => { const f = (Date.now() - t0) / tot; if (barra) barra.style.width = Math.max(0, 100 - f * 100) + '%'; if (f >= 1 && vez) { vez = false; pare(); SND.play('lose'); q.textContent = 'Tempo!'; await wait(900); fim(feitas / MAX, feitas + ' de ' + MAX + ' rodadas (tempo)'); } }, 80); } };
       g.onclick = async e => { const b = e.target.closest('.elo'); if (!b || !vez) return; const i = +b.dataset.i; acende(i);
-        if (i !== seq[pos]) { vez = false; SND.play('lose'); q.textContent = 'Errou!'; await wait(900); return fim(feitas / MAX, feitas + ' de ' + MAX + ' rodadas'); }
-        pos++; if (pos === seq.length) { vez = false; feitas++; SND.play('capture'); await wait(700); if (feitas >= MAX) return fim(1, 'Todas as rodadas'); nova(); } };
+        if (i !== seq[pos]) { vez = false; pare(); SND.play('lose'); q.textContent = 'Errou!'; await wait(900); return fim(feitas / MAX, feitas + ' de ' + MAX + ' rodadas'); }
+        pos++; if (pos === seq.length) { vez = false; pare(); feitas++; SND.play('capture'); await wait(700); if (feitas >= MAX) return fim(1, 'Todas as rodadas'); nova(); } };
       nova();
     },
     // 11. Relâmpago dimensional (antiga raspadinha): três cartas viram e desviram rápido; uma dá +1, uma tira 1, uma nada. Toque o +1 o máximo de vezes
     raspadinha(body, c, fim) {
-      const T = Math.round(22 / c.dif), META = 16; let pts = 0, left = T, acabou = false, aberta = false, tocou = false, rodada = 0, tipos = [];
+      const H = c.hard, NC = H ? 5 : 3, T = Math.round((H ? 24 : 22) / c.dif), META = H ? 13 : 16; let pts = 0, left = T, acabou = false, aberta = false, tocou = false, rodada = 0, tipos = [];
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-grid g3"></div>`; const g = $('.mg-grid', body), mq = $('#mq', body);
       const txt = () => { mq.innerHTML = 'Pontos: <b>' + pts + '</b> · ' + left + ' s'; }; txt();
-      for (let i = 0; i < 3; i++) { const b = mk('<button class="mg-cell scr">?</button>'); b.dataset.i = i; b.style.height = '110px'; g.append(b); }
+      for (let i = 0; i < NC; i++) { const b = mk('<button class="mg-cell scr">?</button>'); b.dataset.i = i; b.style.height = H ? '92px' : '110px'; g.append(b); }
       const tm = setInterval(() => { if (acabou) return; left--; txt(); if (left <= 0) { acabou = true; clearInterval(tm); fim(pts / META, pts + ' pontos'); } }, 1000);
       g.onclick = e => { const b = e.target.closest('.mg-cell'); if (!b || acabou || !aberta || tocou) return; tocou = true; const t = tipos[+b.dataset.i];
-        if (t === 'mais') { pts++; SND.play('capture'); b.classList.add('rl-mais'); } else if (t === 'menos') { pts = Math.max(0, pts - 1); SND.play('lose'); b.classList.add('rl-menos'); } else SND.play('tick'); txt(); };
+        if (t === 'mais') { pts++; SND.play('capture'); b.classList.add('rl-mais'); } else if (t === 'menos2') { pts = Math.max(0, pts - 2); SND.play('lose'); b.classList.add('rl-menos'); } else if (t === 'menos') { pts = Math.max(0, pts - 1); SND.play('lose'); b.classList.add('rl-menos'); } else SND.play('tick'); txt(); };
       (async () => { await wait(700); while (!acabou) {
-        rodada++; tipos = shuffle(['mais', 'nada', 'menos']); tocou = false; const dur = Math.max(300, 700 - rodada * 12) / c.dif;
-        [...g.children].forEach((b, i) => { b.classList.remove('rl-mais', 'rl-menos'); b.classList.add('open'); b.textContent = tipos[i] === 'mais' ? '+1' : tipos[i] === 'menos' ? '−1' : '·'; b.dataset.t = tipos[i]; });
+        rodada++; tipos = shuffle(H ? ['mais', 'menos', 'menos2', 'nada', 'nada'] : ['mais', 'nada', 'menos']); tocou = false; const dur = H ? Math.max(560, 1000 - rodada * 13) : Math.max(300, 700 - rodada * 12) / c.dif;
+        [...g.children].forEach((b, i) => { b.classList.remove('rl-mais', 'rl-menos'); b.classList.add('open'); b.textContent = tipos[i] === 'mais' ? '+1' : tipos[i] === 'menos2' ? '−2' : tipos[i] === 'menos' ? '−1' : '·'; b.dataset.t = tipos[i]; });
         aberta = true; SND.play('flip'); await wait(dur); aberta = false;
-        [...g.children].forEach(b => { b.classList.remove('open', 'rl-mais', 'rl-menos'); b.textContent = '?'; }); await wait(Math.max(160, 320 - rodada * 5) / c.dif); } })();
+        [...g.children].forEach(b => { b.classList.remove('open', 'rl-mais', 'rl-menos'); b.textContent = '?'; }); await wait(H ? Math.max(260, 400 - rodada * 4) : Math.max(160, 320 - rodada * 5) / c.dif); } })();
       return () => { acabou = true; clearInterval(tm); };
     },
     // 12. caça ao pêndulo: escuro, luz segue o dedo, 25 s
@@ -399,7 +404,8 @@
     },
     // Mistério Oculto: olhos que se abrem no escuro; feche-os antes que ataquem (36 olhos, 3 corações)
     culpado(body, c, fim) {
-      const N = 48, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const pend = []; const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
+      const N = c.hard ? 60 : 48, SPOTS = 12; let vidas = 3, nasc = 0, fechados = 0, perdidos = 0, tm = null, prox = 600, acabou = false; const pend = []; if (c.hard) for (let j = 0; j < 3 + rnd(2); j++) pend.push(150 + Math.random() * 1500);   // Hard: já abre com 3 ou mais olhos em instantes aleatórios
+      const olhos = Array.from({ length: SPOTS }, () => null); const t0 = Date.now();
       body.innerHTML = `<p class="mg-q" id="mq"></p><div class="mg-olhos">${Array.from({ length: SPOTS }, (_, i) => `<button class="mg-olho" data-i="${i}" aria-label="olho"><i></i></button>`).join('')}</div>`; const q = $('#mq', body), g = $('.mg-olhos', body);
       const pinta = () => { q.innerHTML = `${'♥'.repeat(vidas)}<span style="opacity:.3">${'♥'.repeat(3 - vidas)}</span> · olhos ${Math.min(nasc, N)}/${N}`; };
       const ate = () => nasc / (N - 1);
@@ -408,8 +414,8 @@
       const fimJ = () => { if (acabou) return; acabou = true; clearInterval(tm); const morreu = vidas <= 0, pct = morreu ? Math.min(.7, fechados / N) : 1 - perdidos / N; fim(pct, morreu ? 'Os olhos venceram (' + fechados + ' fechados)' : fechados + ' de ' + N + ' olhos fechados'); };
       g.onclick = e => { const b = e.target.closest('.mg-olho'); if (!b || acabou) return; const i = +b.dataset.i; if (olhos[i]) fecha(i, false); };
       tm = setInterval(() => { if (acabou) return; const agora = Date.now() - t0;
-        if (nasc + pend.length < N && agora >= prox) { const a = ate(), k = 1 + (Math.random() < a * 1.1 ? 1 : 0) + (a > .5 && Math.random() < .55 ? 1 : 0) + (a > .75 && Math.random() < .55 ? 1 : 0); for (let j = 0; j < k && nasc + pend.length < N; j++) pend.push(agora + Math.random() * 1200 / (1 + a)); prox = agora + (1700 - 1350 * a) / c.dif; }   // cada olho nasce num instante próprio (dessincronizados)
-        for (let q = pend.length - 1; q >= 0; q--) { if (pend[q] > agora) continue; const livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (!livres.length) { pend[q] = agora + 150; continue; } pend.splice(q, 1); const i = pick(livres), a = ate(), life = (3300 - 2500 * a) / c.dif * (.78 + Math.random() * .5); olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; pinta(); }
+        if (nasc + pend.length < N && agora >= prox) { const a = ate(), k = (c.hard ? 2 : 1) + (Math.random() < a * 1.1 ? 1 : 0) + (a > .5 && Math.random() < .55 ? 1 : 0) + (a > .75 && Math.random() < .55 ? 1 : 0); for (let j = 0; j < k && nasc + pend.length < N; j++) pend.push(agora + Math.random() * 1200 / (1 + a)); prox = agora + (c.hard ? 2300 - 1500 * a : 1700 - 1350 * a) / c.dif; }   // cada olho nasce num instante próprio (dessincronizados)
+        for (let q = pend.length - 1; q >= 0; q--) { if (pend[q] > agora) continue; const livres = olhos.map((o, i) => o ? -1 : i).filter(i => i >= 0); if (!livres.length) { pend[q] = agora + 150; continue; } pend.splice(q, 1); const i = pick(livres), a = ate(), life = (c.hard ? 3000 - 2150 * a : 3300 - 2500 * a) / c.dif * (.78 + Math.random() * .5); olhos[i] = { ini: agora, life }; g.children[i].className = 'mg-olho on'; nasc++; pinta(); }
         olhos.forEach((o, i) => { if (!o) return; const f = (agora - o.ini) / o.life, b = g.children[i]; if (f >= 1) return fecha(i, true); b.classList.toggle('tre', f > .4); b.classList.toggle('red', f > .7); });
         if (nasc >= N && !pend.length && !olhos.some(Boolean)) fimJ(); }, 50);
       pinta(); return () => { acabou = true; clearInterval(tm); };

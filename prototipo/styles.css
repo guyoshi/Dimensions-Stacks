@@ -2081,3 +2081,8 @@ body.reduce .n.subnivel .halo, body.reduce .n.subnivel .hs-ring.r1, body.reduce 
 @keyframes mcRise { 0% { opacity: 0; transform: translateY(0) scale(var(--s)) rotate(0); } 15% { opacity: .85; } 100% { opacity: 0; transform: translateY(-330px) scale(var(--s)) rotate(40deg); } }
 body.reduce .hs-rec2.mc .mc-rays, body.reduce .hs-rec2.mc .mc-ico, body.reduce .hs-rec2.mc .mc-fl { animation: none; }
 body.reduce .hs-rec2.mc li.mc-r, body.reduce .hs-rec2.mc .mc-seal, body.reduce .hs-rec2.mc small, body.reduce .hs-rec2.mc h3, body.reduce .hs-rec2.mc .row { animation-duration: .01s; animation-delay: 0s; }
+/* minigames: Hard (portais, Eco das Notas) */
+.mg-portas.q4 { gap: 3px; } .mg-portas.q4 .mg-porta { width: min(22vw, 88px); height: 150px; } .mg-portas.q4 .mg-porta.open { width: min(24vw, 96px); }
+.mg-porta[data-portal="verde"] { --portal: url(cena/portais/portal-ciano.png); --brilho: #5dff9a; }
+.mg-porta[data-portal="verde"]::before { filter: hue-rotate(-62deg) drop-shadow(0 0 8px #5dff9a); }
+.mg-tmo { width: min(260px, 80vw); height: 7px; border-radius: 9px; background: #ffffff1c; overflow: hidden; margin: 2px auto 8px; } .mg-tmo i { display: block; height: 100%; background: linear-gradient(90deg, #ff8a5c, #ffd25f); transition: width .1s linear; }

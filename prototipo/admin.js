@@ -202,7 +202,7 @@
       if (a === 'aba') { S.aba = b.dataset.k; $$('.adm-tabs button', root).forEach(x => x.classList.toggle('on', x.dataset.k === S.aba)); $$('[data-t]', root).forEach(x => { x.hidden = x.dataset.t !== S.aba; }); return; }
       if (a === 'miniopen') openMini();
       else if (a === 'miniclose') closeMini();
-      else if (a === 'miniplay') { const id = b.dataset.id; await window.DSMini.play(id, { teste: true }); paintMini(); }
+      else if (a === 'miniplay') { const id = b.dataset.id; await window.DSMini.play(id, { teste: true, hardUnlocked: true }); paintMini(); }
       else if (a === 'minireset') { window.DSMini.resetLog(); paintMini(); }
       else if (a === 'minicfgreset') { window.DSMini.resetCfg(); paintMini(); }
       else if (a === 'sndopen') openSounds();

@@ -606,13 +606,14 @@
     S.mgBest = S.mgBest || {}; S.mgLock = S.mgLock || {}; let ganho = 0;
     if (res.tier >= 1) {
       const pr = res.hard ? window.DSMini.cfg(n.mg).premios.map((x, i) => i ? Math.round(x * 1.5) : 0) : window.DSMini.cfg(n.mg).premios, antR = ant ? pr[ant] | 0 : 0; ganho = Math.max(0, (pr[res.tier] | 0) - antR); S.mgBestModo = S.mgBestModo || {}; S.mgBestModo[bestKey] = Math.max(ant, res.tier); S.mgBest = S.mgBest || {}; S.mgBest[id] = Math.max(S.mgBest[id] | 0, res.tier); S.pend = (S.pend | 0) + ganho; S.ganho = (S.ganho | 0) + ganho;
-      if (primeira && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
+      if (primeira && !res.hard && n.serieMg && window.DSHistoria) window.DSHistoria.darBroche(n.serieMg);
       if (NPC) NPC.fragMini(n.mg, res.tier);
-    } else if (primeira) S.mgLock[id] = 1;
+    } else if (primeira && !res.hard) S.mgLock[id] = 1;   // falhar no Hard nunca tranca a casa
+
     let cartaMg = null; if (res.tier >= 1 && res.carta) { const em = new Set((S.owned || []).concat(alugadas())), pool = U.D.CARTAS.filter(x => !x.uniao && !EXC.has(x.id) && x.raridade !== 'lendaria' && !em.has(x.id)); if (pool.length) { cartaMg = pool[Math.floor(Math.random() * pool.length)].id; S.owned.push(cartaMg); } }
     save(); paintAll(); try { SND.histPlay('mapa'); } catch (e) { }
     if (cartaMg) { await new Promise(r => revelarCarta([cartaMg], r)); try { SND.histPlay('mapa'); } catch (e) { } }
-    if (res.tier >= 1 && primeira) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira) { toast('Bloqueado até vencer a próxima batalha, ou pague ' + MG_CUSTO + ' pêndulos.'); openNode(id); } else openNode(id);
+    if (res.tier >= 1 && primeira && !res.hard) { toggleWin(id); if (n.serieMg) toast('Broche conquistado (' + nBroches() + '/7)'); } else if (res.tier < 1 && primeira && !res.hard) { toast('Bloqueado até vencer a próxima batalha, ou pague ' + MG_CUSTO + ' pêndulos.'); openNode(id); } else openNode(id);
   }
   function toggleWin(id) {
     const ok = cleared(id);
