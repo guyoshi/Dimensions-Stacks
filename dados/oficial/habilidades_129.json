@@ -2250,7 +2250,7 @@
   {
    "id": "AE-146",
    "nome": "Maré alta",
-   "texto_efeito": "Sua carta de combate recebe +25 no atributo mais fraco dela nesta disputa.",
+   "texto_efeito": "Sua carta de combate recebe +25 nos dois atributos mais fracos dela nesta disputa.",
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -2556,7 +2556,7 @@
   {
    "id": "AE-166",
    "nome": "Armadilha",
-   "texto_efeito": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro.",
+   "texto_efeito": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro, e a sua carta volta ao fundo do seu baralho.",
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -2588,7 +2588,7 @@
   {
    "id": "AE-168",
    "nome": "Casca grossa",
-   "texto_efeito": "Se algum rival usa atributo de ataque, sua carta recebe +30 em Resistência nesta disputa.",
+   "texto_efeito": "Se algum rival usa atributo de ataque, sua carta recebe +30 em Resistência e nenhum rival pode capturá-la nesta disputa.",
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -3092,7 +3092,7 @@
   {
    "id": "AE-202",
    "nome": "Pilhagem preparada",
-   "texto_efeito": "Roube todas as cartas especiais preparadas por seus adversários; elas passam para a sua área de especiais preparados.",
+   "texto_efeito": "Roube todas as cartas especiais preparadas por seus adversários; elas passam para a sua área de especiais preparados. Se nenhum tiver especial preparado, pegue 1 carta aleatória do baralho de um rival.",
    "categoria": "Interação",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",

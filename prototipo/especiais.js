@@ -760,10 +760,10 @@
     const N = (id, nome, texto, cat, o) => def(id, nome, texto, cat, o);
     const weakest = st => AID.reduce((b, a) => (st[a] < st[b] ? a : b), AID[0]), strongest = st => AID.reduce((b, a) => (st[a] > st[b] ? a : b), AID[0]);
     const lostLast = (ctx, pid) => { const r = ctx.g.s.lastRes; return !!r && r.winner != null && r.pids.includes(pid) && r.winner !== pid && !ctx.sameTeam(r.winner, pid); };
-    N('AE-146', 'Maré alta', 'Sua carta de combate recebe +25 no atributo mais fraco dela nesta disputa.', 'Bônus', {
-      fx: st => { const o = Object.assign({}, st); o[weakest(st)] += 25; return o; },
-      apply(ctx, act) { const e = ctx.entry(act.pid), a = weakest(e.stats); ctx.addMod(e, act.pid, 'Maré alta', x => { x.stats[weakest(x.stats)] += 25; }); ctx.say(`${nm(ctx, act.pid)} ergue o atributo mais fraco (${ATTR[a].nome}).`); },
-      ai(ctx, pid) { const e = ctx.entry(pid); return e.attr === weakest(e.stats) ? ctx.flipChance(pid, 25) : 0.03; },
+    N('AE-146', 'Maré alta', 'Sua carta de combate recebe +25 nos dois atributos mais fracos dela nesta disputa.', 'Bônus', {
+      fx: st => { const o = Object.assign({}, st); AID.slice().sort((x, y) => st[x] - st[y]).slice(0, 2).forEach(a => { o[a] += 25; }); return o; },
+      apply(ctx, act) { const e = ctx.entry(act.pid), a = weakest(e.stats); ctx.addMod(e, act.pid, 'Maré alta', x => { AID.slice().sort((p, q) => x.stats[p] - x.stats[q]).slice(0, 2).forEach(k => { x.stats[k] += 25; }); }); ctx.say(`${nm(ctx, act.pid)} ergue os dois atributos mais fracos.`); },
+      ai(ctx, pid) { const e = ctx.entry(pid); return AID.slice().sort((x, y) => e.stats[x] - e.stats[y]).slice(0, 2).includes(e.attr) ? ctx.flipChance(pid, 25) : 0.03; },
     });
     N('AE-147', 'Segundo fôlego', 'Se você perdeu a disputa anterior, sua carta recebe +20 no atributo que está usando.', 'Bônus', {
       fx: (st, at) => { const o = Object.assign({}, st); if (at) o[at] += 20; return o; },
@@ -891,17 +891,17 @@
       apply(ctx, act) { const e = ctx.entry(act.pid); e.fortress = true; ctx.recalc(e); ctx.say(`${nm(ctx, act.pid)} ergue uma fortaleza: sem reduções.`); },
       ai(ctx, pid) { return ctx.g.foeActs && ctx.combat.react ? (ctx.g.foeActs(ctx.combat, pid).some(a => SP[CARDS[a.card].especial].cat === 'Redução') ? 0.9 : 0.1) : 0.15 + 0.3 * oppFlip(ctx, pid); }, val: 0.4,
     });
-    N('AE-166', 'Armadilha', 'Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro.', 'Defesa', {
-      apply(ctx, act) { ctx.entry(act.pid).trap = true; ctx.say(`${nm(ctx, act.pid)} arma uma armadilha na própria carta.`); },
+    N('AE-166', 'Armadilha', 'Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro, e a sua carta volta ao fundo do seu baralho.', 'Defesa', {
+      apply(ctx, act) { const e = ctx.entry(act.pid); e.trap = true; e.echoProt = true; ctx.say(`${nm(ctx, act.pid)} arma uma armadilha na própria carta.`); },
       ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'ataque' ? 0.6 : 0.05; },
     });
     N('AE-167', 'Eco protetor', 'Se sua carta fosse capturada nesta disputa, ela volta ao fundo do seu baralho.', 'Defesa', {
       apply(ctx, act) { ctx.entry(act.pid).echoProt = true; ctx.say(`${nm(ctx, act.pid)} cerca a carta de eco protetor.`); },
       ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'ataque' ? 0.75 : 0.05; },
     });
-    N('AE-168', 'Casca grossa', 'Se algum rival usa atributo de ataque, sua carta recebe +30 em Resistência nesta disputa.', 'Defesa', {
+    N('AE-168', 'Casca grossa', 'Se algum rival usa atributo de ataque, sua carta recebe +30 em Resistência e nenhum rival pode capturá-la nesta disputa.', 'Defesa', {
       fx: (st, at) => Object.assign({}, st, { def: st.def + 30 }),
-      apply(ctx, act) { const e = ctx.entry(act.pid); if (!ctx.entries().some(x => x.pid !== act.pid && !ctx.sameTeam(x.pid, act.pid) && x.attr && ATTR[x.attr].tipo === 'ataque')) return ctx.say('Nenhum rival ataca: a casca fica sem efeito.'); ctx.addMod(e, act.pid, 'Casca grossa', x => { x.stats.def += 30; }); ctx.say(`${nm(ctx, act.pid)} endurece a casca (+30 Resistência).`); },
+      apply(ctx, act) { const e = ctx.entry(act.pid); if (!ctx.entries().some(x => x.pid !== act.pid && !ctx.sameTeam(x.pid, act.pid) && x.attr && ATTR[x.attr].tipo === 'ataque')) return ctx.say('Nenhum rival ataca: a casca fica sem efeito.'); ctx.addMod(e, act.pid, 'Casca grossa', x => { x.stats.def += 30; }); ctx.entries().forEach(x => { if (x.pid !== act.pid && !ctx.sameTeam(x.pid, act.pid)) e.noCaptureBy.add(x.pid); }); ctx.say(`${nm(ctx, act.pid)} endurece a casca (+30 Resistência) e não pode ser capturado.`); },
       ai(ctx, pid) { const e = ctx.entry(pid); return e.attr === 'def' && ctx.entries().some(x => x.pid !== pid && x.attr && ATTR[x.attr].tipo === 'ataque') ? ctx.flipChance(pid, 30) : 0.03; },
     });
     N('AE-169', 'Retirada', 'Devolva sua carta de combate ao topo do baralho e jogue a próxima no lugar; você escolhe se vale o ataque ou a defesa do par do atributo.', 'Defesa', {
