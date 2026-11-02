@@ -68,3 +68,11 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 - **Vigília** (ambos): olhos nascem sem intervalo (sempre que faltam abertos); simultâneos Normal 2 a 4, Hard 3 a 5; tempo final dos olhos maior (Normal ~1,7 s, Hard ~1,6 s) — mudança de balanceamento nos dois modos.
 - **Maré Rubra Hard**: amarelas nascem nas pontas laterais, dormem 3 s (sem mover nem converter) e as azuis nascem a >=115 px delas.
 - **Rota**: dano da nave (som, flash vermelho, tremor, faíscas, piscada com 1,3 s de invulnerabilidade) e explosão ao perder (1,4 s) antes do FIM. **Hard**: meteoros grandes (16% das rochas, mais lentos) que, ao atingirem a nave, soltam 2 fragmentos diagonais; o vão mínimo (54 px) continua garantido e a invulnerabilidade cobre os fragmentos.
+
+## Ajustes 02/11 (lote 11:45)
+- **Pêndulos Fugitivos Hard**: luz do mesmo tamanho do Normal (80; antes 56).
+- **Constelação Pirata Hard**: meta de pontos 105 -> 80 (igual ao Normal, para dar notas altas); bombas mais frequentes (a partir de 12% do tempo) e uma segunda bomba na metade final.
+- **Cores dos Irmãos**: tempo TOTAL para as 6 rodadas (Normal 70 s, Hard 85 s, dividido pela dificuldade), sem limite por rodada; a pontuação continua por rapidez. **Hard**: barreiras se movem (começam paradas por 2,5 s, nunca entram na zona central nem sobre os destinos, mantêm 38 px entre si), empurram as bolinhas, a bolinha arrastada empurra as outras e encostar não perde mais.
+- **Maré, Chama e Gelo**: um som musical por elemento ao acertar, com brilho/pulso na pista e no botão; Hard com janela de acerto menor (Perfeito 24 -> 18 px, Bom 68 -> 46 px).
+- **Chamado da União**: bolinhas vermelhas piscando nas bordas indicam, 2,4 s antes, de onde vem a próxima horda (inclusive as velozes).
+- **Admin**: cada minigame tem "Testar" (Normal) e "Testar Hard" (sem escolha dentro do jogo); botão "Zerar testes" no topo da tela de minigames.

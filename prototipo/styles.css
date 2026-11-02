@@ -2113,3 +2113,4 @@ body.reduce .mg-pass { animation-duration: 0s; opacity: 0; }
 .mg-fim b { font: 800 clamp(64px, 22vw, 120px)/1 var(--f-disp, system-ui); letter-spacing: .04em; color: #fff1d4; text-shadow: 0 0 22px #ffc46b, 0 6px 0 #c4412b, 0 0 60px #ff4f9a; animation: mgFimPop .7s cubic-bezier(.2, 1.6, .4, 1) both; }
 @keyframes mgFimIn { from { opacity: 0 } to { opacity: 1 } }
 @keyframes mgFimPop { 0% { transform: scale(.2) rotate(-8deg); opacity: 0 } 60% { transform: scale(1.18) rotate(2deg); opacity: 1 } 100% { transform: scale(1) rotate(0) } }
+.mini-btns { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }

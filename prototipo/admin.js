@@ -175,7 +175,7 @@
   function miniHtml() {
     const M = window.DSMini, st = M.stats();
     const linhas = M.LISTA.map(m => { const c = M.cfg(m.id), s = st[m.id], n = s.n || 0;
-      return `<div class="mini-c" data-id="${m.id}"><div class="mini-top"><div><b>${esc(m.nome)}</b>${m.serie ? ' <small>(' + esc(m.serie) + ')</small>' : ''}<br><small>${esc(m.desc)}</small></div><button class="btn primary sm" data-a="miniplay" data-id="${m.id}">Testar</button></div>
+      return `<div class="mini-c" data-id="${m.id}"><div class="mini-top"><div><b>${esc(m.nome)}</b>${m.serie ? ' <small>(' + esc(m.serie) + ')</small>' : ''}<br><small>${esc(m.desc)}</small></div><div class="mini-btns"><button class="btn primary sm" data-a="miniplay" data-id="${m.id}" data-modo="normal">Testar</button><button class="btn sm" data-a="miniplay" data-id="${m.id}" data-modo="hard">Testar Hard</button></div></div>
         <div class="mini-f"><label>Dificuldade<input type="number" step="0.1" min="0.5" max="2" value="${c.dif}" data-m="dif"></label>
         <label>Cortes (tier 1 2 3)<input type="text" value="${c.cortes.join(' ')}" data-m="cortes"></label>
         <label>Prêmios (tier 0 1 2 3)<input type="text" value="${c.premios.join(' ')}" data-m="premios"></label></div>
@@ -184,6 +184,7 @@
     return `<div class="adm-in"><header class="adm-h"><h2>Minigames</h2><button class="ibtn" data-a="miniclose" aria-label="Fechar">✕</button></header>
       <section class="adm-box"><p class="hint">Teste cada minigame e ajuste: <b>dif</b> (dificuldade, 0,5 a 2), <b>cortes</b> (percentual mínimo para tier 1, 2 e 3) e <b>prêmios</b> (pêndulos nos tiers 0 a 3). As mudanças valem neste aparelho. Colunas à direita: partidas de teste, média, distribuição dos tiers (0/1/2/3), pêndulos médios e tempo médio. Se quase ninguém passa do tier 0 ou todo mundo faz tier 3, o minigame está mal calibrado.</p>
       <p class="hint">Prêmio máximo somado dos minigames: <b>${tot}</b> pêndulos.</p>
+      <div class="adm-f"><button class="btn primary sm" data-a="minireset">Zerar testes (recomeçar as contagens)</button></div>
       <div class="mini-l">${linhas}</div>
       <div class="adm-f"><button class="btn ghost sm" data-a="minireset">Zerar resultados</button><button class="btn ghost sm" data-a="minicfgreset">Voltar calibragem ao padrão</button></div></section></div>`;
   }
@@ -202,7 +203,7 @@
       if (a === 'aba') { S.aba = b.dataset.k; $$('.adm-tabs button', root).forEach(x => x.classList.toggle('on', x.dataset.k === S.aba)); $$('[data-t]', root).forEach(x => { x.hidden = x.dataset.t !== S.aba; }); return; }
       if (a === 'miniopen') openMini();
       else if (a === 'miniclose') closeMini();
-      else if (a === 'miniplay') { const id = b.dataset.id; await window.DSMini.play(id, { teste: true, hardUnlocked: true }); paintMini(); }
+      else if (a === 'miniplay') { const id = b.dataset.id; await window.DSMini.play(id, { teste: true, hardUnlocked: true, modo: b.dataset.modo || 'normal' }); paintMini(); }
       else if (a === 'minireset') { window.DSMini.resetLog(); paintMini(); }
       else if (a === 'minicfgreset') { window.DSMini.resetCfg(); paintMini(); }
       else if (a === 'sndopen') openSounds();
