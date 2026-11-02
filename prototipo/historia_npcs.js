@@ -151,6 +151,7 @@
       e.classList.toggle('bang', podeFalar && (!st || pr));
       if (podeFalar && pr) aviso = true;
     });
+    if (ini().missaoGuardioes && !ini().missaoGuardioes.concluida) aviso = true;
     const b = A.$('.hs-hud [data-a="pausa"] .mission-dot', root); if (b) b.hidden = !aviso;
     if (A.refrescaCasa) A.refrescaCasa();
   }
@@ -173,8 +174,9 @@
       let h = '';
       if (aba === 'cad') {
         const itens = s.itens.length ? `<div class="mis-itens">${s.itens.map(i => '<span>' + A.esc(i) + '</span>').join('')}</div>` : '';
+        const gm = s.missaoGuardioes, gv = A.GUARD.filter(g => s.cleared[g]).length, jornada = gm ? `<div class="mis-story${gm.concluida ? ' done' : ''}"><span class="mis-story-ico">✦</span><div><b>Destruir Guardiões</b>${bar(gv, A.GUARD.length)}<em>${gm.concluida ? 'Concluída' : 'Enfraqueça a Besta'}</em></div></div>` : '';
         const L = CH.filter(n => estado(n)).sort((a, b) => (estado(a) === 'entregue') - (estado(b) === 'entregue'));
-        h = itens + (L.length ? L.map(n => {
+        h = jornada + itens + (L.length ? L.map(n => {
           const st = estado(n), pr = prog(n), first = s.mis[n.id].first, pron = pronta(n);
           const quer = first ? 'Vença 3 batalhas' : n.pede, tag = st === 'entregue' ? 'Entregue' : pron ? 'Cumprida: fale com ' + curto(n) : 'Em andamento';
           const premio = `<span class="mis-reward">${/fragment/i.test(n.da) ? cristal(true) : ''}<span>Em troca: ${A.esc(n.da)}</span></span>`;

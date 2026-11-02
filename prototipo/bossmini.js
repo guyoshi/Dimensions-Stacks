@@ -14,8 +14,8 @@
     document.body.appendChild(ov); requestAnimationFrame(() => requestAnimationFrame(() => { const i = ov.querySelector('.bm-bar i'); if (i) i.style.width = '0%'; }));
     return ov;
   }
-  async function fecha(ov, ok) {
-    const r = ov.querySelector('.bm-res'); r.textContent = ok ? 'Acertou! +10' : 'Falhou! −10'; r.className = 'bm-res ' + (ok ? 'ok' : 'no');
+  async function fecha(ov, ok, bonus) {
+    const r = ov.querySelector('.bm-res'); r.textContent = ok ? 'Acertou! +' + (bonus || 10) : 'Falhou! −10'; r.className = 'bm-res ' + (ok ? 'ok' : 'no');
     try { U.SND.play(ok ? 'capture' : 'tick'); } catch (e) { }
     await wait(650); ov.remove();
   }
@@ -55,10 +55,10 @@
     box.querySelector('.bm-go').onclick = () => { if (fim_) return; fim_ = true; cancelAnimationFrame(raf); const [x, y] = pos((performance.now() - t0) / 1000); fim(Math.abs(x - y) < 22); };
   }
   const JOGOS = { asteroides, elos, luas };
-  async function play(kind) {
+  async function play(kind, info) {
     kind = kind || sorteia(); const seg = kind === 'elos' ? 5 : 3.8, [t, s] = NOMES[kind], ov = caixa(t, s, seg), area = ov.querySelector('.bm-area');
     const ok = await new Promise(res => { let done = false; const fim = v => { if (done) return; done = true; res(v); }; JOGOS[kind](area, fim, seg); setTimeout(() => fim(false), seg * 1000 + 400); });
-    await fecha(ov, ok); return ok;
+    const bonus = info && ((info.seq | 0) + 1) % 3 === 0 ? 15 : 10; await fecha(ov, ok, bonus); return ok;
   }
   async function salvar(cardId) {
     const c = U.CARDS && U.CARDS[cardId], ov = caixa('Buraco negro!', (c ? c.nome : 'Uma carta da União') + ' está sendo puxada: toque no orbe 6 vezes', 3);

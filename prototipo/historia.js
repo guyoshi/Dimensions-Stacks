@@ -60,7 +60,7 @@
   const GUARDAS = {   // nomes de constelação (cada um ligado ao personagem da carta): Órion/Cassiopeia (Orionus Polar, Sumo Vigia), Corvus (Korvo), Lince (Breno Lins), Escorpião (Raukhar)
     G1: { nome: 'Dupla somada', nomes: ['Cassiopeia', 'Órion'], av: ['J26', 'J31'], regra: 'g_duo', m: [9, 9], equilibrado: true, txt: 'Dois guardiões com nove cartas cada: enquanto ambos lutam, eles jogam uma carta cada e somam os valores; você leva até doze cartas, joga duas por disputa e também soma. Se vencerem, suas cartas vão para quem tinha o maior atributo. Se um cair, o outro segue sozinho em disputas normais.' },
     G2: { nome: 'Roubo duplo', nomes: ['Corvus'], av: ['V10'], regra: 'g_roubo', simbolos: true, m: 9, txt: 'Quem vence leva mais uma carta do topo do perdedor: captura se atacou, Buraco Negro se defendeu. Em toda disputa surgem símbolos de atributo: toque nos verdes (+5 na próxima disputa) e evite os vermelhos (−5).' },
-    G3: { nome: 'Blocos de três', nomes: ['Lince'], av: ['V01'], regra: 'g_bloco', m: 12, txt: 'As disputas valem em blocos de 3. Quem vencer mais leva as cartas do outro: captura se atacou mais, Buraco Negro se defendeu mais.' },
+    G3: { nome: 'Blocos de três', nomes: ['Lince'], av: ['V01'], regra: 'g_bloco', m: 12, blocoEquilibrado: true, txt: 'As disputas valem em blocos de 3. Quem vencer mais leva as cartas do outro: captura somente se venceu mais atacando; empate ou maioria em defesa manda as cartas ao Buraco Negro.' },
     G4: { nome: 'Fenômeno a cada disputa', nomes: ['Escorpião'], av: ['J32'], evTodas: true, m: 6, txt: 'Um fenômeno diferente em toda disputa. Ao ficar sem cartas, o guardião puxa até 7 do Buraco Negro, uma vez.' },
   };
   function guardaDe(id) {   // sorteio guardado no save: a posição é fixa, o guardião varia
@@ -238,7 +238,8 @@
     let inner = '';
     if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle class="win-ring" r="${r + 9}"/><circle r="${r}" class="body"/>${arte}`;
     else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'bau' || n.tipo === 'minigame' || n.tipo === 'inicio' ? '' : n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
-    return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>`;
+    const missao = n.tipo === 'guardiao' ? `<g class="quest-bang" transform="translate(${r * .82} ${-r * .9})"><circle r="12"/><text y="5">!</text></g>` : '';
+    return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>${missao}</g>`;
   }
   function nome(n) {
     if (n.tipo === 'boss') return 'Boss final: A Besta';
@@ -351,6 +352,7 @@
     g.classList.toggle('done', ok); g.classList.toggle('skip', skip); g.classList.toggle('avail', av && !ok); g.classList.toggle('lock', !av && !ok); g.classList.toggle('isstart', n.id === S.startId); g.classList.toggle('subnivel', av && !ok && ['elite', 'miniboss', 'guardiao', 'boss'].includes(n.tipo) && nivel(S.xp) < nivelRecomendado(n));
     if (n.tipo === 'bau') g.classList.toggle('ndone', bauAberto(n.id));
     if (n.tipo === 'boss') g.classList.toggle('opened', guardVivos() === 0);
+    if (n.tipo === 'guardiao') g.classList.toggle('mission-guard', !!S.missaoGuardioes && !ok);
     if (n.tipo === 'minigame') g.classList.toggle('mglock', !!(S.mgLock && S.mgLock[n.id]) && !ok);
   }
 
@@ -615,7 +617,7 @@
     if (!ok) { const no = $('.n[data-id="' + id + '"]', root); if (no) { no.classList.add('winflash'); setTimeout(() => no.classList.remove('winflash'), 1100); } }
     openNode(id);
     if (mem && !ok) setTimeout(() => quandoLivre(() => libertar(mem, () => { const f = (window.DS_FALAS_UNIAO || {})[mem]; if (f) quandoLivre(() => npcFala(mem, f)); })), 500);
-    if (GUARD.includes(id) && !ok) setTimeout(() => quandoLivre(() => golpeBoss()), 500);
+    if (GUARD.includes(id) && !ok) { setTimeout(() => quandoLivre(() => golpeBoss()), 500); setTimeout(() => quandoLivre(() => ativarMissaoGuardioes('guardiao')), 4400); if (S.missaoGuardioes && guardVivos() === 0 && !S.missaoGuardioes.concluida) { S.missaoGuardioes.concluida = 1; save(); setTimeout(() => avisoMissao('Missão concluída', 'Destruir Guardiões', true), 4700); } }
     if (!ok && Object.keys(S.cleared).length === 1 && !mem) setTimeout(() => quandoLivre(tutorial), 900);
     if (id === M.boss && !ok) setTimeout(() => quandoLivre(finalCena), 900);
     const g = $('.n[data-id="' + id + '"]', root); if (g && !ok) { g.classList.remove('pop'); void g.getBoundingClientRect(); g.classList.add('pop'); }
@@ -706,7 +708,7 @@
     if (n.tipo === 'boss') return duelarBoss(id, auto);
     const gd = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null;
     const bat = gd ? Object.assign({}, bat0, { i: gd.nomes.map((nm, k) => { const R = (() => { let a = (id.charCodeAt(3) * 131 + k * 977 + gd.m * 31) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
-      const m = Array.isArray(gd.m) ? gd.m[k] : gd.m, deck = gd.fraco ? [] : [gd.av[k]], used = new Set(gd.av); for (let q = gd.fraco ? 0 : 1; q < m; q++) { const r = gd.fraco ? 'comum' : gd.equilibrado ? (q % 2 ? 'comum' : 'rara') : q === 1 ? 'rara' : q % 2 ? 'epica' : 'lendaria'; let pool = U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && c.raridade === r && !used.has(c.id)); if (gd.fraco || gd.equilibrado) { pool.sort((x, y) => FORCA(x.id) - FORCA(y.id)); if (gd.equilibrado) { const a = r === 'comum' ? .45 : .15, b = r === 'comum' ? .85 : .55; pool = pool.slice(Math.floor(pool.length * a), Math.max(Math.floor(pool.length * a) + 1, Math.ceil(pool.length * b))); } } if (!pool.length) break; const c = gd.fraco ? pool[Math.floor(R() * Math.min(6, pool.length))] : pool[Math.floor(R() * pool.length)]; deck.push(c.id); used.add(c.id); }
+      const m = Array.isArray(gd.m) ? gd.m[k] : gd.m, deck = gd.fraco ? [] : [gd.av[k]], used = new Set(gd.av); for (let q = gd.fraco ? 0 : 1; q < m; q++) { const r = gd.fraco ? 'comum' : gd.equilibrado ? (q % 2 ? 'comum' : 'rara') : gd.blocoEquilibrado ? (q <= 4 ? 'rara' : q <= 8 ? 'epica' : 'lendaria') : q === 1 ? 'rara' : q % 2 ? 'epica' : 'lendaria'; let pool = U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && c.raridade === r && !used.has(c.id)); if (gd.fraco || gd.equilibrado || gd.blocoEquilibrado) { pool.sort((x, y) => FORCA(x.id) - FORCA(y.id)); if (gd.equilibrado) { const a = r === 'comum' ? .45 : .15, b = r === 'comum' ? .85 : .55; pool = pool.slice(Math.floor(pool.length * a), Math.max(Math.floor(pool.length * a) + 1, Math.ceil(pool.length * b))); } else if (gd.blocoEquilibrado) { const a = r === 'lendaria' ? .12 : .2, b = r === 'lendaria' ? .72 : .78; pool = pool.slice(Math.floor(pool.length * a), Math.max(Math.floor(pool.length * a) + 1, Math.ceil(pool.length * b))); } } if (!pool.length) break; const c = gd.fraco ? pool[Math.floor(R() * Math.min(6, pool.length))] : pool[Math.floor(R() * pool.length)]; deck.push(c.id); used.add(c.id); }
       return { n: nm, a: gd.av[k], c: deck.sort((x, y) => FORCA(x) - FORCA(y)) }; }) }) : bat0;
     const ev = bat.e || null, mais = talentoNivel('estrategia') >= 4 && n.tipo !== 'boss' && !gd ? 1 : 0;   // Dom de Estratégia: +1 carta (não vale no Boss nem nos guardiões)
     const opt0 = n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : n.tipo === 'miniboss' ? { n: Math.max(7, ...bat.i.map(x => x.c.length)) + mais, livre: true } : gd ? { n: gd.regra === 'g_duo' ? 12 : 14, livre: true } : mais ? { n: 7 + mais } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
@@ -765,31 +767,50 @@
   }
   // ---- Boss final: 3 fases seguidas contra a Besta (calibrado por simulação com CPUs). Você recomeça cada fase com as mesmas 30 cartas (8 da União + 22); a Besta recomeça com um baralho novo.
   const BOSS_N = [16, 22, 28], BOSS_B = [0, 6, 12];   // cartas da Besta por fase e bônus extra por fase (além de +30 por guardião vivo)
-  const BOSS_FASES = [['Cerco', 'A Besta usa Movimentos a cada duas rodadas. Os Chamados da União (cartas preparadas) respondem.'], ['Agilidade', 'Antes de cada disputa há um desafio relâmpago: acertar dá +10 nas suas cartas, errar tira 10.'], ['Buraco negro', 'O buraco negro puxa cartas do fundo de cada baralho a cada rodada. Salve as da União nos desafios.']];
+  const BOSS_FASES = [['Cerco', 'A Besta usa Movimentos a cada duas rodadas. Os Chamados da União (cartas preparadas) respondem.'], ['Agilidade', 'A cada duas disputas surge um desafio, até oito vezes. Acertos seguidos fortalecem o terceiro bônus.'], ['Buraco negro', 'O buraco negro puxa cartas do fundo de cada baralho a cada rodada. Salve as da União nos desafios.']];
+  function deckBoss(fase, usadas) {   // baralhos estáveis e temáticos: resistência no Cerco, velocidade na Agilidade, inteligência no Buraco Negro
+    const w = fase === 1 ? { pod: .45, def: 1.25, int: .95, vel: .35 } : fase === 2 ? { pod: .8, def: .35, int: .55, vel: 1.35 } : { pod: .45, def: .8, int: 1.35, vel: .45 };
+    const score = c => Object.keys(w).reduce((t, k) => t + c.stats[k] * w[k], 0) + FORCA(c.id) * .16 + (c.especial ? 8 : 0);
+    return U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && !usadas.has(c.id)).sort((a, b) => score(b) - score(a) || a.id.localeCompare(b.id)).slice(0, BOSS_N[fase - 1] - 1).map(c => c.id);
+  }
+  function ajustarTopoBoss(ordem, fase, done) {
+    const base = ordem.slice(), box = el(`<div class="hs-esc boss-order"><h3>Fase ${fase}</h3><p class="hint">Toque em duas cartas para trocar o topo.</p><div class="boss-top5"></div><div class="row"><button class="btn" data-a="keep">Manter</button><button class="btn primary" data-a="ok">Usar ordem</button></div></div>`), grid = $('.boss-top5', box); let sel = -1;
+    const render = () => { grid.replaceChildren(); ordem.slice(0, 5).forEach((id, i) => { const w = el(`<button class="boss-top-card${sel === i ? ' on' : ''}" data-i="${i}" aria-label="Posição ${i + 1}: ${esc(U.CARDS[id].nome)}"><b>${i + 1}</b></button>`); w.append(U.cardEl(id, { up: true, noanim: true, cw: 76 })); grid.append(w); }); };
+    const m = U.modal(box, { cls: 'hs-modal' }); render(); box.onclick = e => { const c = e.target.closest('.boss-top-card'), b = e.target.closest('[data-a]'); if (c) { const i = +c.dataset.i; SND.play('click'); if (sel < 0) sel = i; else if (sel === i) sel = -1; else { [ordem[sel], ordem[i]] = [ordem[i], ordem[sel]]; sel = -1; SND.play('deal'); } render(); return; } if (!b) return; SND.play('click'); if (b.dataset.a === 'keep') ordem.splice(0, ordem.length, ...base); m.close(); setTimeout(done, 180); };
+  }
+  const FALA_BOSS_1 = {
+    V02: 'Essa coisa quer nos congelar de medo. Não vai. É hora de usar tudo o que aprendemos.', J03: 'A Besta é a última muralha. Tudo o que aprendemos nos trouxe até aqui.', M10: 'Eu vejo o padrão dela. Usemos tudo o que aprendemos e não lhe daremos outra abertura.', S01: 'Tripulação, olhos na Besta. Chegou a hora de apostar tudo o que aprendemos.', B01: 'Maré, chama e gelo nos trouxeram até ela. Agora usamos tudo o que aprendemos.', M01: 'Não precisamos adivinhar: aprendemos cada regra deste lugar. Agora vamos aplicá-las.', D06: 'Eu senti a Besta antes de vê-la. Tudo o que aprendemos é o que vai nos manter unidos.', V15: 'Tayo me ensinou a não recuar diante do impossível. Vamos usar tudo o que aprendemos.'
+  };
+  const FALA_BOSS_2 = {
+    V02: 'Quando ela cair, eu quero dizer que fui o primeiro a acreditar. Vamos vencer!', J03: 'Permaneçam juntos. Há um caminho até a vitória.', M10: 'A luz ainda encontra passagem. Nós também encontraremos.', S01: 'Ela pode ter o vazio. Nós temos uma tripulação. Vitória à frente!', B01: 'Nenhuma tempestade dura para sempre. Esta também vai passar.', M01: 'O impossível só é um problema mal observado. Já encontramos a falha.', D06: 'Não estamos sozinhos. Eu consigo sentir: vamos voltar daqui vitoriosos.', V15: 'Respirem. Um passo de cada vez — e o último será a nossa vitória.'
+  };
+  function entradaBossFalando(mao, done) {
+    const uni = UNIAO.filter(c => mao.includes(c)), segue = () => { if (!uni.length) return done(); const a = uni[0], b = uni.find(c => c !== a); npcFala(a, [FALA_BOSS_1[a]], () => b ? npcFala(b, [FALA_BOSS_2[b]], done) : done()); };
+    try { SND.play('roar'); } catch (e) { } npcFala('S11', ['GRRRAAAAH!'], segue);
+  }
   function duelarBoss(id, auto) {
     const n = BY[id], opt = { n: 30, livre: true, prefer: UNIAO.filter(c => (S.owned || []).includes(c)) };
     const autoMao = () => { const o = S.owned || []; return UNIAO.filter(c => o.includes(c)).concat(o.filter(c => !UNIAO.includes(c)).sort((a, b) => FORCA(b) - FORCA(a))).slice(0, 30); };
     (auto ? (b, f) => f(autoMao()) : (b, f) => escolher7(b, f, opt))(null, mao0 => {
       consumirAlugadas(mao0); try { SND.histStop(true); } catch (e) { }
-      const vivos = guardVivos(), pids = [1];
+      const vivos = guardVivos(), pids = [1]; let ordemBoss = null;
       const lanca = F => {
-        const mao = mao0.slice(), usadas = new Set(mao), pool = embaralha(U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && !usadas.has(c.id)).sort((a, b) => FORCA(b.id) - FORCA(a.id)).slice(0, 40)).slice(0, BOSS_N[F - 1] - 1);
-        const besta = ['S11'].concat(pool.map(c => c.id)), bonus = 30 * vivos + BOSS_B[F - 1];
+        const mao = (ordemBoss || mao0).slice(), usadas = new Set(mao), besta = ['S11'].concat(deckBoss(F, usadas)), bonus = 30 * vivos + BOSS_B[F - 1];
         const hist = { musica: 'boss', id, fundo: 'boss', progresso: r => (!r.venceu || F === 3) ? concedeXp(n, r.venceu) : null, evento: { nome: 'Fase ' + F + ' · ' + BOSS_FASES[F - 1][0], regra: BOSS_FASES[F - 1][1] + (bonus ? ' As cartas da Besta ganham +' + bonus + ' em todos os atributos' + (vivos ? ' (' + vivos + ' guardiões vivos).' : '.') : '') }, notaVit: F < 3 ? 'Fase ' + F + ' vencida. A próxima fase começa com um novo baralho da Besta e as suas 30 cartas de volta.' : null,
           aoFim: res => {
-            if (res.venceu && F < 3) { setTimeout(() => lanca(F + 1), 200); return; }
+            if (res.venceu && F < 3) { if (auto) setTimeout(() => lanca(F + 1), 200); else setTimeout(() => ajustarTopoBoss(ordemBoss, F + 1, () => lanca(F + 1)), 200); return; }
             SND.histLock = null; try { SND.histStop(); } catch (e) { }
             regResultado(res.venceu); save();
             voltarMapa = true; U.show('uniao');
-            if (res.venceu && !cleared(id)) { setTimeout(() => toggleWin(id), 450); } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) dica('derrota'); }
+            if (res.venceu && !cleared(id)) { setTimeout(() => toggleWin(id), 450); } else { try { SND.histPlay('mapa'); } catch (e) { } if (!res.venceu) { dica('derrota'); if (vivos) setTimeout(() => quandoLivre(() => ativarMissaoGuardioes('derrota')), 650); } }
           } };
         const v = talentoNivel('vigor'), me = {}, attrMods = {}; if (v >= 1) me.def = 2; if (v >= 2) me.pod = 2; if (v >= 3) me.vel = 2; if (v >= 4) me.int = 2; if (Object.keys(me).length) attrMods[0] = me; if (v >= 5) attrMods[1] = { pod: -1, def: -1, int: -1, vel: -1 };
-        U.startGame({ players: [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }, { name: 'A Besta', bot: true, diff: 'dificil' }], perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: false, maxCombats: 400, maos: [mao, besta], bonusPids: pids, bonusVal: bonus, attrMods, fortuna: talentoNivel('fortuna') ? { pid: 0, n: talentoNivel('fortuna') } : null, skipOnce: NPC && NPC.tem('pulo') ? { pid: 0 } : null, boss: { fase: F, bestaPid: 1 }, historia: hist });
+        U.startGame({ players: [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }, { name: 'A Besta', bot: true, diff: 'dificil' }], perPlayer: 7, difficulty: 'normal', specialsFrom: 2, events: false, maxCombats: 400, maos: [mao, besta], fixedOrderPids: F > 1 ? [0] : [], onOrder: (pid, ord) => { if (pid === 0) ordemBoss = ord.slice(); }, bonusPids: pids, bonusVal: bonus, attrMods, fortuna: talentoNivel('fortuna') ? { pid: 0, n: talentoNivel('fortuna') } : null, skipOnce: NPC && NPC.tem('pulo') ? { pid: 0 } : null, boss: { fase: F, bestaPid: 1 }, historia: hist });
       };
-      if (!auto && UNIAO.some(c => mao0.includes(c))) entradaUniao(mao0.filter(c => UNIAO.includes(c)), mao0.filter(c => UNIAO.includes(c)).length === UNIAO.length, () => lanca(1)); else lanca(1);
+      if (auto) lanca(1); else entradaBossFalando(mao0, () => { const uni = mao0.filter(c => UNIAO.includes(c)); if (uni.length) entradaUniao(uni, uni.length === UNIAO.length, () => lanca(1)); else lanca(1); });
     });
   }
-  function quandoLivre(fn, n, calmo) { n = n || 0; if (n > 80) return; if ($('.bau-ov, .rv-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1, false), 350); return; } if (!calmo) { setTimeout(() => quandoLivre(fn, n + 1, true), 600); return; } fn(); }   // resultado/XP → baú completo → pausa breve → diálogos, sempre sem sobreposição
+  function quandoLivre(fn, n, calmo) { n = n || 0; if (n > 80) return; if ($('.bau-ov, .rv-ov, .frg-ov, .uni-ov, .npc, .cin, .modal')) { setTimeout(() => quandoLivre(fn, n + 1, false), 350); return; } if (!calmo) { setTimeout(() => quandoLivre(fn, n + 1, true), 600); return; } fn(); }   // resultado/XP → baú completo → pausa breve → diálogos, sempre sem sobreposição
   // ---- NPC: um personagem das primeiras cartas do jogador fala com ele (usado também para vendedores, desafios e cobranças)
   function npcFala(cid, linhas, done) {
     const reab = curId, mods = $$('.modal').filter(m => m.style.display !== 'none'); mods.forEach(m => { m.style.display = 'none'; });   // o diálogo tem prioridade: esconde menus e os devolve no fim
@@ -841,6 +862,16 @@
       toast(vivos ? `A Besta foi atingida! Agora ela ganha +${30 * vivos} em todos os atributos (${vivos} guardiões vivos).` : 'A Besta está no seu momento mais fraco: nenhum guardião vivo.');
     }, red ? 100 : 700);
     setTimeout(() => { const ps = BY[posId()]; if (view === 'map') centerOn(ps.x, ps.y, null, !red); }, red ? 600 : 3600);
+  }
+  function mostrarGuardioes() {
+    if (view !== 'map') return; paintAll(); fit(true); setTimeout(() => { GUARD.forEach(id => { const g = $('.n[data-id="' + id + '"]', root); if (g && !cleared(id)) { g.classList.remove('quest-pulse'); void g.getBoundingClientRect(); g.classList.add('quest-pulse'); setTimeout(() => g.classList.remove('quest-pulse'), 3600); } }); }, 550);
+  }
+  function ativarMissaoGuardioes(origem) {
+    const ja = !!S.missaoGuardioes, derrota = origem === 'derrota';
+    if (ja) { if (derrota && !S.avisoBossGuard) { S.avisoBossGuard = 1; save(); npcFala(S.npc || (S.owned || [])[0], ['Talvez você pudesse destruir os Guardiões primeiro.'], mostrarGuardioes); } return; }
+    S.missaoGuardioes = { ativa: 1, concluida: guardVivos() === 0 ? 1 : 0 }; if (derrota) S.avisoBossGuard = 1; save(); paintAll();
+    const linhas = (derrota ? ['Talvez você pudesse destruir os Guardiões primeiro.'] : []).concat(['Eles alimentam a força da Besta. Cada Guardião destruído rompe parte dessa ligação.', 'Marquei os que restam no mapa. Destrua os Guardiões antes de enfrentar a Besta outra vez.']);
+    npcFala(S.npc || (S.owned || [])[0], linhas, () => { mostrarGuardioes(); avisoMissao('Nova missão', 'Destruir Guardiões'); });
   }
   // ---- diálogos de carta, uma única vez cada (S.dicas)
   const DICAS = {

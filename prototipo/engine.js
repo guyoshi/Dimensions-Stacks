@@ -446,9 +446,10 @@
       await this.emit('initiative', { initiator: this.s.initiator });
       for (let i = 0; i < n; i++) {
         const p = this.p(i); let ord;
-        if (this.cfg.semMontar) ord = hands[i]; else if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator, reserve: p.reserve.slice() });
+        if (this.cfg.semMontar || (this.cfg.fixedOrderPids || []).includes(i)) ord = hands[i]; else if (p.bot) ord = this.botOrderHand(hands[i], p, this.s.initiator); else ord = await this.io.orderHand(p, hands[i].slice(), { start: this.s.initiator, reserve: p.reserve.slice() });
         if (!ord || ord.length !== hands[i].length || ord.slice().sort().join() !== hands[i].slice().sort().join()) ord = hands[i];
         p.deck = ord.slice();
+        if (this.cfg.onOrder) this.cfg.onOrder(i, p.deck.slice());
       }
       if (this.rg === 'sobrecarga') this.s.fortes = new Set(hands.map(h => h.slice().sort((a, b) => sum4(CARDS[b].stats) - sum4(CARDS[a].stats))[0]));
       if (this.rg === 'arsenal') this.s.players.forEach(q => { const cs = q.deck.filter(c => { const sp = SP[CARDS[c].especial]; return sp && !sp.stub; }).slice(0, 2); cs.forEach(c => { q.deck.splice(q.deck.indexOf(c), 1); q.prepared.push(c); }); });   // Arsenal: começam com 2 especiais preparados
@@ -828,10 +829,11 @@
       await this.emit('commit', { combat });
       if (duoExtra) await this.emit('extra', { pid: 0, card: duoExtra, guardiao: true });
       if (this.cfg.simbolos) await this.simbolosRound(combat);
-      if (this.cfg.boss && this.cfg.boss.fase === 2) {   // Fase 2: desafio de agilidade; acerto +10, erro −10 nas cartas do jogador
+      if (this.cfg.boss && this.cfg.boss.fase === 2) {   // Fase 2: desafio a cada 2 disputas (máx. 8); sequência de 3 acertos dá +15
         const pe = combat.entries.find(e => e.pid === 0), p0 = this.p(0);
-        if (pe) { const ok = !p0.bot && this.io.bossMini ? !!(await this.io.bossMini(p0, { round: this.s.round })) : this.rand() < (this.cfg.boss.q == null ? 0.7 : this.cfg.boss.q); const d = ok ? 10 : -10;
-          this.addMod(pe, 0, 'Desafio', x => { for (const k of AID) x.stats[k] = Math.max(0, x.stats[k] + d); }); this.log(ok ? 'Desafio cumprido: +10 em todos os atributos.' : 'Desafio falhou: −10 em todos os atributos.', 'efeito'); }
+        const ag = this.s.agilidade = this.s.agilidade || { n: 0, seq: 0 };
+        if (pe && (this.s.combats + 1) % 2 === 0 && ag.n < 8) { const ok = !p0.bot && this.io.bossMini ? !!(await this.io.bossMini(p0, { round: this.s.round, numero: ag.n + 1, seq: ag.seq })) : this.rand() < (this.cfg.boss.q == null ? 0.7 : this.cfg.boss.q); ag.n++; ag.seq = ok ? ag.seq + 1 : 0; const d = ok ? (ag.seq % 3 === 0 ? 15 : 10) : -10;
+          this.addMod(pe, 0, 'Desafio', x => { for (const k of AID) x.stats[k] = Math.max(0, x.stats[k] + d); }); this.log(ok ? `Desafio cumprido: +${d} em todos os atributos${d === 15 ? ' (sequência de 3)' : ''}.` : 'Desafio falhou: −10 em todos os atributos.', 'efeito'); }
       }
       if (this.cfg.sorte) {   // melhoria "Sorte de combate" (Modo História): chance p de a carta do jogador ganhar v% em todos os atributos nesta disputa
         const sg = this.cfg.sorte, se = combat.entries.find(e => e.pid === sg.pid);
@@ -1053,17 +1055,19 @@
         result = { type: attack ? 'attack' : 'defense', winners: [w.pid], winnerPid: w.pid, attr: w.attr, value: this.combatValue(combat, w), tb: ev.tb || null };
         this.log(`${this.p(w.pid).name} vence a disputa ${B.n + 1} do bloco ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit'); }
       B.n++;
+      const block = { step: B.n, limit: 3, ended: false, outcome: null, scores: Object.keys(B.held).map(Number).map(pid => { const x = B.w[pid] || { a: 0, d: 0 }; return { pid, attack: x.a, defense: x.d, total: x.a + x.d }; }) };
       const vazio = Object.keys(B.held).some(k => { const q = this.p(+k); return q.deck.length === 0 && q.reserve.length === 0; });
       if (B.n >= 3 || vazio || this.s.combats + 1 >= (this.cfg.maxCombats || 400)) {
         const tot = pid => { const x = B.w[pid]; return x ? x.a + x.d : 0; }, pids = Object.keys(B.held).map(Number), best = Math.max(...pids.map(tot)), top = pids.filter(p => tot(p) === best);
-        if (best > 0 && top.length === 1) { const wp = top[0], x = B.w[wp], cap = x.a >= x.d;
+        block.ended = true;
+        if (best > 0 && top.length === 1) { const wp = top[0], x = B.w[wp], cap = x.a > x.d; block.outcome = { winnerPid: wp, capture: cap };
           for (const pid of pids) { if (pid === wp) { this.p(pid).deck.push(...B.held[pid]); moves.push({ cards: B.held[pid].slice(), from: pid, to: pid }); continue; }
             const cs = B.held[pid].slice(); if (cap) { this.p(wp).deck.push(...cs); this.s.caps[wp] = (this.s.caps[wp] || 0) + cs.length; moves.push({ cards: cs, from: pid, to: wp }); } else { cs.forEach(c => this.s.bh.push({ id: c, kind: 'normal' })); moves.push({ cards: cs, from: pid, to: 'bh' }); } }
           this.log(`Fim do bloco: ${this.p(wp).name} venceu ${x.a + x.d} disputa(s) ${cap ? 'e captura as cartas dos outros' : '(mais em defesa) e as cartas dos outros vão ao Buraco Negro'}.`, 'efeito'); }
-        else { for (const pid of pids) { this.p(pid).deck.push(...B.held[pid]); moves.push({ cards: B.held[pid].slice(), from: pid, to: pid }); } this.log('Fim do bloco sem vencedor: as cartas voltam aos donos.', 'res'); }
+        else { block.outcome = { winnerPid: null, capture: false }; for (const pid of pids) { this.p(pid).deck.push(...B.held[pid]); moves.push({ cards: B.held[pid].slice(), from: pid, to: pid }); } this.log('Fim do bloco sem vencedor: as cartas voltam aos donos.', 'res'); }
         this.s.blk = null;
       }
-      combat.result = result; combat.moves = moves; this.memResolved(moves);
+      combat.result = result; combat.moves = moves; combat.block = block; this.memResolved(moves);
       let calc = null; try { calc = this.calcSummary(combat, ev, result); } catch (err) { calc = null; }
       await this.emit('resolved', { combat, result, moves, calc });
     }

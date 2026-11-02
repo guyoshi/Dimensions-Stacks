@@ -303,11 +303,24 @@
   function bossMov(now, next, info) {
     const mv = $('#game .bossmov'), B = G && G.cfg.boss; if (!mv || !B) return; let t = `<b>${FASES[B.fase]}</b>`;
     if (B.fase === 1) t += now ? ` · Movimento: <b>${esc(info[now].nome)}</b>` : ' · sem Movimento'; if (B.fase === 1 && next) t += ` · próximo: ${esc(info[next].nome)}`;
+    if (B.fase === 2) t += ` · ⚡ ${(G.s.agilidade && G.s.agilidade.n) || 0}/8`;
+    if (B.fase === 3) { const r = G.s.round || 1, k = r <= 4 ? 1 : r <= 8 ? 2 : 3; t += ` · ● ×${k}`; }
     mv.innerHTML = t;
   }
   function bossBarPaint() {
     if (!G || !G.cfg.boss) return; const p0 = G.p(0), others = new Set(); G.s.players.forEach(q => { if (q.pid !== 0) [...q.deck, ...q.reserve, ...q.prepared].forEach(c => others.add(c)); }); const bh = new Set(G.s.bh.map(x => x.id));
     $$('#game .bossbar .bb').forEach(b => { const id = b.dataset.id; b.className = 'bb ' + (p0.prepared.includes(id) ? 'prep' : bh.has(id) || others.has(id) ? 'lost' : 'deck'); });
+  }
+  function ruleHud() {
+    const host = $('#game'), ar = host && $('.arena', host); if (!host || !ar) return;
+    $$('.rulehud', host).forEach(x => x.remove());
+    if (G && G.cfg && G.cfg.regra && G.cfg.regra.id === 'g_bloco') { const h = el('<div class="rulehud blockhud" aria-label="Placar do bloco de três"></div>'); ar.parentNode.insertBefore(h, ar); blockHud(null); }
+  }
+  function blockHud(block) {
+    const h = $('#game .blockhud'); if (!h) return; const b = block || { step: 0, limit: 3, scores: G.s.players.map(p => ({ pid: p.pid, attack: 0, defense: 0, total: 0 })) };
+    const scores = (b.scores || []).map(x => `<span class="bh-score" style="--pc:${PCOL[x.pid]}" title="${esc(nameOf(x.pid))}: ${x.attack} ataque, ${x.defense} defesa"><i></i><b>${x.total}</b><small>⚔${x.attack} ◆${x.defense}</small></span>`).join('');
+    const out = b.ended ? !b.outcome || b.outcome.winnerPid == null ? '<em title="Empate">＝</em>' : `<em title="${b.outcome.capture ? 'Captura' : 'Buraco Negro'}">${b.outcome.capture ? '⚔' : '●'}</em>` : '';
+    h.classList.toggle('done', !!b.ended); h.innerHTML = `<span class="bh-step" title="Disputas neste bloco">◆ <b>${Math.min(b.step || 0, b.limit || 3)}/${b.limit || 3}</b></span><span class="bh-scores">${scores}</span>${out}`;
   }
   function refresh() {
     if (!G || !V.seats[0] && !Object.keys(V.seats).length) return;
@@ -476,7 +489,7 @@
   // ---------------------------------------------------------------- manipuladores de eventos do motor
   const H = {
     async setup() {
-      buildBoard(); bossHud(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
+      buildBoard(); bossHud(); ruleHud(); SND.play('deal'); banner('Preparando a mesa', 'Embaralhando as dimensões', null, 1400); await sleep(900);
     },
     async initiative({ initiator }) {
       V.init = initiator; const n = V.n, seats = G.s.players.map(p => V.seats[p.pid]).filter(Boolean);
@@ -526,6 +539,7 @@
     },
     async combatStart({ initiator, round }) {
       V.init = initiator; V.win = {}; { const cp = $('#calcpill'); if (cp) cp.remove(); } refresh();
+      if (G.cfg && G.cfg.regra && G.cfg.regra.id === 'g_bloco' && !G.s.blk) blockHud(null);
       caption(`Disputa ${G.s.combats + 1} — ${nameOf(initiator)} inicia` + (round < 2 && V.humans > 0 ? ' · especiais liberam na Rodada 2' : '')); await sleep(350);
       if (G.combat && G.combat.alvo != null) { banner('Alvo do dia: ' + G.combat.alvo, 'vence o valor mais próximo', '#ffd25f', 1600); await sleep(900); }
     },
@@ -649,7 +663,7 @@
       updateAll(); let tipId = null; setCalc(calc);
       if (result.type === 'tie' || result.type === 'none') {
         if (result.tb) await tieBreak(result.tb, null);
-        banner('Empate', 'As cartas voltam aos donos', '#b9b2ea', 1800); SND.play('tick'); caption('Ninguém vence esta disputa.'); await sleep(1700, 900);
+        const retidas = combat.block && !combat.block.ended; banner('Empate', retidas ? 'O bloco continua' : 'As cartas voltam aos donos', '#b9b2ea', 1800); SND.play('tick'); caption(retidas ? 'Ninguém pontua; as cartas ficam retidas até o fim do bloco.' : 'Ninguém vence esta disputa.'); await sleep(1700, 900);
       } else {
         const w = result.winnerPid, slot = V.slots[w], atk = result.type === 'attack';
         if (result.tb) await tieBreak(result.tb, w);
@@ -665,14 +679,15 @@
         caption(tb ? tbTxt + '.' : `${nameOf(w)} vence ${atk ? 'atacando' : 'defendendo'} com ${ATT[result.attr].nome} ${result.value}.`, true);
         await sleep(2100, 1000);
       }
+      if (combat.block) { blockHud(combat.block); if (combat.block.ended) { const o = combat.block.outcome, sub = !o || o.winnerPid == null ? 'cartas devolvidas' : o.capture ? '⚔ captura' : '● Buraco Negro'; banner('Bloco encerrado', sub, '#c58cff', 1400); await sleep(850, 500); } }
       if (tipId && !V.online) await U.tip(tipId); // offline: congela a mesa e explica antes das cartas se moverem
       // movimentação das cartas
       const jobs = moves.map((m, i) => sleep(i * 220).then(async () => {
         const src = V.slots[m.from], card = $('.card', src); if (!card) return;
         const e = entryOf(m.from); const dest = m.to === 'bh' ? $('#bh') : m.zone === 'reserve' ? seatRes(m.to) : seatDeck(m.to);
-        card.style.visibility = 'hidden';
-        if (m.to === 'bh') { SND.play('blackhole'); await fly(src, dest, { id: m.cards[0], stats: e && e.stats, cw: V.cw, ms: 1000, r1: 540, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' }); pulseBH(); }
-        else { if (m.from !== m.to) SND.play('capture'); await fly(src, dest, { id: m.cards[0], stats: e && e.stats, cw: V.cw, ms: 800, arc: 30 }); }
+        card.style.visibility = 'hidden'; const ids = m.cards && m.cards.length ? m.cards : [card.dataset.id];
+        if (m.to === 'bh') { SND.play('blackhole'); await Promise.all(ids.map((id, j) => sleep(j * 90).then(() => fly(src, dest, { id, stats: j ? null : e && e.stats, cw: Math.max(42, V.cw - j * 3), ms: 1000, r1: 500 + j * 35, s1: .04, fade: true, ease: 'cubic-bezier(.6,0,.9,.5)' })))); pulseBH(); }
+        else { if (m.from !== m.to) SND.play('capture'); await Promise.all(ids.map((id, j) => sleep(j * 90).then(() => fly(src, dest, { id, stats: j ? null : e && e.stats, cw: Math.max(42, V.cw - j * 3), ms: 800, arc: 24 + j * 9 })))); }
       }));
       await Promise.all(jobs); refresh(); await sleep(250);
       if (tipId && V.online) U.tip(tipId); // online: só depois das animações, sem travar a mesa
@@ -692,8 +707,8 @@
       refresh(); SND.play('elim'); banner(`${nameOf(pid)} eliminado`, 'sem cartas', '#ff6b6b', 2000); await sleep(1700); if (U.tip) U.tip('elim');
     },
     async movimento({ now, next, info }) { bossMov(now, next, info); if (now) { SND.play('banner'); banner(info[now].nome, info[now].txt, '#b04bff', 2400); caption('Movimento da Besta: ' + info[now].nome + '. ' + info[now].txt, true); await sleep(1500); } },
-    async bossPull({ round, k, pulled }) { refresh(); SND.play('elim'); const salvas = (pulled[0] || []).filter(x => x.saved).length, perdidas = (pulled[0] || []).filter(x => !x.saved && CARDS[x.c] && UNI8.includes(x.c)).length; banner('Buraco negro', `puxa ${k} do fundo de cada baralho` + (salvas ? ` · ${salvas} salva` : '') + (perdidas ? ` · ${perdidas} da União perdida` : ''), '#8f5cff', 1800); await sleep(1200); },
-    async round({ round }) { refresh(); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
+    async bossPull({ round, k, pulled }) { refresh(); bossMov(null, null); SND.play('elim'); const salvas = (pulled[0] || []).filter(x => x.saved).length, perdidas = (pulled[0] || []).filter(x => !x.saved && CARDS[x.c] && UNI8.includes(x.c)).length; banner('Buraco negro', `puxa ${k} do fundo de cada baralho` + (salvas ? ` · ${salvas} salva` : '') + (perdidas ? ` · ${perdidas} da União perdida` : ''), '#8f5cff', 1800); await sleep(1200); },
+    async round({ round }) { refresh(); if (G.cfg && G.cfg.boss) bossMov(null, null); SND.play('round'); banner(`Rodada ${round}`, round === 2 && V.humans > 0 ? 'Especiais liberados' : null, null, 1500); await sleep(1000); if (U.tip && round === 2) { if (V.online) U.tip('round2'); else await U.tip('round2'); } },
     async end({ winner }) {
       SND.matchEnd && SND.matchEnd(); refresh(); const s = G.s; const sameT = (a, b) => a === b || !!(G.cfg && G.cfg.teams && G.cfg.teams.some(t => t.includes(a) && t.includes(b))); const human = winner != null && (V.online ? sameT(winner, V.viewer) : (G.cfg && G.cfg.teams ? G.cfg.teams.some(t => t.includes(winner) && t.some(x => !G.p(x).bot)) : !G.p(winner).bot)); const anyHuman = V.humans > 0;
       const lost = winner == null || !(human || !anyHuman);
@@ -784,7 +799,7 @@
           setTimeout(() => { done = true; ov.remove(); res(tally); }, seg * 1000 + 100);
         });
       },
-      async bossMini() { return window.DSBossMini ? window.DSBossMini.play() : true; },
+      async bossMini(p, info) { return window.DSBossMini ? window.DSBossMini.play(null, info) : true; },
       async bossSave(p, card) { return window.DSBossMini ? window.DSBossMini.salvar(card) : true; },
       async bet(p) {   // modo história, evento Aposta: 1 pêndulo antes de cada rodada
         const A = G.cfg.historia && G.cfg.historia.aposta; if (!A || p.bot || A.saldo() < 1) return false;
