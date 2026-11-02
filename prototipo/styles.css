@@ -2086,3 +2086,25 @@ body.reduce .hs-rec2.mc li.mc-r, body.reduce .hs-rec2.mc .mc-seal, body.reduce .
 .mg-porta[data-portal="verde"] { --portal: url(cena/portais/portal-ciano.png); --brilho: #5dff9a; }
 .mg-porta[data-portal="verde"]::before { filter: hue-rotate(-62deg) drop-shadow(0 0 8px #5dff9a); }
 .mg-tmo { width: min(260px, 80vw); height: 7px; border-radius: 9px; background: #ffffff1c; overflow: hidden; margin: 2px auto 8px; } .mg-tmo i { display: block; height: 100%; background: linear-gradient(90deg, #ff8a5c, #ffd25f); transition: width .1s linear; }
+/* Fechadura: mais espaço para as tentativas, encaixes numerados, brilho nos acertos; Hard com 5 encaixes */
+.mg-body.cf-body { justify-content: flex-start; gap: 7px; padding-top: 4px; }
+.cf-body .mg-cofre { width: min(236px, 60vw); } .cf-body .mg-cofre.c5 { width: min(250px, 63vw); }
+.cf-hist { max-height: none; flex: 1 1 auto; min-height: 96px; } 
+.cf-slot { position: absolute; } .cf-n { position: absolute; right: -2px; top: -4px; min-width: 14px; height: 14px; border-radius: 99px; background: #0b0708; color: #ffe6a7; border: 1px solid #d7a94c; font: 800 9px/13px var(--f-disp); text-align: center; text-shadow: none; }
+.cf-k { text-decoration: none; width: 14px; font: 800 11px var(--f-disp); color: #b79d68; text-align: center; }
+.cf-mini { border-radius: 8px; } .cf-mini.p { box-shadow: 0 0 0 1px #ffd25f, 0 0 12px #ffd25f; background: #ffd25f26; } .cf-mini.q { box-shadow: 0 0 0 1px #72cfff88; background: #72cfff14; }
+.cf-tent.cf-win { border-color: #ffd25f; box-shadow: 0 0 12px #ffd25f66; }
+.cf-body .cf-hint { margin: 0; }
+@media (max-height: 720px) { .cf-body .mg-cofre { width: min(204px, 54vw); } .cf-hist { min-height: 72px; } }
+/* Hard: distrações do tema na Dança, bomba da Constelação */
+.mg-dance { position: relative; }
+.mg-pass { position: absolute; left: 50%; z-index: 6; pointer-events: none; animation: mgPass var(--d) linear forwards; }
+.mg-pass.cometa { width: 110px; height: 7px; border-radius: 9px; background: linear-gradient(90deg, transparent, #bfe6ff 70%, #fff); box-shadow: 0 0 14px #7fd0ff, 0 0 30px #5aa8ff88; }
+.mg-pass.nebulosa { width: 150px; height: 84px; border-radius: 50%; background: radial-gradient(ellipse, #b46bff99, #6a3fd066 55%, transparent 72%); filter: blur(3px); }
+.mg-pass.nave { width: 54px; height: 22px; background: linear-gradient(90deg, #5d6a8c, #d6e4ff); clip-path: polygon(0 50%, 22% 0, 100% 35%, 100% 65%, 22% 100%); filter: drop-shadow(0 0 8px #8fd0ff); }
+@keyframes mgPass { from { transform: translateX(calc(var(--dir) * -290px)) scaleX(var(--dir)); } to { transform: translateX(calc(var(--dir) * 290px)) scaleX(var(--dir)); } }
+body.reduce .mg-pass { animation-duration: 0s; opacity: 0; }
+.mg-cell.sim.bomba { background: radial-gradient(circle, #3a0f1c, #12060c); border-color: #ff5a4f; animation: bombaPulsa .5s ease-in-out infinite; } .mg-cell.sim.bomba svg { width: 100%; height: 100%; }
+.mg-cell.sim.boom { animation: bombaBoom .6s ease-out forwards; }
+@keyframes bombaPulsa { 50% { box-shadow: 0 0 18px #ff3b4f; } } @keyframes bombaBoom { 0% { transform: scale(1); filter: brightness(2); } 100% { transform: scale(2.4); opacity: 0; } }
+/* Hard da Rota/Cores: barreiras */
