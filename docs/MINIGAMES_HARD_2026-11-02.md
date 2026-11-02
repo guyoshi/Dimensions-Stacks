@@ -98,3 +98,10 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 - **REGRA — a vitória prevalece:** capturas marcadas (AE-101 Capturar atacante, AE-102 Capturar defensor, AE-109 Duelo condicionado) só valem se quem as usou VENCEU a disputa; caso contrário o vencedor leva as cartas normalmente. Antes, o marcador podia capturar mesmo perdendo.
 - **Bots:** valores de preparo recalibrados (MIRROR/BOT_VAL/TUNE). Uso zero caiu de 14 para 8 (restam só os não aprovados/sem decisão).
 - **Atenção:** AE-065 (Tríplice transferência) com 85% de vitória do portador — forte demais; AE-092/094/098/099 ficam entre 35–43% (úteis, mas custam uma carta).
+
+## Lote 14:49 (02/11) — REGRAS/BALANÇO
+- **Reformas:** AE-057/058 (quem passa a carta ganha +10 em tudo na disputa), AE-108 (carta perdida para ataque volta ao fundo do baralho, não ao Buraco Negro), AE-119 virou "Embaralhar rivais" (embaralha a ordem do baralho de todos, menos você).
+- **Novas habilidades AE-146 a AE-198 (53)** implementadas no motor, **sem carta atribuída** (não afetam partidas até serem dadas a cartas). Ver `HABILIDADES_190_IDEIAS_2026-11-02.md`.
+- **Mecânicas de motor novas:** Fortaleza (imune a reduções alheias), Reflexo, Armadilha, Contragolpe, Margem larga, Atraso (ninguém usa habilidade), Pausa, fenômeno convocado/escolhido/anulado, carta fantasma (clone −10), aposta com perda do topo do baralho.
+- **UI:** escolha de fenômeno usa o seletor de opções com nome e resumo do fenômeno.
+- **Bots:** valores de preparo calibrados; as mais fracas (Pausa, fenômenos, Marca, Margem larga, Atraso) têm uso baixo de propósito (taxa de vitória do portador de 33% a 42% no teste).

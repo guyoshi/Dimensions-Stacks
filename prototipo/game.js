@@ -933,7 +933,7 @@
       async pickAttr(p, spec) {
         await cover(p);
         const node = el(`<div class="sheet"><div class="txt"><h3>${esc(p.name)}</h3><div class="hint"><b>${esc(spec.title)}</b><br>${esc(spec.hint || '')}</div>
-          <div class="attrs">${spec.options.map(a => `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span></button>`).join('')}</div></div></div>`);
+          <div class="attrs">${spec.options.map(a => spec.names && spec.names[a] ? `<button class="attrbtn" data-v="${a}"><span><b>${esc(spec.names[a].nome)}</b><small>${esc(spec.names[a].curto || '')}</small></span></button>` : `<button class="attrbtn" data-a="${a}" data-v="${a}">${ICON[a]}<span><b>${ATT[a].nome}</b><small>${ATT[a].tipo}</small></span></button>`).join('')}</div></div></div>`);
         return ask(node, '.attrbtn');
       },
       async chooseTarget(p, cands, label) {
