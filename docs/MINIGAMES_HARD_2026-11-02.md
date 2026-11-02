@@ -83,3 +83,7 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 - **BALANÇO Boss final:** Chamado Visão passa a dar +8 em todos os atributos na disputa; Elo +10. Simulação (`tests/sim_boss.js`, `sim_boss_chamados.js`): 8 União + melhores cartas ≈ 49–53% de vitória do bot nas 3 fases; 4 União 14%; sem União 1%; 3 guardiões vivos 0%. Todos os Chamados pesam 9–18 pontos.
 - **BALANÇO Guardiões Cassiopeia/Orion (Dupla somada):** os dois guardiões fazem uma única escolha de atributo (antes cada um escolhia).
 - Testes: `run_npcs.py` e `run_historia.py` atualizados.
+
+## Lote 12:50 (02/11)
+- **BALANÇO Dupla somada (Cassiopeia e Orion):** a 2ª carta do jogador agora é escolhida entre as 3 do topo do baralho (pode pular a do meio); as demais voltam ao topo na mesma ordem. CPU escolhe a de maior soma. A tela avisa que o especial é só da primeira carta.
+- **Textos reduzidos (aprovados):** Home H3; Desafios D1–D3; Perfil P1–P7. H1/H4 mantidos; H2 não aprovado (mantido).

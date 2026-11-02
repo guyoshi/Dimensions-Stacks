@@ -90,7 +90,7 @@
         <button class="tile" data-go="online"><span class="ti">${ICO.users}</span><b>Multiplayer</b></button>
         <button class="tile" data-go="setup"><span class="ti">${ICO.bot}</span><b>Contra CPU</b></button>
       </div>
-      <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia${d.streak > 1 ? ` · ${d.streak} dias seguidos` : ''}</small>${d.done ? '<b>Concluído</b>' : ''}<span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
+      <button class="daily" data-tab="chal"><span class="dl"><small>Desafio do dia</small>${d.done ? '<b>Concluído</b>' : ''}<span>${esc(d.texto)}</span></span><span class="dc ${d.done ? 'ok' : ''}">${d.done ? '✓' : ICO.chev}</span></button>
     </div>`;
     bindTop(s); fxInto(s); homeFan($('#homeFan', s));
     s.onclick = e => {
@@ -184,14 +184,13 @@
   }
   function chalTab() {
     const s = $('#chal'); const d = ST.dailyToday(); const wk = ST.weekly(); ST.save();
-    s.innerHTML = `<div class="tabwrap">${topbar('Desafios', 'Renovam todo dia e toda semana')}
+    s.innerHTML = `<div class="tabwrap">${topbar('Desafios')}
       <section class="card-d big ${d.done ? 'done' : ''}"><div class="cd-h"><span class="pill">Desafio do dia</span>${d.streak ? `<span class="streak">${ICO.flame}${d.streak} ${d.streak === 1 ? 'dia' : 'dias seguidos'}</span>` : ''}</div>
-        <h2>${esc(d.texto)}</h2><div class="cd-f">${d.done ? '<span class="okpill">✓ Concluído hoje</span>' : '<span class="hint">Vale em partidas contra a CPU ou online. Volta amanhã com um novo.</span>'}</div>
+        <h2>${esc(d.texto)}</h2><div class="cd-f">${d.done ? '<span class="okpill">✓ Concluído hoje</span>' : '<span class="hint">Vale contra CPU ou online.</span>'}</div>
         ${d.done ? '' : '<div class="row"><button class="btn primary" data-go="quick">Jogar agora</button></div>'}</section>
       <h3 class="sec">Missões da semana</h3>
       <div class="missions">${wk.map(w => `<div class="mission ${w.val >= w.meta ? 'done' : ''}"><div class="mt"><b>${esc(w.texto)}</b><span>${w.val}/${w.meta}</span></div><div class="bar"><i style="width:${w.val / w.meta * 100}%"></i></div></div>`).join('')}</div>
-      <h3 class="sec">Conquistas</h3><div class="hint">${ST.achievements().filter(a => a.done).length} de ${ST.ACH.length} desbloqueadas. Veja todas no seu Perfil.</div>
-      <div class="row"><button class="btn" data-tab="prof">Ver conquistas</button></div></div>`;
+      <div class="row"><button class="btn" data-tab="prof">Conquistas (${ST.achievements().filter(a => a.done).length}/${ST.ACH.length})</button></div></div>`;
     bindTop(s);
     s.onclick = e => { const b = e.target.closest('[data-go],[data-tab]'); if (!b) return; SND.init(); SND.play('click'); if (b.dataset.tab) return U.show(b.dataset.tab); if (b.dataset.go === 'quick') U.quick(); };
   }
@@ -213,29 +212,28 @@
     const stat = (v, l) => `<div class="stat"><b>${v}</b><small>${l}</small></div>`;
     s.innerHTML = `<div class="tabwrap">${topbar('Perfil')}
       <section class="pf-head"><button class="pf-av" id="pfAv" aria-label="Trocar avatar">${avatarHTML(p.avatar, p.name || 'Jogador', 84)}<i>✎</i></button>
-        <div class="pf-id"><small class="hint">Seu nome</small><div class="pfn" id="pfnRow"><b id="pfNameTxt">${esc(p.name) || 'Sem nome'}</b><button class="ibtn sm" id="pfEdit" aria-label="Editar nome" title="Editar nome">✎</button></div><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Como você quer aparecer" aria-label="Seu nome" value="${esc(p.name)}" autocomplete="off" hidden><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
+        <div class="pf-id"><div class="pfn" id="pfnRow"><b id="pfNameTxt">${esc(p.name) || 'Sem nome'}</b><button class="ibtn sm" id="pfEdit" aria-label="Editar nome" title="Editar nome">✎</button></div><input type="text" id="pfName" class="txtin" maxlength="14" placeholder="Nome" aria-label="Seu nome" value="${esc(p.name)}" autocomplete="off" hidden><div class="pf-uid"><small class="hint">Seu ID</small><code id="pfUid">${esc(ST.uid())}</code><button class="btn sm ghost" id="pfCopy">Copiar</button></div><small class="hint">Jogando desde ${esc(since)}</small></div></section>
       <nav class="pf-tabs" id="pfTabs">${[['res', 'Resumo'], ['car', 'Cartas'], ['con', 'Conquistas'], ['cnt', 'Conta']].map(([k, n]) => `<button data-p="${k}" class="${PFT === k ? 'on' : ''}">${n}</button>`).join('')}</nav>
       <div class="pf-pane" data-p="res"><section class="stats">${stat(t.g, 'Partidas')}${stat(t.w, 'Vitórias')}${stat(t.g ? pct + '%' : '—', 'Aproveitamento')}${stat(t.best, 'Maior sequência')}${stat(t.dispW, 'Disputas ganhas')}${stat(t.esp, 'Especiais usados')}</section>
       <section class="modes"><div><b>Contra CPU</b><span>${t.pvb.w}/${t.pvb.g} vitórias</span></div><div><b>Contra pessoas</b><span>${t.pvp.w}/${t.pvp.g} vitórias</span></div><div><b>Online</b><span>${t.online.w}/${t.online.g} vitórias</span></div>${t.g ? `<div><b>Partida média</b><span>${fmtDur(t.dur / t.g)} · ${(t.rounds / t.g).toFixed(1)} rodadas</span></div>` : ''}</section>
-      </div><div class="pf-pane" data-p="car"><h3 class="sec">Maestria das cartas <span class="hint">${ST.masteryCount(1)} com emblema</span></h3><div class="mastsec" id="mastsec"></div>
+      </div><div class="pf-pane" data-p="car"><h3 class="sec">Maestria das cartas</h3><div class="mastsec" id="mastsec"></div>
       <h3 class="sec">Cartas favoritas</h3><div class="favrow" id="favrow"></div>
 </div><div class="pf-pane" data-p="con"><h3 class="sec">Conquistas <span class="hint">${ach.filter(a => a.done).length}/${ach.length}</span></h3>
       <div class="achs">${ach.map(a => `<div class="ach ${a.done ? 'on' : ''}"><span class="ai">${a.done ? ICO.medal : ICO.lock}</span><div class="at"><b>${esc(a.nome)}</b><small>${esc(a.desc)}</small>${a.done ? '' : (a.meta > 1 ? `<div class="bar"><i style="width:${a.val / a.meta * 100}%"></i></div><em>${a.val}/${a.meta}</em>` : '')}</div></div>`).join('')}</div>
 </div><div class="pf-pane" data-p="cnt">
       <h3 class="sec">Buscar jogador</h3><div class="find" id="pfFind"></div>
       <div class="row" id="pfAdmin"></div>
-      <div class="row" style="margin-top:12px"><button class="btn ghost sm" id="pfReset">Apagar dados deste aparelho</button></div>
+      <div class="row" style="margin-top:12px"><button class="btn ghost sm" id="pfReset">Apagar dados</button></div>
     </div></div>`;
     bindTop(s);
     { const pane = k => { PFT = k; s.querySelectorAll('.pf-pane').forEach(d => { d.hidden = d.dataset.p !== k; }); s.querySelectorAll('#pfTabs button').forEach(b => b.classList.toggle('on', b.dataset.p === k)); };
       pane(PFT); $('#pfTabs', s).onclick = e => { const b = e.target.closest('button'); if (b) { SND.play('click'); pane(b.dataset.p); } }; }
     { const ms = $('#mastsec', s), top = ST.masteryList().slice(0, 6);
       ms.innerHTML = `<div class="mlegend">${ST.MAST_NOME.slice(1).map((n, i) => `<span>${U.emblem(i + 1, 22)}<b>${esc(n)}</b><small>${ST.MAST_AT[i]} XP</small></span>`).join('')}</div>`
-        + (top.length ? `<div class="mtop">${top.map(m => `<button class="mrow" data-id="${m.id}">${U.emblem(m.lv, 30) || '<span class="memp"></span>'}<span class="mn"><b>${esc(CARTAS.find(c => c.id === m.id).nome)}</b><small>${m.xp} XP · ${m.u} usos · ${m.w} vitórias · ${m.s} especiais</small></span></button>`).join('')}</div>` : '<p class="hint">Cada uso, disputa vencida e especial resolvido rende XP à carta. Os emblemas são só reconhecimento: não alteram atributos.</p>')
-        + '<p class="hint">XP: 1 por uso · 3 por disputa vencida · 2 por especial resolvido.</p>';
+        + (top.length ? `<div class="mtop">${top.map(m => `<button class="mrow" data-id="${m.id}">${U.emblem(m.lv, 30) || '<span class="memp"></span>'}<span class="mn"><b>${esc(CARTAS.find(c => c.id === m.id).nome)}</b><small>${m.xp} XP · ${m.u} usos · ${m.w} vitórias · ${m.s} especiais</small></span></button>`).join('')}</div>` : '<p class="hint">Cada uso, disputa vencida e especial resolvido rende XP à carta. Os emblemas são só reconhecimento: não alteram atributos.</p>');
       ms.onclick = e => { const b = e.target.closest('.mrow'); if (b) { SND.play('click'); U.zoom(b.dataset.id, { list: top.map(m => m.id), mastery: true }); } }; }
     const fr = $('#favrow', s);
-    if (p.fav.length) fr.append(...p.fav.slice(0, 12).map(id => cardEl(id, { up: true, noanim: true, cw: 76, click: true }))); else fr.innerHTML = '<p class="hint">Abra uma carta na Coleção e toque em ☆ para favoritá-la.</p>';
+    if (p.fav.length) fr.append(...p.fav.slice(0, 12).map(id => cardEl(id, { up: true, noanim: true, cw: 76, click: true }))); else fr.innerHTML = '<p class="hint">Sem favoritas</p>';
     const nm = $('#pfName', s), row = $('#pfnRow', s);   // o nome só se edita aqui: toque no lápis, digite e confirme com Enter (ou ao sair do campo)
     const commit = () => { ST.setName(nm.value); const n = ST.profile().name; $('#pfNameTxt', s).textContent = n || 'Sem nome'; const av = $('#pfAv', s); av.innerHTML = avatarHTML(ST.profile().avatar, n || 'Jogador', 84) + '<i>✎</i>'; nm.hidden = true; row.hidden = false; };
     $('#pfEdit', s).onclick = () => { SND.play('click'); row.hidden = true; nm.hidden = false; nm.value = ST.profile().name || ''; nm.focus(); nm.select(); };
@@ -244,7 +242,7 @@
     $('#pfAv', s).onclick = () => { SND.play('click'); avatarPicker(() => profTab()); };
     let sure = false; const rb = $('#pfReset', s); rb.onclick = () => { if (!sure) { sure = true; rb.textContent = 'Toque de novo para apagar tudo'; return; } ST.reset(); profTab(); };
     const cp = $('#pfCopy', s); cp.onclick = async () => { try { await navigator.clipboard.writeText(ST.uid()); cp.textContent = 'Copiado'; } catch (e) { cp.textContent = ST.uid(); } };
-    if (U.findHook) U.findHook($('#pfFind', s)); else $('#pfFind', s).innerHTML = '<p class="hint">Busca disponível ao abrir pelo claude.ai.</p>';
+    if (U.findHook) U.findHook($('#pfFind', s)); else $('#pfFind', s).innerHTML = '';
     if (U.adminHook) U.adminHook($('#pfAdmin', s));
   }
   function avatarPicker(done) {

@@ -823,7 +823,10 @@
       let duoExtra = null;
       if (this.rg === 'g_duo' && combat.entries.filter(e => e.pid >= 1).length >= 2) {
         const pe = combat.entries.find(e => e.pid === 0), pp = this.p(0);
-        if (pe && pp.deck.length) { duoExtra = pp.deck.shift(); pe.extra.push(duoExtra); pe.extraStats[duoExtra] = this.evBase(duoExtra, 0).st; }
+        if (pe && pp.deck.length) {   // Dupla somada: a 2ª carta do jogador é escolhida entre as 3 do topo (pode pular a do meio para somar duas não sequenciais)
+          const topo = pp.deck.slice(0, 3);
+          const esc = topo.length > 1 ? (await this.askCards(0, { cards: topo, title: 'Segunda carta da dupla', hint: 'Escolha uma das 3 do topo para somar à carta em jogo. As outras voltam ao topo, na mesma ordem.' }, () => [topo.slice().sort((x, y) => sum4(CARDS[y].stats) - sum4(CARDS[x].stats))[0]]))[0] : topo[0];
+          pp.deck.splice(pp.deck.indexOf(esc), 1); duoExtra = esc; pe.extra.push(duoExtra); pe.extraStats[duoExtra] = this.evBase(duoExtra, 0).st; }
       }
       this.memCommit(combat);
       await this.emit('commit', { combat });
