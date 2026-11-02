@@ -193,5 +193,6 @@
 "AE-195": "Inteligência e Velocidade da carta de combate de um rival trocam de valor nesta disputa.",
 "AE-196": "Os quatro atributos de cada carta em combate são embaralhados ao acaso antes de os jogadores escolherem.",
 "AE-197": "No fim da disputa, antes do vencedor, as cartas de dois jogadores sorteados (você pode estar entre eles) trocam todos os valores de atributo.",
-"AE-198": "Os valores de ataque/defesa e de inteligência/velocidade da sua carta trocam de lugar: Força ↔ Inteligência e Resistência ↔ Velocidade."
+"AE-198": "Os valores de ataque/defesa e de inteligência/velocidade da sua carta trocam de lugar: Força ↔ Inteligência e Resistência ↔ Velocidade.",
+"AE-199": "Troque cartas da sua reserva pelas da reserva de outro jogador: a quantidade é a da menor reserva dos dois e as cartas que vão e vêm são aleatórias."
 }; })(typeof window !== "undefined" ? window : globalThis);

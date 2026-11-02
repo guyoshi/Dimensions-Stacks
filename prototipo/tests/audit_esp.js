@@ -257,6 +257,7 @@ const cnt = (g, pid, z) => g.p(pid)[z].length;
   await dm('AE-188', 'Reflexo: a redução volta ao autor', { flip: { 0: true, 1: true }, world: { f: { 0: [50, 50, 50, 50], 1: [60, 60, 60, 60] }, prep: { 0: ['AE-188'], 1: ['AE-131'] } }, check(g, W, c) { c.ok(c.result.winnerPid === 0, 'P1 sofreu −15 (45) e P0 manteve 50: ' + JSON.stringify(c.result)); } });
   await scn('AE-161', 'pega o topo do líder', { flip: { 0: true }, world: P('AE-161'), check(g, W, c) { c.ok(inD(g, 0, W.X[1][0]) || inD(g, 0, W.X[2][0]), 'P0 levou um topo'); } });
   await scn('AE-163', 'pega 1 da reserva do rival', { flip: { 0: true }, world: P('AE-163'), check(g, W, c) { c.ok(cnt(g, 1, 'reserve') + cnt(g, 2, 'reserve') === 5, 'um rival perdeu 1 da reserva'); } });
+  await scn('AE-199', 'troca a reserva (quantidade da menor) às cegas', { flip: { 0: true }, world: { resN: 3, prep: { 0: ['AE-199'] } }, setup(g, W) { g.p(1).reserve = W.R[1].slice(0, 2); g.p(2).reserve = W.R[2].slice(0, 1); }, check(g, W, c) { c.ok(cnt(g, 0, 'reserve') === 3, 'P0 mantém 3'); c.ok(W.R[1].slice(0, 2).some(x => inR(g, 0, x)) || W.R[2].slice(0, 1).some(x => inR(g, 0, x)), 'P0 recebeu cartas de um rival'); } });
   const all = Object.keys(E.SPECIALS).filter(k => !E.SPECIALS[k].stub); const miss = all.filter(k => !covered.has(k));
   if (!only) console.log('sem cenário:', miss.join(' ') || 'nenhum');
   console.log(`cenários ${total}, falhas ${fails}`);
