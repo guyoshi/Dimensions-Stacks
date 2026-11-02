@@ -891,8 +891,8 @@
       apply(ctx, act) { const e = ctx.entry(act.pid); e.fortress = true; ctx.recalc(e); ctx.say(`${nm(ctx, act.pid)} ergue uma fortaleza: sem reduções.`); },
       ai(ctx, pid) { return ctx.g.foeActs && ctx.combat.react ? (ctx.g.foeActs(ctx.combat, pid).some(a => SP[CARDS[a.card].especial].cat === 'Redução') ? 0.9 : 0.1) : 0.15 + 0.3 * oppFlip(ctx, pid); }, val: 0.4,
     });
-    N('AE-166', 'Armadilha', 'Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro, e a sua carta volta ao fundo do seu baralho.', 'Defesa', {
-      apply(ctx, act) { const e = ctx.entry(act.pid); e.trap = true; e.echoProt = true; ctx.say(`${nm(ctx, act.pid)} arma uma armadilha na própria carta.`); },
+    N('AE-166', 'Armadilha', 'Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro.', 'Defesa', {
+      apply(ctx, act) { const e = ctx.entry(act.pid); e.trap = true; ctx.say(`${nm(ctx, act.pid)} arma uma armadilha na própria carta.`); },
       ai(ctx, pid) { const w = winnerOf(ctx); return w && w.pid !== pid && !ctx.sameTeam(w.pid, pid) && ATTR[w.attr].tipo === 'ataque' ? 0.6 : 0.05; },
     });
     N('AE-167', 'Eco protetor', 'Se sua carta fosse capturada nesta disputa, ela volta ao fundo do seu baralho.', 'Defesa', {

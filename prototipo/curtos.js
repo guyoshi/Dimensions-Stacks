@@ -161,7 +161,7 @@
 "AE-163": "Pegue 1 carta aleatória da reserva de um rival, sem ver qual.",
 "AE-164": "Troque 1 carta do seu baralho ativo (à sua escolha) por 1 carta aleatória do baralho do jogador que tem mais cartas.",
 "AE-165": "Sua carta de combate fica imune a reduções vindas de outros jogadores nesta disputa.",
-"AE-166": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro, e a sua carta volta ao fundo do seu baralho.",
+"AE-166": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro.",
 "AE-167": "Se sua carta fosse capturada nesta disputa, ela volta ao fundo do seu baralho.",
 "AE-168": "Se algum rival usa atributo de ataque, sua carta recebe +30 em Resistência e nenhum rival pode capturá-la nesta disputa.",
 "AE-169": "Devolva sua carta de combate ao topo do baralho e jogue a próxima no lugar; você escolhe se vale o ataque ou a defesa do par do atributo.",

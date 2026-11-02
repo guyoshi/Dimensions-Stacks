@@ -2556,7 +2556,7 @@
   {
    "id": "AE-166",
    "nome": "Armadilha",
-   "texto_efeito": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro, e a sua carta volta ao fundo do seu baralho.",
+   "texto_efeito": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro.",
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
