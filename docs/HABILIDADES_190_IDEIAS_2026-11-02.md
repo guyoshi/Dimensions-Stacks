@@ -221,3 +221,7 @@ Interpretações que mudam o texto original (confirmar):
 
 ## Decisão 02/11 (16:17)
 Todas as interpretações da seção "Implementação" foram **confirmadas** pelo autor: Aposta (perde o topo do baralho), Embaralhar reservas (4 cartas ativas), Dividir o butim, Pausa, Fortaleza, Eco protetor e Retirada.
+
+## Decisão 02/11 (17:55): trocas de habilidades de uso baixo (aplicadas)
+D11 Cara-de-Larva: AE-012 → **AE-179 Contragolpe** · S03 Eric: AE-016 → **AE-162 Taxa do vencedor** · V32 Téorix: AE-017 → **AE-180 Margem larga** · V31 Kali: AE-019 → **AE-153 Inversão do rival** · M05 Padre Tomas: AE-068 → **AE-187 Sacrifício heroico** · S17 Luna Stellar: AE-079 → **AE-188 Reflexo**.
+As habilidades antigas (012, 016, 017, 019, 068, 079) ficam **desocupadas** para cartas futuras. Teste de 400 partidas: as 5 novas são usadas; a AE-153 da Kali ainda quase não é (a carta é forte demais para o bot gastá-la como preparo).

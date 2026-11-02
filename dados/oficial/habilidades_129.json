@@ -32,7 +32,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-002",
@@ -111,7 +112,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-007",
@@ -190,7 +192,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-012",
@@ -199,13 +202,12 @@
    "texto_efeito": "Substitua o valor de Força pelo valor que a carta possui em Inteligência; Inteligência permanece igual.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [
-    "D11"
-   ],
-   "situacao_uso": "EQUIPADA_BARALHO_V1",
+   "cartas_atribuidas": [],
+   "situacao_uso": "DESOCUPADA",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": " 2026-11-02: saiu de D11 (uso baixo nos testes); livre para cartas futuras."
   },
   {
    "id": "AE-013",
@@ -236,7 +238,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-015",
@@ -261,13 +264,12 @@
    "texto_efeito": "Substitua o valor de Resistência pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
    "origem_ideia": "#20 (adaptação)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [
-    "S03"
-   ],
-   "situacao_uso": "EQUIPADA_BARALHO_V1",
+   "cartas_atribuidas": [],
+   "situacao_uso": "DESOCUPADA",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": " 2026-11-02: saiu de S03 (uso baixo nos testes); livre para cartas futuras."
   },
   {
    "id": "AE-017",
@@ -276,14 +278,12 @@
    "texto_efeito": "Substitua o valor de Resistência pelo valor que sua carta possui em Força; Força permanece igual.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [
-    "V32"
-   ],
-   "situacao_uso": "EQUIPADA_BARALHO_V1",
+   "cartas_atribuidas": [],
+   "situacao_uso": "DESOCUPADA",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a S18 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-15: trocada a pedido do autor (efeito fraco: bot nunca o usava / sem ganho dentro do mesmo par). Saiu de S18; volta à reserva. 2026-10-29: atribuída a V32 (proposta, aguardando aprovação)."
+   "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a S18 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-15: trocada a pedido do autor (efeito fraco: bot nunca o usava / sem ganho dentro do mesmo par). Saiu de S18; volta à reserva. 2026-10-29: atribuída a V32 (proposta, aguardando aprovação). 2026-11-02: saiu de V32 (uso baixo nos testes); livre para cartas futuras."
   },
   {
    "id": "AE-018",
@@ -306,14 +306,12 @@
    "texto_efeito": "Substitua o valor de Velocidade pelo valor que sua carta possui em Inteligência; Inteligência permanece igual.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [
-    "V31"
-   ],
-   "situacao_uso": "EQUIPADA_BARALHO_V1",
+   "cartas_atribuidas": [],
+   "situacao_uso": "DESOCUPADA",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: atribuída a J14 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-15: trocada a pedido do autor (efeito fraco: bot nunca o usava / sem ganho dentro do mesmo par). Saiu de J14; volta à reserva. 2026-10-29: atribuída a V31 (proposta, aguardando aprovação)."
+   "revisao": "2026-10-14: atribuída a J14 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-10-15: trocada a pedido do autor (efeito fraco: bot nunca o usava / sem ganho dentro do mesmo par). Saiu de J14; volta à reserva. 2026-10-29: atribuída a V31 (proposta, aguardando aprovação). 2026-11-02: saiu de V31 (uso baixo nos testes); livre para cartas futuras."
   },
   {
    "id": "AE-020",
@@ -342,7 +340,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-022",
@@ -357,7 +356,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-023",
@@ -484,7 +484,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-031",
@@ -515,7 +516,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-033",
@@ -578,7 +580,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-037",
@@ -593,7 +596,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-038",
@@ -640,7 +644,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-041",
@@ -655,7 +660,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-042",
@@ -670,7 +676,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-043",
@@ -701,7 +708,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-045",
@@ -764,7 +772,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-049",
@@ -871,7 +880,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-056",
@@ -1046,7 +1056,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-067",
@@ -1071,14 +1082,12 @@
    "texto_efeito": "Sacrifique uma carta normal sua com algum atributo acima de 90; tome 1 carta aleatória do baralho ativo de cada adversário ativo.",
    "origem_ideia": "#42",
    "avaliacao_de_risco": "Atenção",
-   "cartas_atribuidas": [
-    "M05"
-   ],
-   "situacao_uso": "EQUIPADA_BARALHO_V1",
+   "cartas_atribuidas": [],
+   "situacao_uso": "DESOCUPADA",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: movida de S11 A Besta para M05 Padre Tomas (personagem mais fraco), a pedido do autor."
+   "revisao": "2026-10-14: movida de S11 A Besta para M05 Padre Tomas (personagem mais fraco), a pedido do autor. 2026-11-02: saiu de M05 (uso baixo nos testes); livre para cartas futuras."
   },
   {
    "id": "AE-069",
@@ -1157,7 +1166,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-074",
@@ -1172,7 +1182,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-075",
@@ -1187,7 +1198,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-076",
@@ -1244,14 +1256,12 @@
    "texto_efeito": "Seu próximo combatente normal não pode ser enviado ao Buraco Negro por uma habilidade especial nesta disputa.",
    "origem_ideia": "novo",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [
-    "S17"
-   ],
-   "situacao_uso": "EQUIPADA_BARALHO_V1",
+   "cartas_atribuidas": [],
+   "situacao_uso": "DESOCUPADA",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a S17 na reatribuição global por equivalência carta × especial (autorizada pelo autor)."
+   "revisao": "2026-10-14: saiu da carta (valor medido abaixo de 47%: custava mais do que rendia); volta à reserva. 2026-10-14: atribuída a S17 na reatribuição global por equivalência carta × especial (autorizada pelo autor). 2026-11-02: saiu de S17 (uso baixo nos testes); livre para cartas futuras."
   },
   {
    "id": "AE-080",
@@ -1314,7 +1324,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-084",
@@ -1457,7 +1468,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-094",
@@ -1488,7 +1500,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-097",
@@ -1503,7 +1516,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-098",
@@ -1598,7 +1612,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-105",
@@ -1661,7 +1676,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-109",
@@ -1692,7 +1708,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-129",
@@ -1707,7 +1724,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-111",
@@ -1802,7 +1820,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-118",
@@ -1913,7 +1932,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-125",
@@ -1940,7 +1960,8 @@
    "situacao_uso": "RESERVA_PARA_EXPANSAO",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-127",
@@ -1967,7 +1988,8 @@
    "situacao_uso": "RESERVA_PARA_EXPANSAO",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-130",
@@ -1982,7 +2004,8 @@
    "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
-   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST"
+   "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
+   "revisao": ""
   },
   {
    "id": "AE-131",
@@ -2341,12 +2364,14 @@
    "categoria": "Conversão",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "V31"
+   ],
+   "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a V31."
   },
   {
    "id": "AE-154",
@@ -2473,12 +2498,14 @@
    "categoria": "Roubo",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "S03"
+   ],
+   "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a S03."
   },
   {
    "id": "AE-163",
@@ -2725,12 +2752,14 @@
    "categoria": "Captura",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "D11"
+   ],
+   "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a D11."
   },
   {
    "id": "AE-180",
@@ -2739,12 +2768,14 @@
    "categoria": "Captura",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "V32"
+   ],
+   "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a V32."
   },
   {
    "id": "AE-181",
@@ -2839,12 +2870,14 @@
    "categoria": "Misto",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "M05"
+   ],
+   "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a M05."
   },
   {
    "id": "AE-188",
@@ -2853,12 +2886,14 @@
    "categoria": "Misto",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "S17"
+   ],
+   "situacao_uso": "EQUIPADA_BARALHO_V1",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a S17."
   },
   {
    "id": "AE-189",
@@ -3029,7 +3064,9 @@
    "categoria": "Buraco Negro",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": ["G01"],
+   "cartas_atribuidas": [
+    "G01"
+   ],
    "situacao_uso": "EQUIPADA_GUARDIAO",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
@@ -3043,7 +3080,9 @@
    "categoria": "Troca",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": ["G02"],
+   "cartas_atribuidas": [
+    "G02"
+   ],
    "situacao_uso": "EQUIPADA_GUARDIAO",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
@@ -3057,7 +3096,9 @@
    "categoria": "Interação",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": ["G03"],
+   "cartas_atribuidas": [
+    "G03"
+   ],
    "situacao_uso": "EQUIPADA_GUARDIAO",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
@@ -3071,7 +3112,9 @@
    "categoria": "Reforço",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": ["G04"],
+   "cartas_atribuidas": [
+    "G04"
+   ],
    "situacao_uso": "EQUIPADA_GUARDIAO",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",

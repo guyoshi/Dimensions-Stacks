@@ -807,7 +807,7 @@
         const cand = ctx.entries().filter(e => e.pid !== act.pid && !ctx.sameTeam(e.pid, act.pid)).map(e => e.pid); const t = await ctx.target(act.pid, cand, 'Inverter a carta de quem?', c => c.slice().sort((a, b) => { const x = ctx.entry(a), y = ctx.entry(b); return (y.stats[y.attr] - y.stats[weakest(y.stats)]) - (x.stats[x.attr] - x.stats[weakest(x.stats)]); })[0]); if (t == null) return;
         const te = ctx.entry(t); ctx.addMod(te, act.pid, 'Inversão', x => { const hi = strongest(x.stats), lo = weakest(x.stats); const v = x.stats[hi]; x.stats[hi] = x.stats[lo]; x.stats[lo] = v; }); ctx.say(`${nm(ctx, act.pid)} inverte o maior e o menor atributo de ${nm(ctx, t)}.`);
       },
-      ai(ctx, pid) { return ctx.entries().some(e => e.pid !== pid && !ctx.sameTeam(e.pid, pid) && e.attr === strongest(e.stats) && e.stats[e.attr] - e.stats[weakest(e.stats)] >= 30) ? 0.65 : 0.05; },
+      ai(ctx, pid) { return ctx.entries().some(e => e.pid !== pid && !ctx.sameTeam(e.pid, pid) && e.attr === strongest(e.stats) && e.stats[e.attr] - e.stats[weakest(e.stats)] >= 30) ? 0.65 : 0.12; }, prep: 0.5, val: 0.6,
     });
     N('AE-154', 'Reciclagem', 'O maior atributo da sua carta perde 10 e os outros três ganham 6 nesta disputa.', 'Conversão', {
       fx: st => { const hi = strongest(st), o = {}; AID.forEach(a => { o[a] = a === hi ? st[a] - 10 : st[a] + 6; }); return o; },
