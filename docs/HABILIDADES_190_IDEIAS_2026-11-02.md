@@ -52,7 +52,7 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 | 4 | Último suspiro | +25 no atributo escolhido se seu baralho tem 3 cartas ou menos. | Aprovada |
 | 5 | Veterano | +2 no atributo escolhido por carta que você já capturou (máx. +20). | Aprovada |
 | 6 | Aposta | +25 no atributo escolhido; se perder a disputa, a carta vai ao Buraco Negro. | Aprovada |
-| 7 | Fúria | +30 em Força e −15 em Resistência nesta disputa. | Sem decisão |
+| 7 | Fúria | +30 em Força e −15 em Resistência nesta disputa. | Aprovada |
 
 ### Conversão (6)
 
@@ -117,8 +117,7 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 | # | Nome | O que faz | Situação |
 |---|---|---|---|
 | 44 | Dividir o butim | Dá 3 cartas do jogador mais forte ao mais fraco (podendo ser você). Forte/fraco = quem tem mais/menos cartas; em empate numérico as 3 se dividem, com a maioria para você. (substitui a versão antiga) | Aprovada (alterada) |
-| 45 | Caça ao líder | A captura vale em dobro contra quem tem mais cartas. | Sem decisão |
-| 46 | Contragolpe | Se sua carta for capturada, você recaptura outra. | Sem decisão |
+| 46 | Contragolpe | Se sua carta for capturada, você recaptura outra. | Aprovada |
 | 47 | Margem larga | Se vencer por 30 ou mais, captura 1 carta a mais. | Aprovada |
 
 ### Troca e redistribuição (4)
@@ -131,7 +130,6 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 
 | # | Nome | O que faz | Situação |
 |---|---|---|---|
-| 52 | Relógio | Você inicia a próxima rodada. | Sem decisão |
 | 53 | Pausa | Um rival pula a vez na próxima disputa. | Aprovada |
 | 54 | Convocar fenômeno | Faz um fenômeno aleatório acontecer na próxima rodada. | Aprovada |
 | 55 | Cancelar fenômeno | Anula os efeitos do fenômeno nesta disputa. | Aprovada (alterada) |
@@ -141,7 +139,6 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 
 | # | Nome | O que faz | Situação |
 |---|---|---|---|
-| 57 | Aliança | Por 1 rodada, soma o menor atributo da carta do jogador à direita à sua. | Sem decisão |
 | 58 | Carta fantasma | Cria um clone da carta do rival com −10 em tudo; o clone vai ao fim do seu baralho. | Aprovada (alterada) |
 | 59 | Sacrifício heroico | Descarte 1 carta da reserva: +30 no atributo escolhido. | Aprovada |
 | 63 | Reflexo | Devolve ao rival a primeira redução que você receber. | Aprovada |
@@ -157,7 +154,7 @@ Medido em 400 partidas de bots (cada uma delas foi distribuída ~85 vezes, usada
 - Se ainda faltar para 190: variantes baratas (seção 3).
 
 ### Removidas (não aprovadas)
-8, 9, 10, 12, 15, 22, 32, 33, 34, 38, 39, 41, 43, 49, 50, 51, 60, 61, 62. Sem decisão: 7, 45, 46, 52, 57.
+8, 9, 10, 12, 15, 22, 32, 33, 34, 38, 39, 41, 43, 45, 49, 50, 51, 52, 57, 60, 61, 62. Sem decisão: nenhuma.
 
 ## 3. Variantes baratas de habilidades que já existem (se faltar)
 - **Versão "Mestre"** (mesma habilidade com valor ×1,5 e custo de preparar maior): Impulso, Muralha, Arrancada, Clarividência, Vigor, Golpe pesado.
@@ -177,3 +174,6 @@ Aprovadas: AE-009, 024, 025, 026, 029, 051, 063, 064, 065, 070, 091, 092, 094, 1
 - **AE-119** (não aprovada como estava) muda para: *embaralhe a ordem das cartas de todos os jogadores, menos você.* (ainda não implementada)
 - Novas mecânicas: aprovadas as marcadas "Aprovada" acima, com as alterações indicadas. Interpretações a confirmar: 37 e 44 tratadas como substituídas pela nova versão (aprovadas); 40 só vale se roubar de cartas com especial preparado.
 - Nada foi implementado nesta etapa; só a documentação.
+
+## Decisão 02/11 (13:56)
+Aprovadas 7 e 46. Reprovadas e removidas 45, 52 e 57. Não há mais ideias sem decisão.
