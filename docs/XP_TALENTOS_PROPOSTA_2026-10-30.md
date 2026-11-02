@@ -61,3 +61,10 @@ Os valores iniciais de 5%/4%/3%/2% elevaram a vitória de 53% para 74,2% no moto
 - **Fortuna:** os cinco Dons usam rolagens independentes e respeitam alvo válido, Buraco Negro disponível e a regra de a Bolsa cheia não acumular com o prêmio dobrado. A barra completa passou de 74,2% com as chances propostas inicialmente para 63,4% após o ajuste.
 - **Fragmentos:** as duas substituições custam 8; as dez melhorias somam 62 fragmentos para 48 fontes, preservando escolhas irreversíveis de construção.
 - **Temas:** dez traseiras compráveis foram adicionadas. As cinco lojas sempre oferecem uma própria; os cinco temas raros têm 25% de chance de aparecer como segundo item, somente enquanto ainda não foram comprados.
+
+## Atualização 02/11/2026 (implementado)
+- Substituto do Descanso veloz nos fragmentos: **Carta de reserva** (8). Redistribuição de talentos: por barra, 20 + 5 por ponto da barra (máx. 80).
+- Níveis recomendados: Guardiões Nv 14+, Arautos Nv 8+, Besta Nv 30. A Besta avisa **ao chegar** (uma vez; só informa) e de novo ao duelar, se o jogador estiver abaixo do nível.
+- **Fortuna simulada** (~12 disputas por batalha; 400 partidas; ±3 pontos): 5% por disputa isolado dá +8 (confunde), +12 (queda), +12 (Buraco Negro), +13 (Terremoto) pontos de vitória. Valores finais por disputa: confunde 2,5%, queda 2%, Buraco Negro 2%, Terremoto 2% (antes 1,8%, 1,2%, 0,8%). Barra completa ≈ +14 pontos, parecida com Vigor (+13).
+- Vitória repetida sem carta nova mostra "nenhuma carta nova capturada"; se capturar, abre o baú normalmente.
+- Som de vitória: fanfarra sintetizada (metais em camadas, tímpano, prato, acorde sustentado e brilhos).

@@ -92,6 +92,15 @@
       const g = c.createGain(); g.gain.setValueAtTime(vol || 0.2, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
       s.connect(f); f.connect(g); g.connect(this.sfx); s.start(t);
     },
+    // voz de metal (fanfarra): dois dentes de serra levemente desafinados, filtro que abre no ataque; vib = vibrato nas notas longas
+    brass(f, dur, vol, when, vib) {
+      const c = this.ctx, t = c.currentTime + (when || 0), g = c.createGain(), lp = c.createBiquadFilter();
+      lp.type = 'lowpass'; lp.Q.value = 1.2; lp.frequency.setValueAtTime(f * 1.5, t); lp.frequency.linearRampToValueAtTime(Math.min(9000, f * 6), t + 0.09); lp.frequency.exponentialRampToValueAtTime(Math.min(5000, f * 3.2), t + Math.min(0.6, dur));
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol || 0.06, t + 0.035); g.gain.setValueAtTime(vol || 0.06, t + Math.max(0.05, dur - 0.25)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      const os = [c.createOscillator(), c.createOscillator()]; os[0].type = os[1].type = 'sawtooth'; os[0].frequency.value = f * 0.997; os[1].frequency.value = f * 1.004;
+      if (vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = 5.4; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(f * 0.011, t + 0.7); l.connect(lg); os.forEach(o => lg.connect(o.frequency)); l.start(t); l.stop(t + dur + 0.05); }
+      os.forEach(o => { o.connect(lp); o.start(t); o.stop(t + dur + 0.05); }); lp.connect(g); g.connect(this.sfx);
+    },
     note(n) { return 440 * Math.pow(2, (n - 69) / 12); },
 
     // ---------- sons sintetizados
@@ -133,7 +142,17 @@
       round() { [110, 220, 330, 440, 660].forEach((f, i) => S.tone(f, 2.2 - i * 0.2, 'sine', 0.2 / (i + 1), 0)); S.noise(0.5, 'lowpass', 400, 120, 0.1); },
       refill() { [0, 1, 2].forEach(i => { S.noise(0.06, 'lowpass', 2400, 900, 0.14, i * 0.09); S.tone(110 + i * 12, 0.1, 'sine', 0.14, i * 0.09); }); },
       elim() { S.tone(S.note(50), 1.4, 'sawtooth', 0.12, 0, S.note(38)); S.tone(S.note(43), 1.6, 'sine', 0.2, 0.1, S.note(36)); S.noise(1.1, 'lowpass', 600, 60, 0.18); },
-      victory() { const m = [67, 72, 76, 79, 84, 79, 84, 88]; m.forEach((n, i) => { S.tone(S.note(n), 0.55, 'triangle', 0.2, i * 0.13); S.tone(S.note(n - 12), 0.55, 'sine', 0.1, i * 0.13); }); [60, 64, 67, 72].forEach(n => S.tone(S.note(n), 2.2, 'sine', 0.1, 1.0)); },
+      // fanfarra: TA-NA-NA-NAAAAN — metais em camadas, tímpano, prato e brilho final
+      victory() {
+        S.noise(2.6, 'highpass', 4500, 9000, 0.11, 0.0); S.noise(0.5, 'lowpass', 900, 120, 0.2, 0);           // prato + estrondo
+        S.tone(120, 0.7, 'sine', 0.4, 0, 48); S.tone(75, 1.0, 'sine', 0.45, 0, 36);                          // tímpano
+        [[72, 0], [72, 0.17], [76, 0.34]].forEach(([n, t]) => { S.brass(S.note(n), 0.15, 0.07, t); S.brass(S.note(n - 12), 0.15, 0.05, t); S.tone(S.note(n - 24), 0.2, 'sine', 0.2, t); });   // TA-NA-NA
+        const t0 = 0.52, acorde = [48, 60, 67, 72, 76, 79, 84];                                              // NAAAAN: acorde de Dó maior sustentado
+        acorde.forEach((n, i) => S.brass(S.note(n), 2.9, i < 2 ? 0.07 : 0.055, t0, true));
+        S.tone(S.note(36), 3.0, 'sine', 0.3, t0); S.tone(60, 0.9, 'sine', 0.35, t0, 40);                       // grave + tímpano final
+        S.noise(2.4, 'bandpass', 6000, 3000, 0.08, t0, 0.8);                                                  // brilho do prato
+        [91, 96, 100, 103, 108].forEach((n, i) => { S.tone(S.note(n), 0.9, 'sine', 0.07, t0 + 0.25 + i * 0.09); S.tone(S.note(n + 12), 0.6, 'sine', 0.03, t0 + 0.27 + i * 0.09); });   // chuva de brilhos
+      },
       defeat() { [62, 58, 55, 50].forEach((n, i) => S.tone(S.note(n), 0.8, 'sine', 0.16, i * 0.28, S.note(n - 1))); },
       steal() { S.noise(0.2, 'bandpass', 3000, 700, 0.14, 0, 3); S.tone(S.note(70), 0.15, 'triangle', 0.1, 0.05, S.note(64)); },
       bonus() { S.tone(S.note(79), 0.16, 'triangle', 0.12); S.tone(S.note(86), 0.26, 'triangle', 0.1, 0.09); },
@@ -146,7 +165,7 @@
     pickFn(name) { if (!this.escolha) this.carregaEscolha(); const v = this.variants && this.variants[name]; const i = this.escolha[name] | 0; return (v && v[i]) || this.synth[name]; },
     preview(name, i) { if (!this.enabled) return; this.init(); if (!this.ctx) return; try { const v = this.variants && this.variants[name]; const f = (v && v[i]) || this.synth[name]; if (f) f(); } catch (e) { } },
     // sons de cerimônia: a música abaixa para [nível, segura (s)] e volta devagar
-    DUCK: { victory: [0.12, 3.4], defeat: [0.12, 3.0], legend: [0.3, 1.4], phenom: [0.35, 1.6], elim: [0.45, 1.0], round: [0.6, 0.6],
+    DUCK: { victory: [0.1, 4.2], defeat: [0.12, 3.0], legend: [0.3, 1.4], phenom: [0.35, 1.6], elim: [0.45, 1.0], round: [0.6, 0.6],
       // efeitos da partida: abaixada leve e rápida, para o som das cartas aparecer sem a música "pulsar"
       reveal: [0.62, 0.35, 0.5], flip: [0.7, 0.2, 0.4], win: [0.62, 0.4, 0.5], lose: [0.7, 0.3, 0.5], capture: [0.62, 0.4, 0.5], blackhole: [0.6, 0.5, 0.6], slash: [0.65, 0.3, 0.5], shield: [0.65, 0.3, 0.5], specialFlip: [0.6, 0.5, 0.6], steal: [0.65, 0.3, 0.5] },
     duckMusic(level, hold, rel) {

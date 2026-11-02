@@ -442,8 +442,9 @@
   async function passo(to) {
     if (andando || !passos().includes(to)) return; andando = true; closeSheet(); paintSetas(); const red = document.body.classList.contains('reduce'), n = BY[to];
     S.pos = n.id; heroPlace(n.id, !red); SND.play('tick'); paintLuz(); centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red);
-    await new Promise(r => setTimeout(r, red ? 60 : 380)); save(); andando = false; paintAll(); openNode(n.id);
+    await new Promise(r => setTimeout(r, red ? 60 : 380)); save(); andando = false; paintAll(); openNode(n.id); avisoChegada(n.id);
   }
+  const avisoChegada = id => { if (BY[id] && BY[id].tipo === 'boss' && !cleared(id) && !S.avisosNivel[id]) setTimeout(() => quandoLivre(() => confirmarNivel(id, true)), 500); };   // a Besta avisa assim que o jogador chega (uma vez só)
   function heroSvg() {
     return `<g id="hsHero" class="hs-hero"><circle class="hr-sh" r="15" cy="13"/><circle class="hr-body" r="14" cy="-4"/><circle class="hr-core" r="5" cy="-4"/><path class="hr-pin" d="M0 12 L-6 0 H6 Z"/></g>`;
   }
@@ -476,7 +477,7 @@
       centerOn(n.x, n.y, cam.k < .6 ? .75 : null, !red);
       await new Promise(r => setTimeout(r, red ? 60 : 360));
     }
-    save(); andando = false; paintAll(); openNode(p[p.length - 1]);
+    save(); andando = false; paintAll(); const fim = p[p.length - 1]; openNode(fim); avisoChegada(fim);
   }
 
   // ---- painel de cada ponto
@@ -484,7 +485,7 @@
   function closeSheet() { if (sheet) { sheet.hidden = true; curId = null; $$('.n.sel', root).forEach(g => g.classList.remove('sel')); } }
   const TAL_DESC = {
     vigor: ['Resistência +2', 'Força +2', 'Velocidade +2', 'Inteligência +2', 'Todos os atributos inimigos −1'],
-    fortuna: ['10% de dobrar pêndulos', '2,5%: inimigo escolhe pior atributo', '1,8%: inimigo deixa a carta cair', '1,2%: carta do Buraco Negro vem para você', '0,8%: Terremoto captura carta inimiga'],
+    fortuna: ['10% de dobrar pêndulos', '2,5%: inimigo escolhe pior atributo', '2%: inimigo deixa a carta cair', '2%: carta do Buraco Negro vem para você', '2%: Terremoto captura carta inimiga'],
     estrategia: ['10% de desconto nas lojas comuns', 'Cartas paradas descansam 2 pontos', '1 pêndulo a cada 2 disputas vencidas', 'Começa com 1 carta a mais', 'Arautos e Guardiões começam com 1 a menos'],
   };
   const TAL_RESUMO = { vigor: 'Fortalece suas cartas e enfraquece os rivais.', fortuna: 'Cria oportunidades raras durante as disputas.', estrategia: 'Melhora preparo, economia e vantagem inicial.' };
@@ -573,10 +574,10 @@
     sheet.hidden = false; ensureVisible(n);
     sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') confirmarNivel(id); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
   }
-  function confirmarNivel(id) {
-    const n = BY[id], rec = nivelRecomendado(n), meu = nivel(S.xp), precisa = n.tipo === 'boss' ? meu < rec : meu < rec - 2; if (!precisa || S.avisosNivel[id]) return duelar(id);
+  function confirmarNivel(id, chegada) {   // chegada: aviso ao chegar no ponto (só a Besta); só informa, não inicia o duelo
+    const n = BY[id], rec = nivelRecomendado(n), meu = nivel(S.xp), precisa = n.tipo === 'boss' ? meu < rec : meu < rec - 2; if (!precisa || S.avisosNivel[id]) return chegada ? null : duelar(id);
     S.avisosNivel[id] = 1; save(); const esp = n.tipo === 'miniboss' ? 'Este Arauto luta com 3 ou 4 jogadores.' : n.tipo === 'guardiao' ? 'Este Guardião altera as regras normais da disputa.' : n.tipo === 'boss' ? 'A Besta pode ser enfrentada agora, mas cada Guardião vivo dá +30 a todos os atributos dela.' : 'Esta luta exige uma equipe muito bem preparada.';
-    const box = el(`<div class="hs-conf hs-levelwarn"><div class="lw-card"></div><div><small>AVISO DO MENTOR</small><h3>Volte no Nv ${rec}</h3><p>Você está no Nv ${meu}. ${esc(esp)}</p><div class="row"><button class="btn" data-a="back">Voltar</button><button class="btn primary" data-a="fight">Lutar mesmo assim</button></div></div></div>`), c = U.CARDS[S.npc]; if (c) $('.lw-card', box).append(U.cardEl(S.npc, { up: true, noanim: true, cw: 82 }));
+    const box = el(`<div class="hs-conf hs-levelwarn"><div class="lw-card"></div><div><small>AVISO DO MENTOR</small><h3>Volte no Nv ${rec}</h3><p>Você está no Nv ${meu}. ${esc(esp)}</p><div class="row">${chegada ? '<button class="btn primary" data-a="back">Entendi</button>' : '<button class="btn" data-a="back">Voltar</button><button class="btn primary" data-a="fight">Lutar mesmo assim</button>'}</div></div></div>`), c = U.CARDS[S.npc]; if (c) $('.lw-card', box).append(U.cardEl(S.npc, { up: true, noanim: true, cw: 82 }));
     const m = U.modal(box, { cls: 'hs-modal' }); box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); if (b.dataset.a === 'fight') duelar(id); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
