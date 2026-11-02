@@ -3,7 +3,7 @@
   'use strict';
   const U = window.DSUI, ST = window.DSSTATS;
   const { $, $$, el, esc, CARDS, SERIES, IMG, SND, cardEl } = U;
-  const CARTAS = U.D.CARTAS, COLL = CARTAS.concat(U.D.QUASAR || []);   // coleção mostra também as Quasar
+  const CARTAS = U.D.CARTAS, COLL = CARTAS.concat(U.D.QUASAR || [], U.D.GUARDIOES || []);   // coleção mostra também as Quasar e os Guardiões
 
   // ---------------------------------------------------------------- logotipo: cartas sobrepostas dentro de um portal
   let lid = 0;

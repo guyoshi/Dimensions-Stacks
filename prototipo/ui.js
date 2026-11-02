@@ -115,8 +115,8 @@
     const node = el(`<div class="card rar-${c.raridade}${c.clone ? ' isclone' : ''}${o.up ? ' up' : ''}${o.noanim ? ' noanim' : ''}" data-id="${id}">
       <div class="zm"><div class="flip"><div class="face back"><i class="seal"></i></div>
       <div class="face front"><div class="in">${art}<div class="shade"></div>
-        <div class="cband"><span class="ser">${esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(bid.slice(1))}</span></div>${c.clone ? '<div class="clonetag">CLONE</div>' : ''}${c.quasar ? '<div class="qtag">QUASAR ' + c.quasar + '</div>' : ''}
-        ${c.uniao ? '<div class="uni" title="A União"></div>' : ''}
+        <div class="cband"><span class="ser">${c.guardiao ? U.uniaoLogo('uniao-logo-card') : esc(s.titulo || s.marca)}</span><span class="cno"><small>Nº</small>${esc(bid.slice(1))}</span></div>${c.clone ? '<div class="clonetag">CLONE</div>' : ''}${c.quasar ? '<div class="qtag">QUASAR ' + c.quasar + '</div>' : ''}
+        ${c.uniao && !c.guardiao ? '<div class="uni" title="A União"></div>' : ''}
         <div class="bot"><div class="nome">${esc(c.nome)}</div><div class="espc">${esc(sp ? sp.nome : '—')}</div>
         <div class="stats">${statsHTML(c.stats, st, null, o.mark, o.hide)}</div><div class="rar" title="${RARIDADES[c.raridade].nome}">${'<i>◆</i>'.repeat(n)}</div></div></div>
       </div></div></div></div>`);

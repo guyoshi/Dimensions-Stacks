@@ -2143,3 +2143,6 @@ body.reduce .mg-pass { animation-duration: 0s; opacity: 0; }
 .n.t-boss.korvo .hs-ring { stroke: #c58cff; }
 .n.t-boss.korvo .body { stroke: #c58cff; }
 .t-principe .lbl { display: none; }
+
+/* Guardiões da União: logo de A União na faixa superior, sem o selo */
+.face.front .cband .ser .uniao-logo-card { height: 1.7em; width: auto; max-width: 100%; filter: drop-shadow(0 0 .35em #c89dffcc) drop-shadow(0 .06em .12em #000); }
