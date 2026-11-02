@@ -2250,7 +2250,7 @@
   {
    "id": "AE-146",
    "nome": "Maré alta",
-   "texto_efeito": "Sua carta de combate recebe +15 no atributo mais fraco dela nesta disputa.",
+   "texto_efeito": "Sua carta de combate recebe +25 no atributo mais fraco dela nesta disputa.",
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -2314,7 +2314,7 @@
   {
    "id": "AE-150",
    "nome": "Veterano",
-   "texto_efeito": "Sua carta recebe +2 no atributo que está usando por carta que você já capturou (máximo +20).",
+   "texto_efeito": "Sua carta recebe +3 no atributo que está usando por carta que você já capturou (máximo +30).",
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -2376,7 +2376,7 @@
   {
    "id": "AE-154",
    "nome": "Reciclagem",
-   "texto_efeito": "O maior atributo da sua carta perde 10 e os outros três ganham 6 nesta disputa.",
+   "texto_efeito": "O maior atributo da sua carta perde 10 e os outros três ganham 12 nesta disputa.",
    "categoria": "Conversão",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -2556,7 +2556,7 @@
   {
    "id": "AE-166",
    "nome": "Armadilha",
-   "texto_efeito": "Se alguém capturar sua carta nesta disputa, perde a carta do topo do próprio baralho para o Buraco Negro.",
+   "texto_efeito": "Se alguém capturar sua carta nesta disputa, perde as 2 cartas do topo do próprio baralho para o Buraco Negro.",
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -2588,7 +2588,7 @@
   {
    "id": "AE-168",
    "nome": "Casca grossa",
-   "texto_efeito": "Se algum rival usa atributo de ataque, sua carta recebe +15 em Resistência nesta disputa.",
+   "texto_efeito": "Se algum rival usa atributo de ataque, sua carta recebe +30 em Resistência nesta disputa.",
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -3030,7 +3030,7 @@
   {
    "id": "AE-198",
    "nome": "Virada de tipo",
-   "texto_efeito": "Os valores de ataque/defesa e de inteligência/velocidade da sua carta trocam de lugar: Força ↔ Inteligência e Resistência ↔ Velocidade.",
+   "texto_efeito": "Os valores de ataque/defesa e de inteligência/velocidade da sua carta trocam de lugar: Força ↔ Inteligência e Resistência ↔ Velocidade, e ela recebe +15 no atributo que está usando.",
    "categoria": "Conversão",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
@@ -3060,7 +3060,7 @@
   {
    "id": "AE-200",
    "nome": "Sacrifício astral",
-   "texto_efeito": "Cada outro jogador ativo envia 1 carta aleatória do baralho ativo ao Buraco Negro. Você não é afetado.",
+   "texto_efeito": "Cada outro jogador ativo envia 2 cartas aleatórias do baralho ativo ao Buraco Negro. Você não é afetado.",
    "categoria": "Buraco Negro",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
