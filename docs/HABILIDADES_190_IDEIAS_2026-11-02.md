@@ -177,3 +177,8 @@ Aprovadas: AE-009, 024, 025, 026, 029, 051, 063, 064, 065, 070, 091, 092, 094, 1
 
 ## Decisão 02/11 (13:56)
 Aprovadas 7 e 46. Reprovadas e removidas 45, 52 e 57. Não há mais ideias sem decisão.
+
+## Decisão 02/11 (14:03)
+- **Aprovadas** as reformas propostas de AE-057 e AE-058 (ao passar a carta, a carta de combate ganha +10 nesta disputa) e de AE-108 (a carta que iria ao Buraco Negro volta ao fundo do baralho). **Ainda não implementadas** (só registradas).
+- **Mantidas como estão:** AE-096 e AE-102 (reformas não aprovadas).
+- Fica valendo esta decisão no lugar da linha "Não aprovadas" da decisão das 13:21 para 057, 058 e 108.
