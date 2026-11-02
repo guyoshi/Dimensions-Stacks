@@ -72,7 +72,7 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 ## Ajustes 02/11 (lote 11:45)
 - **Pêndulos Fugitivos Hard**: luz do mesmo tamanho do Normal (80; antes 56).
 - **Constelação Pirata Hard**: meta de pontos 105 -> 80 (igual ao Normal, para dar notas altas); bombas mais frequentes (a partir de 12% do tempo) e uma segunda bomba na metade final.
-- **Cores dos Irmãos**: tempo TOTAL para as 6 rodadas (Normal 70 s, Hard 85 s, dividido pela dificuldade), sem limite por rodada; a pontuação continua por rapidez. **Hard**: barreiras se movem (começam paradas por 2,5 s, nunca entram na zona central nem sobre os destinos, mantêm 38 px entre si), empurram as bolinhas, a bolinha arrastada empurra as outras e encostar não perde mais.
+- **Cores dos Irmãos**: tempo TOTAL para as 6 rodadas (Normal 70 s, Hard 85 s, dividido pela dificuldade), sem limite por rodada; a pontuação continua por rapidez. **Hard**: barreiras ficam no caminho entre o centro (bolinhas) e cada alvo distante, nunca nos cantos; deslizam até 55 px (começam paradas por 2,5 s), nunca entram na zona central, sobre alvos ou perto de bolinhas, e não empurram ninguém. Bolinhas encostando uma na outra continuam perdendo a rodada.
 - **Maré, Chama e Gelo**: um som musical por elemento ao acertar, com brilho/pulso na pista e no botão; Hard com janela de acerto menor (Perfeito 24 -> 18 px, Bom 68 -> 46 px).
 - **Chamado da União**: bolinhas vermelhas piscando nas bordas indicam, 2,4 s antes, de onde vem a próxima horda (inclusive as velozes).
 - **Admin**: cada minigame tem "Testar" (Normal) e "Testar Hard" (sem escolha dentro do jogo); botão "Zerar testes" no topo da tela de minigames.
