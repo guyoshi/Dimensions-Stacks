@@ -35,7 +35,7 @@ async function scn(id, title, o) {
   const W = world(g, o.world); if (o.setup) o.setup(g, W);
   const tot = () => { const a = []; g.s.players.forEach(p => a.push(...p.deck, ...p.reserve, ...p.prepared)); g.s.bh.forEach(x => a.push(x.id)); return a.filter(x => !String(x).includes('*')); };
   const before = tot().length; const bad = []; const ok = (c, m) => { if (!c) bad.push(m); };
-  try { await g.playCombat(0); const aft = tot(); ok(aft.length === before && new Set(aft).size === aft.length, `conservação de cartas: ${before} → ${aft.length}, únicas ${new Set(aft).size}`); o.check(g, W, { ok, logs, ev, reveal, result, has: re => logs.some(l => re.test(l)), evs: t => ev.filter(x => x.t === t) }); }
+  try { await g.playCombat(0); const aft = tot(), esperado = before + (o.allowCreate || 0); ok(aft.length === esperado && new Set(aft).size === aft.length, `conservação de cartas: ${before} → ${aft.length} (esperado ${esperado}), únicas ${new Set(aft).size}`); o.check(g, W, { ok, logs, ev, reveal, result, has: re => logs.some(l => re.test(l)), evs: t => ev.filter(x => x.t === t) }); }
   catch (e) { bad.push('EXCEÇÃO ' + e.message + ' ' + (e.stack || '').split('\n')[1]); }
   if (bad.length) { fails++; console.log('✗', id, title); bad.forEach(m => console.log('    -', m)); logs.slice(-14).forEach(l => console.log('      ·', l)); }
   else if (process.env.V) console.log('✓', id, title);
@@ -258,6 +258,11 @@ const cnt = (g, pid, z) => g.p(pid)[z].length;
   await scn('AE-161', 'pega o topo do líder', { flip: { 0: true }, world: P('AE-161'), check(g, W, c) { c.ok(inD(g, 0, W.X[1][0]) || inD(g, 0, W.X[2][0]), 'P0 levou um topo'); } });
   await scn('AE-163', 'pega 1 da reserva do rival', { flip: { 0: true }, world: P('AE-163'), check(g, W, c) { c.ok(cnt(g, 1, 'reserve') + cnt(g, 2, 'reserve') === 5, 'um rival perdeu 1 da reserva'); } });
   await scn('AE-199', 'troca a reserva (quantidade da menor) às cegas', { flip: { 0: true }, world: { resN: 3, prep: { 0: ['AE-199'] } }, setup(g, W) { g.p(1).reserve = W.R[1].slice(0, 2); g.p(2).reserve = W.R[2].slice(0, 1); }, check(g, W, c) { c.ok(cnt(g, 0, 'reserve') === 3, 'P0 mantém 3'); c.ok(W.R[1].slice(0, 2).some(x => inR(g, 0, x)) || W.R[2].slice(0, 1).some(x => inR(g, 0, x)), 'P0 recebeu cartas de um rival'); } });
+  // ---------- Guardiões de A União (200–203) ----------
+  await scn('AE-200', 'Sacrifício astral bane uma carta de cada outro jogador', { flip: { 0: true }, world: { prep: { 0: ['AE-200'] } }, check(g, W, c) { const d = c.evs('discard').filter(x => x.d.guardiao); c.ok(d.length === 2, 'duas cartas descartadas: ' + d.length); c.ok(d.every(x => x.d.pid !== 0), 'o usuário não foi alvo'); } });
+  await scn('AE-201', 'Troca de órbitas muda apenas os baralhos ativos', { n: 2, flip: { 0: true }, attrs: { 0: 'def', 1: 'def' }, world: { prep: { 0: ['AE-201'] } }, check(g, W, c) { c.ok(c.evs('swapDeck').length === 1, 'troca emitida'); c.ok(W.X[1].some(id => inD(g, 0, id)), 'P0 recebeu carta do baralho de P1'); } });
+  await scn('AE-202', 'Pilhagem preparada toma todos os especiais adversários', { flip: { 0: true }, world: { prep: { 0: ['AE-202'], 1: ['AE-001'], 2: ['AE-002'] } }, check(g, W, c) { const d = c.evs('steal').filter(x => x.d.guardiao && x.d.zone === 'prepared'); c.ok(d.length === 2, 'dois especiais roubados: ' + d.length); c.ok(W.S[1].concat(W.S[2]).every(id => g.p(0).prepared.includes(id) || inBH(g, id)), 'especiais adversários saíram dos donos'); } });
+  await scn('AE-203', 'Chamado da fenda recebe quatro cartas sem Guardião', { n: 2, flip: { 0: true }, allowCreate: 4, world: { prep: { 0: ['AE-203'] } }, check(g, W, c) { const e = c.evs('refill').find(x => x.d.guardiao); c.ok(!!e, 'reforço emitido'); c.ok(e && e.d.cards.length === 4, 'quatro cartas recebidas'); c.ok(e && e.d.cards.every(id => !/^G0/.test(id)), 'nenhuma carta de Guardião veio'); } });
   const all = Object.keys(E.SPECIALS).filter(k => !E.SPECIALS[k].stub); const miss = all.filter(k => !covered.has(k));
   if (!only) console.log('sem cenário:', miss.join(' ') || 'nenhum');
   console.log(`cenários ${total}, falhas ${fails}`);
