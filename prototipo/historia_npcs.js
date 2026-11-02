@@ -76,18 +76,28 @@
   const pu = (c, t) => `<li>${t}</li>`;
   function darFrag(key) { const s = ini(); if (s.frag[key]) return false; s.frag[key] = 1; A.save(); return true; }
   function darReg(c) { const s = ini(); if (s.reg[c]) return false; s.reg[c] = 1; A.save(); return true; }
-  function popup(linhas, titulo) {
-    const U = A.U, box = U.el(`<div class="hs-esc hs-rec2"><h3>${A.esc(titulo || 'Recompensa')}</h3><ul>${linhas.map(l => '<li>' + l + '</li>').join('')}</ul><div class="row"><button class="btn primary" data-a="x">Continuar</button></div></div>`);
-    const m = U.modal(box, { cls: 'hs-modal' }); A.SND.play('legend');
+  // ---- tela de recompensa (missão cumprida): selo, raios, cada prêmio com seu símbolo flutuando
+  const moedaSvg = '<svg viewBox="-12 -12 24 24" aria-hidden="true"><circle r="10.5" fill="#6d1620"/><circle r="9" fill="#d8434a"/><circle r="9" fill="none" stroke="#ffb0a0" stroke-width=".8" opacity=".7"/><path d="M0-6.2 5.4-3.1v6.2L0 6.2-5.4 3.1v-6.2z" fill="#3a0a10" stroke="#ffd0c0" stroke-width=".7"/><circle cy="0" r="1.8" fill="#ffd0c0"/></svg>';
+  const ICO_REC = { moeda: moedaSvg, cristal: '<svg viewBox="-12 -14 24 28" class="cr on" aria-hidden="true"><polygon points="0,-12 8,-3 5,11 -5,11 -8,-3"/><polygon class="f" points="0,-12 8,-3 0,1 -8,-3"/></svg>' };
+  function popup(linhas, titulo) {   // linhas: texto HTML ou { i: 'moeda'|'cristal'|'registro'|'item'|'selo', h: HTML }
+    const U = A.U, red = document.body.classList.contains('reduce'), ic = k => ICO_REC[k] || icone(k) || '';
+    const itens = linhas.map(l => typeof l === 'string' ? { i: '', h: l } : l), cumprida = /cumprida/i.test(titulo || '');
+    const flut = itens.filter(x => x.i).map((x, k) => Array.from({ length: 3 }, (_, q) => `<span class="mc-fl k-${x.i}" style="--x:${((k * 3 + q) * 37) % 100}%;--d:${(q * .55 + k * .2).toFixed(2)}s;--s:${(.7 + q * .22).toFixed(2)}">${ic(x.i)}</span>`).join('')).join('');
+    const box = U.el(`<div class="hs-esc hs-rec2 mc"><div class="mc-rays"></div><div class="mc-flt" aria-hidden="true">${red ? '' : flut}</div>
+      <div class="mc-seal"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m14 25 7 7 14-16"/></svg></div>
+      <small>${cumprida ? 'MISSÃO' : 'RECOMPENSA'}</small><h3>${cumprida ? 'Cumprida' : A.esc(titulo || 'Recompensa')}</h3>
+      <ul>${itens.map((x, k) => `<li class="mc-r${x.i ? ' k-' + x.i : ''}" style="--k:${k}"><span class="mc-ico">${x.i ? ic(x.i) : ''}</span><span class="mc-tx">${x.h}</span></li>`).join('')}</ul>
+      <div class="row"><button class="btn primary" data-a="x">Continuar</button></div></div>`);
+    const m = U.modal(box, { cls: 'hs-modal hs-modal-mc' }); A.SND.play('legend');
     box.onclick = e => { if (e.target.closest('[data-a]')) { A.SND.play('click'); m.close(); } };
   }
   function recebe(r, titulo) {   // r: {pend, itens[], frag, reg}; recompensas de missão não contam como "ganho"
     const s = ini(), L = [];
-    if (r.pend) { s.pend = (s.pend | 0) + r.pend; L.push(`<b>+${r.pend}</b> pêndulos`); }
-    (r.itens || []).forEach(i => { if (!s.itens.includes(i)) s.itens.push(i); L.push('Item: <b>' + A.esc(i) + '</b>'); });
-    if (r.frag && darFrag(r.frag)) L.push(`<b>+1</b> fragmento dimensional <b>(${nFrag()})</b>`);
-    if (r.carta && !s.owned.includes(r.carta)) { s.owned.push(r.carta); L.push('Carta lendária: <b>' + A.esc(A.U.CARDS[r.carta].nome) + '</b>'); }
-    if (r.reg && darReg(r.reg)) L.push('Registro de <b>' + A.esc(A.U.CARDS[r.reg].nome) + '</b>');
+    if (r.pend) { s.pend = (s.pend | 0) + r.pend; L.push({ i: 'moeda', h: `<b>+${r.pend}</b> pêndulos` }); }
+    (r.itens || []).forEach(i => { if (!s.itens.includes(i)) s.itens.push(i); L.push({ i: 'item', h: 'Item: <b>' + A.esc(i) + '</b>' }); });
+    if (r.frag && darFrag(r.frag)) L.push({ i: 'cristal', h: `<b>+1</b> fragmento dimensional <b>(${nFrag()})</b>` });
+    if (r.carta && !s.owned.includes(r.carta)) { s.owned.push(r.carta); L.push({ i: 'item', h: 'Carta lendária: <b>' + A.esc(A.U.CARDS[r.carta].nome) + '</b>' }); }
+    if (r.reg && darReg(r.reg)) L.push({ i: 'registro', h: 'Registro de <b>' + A.esc(A.U.CARDS[r.reg].nome) + '</b>' });
     A.save(); A.paintAll(); setTimeout(() => popup(L, titulo), 250);
   }
 
@@ -247,5 +257,5 @@
     A.save(); return true;
   }
 
-  window.DSNpc = { init: a => { A = a; }, paint, casaSheet, falar, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
+  window.DSNpc = { init: a => { A = a; }, popup, recebe, paint, casaSheet, falar, missoes, colecao, check, vitoria, fragBau, fragMini, vend, lojaExtras, compraExtra, cristal, nFrag, tem, val: MELH_VAL, entrega, ultimo, byId: id => BYID[id], melh: MELH_ID, state: () => ini(), primeiro, dados: D };
 })();

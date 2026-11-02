@@ -561,9 +561,9 @@
     $$('.n.sel', root).forEach(g => g.classList.remove('sel')); const g = $('.n[data-id="' + id + '"]', root); if (g) g.classList.add('sel');
     const ok = cleared(id), av = available(id), aqui = id === posId(), cam_ = aqui ? null : caminho(id), lockMg = n.tipo === 'minigame' && !!(S.mgLock && S.mgLock[id]) && !ok;
     const bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id], et = bat0 && bat0.e && n.tipo !== 'minigame' && textoEvento(bat0.e), evLinha = et ? `<p class="hs-ev">⚡ <b>${esc(et.nome)}</b>: ${esc(et.regra)}</p>` : '';
-    const gdn = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null, inimL = bat0 && !['loja', 'minigame', 'boss'].includes(n.tipo) ? (gdn ? [{ n: gdn.nome, c: gdn.av }] : bat0.i) : null;   // melhoria "Olho vivo"
+    const gdn = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null, espelho = !!(bat0 && bat0.e && bat0.e.id === 'espelho'), inimL = bat0 && !espelho && !['loja', 'minigame', 'boss'].includes(n.tipo) ? (gdn ? [{ n: gdn.nome, c: gdn.av }] : bat0.i) : null;   // Espelho: o inimigo joga cópias das suas cartas, então não mostra um baralho próprio   // melhoria "Olho vivo"
     const conhece = !!(NPC && NPC.tem('olho')) || !!(S.vistos && S.vistos[id]);   // cartas do inimigo: "?" até duelar uma vez (ganhando ou perdendo) ou comprar o Olho vivo
-    const cartas = inimL ? '<div class="hs-olho"></div>' : '';
+    const cartas = inimL ? '<div class="hs-olho"></div>' : espelho ? '<p class="hint">O inimigo joga com cópias das cartas que você levar.</p>' : '';
     const jog = n.tipo === 'miniboss' ? 'Duelo de 3 ou 4 jogadores' : n.tipo === 'guardiao' ? 'Duelo contra o guardião' : n.tipo === 'boss' ? 'Você contra o Boss' : n.tipo === 'loja' ? 'Loja de cartas' : n.tipo === 'minigame' ? 'Minigame' + (n.serieMg ? ' · dá 1 broche' : '') : 'Você contra 1 inimigo';
     const rec = ['elite', 'miniboss', 'guardiao', 'boss'].includes(n.tipo) ? nivelRecomendado(n) : 0, dif = rec ? nivel(S.xp) - rec : 0, recCor = dif >= 0 ? 'ok' : dif >= -2 ? 'warn' : 'danger';
     sheet.innerHTML = `<button class="ibtn x" data-a="x" aria-label="Fechar">✕</button>
@@ -766,7 +766,7 @@
     });
   }
   // ---- Boss final: 3 fases seguidas contra a Besta (calibrado por simulação com CPUs). Você recomeça cada fase com as mesmas 30 cartas (8 da União + 22); a Besta recomeça com um baralho novo.
-  const BOSS_N = [16, 22, 28], BOSS_B = [0, 6, 12];   // cartas da Besta por fase e bônus extra por fase (além de +30 por guardião vivo)
+  const BOSS_N = [16, 22, 28], BOSS_B = [0, 4, 8];   // cartas da Besta por fase e bônus extra por fase (além de +30 por guardião vivo)
   const BOSS_FASES = [['Cerco', 'A Besta usa Movimentos a cada duas rodadas. Os Chamados da União (cartas preparadas) respondem.'], ['Agilidade', 'A cada duas disputas surge um desafio, até oito vezes. Acertos seguidos fortalecem o terceiro bônus.'], ['Buraco negro', 'O buraco negro puxa cartas do fundo de cada baralho a cada rodada. Salve as da União nos desafios.']];
   function deckBoss(fase, usadas) {   // baralhos estáveis e temáticos: resistência no Cerco, velocidade na Agilidade, inteligência no Buraco Negro
     const w = fase === 1 ? { pod: .45, def: 1.25, int: .95, vel: .35 } : fase === 2 ? { pod: .8, def: .35, int: .55, vel: 1.35 } : { pod: .45, def: .8, int: 1.35, vel: .45 };
@@ -964,6 +964,13 @@
         S.pend -= p; S.gasto = (S.gasto | 0) + p; alugadas().push(id); S.alug.estoque = S.alug.estoque.filter(x => x !== id); save(); SND.play('capture'); msg = U.CARDS[id].nome + ' alugada (−' + p + ').'; paintAll(); render(); } };
     render();
   }
+  function arrastaLista(box) {   // lista horizontal que passa da tela: arrasta com o dedo (nativo) ou com o mouse
+    let x0 = null, sl = 0, moveu = false;
+    box.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') return; x0 = e.clientX; sl = box.scrollLeft; moveu = false; });
+    window.addEventListener('pointermove', e => { if (x0 == null) return; const d = e.clientX - x0; if (Math.abs(d) > 4) moveu = true; box.scrollLeft = sl - d; });
+    window.addEventListener('pointerup', () => { x0 = null; });
+    box.addEventListener('click', e => { if (moveu) { e.stopPropagation(); e.preventDefault(); moveu = false; } }, true);
+  }
   function abrirBau(premio, done) {
     closeSheet(); const red = document.body.classList.contains('reduce'), pend = premio.pend | 0, pick = !!premio.opcoes, cartas = premio.opcoes || premio.cartas || []; let escolhida = null;
     const ov = el(`<div class="bau-ov"><div class="bau-stage"><div class="bau-glow"></div><div class="bau-box"><img class="bau-art" src="cena/baus/bau-fechado.png" alt="Baú dimensional fechado"></div><div class="bau-prize"></div></div><button class="btn primary bau-ok" hidden>Continuar</button></div>`);
@@ -978,7 +985,7 @@
         prize.innerHTML = Array.from({ length: Math.min(14, 4 + pend) }, (_, i) => `<span class="bau-coin" style="--dx:${(Math.random() * 220 - 110).toFixed(0)}px;--dy:${(-70 - Math.random() * 120).toFixed(0)}px;--d:${(i * 60)}ms">${coinSvg(30)}</span>`).join('') + `<div class="bau-amt">+${pend}</div>`; SND.play('bauCoin');
       }
       if (cartas.length) {
-        prize.classList.add('cards'); if (pick) prize.classList.add('pick'); cartas.forEach((id, i) => { const w = el('<div class="bau-card" data-id="' + id + '" style="--d:' + (i * 280) + 'ms"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cartas.length > 2 ? 92 : 118 })); if (!(S.owned || []).includes(id)) w.append(el('<span class="bau-new">NOVA</span>')); prize.append(w); setTimeout(() => { if (!fim) SND.play('bauCard'); }, red ? 0 : i * 280); });
+        prize.classList.add('cards'); if (pick) prize.classList.add('pick'); arrastaLista(prize); if (cartas.length > 3) prize.classList.add('mais'); cartas.forEach((id, i) => { const w = el('<div class="bau-card" data-id="' + id + '" style="--d:' + (i * 280) + 'ms"></div>'); w.append(U.cardEl(id, { up: true, noanim: true, cw: cartas.length > 2 ? 92 : 118 })); if (!(S.owned || []).includes(id)) w.append(el('<span class="bau-new">NOVA</span>')); prize.append(w); setTimeout(() => { if (!fim) SND.play('bauCard'); }, red ? 0 : i * 280); });
         if (cartas.some(id => U.CARDS[id] && U.CARDS[id].raridade === 'lendaria')) T(() => SND.play('legend'), 400);
       }
       ok.hidden = false; if (pick) { ok.disabled = true; ok.textContent = 'Escolha uma'; prize.onclick = e => { const w = e.target.closest('.bau-card'); if (!w) return; escolhida = w.dataset.id; $$('.bau-card', prize).forEach(x => { x.classList.toggle('sel', x === w); x.classList.toggle('no', x !== w); }); ok.disabled = false; ok.textContent = 'Pegar'; SND.play('tick'); }; }

@@ -16,7 +16,7 @@ async function fase(F, k, P, R, mao) {
   const w = await g.run(); return { w, rounds: g.s.round, combats: g.s.combats, order: ordem.slice(), err, left: g.totalCards(g.p(0)) };
 }
 (async () => {
-  const n = +process.argv[2] || 200, cen = process.argv[3] || 'cheia', N = (process.argv[4] || '16,22,28').split(',').map(Number), b = (process.argv[5] || '0,6,12').split(',').map(Number), vivos = +process.argv[6] || 0;
+  const n = +process.argv[2] || 200, cen = process.argv[3] || 'cheia', N = (process.argv[4] || '16,22,28').split(',').map(Number), b = (process.argv[5] || '0,4,8').split(',').map(Number), vivos = +process.argv[6] || 0;
   const P = Object.assign({ N, b, vivos, q: .7, salva: .7 }, cen === 'sem' ? { uniao: false } : cen === 'media' ? { nuniao: 4 } : cen === 'meia' ? { nuniao: 4, pool: 30 } : {});
   let win = 0, fail = [0, 0, 0, 0], rod = [0, 0, 0, 0], comb = [0, 0, 0, 0], reach = [0, 0, 0, 0], errs = 0, falhas = 0;
   for (let k = 0; k < n; k++) { const R = rngF(500 + k * 13); let ok = true, mao = montaMao(P, R);

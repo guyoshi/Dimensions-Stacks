@@ -41,3 +41,9 @@ O buraco cresce: rodadas 1-4 puxa 1 carta do fundo de cada baralho por rodada; 5
 1. A Besta tem quantas cartas por fase (sugestão: 30, e cada fase termina quando você captura 20)?
 2. Cartas da União capturadas pela Besta podem ser perdidas de vez (só Jennifer recupera)?
 3. Chamado da União só com os 8 em mãos ou também parcial?
+
+## Recalibração de 02/11/2026
+- Baralhos da Besta temáticos por fase (resistência, velocidade, inteligência), sorteados entre as 48 melhores do perfil para não depender só das cartas absolutas. Cartas: 16, 22 e 28 por fase.
+- **Bônus extra por fase mudou de 0/6/12 para 0/4/8** (mais +30 por Guardião vivo). Simulação (motor real, 150 partidas, jogador CPU difícil, União completa, Guardiões mortos): vitória **43%** (meta 40–45%). Com 1 Guardião vivo: 0% (muro intencional).
+- Lince (Blocos de três): composição 4 raras, 4 épicas e 3 lendárias sem corte de força. Simulação 85% de vitória do jogador CPU com 10 cartas contra 12 (antes 80%). Alternativas medidas: 2/4/5 → 81%; 1/4/6 → 71%; 0/4/7 → 73%. Mantida a composição aprovada; decisão do autor se quiser Lince mais duro.
+- O aviso "conservação" que aparece na simulação com a Besta usando Clone já existia antes (o clone é carta nova por desenho); não é bug do jogo.
