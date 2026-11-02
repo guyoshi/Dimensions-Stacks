@@ -3,7 +3,8 @@
   'use strict';
   const D = window.DS_DATA, E = window.DS_ENGINE;
   const { SERIES, ATRIBUTOS, RARIDADES, CARTAS } = D;
-  const CARDS_BASE = Object.fromEntries(CARTAS.concat(D.QUASAR || []).map(c => [c.id, c]));   // Quasar: fora de D.CARTAS (sorteios), mas válidas em U.CARDS
+  const CARDS_COLECAO = CARTAS.concat(D.GUARDIOES || []);
+  const CARDS_BASE = Object.fromEntries(CARTAS.concat(D.QUASAR || [], D.GUARDIOES || []).map(c => [c.id, c]));   // Quasar/Guardiões: fora de D.CARTAS (sorteios), mas válidas em U.CARDS
   // Cartas CLONE (id "J08*1"): cópia da carta original, criada na hora; não entram em listas (Object.keys não as vê)
   const CARDS = new Proxy(CARDS_BASE, { get(t, k) { if (typeof k === 'string' && k.indexOf('*') > 0 && !(k in t)) { const b = t[k.slice(0, k.indexOf('*'))]; if (b) Object.defineProperty(t, k, { value: Object.assign({}, b, { id: k, clone: true, orig: b.id }), enumerable: false, configurable: true }); } return t[k]; } });
   const ATT = Object.fromEntries(ATRIBUTOS.map(a => [a.id, a]));
@@ -397,12 +398,12 @@
   // ---- coleção
   function collection() {
     let filt = 'todas';
-    const wrap = el(`<div><h2 style="color:var(--gold2);margin-bottom:8px">Coleção <span class="hint">(${CARTAS.length} cartas · ${Object.keys(IMG).length} com foto)</span></h2><div class="chips"></div><div class="cgrid"></div></div>`);
+    const wrap = el(`<div><h2 style="color:var(--gold2);margin-bottom:8px">Coleção <span class="hint">(${CARDS_COLECAO.length} cartas · ${Object.keys(IMG).length} com foto)</span></h2><div class="chips"></div><div class="cgrid"></div></div>`);
     const chips = $('.chips', wrap), grid = $('.cgrid', wrap);
     const keys = ['todas', ...Object.keys(SERIES), 'uniao'];
     function draw() {
       chips.innerHTML = keys.map(k => `<button data-k="${k}" class="${filt === k ? 'on' : ''}"${k === 'uniao' ? ' aria-label="A União"' : ''}>${k === 'todas' ? 'Todas' : k === 'uniao' ? U.uniaoLogo('uniao-logo-chip') : SERIES[k].nome}</button>`).join('');
-      grid.replaceChildren(...CARTAS.filter(c => filt === 'todas' || (filt === 'uniao' ? c.uniao : c.serie === filt)).map(c => cardEl(c.id, { up: true, noanim: true, cw: 112, click: true })));
+      grid.replaceChildren(...CARDS_COLECAO.filter(c => filt === 'todas' || (filt === 'uniao' ? c.uniao : c.serie === filt)).map(c => cardEl(c.id, { up: true, noanim: true, cw: 112, click: true })));
     }
     chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; filt = b.dataset.k; SND.play('tick'); draw(); };
     draw(); SND.play('click'); U.modal(wrap);

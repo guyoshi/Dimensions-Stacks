@@ -7,7 +7,7 @@
   const ATTRS = D.ATRIBUTOS;
   const AID = ATTRS.map(a => a.id);
   const ATTR = Object.fromEntries(ATTRS.map(a => [a.id, a]));
-  const CARDS = Object.fromEntries(D.CARTAS.concat(D.QUASAR || []).map(c => [c.id, c]));   // Quasar só entra por id (luta final); nunca nos sorteios (D.CARTAS)
+  const CARDS = Object.fromEntries(D.CARTAS.concat(D.QUASAR || [], D.GUARDIOES || []).map(c => [c.id, c]));   // Quasar/Guardiões só entram por id; nunca no pool comum (D.CARTAS)
   // Cartas CLONE (especial "Clone"): cópia da carta vencedora, com id próprio "J08*1" (a mesma carta nunca existe duas vezes sob o mesmo id).
   // Ficam não enumeráveis em CARDS para não aparecerem em listas de coleção.
   const isClone = id => typeof id === 'string' && id.indexOf('*') > 0;
@@ -209,6 +209,28 @@
       const a = list.find(x => x.pid === t); if (await ctx.cancelAct(a, act.pid)) ctx.say(`${ctx.name(act.pid)} cancela o especial de ${ctx.name(t)}!`);
     },
     ai: (ctx, pid) => 0.05 + 0.7 * ctx.g.botOppFlip(pid),
+  });
+
+  // Guardiões de A União: exclusivas de Jornada e muito raras em partidas livres.
+  def('AE-200', 'Sacrifício astral', 'Cada outro jogador ativo envia 1 carta aleatória do baralho ativo ao Buraco Negro. Você não é afetado.', 'Buraco Negro', {
+    can(ctx, pid) { return ctx.alive().some(o => o !== pid && ctx.player(o).deck.length > 0); },
+    async apply(ctx, act) { let n = 0; for (const pid of ctx.alive()) { if (pid === act.pid) continue; const p = ctx.player(pid); if (!p.deck.length) continue; const i = Math.floor(ctx.rand() * p.deck.length), c = p.deck.splice(i, 1)[0]; ctx.toBH(c, 'normal'); n++; await ctx.emit('discard', { pid, card: c, guardiao: true }); } ctx.say(`${ctx.name(act.pid)} sacrifica a própria carta e bane ${n} carta${n === 1 ? '' : 's'}.`); },
+    ai: (ctx, pid) => Math.min(.8, .18 + .17 * ctx.alive().filter(o => o !== pid && ctx.player(o).deck.length).length), val: 1.1,
+  });
+  def('AE-201', 'Troca de órbitas', 'Troque todo o seu baralho ativo pelo baralho ativo de um adversário. Reservas e especiais preparados não mudam.', 'Troca', {
+    can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).deck.length > 0); },
+    async apply(ctx, act) { const me = ctx.player(act.pid), cand = ctx.opps(act.pid).filter(o => ctx.player(o).deck.length > 0); if (!cand.length) return; const t = await ctx.pick(act.pid, cand, 'Trocar o baralho ativo com quem?', a => a.slice().sort((x, y) => ctx.player(y).deck.length - ctx.player(x).deck.length)[0]); if (t == null) return; const alvo = ctx.player(t), meu = me.deck; me.deck = alvo.deck; alvo.deck = meu; ctx.g.memInit(); await ctx.emit('swapDeck', { from: act.pid, to: t, guardiao: true }); ctx.say(`${ctx.name(act.pid)} troca seu baralho ativo com ${ctx.name(t)}.`); },
+    ai: (ctx, pid) => { const me = ctx.player(pid).deck.reduce((s, c) => s + sum4(CARDS[c].stats), 0); const best = Math.max(...ctx.opps(pid).map(o => ctx.player(o).deck.reduce((s, c) => s + sum4(CARDS[c].stats), 0)), me); return best > me + 45 ? .78 : .06; }, val: 1.2,
+  });
+  def('AE-202', 'Pilhagem preparada', 'Roube todas as cartas especiais preparadas por seus adversários; elas passam para a sua área de especiais preparados.', 'Interação', {
+    can(ctx, pid) { return ctx.opps(pid).some(o => ctx.player(o).prepared.length > 0); },
+    async apply(ctx, act) { const me = ctx.player(act.pid); let n = 0; for (const o of ctx.opps(act.pid)) { const p = ctx.player(o); while (p.prepared.length) { const c = p.prepared.shift(); me.prepared.push(c); n++; await ctx.emit('steal', { from: o, to: act.pid, card: c, zone: 'prepared', dzone: 'prepared', guardiao: true }); } } ctx.say(`${ctx.name(act.pid)} toma ${n} especial${n === 1 ? '' : 'is'} preparado${n === 1 ? '' : 's'}.`); },
+    ai: (ctx, pid) => Math.min(.9, .18 + .22 * ctx.opps(pid).reduce((n, o) => n + ctx.player(o).prepared.length, 0)), val: 1.35,
+  });
+  def('AE-203', 'Chamado da fenda', 'Receba 4 cartas novas aleatórias ao fim do seu baralho. Cartas de Guardião não podem vir nesta chamada.', 'Reforço', {
+    can(ctx) { return D.CARTAS.length > 0; },
+    async apply(ctx, act) { const g = ctx.g, used = new Set(g.s.bh.map(x => x.id)); g.s.players.forEach(p => ['deck', 'reserve', 'prepared'].forEach(z => p[z].forEach(c => used.add(c)))); ctx.combat.entries.forEach(e => { used.add(e.card); e.extra.forEach(c => used.add(c)); }); const pool = D.CARTAS.filter(c => !used.has(c.id)).map(c => c.id), got = shuffle(pool, ctx.rand).slice(0, 4); g.p(act.pid).deck.push(...got); g.memInit(); await ctx.emit('refill', { pid: act.pid, cards: got, guardiao: true }); ctx.say(`${ctx.name(act.pid)} chama ${got.length} carta${got.length === 1 ? '' : 's'} nova${got.length === 1 ? '' : 's'} da fenda.`); },
+    ai: () => .72, val: 1.3,
   });
 
   // ordem de resolução dos efeitos: blindagem → cancelamentos → proteções → principais → cópias/repetições → ajustes finais
@@ -428,7 +450,9 @@
     async setup() {
       const cfg = this.cfg, n = cfg.players.length;
       const per = Math.max(7, cfg.perPlayer);
-      const ids = shuffle(D.CARTAS.map(c => c.id), this.rand).slice(0, per * n);
+      let ids = shuffle(D.CARTAS.map(c => c.id), this.rand).slice(0, per * n);
+      // Só a partida livre recebe um Guardião, e ainda assim no máximo um a cada ~286 partidas.
+      if (!cfg.maos && cfg.guardianRare !== false && (D.GUARDIOES || []).length && this.rand() < (cfg.guardianRare == null ? .0035 : cfg.guardianRare)) { const gs = D.GUARDIOES, c = gs[Math.floor(this.rand() * gs.length)].id; ids[ids.length - 1] = c; ids = shuffle(ids, this.rand); }
       this.s.players = cfg.players.map((pc, i) => ({ pid: i, name: pc.name, bot: !!pc.bot, avatar: pc.avatar, diff: pc.diff, noSpecial: !!pc.noSpecial, pol: pc.pol, deck: [], reserve: [], prepared: [], alive: true }));
       const hands = []; let k = 0;
       if (cfg.maos) { cfg.maos.forEach(m => hands.push(m.slice())); }   // modo história: mãos fixas (7 cartas por lado), sem reserva

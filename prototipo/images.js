@@ -145,5 +145,9 @@ window.CARD_IMAGES = {
  "Q10": "photos/Q10.webp?v=044d4e1bfc",
  "Q11": "photos/Q11.webp?v=dd0a543486",
  "Q12": "photos/Q12.webp?v=c7598f45b0",
- "Q13": "photos/Q13.webp?v=d555152d39"
+ "Q13": "photos/Q13.webp?v=d555152d39",
+ "G01": "photos/G01.jpg?v=guard-20261102",
+ "G02": "photos/G02.jpg?v=guard-20261102",
+ "G03": "photos/G03.jpg?v=guard-20261102",
+ "G04": "photos/G04.jpg?v=guard-20261102"
 };

@@ -12,6 +12,7 @@
     spacetheft: { nome: 'Spacetheft',             titulo: 'Spacetheft', marca: 'SPACETHEFT',          cor: '#1b1b22', escuro: '#000000', texto: '#ffffff', cor2: '#9a9aa8' },
     jesed:      { nome: 'Ciclo de Jesed',         titulo: 'Ciclo de Jesed', marca: 'JESED',               cor: '#e9b923', escuro: '#7a5a00', texto: '#1d1400', cor2: '#fff1b0' },
     belfex:     { nome: 'Édelin Lys', titulo: 'Édelin Lys', marca: 'ÉDELIN LYS', cor: '#2faa5a', escuro: '#0f4a26', texto: '#ffffff', cor2: '#aef0c3' },
+    uniao:      { nome: 'A União', titulo: 'A União', marca: 'A UNIÃO', cor: '#8e70ff', escuro: '#25165c', texto: '#ffffff', cor2: '#ffe59a' },
   };
 
   const ATRIBUTOS = [
@@ -284,5 +285,13 @@
     ['P08', 'Príncipe das Trevas', 'Príncipe de Belfex, responsável pela magia das sombras.', [95, 95, 68, 62], 'AE-172'],
   ];
   PRINCIPES_DEF.forEach(function (r) { QUASAR.push({ id: r[0], nome: r[1], serie: 'belfex', nota: 'Príncipe elemental', uniao: false, descricao: r[2], perfil: null, proposta: false, aprovada: true, stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'lendaria', especial: r[4], provisorio: false, principe: true }); });
-  root.DS_DATA = { QUASAR: QUASAR, AURA_QUASAR: AURA, poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: CARTAS_FINAIS, HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
+  // ---------- 4 cartas dos Guardiões: exclusivas da Jornada (uma por confronto) e raríssimas em partidas livres.
+  // Ficam fora de D.CARTAS: não entram em lojas, baús, inimigos nem nos reforços aleatórios.
+  const GUARDIOES = [
+    { id: 'G01', nome: 'Cassiopeia & Órion', serie: 'uniao', nota: 'Guardiões de A União', uniao: true, descricao: 'A dupla que vigia a constelação e cobra um preço de todos os outros.', stats: { pod: 100, def: 0, int: 0, vel: 0 }, raridade: 'lendaria', especial: 'AE-200', provisorio: false, guardiao: 'G1' },
+    { id: 'G02', nome: 'Corvus', serie: 'uniao', nota: 'Guardião de A União', uniao: true, descricao: 'Guardião de plumas cósmicas, capaz de inverter o rumo de uma batalha.', stats: { pod: 0, def: 100, int: 0, vel: 0 }, raridade: 'lendaria', especial: 'AE-201', provisorio: false, guardiao: 'G2' },
+    { id: 'G03', nome: 'Lince', serie: 'uniao', nota: 'Guardião de A União', uniao: true, descricao: 'Sentinela veloz e calculista, atento ao que os rivais deixam preparado.', stats: { pod: 0, def: 0, int: 100, vel: 0 }, raridade: 'lendaria', especial: 'AE-202', provisorio: false, guardiao: 'G3' },
+    { id: 'G04', nome: 'Escorpião', serie: 'uniao', nota: 'Guardião de A União', uniao: true, descricao: 'Guardião da fenda rubra, que chama reforços para prolongar a luta.', stats: { pod: 0, def: 0, int: 0, vel: 100 }, raridade: 'lendaria', especial: 'AE-203', provisorio: false, guardiao: 'G4' },
+  ];
+  root.DS_DATA = { QUASAR: QUASAR, GUARDIOES: GUARDIOES, AURA_QUASAR: AURA, poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: CARTAS_FINAIS, HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
 })(typeof window !== 'undefined' ? window : globalThis);
