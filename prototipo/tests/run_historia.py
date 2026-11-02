@@ -39,7 +39,7 @@ try:
     pg.screenshot(path=shots + '/hist_hub.png')
     pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1500)
     n = pg.evaluate("document.querySelectorAll('.n').length"); e = pg.evaluate("document.querySelectorAll('.hs-edges .e').length")
-    chk(n == 179, 'mapa com 179 pontos (100 batalhas + 5 lojas + 31 casas + 22 baús + 17 minigames + 4 inícios): %d' % n)
+    chk(n == 187, 'mapa com 187 pontos (100 batalhas + 5 lojas + 31 casas + 22 baús + 17 minigames + 4 inícios + 8 príncipes): %d' % n)
     M = pg.evaluate("window.DSHistoria.data"); chk(e == sum(len(x['viz']) for x in M['nos']) // 2, 'arestas desenhadas: %d' % e)
     pg.evaluate("(()=>{const k='dsstacks.historia',o=JSON.parse(localStorage.getItem(k));o.tutorial=1;localStorage.setItem(k,JSON.stringify(o));})()"); pg.reload(); pg.wait_for_timeout(900); pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500); pg.click('[data-a=cont]'); pg.wait_for_selector('.hs-svg'); pg.wait_for_timeout(1200)
     S = pg.evaluate("window.DSHistoria.state()"); chk(S and S['startId'] in M['starts'].values(), 'ponto de partida sorteado: ' + S['start'])

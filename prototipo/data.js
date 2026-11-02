@@ -270,5 +270,18 @@
     return { id: r[0], nome: b.nome, serie: b.serie, nota: 'Quasar ' + r[2], uniao: false, descricao: AURA[r[2]], perfil: null, proposta: false, aprovada: true,
       stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'quasar', especial: b.especial, provisorio: false, quasar: r[2], base: b.id };
   });
+  // ---------- 8 PRÍNCIPES elementais (pós-game): Lendárias exclusivas, só como recompensa; ficam fora de D.CARTAS (sorteios, baús, lojas, decks inimigos).
+  // Nomes provisórios (os títulos); sem foto ainda. Especiais PROVISÓRIOS: as 8 conversões livres (AE-018/020/053/054/125-128), a serem trocadas pelo autor.
+  const PRINCIPES_DEF = [   // [id, nome, descrição, stats, especial provisório]
+    ['P01', 'Príncipe das Águas', 'Príncipe de Belfex, responsável pela magia da água e das marés da 4ª dimensão.', [58, 66, 92, 90], 'AE-018'],
+    ['P02', 'Princesa do Fogo', 'Princesa de Belfex, responsável pela magia do fogo e do calor.', [95, 88, 66, 60], 'AE-020'],
+    ['P03', 'Princesa da Natureza', 'Princesa de Belfex, responsável pela magia da vida e das plantas.', [83, 94, 61, 70], 'AE-053'],
+    ['P04', 'Princesa dos Ventos', 'Princesa de Belfex, responsável pela magia do ar e das tempestades.', [59, 67, 89, 95], 'AE-054'],
+    ['P05', 'Princesa da Luz', 'Princesa de Belfex, responsável pela magia de energia e luz.', [64, 55, 94, 92], 'AE-125'],
+    ['P06', 'Príncipe do Tempo', 'Príncipe de Belfex, responsável pela magia do tempo.', [63, 68, 95, 81], 'AE-126'],
+    ['P07', 'Príncipe do Espaço', 'Príncipe de Belfex, responsável pela magia do espaço.', [68, 63, 85, 95], 'AE-127'],
+    ['P08', 'Príncipe das Trevas', 'Príncipe de Belfex, responsável pela magia das sombras.', [95, 95, 68, 62], 'AE-128'],
+  ];
+  PRINCIPES_DEF.forEach(function (r) { QUASAR.push({ id: r[0], nome: r[1], serie: 'belfex', nota: 'Príncipe elemental', uniao: false, descricao: r[2], perfil: null, proposta: false, aprovada: true, stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'lendaria', especial: r[4], provisorio: false, principe: true }); });
   root.DS_DATA = { QUASAR: QUASAR, AURA_QUASAR: AURA, poder: poder, SERIES: SERIES, ATRIBUTOS: ATRIBUTOS, RARIDADES: RARIDADES, CARTAS: CARTAS_FINAIS, HABILIDADES: PROP ? PROP.hab : {}, hash: hash, rng: rng };
 })(typeof window !== 'undefined' ? window : globalThis);

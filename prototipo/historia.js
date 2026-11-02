@@ -22,6 +22,7 @@
     inicio:   { nome: 'Início', cor: '#9fd0ff', r: 16, desc: 'Casa inicial, vazia: a jornada começa aqui e a primeira batalha está logo à frente.' },
     casa:     { nome: 'Casa de NPC', cor: '#b48cff', r: 19, desc: 'Moradia de um NPC: conversas e missões. Não tem duelo e não bloqueia o caminho.' },
     minigame: { nome: 'Minigame', cor: '#ff8ad8', r: 21, desc: 'Casa de minigame, no meio do caminho. Passe com ao menos "Bom" para seguir; se falhar, pague um pouco para tentar de novo.' },
+    principe: { nome: 'Príncipe', cor: '#c58cff', r: 26, desc: 'Pós-game: um dos 8 príncipes elementais. Custa 5 fragmentos de Estírio.' },
     boss:     { nome: 'Boss final', cor: '#fbf9ff', r: 66, desc: 'A Besta, no núcleo da galáxia.' },
   };
   const LADOS = { esq: 'Vila Velha', cima: 'Kaeliran', dir: 'Belfex', baixo: 'Braço de Origem', nw: 'Cidade Crepúsculo', ne: 'Promessas do Mar' };   // setores: lugares dos livros (Diário Sobrenatural, Ciclo de Jesed, Viajantes, Spacetheft, Mistério Oculto, Édelin Lys)
@@ -163,6 +164,7 @@
   function available(id) {
     if (!S) return false;
     if (P.aberto) return true;
+    if (BY[id].tipo === 'principe') return POS();
     if (cleared(id)) return true;
     if (id === M.boss) return bossOpen();
     return liberados().has(id);
@@ -234,20 +236,39 @@
     const mx = (a.x + b.x) / 2 - dy / len * off, my = (a.y + b.y) / 2 + dx / len * off;
     return `M${a.x} ${a.y} Q${mx.toFixed(1)} ${my.toFixed(1)} ${b.x} ${b.y}`;
   }
+  // ---- PÓS-GAME QUASAR (aprovado pelo autor em 02/11/2026). Depois de vencer a Besta: Korvo (Quasar 2) assume o centro; ~40 desafios ganham versão "+" (dá 1 fragmento de Estírio);
+  // 5 fragmentos pagam a luta contra cada um dos 8 príncipes elementais (nós novos ao redor do núcleo); cada príncipe dá uma Lendária + cartas Quasar. A luta final contra Korvo ainda não existe.
+  const POS = () => !!(S && S.cleared && S.cleared[M.boss]);
+  const PLUS = (() => { const L = t => NOS.filter(n => n.tipo === t).map(n => n.id).sort(), ev = L('evento'), pick = (a, k) => Array.from({ length: k }, (_, i) => a[Math.floor(i * a.length / k)]); return new Set([...L('guardiao'), ...L('miniboss'), ...L('elite'), ...pick(ev, 18)]); })();   // 4 guardiões + 8 arautos + 10 elites + 18 eventos = 40 desafios "+"
+  const PR_DEF = [['PR1', 'P01', 'Príncipe das Águas', '#4aa3ff', 'mare', ['Q07']], ['PR2', 'P02', 'Princesa do Fogo', '#ff6a3d', 'solar', ['Q04']], ['PR3', 'P03', 'Princesa da Natureza', '#5dd16a', 'rodizio', ['Q09']], ['PR4', 'P04', 'Princesa dos Ventos', '#bfe8ff', 'pressa', ['Q11']],
+    ['PR5', 'P05', 'Princesa da Luz', '#fff0a0', 'abertas', ['Q01']], ['PR6', 'P06', 'Príncipe do Tempo', '#e0b3ff', 'relogio', ['Q08']], ['PR7', 'P07', 'Príncipe do Espaço', '#8a7bff', 'estelar', ['Q12']], ['PR8', 'P08', 'Príncipe das Trevas', '#9b59d6', 'silencio', ['Q05', 'Q02']]];
+  const PR_BONUS = ['Q10', 'Q03', 'Q06'];   // "Quasar completo": ao vencer os 8 (Breno N2, Édelin N3, Beatriz N3)
+  const PR_CUSTO = 5, PRINCIPES = PR_DEF.map(d => d[0]);
+  (function () {
+    const bs = BY[M.boss], base = NOS.slice(); PR_DEF.forEach((d, i) => { const ang = -Math.PI / 2 + i * Math.PI / 4; let x = 0, y = 0;
+      for (let rad = 260; rad <= 900; rad += 20) { x = Math.round(bs.x + Math.cos(ang) * rad); y = Math.round(bs.y + Math.sin(ang) * rad); if (Math.min(...base.map(o => Math.hypot(o.x - x, o.y - y))) >= 95) break; }
+      const n = { id: d[0], tipo: 'principe', tier: 4, lado: 'dir', x, y, viz: [bs.id], nomeP: d[2], cor: d[3], card: d[1] }; NOS.push(n); BY[n.id] = n; bs.viz.push(n.id); base.push(n); });
+    window.DS_HIST_BAT = window.DS_HIST_BAT || {};   // baralhos: as Lendárias mais fortes (7), um evento fixo por príncipe
+    const forca = id => { const c = U.CARDS[id]; return c ? Object.values(c.stats).reduce((a, b) => a + b, 0) : 0; };
+    PR_DEF.forEach((d, k) => { const L = U.D.CARTAS.filter(c => !c.uniao && !new Set(['S11', 'V26', 'J30']).has(c.id) && c.raridade === 'lendaria').sort((a, b) => forca(b.id) - forca(a.id)), off = (k * 2) % Math.max(1, L.length - 6), deck = L.slice(off, off + 7).map(c => c.id).sort((a, b) => forca(a) - forca(b));
+      window.DS_HIST_BAT[d[0]] = { t: 'elite', r: 4, tema: 'Édelin Lys', i: [{ n: d[2], a: deck[deck.length - 1], c: deck }], e: { id: d[4] } }; });
+  })();
   const EDGES = []; NOS.forEach(a => a.viz.forEach(v => { if (a.id < v) EDGES.push([a, BY[v]]); }));
   function nodeSvg(n) {
     const T = TIPOS[n.tipo], r = T.r, num = n.id[0] === 'B' ? String(+n.id.slice(1)) : n.id.slice(1);
-    const arquivo = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', casa: 'npc', minigame: 'minigame', boss: 'boss' }[n.tipo];
+    const arquivo = { normal: 'normal', evento: 'evento', elite: 'elite', miniboss: 'miniboss', guardiao: 'guardiao', loja: 'loja', casa: 'npc', minigame: 'minigame', boss: 'boss', principe: 'elite' }[n.tipo];
     const tam = r * (n.tipo === 'boss' ? 2.7 : 2.55);
     const arte = n.tipo === 'inicio' ? `<g class="node-art" style="color:#cfe8ff" transform="scale(1.5)">${ICON.star}</g>` : n.tipo === 'bau' ? bauSvg().replace('<svg class="bau-svg"', `<svg class="node-art bau-n" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}"`) : `<image class="node-art" href="cena/icones-mapa/${arquivo}.png" x="${(-tam / 2).toFixed(1)}" y="${(-tam / 2).toFixed(1)}" width="${tam.toFixed(1)}" height="${tam.toFixed(1)}" preserveAspectRatio="xMidYMid meet"/>`;
     let inner = '';
     if (n.tipo === 'boss') inner = `<circle class="hs-ring r1" r="${r + 18}"/><circle class="hs-ring r2" r="${r + 44}"/><circle class="win-ring" r="${r + 9}"/><circle r="${r}" class="body"/>${arte}`;
     else inner = `<circle class="halo" r="${r + 10}"/><circle class="win-ring" r="${r + 7}"/><circle class="body" r="${r}"/>${arte}${n.tipo === 'bau' || n.tipo === 'minigame' || n.tipo === 'inicio' ? '' : n.tipo === 'casa' ? `<g class="np-bang" transform="translate(${r * .75} ${-r * .8})"><circle r="10"/><text y="4.5">!</text></g>` : `<text class="lbl" y="${r + 18}">${esc(num)}</text>`}`;
     const missao = n.tipo === 'guardiao' ? `<g class="quest-bang" transform="translate(${r * .82} ${-r * .9})"><circle r="12"/><text y="5">!</text></g>` : '';
-    return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>${missao}</g>`;
+    const plusMk = PLUS.has(n.id) ? `<g class="plus-bang" transform="translate(${-r * .8} ${-r * .85})"><circle r="11"/><text y="5">+</text></g>` : '';
+    return `<g class="n t-${n.tipo}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" style="--c:${n.cor || T.cor}" tabindex="0" role="button" aria-label="${esc(nome(n))}">${inner}<g class="chk" transform="translate(${r * .72} ${-r * .72})"><circle r="9"/><path d="M-4 0 L-1 3 L5 -3.5" fill="none" stroke="#1d1400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>${missao}${plusMk}</g>`;
   }
   function nome(n) {
-    if (n.tipo === 'boss') return 'Boss final: A Besta';
+    if (n.tipo === 'principe') return n.nomeP;
+    if (n.tipo === 'boss') return POS() ? 'Boss final: Korvo (Quasar 2)' : 'Boss final: A Besta';
     if (n.tipo === 'guardiao') return 'Guardião: ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
     if (n.tipo === 'bau') return 'Baú';
@@ -319,7 +340,7 @@
         <filter id="hsGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
         <g id="hsCam"><image class="hs-gal" href="cena/mapa-galaxia.png" x="-1392" y="-612" width="2800" height="1400" preserveAspectRatio="none" mask="url(#hsGalM)"/><g class="hs-edges">${EDGES.map(([a, b]) => `<path class="e" data-a="${a.id}" data-b="${b.id}" d="${edgePath(a, b)}"/>`).join('')}</g><g id="hsLights"></g><g class="hs-nodes">${NOS.map(nodeSvg).join('')}</g><g id="hsNpcs"></g><g id="hsMarks"></g>${heroSvg()}<g id="hsArrows"></g></g></svg>
       <div class="hs-hud top"><button class="ibtn" data-a="back" aria-label="Voltar">←</button><div class="hs-ttl">${U.uniaoLogo('uniao-logo-map')}</div>
-        <div class="hs-pill hs-level" title="Nível ${nivel(S.xp)}" aria-label="Nível ${nivel(S.xp)}"><span>Nv</span><b id="hsNivel">${nivel(S.xp)}</b><i><u id="hsXpBar"></u></i></div><div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button><button class="ibtn hs-pause" data-a="pausa" aria-label="Abrir Jornada" title="Jornada"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5 14 10l6.5 2-6.5 2-2 6.5-2-6.5-6.5-2 6.5-2Z"/><path class="fill" d="M12 8.2 13.2 12 12 15.8 10.8 12Z"/></svg><em class="mission-dot" hidden aria-label="Há uma missão pronta"></em></button></div>
+        <div class="hs-pill hs-level" title="Nível ${nivel(S.xp)}" aria-label="Nível ${nivel(S.xp)}"><span>Nv</span><b id="hsNivel">${nivel(S.xp)}</b><i><u id="hsXpBar"></u></i></div><div class="hs-pill" title="Pêndulos">${coinSvg(20)}<b id="hsPend">${S.pend}</b></div><div class="hs-pill hs-frg" id="hsFrgP" title="Fragmentos dimensionais"${NPC && NPC.nFrag() ? '' : ' hidden'}>${NPC ? NPC.cristal(true) : ''}<b id="hsFrag">${NPC ? NPC.nFrag() : 0}</b></div><div class="hs-pill" id="hsEstP" title="Fragmentos de Estírio"${POS() ? '' : ' hidden'}><span class="ci">✦</span><b id="hsEst">${S.est | 0}</b></div><button class="hs-pill hs-bro" data-a="broches" title="Broches" aria-label="Broches"><span class="ci">◈</span><b id="hsBro">${nBroches()}</b><small>/ 7</small></button><button class="hs-pill" data-a="cartas" title="Minhas cartas" aria-label="Minhas cartas"><span class="ci">▮</span><b id="hsCards">${S.owned.length}</b><small>/ ${U.D.CARTAS.length}</small></button><button class="ibtn hs-pause" data-a="pausa" aria-label="Abrir Jornada" title="Jornada"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5 14 10l6.5 2-6.5 2-2 6.5-2-6.5-6.5-2 6.5-2Z"/><path class="fill" d="M12 8.2 13.2 12 12 15.8 10.8 12Z"/></svg><em class="mission-dot" hidden aria-label="Há uma missão pronta"></em></button></div>
       <div class="hs-hud ctl"><button class="ibtn" data-a="start" aria-label="Ir à sua posição" title="Minha posição"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></button><button class="ibtn" data-a="fit" aria-label="Ver o mapa inteiro" title="Visão geral"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-25 12 12)"/><circle cx="20" cy="8" r="1.5" class="fill"/></svg></button><button class="ibtn" data-a="aluguel" id="hsAlug" aria-label="Aluguel de cartas"${S.alug ? '' : ' hidden'}>⇄</button><button class="ibtn map-help" data-a="leg" aria-label="Legenda do mapa" title="Legenda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.8 5.8 4.2 9.2 10 10-5.8.8-9.2 4.2-10 10-.8-5.8-4.2-9.2-10-10 5.8-.8 9.2-4.2 10-10Z"/></svg></button></div>
       <div class="hs-sheet" id="hsSheet" hidden></div><div class="hs-toast" id="hsToast" hidden></div><div class="hs-dark" id="hsDark"></div>`;
     svg = $('#hsSvg', root); camG = $('#hsCam', root); sheet = $('#hsSheet', root); svg.classList.toggle('no-nums', P.numeros === false);
@@ -340,7 +361,7 @@
     $$('.n', root).forEach(g => paintNode(g));
     svg.classList.toggle('aberto', !!P.aberto); paintLuz(); paintSetas();
     const mk = $('#hsMarks', root); if (mk) mk.innerHTML = '';
-    const pb = $('#hsBro', root); if (pb) pb.textContent = nBroches(); const pe = $('#hsPend', root), pc = $('#hsCards', root), nl = $('#hsNivel', root), xb = $('#hsXpBar', root); if (NPC) { const fg = $('#hsFrag', root), fp = $('#hsFrgP', root), nf = NPC.nFrag(); if (fg) fg.textContent = nf; if (fp) fp.hidden = !nf; } const ba = $('#hsAlug', root); if (ba) ba.hidden = !S.alug; if (pe) pe.textContent = S.pend; if (pc) pc.textContent = S.owned.length; if (nl) nl.textContent = nivel(S.xp); if (xb) { const lv = nivel(S.xp), a = xpParaNivel(lv), b = lv < 30 ? xpParaNivel(lv + 1) : Math.max(a + 1, S.xp); xb.style.width = (lv >= 30 ? 100 : Math.round(100 * ((S.xp - a) / Math.max(1, b - a)))) + '%'; }
+    const pb = $('#hsBro', root); if (pb) pb.textContent = nBroches(); const pE = $('#hsEstP', root), nE = $('#hsEst', root); if (pE) pE.hidden = !POS(); if (nE) nE.textContent = S.est | 0; const pe = $('#hsPend', root), pc = $('#hsCards', root), nl = $('#hsNivel', root), xb = $('#hsXpBar', root); if (NPC) { const fg = $('#hsFrag', root), fp = $('#hsFrgP', root), nf = NPC.nFrag(); if (fg) fg.textContent = nf; if (fp) fp.hidden = !nf; } const ba = $('#hsAlug', root); if (ba) ba.hidden = !S.alug; if (pe) pe.textContent = S.pend; if (pc) pc.textContent = S.owned.length; if (nl) nl.textContent = nivel(S.xp); if (xb) { const lv = nivel(S.xp), a = xpParaNivel(lv), b = lv < 30 ? xpParaNivel(lv + 1) : Math.max(a + 1, S.xp); xb.style.width = (lv >= 30 ? 100 : Math.round(100 * ((S.xp - a) / Math.max(1, b - a)))) + '%'; }
   }
   // ---- o que aparece: só o que foi vencido ilumina. Caminhos e bifurcações surgem ao vencer uma fase; os vizinhos aparecem (abertos ou trancados) mesmo com o boneco longe. O núcleo está sempre visível.
   const NUCLEO = new Set(NOS.filter(n => n.tier === 4).map(n => n.id));
@@ -350,7 +371,7 @@
     const vis = new Set(NUCLEO); rev.forEach(i => { vis.add(i); BY[i].viz.forEach(v => vis.add(v)); });
     $$('.n', root).forEach(g => g.classList.toggle('fog', ocultar && !vis.has(g.dataset.id)));
     $$('.hs-edges .e', root).forEach(p => { const a = p.dataset.a, b = p.dataset.b; p.classList.toggle('fog', ocultar && !(rev.has(a) || rev.has(b) || (NUCLEO.has(a) && NUCLEO.has(b)))); });
-    lastVis = vis; if (NPC) NPC.paint(rev, ocultar);
+    lastVis = vis; $$('.hs-edges .e', root).forEach(p => p.classList.toggle('hs-oculto', (BY[p.dataset.a].tipo === 'principe' || BY[p.dataset.b].tipo === 'principe') && !POS())); if (NPC) NPC.paint(rev, ocultar);
   }
   function paintNode(g) {
     const n = BY[g.dataset.id], ok = cleared(n.id), skip = pulado(n.id), av = available(n.id);
@@ -359,6 +380,9 @@
     if (n.tipo === 'boss') g.classList.toggle('opened', guardVivos() === 0);
     if (n.tipo === 'guardiao') g.classList.toggle('mission-guard', !!S.missaoGuardioes && !ok);
     if (n.tipo === 'minigame') g.classList.toggle('mglock', !!(S.mgLock && S.mgLock[n.id]) && !ok);
+    if (n.tipo === 'boss') g.classList.toggle('korvo', ok);
+    if (n.tipo === 'principe') g.classList.toggle('hs-oculto', !POS());
+    if (PLUS.has(n.id)) { const f = !!(S.plusFeitos && S.plusFeitos[n.id]); g.classList.toggle('plusok', POS() && ok && !f); g.classList.toggle('plusdone', POS() && ok && f); }
   }
 
   // ---- câmera: arrastar, pinça, roda do mouse
@@ -575,17 +599,17 @@
       <div class="hs-sh-h"><span class="hs-dot" style="background:${T.cor}"></span><div><h3>${esc(nome(n))}</h3><small>${esc(T.nome)} · ${esc(REGIAO[n.tier])}</small></div></div>
       ${rec ? `<div class="hs-nvrec ${recCor}"><span>Nv ${rec} recomendado</span><small>Você está no Nv ${nivel(S.xp)}</small></div>` : ''}
       <p class="hs-st ${ok ? 'hs-ok' : pulado(id) ? 'hs-skip' : lockMg ? 'hs-lk' : av ? 'hs-av' : 'hs-lk'}">${ok ? (n.tipo === 'minigame' ? '✓ Passou' : '✓ Vencida') : pulado(id) ? 'Caminho liberado · duelo opcional' : lockMg ? 'Bloqueado: vença a próxima batalha ou pague' : av ? 'Disponível' : 'Caminho fechado'}</p>
-      ${evLinha}${n.tipo === 'minigame' ? mgTiers(n) : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b></p>` : ''}${n.id === M.boss ? `<p class="hint">Besta +${bonusBoss()} em tudo (${guardVivos()} guardiões vivos)</p>` : ''}${cartas}${NPC ? '' : ''}
-      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : `<button class="btn primary" data-a="duelar">${ok ? 'Rebatalhar' : 'Duelar'}</button>`) : ''}${!aqui && cam_ ? '<span class="hint hs-go">Toque de novo no ponto para ir até lá.</span>' : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
+      ${evLinha}${n.tipo === 'minigame' ? mgTiers(n) : n.tipo !== 'loja' && n.tipo !== 'boss' ? `<p class="hs-rec">${coinSvg(15)}<b>${premioDe(n)}</b></p>` : ''}${n.id === M.boss ? (POS() ? '<p class="hint">Korvo absorveu o poder da Besta e espera no núcleo. A luta final ainda está sendo preparada.</p>' : `<p class="hint">Besta +${bonusBoss()} em tudo (${guardVivos()} guardiões vivos)</p>`) : n.tipo === 'principe' ? `<p class="hint">${S.principePago && S.principePago[id] ? 'Luta já paga.' : 'Custa ' + PR_CUSTO + ' fragmentos de Estírio (você tem ' + (S.est | 0) + ').'} Dá a Lendária dele e cartas Quasar.</p>` : ''}${cartas}${NPC ? '' : ''}
+      <div class="row">${aqui ? (n.tipo === 'loja' ? '<button class="btn primary" data-a="loja">Entrar</button>' : n.tipo === 'minigame' ? (lockMg ? `<button class="btn primary" data-a="desbloq">${NPC && NPC.tem('segunda') && !(S.mgGratis && S.mgGratis[n.mg]) ? 'Desbloquear de graça (1×)' : 'Desbloquear por ' + Math.min(MG_CUSTO, S.pend | 0) + ' pêndulos'}</button>` : `<button class="btn primary" data-a="mini">${ok ? 'Jogar de novo' : 'Jogar'}</button>`) : `${n.tipo === 'boss' && ok ? '<span class="hint">Luta final em breve</span>' : `<button class="btn primary" data-a="duelar">${ok ? 'Rebatalhar' : n.tipo === 'principe' && !(S.principePago && S.principePago[id]) ? 'Duelar · ' + PR_CUSTO + ' Estírio' : 'Duelar'}</button>`}${ok && POS() && PLUS.has(id) ? `<button class="btn" data-a="plus">${S.plusFeitos && S.plusFeitos[id] ? 'Desafio + (feito)' : 'Desafio + · +1 Estírio'}</button>` : ''}`) : ''}${!aqui && cam_ ? '<span class="hint hs-go">Toque de novo no ponto para ir até lá.</span>' : ''}${P.aberto ? `<button class="btn" data-a="win">${ok ? 'Desfazer vitória (teste)' : 'Marcar vencida (teste)'}</button>` : ''}</div>`;
     if (inimL) { const ol = $('.hs-olho', sheet); if (ol) inimL.forEach(x => { const r = el('<div class="hs-orow"><small></small><div></div></div>'); $('small', r).textContent = x.n + (gdn ? ' · cartas principais' : ''); x.c.forEach(c => { if (!U.CARDS[c]) return; const w = el('<span class="hs-oc"></span>'); if (conhece) { w.append(U.cardEl(c, { up: true, noanim: true, cw: 44 })); if (!(S.owned || []).includes(c)) w.classList.add('nova'); } else w.innerHTML = '<i class="hs-q">?</i>'; $('div', r).append(w); }); ol.append(r); }); }
     sheet.hidden = false; ensureVisible(n);
-    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') confirmarNivel(id); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
+    sheet.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; if (b.dataset.a === 'x') closeSheet(); else if (b.dataset.a === 'win') toggleWin(id); else if (b.dataset.a === 'duelar') confirmarNivel(id); else if (b.dataset.a === 'plus') confirmarNivel(id, false, true); else if (b.dataset.a === 'mini') jogarMini(id); else if (b.dataset.a === 'desbloq') desbloquearMini(id); else if (b.dataset.a === 'loja') loja(id); else if (b.dataset.a.startsWith('npc:') && NPC) NPC.falar(b.dataset.a.slice(4)); };
   }
-  function confirmarNivel(id, chegada) {   // chegada: aviso ao chegar no ponto (só a Besta); só informa, não inicia o duelo
-    const n = BY[id], rec = nivelRecomendado(n), meu = nivel(S.xp), precisa = n.tipo === 'boss' ? meu < rec : meu < rec - 2; if (!precisa || S.avisosNivel[id]) return chegada ? null : duelar(id);
+  function confirmarNivel(id, chegada, plus) {   // chegada: aviso ao chegar no ponto (só a Besta); só informa, não inicia o duelo
+    const n = BY[id], rec = nivelRecomendado(n), meu = nivel(S.xp), precisa = n.tipo === 'boss' ? meu < rec : meu < rec - 2; if (!precisa || S.avisosNivel[id]) return chegada ? null : duelar(id, false, plus);
     S.avisosNivel[id] = 1; save(); const esp = n.tipo === 'miniboss' ? 'Este Arauto luta com 3 ou 4 jogadores.' : n.tipo === 'guardiao' ? 'Este Guardião altera as regras normais da disputa.' : n.tipo === 'boss' ? 'A Besta pode ser enfrentada agora, mas cada Guardião vivo dá +30 a todos os atributos dela.' : 'Esta luta exige uma equipe muito bem preparada.';
     const box = el(`<div class="hs-conf hs-levelwarn"><div class="lw-card"></div><div><small>AVISO DO MENTOR</small><h3>Volte no Nv ${rec}</h3><p>Você está no Nv ${meu}. ${esc(esp)}</p><div class="row">${chegada ? '<button class="btn primary" data-a="back">Entendi</button>' : '<button class="btn" data-a="back">Voltar</button><button class="btn primary" data-a="fight">Lutar mesmo assim</button>'}</div></div></div>`), c = U.CARDS[S.npc]; if (c) $('.lw-card', box).append(U.cardEl(S.npc, { up: true, noanim: true, cw: 82 }));
-    const m = U.modal(box, { cls: 'hs-modal' }); box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); if (b.dataset.a === 'fight') duelar(id); };
+    const m = U.modal(box, { cls: 'hs-modal' }); box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); m.close(); if (b.dataset.a === 'fight') duelar(id, false, plus); };
   }
   function ensureVisible(n) {   // o painel cobre a parte de baixo: leva o ponto para a área livre de cima
     const { w, h } = view$(), sh = sheet.getBoundingClientRect().height, free = Math.max(120, h - sh), sy = n.y * cam.k + cam.y, sx = n.x * cam.k + cam.x;
@@ -636,7 +660,7 @@
   // A ajuda por derrotas afeta exclusivamente as normais, sem alterar o desafio próprio de Arautos, Guardiões e Boss.
   const ajudaDerrota = () => { const r = (S && S.rec) || []; if (r.length < 3) return 0; const L = r.filter(x => !x).length; let seq = 0; for (let k = r.length - 1; k >= 0 && !r[k]; k--) seq++; return Math.min(.45, .05 * Math.max(0, L - 2) + .06 * Math.max(0, seq - 1)); };
   const regResultado = venceu => { S.rec = ((S.rec || []).concat(venceu ? 1 : 0)).slice(-8); };
-  const NIVEL_PADRAO = { evento: .55, elite: .68, miniboss: .82, guardiao: .9, boss: 1 };
+  const NIVEL_PADRAO = { evento: .55, elite: .68, miniboss: .82, guardiao: .9, boss: 1, principe: 1 };
   const nivelBot = n => {
     if (n.tipo !== 'normal') return NIVEL_PADRAO[n.tipo] == null ? .55 : NIVEL_PADRAO[n.tipo];
     const v = RANKS[n.id] == null ? Math.max(0, (n.tier - 1) * 10) : RANKS[n.id], base = v <= MARCO_GUARDIOES ? .18 + .52 * Math.pow(v / MARCO_GUARDIOES, 1.15) : .70 + .30 * Math.min(1, (v - MARCO_GUARDIOES) / 15);
@@ -654,7 +678,7 @@
     const modal = U.modal(box, { cls: 'hs-modal' });
     box.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; SND.play('click'); modal.close(); if (b.dataset.a !== 'sim') return; S.atalhos = S.atalhos || {}; S.atalhos[id] = 1; save(); paintAll(); openNode(id); toast('Caminho liberado. Esta batalha continua disponível quando quiser tentar de novo.'); };
   }
-  const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
+  const PREMIO = { normal: 10, evento: 14, elite: 22, miniboss: 35, guardiao: 50, boss: 0, principe: 80 };   // PROPOSTA: pêndulos por vitória (× 1 + 0,5 por região acima da 1ª)
   const premioBase = n => Math.round((PREMIO[n.tipo] || 10) * (1 + .5 * ((n.tipo === "guardiao" ? 4 : n.tier || 1) - 1)));
   const premioDe = n => Math.round(premioBase(n) * (NPC && NPC.tem('bolsa') ? 1.2 : 1));   // melhoria "Bolsa cheia": +20%
   // ---- cansaço das cartas (PROPOSTA, a calibrar): só vale com 21 ou mais cartas. Carta usada numa vitória cansa conforme a raridade; as não usadas descansam 1 ponto por vitória; derrota não cansa. Carta cansada não entra no duelo; pêndulos descansam.
@@ -678,7 +702,7 @@
   }
   function escolher7(bat, ok, opt) {   // o jogador escolhe as cartas do duelo (7, ou menos em alguns eventos)
     opt = opt || {}; if (opt.so && !(S.owned || []).some(c => (U.CARDS[c] || {}).raridade === opt.so)) opt = { n: opt.n }; const N = opt.n || 7;   // sem carta da raridade pedida: vale a melhor
-    const todas = (S.owned || []).concat(alugadas().filter(c => !(S.owned || []).includes(c))).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
+    const todas = (S.owned || []).concat(alugadas().filter(c => !(S.owned || []).includes(c))).filter(c => (U.CARDS[c] || {}).raridade !== 'quasar').filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so).sort((a, b) => FORCA(b) - FORCA(a));
     const NN = Math.min(N, todas.length);   // sem cartas suficientes, o time completo é o que há
     const livres = () => todas.filter(id => !fadigaOn() || !fad(id));
     const box = el(`<div class="hs-esc"><h3>Seu time${opt.so ? ' (lendária)' : ''}</h3><div class="hs-deck"></div><p class="hint"><b class="hs-cnt"></b> <span class="hs-msg"></span></p><div class="hs-escg"></div><div class="row"><button class="btn" data-a="melhores">Melhores ${N}</button><button class="btn" data-a="x">Cancelar</button><button class="btn primary" data-a="go">Iniciar</button></div></div>`);
@@ -708,17 +732,32 @@
   }
   const embaralha = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const textoEvento = ev => { const c = (window.DS_EVENTOS_H || {})[ev.id]; if (!c) return null; return { nome: c.nome, regra: c.regra.replace('{A}', ev.attr && U.ATT[ev.attr] ? U.ATT[ev.attr].nome : '') }; };
-  const fundoBatalha = n => ['normal', 'evento', 'elite'].includes(n.tipo) ? 'setor-' + setor(n) : ({ miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss' })[n.tipo] || null;
-  function duelar(id, auto) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
+  const fundoBatalha = n => ['normal', 'evento', 'elite'].includes(n.tipo) ? 'setor-' + setor(n) : ({ miniboss: 'arauto', guardiao: 'guardiao', boss: 'boss', principe: 'boss' })[n.tipo] || null;
+  // ---- pós-game: versão "+" dos desafios (inimigo com +2 cartas e uma raridade acima por carta; só 1 fragmento de Estírio por desafio) e recompensas dos príncipes
+  function plusBat(bat) {
+    const RAR = ['comum', 'rara', 'epica', 'lendaria'], ban = new Set(['S11', 'V26', 'J30']), usado = new Set(), ev = bat.e; bat.i.forEach(x => x.c.forEach(c => usado.add(c)));
+    const sobe = c => { const k = RAR.indexOf((U.CARDS[c] || {}).raridade); if (k < 0) return c; const f0 = FORCA(c), alvo = RAR[Math.min(3, k + 1)], pool = U.D.CARTAS.filter(x => !x.uniao && !ban.has(x.id) && x.raridade === alvo && !usado.has(x.id)).sort((a, b) => Math.abs(FORCA(a.id) - f0 - 25) - Math.abs(FORCA(b.id) - f0 - 25)), nv = pool.length ? pool[Math.floor(Math.random() * Math.min(4, pool.length))].id : c; usado.add(nv); return nv; };
+    const extra = k => { const pool = U.D.CARTAS.filter(x => !x.uniao && !ban.has(x.id) && x.raridade === 'lendaria' && !usado.has(x.id)).sort((a, b) => FORCA(b.id) - FORCA(a.id)).slice(0, 10), out = []; for (let q = 0; q < k && pool.length; q++) { const c = pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id; usado.add(c); out.push(c); } return out; };
+    return Object.assign({}, bat, { i: bat.i.map(x => { let c = x.c.map(sobe); if (!ev) c = c.concat(extra(2)); c.sort((a, b) => FORCA(a) - FORCA(b)); return Object.assign({}, x, { c }); }) });   // com evento de regra, só sobe a raridade (o evento controla o tamanho do baralho)
+  }
+  function darEstirio(id) { S.plusFeitos = S.plusFeitos || {}; if (S.plusFeitos[id]) return; S.plusFeitos[id] = 1; S.est = (S.est | 0) + 1; save(); paintAll(); setTimeout(() => toast('+1 fragmento de Estírio (' + S.est + ')'), 700); }
+  function darPrincipe(id) {
+    const d = PR_DEF.find(x => x[0] === id); if (!d) return; const cartas = [d[1]].concat(d[5]); if (PRINCIPES.every(p => cleared(p))) cartas.push(...PR_BONUS);   // oito derrotados: bônus "Quasar completo"
+    S.owned = S.owned || []; const novas = cartas.filter(c => !S.owned.includes(c)); if (!novas.length) return; novas.forEach(c => S.owned.push(c)); save(); paintAll();
+    quandoLivre(() => abrirBau({ cartas: novas, semDica: true }));
+  }
+  function duelar(id, auto, plus) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
     const n = BY[id], bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (!bat0 || n.tipo === 'loja') return;
-    if (n.tipo === 'boss') return duelarBoss(id, auto);
+    if (n.tipo === 'boss') return cleared(id) ? toast('Korvo (Quasar 2) ainda está se preparando. Em breve.') : duelarBoss(id, auto);
+    if (n.tipo === 'principe') { S.principePago = S.principePago || {}; if (!S.principePago[id]) { if ((S.est | 0) < PR_CUSTO) return toast('Precisa de ' + PR_CUSTO + ' fragmentos de Estírio (você tem ' + (S.est | 0) + ')'); S.est -= PR_CUSTO; S.principePago[id] = 1; save(); paintAll(); } }
     const gd = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null;
-    const bat = gd ? Object.assign({}, bat0, { i: gd.nomes.map((nm, k) => { const R = (() => { let a = (id.charCodeAt(3) * 131 + k * 977 + gd.m * 31) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
+    let bat = gd ? Object.assign({}, bat0, { i: gd.nomes.map((nm, k) => { const R = (() => { let a = (id.charCodeAt(3) * 131 + k * 977 + gd.m * 31) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
       const m = Array.isArray(gd.m) ? gd.m[k] : gd.m, deck = gd.fraco ? [] : [gd.av[k]], used = new Set(gd.av); for (let q = gd.fraco ? 0 : 1; q < m; q++) { const r = gd.fraco ? 'comum' : gd.equilibrado ? (q % 2 ? 'comum' : 'rara') : gd.blocoEquilibrado ? (q <= 1 ? 'rara' : q <= 5 ? 'epica' : 'lendaria') : q === 1 ? 'rara' : q % 2 ? 'epica' : 'lendaria'; let pool = U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id) && c.raridade === r && !used.has(c.id)); if (gd.fraco || gd.equilibrado) { pool.sort((x, y) => FORCA(x.id) - FORCA(y.id)); if (gd.equilibrado) { const a = r === 'comum' ? .45 : .15, b = r === 'comum' ? .85 : .55; pool = pool.slice(Math.floor(pool.length * a), Math.max(Math.floor(pool.length * a) + 1, Math.ceil(pool.length * b))); } } if (!pool.length) break; const c = gd.fraco ? pool[Math.floor(R() * Math.min(6, pool.length))] : pool[Math.floor(R() * pool.length)]; deck.push(c.id); used.add(c.id); }
       return { n: nm, a: gd.av[k], c: deck.sort((x, y) => FORCA(x) - FORCA(y)) }; }) }) : bat0;
+    if (plus) bat = plusBat(bat);
     const ev = bat.e || null, mais = talentoNivel('estrategia') >= 4 && n.tipo !== 'boss' && !gd ? 1 : 0;   // Dom de Estratégia: +1 carta (não vale no Boss nem nos guardiões)
-    const opt0 = n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : n.tipo === 'miniboss' ? { n: Math.max(7, ...bat.i.map(x => x.c.length)) + mais, livre: true } : gd ? { n: gd.regra === 'g_duo' ? 12 : 14, livre: true } : mais ? { n: 7 + mais } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
-    const autoMao = () => { const o = (S.owned || []).filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so); return (o.length ? o : (S.owned || [])).slice(0, opt.n || 7); };
+    const opt0 = plus && n.tipo !== 'miniboss' && !ev ? { n: Math.max(7, ...bat.i.map(x => x.c.length)), livre: true } : n.tipo === 'boss' && UNIAO.every(c => (S.owned || []).includes(c)) ? { n: 8 } : n.tipo === 'miniboss' ? { n: Math.max(7, ...bat.i.map(x => x.c.length)) + mais, livre: true } : gd ? { n: gd.regra === 'g_duo' ? 12 : 14, livre: true } : mais ? { n: 7 + mais } : {}, opt = ev ? ({ desvantagem: { n: 5 }, curto: { n: 3 }, davi: { n: 1, so: 'lendaria' } }[ev.id] || {}) : opt0;
+    const autoMao = () => { const o = (S.owned || []).filter(c => (U.CARDS[c] || {}).raridade !== 'quasar').filter(c => !opt.so || (U.CARDS[c] || {}).raridade === opt.so); return (o.length ? o : (S.owned || [])).slice(0, opt.n || 7); };
     const emprestadas = () => {   // Baralho emprestado: as 7 cartas mais fortes do tema (não são suas e não cansam)
       const tm = (bat.tema || '').toLowerCase(), noTema = c => { const sr = U.SERIES[c.serie]; return sr && sr.nome.toLowerCase() === tm; };
       const fortes = U.D.CARTAS.filter(c => !c.uniao && !EXC.has(c.id)).sort((a, b) => FORCA(b.id) - FORCA(a.id));
@@ -745,7 +784,7 @@
       if (talentoNivel('estrategia') >= 5 && (n.tipo === 'miniboss' || n.tipo === 'guardiao')) inims.forEach(l => { if (l.length > 1) l.pop(); });
       const bots = bat.i.map(x => ({ name: x.n, bot: true, diff: ev && ev.id === 'clarividente' ? 'dificil' : nivelBot(n) }));
       const players = [{ name: S.nome || 'Você', bot: !!auto, diff: 'dificil' }].concat(bots);
-      const musica = n.tipo === 'boss' ? 'boss' : n.tipo === 'miniboss' ? 'arauto' : n.tipo === 'guardiao' ? 'guardiao' : 'batalha';
+      const musica = n.tipo === 'boss' || n.tipo === 'principe' ? 'boss' : n.tipo === 'miniboss' ? 'arauto' : n.tipo === 'guardiao' ? 'guardiao' : 'batalha';
       try { SND.histStop(true); } catch (e) { }
       const besta = n.tipo === 'boss' ? bonusBoss() : 0, bonusPids = bat.i.map((_, k) => k + 1);
       const uni = n.tipo === 'boss' ? mao.filter(c => UNIAO.includes(c)) : [], uniTodas = uni.length === UNIAO.length;
@@ -756,6 +795,7 @@
         S.vistos = S.vistos || {}; S.vistos[id] = 1; regResultado(res.venceu);
         S.derrotas = S.derrotas || {}; let ofertaLiberacao = false;
         if (res.venceu) delete S.derrotas[id]; else { S.derrotas[id] = (S.derrotas[id] | 0) + 1; ofertaLiberacao = S.derrotas[id] === PULO_APOS_DERROTAS && podeLiberarCaminho(id); }
+        if (plus && res.venceu) darEstirio(id);
         const xpGanho = res.xp || (!res.abandonou ? concedeXp(n, res.venceu) : null); S.seq = res.venceu ? (S.seq | 0) + 1 : 0; S.seqMax = Math.max(S.seqMax | 0, S.seq); if (res.venceu && !(res.espUsos | 0)) S.semHab = (S.semHab | 0) + 1; save(); if (xpGanho) setTimeout(() => toast('+' + xpGanho.ganho + ' XP' + (xpGanho.nivelDepois > xpGanho.nivelAntes ? ' · Nível ' + xpGanho.nivelDepois + '!' : '')), 250);
         let cn = 0, primeiraCansaco = false; if (res.venceu) { cn = aplicaCansaco(ev && ev.id === 'emprestado' ? [] : mao0.filter(c => !alug0.has(c))); primeiraCansaco = cn && fadigaOn() && !S.tutCansaco; if (primeiraCansaco) S.tutCansaco = 1; S.capt = (S.capt | 0) + capturadas.length; save(); }
         if (primeiraVitoria) {
@@ -763,7 +803,7 @@
           const baseP = premioBase(n), dobra = talentoNivel('fortuna') >= 1 && Math.random() < .10, premio = dobra ? baseP * 2 : Math.round(baseP * (NPC && NPC.tem('bolsa') ? 1.2 : 1)), estrategico = talentoNivel('estrategia') >= 3 ? Math.floor((res.disputasVencidas | 0) / 2) : 0, totalP = premio + estrategico; S.pend = (S.pend | 0) + totalP; S.ganho = (S.ganho | 0) + totalP; if (dobra) setTimeout(() => toast('Fortuna dobrou os pêndulos desta vitória!'), 900); else if (estrategico) setTimeout(() => toast('Estratégia: +' + estrategico + ' pêndulos por disputas vencidas'), 900); save();
           if (primeiraCansaco) quandoLivre(() => { const nar = mao0[Math.floor(Math.random() * mao0.length)]; npcFala(nar, ['Vencemos, {nome}, mas estamos cansadas. As mais raras cansam mais.', 'Cada vitória sem nós descansa 1 ponto. Ou pague pêndulos ao escolher o time.']); });
           else if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 1200);
-          setTimeout(() => { toggleWin(id); if (NPC) NPC.vitoria(id); if (capturadas.length) { setTimeout(() => abrirBau({ cartas: capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
+          setTimeout(() => { toggleWin(id); if (n.tipo === 'principe') setTimeout(() => darPrincipe(id), 1800); if (NPC) NPC.vitoria(id); if (capturadas.length) { setTimeout(() => abrirBau({ cartas: capturadas, semDica: true }), 700); dica('captura'); } if (NPC) setTimeout(() => NPC.check(), 1500); }, 450);
         } else if (res.venceu) { if (cn && fadigaOn()) setTimeout(() => toast(cn + ' cartas ficaram cansadas'), 900); if (NPC) NPC.vitoria(id); if (capturadas.length) setTimeout(() => { abrirBau({ cartas: capturadas, semDica: true }); dica('captura'); }, 500); else setTimeout(() => toast('Vitória repetida · nenhuma carta nova capturada'), 650); if (NPC) setTimeout(() => NPC.check(), 1200); }
         else { try { SND.histPlay('mapa'); } catch (e) { } if (ofertaLiberacao) setTimeout(() => quandoLivre(() => oferecerLiberacao(id)), 600); else dica('derrota'); }
       } };
@@ -1140,5 +1180,5 @@
   }
 
   if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, avisoMissao, abrirCasa, refrescaCasa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
-  window.DSHistoria = { npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, pausa: pausaHistoria, mount, show: hub, data: M, state: () => S, openNode };
+  window.DSHistoria = { quasar: { darPrincipe, darEstirio, plusBat, PLUS, PRINCIPES }, npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, pausa: pausaHistoria, mount, show: hub, data: M, state: () => S, openNode };
 })();

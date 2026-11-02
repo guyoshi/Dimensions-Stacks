@@ -2114,3 +2114,15 @@ body.reduce .mg-pass { animation-duration: 0s; opacity: 0; }
 @keyframes mgFimIn { from { opacity: 0 } to { opacity: 1 } }
 @keyframes mgFimPop { 0% { transform: scale(.2) rotate(-8deg); opacity: 0 } 60% { transform: scale(1.18) rotate(2deg); opacity: 1 } 100% { transform: scale(1) rotate(0) } }
 .mini-btns { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
+
+/* Pós-game Quasar */
+.n.hs-oculto, .hs-edges .e.hs-oculto { display: none; }
+.n .plus-bang { display: none; pointer-events: none; }
+.n.plusok .plus-bang { display: block; animation: questBang 1.25s ease-in-out infinite; }
+.n.plusdone .plus-bang { display: block; opacity: .45; }
+.plus-bang circle { fill: #c58cff; stroke: #fff; stroke-width: 2; filter: drop-shadow(0 0 7px #c58cff); }
+.plus-bang text { fill: #1b0f33; font: 800 16px system-ui; text-anchor: middle; }
+.n.t-boss.korvo .node-art { filter: hue-rotate(250deg) saturate(1.5) brightness(1.1); }
+.n.t-boss.korvo .hs-ring { stroke: #c58cff; }
+.n.t-boss.korvo .body { stroke: #c58cff; }
+.t-principe .lbl { display: none; }

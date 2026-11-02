@@ -1,4 +1,4 @@
-# Pós-game "Quasar" — PROPOSTA (aguardando aprovação do autor)
+# Pós-game "Quasar" — IMPLEMENTADO em 02/11/2026 (aprovado pelo autor)
 
 Pedido de 29/10/2026. Nada disto está no jogo ainda. Fotos dos príncipes e das cartas Quasar: aguardando envio. Batalha contra Korvo: indefinida.
 
@@ -51,3 +51,14 @@ Proposta: 4 guardiões + 8 minibosses + 10 elites + 18 eventos = 40. "+" = inimi
 - Nomes reais dos príncipes e fotos (8 + 13 Quasar).
 - Batalha contra Korvo (cartas, regras, tamanho do baralho).
 - Os 40 "+" listados por mim ou escolhidos por você.
+
+
+## Implementado em 02/11/2026
+- Vencer a Besta: o nó do centro vira **Korvo (Quasar 2)** (cor violeta); a luta final **ainda não existe** (o painel diz "em breve" e não há botão).
+- **40 desafios "+"**: 4 guardiões + 8 arautos + 10 elites + 18 eventos (distribuídos de forma uniforme pela lista de eventos). Marca "+" no nó depois de vencê-lo. Inimigo com +2 cartas Lendárias e uma raridade acima por carta (em batalhas com evento de regra, só sobe a raridade). **1 fragmento de Estírio por desafio, uma vez só.** Contador de Estírio no cabeçalho do mapa.
+- **8 nós de príncipes** em anel ao redor do núcleo, só visíveis no pós-game, **5 fragmentos de Estírio** cada (pagos ao iniciar a luta; se perder, não paga de novo). Baralho: 7 Lendárias mais fortes, evento fixo por príncipe (Águas: Maré de Gerbe, Fogo: Tempestade solar, Natureza: Rodízio, Ventos: Pressa cósmica, Luz: Cartas abertas, Tempo: Relógio de Gerbe, Espaço: Névoa estelar, Trevas: Silêncio). Pêndulos: 80.
+- **Cartas dos príncipes** P01 a P08 (Lendárias, soma 305 a 320, somas únicas, par fraco <= 70), sem foto, **especiais provisórios** = as 8 conversões livres (AE-018, 020, 053, 054, 125 a 128) para o autor trocar.
+- **Recompensas**: Águas Bruno N1, Fogo Beatriz N1, Natureza Breno N1, Ventos Banjo N1, Luz Édelin N1, Tempo Bruno N2, Espaço Banjo N2, Trevas Beatriz N2 + Édelin N2; ao vencer os 8: Breno N2, Édelin N3, Beatriz N3.
+- Cartas Quasar ficam na coleção e **nunca entram na escolha de time** dos duelos normais.
+- A Aura Quasar (efeitos por nível) só está descrita no texto da carta; o efeito em jogo será ligado junto com a luta final contra o Korvo.
+- Teste: `tests/run_quasar.py` (17 verificações).
