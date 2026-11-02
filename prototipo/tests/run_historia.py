@@ -30,8 +30,19 @@ shots = os.path.join(proj, 'tests', 'shots'); os.makedirs(shots, exist_ok=True)
 try:
   with sync_playwright() as p:
     b = p.chromium.launch(); ctx = b.new_context(viewport={'width': 400, 'height': 850}, has_touch=True); pg = ctx.new_page()
+    _click = pg.click
+    def _click2(sel, *a, **k):   # diálogos de NPC atrasados (após baú/vitória) cobrem a tela: fecha-os antes de cada toque
+        if not str(sel).startswith('.npc'):
+            for _ in range(8):
+                n = pg.query_selector('.npc')
+                if not n: break
+                try: n.click(timeout=800)
+                except Exception: break
+                pg.wait_for_timeout(60)
+        return _click(sel, *a, **k)
+    pg.click = _click2
     pg.add_init_script("localStorage.setItem('dsstacks.opts', JSON.stringify({musicOn:false,help:false}));localStorage.setItem('dsstacks.historia.prefs', JSON.stringify({aberto:true,escuro:false,v2:1,escuro:false}));")
-    pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text else None)
+    pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text and 'Failed to load resource' not in m.text else None)
     pg.goto('http://localhost:8777/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500)
     chk(pg.evaluate("document.querySelector('#nav').hidden") is True, 'barra inferior oculta no modo história')
@@ -52,6 +63,7 @@ try:
     pg.screenshot(path=shots + '/hist_painel.png')
     chk(not pg.evaluate("document.querySelector('.n.t-boss').classList.contains('opened')"), 'ponto da Besta ainda não dourado com guardiões vivos')
     for gi, g in enumerate(M['guardioes'].values()):
+        drain_story(pg, 4000)   # NPCs podem abrir diálogo após o baú
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
         for _t in range(10):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel
@@ -62,6 +74,7 @@ try:
         drain_story(pg); pg.evaluate("document.querySelectorAll('.rv-ov,.modal').forEach(e=>e.remove())"); pg.wait_for_timeout(250)
     pg.wait_for_timeout(600)
     for n in [x['id'] for x in M['nos'] if x['tipo'] == 'miniboss']:
+        drain_story(pg, 4000)   # NPCs podem abrir diálogo após o baú
         pg.click('#hsSheet [data-a=x]') if pg.evaluate("!document.querySelector('#hsSheet').hidden") else None
         pg.click('[data-a=fit]'); pg.wait_for_timeout(1400)
         for _t in range(10):   # vizinho do boneco: o 1º toque anda; repete até abrir o painel

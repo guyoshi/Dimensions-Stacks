@@ -249,10 +249,10 @@
     apply(ctx, act) { const e = ctx.entry(act.pid); ctx.opps(act.pid).forEach(o => e.noCaptureBy.add(o)); ctx.addMod(e, act.pid, 'Muralha polar', x => { for (const k of AID) x.stats[k] += 10; }); ctx.say(`${ctx.name(act.pid)} ergue a muralha polar.`); },
     ai: (ctx, pid) => ctx.isLosing(pid) ? 0.75 : 0.12 + 0.3 * ctx.flipChance(pid, 10),
   });
-  chdef('CH-visao', 'Visão', 'Mostra as 3 próximas cartas da Besta e o próximo Movimento.', {
+  chdef('CH-visao', 'Visão', 'Mostra as 3 próximas cartas da Besta e dá +8 em todos os atributos à sua carta nesta disputa.', {
     can: (ctx, pid) => ctx.opps(pid).some(o => ctx.player(o).deck.length > 0),
     async apply(ctx, act) {
-      const o = ctx.opps(act.pid)[0], cards = ctx.player(o).deck.slice(0, 3); await ctx.emit('peek', { pid: act.pid, target: o, cards }); ctx.learn(act.pid, o, cards);
+      const o = ctx.opps(act.pid)[0], cards = ctx.player(o).deck.slice(0, 3); await ctx.emit('peek', { pid: act.pid, target: o, cards }); ctx.learn(act.pid, o, cards); ctx.addMod(ctx.entry(act.pid), act.pid, 'Visão', x => { for (const k of AID) x.stats[k] += 8; });
       const g = ctx.g, nx = g.movFor(g.s.round + (g.s.initiated.size >= g.alive().length - 1 ? 1 : 0)); if (g.cfg.boss && g.cfg.boss.fase === 1) ctx.say(nx ? `Próximo Movimento: ${MOVS[nx].nome}.` : 'A Besta não anuncia Movimento para a próxima rodada.');
     },
     ai: (ctx, pid) => ctx.mem(pid, ctx.opps(pid)[0]).length ? 0.1 : 0.45,
@@ -281,10 +281,10 @@
     can: ctx => !(ctx.combat.ev && ctx.combat.ev.id === 'avesso'),
     ai: (ctx, pid) => { const w = ctx.g.evaluate(ctx.combat, true); const me = ctx.entry(pid); const fe = foeEntry(ctx, pid); return (fe && me && ctx.value(me) < ctx.value(fe) - 6) ? 0.15 : ctx.isLosing(pid) ? 0.02 : 0.02; },
   });
-  chdef('CH-elo', 'Elo', 'Devolve ao topo do seu baralho uma carta sua que a Besta capturou.', {
+  chdef('CH-elo', 'Elo', 'Devolve ao topo do seu baralho uma carta sua que a Besta capturou e dá +10 em todos os atributos à sua carta nesta disputa.', {
     can: (ctx, pid) => !!ctx.g.s.own && ctx.opps(pid).some(o => ctx.player(o).deck.some(c => ctx.g.s.own[c] === pid)),
     async apply(ctx, act) {
-      const o = ctx.opps(act.pid)[0], me = act.pid, list = ctx.player(o).deck;
+      const o = ctx.opps(act.pid)[0], me = act.pid, list = ctx.player(o).deck; ctx.addMod(ctx.entry(me), me, 'Elo', x => { for (const k of AID) x.stats[k] += 10; });
       // O teste aleatório pode forçar o efeito fora da luta da Besta. O Elo deve
       // simplesmente não encontrar alvo quando o mapa de posse não existe.
       const own = ctx.g.s.own || {};
@@ -852,6 +852,8 @@
       for (const e of combat.entries) {
         if (e.pid === escolhe) continue;
         const opts = this.attrOptions(combat, e, pair);
+        const irmao = this.rg === 'g_duo' && e.pid >= 1 ? combat.entries.find(x => x !== e && x.pid >= 1 && !x.withdrawn && x.attr) : null;   // Dupla somada: os dois guardiões fazem UMA escolha de atributo (são dois escolhedores, não três)
+        if (irmao && opts.includes(irmao.attr)) { e.attr = irmao.attr; continue; }
         e.attr = await this.chooseAttr(combat, e, opts);
         if (!opts.includes(e.attr)) e.attr = opts[0];
       }

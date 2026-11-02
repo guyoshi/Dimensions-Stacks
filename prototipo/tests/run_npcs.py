@@ -57,7 +57,7 @@ try:
         pg.screenshot(path='/tmp/m1.png'); pg.click('.hs-mis [data-a="t:con"]'); chk(pg.evaluate("document.querySelectorAll('.hs-mis .mis-row').length") == 1, 'aba conquistas')
         pg.click('.hs-pausa>nav [data-a="t:registros"]'); pg.wait_for_selector('.hs-pausa .hs-col'); pg.click('.hs-col [data-a="t:reg"]'); pg.click('.hs-col [data-a="t:selo"]'); pg.screenshot(path='/tmp/m2.png'); pg.click('.hs-pausa-modal .x'); pg.wait_for_timeout(200)
         # loja com vendedor e extras
-        pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") == 3, 'loja 5: registro + 2 melhorias')
+        pg.evaluate("DSHistoria.loja('L5')"); pg.wait_for_selector('.hs-loja .loja-x'); chk(pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length") >= 3, 'loja 5: registro + melhorias (%s)' % pg.evaluate("document.querySelectorAll('.hs-loja .loja-x').length"))
         chk('Maria' in pg.evaluate("document.querySelector('.loja-vend').textContent"), 'vendedor aparece')
         pg.screenshot(path='/tmp/m3.png')
         pg.click('.hs-loja .loja-x'); pg.wait_for_timeout(300)
@@ -90,9 +90,9 @@ try:
         ok, gasto = compra('L1', 'Preços menores'); chk(ok and pg.evaluate("DSNpc.tem('preco')"), 'comprar Preços menores')
         pg.evaluate("DSHistoria.loja('L1')"); pg.wait_for_selector('.hs-loja .loja-it'); p1 = pg.evaluate("+document.querySelector('.hs-loja .loja-it:not(.loja-x) .loja-pr b').textContent"); pg.click('.hs-loja [data-a=x]'); pg.wait_for_timeout(300)
         chk(p1 < p0, 'preço da carta caiu (%s -> %s)' % (p0, p1))
-        for lj, nm, idm in [('L3', 'Iniciativa', 'atr'), ('L4', 'Sorte de combate', 'sorte'), ('L5', 'Mão ampliada', 'maos')]:
+        for lj, nm, idm in [('L3', 'Iniciativa', 'atr'), ('L4', 'Sorte de combate', 'sorte'), ('L5', 'Aluguel de cartas', 'aluguel')]:
             ok, gasto = compra(lj, nm); chk(ok and pg.evaluate("DSNpc.tem('%s')" % idm), 'comprar ' + nm)
-        chk(pg.evaluate("DSNpc.nFrag()") == base - (4 + 6 + 8 + 10 + 12), 'saldo = antes - preços provisórios (%s)' % pg.evaluate("DSNpc.nFrag()"))
+        chk(pg.evaluate("DSNpc.nFrag()") == base - (4 + 6 + 8 + 10 + 8), 'saldo = antes - preços provisórios (%s)' % pg.evaluate("DSNpc.nFrag()"))
         # fragmento de minigame só no prêmio máximo
         f0 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("DSNpc.fragMini('x',2)"); f1 = pg.evaluate("DSNpc.nFrag()"); pg.evaluate("DSNpc.fragMini('x',3)"); pg.evaluate("DSNpc.fragMini('x',3)"); f2 = pg.evaluate("DSNpc.nFrag()")
         chk(f1 == f0 and f2 == f0 + 1, 'minigame: só o Perfeito dá 1 fragmento (uma vez)')

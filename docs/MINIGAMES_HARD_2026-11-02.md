@@ -76,3 +76,10 @@ Achado: no Normal, Bom e Ótimo exigem as mesmas 4 tentativas (cortes .34/.5 sob
 - **Maré, Chama e Gelo**: um som musical por elemento ao acertar, com brilho/pulso na pista e no botão; Hard com janela de acerto menor (Perfeito 24 -> 18 px, Bom 68 -> 46 px).
 - **Chamado da União**: bolinhas vermelhas piscando nas bordas indicam, 2,4 s antes, de onde vem a próxima horda (inclusive as velozes).
 - **Admin**: cada minigame tem "Testar" (Normal) e "Testar Hard" (sem escolha dentro do jogo); botão "Zerar testes" no topo da tela de minigames.
+
+## Lote 12:30 (02/11)
+- **Mapa:** removido o brilho animado (filtro) de cada ponto e o blur 90 da máscara do fundo; só pontos disponíveis/selecionados flutuam. 29→60 fps no teste de arrasto. Visual igual.
+- **Fechadura (Normal):** cortes .30/.45/.62 (Bom ≤5 tentativas, Ótimo ≤4, Perfeito ≤3 de 6). Hard igual.
+- **BALANÇO Boss final:** Chamado Visão passa a dar +8 em todos os atributos na disputa; Elo +10. Simulação (`tests/sim_boss.js`, `sim_boss_chamados.js`): 8 União + melhores cartas ≈ 49–53% de vitória do bot nas 3 fases; 4 União 14%; sem União 1%; 3 guardiões vivos 0%. Todos os Chamados pesam 9–18 pontos.
+- **BALANÇO Guardiões Cassiopeia/Orion (Dupla somada):** os dois guardiões fazem uma única escolha de atributo (antes cada um escolhia).
+- Testes: `run_npcs.py` e `run_historia.py` atualizados.
