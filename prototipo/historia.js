@@ -788,7 +788,7 @@
       try { SND.histStop(true); } catch (e) { }
       const besta = n.tipo === 'boss' ? bonusBoss() : 0, bonusPids = bat.i.map((_, k) => k + 1);
       const uni = n.tipo === 'boss' ? mao.filter(c => UNIAO.includes(c)) : [], uniTodas = uni.length === UNIAO.length;
-      const hist = { musica, id, fundo: fundoBatalha(n), progresso: r => concedeXp(n, r.venceu), aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
+    const hist = { musica, id, fundo: fundoBatalha(n), guardiao: gd ? guardaDe(id) : null, progresso: r => concedeXp(n, r.venceu), aposta: ev && ev.id === 'aposta' ? { saldo: () => S.pend | 0, paga: () => { S.pend = Math.max(0, (S.pend | 0) - 1); save(); }, resolve: r => { S.pend = (S.pend | 0) + (r === 'win' ? 3 : r === 'tie' ? 1 : 0); save(); } } : null, evento: gd ? { nome: gd.nome, regra: gd.txt } : ev ? textoEvento(ev) : besta ? { nome: 'Poder da Besta', regra: 'As cartas da Besta ganham +' + besta + ' em todos os atributos (' + guardVivos() + ' guardiões vivos).' } : null, aoFim: res => {
         const primeiraVitoria = res.venceu && !cleared(id), capturadas = [...new Set(res.capturadas || [])].filter(c => !(S.owned || []).includes(c));
         SND.histLock = null; try { if (res.venceu) { SND.histStop(true); SND.histPlay('vitoria'); setTimeout(() => quandoLivre(() => { try { SND.histPlay('mapa'); } catch (e) { } }), 6000); } else SND.histStop(); } catch (e) { }
         voltarMapa = true; U.show('uniao');
@@ -843,7 +843,7 @@
       const vivos = guardVivos(), pids = [1]; let ordemBoss = null;
       const lanca = F => {
         const mao = (ordemBoss || mao0).slice(), usadas = new Set(mao), besta = ['S11'].concat(deckBoss(F, usadas)), bonus = 30 * vivos + BOSS_B[F - 1];
-        const hist = { musica: 'boss', id, fundo: 'boss', progresso: r => (!r.venceu || F === 3) ? concedeXp(n, r.venceu) : null, evento: { nome: 'Fase ' + F + ' · ' + BOSS_FASES[F - 1][0], regra: BOSS_FASES[F - 1][1] + (bonus ? ' As cartas da Besta ganham +' + bonus + ' em todos os atributos' + (vivos ? ' (' + vivos + ' guardiões vivos).' : '.') : '') }, notaVit: F < 3 ? 'Fase ' + F + ' vencida. A próxima fase começa com um novo baralho da Besta e as suas 30 cartas de volta.' : null,
+        const hist = { musica: 'boss', id, fundo: 'boss', bestaFase: F, progresso: r => (!r.venceu || F === 3) ? concedeXp(n, r.venceu) : null, evento: { nome: 'Fase ' + F + ' · ' + BOSS_FASES[F - 1][0], regra: BOSS_FASES[F - 1][1] + (bonus ? ' As cartas da Besta ganham +' + bonus + ' em todos os atributos' + (vivos ? ' (' + vivos + ' guardiões vivos).' : '.') : '') }, notaVit: F < 3 ? 'Fase ' + F + ' vencida. A próxima fase começa com um novo baralho da Besta e as suas 30 cartas de volta.' : null,
           aoFim: res => {
             if (res.venceu && F < 3) { if (auto) setTimeout(() => lanca(F + 1), 200); else setTimeout(() => ajustarTopoBoss(ordemBoss, F + 1, () => lanca(F + 1)), 200); return; }
             SND.histLock = null; try { SND.histStop(); } catch (e) { }

@@ -76,7 +76,7 @@ button.rerollbot:hover { background: #ffffff26; }
 button.rerollbot:active { transform: scale(.96); }
 
 /* ---------- jogo ---------- */
-#game { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+#game { padding: 0; overflow: hidden; display: flex; flex-direction: column; position: relative; }
 #game[hidden] { display: none; }
 .hud { display: flex; align-items: center; gap: 8px; padding: 8px 12px; padding-top: calc(8px + env(safe-area-inset-top, 0px)); background: linear-gradient(180deg, #04030fcc, transparent); z-index: 5; flex: none; }
 .hud .mid { flex: 1; text-align: center; min-width: 0; }
@@ -366,6 +366,7 @@ body.reduce *, body.reduce *::before, body.reduce *::after { animation-duration:
 .prepbtn { background: linear-gradient(180deg, #5b3bb8, #3a2388); border-color: #b78cff; }
 .reservebtn { display:inline-flex; flex-direction:column; align-items:flex-start; gap:1px; color:#eaffff; border-color:#63dfff; background:linear-gradient(180deg,#17658a,#123458); box-shadow:0 0 12px #56ddff2e inset; }
 .reservebtn b { font:800 11px var(--f-disp); } .reservebtn small { color:#bfefff; font-size:9px; font-weight:650; }
+.reservebtn::before { content:'↷'; float:left; margin-right:5px; font:900 22px/16px var(--f-disp); color:#a9f3ff; text-shadow:0 0 9px #58dcff; }
 
 .ico { display: inline-flex; align-items: center; gap: .25em; margin-right: .6em; font-weight: 800; }
 .ico svg { width: 1.1em; height: 1.1em; fill: currentColor; color: var(--ac); }
@@ -1777,6 +1778,15 @@ body.reduce .mg-cofre, body.reduce .cf-slot.fixo { animation: none; }
 #game[data-fundo="boss"] { background-image: linear-gradient(#09021175, #090211d1), url(cena/batalha-boss.png); animation: bossbg 26s linear infinite; }
 @keyframes bossbg { to { background-position: 0 0, 100% 60%; } }
 body.reduce #game[data-fundo="boss"] { animation: none; }
+#game > .battle-scene { position:absolute; z-index:0; pointer-events:none; opacity:.34; filter:drop-shadow(0 0 22px #7d3fff99); }
+#game > .besta-scene { right:-7vw; bottom:10%; width:min(62vw,330px); aspect-ratio:1; background:url(cena/ui/besta-fases.png) 0 50%/300% 100% no-repeat; }
+#game[data-besta-fase="2"] > .besta-scene { background-position:50% 50%; opacity:.42; filter:drop-shadow(0 0 27px #b74bffff); }
+#game[data-besta-fase="3"] > .besta-scene { background-position:100% 50%; opacity:.48; filter:drop-shadow(0 0 30px #ffe39b99); }
+#game > .guardiao-scene { right:4vw; bottom:15%; width:min(48vw,245px); aspect-ratio:128/214; background-image:url(cena/ui/guardioes-icons.png); background-repeat:no-repeat; background-size:500% 100%; opacity:.27; }
+#game > .guardiao-scene.g0 { background-position:0 50%; } #game > .guardiao-scene.g1 { background-position:25% 50%; } #game > .guardiao-scene.g2 { background-position:50% 50%; } #game > .guardiao-scene.g3 { background-position:75% 50%; } #game > .guardiao-scene.g4 { background-position:100% 50%; }
+#game > .guardiao-scene.duo { width:min(32vw,165px); bottom:12%; } #game > .guardiao-scene.duo.d1 { right:28vw; opacity:.2; transform:scale(.82); }
+#game > .board, #game > #caption { position:relative; z-index:1; }
+body.reduce #game > .battle-scene { display:none; }
 #game[data-fundo="boss"] .slot[data-pid="1"] .card { box-shadow: 0 0 14px 3px #8a2be2cc, 0 0 34px 8px #2a0a4acc; filter: saturate(.8) contrast(1.06); }
 #game[data-fundo="boss"] .slot[data-pid="1"] .card::after { content: ''; position: absolute; inset: -6%; border-radius: inherit; pointer-events: none; background: radial-gradient(circle at 30% 20%, #b04bff55, transparent 55%), radial-gradient(circle at 75% 85%, #000000aa, transparent 60%); mix-blend-mode: multiply; animation: auraB 3.2s ease-in-out infinite; }
 @keyframes auraB { 50% { opacity: .55; transform: scale(1.04); } }
