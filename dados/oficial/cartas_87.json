@@ -1461,7 +1461,7 @@
    },
    "soma_atributos": 211,
    "perfil_balanceamento": "Modesta",
-   "habilidade_especial_id": "AE-016",
+   "habilidade_especial_id": "AE-162",
    "uniao": "NAO",
    "base_narrativa": {
     "fonte": "S",
@@ -1999,7 +1999,7 @@
    },
    "soma_atributos": 272,
    "perfil_balanceamento": "Padrão",
-   "habilidade_especial_id": "AE-012",
+   "habilidade_especial_id": "AE-179",
    "uniao": "NAO",
    "base_narrativa": {
     "fonte": "D2-histórico",
@@ -2293,7 +2293,7 @@
    },
    "soma_atributos": 177,
    "perfil_balanceamento": "Frágil",
-   "habilidade_especial_id": "AE-068",
+   "habilidade_especial_id": "AE-187",
    "uniao": "NAO",
    "base_narrativa": {
     "fonte": "M",
@@ -2735,7 +2735,7 @@
    },
    "soma_atributos": 243,
    "perfil_balanceamento": "Padrão",
-   "habilidade_especial_id": "AE-079",
+   "habilidade_especial_id": "AE-188",
    "uniao": "NAO",
    "base_narrativa": {
     "fonte": "S-manuscrito",
@@ -3010,7 +3010,7 @@
    },
    "soma_atributos": 199,
    "perfil_balanceamento": "Modesta",
-   "habilidade_especial_id": "AE-019",
+   "habilidade_especial_id": "AE-153",
    "uniao": "NAO",
    "base_narrativa": {
     "fonte": "V-manuscrito",
@@ -3035,7 +3035,7 @@
    },
    "soma_atributos": 267,
    "perfil_balanceamento": "Padrão",
-   "habilidade_especial_id": "AE-017",
+   "habilidade_especial_id": "AE-180",
    "uniao": "NAO",
    "base_narrativa": {
     "fonte": "V-manuscrito",
