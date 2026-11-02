@@ -136,6 +136,11 @@
   let P = Object.assign({ aberto: false, escuro: true, numeros: true, slot: 1 }, rd(PKEY, {}));   // preferências (mapa aberto = modo teste, desligado por padrão: só se avança vencendo)
   if (P.v2 !== 1) { P.aberto = false; P.v2 = 1; try { wr(PKEY, P); } catch (e) { } }   // migração: o mapa aberto (teste) passa a vir desligado
   const save = () => { if (S) wr(kSlot(P.slot), S); wr(PKEY, P); };   // 3 saves: o 1 usa a chave antiga
+  // % do jogo todo: média de cartas, batalhas, melhorias, temas e broches
+  const VENCIVEIS = NOS.filter(n => ['normal', 'evento', 'elite', 'miniboss', 'guardiao', 'minigame', 'boss'].includes(n.tipo));
+  const pctJogo = s => { const f = (a, b) => b ? Math.min(1, a / b) : 0, nm = window.DSNpc && window.DSNpc.melh ? Object.keys(window.DSNpc.melh).length : 10;
+    const partes = [f((s.owned || []).length, U.D.CARTAS.length), f(VENCIVEIS.filter(n => (s.cleared || {})[n.id]).length, VENCIVEIS.length), f(Object.keys(s.melh || {}).length, nm), f(Object.keys(s.temas || {}).length - 1, TEMAS.length - 1), f(Object.keys(s.broches || {}).length, 7)];
+    return partes.reduce((a, b) => a + b, 0) / partes.length; };
   const slotOk = n => { const s = rd(kSlot(n), null); return s && s.v === 1 && BY[s.startId] ? s : null; };
   const load = () => { const s = rd(kSlot(P.slot), null); S = s && s.v === 1 && BY[s.startId] ? s : null; if (S) migraProgresso(S); aplicaTema(); return S; };
 
@@ -267,8 +272,8 @@
     if (voltarMapa && S) { voltarMapa = false; openMap(); return; }
     view = 'hub'; load(); try { if (SND.histNow) SND.histStop(); } catch (e) { }   // tela inicial: volta a música normal do menu
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
-    const linhas = [1, 2, 3].map(n => { const s = slotOk(n), nb = s ? Object.keys(s.cleared || {}).length : 0, lv = s ? nivel(Math.max(0, s.xp == null ? Math.round(nb * 24) : s.xp | 0)) : 1, pct = s ? Math.round(100 * (s.owned || []).length / Math.max(1, U.D.CARTAS.length)) : 0;
-      return `<div class="hs-slot${s ? ' on' : ''}"><b>${n}</b>${s ? `<span class="hs-sn">${esc(s.nome || 'Viajante')}<small>Nv ${lv} · ${pct}% das cartas · ${nb} vitórias</small></span><button class="btn primary" data-a="cont" data-s="${n}">Continuar</button><button class="btn ibtn" data-a="del" data-s="${n}" aria-label="Apagar save ${n}">✕</button>` : `<span class="hs-sn"><small>Vazio</small></span><button class="btn primary" data-a="novo" data-s="${n}">Novo jogo</button>`}</div>`; }).join('');
+    const linhas = [1, 2, 3].map(n => { const s = slotOk(n), nb = s ? Object.keys(s.cleared || {}).length : 0, lv = s ? nivel(Math.max(0, s.xp == null ? Math.round(nb * 24) : s.xp | 0)) : 1, nc = s ? (s.owned || []).length : 0, pct = s ? Math.round(100 * pctJogo(s)) : 0;
+      return `<div class="hs-slot${s ? ' on' : ''}"><b>${n}</b>${s ? `<span class="hs-sn">${esc(s.nome || 'Viajante')}<small>Nv ${lv} · ${pct}% · ▣ ${nc} · ⚔ ${nb}</small></span><button class="btn primary" data-a="cont" data-s="${n}">Continuar</button><button class="btn ibtn" data-a="del" data-s="${n}" aria-label="Apagar save ${n}">✕</button>` : `<span class="hs-sn"><small>Vazio</small></span><button class="btn primary" data-a="novo" data-s="${n}">Novo jogo</button>`}</div>`; }).join('');
     h.innerHTML = `      <button class="hs-back ibtn" data-a="sair" aria-label="Sair do modo história">←</button>
       <div class="hs-hubin"><div class="hs-seal"></div><h1>${U.uniaoLogo('uniao-logo-hero')}</h1><div class="hs-slots">${linhas}</div></div>`;
     h.onclick = e => {
