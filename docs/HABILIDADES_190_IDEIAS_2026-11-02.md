@@ -182,3 +182,42 @@ Aprovadas 7 e 46. Reprovadas e removidas 45, 52 e 57. Não há mais ideias sem d
 - **Aprovadas** as reformas propostas de AE-057 e AE-058 (ao passar a carta, a carta de combate ganha +10 nesta disputa) e de AE-108 (a carta que iria ao Buraco Negro volta ao fundo do baralho). **Ainda não implementadas** (só registradas).
 - **Mantidas como estão:** AE-096 e AE-102 (reformas não aprovadas).
 - Fica valendo esta decisão no lugar da linha "Não aprovadas" da decisão das 13:21 para 057, 058 e 108.
+
+## Implementação 02/11 (14:49 em diante)
+Reformas aplicadas: AE-057/058 (+10 em tudo para quem passa), AE-108 (a carta volta ao fundo do baralho), AE-119 "Embaralhar rivais".
+Novas habilidades implementadas (ainda **sem carta atribuída**, testadas por `tests/sim_esp.js` e `tests/audit_esp.js`):
+
+| Ideia | AE | Nome |
+|---|---|---|
+| 1–7 | 146–152 | Maré alta, Segundo fôlego, Foco duplo, Último suspiro, Veterano, Aposta, Fúria |
+| 11 | 153 | Inversão do rival |
+| 13 | 154 | Reciclagem |
+| 14 | 155 | Atributo vetado |
+| 16, 17 | 156, 157 | Sorteio viciado, Silêncio de Força |
+| 18 | 158, 159, 160 | Mesa dos vizinhos (direita), (esquerda), Pular a rodada |
+| 19–21 | 161–163 | Furto do líder, Taxa do vencedor, Mão leve |
+| 23 | 164 | Troca justa |
+| 24–28 | 165–169 | Fortaleza, Armadilha, Eco protetor, Casca grossa, Retirada |
+| 29–31 | 170–172 | Ressonância, Oferenda, Colapso |
+| 35 | 173 | Marca |
+| 36, 37 | 174, 175 | Rastreio, Espiar especiais |
+| 40 | 176 | Roubo de preparo |
+| 42 | 177 | Atraso (ninguém usa habilidade) |
+| 44 | 178 | Dividir o butim |
+| 46, 47 | 179, 180 | Contragolpe, Margem larga |
+| 48 | 181 | Embaralhar reservas |
+| 53–56 | 182–185 | Pausa, Convocar, Cancelar e Escolher fenômeno |
+| 58, 59, 63 | 186–188 | Carta fantasma, Sacrifício heroico, Reflexo |
+| pedidos novos | 189–198 | Mistura pessoal, Mistura geral, Cofre do baralho, Cofre da reserva, Barreira total, Ataque invertido (FOR↔RES), Mente invertida (INT↔VEL), Caos de atributos, Troca do destino, Virada de tipo |
+
+Interpretações que mudam o texto original (confirmar):
+- **Aposta (151):** se perder, a carta do **topo do baralho** vai ao Buraco Negro (a carta em jogo segue a regra "vitória prevalece": quem vence a leva).
+- **Eco protetor (167)** é mais fraco que Não perder a carta (072): só vale contra captura.
+- **Embaralhar reservas (181):** todos ficam com 4 cartas ativas; as que passam de 4 vão à reserva, que é embaralhada; quem tem menos de 4 completa pela reserva.
+- **Dividir o butim (178):** o jogador com mais cartas dá 3 aleatórias ao com menos. Em empate numérico, você pega 2 e o rival com mais cartas dá 1 ao outro.
+- **Pausa (182):** o rival que pula tem a carta devolvida ao fim do baralho; com 2 jogadores a disputa fica sem vencedor.
+- **Fortaleza (165):** reduções vindas de outros jogadores são descartadas por inteiro; **até 3 cartas** podem ter esta habilidade e **até 2** a Escolher fenômeno (185) quando forem atribuídas.
+- **Retirada (169)** pede, depois da troca, se vale o ataque ou a defesa do par do atributo.
+
+## Decisão 02/11 (16:17)
+Todas as interpretações da seção "Implementação" foram **confirmadas** pelo autor: Aposta (perde o topo do baralho), Embaralhar reservas (4 cartas ativas), Dividir o butim, Pausa, Fortaleza, Eco protetor e Retirada.

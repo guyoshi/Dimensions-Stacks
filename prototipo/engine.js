@@ -359,7 +359,7 @@
       }
       return out;
     }
-    curEv() { if (this.rg === 'avesso') return { id: 'avesso' }; return (this.s.events && this.s.events[this.s.round]) || null; }
+    curEv() { if (this.rg === 'avesso') return { id: 'avesso' }; if (this.combat && this.combat.noEv) return null; return (this.s.events && this.s.events[this.s.round]) || null; }
     // atributos da carta já com o efeito do fenômeno da rodada; "mark" diz à interface o que mudou
     evBase(card, pid) {
       const st = Object.assign({}, CARDS[card].stats), ev = this.curEv(), rg = this.rg; if (!ev && !rg && !this.cfg.bonusVal && !this.cfg.bonusCards && !this.cfg.attrMods) return { st, mark: null };
@@ -583,6 +583,13 @@
       if (this.combat && this.combat.eco && typeof src === 'number' && label !== 'Conversão' && label !== 'Permuta') {   // Eco dos Especiais: bônus e reduções valem o dobro
         const f0 = fn; fn = x => { const b = Object.assign({}, x.stats); f0(x); for (const k in x.stats) x.stats[k] = Math.max(0, x.stats[k] + (x.stats[k] - b[k])); };
       }
+      { const f1 = fn; let dec = null;   // Fortaleza: reduções alheias não pegam · Reflexo: a primeira redução recebida volta ao autor
+        fn = x => { if (typeof src !== 'number' || src === x.pid || (!x.fortress && !x.reflect && dec == null)) return f1(x);
+          if (dec === 'reflect') return;
+          const b = Object.assign({}, x.stats); f1(x); if (!AID.some(k => x.stats[k] < b[k])) return;
+          x.stats = b; if (x.fortress) return;
+          if (x.reflect && !x.reflectUsed && dec == null) { x.reflectUsed = true; dec = 'reflect'; const se = this.combat && this.combat.entries.find(q => q.pid === src); if (se) { this.addMod(se, x.pid, 'Reflexo', f1); this.log(`${this.p(x.pid).name} reflete a redução para ${this.p(src).name}.`, 'efeito'); } return; }
+          f1(x); }; }
       e.mods.push({ src, label, fn, off: false }); fn(e);
     }
     swapEntryCard(e, card) { const old = e.card; e.card = card; const eb = this.evBase(card, e.pid); e.base = Object.assign({}, eb.st); e.evm = eb.mark; this.recalc(e); return old; }
@@ -817,6 +824,7 @@
         const p = this.p(pid); const c = p.deck.shift();
         const eb = this.evBase(c, pid);
         combat.entries.push({ pid, card: c, base: Object.assign({}, eb.st), stats: Object.assign({}, eb.st), evm: eb.mark, bonus: 0, extra: [], extraStats: {}, mods: [], attr: null, withdrawn: false, gone: false, noCaptureBy: new Set() });
+        { const sk = this.s.skip; if (sk && sk.has(pid)) { sk.delete(pid); combat.entries[combat.entries.length - 1].withdrawn = true; this.log(`${this.p(pid).name} pula esta disputa (Pausa): a carta vai ao fim do baralho.`, 'efeito'); } }
         { const mk = this.s.marks || (this.s.marks = []), mi = mk.findIndex(m => m.card === c); if (mi >= 0) { const m = mk.splice(mi, 1)[0], en = combat.entries[combat.entries.length - 1]; this.addMod(en, m.src, 'Marca', x => { for (const k of AID) x.stats[k] = Math.max(0, x.stats[k] + m.v); }); this.log(`${CARDS[c].nome} entra marcada (${m.v}).`, 'efeito'); } }
       }
       // Dois Guardiões revelam uma carta cada; o jogador revela duas. Quando
@@ -889,6 +897,7 @@
       if (ctl.typeAll) tryF(a => ATTR[a].tipo === ctl.typeAll);
       const per = ctl.per[e.pid];
       if (per) { if (per.force) tryF(a => ATTR[a].tipo === per.force); if (per.ban) tryF(a => ATTR[a].tipo !== per.ban); }
+      if (per && per.banAttr && per.banAttr.length) tryF(a => !per.banAttr.includes(a));
       return opts;
     }
     async ctrlWindow(combat) {
@@ -905,7 +914,7 @@
       const acts = picks.map(pk => this.activate(combat, pk.pid, pk.card, false, combat.ctrlActs)).filter(Boolean);
       await this.emit('specialsFlip', { combat, acts: acts.slice(), stage: 'ctrl' });
       for (const a of acts) {
-        const sp = SP[CARDS[a.card].especial]; a.done = true; this.log(`${this.p(a.pid).name} ativa ${sp.nome}.`, 'efeito');
+        const sp = SP[CARDS[a.card].especial]; a.done = true; if (combat.noSpecials && CARDS[a.card].especial !== 'AE-177') { this.log(`${this.p(a.pid).name}: Atraso impede o especial.`, 'efeito'); continue; } this.log(`${this.p(a.pid).name} ativa ${sp.nome}.`, 'efeito');
         await this.emit('effectStart', { act: a, spec: sp }); await sp.apply(ctx, a); await this.emit('effectEnd', { act: a, spec: sp });
       }
     }
@@ -934,6 +943,7 @@
           const a = combat.activations[i]; if (a.done) continue;
           const sp = SP[CARDS[a.card].especial]; if ((sp.phase || 'main') !== ph) continue; a.done = true;
           if (a.cancelled) { this.log(`O especial de ${this.p(a.pid).name} foi cancelado.`, 'efeito'); continue; }
+          if (combat.noSpecials && CARDS[a.card].especial !== 'AE-177') { this.log(`${this.p(a.pid).name}: Atraso impede o especial.`, 'efeito'); continue; }
           this.log(`${this.p(a.pid).name} ativa ${sp.nome}.`, 'efeito');
           await this.emit('effectStart', { act: a, spec: sp }); await sp.apply(ctx, a); await this.emit('effectEnd', { act: a, spec: sp });
         }
@@ -1043,7 +1053,7 @@
       await this.emit('specialsFlip', { combat, acts, forced: true });
       const ctx = this.ctxFor(combat);
       for (const a of acts) {
-        const sp = SP[CARDS[a.card].especial]; a.done = true; this.log(`${p.name} ativa ${sp.nome}.`, 'efeito');
+        const sp = SP[CARDS[a.card].especial]; a.done = true; if (combat.noSpecials && CARDS[a.card].especial !== 'AE-177') continue; this.log(`${p.name} ativa ${sp.nome}.`, 'efeito');
         await this.emit('effectStart', { act: a, spec: sp }); await sp.apply(ctx, a); await this.emit('effectEnd', { act: a, spec: sp });
       }
     }
@@ -1090,7 +1100,7 @@
         else { const kc = gone(e, cardsOf(e)); kc.forEach(c => this.s.bh.push({ id: c, kind: 'normal' })); moves.push({ cards: kc.length ? kc : cardsOf(e), from: e.pid, to: 'bh' }); }
       };
       const back = (e) => { give(e.pid, cardsOf(e)); moves.push({ cards: cardsOf(e), from: e.pid, to: e.pid }); };
-      const capture = (e, pid) => { const cs = cardsOf(e).filter(c => !isClone(c) || (this.s.clones[c] || {}).owner === pid); const lost = cardsOf(e).filter(c => !cs.includes(c)); if (lost.length) { lost.forEach(c => delete this.s.clones[c]); this.log('Uma carta clone não pode ser capturada: desaparece.', 'res'); } if (cs.length) { give(pid, cs); this.s.caps[pid] = (this.s.caps[pid] || 0) + cs.length; } moves.push({ cards: cs.length ? cs : cardsOf(e), from: e.pid, to: cs.length ? pid : 'bh' }); };
+      const capture = (e, pid) => { if (e.echoProt) { back(e); this.log(`${this.p(e.pid).name}: o eco protetor devolve a carta ao fundo do baralho.`, 'res'); return; } const cs = cardsOf(e).filter(c => !isClone(c) || (this.s.clones[c] || {}).owner === pid); const lost = cardsOf(e).filter(c => !cs.includes(c)); if (lost.length) { lost.forEach(c => delete this.s.clones[c]); this.log('Uma carta clone não pode ser capturada: desaparece.', 'res'); } if (cs.length) { give(pid, cs); this.s.caps[pid] = (this.s.caps[pid] || 0) + cs.length; } moves.push({ cards: cs.length ? cs : cardsOf(e), from: e.pid, to: cs.length ? pid : 'bh' }); };
       let result = { type: 'none', winners: [], winnerPid: null };
       const live = es.filter(e => !e.withdrawn);
       es.filter(e => e.withdrawn && !e.gone).forEach(back);
@@ -1127,7 +1137,7 @@
           if (l.saveOnLoss) { back(l); continue; }
           const blocked = l.noCaptureBy.has(w.pid);
           if (attack || w.compCapture) {
-            if (attack && l.negateCapture) { toBH(l); continue; }
+            if (attack && l.negateCapture) { back(l); this.log(`${this.p(l.pid).name} nega a captura: a carta volta ao fundo do seu baralho.`, 'res'); continue; }
             if (blocked) { back(l); this.log(`${this.p(l.pid).name} impede a captura da própria carta.`, 'res'); continue; }
             capture(l, w.pid);
           } else {
@@ -1151,6 +1161,12 @@
         if (ev.tb) this.log(`Empate em ${ev.tb.top}! Desempate pela soma dos 4 atributos: ${ev.tb.list.map(x => this.p(x.pid).name + ' ' + x.v).join(' × ')}.`, 'efeito');
         this.log(`${this.p(w.pid).name} vence ${attack ? 'atacando' : 'defendendo'} com ${ATTR[w.attr].nome} ${result.value}.`, 'vit');
       }
+      for (const l of es) if (l.counter && !l.gone) { const h = this.s.players.find(q => q.pid !== l.pid && q.deck.includes(l.card)); if (h && h.deck.length) { const c = h.deck.shift(); this.p(l.pid).deck.push(c); this.s.caps[l.pid] = (this.s.caps[l.pid] || 0) + 1; moves.push({ cards: [c], from: h.pid, to: l.pid }); this.log(`${this.p(l.pid).name} contra-ataca e captura a carta do topo de ${h.name}.`, 'efeito'); } }
+      if (result.winnerPid != null) { const we = es.find(e => e.pid === result.winnerPid); if (we && we.wideMargin) { const others = live.filter(x => x !== we && !this.sameTeam(x.pid, we.pid)); const m = this.combatValue(combat, we) - Math.max(0, ...others.map(x => this.combatValue(combat, x))); const vic = others.filter(x => !x.saveOnLoss && this.p(x.pid).deck.length).sort((a, b) => this.p(b.pid).deck.length - this.p(a.pid).deck.length)[0];
+        if (m >= 30 && vic) { const lp = this.p(vic.pid), c = lp.deck.shift(); if (ATTR[we.attr].tipo === 'ataque') { this.p(we.pid).deck.push(c); this.s.caps[we.pid] = (this.s.caps[we.pid] || 0) + 1; moves.push({ cards: [c], from: vic.pid, to: we.pid }); this.log(`Margem larga: ${this.p(we.pid).name} captura também a carta do topo de ${lp.name}.`, 'efeito'); } else { this.s.bh.push({ id: c, kind: 'normal' }); this.log(`Margem larga: a carta do topo de ${lp.name} vai ao Buraco Negro.`, 'efeito'); } } } }
+      for (const l of es) if (l.trap && !l.gone) { const h = this.s.players.find(q => q.pid !== l.pid && q.deck.includes(l.card)); if (h && h.deck.length) { const c = h.deck.shift(); this.s.bh.push({ id: c, kind: 'normal' }); this.log(`${h.name} cai na armadilha de ${this.p(l.pid).name}: a carta do topo do baralho vai ao Buraco Negro.`, 'efeito'); } }
+      for (const l of es) if (l.betLoss && result.winnerPid != null && result.winnerPid !== l.pid && !this.sameTeam(result.winnerPid, l.pid)) { const lp = this.p(l.pid); if (lp.deck.length) { const c = lp.deck.shift(); this.s.bh.push({ id: c, kind: 'normal' }); this.log(`${lp.name} perdeu a aposta: a carta do topo do baralho vai ao Buraco Negro.`, 'efeito'); } }
+      this.s.lastRes = { winner: result.winnerPid, pids: es.map(e => e.pid) };   // para habilidades que olham a disputa anterior
       combat.result = result; combat.moves = moves; this.memResolved(moves);
       let calc = null; try { calc = this.calcSummary(combat, ev, result); } catch (err) { calc = null; }
       if (combat.bet) { const r = result.winnerPid === 0 ? 'win' : result.winnerPid == null ? 'tie' : 'lose', A = this.cfg.historia && this.cfg.historia.aposta; if (A && A.resolve) A.resolve(r); this.log(r === 'win' ? 'Aposta vencida: +2 pêndulos.' : r === 'tie' ? 'Empate: a aposta é devolvida.' : 'Aposta perdida: −1 pêndulo.', 'efeito'); }
@@ -1320,7 +1336,7 @@
   // Calibração dos bots (medida com tests/calib_val.js: varre val e aiMul de cada especial em duelo e em 3 jogadores; reativos/informação usam estimativa de projeto)
   // [antiga] (tests/bot_per_special.js): val = quanto vale gastar uma carta de combate para preparar; aiMul = escala da vontade de virar.
   // Valor de cada especial em "cartas de diferença" (medido com tests/bot_per_special.js: % de vitórias do bot que usa × o que nunca usa, (v-38)/12).
-  const BOT_VAL = { 'AE-009': 0.4, 'AE-025': 0.3, 'AE-029': 0.3, 'AE-070': 0.4, 'AE-091': 0.3, 'AE-100': 0.3, 'AE-107': 0.4, 'AE-111': 0.4, 'AE-002': 0.6, 'AE-004': 0.6, 'AE-006': 0.6, 'AE-008': 0.6, 'AE-010': 1.6, 'AE-012': 0.6, 'AE-017': 0.5, 'AE-021': 0.15, 'AE-022': 0.3, 'AE-024': 0.3, 'AE-026': 0.3, 'AE-028': 0.15, 'AE-030': 0.6, 'AE-031': 2.5, 'AE-032': 1.6, 'AE-037': 0.6, 'AE-039': 2.5, 'AE-041': 0.15, 'AE-046': 1, 'AE-047': 1.6, 'AE-048': 1.6, 'AE-051': 0.4, 'AE-053': 1, 'AE-055': 0.15, 'AE-056': 0.15, 'AE-059': 1, 'AE-061': 1, 'AE-062': 1, 'AE-063': 0.4, 'AE-064': 0.5, 'AE-065': 0.5, 'AE-066': 0.2, 'AE-067': 0.5, 'AE-068': 0.3, 'AE-069': 1, 'AE-071': 0.15, 'AE-072': 0.15, 'AE-073': 0.8, 'AE-074': 0.9, 'AE-075': 0.15, 'AE-076': 0.7, 'AE-077': 0.6, 'AE-078': 0.7, 'AE-079': 0.7, 'AE-080': 0.3, 'AE-081': 1, 'AE-082': 0.3, 'AE-083': 0.3, 'AE-084': 0.2, 'AE-085': 0.3, 'AE-086': 0.6, 'AE-087': 2.5, 'AE-089': 0.3, 'AE-090': 0.7, 'AE-091': 0.3, 'AE-092': 0.5, 'AE-093': 0.25, 'AE-094': 0.5, 'AE-095': 0.25, 'AE-096': 0.4, 'AE-097': 0.2, 'AE-098': 0.5, 'AE-099': 0.5, 'AE-100': 0.3, 'AE-101': 0.3, 'AE-103': 1, 'AE-105': 0.9, 'AE-106': 0.6, 'AE-108': 0.8, 'AE-110': 0.3, 'AE-111': 0.9, 'AE-112': 0.8, 'AE-113': 0.9, 'AE-114': 0.8, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.15, 'AE-118': 0.6, 'AE-119': 0.15, 'AE-120': 0.3, 'AE-129': 2.5, 'AE-130': 1 };
+  const BOT_VAL = { 'AE-182': 0.1, 'AE-183': 0.1, 'AE-185': 0.1, 'AE-173': 0.2, 'AE-180': 0.2, 'AE-177': 0.2, 'AE-184': 0.2, 'AE-165': 0.3, 'AE-188': 0.3, 'AE-181': 0.3, 'AE-157': 0.3, 'AE-057': 0.3, 'AE-058': 0.3, 'AE-108': 0.3, 'AE-119': 0.4, 'AE-009': 0.4, 'AE-025': 0.3, 'AE-029': 0.3, 'AE-070': 0.4, 'AE-091': 0.3, 'AE-100': 0.3, 'AE-107': 0.4, 'AE-111': 0.4, 'AE-002': 0.6, 'AE-004': 0.6, 'AE-006': 0.6, 'AE-008': 0.6, 'AE-010': 1.6, 'AE-012': 0.6, 'AE-017': 0.5, 'AE-021': 0.15, 'AE-022': 0.3, 'AE-024': 0.3, 'AE-026': 0.3, 'AE-028': 0.15, 'AE-030': 0.6, 'AE-031': 2.5, 'AE-032': 1.6, 'AE-037': 0.6, 'AE-039': 2.5, 'AE-041': 0.15, 'AE-046': 1, 'AE-047': 1.6, 'AE-048': 1.6, 'AE-051': 0.4, 'AE-053': 1, 'AE-055': 0.15, 'AE-056': 0.15, 'AE-059': 1, 'AE-061': 1, 'AE-062': 1, 'AE-063': 0.4, 'AE-064': 0.5, 'AE-065': 0.5, 'AE-066': 0.2, 'AE-067': 0.5, 'AE-068': 0.3, 'AE-069': 1, 'AE-071': 0.15, 'AE-072': 0.15, 'AE-073': 0.8, 'AE-074': 0.9, 'AE-075': 0.15, 'AE-076': 0.7, 'AE-077': 0.6, 'AE-078': 0.7, 'AE-079': 0.7, 'AE-080': 0.3, 'AE-081': 1, 'AE-082': 0.3, 'AE-083': 0.3, 'AE-084': 0.2, 'AE-085': 0.3, 'AE-086': 0.6, 'AE-087': 2.5, 'AE-089': 0.3, 'AE-090': 0.7, 'AE-091': 0.3, 'AE-092': 0.5, 'AE-093': 0.25, 'AE-094': 0.5, 'AE-095': 0.25, 'AE-096': 0.4, 'AE-097': 0.2, 'AE-098': 0.5, 'AE-099': 0.5, 'AE-100': 0.3, 'AE-101': 0.3, 'AE-103': 1, 'AE-105': 0.9, 'AE-106': 0.6, 'AE-108': 0.8, 'AE-110': 0.3, 'AE-111': 0.9, 'AE-112': 0.8, 'AE-113': 0.9, 'AE-114': 0.8, 'AE-115': 0.9, 'AE-116': 0.9, 'AE-117': 0.15, 'AE-118': 0.6, 'AE-119': 0.15, 'AE-120': 0.3, 'AE-129': 2.5, 'AE-130': 1 };
   // sem utilidade para o bot (ele não consegue tirar proveito): nunca prepara
   const BOT_RATE = 1;
   const SUMS = D.CARTAS.map(c => sum4(c.stats)).sort((x, y) => x - y);
@@ -1328,7 +1344,7 @@
   const TUNE = { 'AE-092': { aiMul: 0.3 }, 'AE-094': { aiMul: 0.3 }, 'AE-099': { aiMul: 0.3 }, 'AE-098': { aiMul: 0.3 }, 'AE-100': { aiMul: 0.3 }, 'AE-063': { aiMul: 0.3 }, 'AE-111': { aiMul: 0.3 }, 'AE-002': { aiMul: 0.65 }, 'AE-004': { aiMul: 0.65 }, 'AE-006': { aiMul: 0.65 }, 'AE-008': { aiMul: 0.65 }, 'AE-010': { aiMul: 0.65 }, 'AE-012': { aiMul: 0.65 }, 'AE-021': { aiMul: 0.65 }, 'AE-022': { aiMul: 0.35 }, 'AE-030': { aiMul: 0.65 }, 'AE-031': { aiMul: 0.65 }, 'AE-032': { aiMul: 0.65 }, 'AE-037': { aiMul: 0.65 }, 'AE-039': { aiMul: 0.65 }, 'AE-041': { aiMul: 0.65 }, 'AE-046': { aiMul: 0.65 }, 'AE-047': { aiMul: 0.65 }, 'AE-048': { aiMul: 0.65 }, 'AE-059': { aiMul: 0.65 }, 'AE-061': { aiMul: 0.35 }, 'AE-062': { aiMul: 0.35 }, 'AE-069': { aiMul: 0.65 }, 'AE-071': { aiMul: 0.35 }, 'AE-072': { aiMul: 0.35 }, 'AE-075': { aiMul: 0.65 }, 'AE-081': { aiMul: 0.65 }, 'AE-082': { aiMul: 0.35 }, 'AE-101': { aiMul: 0.65 }, 'AE-103': { aiMul: 0.65 }, 'AE-110': { aiMul: 0.65 }, 'AE-129': { aiMul: 0.35 } };
   // Calibração de DOIS LADOS (tests/calib_mirror2.js, 13/10/2026): todas as cartas = X e todos os jogadores o usam (reações incluídas); o focal varre val × aiMul em duelo, 3 e 4 jogadores.
   // [val, mul] só onde superou a política anterior por margem; val 0 = gastar uma carta para prepará-lo rende menos que lutar com ela (o especial é fraco como habilidade).
-  const MIRROR = {'AE-018': [0, 1], 'AE-020': [0, 1], 'AE-027': [0.15, 1.3], 'AE-040': [1, 0.8], 'AE-052': [0.15, 1], 'AE-057': [0, 1], 'AE-058': [0, 1], 'AE-073': [0.15, 0.3], 'AE-074': [1, 0.3], 'AE-076': [0.3, 0.3], 'AE-077': [0.3, 0.3], 'AE-078': [0.3, 0.3], 'AE-079': [0.6, 0.3], 'AE-080': [1.6, 0.3], 'AE-082': [0.6, 1], 'AE-085': [0.6, 1.3], 'AE-090': [0.3, 0.5], 'AE-095': [0, 1], 'AE-096': [0, 1], 'AE-102': [0, 1], 'AE-105': [0.15, 0.5], 'AE-108': [0, 0.5], 'AE-112': [0, 1], 'AE-113': [0.15, 0.3], 'AE-114': [0, 1], 'AE-115': [1, 0.3], 'AE-116': [0.3, 0.3], 'AE-118': [0.3, 0.3], 'AE-119': [0, 1], 'AE-120': [0.3, 0.3], 'AE-121': [0, 1], 'AE-122': [0, 1], 'AE-125': [0, 1], 'AE-128': [0, 1], 'AE-130': [0.15, 0.3]};
+  const MIRROR = {'AE-018': [0, 1], 'AE-020': [0, 1], 'AE-027': [0.15, 1.3], 'AE-040': [1, 0.8], 'AE-052': [0.15, 1], 'AE-073': [0.15, 0.3], 'AE-074': [1, 0.3], 'AE-076': [0.3, 0.3], 'AE-077': [0.3, 0.3], 'AE-078': [0.3, 0.3], 'AE-079': [0.6, 0.3], 'AE-080': [1.6, 0.3], 'AE-082': [0.6, 1], 'AE-085': [0.6, 1.3], 'AE-090': [0.3, 0.5], 'AE-095': [0, 1], 'AE-096': [0, 1], 'AE-102': [0, 1], 'AE-105': [0.15, 0.5], 'AE-112': [0, 1], 'AE-113': [0.15, 0.3], 'AE-114': [0, 1], 'AE-115': [1, 0.3], 'AE-116': [0.3, 0.3], 'AE-118': [0.3, 0.3], 'AE-120': [0.3, 0.3], 'AE-121': [0, 1], 'AE-122': [0, 1], 'AE-125': [0, 1], 'AE-128': [0, 1], 'AE-130': [0.15, 0.3]};
   // Especiais REATIVOS (respondem a especiais dos rivais): só são virados na janela de reação, depois da revelação dos demais.
   const REACT = ['AE-073', 'AE-074', 'AE-076', 'AE-077', 'AE-078', 'AE-079', 'AE-080', 'AE-113', 'AE-114', 'AE-115', 'AE-116', 'AE-120', 'AE-130', 'AE-134'];
   function finalize() {
