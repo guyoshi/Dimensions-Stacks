@@ -1,4 +1,4 @@
-# Proposta: distribuição das 53 habilidades novas (02/11/2026)
+# APROVADA E APLICADA (02/11/2026, 16:58) — Proposta: distribuição das 53 habilidades novas (02/11/2026)
 
 **Situação:** o jogo tem 154 cartas e 141 habilidades distintas. Só há **21 vagas** para habilidades novas hoje: as 13 cartas Quasar que repetem a habilidade da carta-base e os 8 Príncipes Elementais (que usam habilidades provisórias). As outras 32 ficam num **banco** para cartas futuras (ou para trocar habilidades fracas).
 
@@ -41,3 +41,6 @@ Opção: trocar nelas as habilidades de uso zero/baixo de cartas existentes (hoj
 - **Balanço:** nenhuma das três mais fortes (Aposta, Furto do líder, Dividir o butim) entra nesta distribuição; ficam no banco. Depois de atribuir, medimos de novo com as cartas reais (meta: portador entre 47% e 55%).
 - **Fracas atribuídas:** Mistura geral, Caos de atributos e Fortaleza ficam abaixo de 47% no teste; para lendárias/Quasar talvez valha subir o efeito. Decida após ver em jogo.
 - **Limite por habilidade** = quantas cartas podem carregar a mesma habilidade. Nesta proposta cada uma vai a **uma só** carta, então o limite não é usado.
+
+
+**Aplicado** em `prototipo/data.js` (QUASAR_ESP e PRINCIPES_DEF). Banco restante: 32 habilidades sem carta (+ AE-199 Troca de reservas, AE-018/020/053/054/125–128 liberadas).

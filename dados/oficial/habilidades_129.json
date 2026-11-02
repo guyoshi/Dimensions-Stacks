@@ -2231,12 +2231,14 @@
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q09"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q09 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-147",
@@ -2245,12 +2247,14 @@
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q04"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q04 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-148",
@@ -2259,12 +2263,14 @@
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q10"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q10 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-149",
@@ -2273,12 +2279,14 @@
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q05"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q05 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-150",
@@ -2287,12 +2295,14 @@
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q06"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q06 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-151",
@@ -2315,12 +2325,14 @@
    "categoria": "Bônus",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P02"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a P02 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-153",
@@ -2343,12 +2355,14 @@
    "categoria": "Conversão",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q11"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q11 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-155",
@@ -2357,12 +2371,14 @@
    "categoria": "Controle",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q07"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q07 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-156",
@@ -2385,12 +2401,14 @@
    "categoria": "Controle",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q08"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q08 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-158",
@@ -2469,12 +2487,14 @@
    "categoria": "Roubo",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q13"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q13 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-164",
@@ -2497,12 +2517,14 @@
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q03"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q03 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-166",
@@ -2511,12 +2533,14 @@
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q02"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q02 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-167",
@@ -2525,12 +2549,14 @@
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P03"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a P03 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-168",
@@ -2539,12 +2565,14 @@
    "categoria": "Defesa",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q01"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a Q01 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-169",
@@ -2595,12 +2623,14 @@
    "categoria": "Buraco Negro",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P08"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a P08 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-173",
@@ -2637,12 +2667,14 @@
    "categoria": "Informação",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P05"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a P05 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-176",
@@ -2735,12 +2767,14 @@
    "categoria": "Tempo",
    "origem_ideia": "novo (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P06"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída."
+   "revisao": "2026-11-02: criada a partir da lista de ideias aprovadas pelo autor; ainda sem carta atribuída. 2026-11-02: atribuída a P06 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-183",
@@ -2847,12 +2881,14 @@
    "categoria": "Interação",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P01"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta."
+   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta. 2026-11-02: atribuída a P01 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-191",
@@ -2931,12 +2967,14 @@
    "categoria": "Controle",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P04"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta."
+   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta. 2026-11-02: atribuída a P04 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-197",
@@ -2945,12 +2983,14 @@
    "categoria": "Troca",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "P07"
+   ],
+   "situacao_uso": "EQUIPADA_PRINCIPE",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta."
+   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta. 2026-11-02: atribuída a P07 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-198",
@@ -2959,12 +2999,14 @@
    "categoria": "Conversão",
    "origem_ideia": "pedido do autor (02/11/2026)",
    "avaliacao_de_risco": "Teste",
-   "cartas_atribuidas": [],
-   "situacao_uso": "IMPLEMENTADA_SEM_CARTA",
+   "cartas_atribuidas": [
+    "Q12"
+   ],
+   "situacao_uso": "EQUIPADA_QUASAR",
    "aprovacao": "APROVADO_COMO_DESIGN_PELO_AUTOR",
    "validacao_balanceamento": "PENDENTE_DE_TESTES",
    "resolucao_de_lacunas": "CONSULTAR_REGRAS_E_CHECKLIST",
-   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta."
+   "revisao": "2026-11-02: desenhada a partir do pedido do autor; ainda sem carta. 2026-11-02: atribuída a Q12 (distribuição aprovada pelo autor)."
   },
   {
    "id": "AE-199",
