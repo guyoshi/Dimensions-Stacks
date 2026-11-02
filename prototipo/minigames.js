@@ -36,7 +36,7 @@
     { id: 'gancho', nome: 'Constelação Pirata', serie: 'Spacetheft', desc: 'Toque nos símbolos espaciais que aparecem. Cuidado com a caveira.', cortes: [.34, .67, .84] },
     { id: 'culpado', nome: 'Vigília Escura', serie: 'Mistério Oculto', desc: 'Feche os olhos que se abrem antes que ataquem. 3 corações.', cortes: [.5, .75, .96] },
     { id: 'ritmo', nome: 'Maré, Chama e Gelo', serie: 'Édelin Lys', desc: 'Toque nas notas quando chegarem à linha, na pista do elemento.', cortes: [.4, .7, .9] },
-    { id: 'formacao', nome: 'Chamado da União', serie: 'A União', desc: 'Arraste cada herói para longe das hordas: eles atacam sozinhos. Sobreviva com o máximo deles.', cortes: [.34, .6, .99] },
+    { id: 'formacao', nome: 'Chamado da União', serie: 'A União', desc: 'Proteja o Estírio, a bolinha brilhante: as hordas vão atrás dele. Arraste o Estírio e os heróis, que atacam sozinhos. Se uma horda tocar o Estírio, acabou.', cortes: [.34, .6, .99] },
   ];
   const BYID = {}; LISTA.forEach(m => { BYID[m.id] = m; });
   const cfgAll = () => rd(CFG_KEY, {});
@@ -99,27 +99,33 @@
   const hidden = cw => U.cardEl('?', { noanim: true, cw: cw || 96 });
   const randCards = n => shuffle(CARTAS()).slice(0, n).map(c => c.id);
 
-  // ---- simulação do Chamado da União (lógica pura, testável): 8 membros atacam à distância; as hordas perseguem o membro mais próximo
-  function uniaoSim(dif, rand) {
-    const W = 380, H = 480, NM = 8, R = 11, RE = 9, RANGE = 100, CD = .6, WAVES = 7, GAP = 4.3;
+  // ---- simulação do Chamado da União (lógica pura, testável): proteja o Estírio; 8 heróis atacam à distância. Normal: parte dos inimigos vai ao Estírio e o resto aos heróis; Hard: todos vão ao Estírio
+  function uniaoSim(dif, rand, opts) {
+    const HD = !!(opts && opts.hard), W = 380, H = 480, NM = 8, R = 11, RE = 9, RES = 11, RANGE = 100, CD = .6, WAVES = 7, GAP = 4.3, VEST = (opts && opts.vest) || 200, PEST = (opts && opts.pest != null) ? opts.pest : .4, CNT = (opts && opts.cnt) || (HD ? .55 : .45), SPD = (opts && opts.spd) || (HD ? .8 : .7);   // calibrado em simulação (tools/sim_uniao.js): bot de anel vence ~70% no Normal e ~35% no Hard
     const ms = Array.from({ length: NM }, (_, i) => ({ x: W / 2 + Math.cos(i / NM * 6.283) * 60, y: H / 2 + Math.sin(i / NM * 6.283) * 60, vivo: true, cd: rand() * CD }));
-    const es = [], atk = []; let t = 0, wave = 0, prox = 1.2, kills = 0;
-    const TP = { n: { r: RE, m: 1, hp: 1 }, f: { r: 7, m: 1.75, hp: 1 }, g: { r: 14, m: .72, hp: 2 }, h: { r: 19, m: .58, hp: 3 } };   // normal, rápido, grande (divide em 2 normais), enorme (divide em 2 grandes); maior = mais lento
-    const mk = (tp, x, y, vb) => { const k = TP[tp]; es.push({ x, y, tp, r: k.r, hp: tp === 'n' && wave >= 3 && rand() < .18 ? 2 : k.hp, vb, v: vb * k.m }); };
+    const est = { x: W / 2, y: H / 2, tx: W / 2, ty: H / 2 }, es = [], atk = []; let t = 0, wave = 0, prox = 1.2, kills = 0;
+    const TP = { n: { r: RE, m: 1, hp: 1 }, f: { r: 7, m: 1.75, hp: 1 }, g: { r: 14, m: .72, hp: 2 }, h: { r: 19, m: .58, hp: 3 }, v: { r: 7, m: 2.1, hp: 1 } };   // normal, rápido, grande (divide em 2 normais), enorme (divide em 2 grandes), veloz (vai direto ao Estírio)
+    const mk = (tp, x, y, vb, ae) => { const k = TP[tp]; es.push({ x, y, tp, r: k.r, hp: tp === 'n' && wave >= 3 && rand() < .18 ? 2 : k.hp, vb, v: vb * k.m, ae: tp === 'v' || (ae == null ? (HD || rand() < PEST) : ae) }); };
+    const borda = () => { const l = Math.floor(rand() * 4), u = rand(); return l === 0 ? [u * W, -10 - rand() * 30] : l === 1 ? [W + 10 + rand() * 30, u * H] : l === 2 ? [u * W, H + 10 + rand() * 30] : [-10 - rand() * 30, u * H]; };
     const spawn = n => { const lados = [Math.floor(rand() * 4), Math.floor(rand() * 4)]; let i = 0; while (n > 0) { i++; const l = lados[i % 2], u = rand(); let x, y; if (l === 0) { x = u * W; y = -10 - rand() * 30; } else if (l === 1) { x = W + 10 + rand() * 30; y = u * H; } else if (l === 2) { x = u * W; y = H + 10 + rand() * 30; } else { x = -10 - rand() * 30; y = u * H; }
-      const vb = (46 + wave * 5) * dif * (.85 + rand() * .3), q = rand(); let tp = 'n'; if (wave >= 3 && n >= 4 && q < .1) tp = 'h'; else if (wave >= 2 && n >= 2 && q < .26) tp = 'g'; else if (wave >= 1 && q < .5) tp = 'f';   // a massa de inimigos continua a mesma: grande vale 2, enorme vale 4
-      n -= tp === 'h' ? 4 : tp === 'g' ? 2 : 1; mk(tp, x, y, vb); } };
-    const S = { W, H, R, RE, RANGE, ms, es, atk, get t() { return t; }, get wave() { return wave; }, WAVES, get kills() { return kills; }, done: false,
+      const vb = (46 + wave * 5) * dif * SPD * (.85 + rand() * .3), q = rand(); let tp = 'n'; if (wave >= 3 && n >= 4 && q < .1) tp = 'h'; else if (wave >= 2 && n >= 2 && q < .26) tp = 'g'; else if (wave >= 1 && q < .5) tp = 'f';
+      n -= tp === 'h' ? 4 : tp === 'g' ? 2 : 1; mk(tp, x, y, vb); }
+      const nv = HD ? (wave >= 1 ? 1 + (wave >= 4 ? 1 : 0) + (wave >= 6 ? 1 : 0) : 0) : (wave >= 3 ? 1 + (wave >= 5 ? 1 : 0) : 0); for (let k = 0; k < nv; k++) { const [x, y] = borda(); mk('v', x, y, (46 + wave * 5) * dif * SPD); } };
+    const S = { W, H, R, RE, RES, RANGE, ms, es, atk, est, get t() { return t; }, get wave() { return wave; }, WAVES, get kills() { return kills; }, done: false, perdeu: false,
       vivos: () => ms.filter(m => m.vivo).length,
       move(i, x, y) { const m = ms[i]; if (m && m.vivo) { m.x = Math.max(R, Math.min(W - R, x)); m.y = Math.max(R, Math.min(H - R, y)); } },
+      moveEst(x, y) { est.tx = Math.max(RES, Math.min(W - RES, x)); est.ty = Math.max(RES + 22, Math.min(H - RES, y)); },
       step(dt) { if (S.done) return; t += dt;
-        if (wave < WAVES && t >= prox) { spawn(Math.round((7 + wave * 5) * 1.2)); wave++; prox += GAP / Math.sqrt(dif); }
+        const dx = est.tx - est.x, dy = est.ty - est.y, dd = Math.hypot(dx, dy), pass = Math.min(dd, VEST * dt); if (dd > .01) { est.x += dx / dd * pass; est.y += dy / dd * pass; }
+        if (wave < WAVES && t >= prox) { spawn(Math.round((7 + wave * 5) * 1.2 * CNT)); wave++; prox += GAP / Math.sqrt(dif); }
         const vivos = ms.filter(m => m.vivo);
-        es.forEach(e => { let a = null, d = 1e9; vivos.forEach(m => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = m; } }); if (a) { e.x += (a.x - e.x) / d * e.v * dt; e.y += (a.y - e.y) / d * e.v * dt; } });
+        es.forEach(e => { let tx, ty, d = 1e9; if (e.ae || !vivos.length) { tx = est.x; ty = est.y; d = Math.hypot(tx - e.x, ty - e.y); } else { let a = null; vivos.forEach(m => { const dd2 = Math.hypot(m.x - e.x, m.y - e.y); if (dd2 < d) { d = dd2; a = m; } }); tx = a.x; ty = a.y; } if (d > .01) { e.x += (tx - e.x) / d * e.v * dt; e.y += (ty - e.y) / d * e.v * dt; } });
+        if (es.some(e => Math.hypot(est.x - e.x, est.y - e.y) < RES + e.r - 2)) { S.perdeu = true; S.done = true; return; }
         es.forEach(e => { vivos.forEach(m => { if (m.vivo && Math.hypot(m.x - e.x, m.y - e.y) < R + e.r - 3) { m.vivo = false; S.morreu = (S.morreu || 0) + 1; S.ultimaMorte = m; } }); });
-        vivos.forEach(m => { if (!m.vivo) return; m.cd -= dt; if (m.cd > 0) return; let a = null, d = 1e9; es.forEach(e => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = e; } }); if (a && d <= RANGE) { m.cd = CD; a.hp--; atk.push({ x1: m.x, y1: m.y, x2: a.x, y2: a.y, l: .14 }); if (a.hp <= 0) { es.splice(es.indexOf(a), 1); kills++; if (a.tp === 'g' || a.tp === 'h') { const f = a.tp === 'h' ? 'g' : 'n'; mk(f, a.x - 8, a.y, a.vb); mk(f, a.x + 8, a.y, a.vb); } } } });
+        vivos.forEach(m => { if (!m.vivo) return; m.cd -= dt; if (m.cd > 0) return; let a = null, d = 1e9; es.forEach(e => { const dd = Math.hypot(m.x - e.x, m.y - e.y); if (dd < d) { d = dd; a = e; } }); if (a && d <= RANGE) { m.cd = CD; a.hp--; atk.push({ x1: m.x, y1: m.y, x2: a.x, y2: a.y, l: .14 }); if (a.hp <= 0) { es.splice(es.indexOf(a), 1); kills++; if (a.tp === 'g' || a.tp === 'h') { const f = a.tp === 'h' ? 'g' : 'n'; mk(f, a.x - 8, a.y, a.vb, a.ae); mk(f, a.x + 8, a.y, a.vb, a.ae); } } } });
         for (let i = atk.length - 1; i >= 0; i--) { atk[i].l -= dt; if (atk[i].l <= 0) atk.splice(i, 1); }
-        if (!ms.some(m => m.vivo) || (wave >= WAVES && !es.length) || t > 90) S.done = true; } };
+        if ((wave >= WAVES && !es.length) || t > 90) S.done = true; },
+      resultado() { const v = S.vivos(); return S.perdeu ? .3 * Math.min(1, S.wave / WAVES) : .4 + .6 * v / NM; } };   // perdeu o Estírio: no máximo 30%; sobreviveu: 40% + 60% pelos heróis vivos
     return S;
   }
 
@@ -161,7 +167,7 @@
     },
     // 3. Silhuetas (quem é quem): só alguns trechos escuros da imagem da carta aparecem; 8 perguntas, 10 s cada
     quemequem(body, c, fim) {
-      const N = c.hard ? 12 : 8; let n = 0, ok = 0, tm = null, left = Math.round((c.hard ? 84 : 60) / c.dif), done = false, acabou = false;   // tempo total para as 8 cartas
+      const N = c.hard ? 12 : 8; let n = 0, ok = 0, tm = null, left = Math.round((c.hard ? 67 : 60) / c.dif), done = false, acabou = false;   // tempo total para as 8 cartas
       const trechos = id => { const src = (window.CARD_IMAGES || {})[id]; if (!src) return null; const W = 150, H = 200, k = c.hard ? 3 : 3 + (Math.random() < .5 ? 1 : 0), cs = [];
         for (let i = 0; i < k; i++) cs.push(`radial-gradient(circle ${c.hard ? 28 + rnd(10) : 34 + rnd(12)}px at ${22 + rnd(W - 44)}px ${22 + rnd(H - 44)}px, #000 55%, transparent 100%)`);
         const d = mk(`<div class="mg-frag" style="width:${W}px;height:${H}px;background-image:url(${src});-webkit-mask-image:${cs.join(',')};mask-image:${cs.join(',')}"></div>`); return d; };
@@ -467,15 +473,15 @@
     // A União: Chamado da União — controle cada herói com o dedo (arraste) para longe das hordas; eles atacam sozinhos à distância. Tocado, o herói morre
     formacao(body, c, fim) {
       const cv = mk('<canvas class="mg-cv"></canvas>'); body.append(cv); const W = cv.width = 380, H = cv.height = 480, g = cv.getContext('2d'); cv.style.width = '100%'; cv.style.maxWidth = '380px'; cv.style.touchAction = 'none';
-      const S = uniaoSim(c.dif, Math.random), UN = ['D06', 'M01', 'J03', 'B01', 'S01', 'M10', 'V15', 'V02'], imgs = UN.map(id => { const im = new Image(); const src = (window.CARD_IMAGES || {})[id]; if (src) im.src = src.replace('photos/', 'photos/t/'); return im; }), horda = new Image(); horda.src = 'cena/minigames/horda-uniao.png';
+      const S = uniaoSim(c.dif, Math.random, { hard: !!c.hard }), UN = ['D06', 'M01', 'J03', 'B01', 'S01', 'M10', 'V15', 'V02'], imgs = UN.map(id => { const im = new Image(); const src = (window.CARD_IMAGES || {})[id]; if (src) im.src = src.replace('photos/', 'photos/t/'); return im; }), horda = new Image(); horda.src = 'cena/minigames/horda-uniao.png';
       const cor = id => { const k = U.CARDS[id], sr = (U.SERIES || {})[k && k.serie]; return sr ? sr.cor : '#8f5cff'; };
       const ptr = new Map(); let raf = 0, last = 0, acabou = false, msgMorte = 0;
       const pos = e => { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; };
-      cv.onpointerdown = e => { const p = pos(e); let m = -1, d = 48; S.ms.forEach((x, i) => { const dd = Math.hypot(x.x - p.x, x.y - p.y); if (x.vivo && dd < d && ![...ptr.values()].includes(i)) { d = dd; m = i; } }); if (m >= 0) { ptr.set(e.pointerId, m); try { cv.setPointerCapture(e.pointerId); } catch (er) { } } };
-      cv.onpointermove = e => { const i = ptr.get(e.pointerId); if (i == null) return; const p = pos(e); S.move(i, p.x, p.y); };
+      cv.onpointerdown = e => { const p = pos(e); if (Math.hypot(S.est.x - p.x, S.est.y - p.y) < 40 && ![...ptr.values()].includes('E')) { ptr.set(e.pointerId, 'E'); try { cv.setPointerCapture(e.pointerId); } catch (er) { } S.moveEst(p.x, p.y); return; } let m = -1, d = 48; S.ms.forEach((x, i) => { const dd = Math.hypot(x.x - p.x, x.y - p.y); if (x.vivo && dd < d && ![...ptr.values()].includes(i)) { d = dd; m = i; } }); if (m >= 0) { ptr.set(e.pointerId, m); try { cv.setPointerCapture(e.pointerId); } catch (er) { } } };
+      cv.onpointermove = e => { const i = ptr.get(e.pointerId); if (i == null) return; const p = pos(e); if (i === 'E') S.moveEst(p.x, p.y); else S.move(i, p.x, p.y); };
       cv.onpointerup = cv.onpointercancel = e => { ptr.delete(e.pointerId); };
       let mortos = 0;
-      const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); const v = S.vivos(); fim(v ? .34 + .66 * (v - 1) / 7 : 0, v ? v + ' de 8 heróis sobreviveram' : 'Todos caíram'); };
+      const fimJogo = () => { if (acabou) return; acabou = true; cancelAnimationFrame(raf); const v = S.vivos(); fim(S.resultado(), S.perdeu ? 'O Estírio caiu na onda ' + Math.min(S.wave, S.WAVES) : 'O Estírio sobreviveu com ' + v + ' de 8 heróis'); };
       const loop = ts => { if (acabou) return; const dt = Math.min(.05, (ts - (last || ts)) / 1000); last = ts; S.step(dt);
         const n = S.ms.filter(m => !m.vivo).length; if (n > mortos) { mortos = n; SND.play('lose'); }
         g.fillStyle = '#07040f'; g.fillRect(0, 0, W, H);
@@ -484,6 +490,7 @@
         S.ms.forEach((m, i) => { if (!m.vivo) { g.fillStyle = '#ffffff22'; g.font = '16px system-ui'; g.textAlign = 'center'; g.fillText('✕', m.x, m.y + 5); g.textAlign = 'left'; return; }
           const held = [...ptr.values()].includes(i); if (held) { g.beginPath(); g.arc(m.x, m.y, S.R + 10, 0, 7); g.strokeStyle = cor(UN[i]) + 'aa'; g.lineWidth = 2; g.stroke(); } g.save(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.shadowColor = cor(UN[i]); g.shadowBlur = held ? 20 : 8; g.fillStyle = cor(UN[i]); g.fill(); g.shadowBlur = 0; g.clip();
           if (imgs[i].complete && imgs[i].naturalWidth) g.drawImage(imgs[i], m.x - S.R, m.y - S.R, S.R * 2, S.R * 2); g.restore(); g.beginPath(); g.arc(m.x, m.y, S.R + (held ? 3 : 0), 0, 7); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke(); });
+        { const E = S.est, pu = 1 + .12 * Math.sin(S.t * 6), hl = [...ptr.values()].includes('E'); g.save(); const gr = g.createRadialGradient(E.x, E.y, 2, E.x, E.y, 30 * pu); gr.addColorStop(0, '#ffffff'); gr.addColorStop(.25, '#ffe9a0'); gr.addColorStop(1, '#ffd25f00'); g.fillStyle = gr; g.beginPath(); g.arc(E.x, E.y, 30 * pu, 0, 7); g.fill(); g.shadowColor = '#ffd25f'; g.shadowBlur = hl ? 26 : 16; g.fillStyle = '#fff6cf'; g.beginPath(); g.arc(E.x, E.y, S.RES, 0, 7); g.fill(); g.restore(); }
         g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.fillText('Heróis ' + S.vivos() + ' / 8', 10, 20); g.fillText('Onda ' + Math.min(S.wave, S.WAVES) + '/' + S.WAVES, W - 80, 20);
         if (S.done) return fimJogo(); raf = requestAnimationFrame(loop); };
       raf = requestAnimationFrame(loop); return () => { acabou = true; cancelAnimationFrame(raf); };
