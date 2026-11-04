@@ -291,7 +291,7 @@
   let voltarMapa = false;
   function hub() {
     if (voltarMapa && S) { voltarMapa = false; openMap(); return; }
-    view = 'hub'; load(); try { if (SND.histNow) SND.histStop(); } catch (e) { }   // tela inicial: volta a música normal do menu
+    view = 'hub'; try { U.navUniao(true); } catch (e) { } load(); try { if (SND.histNow) SND.histStop(); } catch (e) { }   // tela inicial: volta a música normal do menu
     const h = $('#hsHub', root), mp = $('#hsMap', root); mp.hidden = true; h.hidden = false;
     const linhas = [1, 2, 3].map(n => { const s = slotOk(n), nb = s ? Object.keys(s.cleared || {}).length : 0, lv = s ? nivel(Math.max(0, s.xp == null ? Math.round(nb * 24) : s.xp | 0)) : 1, nc = s ? (s.owned || []).length : 0, pct = s ? Math.round(100 * pctJogo(s)) : 0;
       return `<div class="hs-slot${s ? ' on' : ''}"><b>${n}</b>${s ? `<span class="hs-sn">${esc(s.nome || 'Viajante')}<small>Nv ${lv} · ${pct}% · ▣ ${nc} · ⚔ ${nb}</small></span><button class="btn primary" data-a="cont" data-s="${n}">Continuar</button><button class="btn ibtn" data-a="del" data-s="${n}" aria-label="Apagar save ${n}">✕</button>` : `<span class="hs-sn"><small>Vazio</small></span><button class="btn primary" data-a="novo" data-s="${n}">Novo jogo</button>`}</div>`; }).join('');
@@ -333,7 +333,7 @@
 
   // ---- mapa
   function openMap(novo, intro, comFade) {
-    if (!S) return; view = 'map';
+    if (!S) return; view = 'map'; try { U.navUniao(false); } catch (e) { }
     const h = $('#hsHub', root), mp = $('#hsMap', root); h.hidden = true; mp.hidden = false;
     mp.innerHTML = `<div class="hs-particles" aria-hidden="true">${particulasMapa()}</div><svg class="hs-svg" id="hsSvg" aria-label="Mapa da jornada"><defs><radialGradient id="hsGalG" cx=".5" cy=".5" r=".5"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="hsGalM" maskUnits="userSpaceOnUse" x="-1392" y="-612" width="2800" height="1400"><rect x="-1392" y="-612" width="2800" height="1400" fill="url(#hsGalG)"/></mask><radialGradient id="hsCoin" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ff8d80"/><stop offset=".55" stop-color="#d8332f"/><stop offset="1" stop-color="#8c1612"/></radialGradient>
         <radialGradient id="hsLight"><stop offset="0" stop-color="#d9c8ff" stop-opacity=".34"/><stop offset=".45" stop-color="#8f6cff" stop-opacity=".14"/><stop offset="1" stop-color="#8f6cff" stop-opacity="0"/></radialGradient><radialGradient id="hsLightH"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".5"/><stop offset=".4" stop-color="#ffc46b" stop-opacity=".2"/><stop offset="1" stop-color="#ffc46b" stop-opacity="0"/></radialGradient>
@@ -1181,5 +1181,5 @@
   }
 
   if (NPC) NPC.init({ aoMelhoria: id => { if (id === 'aluguel') quandoLivre(apresentarAluguel); }, S: () => S, save, BY, NOS, M, U, $, $$, el, esc, SND, root: () => root, npcFala, toast, centerOn, andar, avisoMissao, abrirCasa, refrescaCasa, caminho, posId, openNode, closeSheet, paintAll, quandoLivre, nBat, GUARD, MINIS, UNIAO, LADOS, bonusBoss, available, andando: () => andando });
-  window.DSHistoria = { quasar: { darPrincipe, darEstirio, plusBat, PLUS, PRINCIPES }, npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, pausa: pausaHistoria, mount, show: hub, data: M, state: () => S, openNode };
+  window.DSHistoria = { view: () => view, quasar: { darPrincipe, darEstirio, plusBat, PLUS, PRINCIPES }, npc: NPC, darBroche: (serie) => { if (!S) return; S.broches = S.broches || {}; S.broches[serie] = 1; save(); if (view === 'map') paintAll(); }, loja, minhasCartas, dica, golpeBoss, escolher7, aplicaCansaco, duelar, abrirBau, pausa: pausaHistoria, mount, show: hub, data: M, state: () => S, openNode };
 })();

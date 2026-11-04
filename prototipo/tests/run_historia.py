@@ -45,7 +45,7 @@ try:
     pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type == 'error' and 'fonts' not in m.text and 'ERR_' not in m.text and 'Failed to load resource' not in m.text else None)
     pg.goto('http://localhost:8777/_page.html'); pg.wait_for_timeout(900)
     pg.click('#nav [data-tab=uniao]'); pg.wait_for_timeout(500)
-    chk(pg.evaluate("document.querySelector('#nav').hidden") is True, 'barra inferior oculta no modo história')
+    chk(pg.evaluate("document.querySelector('#nav').hidden") is False, 'barra inferior visível na tela inicial do modo história')
     chk(pg.evaluate("!document.querySelector('[data-a=cont]')"), 'sem Continuar sem jornada salva')
     pg.screenshot(path=shots + '/hist_hub.png')
     pg.click('[data-a=novo]'); pg.wait_for_selector('.cin-skip', timeout=5000); pg.click('.cin-skip'); pg.click('.cin-qs button'); pg.wait_for_selector('.hs-svg', timeout=10000); pg.wait_for_timeout(1500)

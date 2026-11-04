@@ -63,11 +63,16 @@
   const render = { menu: () => home(), coll: () => collTab(), uniao: () => uniaoTab(), chal: () => chalTab(), prof: () => profTab() };
   U.afterShow = function (name) {
     const nav = $('#nav'); if (!nav) return;
-    const tab = name in render, full = name === 'uniao'; nav.hidden = !tab || full;   // o modo história ocupa a tela toda (jogo dentro do jogo)
+    const tab = name in render, full = name === 'uniao'; nav.hidden = !tab || full;   // o modo história ocupa a tela toda (jogo dentro do jogo); só a tela inicial do modo (hub) mantém a barra (U.navUniao)
     $$('button', nav).forEach(b => b.classList.toggle('on', b.dataset.tab === name));
     $('#app').classList.toggle('hasnav', tab && !full);
     try { if (!full && SND.histNow) SND.histStop(); } catch (e) { }   // a trilha do mapa só toca no mapa (historia.js); na tela inicial do modo toca o menu normal
     if (tab) { render[name](); const s = $('#' + name); if (s) s.scrollTop = 0; }
+    if (full) U.navUniao(window.DSHistoria && window.DSHistoria.view && window.DSHistoria.view() === 'hub');
+  };
+  U.navUniao = function (mostra) {   // barra inferior na aba A União: visível na tela inicial (Novo jogo/Continuar), oculta no mapa
+    const nav = $('#nav'), app = $('#app'); if (!nav || !app) return; const na = !$('#uniao') || $('#uniao').hidden; if (na) return;
+    nav.hidden = !mostra; app.classList.toggle('hasnav', !!mostra);
   };
 
   function topbar(title, sub, extra) {
@@ -190,9 +195,9 @@
         ${d.done ? '' : '<div class="row"><button class="btn primary" data-go="quick">Jogar agora</button></div>'}</section>
       <h3 class="sec">Missões da semana</h3>
       <div class="missions">${wk.map(w => `<div class="mission ${w.val >= w.meta ? 'done' : ''}"><div class="mt"><b>${esc(w.texto)}</b><span>${w.val}/${w.meta}</span></div><div class="bar"><i style="width:${w.val / w.meta * 100}%"></i></div></div>`).join('')}</div>
-      <div class="row"><button class="btn" data-tab="prof">Conquistas (${ST.achievements().filter(a => a.done).length}/${ST.ACH.length})</button></div></div>`;
+      <div class="row"><button class="btn" data-tab="prof" data-pft="con">Conquistas (${ST.achievements().filter(a => a.done).length}/${ST.ACH.length})</button></div></div>`;
     bindTop(s);
-    s.onclick = e => { const b = e.target.closest('[data-go],[data-tab]'); if (!b) return; SND.init(); SND.play('click'); if (b.dataset.tab) return U.show(b.dataset.tab); if (b.dataset.go === 'quick') U.quick(); };
+    s.onclick = e => { const b = e.target.closest('[data-go],[data-tab]'); if (!b) return; SND.init(); SND.play('click'); if (b.dataset.tab) { if (b.dataset.pft) PFT = b.dataset.pft; return U.show(b.dataset.tab); } if (b.dataset.go === 'quick') U.quick(); };
   }
 
   // ---------------------------------------------------------------- perfil (aba)
