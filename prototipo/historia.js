@@ -236,7 +236,7 @@
     const mx = (a.x + b.x) / 2 - dy / len * off, my = (a.y + b.y) / 2 + dx / len * off;
     return `M${a.x} ${a.y} Q${mx.toFixed(1)} ${my.toFixed(1)} ${b.x} ${b.y}`;
   }
-  // ---- PÓS-GAME QUASAR (aprovado pelo autor em 02/11/2026). Depois de vencer a Besta: Korvo (Quasar 2) assume o centro; ~40 desafios ganham versão "+" (dá 1 fragmento de Estírio);
+  // ---- PÓS-GAME QUASAR (aprovado pelo autor em 02/11/2026). Depois de vencer a Besta: Korvo (Quasar β) assume o centro; ~40 desafios ganham versão "+" (dá 1 fragmento de Estírio);
   // 5 fragmentos pagam a luta contra cada um dos 8 príncipes elementais (nós novos ao redor do núcleo); cada príncipe dá uma Lendária + cartas Quasar. A luta final contra Korvo ainda não existe.
   const POS = () => !!(S && S.cleared && S.cleared[M.boss]);
   const PLUS = (() => { const L = t => NOS.filter(n => n.tipo === t).map(n => n.id).sort(), ev = L('evento'), pick = (a, k) => Array.from({ length: k }, (_, i) => a[Math.floor(i * a.length / k)]); return new Set([...L('guardiao'), ...L('miniboss'), ...L('elite'), ...pick(ev, 18)]); })();   // 4 guardiões + 8 arautos + 10 elites + 18 eventos = 40 desafios "+"
@@ -268,7 +268,7 @@
   }
   function nome(n) {
     if (n.tipo === 'principe') return n.nomeP;
-    if (n.tipo === 'boss') return POS() ? 'Boss final: Korvo (Quasar 2)' : 'Boss final: A Besta';
+    if (n.tipo === 'boss') return POS() ? 'Boss final: Korvo (Quasar β)' : 'Boss final: A Besta';
     if (n.tipo === 'guardiao') return 'Guardião: ' + LADOS[n.lado];
     if (n.tipo === 'loja') return 'Loja ' + n.id.slice(1);
     if (n.tipo === 'bau') return 'Baú';
@@ -748,7 +748,7 @@
   }
   function duelar(id, auto, plus) {   // auto: gancho de teste, o jogador vira bot e a partida roda sozinha
     const n = BY[id], bat0 = window.DS_HIST_BAT && window.DS_HIST_BAT[id]; if (!bat0 || n.tipo === 'loja') return;
-    if (n.tipo === 'boss') return cleared(id) ? toast('Korvo (Quasar 2) ainda está se preparando. Em breve.') : duelarBoss(id, auto);
+    if (n.tipo === 'boss') return cleared(id) ? toast('Korvo (Quasar β) ainda está se preparando. Em breve.') : duelarBoss(id, auto);
     if (n.tipo === 'principe') { S.principePago = S.principePago || {}; if (!S.principePago[id]) { if ((S.est | 0) < PR_CUSTO) return toast('Precisa de ' + PR_CUSTO + ' fragmentos de Estírio (você tem ' + (S.est | 0) + ')'); S.est -= PR_CUSTO; S.principePago[id] = 1; save(); paintAll(); } }
     const gd = n.tipo === 'guardiao' ? GUARDAS[guardaDe(id)] : null;
     let bat = gd ? Object.assign({}, bat0, { i: gd.nomes.map((nm, k) => { const R = (() => { let a = (id.charCodeAt(3) * 131 + k * 977 + gd.m * 31) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();

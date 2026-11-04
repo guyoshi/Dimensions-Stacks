@@ -265,11 +265,11 @@
     ['Q11', 'V03', 1, [81, 80, 101, 101]], ['Q12', 'V03', 2, [93, 92, 113, 113]],
     ['Q13', 'V10', 2, [125, 115, 100, 98]],
   ];
-  const AURA = { 1: 'Aura Quasar 1 (euforia): +10% em todos os atributos das suas outras cartas na mesma disputa.', 2: 'Aura Quasar 2 (aura sombria): quem enfrenta esta carta perde 10% no atributo escolhido.', 3: 'Aura Quasar 3 (flutuação): ignora modificadores negativos e ganha +15% em todos os atributos.' };
+  const AURA = { 1: 'Aura Quasar α (euforia): +10% em todos os atributos das suas outras cartas na mesma disputa.', 2: 'Aura Quasar β (aura sombria): quem enfrenta esta carta perde 10% no atributo escolhido.', 3: 'Aura Quasar γ (flutuação): ignora modificadores negativos e ganha +15% em todos os atributos.' };
   const QUASAR_ESP = {'Q09': 'AE-146', 'Q10': 'AE-148', 'Q07': 'AE-155', 'Q08': 'AE-157', 'Q11': 'AE-154', 'Q12': 'AE-198', 'Q04': 'AE-147', 'Q05': 'AE-149', 'Q06': 'AE-150', 'Q13': 'AE-163', 'Q01': 'AE-168', 'Q02': 'AE-166', 'Q03': 'AE-165'};   // habilidade própria de cada Quasar (distribuição aprovada em 02/11/2026)
   const QUASAR = QUASAR_DEF.map(function (r) {
     const b = CARTAS_FINAIS.find(c => c.id === r[1]);
-    return { id: r[0], nome: b.nome, serie: b.serie, nota: 'Quasar ' + r[2], uniao: false, descricao: AURA[r[2]], perfil: null, proposta: false, aprovada: true,
+    return { id: r[0], nome: b.nome, serie: b.serie, nota: 'Quasar ' + ({1: 'α', 2: 'β', 3: 'γ'})[r[2]], uniao: false, descricao: AURA[r[2]], perfil: null, proposta: false, aprovada: true,
       stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'quasar', especial: QUASAR_ESP[r[0]] || b.especial, provisorio: false, quasar: r[2], base: b.id };
   });
   // ---------- 8 PRÍNCIPES elementais (pós-game): Lendárias exclusivas, só como recompensa; ficam fora de D.CARTAS (sorteios, baús, lojas, decks inimigos).
@@ -284,7 +284,7 @@
     ['P07', 'Príncipe do Espaço', 'Príncipe de Belfex, responsável pela magia do espaço.', [68, 63, 85, 95], 'AE-197'],
     ['P08', 'Príncipe das Trevas', 'Príncipe de Belfex, responsável pela magia das sombras.', [95, 95, 68, 62], 'AE-172'],
   ];
-  PRINCIPES_DEF.forEach(function (r) { QUASAR.push({ id: r[0], nome: r[1], serie: 'belfex', nota: 'Príncipe elemental', uniao: false, descricao: r[2], perfil: null, proposta: false, aprovada: true, stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'lendaria', especial: r[4], provisorio: false, principe: true }); });
+  PRINCIPES_DEF.forEach(function (r) { QUASAR.push({ id: r[0], nome: r[1], serie: 'viajantes', num: 43 + PRINCIPES_DEF.indexOf(r), nota: 'Príncipe elemental', uniao: false, descricao: r[2], perfil: null, proposta: false, aprovada: true, stats: { pod: r[3][0], def: r[3][1], int: r[3][2], vel: r[3][3] }, raridade: 'lendaria', especial: r[4], provisorio: false, principe: true }); });
   // ---------- 4 cartas dos Guardiões: exclusivas da Jornada (uma por confronto) e raríssimas em partidas livres.
   // Ficam fora de D.CARTAS: não entram em lojas, baús, inimigos nem nos reforços aleatórios.
   const GUARDIOES = [

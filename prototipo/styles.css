@@ -2152,3 +2152,6 @@ body.reduce .mg-pass { animation-duration: 0s; opacity: 0; }
 .optrow > .seg { display: flex; width: 100%; min-width: 0; box-sizing: border-box; }
 .optrow > .seg button { flex: 1 1 0; min-width: 0; padding-inline: .3em; white-space: nowrap; font-size: .92em; }
 .optrow > .btn { width: 100%; box-sizing: border-box; }
+
+/* Etiqueta Quasar: sai da faixa do número (canto direito) e fica à esquerda, logo abaixo da faixa */
+.qtag { right: auto; left: .7em; top: 3.7em; }
