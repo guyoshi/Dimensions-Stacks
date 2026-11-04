@@ -2146,3 +2146,9 @@ body.reduce .mg-pass { animation-duration: 0s; opacity: 0; }
 
 /* Guardiões da União: logo de A União na faixa superior, sem o selo */
 .face.front .cband .ser .uniao-logo-card { height: 1.7em; width: auto; max-width: 100%; filter: drop-shadow(0 0 .35em #c89dffcc) drop-shadow(0 .06em .12em #000); }
+
+/* Opções: todos os seletores com a mesma largura, alinhados à direita e sem estourar a caixa */
+.optrow { grid-template-columns: minmax(96px, 38%) minmax(0, 1fr); }
+.optrow > .seg { display: flex; width: 100%; min-width: 0; box-sizing: border-box; }
+.optrow > .seg button { flex: 1 1 0; min-width: 0; padding-inline: .3em; white-space: nowrap; font-size: .92em; }
+.optrow > .btn { width: 100%; box-sizing: border-box; }
